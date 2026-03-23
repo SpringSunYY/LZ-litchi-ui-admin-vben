@@ -24,6 +24,7 @@
   },
   "actionMessage": {
     "deleteConfirm": "Are you sure to delete {0}?",
+    "deleteCascadeConfirm": "Are you sure to delete {0}?",
     "deleting": "Deleting {0} ...",
     "deleteSuccess": "{0} deleted successfully",
     "deleteFailed": "{0} deleted failed",
@@ -32,7 +33,10 @@
     "importSuccess": "Import succeeded",
     "importFail": "Import failed",
     "downloadTemplateFail": "Download template failed",
-    "updating": "Updating {0}..."
+    "updating": "Updating {0}...",
+    "cascadeDelete": "Cascade Delete",
+    "cascadeDeleteTip": "When enabled, all child data will be deleted together",
+    "cascadeDeleteTipOff": "When disabled, only this item is deleted, child data remains"
   },
   "placeholder": {
     "input": "Please enter",

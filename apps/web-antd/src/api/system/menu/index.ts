@@ -49,6 +49,8 @@ export async function updateMenu(data: SystemMenuApi.Menu) {
 }
 
 /** 删除菜单 */
-export async function deleteMenu(id: number) {
-  return requestClient.delete(`/system/menu/delete?id=${id}`);
+export async function deleteMenu(id: number, isDeleteChildren = false) {
+  return requestClient.delete(
+    `/system/menu/delete?id=${id}&isDeleteChildren=${isDeleteChildren}`,
+  );
 }

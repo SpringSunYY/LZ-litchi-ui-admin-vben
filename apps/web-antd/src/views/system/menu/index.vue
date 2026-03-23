@@ -7,7 +7,7 @@ import { ref } from 'vue';
 import { DocAlert, Page, useVbenModal } from '@vben/common-ui';
 import { IconifyIcon } from '@vben/icons';
 
-import { message } from 'ant-design-vue';
+import { message, Tooltip } from 'ant-design-vue';
 
 import { ACTION_ICON, TableAction, useVbenVxeGrid } from '#/adapter/vxe-table';
 import { deleteMenu, getMenuList } from '#/api/system/menu';
@@ -42,6 +42,9 @@ function handleEdit(row: SystemMenuApi.Menu) {
   formModalApi.setData(row).open();
 }
 
+/** 全局级联删除开关（默认 false） */
+const isDeleteChildren = ref(false);
+
 /** 删除菜单 */
 async function handleDelete(row: SystemMenuApi.Menu) {
   const hideLoading = message.loading({
@@ -49,7 +52,7 @@ async function handleDelete(row: SystemMenuApi.Menu) {
     key: 'action_key_msg',
   });
   try {
-    await deleteMenu(row.id as number);
+    await deleteMenu(row.id as number, isDeleteChildren.value);
     message.success({
       content: $t('ui.actionMessage.deleteSuccess', [row.name]),
       key: 'action_key_msg',
@@ -127,6 +130,20 @@ const [Grid, gridApi] = useVbenVxeGrid({
             },
           ]"
         />
+        <div class="ml-4 flex items-center gap-2">
+          <a-switch v-model:checked="isDeleteChildren" size="small" />
+          <Tooltip
+            :title="
+              isDeleteChildren
+                ? $t('ui.actionMessage.cascadeDeleteTip')
+                : $t('ui.actionMessage.cascadeDeleteTipOff')
+            "
+          >
+            <span class="text-muted-foreground cursor-default text-sm">
+              {{ $t('ui.actionMessage.cascadeDelete') }}
+            </span>
+          </Tooltip>
+        </div>
       </template>
       <template #name="{ row }">
         <div class="flex w-full items-center gap-1">
@@ -170,7 +187,7 @@ const [Grid, gridApi] = useVbenVxeGrid({
               icon: ACTION_ICON.DELETE,
               auth: ['system:menu:delete'],
               popConfirm: {
-                title: $t('ui.actionMessage.deleteConfirm', [row.name]),
+                title: $t('ui.actionMessage.deleteCascadeConfirm', [row.name]),
                 confirm: handleDelete.bind(null, row),
               },
             },

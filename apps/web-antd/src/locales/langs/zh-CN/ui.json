@@ -24,6 +24,7 @@
   },
   "actionMessage": {
     "deleteConfirm": "确定删除 {0} 吗？",
+    "deleteCascadeConfirm": "确定删除 {0} 吗？",
     "deleting": "正在删除 {0} ...",
     "deleteSuccess": "{0} 删除成功",
     "deleteFailed": "{0} 删除失败",
@@ -32,7 +33,10 @@
     "importSuccess": "导入成功",
     "importFail": "导入失败",
     "downloadTemplateFail": "下载模板失败",
-    "updating": "正在更新 {0}..."
+    "updating": "正在更新 {0}...",
+    "cascadeDelete": "级联删除",
+    "cascadeDeleteTip": "开启后，将连同所有子数据一并删除",
+    "cascadeDeleteTipOff": "关闭则只删除当前数据，不影响子数据"
   },
   "placeholder": {
     "input": "请输入",
