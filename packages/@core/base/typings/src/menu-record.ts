@@ -3,6 +3,7 @@ import type { RouteMeta, RouteRecordRaw } from 'vue-router';
 
 /** 路由元信息 */
 interface AppRouteRecordRaw extends Omit<RouteRecordRaw, 'meta'> {
+  alwaysShow?: boolean;
   children?: AppRouteRecordRaw[];
   component?: any;
   componentName?: string;

@@ -232,7 +232,7 @@ export function useFormSchema(): VbenFormSchema[] {
       },
       rules: 'required',
       defaultValue: true,
-      help: '选择不是时，当该菜单只有一个子菜单时，不展示自己，直接展示子菜单',
+      help: '选择不是时，不显示自己以及所有子菜单',
       dependencies: {
         triggerFields: ['type'],
         show: (values) => {
