@@ -4,14 +4,8 @@ import type { NotificationItem } from '@vben/layouts';
 import { computed, onMounted, ref, watch } from 'vue';
 
 import { AuthenticationLoginExpiredModal, useVbenModal } from '@vben/common-ui';
-import { VBEN_DOC_URL, VBEN_GITHUB_URL } from '@vben/constants';
 import { useWatermark } from '@vben/hooks';
-import {
-  AntdProfileOutlined,
-  BookOpenText,
-  CircleHelp,
-  MdiGithub,
-} from '@vben/icons';
+import { AntdProfileOutlined } from '@vben/icons';
 import {
   BasicLayout,
   LockScreen,
@@ -20,7 +14,9 @@ import {
 } from '@vben/layouts';
 import { preferences } from '@vben/preferences';
 import { useAccessStore, useUserStore } from '@vben/stores';
-import { formatDateTime, openWindow } from '@vben/utils';
+import { formatDateTime } from '@vben/utils';
+
+import { notification } from 'ant-design-vue';
 
 import {
   getUnreadNotifyMessageCount,
@@ -57,31 +53,6 @@ const menus = computed(() => [
     icon: AntdProfileOutlined,
     text: $t('ui.widgets.profile'),
   },
-  {
-    handler: () => {
-      openWindow(VBEN_DOC_URL, {
-        target: '_blank',
-      });
-    },
-    icon: BookOpenText,
-    text: $t('ui.widgets.document'),
-  },
-  {
-    handler: () => {
-      openWindow(VBEN_GITHUB_URL, {
-        target: '_blank',
-      });
-    },
-    icon: MdiGithub,
-    text: 'GitHub',
-  },
-  {
-    handler: () => {
-      helpModalApi.open();
-    },
-    icon: CircleHelp,
-    text: $t('ui.widgets.qa'),
-  },
 ]);
 
 const avatar = computed(() => {
@@ -93,8 +64,16 @@ async function handleLogout() {
 }
 
 /** 获得未读消息数 */
-async function handleNotificationGetUnreadCount() {
+async function handleNotificationGetUnreadCount(isRemind = false) {
   unreadCount.value = await getUnreadNotifyMessageCount();
+  // 提示
+  if (isRemind && unreadCount.value > 0 && unreadCount.value > 0) {
+    notification.success({
+      description: `${$t('authentication.noReadMessage')}`,
+      duration: 3,
+      message: $t('authentication.noReadMessage'),
+    });
+  }
 }
 
 /** 获得消息列表 */
@@ -151,12 +130,12 @@ function handleNotificationOpen(open: boolean) {
 // ========== 初始化 ==========
 onMounted(() => {
   // 首次加载未读数量
-  handleNotificationGetUnreadCount();
+  handleNotificationGetUnreadCount(true);
   // 轮询刷新未读数量
   setInterval(
     () => {
       if (userStore.userInfo) {
-        handleNotificationGetUnreadCount();
+        handleNotificationGetUnreadCount(true);
       }
     },
     1000 * 60 * 2,

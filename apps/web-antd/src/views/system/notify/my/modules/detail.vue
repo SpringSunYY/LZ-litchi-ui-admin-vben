@@ -18,6 +18,7 @@ const [Description, descApi] = useDescription({
 });
 
 const [Modal, modalApi] = useVbenModal({
+  class: 'w-[1000px]',
   async onOpenChange(isOpen: boolean) {
     if (!isOpen) {
       return;
