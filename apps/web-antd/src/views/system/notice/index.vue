@@ -11,7 +11,13 @@ import { deleteNotice, getNoticePage, pushNotice } from '#/api/system/notice';
 import { $t } from '#/locales';
 
 import { useGridColumns, useGridFormSchema } from './data';
+import Detail from './modules/detail.vue';
 import Form from './modules/form.vue';
+
+const [DetailModal, detailModalApi] = useVbenModal({
+  connectedComponent: Detail,
+  destroyOnClose: true,
+});
 
 const [FormModal, formModalApi] = useVbenModal({
   connectedComponent: Form,
@@ -31,6 +37,11 @@ function handleCreate() {
 /** 编辑公告 */
 function handleEdit(row: SystemNoticeApi.Notice) {
   formModalApi.setData(row).open();
+}
+
+/** 查看公告详情 */
+function handleDetail(row: SystemNoticeApi.Notice) {
+  detailModalApi.setData(row).open();
 }
 
 /** 删除公告 */
@@ -100,6 +111,7 @@ const [Grid, gridApi] = useVbenVxeGrid({
 
 <template>
   <Page auto-content-height>
+    <DetailModal />
     <FormModal @success="onRefresh" />
     <Grid table-title="公告列表">
       <template #toolbar-tools>
@@ -118,6 +130,12 @@ const [Grid, gridApi] = useVbenVxeGrid({
       <template #actions="{ row }">
         <TableAction
           :actions="[
+            {
+              label: '查看',
+              type: 'link',
+              icon: ACTION_ICON.VIEW,
+              onClick: handleDetail.bind(null, row),
+            },
             {
               label: $t('common.edit'),
               type: 'link',

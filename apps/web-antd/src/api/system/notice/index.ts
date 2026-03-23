@@ -1,6 +1,6 @@
-import type { PageParam, PageResult } from '@vben/request';
+import type {PageParam, PageResult} from '@vben/request';
 
-import { requestClient } from '#/api/request';
+import {requestClient} from '#/api/request';
 
 export namespace SystemNoticeApi {
   /** 公告信息 */
@@ -9,6 +9,7 @@ export namespace SystemNoticeApi {
     title: string;
     type: number;
     content: string;
+    appendixUrl: string; // 附件
     status: number;
     remark: string;
     creator?: string;

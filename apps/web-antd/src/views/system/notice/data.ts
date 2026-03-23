@@ -1,7 +1,13 @@
 import type { VbenFormSchema } from '#/adapter/form';
 import type { VxeTableGridOptions } from '#/adapter/vxe-table';
+import type { DescriptionItemSchema } from '#/components/description';
+
+import { h } from 'vue';
+
+import { formatDateTime } from '@vben/utils';
 
 import { z } from '#/adapter/form';
+import { DictTag } from '#/components/dict-tag';
 import { CommonStatusEnum, DICT_TYPE, getDictOptions } from '#/utils';
 
 /** 新增/修改的表单 */
@@ -37,6 +43,14 @@ export function useFormSchema(): VbenFormSchema[] {
       label: '公告内容',
       component: 'RichTextarea',
       rules: 'required',
+    },
+    {
+      fieldName: 'appendixUrl',
+      label: '附件',
+      component: 'FileUpload',
+      componentProps: {
+        maxSize: 100,
+      },
     },
     {
       fieldName: 'status',
@@ -122,6 +136,94 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
       width: 220,
       fixed: 'right',
       slots: { default: 'actions' },
+    },
+  ];
+}
+
+/** 详情展示的字段 */
+export function useDetailSchema(): DescriptionItemSchema[] {
+  return [
+    {
+      field: 'title',
+      label: '公告标题',
+      span: 2,
+    },
+    {
+      field: 'type',
+      label: '公告类型',
+      span: 1,
+      content: (data) =>
+        h(DictTag, {
+          type: DICT_TYPE.SYSTEM_NOTICE_TYPE,
+          value: data?.type,
+        }),
+    },
+    {
+      field: 'status',
+      label: '公告状态',
+      span: 1,
+      content: (data) =>
+        h(DictTag, {
+          type: DICT_TYPE.COMMON_STATUS,
+          value: data?.status,
+        }),
+    },
+    {
+      field: 'content',
+      label: '公告内容',
+      span: 2,
+      content: (data) =>
+        data?.content
+          ? h('div', {
+              innerHTML: data.content,
+              style: 'word-break: break-all;',
+            })
+          : '-',
+    },
+    {
+      field: 'appendixUrl',
+      label: '附件',
+      span: 2,
+      content: (data) => {
+        if (!data?.appendixUrl) return '-';
+        const urls = data.appendixUrl
+          .split('||')
+          .filter((item: string) => item.trim());
+        if (urls.length === 0) return '-';
+        return h(
+          'div',
+          {
+            class: 'file-list',
+            style: 'display: flex; flex-direction: column; gap: 4px;',
+          },
+          urls.map((url: string) => {
+            const fileName = decodeURIComponent(
+              url.slice(url.lastIndexOf('/') + 1),
+            );
+            return h(
+              'a',
+              {
+                href: url,
+                target: '_blank',
+                rel: 'noopener noreferrer',
+                style: 'color: #1890ff; text-decoration: underline;',
+              },
+              fileName,
+            );
+          }),
+        );
+      },
+    },
+    {
+      field: 'createTime',
+      label: '创建时间',
+      span: 1,
+      content: (data) => formatDateTime(data?.createTime) as string,
+    },
+    {
+      field: 'remark',
+      label: '备注',
+      span: 1,
     },
   ];
 }
