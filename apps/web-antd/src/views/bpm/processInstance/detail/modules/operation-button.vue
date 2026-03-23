@@ -355,7 +355,7 @@ async function handleAudit(pass: boolean, formRef: FormInstance | undefined) {
         data.signPicUrl = approveReasonForm.signPicUrl;
       }
       // 多表单处理，并且有额外的 approveForm 表单，需要校验 + 拼接到 data 表单里提交
-      // TODO YY 任务有多表单这里要如何处理，会和可编辑的字段冲突
+      // TODO 芋艿 任务有多表单这里要如何处理，会和可编辑的字段冲突
       const formCreateApi = approveFormFApi.value;
       if (Object.keys(formCreateApi)?.length > 0) {
         await formCreateApi.validate();
@@ -658,8 +658,13 @@ async function validateNormalForm() {
 function getUpdatedProcessInstanceVariables() {
   const variables: any = {};
   props.writableFields.forEach((field: string) => {
-    if (field && variables[field])
-      variables[field] = props.normalFormApi.getValue(field);
+    if (field) {
+      const value = props.normalFormApi?.getValue(field);
+      // 检查字段值是否存在（不为 undefined 和 null）
+      if (value !== undefined && value !== null) {
+        variables[field] = value;
+      }
+    }
   });
   return variables;
 }

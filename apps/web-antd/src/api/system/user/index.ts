@@ -29,6 +29,14 @@ export function getUserPage(params: PageParam) {
   );
 }
 
+/** 查询用户简单列表 */
+export function getSimpleUserPage(params: PageParam) {
+  return requestClient.get<PageResult<SystemUserApi.User>>(
+    '/system/user/simple-page',
+    { params },
+  );
+}
+
 /** 查询用户详情 */
 export function getUser(id: number) {
   return requestClient.get<SystemUserApi.User>(`/system/user/get?id=${id}`);

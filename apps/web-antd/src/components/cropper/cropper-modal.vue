@@ -82,6 +82,11 @@ function handleReady(cropperInstance: CropperType) {
   modalLoading(false);
 }
 
+function handleImgError() {
+  // 图片加载失败，关闭 loading
+  modalLoading(false);
+}
+
 function handlerToolbar(event: string, arg?: number) {
   if (event === 'scaleX') {
     scaleX = arg = scaleX === -1 ? 1 : -1;
@@ -130,6 +135,7 @@ async function handleOk() {
             height="300px"
             @cropend="handleCropend"
             @ready="handleReady"
+            @img-error="handleImgError"
           />
         </div>
 

@@ -4,7 +4,7 @@ import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 import { onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
-import { DocAlert, Page, useVbenModal } from '@vben/common-ui';
+import {  Page, useVbenModal } from '@vben/common-ui';
 
 import { Button, Image, Tag, Tooltip } from 'ant-design-vue';
 
@@ -89,9 +89,6 @@ onMounted(() => {
 
 <template>
   <Page auto-content-height>
-    <template #doc>
-      <DocAlert title="工作流手册" url="https://doc.iocoder.cn/bpm/" />
-    </template>
     <Grid table-title="流程定义列表">
       <template #icon="{ row }">
         <Image

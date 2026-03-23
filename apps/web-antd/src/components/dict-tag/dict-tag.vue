@@ -3,7 +3,7 @@ import { computed } from 'vue';
 
 import { Tag } from 'ant-design-vue';
 
-// import { isHexColor } from '@/utils/color' // TODO @YY：【可优化】增加 cssClass 的处理 https://gitee.com/litchicode/litchi-ui-admin-vben/blob/v2.4.1/src/components/DictTag/src/DictTag.vue#L60
+// import { isHexColor } from '@/utils/color' // TODO @芋艿：【可优化】增加 cssClass 的处理 https://gitee.com/yudaocode/yudao-ui-admin-vben/blob/v2.4.1/src/components/DictTag/src/DictTag.vue#L60
 import { getDictObj } from '#/utils';
 
 interface DictTagProps {

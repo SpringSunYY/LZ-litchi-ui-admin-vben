@@ -28,6 +28,8 @@ const emit = defineEmits(['update:value', 'change']);
 
 const sourceValue = ref(props.value || '');
 const prefixCls = 'cropper-avatar';
+// 图片加载失败状态
+const imgError = ref(false);
 const [CropperModal, modalApi] = useVbenModal({
   connectedComponent: cropperModal,
 });
@@ -46,8 +48,20 @@ const getImageWrapperStyle = computed(
   (): CSSProperties => ({ height: unref(getWidth), width: unref(getWidth) }),
 );
 
+// 图片加载成功
+function handleImgLoad() {
+  imgError.value = false;
+}
+
+// 图片加载失败
+function handleImgError() {
+  imgError.value = true;
+}
+
 watchEffect(() => {
   sourceValue.value = props.value || '';
+  // 当头像 URL 变化时，重置加载错误状态
+  imgError.value = false;
 });
 
 watch(
@@ -59,6 +73,7 @@ watch(
 
 function handleUploadSuccess({ data, source }: any) {
   sourceValue.value = source;
+  imgError.value = false;
   emit('change', { data, source });
   message.success($t('ui.cropper.uploadSuccess'));
 }
@@ -90,7 +105,29 @@ defineExpose({
           class="icon-[ant-design--cloud-upload-outlined] text-[#d6d6d6]"
         ></span>
       </div>
-      <img v-if="sourceValue" :src="sourceValue" alt="avatar" />
+      <!-- 显示默认头像或图片加载失败时显示上传图标 -->
+      <img
+        v-if="sourceValue && !imgError"
+        :src="sourceValue"
+        alt="avatar"
+        @error="handleImgError"
+        @load="handleImgLoad"
+      />
+      <!-- 图片加载失败时，显示上传图标提示用户可以重新上传 -->
+      <div
+        v-else
+        :class="`${prefixCls}-image-error`"
+        :style="getImageWrapperStyle"
+      >
+        <span
+          :style="{
+            width: `${getIconWidth}`,
+            height: `${getIconWidth}`,
+            lineHeight: `${getIconWidth}`,
+          }"
+          class="icon-[ant-design--cloud-upload-outlined] text-[#d6d6d6]"
+        ></span>
+      </div>
     </div>
     <Button
       v-if="showBtn"
@@ -148,6 +185,18 @@ defineExpose({
 
   &-image-mask:hover {
     opacity: 40;
+  }
+
+  &-image-error {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: inherit;
+    height: inherit;
+    background: #f5f5f5;
+    border: inherit;
+    border-radius: inherit;
   }
 
   &-upload-btn {

@@ -25,7 +25,7 @@ const props = withDefaults(defineProps<CropperProps>(), {
   options: () => ({}),
 });
 
-const emit = defineEmits(['cropend', 'ready', 'cropendError']);
+const emit = defineEmits(['cropend', 'ready', 'cropendError', 'imgError']);
 const attrs = useAttrs();
 
 type ElRef<T extends HTMLElement = HTMLDivElement> = null | T;
@@ -157,6 +157,7 @@ function getRoundedCanvas() {
       :crossorigin="crossorigin"
       :src="src"
       :style="getImageStyle"
+      @error="emit('imgError')"
     />
   </div>
 </template>

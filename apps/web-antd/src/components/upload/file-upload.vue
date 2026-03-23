@@ -1,12 +1,12 @@
 <script lang="ts" setup>
-import type { UploadFile, UploadProps } from 'ant-design-vue';
+import type { Tooltip, UploadFile, UploadProps } from 'ant-design-vue';
 import type { UploadRequestOption } from 'ant-design-vue/lib/vc-upload/interface';
 
 import type { FileUploadProps } from './typing';
 
 import type { AxiosProgressEvent } from '#/api/infra/file';
 
-import { ref, toRefs, watch } from 'vue';
+import { nextTick, ref, toRefs, watch } from 'vue';
 
 import { CloudUpload } from '@vben/icons';
 import { $t } from '@vben/locales';
@@ -25,18 +25,19 @@ const props = withDefaults(defineProps<FileUploadProps>(), {
   directory: undefined,
   disabled: false,
   helpText: '',
-  maxSize: 2,
-  maxNumber: 1,
+  maxSize: 500,
+  maxNumber: 100,
   accept: () => [],
-  multiple: false,
+  multiple: true,
   api: undefined,
   resultField: '',
-  showDescription: false,
+  showDescription: true,
+  timeout: 0,
 });
 const emit = defineEmits(['change', 'update:value', 'delete', 'returnText']);
 const { accept, helpText, maxNumber, maxSize } = toRefs(props);
 const isInnerOperate = ref<boolean>(false);
-const { getStringAccept } = useUploadType({
+const { getAccept, getStringAccept } = useUploadType({
   acceptRef: accept,
   helpTextRef: helpText,
   maxNumberRef: maxNumber,
@@ -60,7 +61,8 @@ watch(
       if (Array.isArray(v)) {
         value = v;
       } else {
-        value.push(v);
+        // 支持 || 分隔符分隔的多个文件URL
+        value = v.split('||').filter((item) => item.trim());
       }
       fileList.value = value.map((item, i) => {
         if (item && isString(item)) {
@@ -100,9 +102,6 @@ async function handleRemove(file: UploadFile) {
 }
 
 async function beforeUpload(file: File) {
-  const fileContent = await file.text();
-  emit('returnText', fileContent);
-
   const { maxSize, accept } = props;
   const isAct = checkFileType(file, accept);
   if (!isAct) {
@@ -122,7 +121,7 @@ async function beforeUpload(file: File) {
 }
 
 async function customRequest(info: UploadRequestOption<any>) {
-  let { api } = props;
+  let { api, timeout } = props;
   if (!api || !isFunction(api)) {
     api = useUpload(props.directory).httpRequest;
   }
@@ -132,10 +131,26 @@ async function customRequest(info: UploadRequestOption<any>) {
       const percent = Math.trunc((e.loaded / e.total!) * 100);
       info.onProgress!({ percent });
     };
-    const res = await api?.(info.file as File, progressEvent);
+
+    // 构建上传 Promise
+    const uploadPromise = api?.(info.file as File, progressEvent);
+
+    // 处理超时（仅在 timeout > 0 时启用超时检测）
+    let res;
+    if (timeout && timeout > 0) {
+      const timeoutPromise = new Promise((_, reject) => {
+        setTimeout(() => reject(new Error('上传超时')), timeout);
+      });
+      res = await Promise.race([uploadPromise, timeoutPromise]);
+    } else {
+      res = await uploadPromise;
+    }
+
     info.onSuccess!(res);
     message.success($t('ui.upload.uploadSuccess'));
 
+    // 等待 fileList 更新后再获取值
+    await nextTick();
     // 更新文件
     const value = getValue();
     isInnerOperate.value = true;
@@ -143,6 +158,8 @@ async function customRequest(info: UploadRequestOption<any>) {
     emit('change', value);
   } catch (error: any) {
     console.error(error);
+    const errorMsg = error?.message || '上传失败';
+    message.error(errorMsg);
     info.onError!(error);
   }
 }
@@ -156,11 +173,22 @@ function getValue() {
       }
       return item?.url || item?.response?.url || item?.response;
     });
-  // add by YY：【特殊】单个文件的情况，获取首个元素，保证返回的是 String 类型
+  // add by 芋艿：【特殊】单个文件的情况，获取首个元素，保证返回的是 String 类型
   if (props.maxNumber === 1) {
     return list.length > 0 ? list[0] : '';
   }
-  return list;
+  // 多个文件用 || 分隔符拼接成字符串
+  return list.length > 0 ? list.join('||') : '';
+}
+
+// 点击文件预览/下载
+function handlePreview(file: UploadFile) {
+  if (file.url) {
+    window.open(file.url, '_blank');
+  } else if (file.response) {
+    // 如果 url 不存在，尝试从 response 中获取
+    window.open(file.response, '_blank');
+  }
 }
 </script>
 
@@ -169,6 +197,7 @@ function getValue() {
     <Upload
       v-bind="$attrs"
       v-model:file-list="fileList"
+      action="#"
       :accept="getStringAccept"
       :before-upload="beforeUpload"
       :custom-request="customRequest"
@@ -178,6 +207,7 @@ function getValue() {
       list-type="text"
       :progress="{ showInfo: true }"
       @remove="handleRemove"
+      @preview="handlePreview"
     >
       <div v-if="fileList && fileList.length < maxNumber">
         <Button>
@@ -185,13 +215,40 @@ function getValue() {
           {{ $t('ui.upload.upload') }}
         </Button>
       </div>
-      <div v-if="showDescription" class="mt-2 flex flex-wrap items-center">
-        请上传不超过
-        <div class="text-primary mx-1 font-bold">{{ maxSize }}MB</div>
-        的
-        <div class="text-primary mx-1 font-bold">{{ accept.join('/') }}</div>
-        格式文件
-      </div>
+      <Tooltip
+        v-if="showDescription"
+        :title="`请上传不超过 ${maxSize}MB 的文件${getAccept.length > 0 ? `，支持 ${getAccept.join('/')} 格式` : ''}，最多 ${maxNumber} 个`"
+      >
+        <div class="mt-2 flex flex-wrap items-center">
+          请上传不超过
+          <div class="text-primary mx-1 font-bold">{{ maxSize }}MB</div>
+          的文件
+          <template v-if="getAccept.length > 0">
+            ，支持
+            <div class="text-primary mx-1 font-bold">
+              {{ getAccept.join('/') }}
+            </div>
+            格式
+          </template>
+          ，最多
+          <div class="text-primary mx-1 font-bold">{{ maxNumber }}</div>
+          个
+        </div>
+      </Tooltip>
     </Upload>
   </div>
 </template>
+
+<style scoped>
+/* 文件名过长时省略显示，保证删除按钮不被遮挡 */
+:deep(.ant-upload-list-item-name) {
+  max-width: calc(100% - 50%) !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+:deep(.ant-upload-list-item-actions) {
+  right: 10% !important;
+  display: flex !important;
+}
+</style>

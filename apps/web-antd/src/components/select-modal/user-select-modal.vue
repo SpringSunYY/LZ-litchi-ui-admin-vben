@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-// TODO @YY：是否有更好的组织形式？！
+// TODO @芋艿：是否有更好的组织形式？！
 // TODO @xingyu：你感觉，这个放到每个 system、infra 模块下，然后新建一个 components，表示每个模块，有一些共享的组件？然后，全局只放通用的（无业务含义的），可以哇？
 import type { Key } from 'ant-design-vue/es/table/interface';
 
@@ -23,7 +23,7 @@ import {
 } from 'ant-design-vue';
 
 import { getSimpleDeptList } from '#/api/system/dept';
-import { getUserPage } from '#/api/system/user';
+import { getSimpleUserPage, getUserPage } from '#/api/system/user';
 
 // 部门树节点接口
 interface DeptTreeNode {
@@ -197,7 +197,8 @@ const filteredDeptTree = computed(() => {
 // 加载用户数据
 async function loadUserData(pageNo: number, pageSize: number) {
   try {
-    const { list, total } = await getUserPage({
+    console.log('loadUserData', pageNo, pageSize);
+    const { list, total } = await getSimpleUserPage({
       pageNo,
       pageSize,
       deptId: selectedDeptId.value,
@@ -406,10 +407,10 @@ function processDeptNode(node: any): DeptTreeNode {
 </script>
 
 <template>
-  <Modal class="w-[40%]" key="user-select-modal" :title="title">
+  <Modal class="w-[55%]" key="user-select-modal" :title="title">
     <Row :gutter="[16, 16]">
       <Col :span="6">
-        <div class="h-[500px] overflow-auto rounded border">
+        <div class="h-[580px] overflow-auto rounded border">
           <div class="border-b p-2">
             <Input
               v-model:value="deptSearchKeys"
@@ -489,7 +490,7 @@ function processDeptNode(node: any): DeptTreeNode {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 500px;
+  height: 580px;
 }
 
 :deep(.ant-transfer-list) {

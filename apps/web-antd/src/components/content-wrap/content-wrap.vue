@@ -1,6 +1,6 @@
 <!--
-  参考自 https://github.com/litchicode/litchi-ui-admin-vue3/blob/master/src/components/ContentWrap/src/ContentWrap.vue
-  保证和 litchi-ui-admin-vue3 功能的一致性
+  参考自 https://github.com/yudaocode/yudao-ui-admin-vue3/blob/master/src/components/ContentWrap/src/ContentWrap.vue
+  保证和 yudao-ui-admin-vue3 功能的一致性
 -->
 <script lang="ts" setup>
 import type { CSSProperties } from 'vue';

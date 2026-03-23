@@ -28,19 +28,25 @@ export function useUploadType({
   helpTextRef,
   maxNumberRef,
   maxSizeRef,
+  minSizeRef,
 }: {
-  acceptRef: Ref<string[]>;
+  acceptRef: Ref<string[] | string>;
   helpTextRef: Ref<string>;
   maxNumberRef: Ref<number>;
   maxSizeRef: Ref<number>;
+  minSizeRef?: Ref<number>;
 }) {
   // 文件类型限制
   const getAccept = computed(() => {
     const accept = unref(acceptRef);
-    if (accept && accept.length > 0) {
-      return accept;
+    if (!accept) {
+      return [];
     }
-    return [];
+    // 如果是字符串，用 / 分隔符分割成数组
+    if (typeof accept === 'string') {
+      return accept.split('/').filter((item) => item.trim());
+    }
+    return accept;
   });
   const getStringAccept = computed(() => {
     return unref(getAccept)
@@ -60,7 +66,7 @@ export function useUploadType({
     }
     const helpTexts: string[] = [];
 
-    const accept = unref(acceptRef);
+    const accept = unref(getAccept);
     if (accept.length > 0) {
       helpTexts.push($t('ui.upload.accept', [accept.join(',')]));
     }
@@ -68,6 +74,11 @@ export function useUploadType({
     const maxSize = unref(maxSizeRef);
     if (maxSize) {
       helpTexts.push($t('ui.upload.maxSize', [maxSize]));
+    }
+
+    const minSize = unref(minSizeRef);
+    if (minSize && minSize > 0) {
+      helpTexts.push($t('ui.upload.minSize', [minSize]));
     }
 
     const maxNumber = unref(maxNumberRef);
@@ -79,7 +90,7 @@ export function useUploadType({
   return { getAccept, getStringAccept, getHelpText };
 }
 
-// TODO @YY：目前保持和 admin-vue3 一致，后续可能重构
+// TODO @芋艿：目前保持和 admin-vue3 一致，后续可能重构
 export function useUpload(directory?: string) {
   // 后端上传地址
   const uploadUrl = getUploadUrl();
@@ -97,12 +108,13 @@ export function useUpload(directory?: string) {
       const fileName = await generateFileName(file);
       // 1.2 获取文件预签名地址
       const presignedInfo = await getFilePresignedUrl(fileName, directory);
-      // 1.3 上传文件
+      // 1.3 上传文件（timeout: 0 防止大文件上传超时）
       return baseRequestClient
         .put(presignedInfo.uploadUrl, file, {
           headers: {
             'Content-Type': file.type,
           },
+          timeout: 0,
         })
         .then(() => {
           // 1.4. 记录文件信息到后端（异步）
@@ -111,8 +123,8 @@ export function useUpload(directory?: string) {
           return { url: presignedInfo.url };
         });
     } else {
-      // 模式二：后端上传
-      return uploadFile({ file, directory }, onUploadProgress);
+      // 模式二：后端上传（timeout: 0 防止大文件上传超时）
+      return uploadFile({ file, directory }, onUploadProgress, { timeout: 0 });
     }
   }
 

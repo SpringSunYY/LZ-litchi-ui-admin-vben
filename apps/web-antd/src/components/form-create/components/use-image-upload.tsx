@@ -24,9 +24,9 @@ function convertFileType(fileTypes: string | string[]): string[] {
     .filter(Boolean);
 }
 
-export const useImagesUpload = () => {
+export const useImageUpload = () => {
   return defineComponent({
-    name: 'ImagesUpload',
+    name: 'ImageUpload',
     props: {
       // form-create 字段标识
       field: {
@@ -46,12 +46,7 @@ export const useImagesUpload = () => {
       // 文件大小限制(MB) - 对应表单设计器的 fileSize
       fileSize: {
         type: Number,
-        default: 5,
-      },
-      // 数量限制 - 对应表单设计器的 limit
-      limit: {
-        type: Number,
-        default: 5,
+        default: 2,
       },
       // 文件类型限制 - 对应表单设计器的 fileType (可能是字符串或数组)
       fileType: {
@@ -61,7 +56,7 @@ export const useImagesUpload = () => {
     },
     setup(props, { emit }) {
       const attrs = useAttrs();
-      const { fileSize, limit, fileType, drag } = toRefs(props);
+      const { fileSize, fileType, drag } = toRefs(props);
 
       // form-create 使用 modelValue 作为 v-model 的值
       const bindValue = (attrs.modelValue as string) || props.value;
@@ -91,7 +86,7 @@ export const useImagesUpload = () => {
           {...attrs}
           accept={convertFileType(fileType.value)}
           listType={drag.value ? 'picture-card' : 'picture-card'}
-          maxNumber={limit.value}
+          maxNumber={1}
           maxSize={fileSize.value}
           onChange={handleChange}
           value={bindValue}

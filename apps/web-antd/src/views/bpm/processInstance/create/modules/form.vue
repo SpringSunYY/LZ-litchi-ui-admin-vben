@@ -80,6 +80,20 @@ const detailForm = ref<ProcessFormData>({
   value: {},
 });
 
+/** 监听表单数据变化 */
+watch(
+  () => detailForm.value.value,
+  (newVal) => {
+    // 打印每个 rule 的 type 和 field
+    detailForm.value.rule?.map((r: any) => ({
+      type: r.type,
+      field: r.field,
+      id: r.id,
+    }));
+  },
+  { deep: true },
+);
+
 const fApi = ref<ApiAttrs>();
 const startUserSelectTasks = ref<UserTask[]>([]);
 const startUserSelectAssignees = ref<Record<string, string[]>>({});
@@ -346,8 +360,16 @@ defineExpose({ initProcessInfo });
     <template #actions>
       <template v-if="activeTab === 'form'">
         <Space wrap class="flex w-full justify-center">
-          <Button plain type="primary" @click="submitForm">
-            <IconifyIcon icon="lucide:check" />
+          <Button
+            plain
+            type="primary"
+            :loading="processInstanceStartLoading"
+            @click="submitForm"
+          >
+            <IconifyIcon
+              v-if="!processInstanceStartLoading"
+              icon="lucide:check"
+            />
             发起
           </Button>
           <Button plain type="default" @click="handleCancel">

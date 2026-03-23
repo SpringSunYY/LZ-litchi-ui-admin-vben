@@ -4,7 +4,7 @@ import type { BpmTaskApi } from '#/api/bpm/task';
 
 import { h } from 'vue';
 
-import { DocAlert, Page, prompt } from '@vben/common-ui';
+import { Page, prompt } from '@vben/common-ui';
 
 import { Button, message, Textarea } from 'ant-design-vue';
 
@@ -102,11 +102,6 @@ const [Grid, gridApi] = useVbenVxeGrid({
 
 <template>
   <Page auto-content-height>
-    <DocAlert
-      title="流程发起、取消、重新发起"
-      url="https://doc.iocoder.cn/bpm/process-instance"
-    />
-
     <Grid table-title="流程状态">
       <!-- 摘要 -->
       <template #slot-summary="{ row }">

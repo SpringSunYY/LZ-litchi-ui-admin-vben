@@ -5,7 +5,7 @@ import type { BpmFormApi } from '#/api/bpm/form';
 import { watch } from 'vue';
 import { useRoute } from 'vue-router';
 
-import { DocAlert, Page, useVbenModal } from '@vben/common-ui';
+import {  Page, useVbenModal } from '@vben/common-ui';
 import { $t } from '@vben/locales';
 
 import { message } from 'ant-design-vue';
@@ -131,12 +131,6 @@ watch(
 
 <template>
   <Page auto-content-height>
-    <template #doc>
-      <DocAlert
-        title="审批接入（流程表单）"
-        url="https://doc.iocoder.cn/bpm/use-bpm-form/"
-      />
-    </template>
 
     <DetailModal />
     <Grid table-title="流程表单">

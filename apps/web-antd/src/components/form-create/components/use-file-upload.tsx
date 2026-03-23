@@ -1,32 +1,12 @@
 import type { PropType } from 'vue';
 
-import { defineComponent, toRefs, useAttrs } from 'vue';
+import { defineComponent, useAttrs } from 'vue';
 
-import ImageUpload from '#/components/upload/image-upload.vue';
+import FileUpload from '#/components/upload/file-upload.vue';
 
-// 将 MIME 类型或字符串转换为文件扩展名数组
-function convertFileType(fileTypes: string | string[]): string[] {
-  // 如果是字符串，转为数组
-  const types = Array.isArray(fileTypes) ? fileTypes : [fileTypes];
-  const mimeToExt: Record<string, string> = {
-    'image/jpeg': 'jpg',
-    'image/jpg': 'jpg',
-    'image/png': 'png',
-    'image/gif': 'gif',
-    'image/webp': 'webp',
-    'image/bmp': 'bmp',
-    'image/svg+xml': 'svg',
-    'image/tiff': 'tiff',
-    'image/x-icon': 'ico',
-  };
-  return types
-    .map((type) => mimeToExt[type] || type.replace('image/', ''))
-    .filter(Boolean);
-}
-
-export const useImagesUpload = () => {
+export const useFileUpload = () => {
   return defineComponent({
-    name: 'ImagesUpload',
+    name: 'FileUpload',
     props: {
       // form-create 字段标识
       field: {
@@ -38,30 +18,44 @@ export const useImagesUpload = () => {
         type: String as PropType<string | string[]>,
         default: '',
       },
+      // 文件类型限制 (可能是字符串或数组)
+      fileType: {
+        type: [Array, String] as PropType<string | string[]>,
+        default: () => ['doc', 'xls', 'ppt', 'txt', 'pdf'],
+      },
+      // 是否在选取文件后立即进行上传
+      autoUpload: {
+        type: Boolean,
+        default: true,
+      },
       // 拖拽上传
       drag: {
         type: Boolean,
         default: false,
       },
-      // 文件大小限制(MB) - 对应表单设计器的 fileSize
+      // 是否显示提示
+      isShowTip: {
+        type: Boolean,
+        default: true,
+      },
+      // 文件大小限制(MB)
       fileSize: {
         type: Number,
         default: 5,
       },
-      // 数量限制 - 对应表单设计器的 limit
+      // 数量限制
       limit: {
         type: Number,
         default: 5,
       },
-      // 文件类型限制 - 对应表单设计器的 fileType (可能是字符串或数组)
-      fileType: {
-        type: [Array, String] as PropType<string | string[]>,
-        default: () => ['jpg', 'jpeg', 'png', 'gif', 'webp'],
+      // 是否禁用
+      disabled: {
+        type: Boolean,
+        default: false,
       },
     },
     setup(props, { emit }) {
       const attrs = useAttrs();
-      const { fileSize, limit, fileType, drag } = toRefs(props);
 
       // form-create 使用 modelValue 作为 v-model 的值
       const bindValue = (attrs.modelValue as string) || props.value;
@@ -74,7 +68,7 @@ export const useImagesUpload = () => {
       // formCreateInject.field 是当前字段的名称
       const formField = formCreateInject?.field;
 
-      // 监听 ImageUpload 组件的值变化
+      // 监听 FileUpload 组件的值变化
       const handleChange = (val: string) => {
         // 优先使用 form-create api 设置值
         if (formCreateApi && formField) {
@@ -87,13 +81,14 @@ export const useImagesUpload = () => {
       };
 
       return () => (
-        <ImageUpload
+        <FileUpload
           {...attrs}
-          accept={convertFileType(fileType.value)}
-          listType={drag.value ? 'picture-card' : 'picture-card'}
-          maxNumber={limit.value}
-          maxSize={fileSize.value}
+          accept={props.fileType as string[]}
+          disabled={props.disabled}
+          maxNumber={props.limit}
+          maxSize={props.fileSize}
           onChange={handleChange}
+          showDescription={props.isShowTip}
           value={bindValue}
         />
       );

@@ -72,8 +72,12 @@ async function onSubmit() {
   // 提交表单
   const data = (await formApi.getValues()) as BpmOALeaveApi.LeaveVO;
 
+  console.log('[onSubmit] startUserSelectTasks=', startUserSelectTasks.value);
+  console.log('[onSubmit] startUserSelectAssignees=', startUserSelectAssignees.value);
+
   // 审批相关：设置指定审批人
   if (startUserSelectTasks.value?.length > 0) {
+    console.log('[onSubmit] 设置 startUserSelectAssignees', startUserSelectAssignees.value);
     data.startUserSelectAssignees = startUserSelectAssignees.value;
   }
 

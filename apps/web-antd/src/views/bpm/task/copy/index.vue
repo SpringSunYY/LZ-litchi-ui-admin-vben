@@ -2,7 +2,7 @@
 import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 import type { BpmProcessInstanceApi } from '#/api/bpm/processInstance';
 
-import { DocAlert, Page } from '@vben/common-ui';
+import {  Page } from '@vben/common-ui';
 
 import { ACTION_ICON, TableAction, useVbenVxeGrid } from '#/adapter/vxe-table';
 import { getProcessInstanceCopyPage } from '#/api/bpm/processInstance';
@@ -60,12 +60,6 @@ const [Grid] = useVbenVxeGrid({
 
 <template>
   <Page auto-content-height>
-    <template #doc>
-      <DocAlert
-        title="审批转办、委派、抄送"
-        url="https://doc.iocoder.cn/bpm/task-delegation-and-cc/"
-      />
-    </template>
 
     <Grid table-title="抄送任务">
       <template #actions="{ row }">

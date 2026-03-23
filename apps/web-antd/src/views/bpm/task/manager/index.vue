@@ -2,7 +2,7 @@
 import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 import type { BpmTaskApi } from '#/api/bpm/task';
 
-import { DocAlert, Page } from '@vben/common-ui';
+import {  Page } from '@vben/common-ui';
 
 import { ACTION_ICON, TableAction, useVbenVxeGrid } from '#/adapter/vxe-table';
 import { getTaskManagerPage } from '#/api/bpm/task';
@@ -57,9 +57,6 @@ const [Grid] = useVbenVxeGrid({
 
 <template>
   <Page auto-content-height>
-    <template #doc>
-      <DocAlert title="工作流手册" url="https://doc.iocoder.cn/bpm/" />
-    </template>
     <Grid table-title="流程任务">
       <template #actions="{ row }">
         <TableAction

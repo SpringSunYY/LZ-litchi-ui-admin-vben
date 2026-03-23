@@ -4,7 +4,7 @@ import type { BpmOALeaveApi } from '#/api/bpm/oa/leave';
 
 import { h } from 'vue';
 
-import { DocAlert, Page, prompt } from '@vben/common-ui';
+import { Page, prompt } from '@vben/common-ui';
 
 import { message, Textarea } from 'ant-design-vue';
 
@@ -111,10 +111,6 @@ function onRefresh() {
 
 <template>
   <Page auto-content-height>
-    <DocAlert
-      title="审批接入（业务表单）"
-      url="https://doc.iocoder.cn/bpm/use-business-form/"
-    />
 
     <Grid table-title="请假列表">
       <template #toolbar-tools>
