@@ -262,6 +262,14 @@ export function useFormSchema(): VbenFormSchema[] {
         },
       },
     },
+    {
+      fieldName: 'remark',
+      label: '菜单备注',
+      component: 'Input',
+      componentProps: {
+        placeholder: '请输入菜单备注',
+      },
+    },
   ];
 }
 
@@ -307,6 +315,11 @@ export function useGridColumns(): VxeTableGridOptions<SystemMenuApi.Menu>['colum
         name: 'CellDict',
         props: { type: DICT_TYPE.COMMON_STATUS },
       },
+    },
+    {
+      field: 'remark',
+      title: '菜单备注',
+      visible: false,
     },
     {
       title: '操作',
