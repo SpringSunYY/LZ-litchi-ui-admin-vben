@@ -23,6 +23,7 @@ import { notification } from 'ant-design-vue';
 
 import { Tinymce as RichTextarea } from '#/components/tinymce';
 import { FileUpload, ImageUpload } from '#/components/upload';
+import { NumberRange } from '#/components/number-range';
 
 const AutoComplete = defineAsyncComponent(
   () => import('ant-design-vue/es/auto-complete'),
@@ -122,6 +123,7 @@ export type ComponentType =
   | 'InputNumber'
   | 'InputPassword'
   | 'Mentions'
+  | 'NumberRange'
   | 'PrimaryButton'
   | 'Radio'
   | 'RadioGroup'
@@ -186,6 +188,7 @@ async function initComponentAdapter() {
     }),
     Input: withDefaultPlaceholder(Input, 'input'),
     InputNumber: withDefaultPlaceholder(InputNumber, 'input'),
+    NumberRange,
     InputPassword: withDefaultPlaceholder(InputPassword, 'input'),
     Mentions: withDefaultPlaceholder(Mentions, 'input'),
     // 自定义主要按钮
