@@ -39,13 +39,13 @@ const getClass = computed(() => [prefixCls]);
 const getWidth = computed(() => `${`${props.width}`.replace(/px/, '')}px`);
 
 const getIconWidth = computed(
-  () => `${Number.parseInt(`${props.width}`.replace(/px/, '')) / 2}px`,
+    () => `${Number.parseInt(`${props.width}`.replace(/px/, '')) / 2}px`,
 );
 
 const getStyle = computed((): CSSProperties => ({ width: unref(getWidth) }));
 
 const getImageWrapperStyle = computed(
-  (): CSSProperties => ({ height: unref(getWidth), width: unref(getWidth) }),
+    (): CSSProperties => ({ height: unref(getWidth), width: unref(getWidth) }),
 );
 
 // 图片加载成功
@@ -65,10 +65,10 @@ watchEffect(() => {
 });
 
 watch(
-  () => sourceValue.value,
-  (v: string) => {
-    emit('update:value', v);
-  },
+    () => sourceValue.value,
+    (v: string) => {
+      emit('update:value', v);
+    },
 );
 
 function handleUploadSuccess({ data, source }: any) {
@@ -90,59 +90,59 @@ defineExpose({
 <template>
   <div :class="getClass" :style="getStyle">
     <div
-      :class="`${prefixCls}-image-wrapper`"
-      :style="getImageWrapperStyle"
-      @click="openModal"
+        :class="`${prefixCls}-image-wrapper`"
+        :style="getImageWrapperStyle"
+        @click="openModal"
     >
       <div :class="`${prefixCls}-image-mask`" :style="getImageWrapperStyle">
         <span
-          :style="{
+            :style="{
             ...getImageWrapperStyle,
             width: `${getIconWidth}`,
             height: `${getIconWidth}`,
             lineHeight: `${getIconWidth}`,
           }"
-          class="icon-[ant-design--cloud-upload-outlined] text-[#d6d6d6]"
+            class="icon-[ant-design--cloud-upload-outlined] text-[#d6d6d6]"
         ></span>
       </div>
       <!-- 显示默认头像或图片加载失败时显示上传图标 -->
       <img
-        v-if="sourceValue && !imgError"
-        :src="sourceValue"
-        alt="avatar"
-        @error="handleImgError"
-        @load="handleImgLoad"
+          v-if="sourceValue && !imgError"
+          :src="sourceValue"
+          alt="avatar"
+          @error="handleImgError"
+          @load="handleImgLoad"
       />
       <!-- 图片加载失败时，显示上传图标提示用户可以重新上传 -->
       <div
-        v-else
-        :class="`${prefixCls}-image-error`"
-        :style="getImageWrapperStyle"
+          v-else
+          :class="`${prefixCls}-image-error`"
+          :style="getImageWrapperStyle"
       >
         <span
-          :style="{
+            :style="{
             width: `${getIconWidth}`,
             height: `${getIconWidth}`,
             lineHeight: `${getIconWidth}`,
           }"
-          class="icon-[ant-design--cloud-upload-outlined] text-[#d6d6d6]"
+            class="icon-[ant-design--cloud-upload-outlined] text-[#d6d6d6]"
         ></span>
       </div>
     </div>
     <Button
-      v-if="showBtn"
-      :class="`${prefixCls}-upload-btn`"
-      @click="openModal"
-      v-bind="btnProps"
+        v-if="showBtn"
+        :class="`${prefixCls}-upload-btn`"
+        @click="openModal"
+        v-bind="btnProps"
     >
       {{ btnText ? btnText : $t('ui.cropper.selectImage') }}
     </Button>
 
     <CropperModal
-      :size="size"
-      :src="sourceValue"
-      :upload-api="uploadApi"
-      @upload-success="handleUploadSuccess"
+        :size="size"
+        :src="sourceValue"
+        :upload-api="uploadApi"
+        @upload-success="handleUploadSuccess"
     />
   </div>
 </template>
