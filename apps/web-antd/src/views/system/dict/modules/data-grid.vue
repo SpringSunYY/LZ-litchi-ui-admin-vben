@@ -110,6 +110,8 @@ watch(
     }
   },
 );
+
+defineExpose({ onRefresh });
 </script>
 
 <template>

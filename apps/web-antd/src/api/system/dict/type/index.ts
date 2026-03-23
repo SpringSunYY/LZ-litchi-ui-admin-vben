@@ -38,8 +38,10 @@ export function updateDictType(data: SystemDictTypeApi.DictType) {
 }
 
 // 删除字典
-export function deleteDictType(id: number) {
-  return requestClient.delete(`/system/dict-type/delete?id=${id}`);
+export function deleteDictType(id: number, isDeleteChildren = false) {
+  return requestClient.delete(
+    `/system/dict-type/delete?id=${id}&isDeleteChildren=${isDeleteChildren}`,
+  );
 }
 
 // 导出字典类型

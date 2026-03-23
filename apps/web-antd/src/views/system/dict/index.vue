@@ -7,9 +7,15 @@ import DataGrid from './modules/data-grid.vue';
 import TypeGrid from './modules/type-grid.vue';
 
 const searchDictType = ref<string>(); // 搜索的字典类型
+const dataGridRef = ref<InstanceType<typeof DataGrid>>();
 
 function handleDictTypeSelect(dictType: string) {
   searchDictType.value = dictType;
+}
+
+function handleDictTypeDeleted() {
+  searchDictType.value = undefined;
+  dataGridRef.value?.onRefresh();
 }
 </script>
 
@@ -22,11 +28,11 @@ function handleDictTypeSelect(dictType: string) {
     <div class="flex h-full">
       <!-- 左侧字典类型列表 -->
       <div class="w-1/2 pr-3">
-        <TypeGrid @select="handleDictTypeSelect" />
+        <TypeGrid @select="handleDictTypeSelect" @deleted="handleDictTypeDeleted" />
       </div>
       <!-- 右侧字典数据列表 -->
       <div class="w-1/2">
-        <DataGrid :dict-type="searchDictType" />
+        <DataGrid ref="dataGridRef" :dict-type="searchDictType" />
       </div>
     </div>
   </Page>

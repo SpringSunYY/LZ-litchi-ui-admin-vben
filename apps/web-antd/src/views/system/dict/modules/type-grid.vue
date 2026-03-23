@@ -5,6 +5,8 @@ import type {
 } from '#/adapter/vxe-table';
 import type { SystemDictTypeApi } from '#/api/system/dict/type';
 
+import { ref } from 'vue';
+
 import { useVbenModal } from '@vben/common-ui';
 import { downloadFileFromBlobPart } from '@vben/utils';
 
@@ -16,12 +18,16 @@ import {
   exportDictType,
   getDictTypePage,
 } from '#/api/system/dict/type';
+import { CascadeDeleteSwitch } from '#/components/cascade-delete-switch';
 import { $t } from '#/locales';
 
 import { useTypeGridColumns, useTypeGridFormSchema } from '../data';
 import TypeForm from './type-form.vue';
 
-const emit = defineEmits(['select']);
+const emit = defineEmits<{
+  select: [dictType: string];
+  deleted: [];
+}>();
 
 const [TypeFormModal, typeFormModalApi] = useVbenModal({
   connectedComponent: TypeForm,
@@ -49,6 +55,9 @@ function handleEdit(row: any) {
   typeFormModalApi.setData(row).open();
 }
 
+/** 全局级联删除开关（默认 false） */
+const isDeleteChildren = ref(false);
+
 /** 删除字典类型 */
 async function handleDelete(row: SystemDictTypeApi.DictType) {
   const hideLoading = message.loading({
@@ -56,12 +65,13 @@ async function handleDelete(row: SystemDictTypeApi.DictType) {
     key: 'action_key_msg',
   });
   try {
-    await deleteDictType(row.id as number);
+    await deleteDictType(row.id as number, isDeleteChildren.value);
     message.success({
       content: $t('ui.actionMessage.deleteSuccess', [row.name]),
       key: 'action_key_msg',
     });
     onRefresh();
+    emit('deleted');
   } finally {
     hideLoading();
   }
@@ -130,6 +140,7 @@ const [Grid, gridApi] = useVbenVxeGrid({
             },
           ]"
         />
+        <CascadeDeleteSwitch v-model="isDeleteChildren" />
       </template>
       <template #actions="{ row }">
         <TableAction

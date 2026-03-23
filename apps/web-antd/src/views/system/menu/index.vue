@@ -7,13 +7,14 @@ import { ref } from 'vue';
 import { DocAlert, Page, useVbenModal } from '@vben/common-ui';
 import { IconifyIcon } from '@vben/icons';
 
-import { message, Tooltip } from 'ant-design-vue';
+import { message } from 'ant-design-vue';
 
 import { ACTION_ICON, TableAction, useVbenVxeGrid } from '#/adapter/vxe-table';
 import { deleteMenu, getMenuList } from '#/api/system/menu';
 import { $t } from '#/locales';
 import { SystemMenuTypeEnum } from '#/utils';
 
+import { CascadeDeleteSwitch } from '#/components/cascade-delete-switch';
 import { useGridColumns } from './data';
 import Form from './modules/form.vue';
 
@@ -130,20 +131,7 @@ const [Grid, gridApi] = useVbenVxeGrid({
             },
           ]"
         />
-        <div class="ml-4 flex items-center gap-2">
-          <a-switch v-model:checked="isDeleteChildren" size="small" />
-          <Tooltip
-            :title="
-              isDeleteChildren
-                ? $t('ui.actionMessage.cascadeDeleteTip')
-                : $t('ui.actionMessage.cascadeDeleteTipOff')
-            "
-          >
-            <span class="text-muted-foreground cursor-default text-sm">
-              {{ $t('ui.actionMessage.cascadeDelete') }}
-            </span>
-          </Tooltip>
-        </div>
+        <CascadeDeleteSwitch v-model="isDeleteChildren" />
       </template>
       <template #name="{ row }">
         <div class="flex w-full items-center gap-1">
