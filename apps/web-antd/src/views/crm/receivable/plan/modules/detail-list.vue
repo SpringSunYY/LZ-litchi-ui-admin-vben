@@ -3,6 +3,8 @@ import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 import type { CrmReceivableApi } from '#/api/crm/receivable';
 import type { CrmReceivablePlanApi } from '#/api/crm/receivable/plan';
 
+import { watch } from 'vue';
+
 import { useVbenModal } from '@vben/common-ui';
 
 import { message } from 'ant-design-vue';
@@ -84,11 +86,11 @@ const [Grid, gridApi] = useVbenVxeGrid({
             pageSize: page.pageSize,
             ...formValues,
           };
-          if (props.customerId && !props.contractId) {
-            queryParams.customerId = props.customerId;
-          } else if (props.customerId && props.contractId) {
-            // 如果是合同的话客户编号也需要带上因为权限基于客户
-            queryParams.customerId = props.customerId;
+          if (!props.customerId) {
+            return { total: 0, list: [] };
+          }
+          queryParams.customerId = props.customerId;
+          if (props.contractId) {
             queryParams.contractId = props.contractId;
           }
           return await getReceivablePlanPageByCustomer(queryParams);
@@ -104,6 +106,16 @@ const [Grid, gridApi] = useVbenVxeGrid({
     },
   } as VxeTableGridOptions<CrmReceivablePlanApi.Plan>,
 });
+
+/** 监听 props 变化，自动刷新表格数据 */
+watch(
+  () => props.customerId,
+  (newCustomerId) => {
+    if (newCustomerId) {
+      gridApi.query();
+    }
+  },
+);
 </script>
 
 <template>
