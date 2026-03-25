@@ -101,7 +101,9 @@ export namespace CrmStatisticsCustomerApi {
 }
 
 /** 客户总量分析(按日期) */
-export function getCustomerSummaryByDate(params: CrmStatisticsCustomerApi.StatisticsParams) {
+export function getCustomerSummaryByDate(
+  params: CrmStatisticsCustomerApi.StatisticsParams,
+) {
   return requestClient.get<CrmStatisticsCustomerApi.CustomerSummaryByDate[]>(
     '/crm/statistics-customer/get-customer-summary-by-date',
     { params },
@@ -109,7 +111,9 @@ export function getCustomerSummaryByDate(params: CrmStatisticsCustomerApi.Statis
 }
 
 /** 客户总量分析(按用户) */
-export function getCustomerSummaryByUser(params: CrmStatisticsCustomerApi.StatisticsParams) {
+export function getCustomerSummaryByUser(
+  params: CrmStatisticsCustomerApi.StatisticsParams,
+) {
   return requestClient.get<CrmStatisticsCustomerApi.CustomerSummaryByUser[]>(
     '/crm/statistics-customer/get-customer-summary-by-user',
     { params },
@@ -117,7 +121,9 @@ export function getCustomerSummaryByUser(params: CrmStatisticsCustomerApi.Statis
 }
 
 /** 客户跟进次数分析(按日期) */
-export function getFollowUpSummaryByDate(params: CrmStatisticsCustomerApi.StatisticsParams) {
+export function getFollowUpSummaryByDate(
+  params: CrmStatisticsCustomerApi.StatisticsParams,
+) {
   return requestClient.get<CrmStatisticsCustomerApi.FollowUpSummaryByDate[]>(
     '/crm/statistics-customer/get-follow-up-summary-by-date',
     { params },
@@ -125,7 +131,9 @@ export function getFollowUpSummaryByDate(params: CrmStatisticsCustomerApi.Statis
 }
 
 /** 客户跟进次数分析(按用户) */
-export function getFollowUpSummaryByUser(params: CrmStatisticsCustomerApi.StatisticsParams) {
+export function getFollowUpSummaryByUser(
+  params: CrmStatisticsCustomerApi.StatisticsParams,
+) {
   return requestClient.get<CrmStatisticsCustomerApi.FollowUpSummaryByUser[]>(
     '/crm/statistics-customer/get-follow-up-summary-by-user',
     { params },
@@ -133,7 +141,9 @@ export function getFollowUpSummaryByUser(params: CrmStatisticsCustomerApi.Statis
 }
 
 /** 获取客户跟进方式统计数 */
-export function getFollowUpSummaryByType(params: CrmStatisticsCustomerApi.StatisticsParams) {
+export function getFollowUpSummaryByType(
+  params: CrmStatisticsCustomerApi.StatisticsParams,
+) {
   return requestClient.get<CrmStatisticsCustomerApi.FollowUpSummaryByType[]>(
     '/crm/statistics-customer/get-follow-up-summary-by-type',
     { params },
@@ -141,7 +151,9 @@ export function getFollowUpSummaryByType(params: CrmStatisticsCustomerApi.Statis
 }
 
 /** 合同摘要信息(客户转化率页面) */
-export function getContractSummary(params: CrmStatisticsCustomerApi.StatisticsParams) {
+export function getContractSummary(
+  params: CrmStatisticsCustomerApi.StatisticsParams,
+) {
   return requestClient.get<CrmStatisticsCustomerApi.CustomerContractSummary[]>(
     '/crm/statistics-customer/get-contract-summary',
     { params },
@@ -149,7 +161,9 @@ export function getContractSummary(params: CrmStatisticsCustomerApi.StatisticsPa
 }
 
 /** 获取客户公海分析(按日期) */
-export function getPoolSummaryByDate(params: CrmStatisticsCustomerApi.StatisticsParams) {
+export function getPoolSummaryByDate(
+  params: CrmStatisticsCustomerApi.StatisticsParams,
+) {
   return requestClient.get<CrmStatisticsCustomerApi.PoolSummaryByDate[]>(
     '/crm/statistics-customer/get-pool-summary-by-date',
     { params },
@@ -157,7 +171,9 @@ export function getPoolSummaryByDate(params: CrmStatisticsCustomerApi.Statistics
 }
 
 /** 获取客户公海分析(按用户) */
-export function getPoolSummaryByUser(params: CrmStatisticsCustomerApi.StatisticsParams) {
+export function getPoolSummaryByUser(
+  params: CrmStatisticsCustomerApi.StatisticsParams,
+) {
   return requestClient.get<CrmStatisticsCustomerApi.PoolSummaryByUser[]>(
     '/crm/statistics-customer/get-pool-summary-by-user',
     { params },
@@ -165,7 +181,9 @@ export function getPoolSummaryByUser(params: CrmStatisticsCustomerApi.Statistics
 }
 
 /** 获取客户成交周期(按日期) */
-export function getCustomerDealCycleByDate(params: CrmStatisticsCustomerApi.StatisticsParams) {
+export function getCustomerDealCycleByDate(
+  params: CrmStatisticsCustomerApi.StatisticsParams,
+) {
   return requestClient.get<CrmStatisticsCustomerApi.CustomerDealCycleByDate[]>(
     '/crm/statistics-customer/get-customer-deal-cycle-by-date',
     { params },
@@ -173,7 +191,9 @@ export function getCustomerDealCycleByDate(params: CrmStatisticsCustomerApi.Stat
 }
 
 /** 获取客户成交周期(按用户) */
-export function getCustomerDealCycleByUser(params: CrmStatisticsCustomerApi.StatisticsParams) {
+export function getCustomerDealCycleByUser(
+  params: CrmStatisticsCustomerApi.StatisticsParams,
+) {
   return requestClient.get<CrmStatisticsCustomerApi.CustomerDealCycleByUser[]>(
     '/crm/statistics-customer/get-customer-deal-cycle-by-user',
     { params },
@@ -181,7 +201,9 @@ export function getCustomerDealCycleByUser(params: CrmStatisticsCustomerApi.Stat
 }
 
 /** 获取客户成交周期(按地区) */
-export function getCustomerDealCycleByArea(params: CrmStatisticsCustomerApi.StatisticsParams) {
+export function getCustomerDealCycleByArea(
+  params: CrmStatisticsCustomerApi.StatisticsParams,
+) {
   return requestClient.get<CrmStatisticsCustomerApi.CustomerDealCycleByArea[]>(
     '/crm/statistics-customer/get-customer-deal-cycle-by-area',
     { params },
@@ -189,7 +211,9 @@ export function getCustomerDealCycleByArea(params: CrmStatisticsCustomerApi.Stat
 }
 
 /** 获取客户成交周期(按产品) */
-export function getCustomerDealCycleByProduct(params: CrmStatisticsCustomerApi.StatisticsParams) {
+export function getCustomerDealCycleByProduct(
+  params: CrmStatisticsCustomerApi.StatisticsParams,
+) {
   return requestClient.get<
     CrmStatisticsCustomerApi.CustomerDealCycleByProduct[]
   >('/crm/statistics-customer/get-customer-deal-cycle-by-product', { params });
