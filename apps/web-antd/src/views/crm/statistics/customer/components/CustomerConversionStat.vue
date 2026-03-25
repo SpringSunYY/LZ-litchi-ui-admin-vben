@@ -1,20 +1,17 @@
 <script lang="ts" setup>
 import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 
-import { Card, Space } from 'ant-design-vue';
-
 import { useVbenVxeGrid } from '#/adapter/vxe-table';
 import { getContractSummary } from '#/api/crm/statistics/customer';
-
-import { DICT_TYPE, getDictOptions } from '#/utils';
+import { DICT_TYPE } from '#/utils';
 
 defineOptions({ name: 'CustomerConversionStat' });
 
 const props = defineProps<{
   queryParams: {
     deptId?: number;
-    userId?: number;
     times: string[];
+    userId?: number;
   };
 }>();
 

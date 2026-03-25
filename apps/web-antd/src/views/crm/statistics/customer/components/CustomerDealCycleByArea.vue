@@ -1,6 +1,7 @@
 <script lang="ts" setup>
-import type { CrmStatisticsCustomerApi } from '#/api/crm/statistics/customer';
 import type { EchartsUIType } from '@vben/plugins/echarts';
+
+import type { CrmStatisticsCustomerApi } from '#/api/crm/statistics/customer';
 
 import { nextTick, reactive, ref, watch } from 'vue';
 
@@ -16,8 +17,8 @@ defineOptions({ name: 'CustomerDealCycleByArea' });
 const props = defineProps<{
   queryParams: {
     deptId?: number;
-    userId?: number;
     times: string[];
+    userId?: number;
   };
 }>();
 
@@ -38,7 +39,13 @@ function renderChart() {
   renderEcharts({
     tooltip: { trigger: 'axis' },
     legend: { data: [$t('crm.customer.statistics.dealCycleDays')], bottom: 0 },
-    grid: { left: '3%', right: '4%', bottom: '15%', top: '8%', containLabel: true },
+    grid: {
+      left: '3%',
+      right: '4%',
+      bottom: '15%',
+      top: '8%',
+      containLabel: true,
+    },
     xAxis: {
       type: 'category',
       data: areas,
@@ -110,17 +117,27 @@ defineExpose({ loadData });
     <Row :gutter="16" class="mb-4">
       <Col :span="12">
         <Card :bordered="false">
-          <Statistic :title="$t('crm.customer.statistics.avgDealCycle')" :value="totalStats.avgDealCycle" :suffix="$t('crm.customer.statistics.days')" />
+          <Statistic
+            :title="$t('crm.customer.statistics.avgDealCycle')"
+            :value="totalStats.avgDealCycle"
+            :suffix="$t('crm.customer.statistics.days')"
+          />
         </Card>
       </Col>
       <Col :span="12">
         <Card :bordered="false">
-          <Statistic :title="$t('crm.customer.statistics.dealCustomerCount')" :value="totalStats.totalDealCount" />
+          <Statistic
+            :title="$t('crm.customer.statistics.dealCustomerCount')"
+            :value="totalStats.totalDealCount"
+          />
         </Card>
       </Col>
     </Row>
 
-    <Card :title="$t('crm.customer.statistics.dealCycleRankByArea')" :bordered="false">
+    <Card
+      :title="$t('crm.customer.statistics.dealCycleRankByArea')"
+      :bordered="false"
+    >
       <EchartsUI ref="chartRef" style="height: 400px" />
     </Card>
   </div>

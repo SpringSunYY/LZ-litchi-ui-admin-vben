@@ -1,6 +1,7 @@
 <script lang="ts" setup>
-import type { CrmStatisticsCustomerApi } from '#/api/crm/statistics/customer';
 import type { EchartsUIType } from '@vben/plugins/echarts';
+
+import type { CrmStatisticsCustomerApi } from '#/api/crm/statistics/customer';
 
 import { nextTick, reactive, ref, watch } from 'vue';
 
@@ -19,8 +20,8 @@ defineOptions({ name: 'CustomerFollowUpSummary' });
 const props = defineProps<{
   queryParams: {
     deptId?: number;
-    userId?: number;
     times: string[];
+    userId?: number;
   };
 }>();
 
@@ -41,9 +42,7 @@ const { renderEcharts: renderUserChart } = useEcharts(userChartRef);
 /** 渲染日期趋势图 */
 function renderDateTrendChart() {
   const times = dateChartData.value.map((i) => i.time);
-  const recordCounts = dateChartData.value.map(
-    (i) => i.followUpRecordCount,
-  );
+  const recordCounts = dateChartData.value.map((i) => i.followUpRecordCount);
   const customerCounts = dateChartData.value.map(
     (i) => i.followUpCustomerCount,
   );
@@ -51,10 +50,19 @@ function renderDateTrendChart() {
   renderDateChart({
     tooltip: { trigger: 'axis' },
     legend: {
-      data: [$t('crm.customer.statistics.followUpCount'), $t('crm.customer.statistics.followUpCustomerCount')],
+      data: [
+        $t('crm.customer.statistics.followUpCount'),
+        $t('crm.customer.statistics.followUpCustomerCount'),
+      ],
       bottom: 0,
     },
-    grid: { left: '3%', right: '4%', bottom: '15%', top: '8%', containLabel: true },
+    grid: {
+      left: '3%',
+      right: '4%',
+      bottom: '15%',
+      top: '8%',
+      containLabel: true,
+    },
     xAxis: {
       type: 'category',
       data: times,
@@ -88,9 +96,7 @@ function renderDateTrendChart() {
 /** 渲染员工排行图 */
 function renderUserRankChart() {
   const names = userChartData.value.map((i) => i.ownerUserName);
-  const recordCounts = userChartData.value.map(
-    (i) => i.followupRecordCount,
-  );
+  const recordCounts = userChartData.value.map((i) => i.followupRecordCount);
   const customerCounts = userChartData.value.map(
     (i) => i.followupCustomerCount,
   );
@@ -98,10 +104,19 @@ function renderUserRankChart() {
   renderUserChart({
     tooltip: { trigger: 'axis' },
     legend: {
-      data: [$t('crm.customer.statistics.followUpCount'), $t('crm.customer.statistics.followUpCustomerCount')],
+      data: [
+        $t('crm.customer.statistics.followUpCount'),
+        $t('crm.customer.statistics.followUpCustomerCount'),
+      ],
       bottom: 0,
     },
-    grid: { left: '3%', right: '4%', bottom: '15%', top: '8%', containLabel: true },
+    grid: {
+      left: '3%',
+      right: '4%',
+      bottom: '15%',
+      top: '8%',
+      containLabel: true,
+    },
     xAxis: {
       type: 'category',
       data: names,
@@ -158,7 +173,9 @@ async function loadData() {
     );
     totalStats.avgPerCustomer =
       totalStats.followUpCustomerCount > 0
-        ? (totalStats.followUpRecordCount / totalStats.followUpCustomerCount).toFixed(2)
+        ? (
+            totalStats.followUpRecordCount / totalStats.followUpCustomerCount
+          ).toFixed(2)
         : '0.00';
 
     dateChartData.value = dateRes;
@@ -186,29 +203,44 @@ defineExpose({ loadData });
     <Row :gutter="16" class="mb-4">
       <Col :span="8">
         <Card :bordered="false">
-          <Statistic :title="$t('crm.customer.statistics.totalFollowUpCount')" :value="totalStats.followUpRecordCount" />
+          <Statistic
+            :title="$t('crm.customer.statistics.totalFollowUpCount')"
+            :value="totalStats.followUpRecordCount"
+          />
         </Card>
       </Col>
       <Col :span="8">
         <Card :bordered="false">
-          <Statistic :title="$t('crm.customer.statistics.followUpCustomerCount')" :value="totalStats.followUpCustomerCount" />
+          <Statistic
+            :title="$t('crm.customer.statistics.followUpCustomerCount')"
+            :value="totalStats.followUpCustomerCount"
+          />
         </Card>
       </Col>
       <Col :span="8">
         <Card :bordered="false">
-          <Statistic :title="$t('crm.customer.statistics.avgFollowUpPerCustomer')" :value="totalStats.avgPerCustomer" />
+          <Statistic
+            :title="$t('crm.customer.statistics.avgFollowUpPerCustomer')"
+            :value="totalStats.avgPerCustomer"
+          />
         </Card>
       </Col>
     </Row>
 
     <Row :gutter="16">
       <Col :span="12">
-        <Card :title="$t('crm.customer.statistics.followUpCountTrend')" :bordered="false">
+        <Card
+          :title="$t('crm.customer.statistics.followUpCountTrend')"
+          :bordered="false"
+        >
           <EchartsUI ref="dateChartRef" style="height: 300px" />
         </Card>
       </Col>
       <Col :span="12">
-        <Card :title="$t('crm.customer.statistics.followUpCountRankByEmployee')" :bordered="false">
+        <Card
+          :title="$t('crm.customer.statistics.followUpCountRankByEmployee')"
+          :bordered="false"
+        >
           <EchartsUI ref="userChartRef" style="height: 300px" />
         </Card>
       </Col>

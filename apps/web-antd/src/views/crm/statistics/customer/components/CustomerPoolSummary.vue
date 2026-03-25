@@ -1,6 +1,7 @@
 <script lang="ts" setup>
-import type { CrmStatisticsCustomerApi } from '#/api/crm/statistics/customer';
 import type { EchartsUIType } from '@vben/plugins/echarts';
+
+import type { CrmStatisticsCustomerApi } from '#/api/crm/statistics/customer';
 
 import { nextTick, reactive, ref, watch } from 'vue';
 
@@ -19,8 +20,8 @@ defineOptions({ name: 'CustomerPoolSummary' });
 const props = defineProps<{
   queryParams: {
     deptId?: number;
-    userId?: number;
     times: string[];
+    userId?: number;
   };
 }>();
 
@@ -47,10 +48,19 @@ function renderDateTrendChart() {
   renderDateChart({
     tooltip: { trigger: 'axis' },
     legend: {
-      data: [$t('crm.customer.statistics.putIntoPool'), $t('crm.customer.statistics.takeFromPool')],
+      data: [
+        $t('crm.customer.statistics.putIntoPool'),
+        $t('crm.customer.statistics.takeFromPool'),
+      ],
       bottom: 0,
     },
-    grid: { left: '3%', right: '4%', bottom: '15%', top: '8%', containLabel: true },
+    grid: {
+      left: '3%',
+      right: '4%',
+      bottom: '15%',
+      top: '8%',
+      containLabel: true,
+    },
     xAxis: {
       type: 'category',
       data: times,
@@ -90,10 +100,19 @@ function renderUserRankChart() {
   renderUserChart({
     tooltip: { trigger: 'axis' },
     legend: {
-      data: [$t('crm.customer.statistics.putIntoPool'), $t('crm.customer.statistics.takeFromPool')],
+      data: [
+        $t('crm.customer.statistics.putIntoPool'),
+        $t('crm.customer.statistics.takeFromPool'),
+      ],
       bottom: 0,
     },
-    grid: { left: '3%', right: '4%', bottom: '15%', top: '8%', containLabel: true },
+    grid: {
+      left: '3%',
+      right: '4%',
+      bottom: '15%',
+      top: '8%',
+      containLabel: true,
+    },
     xAxis: {
       type: 'category',
       data: names,
@@ -176,29 +195,44 @@ defineExpose({ loadData });
     <Row :gutter="16" class="mb-4">
       <Col :span="8">
         <Card :bordered="false">
-          <Statistic :title="$t('crm.customer.statistics.putIntoPoolCount')" :value="totalStats.customerPutCount" />
+          <Statistic
+            :title="$t('crm.customer.statistics.putIntoPoolCount')"
+            :value="totalStats.customerPutCount"
+          />
         </Card>
       </Col>
       <Col :span="8">
         <Card :bordered="false">
-          <Statistic :title="$t('crm.customer.statistics.takeFromPoolCount')" :value="totalStats.customerTakeCount" />
+          <Statistic
+            :title="$t('crm.customer.statistics.takeFromPoolCount')"
+            :value="totalStats.customerTakeCount"
+          />
         </Card>
       </Col>
       <Col :span="8">
         <Card :bordered="false">
-          <Statistic :title="$t('crm.customer.statistics.netGrowthCustomerCount')" :value="totalStats.netGrowth" />
+          <Statistic
+            :title="$t('crm.customer.statistics.netGrowthCustomerCount')"
+            :value="totalStats.netGrowth"
+          />
         </Card>
       </Col>
     </Row>
 
     <Row :gutter="16">
       <Col :span="12">
-        <Card :title="$t('crm.customer.statistics.poolCustomerTrend')" :bordered="false">
+        <Card
+          :title="$t('crm.customer.statistics.poolCustomerTrend')"
+          :bordered="false"
+        >
           <EchartsUI ref="dateChartRef" style="height: 300px" />
         </Card>
       </Col>
       <Col :span="12">
-        <Card :title="$t('crm.customer.statistics.poolCustomerRankByEmployee')" :bordered="false">
+        <Card
+          :title="$t('crm.customer.statistics.poolCustomerRankByEmployee')"
+          :bordered="false"
+        >
           <EchartsUI ref="userChartRef" style="height: 300px" />
         </Card>
       </Col>

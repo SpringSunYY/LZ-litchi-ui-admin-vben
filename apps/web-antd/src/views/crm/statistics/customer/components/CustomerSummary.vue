@@ -1,13 +1,13 @@
 <script lang="ts" setup>
 import type { EchartsUIType } from '@vben/plugins/echarts';
 
+import type { CrmStatisticsCustomerApi } from '#/api/crm/statistics/customer';
+
 import { nextTick, reactive, ref, watch } from 'vue';
 
 import { EchartsUI, useEcharts } from '@vben/plugins/echarts';
 
 import { Card, Col, Row, Statistic } from 'ant-design-vue';
-
-import type { CrmStatisticsCustomerApi } from '#/api/crm/statistics/customer';
 
 import {
   getCustomerSummaryByDate,
@@ -20,8 +20,8 @@ defineOptions({ name: 'CustomerSummary' });
 const props = defineProps<{
   queryParams: {
     deptId?: number;
-    userId?: number;
     times: string[];
+    userId?: number;
   };
 }>();
 
@@ -48,10 +48,19 @@ function renderDateTrendChart() {
   renderDateChart({
     tooltip: { trigger: 'axis' },
     legend: {
-      data: [$t('crm.customer.statistics.newCustomer'), $t('crm.customer.statistics.dealCustomer')],
+      data: [
+        $t('crm.customer.statistics.newCustomer'),
+        $t('crm.customer.statistics.dealCustomer'),
+      ],
       bottom: 0,
     },
-    grid: { left: '3%', right: '4%', bottom: '15%', top: '8%', containLabel: true },
+    grid: {
+      left: '3%',
+      right: '4%',
+      bottom: '15%',
+      top: '8%',
+      containLabel: true,
+    },
     xAxis: {
       type: 'category',
       data: times,
@@ -91,10 +100,19 @@ function renderUserRankChart() {
   renderUserChart({
     tooltip: { trigger: 'axis' },
     legend: {
-      data: [$t('crm.customer.statistics.newCustomer'), $t('crm.customer.statistics.dealCustomer')],
+      data: [
+        $t('crm.customer.statistics.newCustomer'),
+        $t('crm.customer.statistics.dealCustomer'),
+      ],
       bottom: 0,
     },
-    grid: { left: '3%', right: '4%', bottom: '15%', top: '8%', containLabel: true },
+    grid: {
+      left: '3%',
+      right: '4%',
+      bottom: '15%',
+      top: '8%',
+      containLabel: true,
+    },
     xAxis: {
       type: 'category',
       data: names,
@@ -182,12 +200,18 @@ defineExpose({ loadData });
     <Row :gutter="16" class="mb-4">
       <Col :span="6">
         <Card :bordered="false">
-          <Statistic :title="$t('crm.customer.statistics.newCustomerCount')" :value="totalStats.customerCreateCount" />
+          <Statistic
+            :title="$t('crm.customer.statistics.newCustomerCount')"
+            :value="totalStats.customerCreateCount"
+          />
         </Card>
       </Col>
       <Col :span="6">
         <Card :bordered="false">
-          <Statistic :title="$t('crm.customer.statistics.dealCustomerCount')" :value="totalStats.customerDealCount" />
+          <Statistic
+            :title="$t('crm.customer.statistics.dealCustomerCount')"
+            :value="totalStats.customerDealCount"
+          />
         </Card>
       </Col>
       <Col :span="12">
@@ -203,12 +227,18 @@ defineExpose({ loadData });
 
     <Row :gutter="16">
       <Col :span="12">
-        <Card :title="$t('crm.customer.statistics.customerTotalTrend')" :bordered="false">
+        <Card
+          :title="$t('crm.customer.statistics.customerTotalTrend')"
+          :bordered="false"
+        >
           <EchartsUI ref="dateChartRef" style="height: 300px" />
         </Card>
       </Col>
       <Col :span="12">
-        <Card :title="$t('crm.customer.statistics.customerTotalRankByEmployee')" :bordered="false">
+        <Card
+          :title="$t('crm.customer.statistics.customerTotalRankByEmployee')"
+          :bordered="false"
+        >
           <EchartsUI ref="userChartRef" style="height: 300px" />
         </Card>
       </Col>

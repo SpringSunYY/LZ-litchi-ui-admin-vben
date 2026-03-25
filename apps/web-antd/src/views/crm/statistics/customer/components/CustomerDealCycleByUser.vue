@@ -1,6 +1,7 @@
 <script lang="ts" setup>
-import type { CrmStatisticsCustomerApi } from '#/api/crm/statistics/customer';
 import type { EchartsUIType } from '@vben/plugins/echarts';
+
+import type { CrmStatisticsCustomerApi } from '#/api/crm/statistics/customer';
 
 import { nextTick, reactive, ref, watch } from 'vue';
 
@@ -19,8 +20,8 @@ defineOptions({ name: 'CustomerDealCycleByUser' });
 const props = defineProps<{
   queryParams: {
     deptId?: number;
-    userId?: number;
     times: string[];
+    userId?: number;
   };
 }>();
 
@@ -29,8 +30,12 @@ const totalStats = reactive({
   avgDealCycle: '0.00',
   totalDealCount: 0,
 });
-const dateChartData = ref<CrmStatisticsCustomerApi.CustomerDealCycleByDate[]>([]);
-const userChartData = ref<CrmStatisticsCustomerApi.CustomerDealCycleByUser[]>([]);
+const dateChartData = ref<CrmStatisticsCustomerApi.CustomerDealCycleByDate[]>(
+  [],
+);
+const userChartData = ref<CrmStatisticsCustomerApi.CustomerDealCycleByUser[]>(
+  [],
+);
 
 const dateChartRef = ref<EchartsUIType>();
 const userChartRef = ref<EchartsUIType>();
@@ -45,7 +50,13 @@ function renderDateTrendChart() {
   renderDateChart({
     tooltip: { trigger: 'axis' },
     legend: { data: [$t('crm.customer.statistics.dealCycleDays')], bottom: 0 },
-    grid: { left: '3%', right: '4%', bottom: '15%', top: '8%', containLabel: true },
+    grid: {
+      left: '3%',
+      right: '4%',
+      bottom: '15%',
+      top: '8%',
+      containLabel: true,
+    },
     xAxis: {
       type: 'category',
       data: times,
@@ -77,7 +88,13 @@ function renderUserRankChart() {
   renderUserChart({
     tooltip: { trigger: 'axis' },
     legend: { data: [$t('crm.customer.statistics.dealCycleDays')], bottom: 0 },
-    grid: { left: '3%', right: '4%', bottom: '15%', top: '8%', containLabel: true },
+    grid: {
+      left: '3%',
+      right: '4%',
+      bottom: '15%',
+      top: '8%',
+      containLabel: true,
+    },
     xAxis: {
       type: 'category',
       data: names,
@@ -155,24 +172,37 @@ defineExpose({ loadData });
     <Row :gutter="16" class="mb-4">
       <Col :span="12">
         <Card :bordered="false">
-          <Statistic :title="$t('crm.customer.statistics.avgDealCycle')" :value="totalStats.avgDealCycle" :suffix="$t('crm.customer.statistics.days')" />
+          <Statistic
+            :title="$t('crm.customer.statistics.avgDealCycle')"
+            :value="totalStats.avgDealCycle"
+            :suffix="$t('crm.customer.statistics.days')"
+          />
         </Card>
       </Col>
       <Col :span="12">
         <Card :bordered="false">
-          <Statistic :title="$t('crm.customer.statistics.dealCustomerCount')" :value="totalStats.totalDealCount" />
+          <Statistic
+            :title="$t('crm.customer.statistics.dealCustomerCount')"
+            :value="totalStats.totalDealCount"
+          />
         </Card>
       </Col>
     </Row>
 
     <Row :gutter="16">
       <Col :span="12">
-        <Card :title="$t('crm.customer.statistics.dealCycleTrend')" :bordered="false">
+        <Card
+          :title="$t('crm.customer.statistics.dealCycleTrend')"
+          :bordered="false"
+        >
           <EchartsUI ref="dateChartRef" style="height: 300px" />
         </Card>
       </Col>
       <Col :span="12">
-        <Card :title="$t('crm.customer.statistics.dealCycleRankByEmployee')" :bordered="false">
+        <Card
+          :title="$t('crm.customer.statistics.dealCycleRankByEmployee')"
+          :bordered="false"
+        >
           <EchartsUI ref="userChartRef" style="height: 300px" />
         </Card>
       </Col>

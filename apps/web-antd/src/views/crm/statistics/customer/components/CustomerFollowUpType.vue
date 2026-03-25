@@ -1,6 +1,7 @@
 <script lang="ts" setup>
-import type { CrmStatisticsCustomerApi } from '#/api/crm/statistics/customer';
 import type { EchartsUIType } from '@vben/plugins/echarts';
+
+import type { CrmStatisticsCustomerApi } from '#/api/crm/statistics/customer';
 
 import { nextTick, reactive, ref, watch } from 'vue';
 
@@ -16,8 +17,8 @@ defineOptions({ name: 'CustomerFollowUpType' });
 const props = defineProps<{
   queryParams: {
     deptId?: number;
-    userId?: number;
     times: string[];
+    userId?: number;
   };
 }>();
 
@@ -121,14 +122,20 @@ defineExpose({ loadData });
 
 <template>
   <div v-loading="loading">
-    <Card :title="$t('crm.customer.statistics.followUpTypeDistribution')" :bordered="false">
+    <Card
+      :title="$t('crm.customer.statistics.followUpTypeDistribution')"
+      :bordered="false"
+    >
       <div class="flex items-center">
         <div style="width: 35%">
           <EchartsUI ref="chartRef" style="height: 400px" />
         </div>
         <div style="width: 65%" class="pl-8">
           <div class="mb-4">
-            <Statistic :title="$t('common.total')" :value="totalStats.totalCount" />
+            <Statistic
+              :title="$t('common.total')"
+              :value="totalStats.totalCount"
+            />
           </div>
           <div
             v-for="(item, index) in chartData"

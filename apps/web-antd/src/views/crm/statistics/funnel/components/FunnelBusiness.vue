@@ -1,16 +1,16 @@
 <script lang="ts" setup>
 import type { EchartsUIType } from '@vben/plugins/echarts';
 
+import type { VxeTableGridOptions } from '#/adapter/vxe-table';
+import type { CrmStatisticsFunnelApi } from '#/api/crm/statistics/funnel';
+
 import { nextTick, ref, watch } from 'vue';
 
 import { EchartsUI, useEcharts } from '@vben/plugins/echarts';
 
 import { Button, Card } from 'ant-design-vue';
 
-import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 import { useVbenVxeGrid } from '#/adapter/vxe-table';
-
-import type { CrmStatisticsFunnelApi } from '#/api/crm/statistics/funnel';
 import {
   getBusinessSummaryByEndStatus,
   getFunnelSummary,
@@ -23,9 +23,9 @@ defineOptions({ name: 'FunnelBusiness' });
 const props = defineProps<{
   queryParams: {
     deptId?: number;
-    userId?: number;
     interval: number;
     times: string[];
+    userId?: number;
   };
 }>();
 
@@ -61,7 +61,9 @@ function buildOptions() {
         bottom: 60,
         width: '80%',
         min: 0,
-        max: active.value ? 100 : Math.max(customerCount, businessCount, winCount),
+        max: active.value
+          ? 100
+          : Math.max(customerCount, businessCount, winCount),
         minSize: '0%',
         maxSize: '100%',
         sort: 'descending' as const,
@@ -75,14 +77,32 @@ function buildOptions() {
         emphasis: { label: { fontSize: 20 } },
         data: active.value
           ? [
-              { value: 60, name: `${$t('crm.common.customerCount')}：${customerCount}` },
-              { value: 40, name: `${$t('crm.common.businessCount')}：${businessCount}` },
-              { value: 20, name: `${$t('crm.common.businessWinCount')}：${winCount}` },
+              {
+                value: 60,
+                name: `${$t('crm.common.customerCount')}：${customerCount}`,
+              },
+              {
+                value: 40,
+                name: `${$t('crm.common.businessCount')}：${businessCount}`,
+              },
+              {
+                value: 20,
+                name: `${$t('crm.common.businessWinCount')}：${winCount}`,
+              },
             ]
           : [
-              { value: customerCount, name: `${$t('crm.common.customerCount')}：${customerCount}` },
-              { value: businessCount, name: `${$t('crm.common.businessCount')}：${businessCount}` },
-              { value: winCount, name: `${$t('crm.common.businessWinCount')}：${winCount}` },
+              {
+                value: customerCount,
+                name: `${$t('crm.common.customerCount')}：${customerCount}`,
+              },
+              {
+                value: businessCount,
+                name: `${$t('crm.common.businessCount')}：${businessCount}`,
+              },
+              {
+                value: winCount,
+                name: `${$t('crm.common.businessWinCount')}：${winCount}`,
+              },
             ],
       },
     ],
@@ -165,10 +185,7 @@ defineExpose({ loadData });
 <template>
   <div v-loading="loading">
     <Card :bordered="false" class="mb-4">
-      <Button
-        :type="active ? 'primary' : 'default'"
-        @click="active = true"
-      >
+      <Button :type="active ? 'primary' : 'default'" @click="active = true">
         {{ $t('crm.funnel.customerView') }}
       </Button>
       <Button
@@ -189,4 +206,3 @@ defineExpose({ loadData });
     </Card>
   </div>
 </template>
-

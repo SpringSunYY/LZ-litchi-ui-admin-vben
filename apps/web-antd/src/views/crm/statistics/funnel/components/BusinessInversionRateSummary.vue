@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import type { EchartsUIType } from '@vben/plugins/echarts';
+
 import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 
 import { nextTick, ref, watch } from 'vue';
@@ -20,9 +21,9 @@ defineOptions({ name: 'BusinessInversionRateSummary' });
 const props = defineProps<{
   queryParams: {
     deptId?: number;
-    userId?: number;
     interval: number;
     times: string[];
+    userId?: number;
   };
 }>();
 
