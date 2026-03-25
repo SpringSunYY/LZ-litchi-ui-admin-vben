@@ -4,6 +4,7 @@ import type { Dayjs } from 'dayjs';
 import { computed, onMounted, reactive, ref, watch } from 'vue';
 
 import { Page } from '@vben/common-ui';
+import { handleTree } from '@vben/utils';
 
 import {
   Button,
@@ -18,14 +19,13 @@ import {
 } from 'ant-design-vue';
 import dayjs from 'dayjs';
 
-import { getSimpleDeptList } from '#/api/system/dept';
 import {
   getCustomerSummaryByDate,
   getCustomerSummaryByUser,
 } from '#/api/crm/statistics/customer';
-import { $t } from '#/locales';
+import { getSimpleDeptList } from '#/api/system/dept';
 import { getSimpleUserList } from '#/api/system/user';
-import { handleTree } from '@vben/utils';
+import { $t } from '#/locales';
 
 import CustomerConversionStat from './components/CustomerConversionStat.vue';
 import CustomerDealCycleByArea from './components/CustomerDealCycleByArea.vue';
@@ -135,7 +135,8 @@ async function loadAllData() {
 
 /** 重置表单 */
 function handleReset() {
-  formState.deptId = deptList.value.length > 0 ? deptList.value[0]!.id : undefined;
+  formState.deptId =
+    deptList.value.length > 0 ? deptList.value[0]!.id : undefined;
   formState.userId = undefined;
   formState.interval = 2;
   resetTimeRange();
@@ -152,16 +153,21 @@ watch(
 
 const pickerType = computed(() => {
   switch (formState.interval) {
-    case 1:
+    case 1: {
       return 'date';
-    case 2:
+    }
+    case 2: {
       return 'week';
-    case 3:
+    }
+    case 3: {
       return 'month';
-    case 4:
+    }
+    case 4: {
       return 'year';
-    default:
+    }
+    default: {
       return 'date';
+    }
   }
 });
 
@@ -174,24 +180,30 @@ const pickerType = computed(() => {
 function resetTimeRange() {
   switch (formState.interval) {
     case 1: // 天
-    case 2: // 周
+    case 2: {
+      // 周
       formState.times = [
         dayjs().subtract(7, 'day').startOf('day'),
         dayjs().subtract(1, 'day').endOf('day'),
       ];
       break;
-    case 3: // 月
+    }
+    case 3: {
+      // 月
       formState.times = [
         dayjs().subtract(1, 'month').startOf('month'),
-        dayjs().subtract(1, 'day').endOf('day'),
+        dayjs().subtract(3, 'day').endOf('day'),
       ];
       break;
-    case 4: // 年
+    }
+    case 4: {
+      // 年
       formState.times = [
         dayjs().subtract(1, 'year').startOf('year'),
-        dayjs().subtract(1, 'day').endOf('day'),
+        dayjs().subtract(2, 'day').endOf('day'),
       ];
       break;
+    }
   }
 }
 
@@ -208,8 +220,14 @@ const chartTabs = computed(() => [
   { label: $t('crm.customer.statistics.customerTotal'), value: 'summary' },
   { label: $t('crm.customer.statistics.followUpAnalysis'), value: 'followUp' },
   { label: $t('crm.customer.statistics.poolAnalysis'), value: 'pool' },
-  { label: $t('crm.customer.statistics.dealCycleAnalysis'), value: 'dealCycle' },
-  { label: $t('crm.customer.statistics.customerConversion'), value: 'conversion' },
+  {
+    label: $t('crm.customer.statistics.dealCycleAnalysis'),
+    value: 'dealCycle',
+  },
+  {
+    label: $t('crm.customer.statistics.customerConversion'),
+    value: 'conversion',
+  },
 ]);
 
 const dealCycleTabs = computed(() => [
@@ -254,10 +272,18 @@ onMounted(async () => {
 
         <Form.Item :label="$t('crm.customer.interval')">
           <Select v-model:value="formState.interval" style="width: 140px">
-            <Select.Option :value="1">{{ $t('crm.customer.intervalDay') }}</Select.Option>
-            <Select.Option :value="2">{{ $t('crm.customer.intervalWeek') }}</Select.Option>
-            <Select.Option :value="3">{{ $t('crm.customer.intervalMonth') }}</Select.Option>
-            <Select.Option :value="4">{{ $t('crm.customer.intervalYear') }}</Select.Option>
+            <Select.Option :value="1">
+              {{ $t('crm.customer.intervalDay') }}
+            </Select.Option>
+            <Select.Option :value="2">
+              {{ $t('crm.customer.intervalWeek') }}
+            </Select.Option>
+            <Select.Option :value="3">
+              {{ $t('crm.customer.intervalMonth') }}
+            </Select.Option>
+            <Select.Option :value="4">
+              {{ $t('crm.customer.intervalYear') }}
+            </Select.Option>
           </Select>
         </Form.Item>
 

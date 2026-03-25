@@ -1,4 +1,13 @@
 {
+  "common": {
+    "days": "天",
+    "yuan": "元",
+    "customerCount": "客户数",
+    "businessCount": "商机数",
+    "businessWinCount": "赢单数",
+    "businessStage": "阶段",
+    "businessAmount": "商机总金额"
+  },
   "customer": {
     "department": "部门",
     "employee": "员工",
@@ -44,8 +53,19 @@
       "dealCycleRankByArea": "成交周期排行(按地区)",
       "dealCycleRankByProduct": "成交周期排行(按产品)",
       "dealCycleDays": "成交周期(天)",
-      "avgDealCycle": "平均成交周期",
-      "days": "天"
+      "avgDealCycle": "平均成交周期"
     }
+  },
+  "funnel": {
+    "title": "销售漏斗",
+    "businessAnalysis": "商机分析",
+    "businessInversionRateAnalysis": "商机转化率分析",
+    "customerView": "客户视角",
+    "dynamicView": "动态视角",
+    "newBusinessCount": "新增商机数",
+    "newBusinessAmount": "新增商机金额",
+    "winRate": "赢单转化率",
+    "totalBusinessCount": "商机总数",
+    "winBusinessCount": "赢单商机数"
   }
 }

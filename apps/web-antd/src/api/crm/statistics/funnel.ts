@@ -10,6 +10,14 @@ export namespace CrmStatisticsFunnelApi {
     businessWinCount: number; // 赢单数
   }
 
+  /** 商机结束状态统计 */
+  export interface BusinessEndStatusSummary {
+    endStatus: number; // 结束状态
+    endStatusName: string; // 结束状态名称
+    businessCount: number; // 商机数
+    totalPrice: number; // 商机总金额
+  }
+
   /** 商机分析(按日期) */
   export interface BusinessSummaryByDate {
     time: string; // 时间
@@ -23,6 +31,13 @@ export namespace CrmStatisticsFunnelApi {
     businessCount: number; // 商机数量
     businessWinCount: number; // 赢单商机数
   }
+
+  /** 商机分页列表项 */
+  export interface BusinessPageItem {
+    id: number;
+    name: string;
+    customerName: string;
+  }
 }
 
 /** 获取销售漏斗统计数据 */
@@ -35,7 +50,7 @@ export function getFunnelSummary(params: PageParam) {
 
 /** 获取商机结束状态统计 */
 export function getBusinessSummaryByEndStatus(params: PageParam) {
-  return requestClient.get<Record<string, number>>(
+  return requestClient.get<CrmStatisticsFunnelApi.BusinessEndStatusSummary[]>(
     '/crm/statistics-funnel/get-business-summary-by-end-status',
     { params },
   );
@@ -60,7 +75,7 @@ export function getBusinessInversionRateSummaryByDate(params: PageParam) {
 
 /** 获取商机列表(按日期) */
 export function getBusinessPageByDate(params: PageParam) {
-  return requestClient.get<PageResult<any>>(
+  return requestClient.get<PageResult<CrmStatisticsFunnelApi.BusinessPageItem>>(
     '/crm/statistics-funnel/get-business-page-by-date',
     { params },
   );

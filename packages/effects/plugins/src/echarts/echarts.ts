@@ -1,6 +1,7 @@
 import type {
   // 系列类型的定义后缀都为 SeriesOption
   BarSeriesOption,
+  FunnelSeriesOption,
   GaugeSeriesOption,
   LineSeriesOption,
 } from 'echarts/charts';
@@ -15,6 +16,7 @@ import type { ComposeOption } from 'echarts/core';
 
 import {
   BarChart,
+  FunnelChart,
   GaugeChart,
   LineChart,
   PieChart,
@@ -39,6 +41,7 @@ import { CanvasRenderer } from 'echarts/renderers';
 export type ECOption = ComposeOption<
   | BarSeriesOption
   | DatasetComponentOption
+  | FunnelSeriesOption
   | GaugeSeriesOption
   | GridComponentOption
   | LineSeriesOption
@@ -57,6 +60,7 @@ echarts.use([
   TransformComponent,
   BarChart,
   LineChart,
+  FunnelChart,
   GaugeChart,
   LabelLayout,
   UniversalTransition,

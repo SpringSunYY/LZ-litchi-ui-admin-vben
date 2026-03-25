@@ -1,4 +1,13 @@
 {
+  "common": {
+    "days": "days",
+    "yuan": "Yuan",
+    "customerCount": "Customer Count",
+    "businessCount": "Business Count",
+    "businessWinCount": "Win Count",
+    "businessStage": "Stage",
+    "businessAmount": "Business Amount"
+  },
   "customer": {
     "department": "Department",
     "employee": "Employee",
@@ -34,7 +43,7 @@
       "avgFollowUpPerCustomer": "Avg Follow-up Per Customer",
       "followUpTypeDistribution": "Follow-up Type Distribution",
       "poolCustomerTrend": "Pool Customer Trend",
-      "poolCustomerRankByEmployee": "Pool Customer Rank (By Employee)",
+      "poolCustomerRankByEmployee": "Pool Rank (By Employee)",
       "putIntoPool": "Put Into Pool",
       "takeFromPool": "Take From Pool",
       "putIntoPoolCount": "Put Into Pool Count",
@@ -45,8 +54,19 @@
       "dealCycleRankByArea": "Deal Cycle Rank (By Area)",
       "dealCycleRankByProduct": "Deal Cycle Rank (By Product)",
       "dealCycleDays": "Deal Cycle (Days)",
-      "avgDealCycle": "Avg Deal Cycle",
-      "days": "days"
+      "avgDealCycle": "Avg Deal Cycle"
     }
+  },
+  "funnel": {
+    "title": "Sales Funnel",
+    "businessAnalysis": "Business Analysis",
+    "businessInversionRateAnalysis": "Business Conversion Analysis",
+    "customerView": "Customer View",
+    "dynamicView": "Dynamic View",
+    "newBusinessCount": "New Business Count",
+    "newBusinessAmount": "New Business Amount",
+    "winRate": "Win Rate",
+    "totalBusinessCount": "Total Business Count",
+    "winBusinessCount": "Win Business Count"
   }
 }
