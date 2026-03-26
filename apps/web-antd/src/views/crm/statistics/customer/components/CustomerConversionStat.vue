@@ -69,6 +69,7 @@ const [Grid, gridApi] = useVbenVxeGrid({
 });
 
 async function loadData() {
+  if (!props.queryParams.deptId) return;
   const res = await getContractSummary({
     interval: props.queryParams.interval,
     deptId: props.queryParams.deptId,

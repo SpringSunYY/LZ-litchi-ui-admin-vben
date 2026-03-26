@@ -67,5 +67,25 @@
     "winRate": "赢单转化率",
     "totalBusinessCount": "商机总数",
     "winBusinessCount": "赢单商机数"
+  },
+  "performance": {
+    "title": "员工业绩",
+    "contractCountAnalysis": "合同数量统计",
+    "contractPriceAnalysis": "合同金额统计",
+    "receivablePriceAnalysis": "回款金额统计",
+    "contractCount": "签约合同数",
+    "contractAmount": "合同金额",
+    "receivableAmount": "回款金额",
+    "currentMonthCount": "本月",
+    "lastMonthCount": "上月",
+    "lastYearCount": "去年",
+    "currentMonthAmount": "本月合同金额",
+    "lastMonthAmount": "上月合同金额",
+    "lastYearAmount": "去年合同金额",
+    "currentMonthReceivable": "本月回款金额",
+    "lastMonthReceivable": "上月回款金额",
+    "lastYearReceivable": "去年回款金额",
+    "byEmployee": "按员工",
+    "byMonth": "按月份"
   }
 }

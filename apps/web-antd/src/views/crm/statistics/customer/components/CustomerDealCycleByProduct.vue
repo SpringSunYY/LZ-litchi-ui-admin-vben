@@ -73,6 +73,7 @@ function renderChart() {
 
 /** 加载数据 */
 async function loadData() {
+  if (!props.queryParams.deptId) return;
   loading.value = true;
   try {
     const params = {

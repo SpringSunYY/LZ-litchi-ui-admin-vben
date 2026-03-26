@@ -68,5 +68,25 @@
     "winRate": "Win Rate",
     "totalBusinessCount": "Total Business Count",
     "winBusinessCount": "Win Business Count"
+  },
+  "performance": {
+    "title": "Employee Performance",
+    "contractCountAnalysis": "Contract Count Analysis",
+    "contractPriceAnalysis": "Contract Amount Analysis",
+    "receivablePriceAnalysis": "Receivable Amount Analysis",
+    "contractCount": "Contract Count",
+    "contractAmount": "Contract Amount",
+    "receivableAmount": "Receivable Amount",
+    "currentMonthCount": "This Month",
+    "lastMonthCount": "Last Month",
+    "lastYearCount": "Last Year",
+    "currentMonthAmount": "This Month Amount",
+    "lastMonthAmount": "Last Month Amount",
+    "lastYearAmount": "Last Year Amount",
+    "currentMonthReceivable": "This Month Receivable",
+    "lastMonthReceivable": "Last Month Receivable",
+    "lastYearReceivable": "Last Year Receivable",
+    "byEmployee": "By Employee",
+    "byMonth": "By Month"
   }
 }

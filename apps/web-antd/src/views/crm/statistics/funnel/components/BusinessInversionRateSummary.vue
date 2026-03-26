@@ -136,6 +136,7 @@ const [Grid, gridApi] = useVbenVxeGrid({
 });
 
 async function loadData() {
+  if (!props.queryParams.deptId) return;
   loading.value = true;
   try {
     const params = {
