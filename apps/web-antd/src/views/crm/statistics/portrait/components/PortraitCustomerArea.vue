@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import type { EchartsUIType } from '@vben/plugins/echarts';
 
-import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 import type { CrmStatisticsPortraitApi } from '#/api/crm/statistics/portrait';
 
 import { nextTick, ref, watch } from 'vue';
@@ -15,7 +14,7 @@ import { getCustomerArea } from '#/api/crm/statistics/portrait';
 import { $t } from '#/locales';
 import { areaReplace } from '#/utils';
 
-defineOptions({ name: 'PortraitCustomerArea' });
+import { areaColumns } from '../data';
 
 const props = defineProps<{
   queryParams: {
@@ -126,34 +125,9 @@ async function renderRightMap(mapJson: any) {
   });
 }
 
-const columns: VxeTableGridOptions['columns'] = [
-  { type: 'seq', width: 60, title: '#' },
-  { field: 'areaName', title: $t('crm.portrait.areaName'), minWidth: 120 },
-  {
-    field: 'customerCount',
-    title: $t('crm.portrait.customerCount'),
-    minWidth: 100,
-  },
-  {
-    field: 'customerPortion',
-    title: $t('crm.portrait.areaPortion'),
-    minWidth: 120,
-  },
-  {
-    field: 'dealCount',
-    title: $t('crm.portrait.dealCount'),
-    minWidth: 100,
-  },
-  {
-    field: 'dealPortion',
-    title: $t('crm.portrait.dealPortion'),
-    minWidth: 120,
-  },
-];
-
 const [Grid, gridApi] = useVbenVxeGrid({
   gridOptions: {
-    columns,
+    columns: areaColumns,
     height: 400,
     data: [],
   },

@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import type { EchartsUIType } from '@vben/plugins/echarts';
 
-import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 import type { CrmStatisticsCustomerApi } from '#/api/crm/statistics/customer';
 
 import { nextTick, reactive, ref } from 'vue';
@@ -15,7 +14,8 @@ import {
   getFollowUpSummaryByDate,
   getFollowUpSummaryByUser,
 } from '#/api/crm/statistics/customer';
-import { $t } from '#/locales';
+
+import { followUpSummaryColumns } from '../data';
 
 defineOptions({ name: 'CustomerFollowUpSummary' });
 
@@ -40,24 +40,9 @@ const tableData = ref<CrmStatisticsCustomerApi.FollowUpSummaryByUser[]>([]);
 const chartRef = ref<EchartsUIType>();
 const { renderEcharts } = useEcharts(chartRef);
 
-const columns: VxeTableGridOptions['columns'] = [
-  { type: 'seq', width: 60, title: '#' },
-  { field: 'ownerUserName', title: $t('crm.customer.employee'), minWidth: 120 },
-  {
-    field: 'followUpRecordCount',
-    title: $t('crm.customer.followUpCount'),
-    minWidth: 100,
-  },
-  {
-    field: 'followUpCustomerCount',
-    title: $t('crm.customer.followUpCustomerCount'),
-    minWidth: 100,
-  },
-];
-
 const [Grid, gridApi] = useVbenVxeGrid({
   gridOptions: {
-    columns,
+    columns: followUpSummaryColumns,
     height: 300,
     data: [],
   },

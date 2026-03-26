@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import type { EchartsUIType } from '@vben/plugins/echarts';
 
-import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 import type { CrmStatisticsPerformanceApi } from '#/api/crm/statistics/performance';
 
 import { nextTick, reactive, ref, watch } from 'vue';
@@ -14,7 +13,7 @@ import { useVbenVxeGrid } from '#/adapter/vxe-table';
 import { getReceivablePricePerformance } from '#/api/crm/statistics/performance';
 import { $t } from '#/locales';
 
-defineOptions({ name: 'ReceivablePricePerformance' });
+import { receivablePriceColumns } from '../data';
 
 const props = defineProps<{
   queryParams: {
@@ -37,44 +36,9 @@ const chartData = ref<CrmStatisticsPerformanceApi.Performance[]>([]);
 const chartRef = ref<EchartsUIType>();
 const { renderEcharts: renderChart } = useEcharts(chartRef);
 
-const columns: VxeTableGridOptions['columns'] = [
-  { type: 'seq', width: 60, title: '#' },
-  { field: 'time', title: $t('common.date'), minWidth: 100 },
-  {
-    field: 'currentMonthCount',
-    title: $t('crm.performance.currentMonthReceivable'),
-    minWidth: 150,
-    formatter: 'formatAmount2',
-  },
-  {
-    field: 'lastMonthCount',
-    title: $t('crm.performance.lastMonthReceivable'),
-    minWidth: 150,
-    formatter: 'formatAmount2',
-  },
-  {
-    field: 'lastYearCount',
-    title: $t('crm.performance.lastYearReceivable'),
-    minWidth: 150,
-    formatter: 'formatAmount2',
-  },
-  {
-    field: 'monthChainRate',
-    title: $t('crm.performance.monthChainRate'),
-    minWidth: 120,
-    formatter: ({ cellValue }) => (cellValue !== 'NULL' ? `${cellValue}%` : '-'),
-  },
-  {
-    field: 'yearChainRate',
-    title: $t('crm.performance.yearChainRate'),
-    minWidth: 120,
-    formatter: ({ cellValue }) => (cellValue !== 'NULL' ? `${cellValue}%` : '-'),
-  },
-];
-
 const [Grid, gridApi] = useVbenVxeGrid({
   gridOptions: {
-    columns,
+    columns: receivablePriceColumns,
     height: 400,
     data: [],
   },

@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import type { EchartsUIType } from '@vben/plugins/echarts';
 
-import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 import type { CrmStatisticsFunnelApi } from '#/api/crm/statistics/funnel';
 
 import { nextTick, reactive, ref, watch } from 'vue';
@@ -16,7 +15,8 @@ import {
   getFunnelSummary,
 } from '#/api/crm/statistics/funnel';
 import { $t } from '#/locales';
-import { DICT_TYPE } from '#/utils';
+
+import { funnelColumns } from '../data';
 
 defineOptions({ name: 'FunnelBusiness' });
 
@@ -42,33 +42,9 @@ const totalStats = reactive({
   businessWinCount: 0,
 });
 
-const columns: VxeTableGridOptions['columns'] = [
-  { type: 'seq', width: 60, title: '#' },
-  {
-    field: 'endStatus',
-    title: $t('crm.funnel.endStatus'),
-    width: 200,
-    cellRender: {
-      name: 'CellDict',
-      props: { type: DICT_TYPE.CRM_BUSINESS_END_STATUS_TYPE },
-    },
-  },
-  {
-    field: 'businessCount',
-    title: $t('crm.common.businessCount'),
-    minWidth: 200,
-  },
-  {
-    field: 'totalPrice',
-    title: $t('crm.common.businessAmount'),
-    minWidth: 200,
-    formatter: 'formatAmount2',
-  },
-];
-
 const [Grid, gridApi] = useVbenVxeGrid({
   gridOptions: {
-    columns,
+    columns: funnelColumns,
     height: 300,
     data: [],
   },

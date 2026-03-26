@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import type { EchartsUIType } from '@vben/plugins/echarts';
 
-import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 import type { CrmStatisticsCustomerApi } from '#/api/crm/statistics/customer';
 
 import { nextTick, reactive, ref, watch } from 'vue';
@@ -14,7 +13,7 @@ import { useVbenVxeGrid } from '#/adapter/vxe-table';
 import { getCustomerDealCycleByArea } from '#/api/crm/statistics/customer';
 import { $t } from '#/locales';
 
-defineOptions({ name: 'CustomerDealCycleByArea' });
+import { dealCycleByAreaColumns } from '../data';
 
 const props = defineProps<{
   queryParams: {
@@ -36,24 +35,9 @@ const tableData = ref<CrmStatisticsCustomerApi.CustomerDealCycleByArea[]>([]);
 const chartRef = ref<EchartsUIType>();
 const { renderEcharts } = useEcharts(chartRef);
 
-const columns: VxeTableGridOptions['columns'] = [
-  { type: 'seq', width: 60, title: '#' },
-  { field: 'areaName', title: $t('crm.portrait.areaName'), minWidth: 120 },
-  {
-    field: 'customerDealCount',
-    title: $t('crm.customer.dealCustomerCount'),
-    minWidth: 100,
-  },
-  {
-    field: 'customerDealCycle',
-    title: $t('crm.customer.dealCycleDays'),
-    minWidth: 100,
-  },
-];
-
 const [Grid, gridApi] = useVbenVxeGrid({
   gridOptions: {
-    columns,
+    columns: dealCycleByAreaColumns,
     height: 400,
     data: [],
   },

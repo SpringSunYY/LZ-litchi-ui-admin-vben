@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import type { EchartsUIType } from '@vben/plugins/echarts';
 
-import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 import type { CrmStatisticsFunnelApi } from '#/api/crm/statistics/funnel';
 
 import { nextTick, ref, watch } from 'vue';
@@ -16,6 +15,8 @@ import {
   getBusinessSummaryByDate,
 } from '#/api/crm/statistics/funnel';
 import { $t } from '#/locales';
+
+import { businessColumns } from '../data';
 
 defineOptions({ name: 'BusinessSummary' });
 
@@ -96,62 +97,9 @@ function renderBarChart() {
   });
 }
 
-const columns: VxeTableGridOptions['columns'] = [
-  { type: 'seq', width: 60, title: '#' },
-  {
-    field: 'name',
-    title: $t('crm.funnel.businessName'),
-    minWidth: 180,
-  },
-  {
-    field: 'customerName',
-    title: $t('crm.common.customerName'),
-    minWidth: 180,
-  },
-  {
-    field: 'statusTypeName',
-    title: $t('crm.common.businessStage'),
-    minWidth: 120,
-  },
-  {
-    field: 'ownerUserName',
-    title: $t('crm.customer.employee'),
-    minWidth: 120,
-  },
-  {
-    field: 'totalProductPrice',
-    title: $t('crm.funnel.totalProductPrice'),
-    minWidth: 120,
-    formatter: 'formatAmount2',
-  },
-  {
-    field: 'discountPercent',
-    title: $t('crm.funnel.discountPercent'),
-    minWidth: 120,
-    formatter: ({ cellValue }) => (cellValue ? `${cellValue}%` : '-'),
-  },
-  {
-    field: 'totalPrice',
-    title: $t('crm.common.businessAmount'),
-    minWidth: 120,
-    formatter: 'formatAmount2',
-  },
-  {
-    field: 'dealTime',
-    title: $t('crm.contract.orderDate'),
-    minWidth: 160,
-    formatter: 'formatDate',
-  },
-  {
-    field: 'creatorName',
-    title: $t('crm.funnel.creator'),
-    minWidth: 120,
-  },
-];
-
 const [Grid, gridApi] = useVbenVxeGrid({
   gridOptions: {
-    columns,
+    columns: businessColumns,
     height: 300,
     data: [],
   },

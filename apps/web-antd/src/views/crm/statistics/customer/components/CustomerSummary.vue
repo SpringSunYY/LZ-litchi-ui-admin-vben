@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import type { EchartsUIType } from '@vben/plugins/echarts';
 
-import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 import type { CrmStatisticsCustomerApi } from '#/api/crm/statistics/customer';
 
 import { nextTick, reactive, ref } from 'vue';
@@ -16,6 +15,8 @@ import {
   getCustomerSummaryByUser,
 } from '#/api/crm/statistics/customer';
 import { $t } from '#/locales';
+
+import { customerSummaryColumns } from '../data';
 
 defineOptions({ name: 'CustomerSummary' });
 
@@ -40,60 +41,15 @@ const tableData = ref<CrmStatisticsCustomerApi.CustomerSummaryByUser[]>([]);
 const chartRef = ref<EchartsUIType>();
 const { renderEcharts } = useEcharts(chartRef);
 
-const columns: VxeTableGridOptions['columns'] = [
-  { type: 'seq', width: 60, title: '#' },
-  { field: 'ownerUserName', title: $t('crm.customer.employee'), minWidth: 120 },
-  {
-    field: 'customerCreateCount',
-    title: $t('crm.customer.newCustomerCount'),
-    minWidth: 100,
-  },
-  {
-    field: 'customerDealCount',
-    title: $t('crm.customer.dealCustomerCount'),
-    minWidth: 100,
-  },
-  {
-    field: 'dealRate',
-    title: $t('crm.customer.dealRate'),
-    minWidth: 100,
-    formatter: ({ cellValue }) => `${cellValue}%`,
-  },
-  {
-    field: 'contractPrice',
-    title: $t('crm.portrait.totalPrice'),
-    minWidth: 120,
-    formatter: 'formatAmount2',
-  },
-  {
-    field: 'receivablePrice',
-    title: $t('crm.portrait.receivablePrice'),
-    minWidth: 120,
-    formatter: 'formatAmount2',
-  },
-  {
-    field: 'receivableNotPrice',
-    title: $t('crm.portrait.receivableNotPrice'),
-    minWidth: 120,
-    formatter: 'formatAmount2',
-  },
-  {
-    field: 'receivableRate',
-    title: $t('crm.customer.receivableRate'),
-    minWidth: 100,
-    formatter: ({ cellValue }) => `${cellValue}%`,
-  },
-];
-
 const [Grid, gridApi] = useVbenVxeGrid({
   gridOptions: {
-    columns,
+    columns: customerSummaryColumns,
     height: 300,
     data: [],
   },
 });
 
-function drawChart() {
+function renderChart() {
   const times = chartData.value.map((i) => i.time);
   const createCounts = chartData.value.map((i) => i.customerCreateCount);
   const dealCounts = chartData.value.map((i) => i.customerDealCount);
@@ -190,7 +146,7 @@ async function loadData() {
     gridApi.grid?.loadData(tableRows);
 
     await nextTick();
-    drawChart();
+    renderChart();
   } finally {
     loading.value = false;
   }

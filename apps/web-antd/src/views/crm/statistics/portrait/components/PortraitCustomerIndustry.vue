@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import type { EchartsUIType } from '@vben/plugins/echarts';
-import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 
 import type { CrmStatisticsPortraitApi } from '#/api/crm/statistics/portrait';
 
@@ -15,7 +14,7 @@ import { getCustomerIndustry } from '#/api/crm/statistics/portrait';
 import { $t } from '#/locales';
 import { DICT_TYPE, getDictLabel } from '#/utils';
 
-defineOptions({ name: 'PortraitCustomerIndustry' });
+import { industryColumns } from '../data';
 
 const props = defineProps<{
   queryParams: {
@@ -103,34 +102,9 @@ function renderRightPie() {
   });
 }
 
-const columns: VxeTableGridOptions['columns'] = [
-  { type: 'seq', width: 60, title: '#' },
-  { field: 'industryName', title: $t('crm.portrait.industry'), minWidth: 120 },
-  {
-    field: 'customerCount',
-    title: $t('crm.portrait.customerCount'),
-    minWidth: 100,
-  },
-  {
-    field: 'industryPortion',
-    title: $t('crm.portrait.industryPortion'),
-    minWidth: 120,
-  },
-  {
-    field: 'dealCount',
-    title: $t('crm.portrait.dealCount'),
-    minWidth: 100,
-  },
-  {
-    field: 'dealPortion',
-    title: $t('crm.portrait.dealPortion'),
-    minWidth: 120,
-  },
-];
-
 const [Grid, gridApi] = useVbenVxeGrid({
   gridOptions: {
-    columns,
+    columns: industryColumns,
     height: 400,
     data: [],
   },

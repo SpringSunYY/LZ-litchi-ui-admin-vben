@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import type { EchartsUIType } from '@vben/plugins/echarts';
 
-import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 import type { CrmStatisticsCustomerApi } from '#/api/crm/statistics/customer';
 
 import { nextTick, reactive, ref, watch } from 'vue';
@@ -15,7 +14,7 @@ import { getFollowUpSummaryByType } from '#/api/crm/statistics/customer';
 import { $t } from '#/locales';
 import { DICT_TYPE, getDictLabel } from '#/utils';
 
-defineOptions({ name: 'CustomerFollowUpType' });
+import { followUpTypeColumns } from '../data';
 
 const props = defineProps<{
   queryParams: {
@@ -47,33 +46,9 @@ const COLORS = [
   '#fffb96',
 ];
 
-const columns: VxeTableGridOptions['columns'] = [
-  { type: 'seq', width: 60, title: '#' },
-  {
-    field: 'followUpType',
-    title: $t('crm.customer.followUpType'),
-    minWidth: 120,
-    cellRender: {
-      name: 'CellDict',
-      props: { type: DICT_TYPE.CRM_FOLLOW_UP_TYPE },
-    },
-  },
-  {
-    field: 'followUpRecordCount',
-    title: $t('crm.customer.followUpCount'),
-    minWidth: 100,
-  },
-  {
-    field: 'portion',
-    title: $t('crm.customer.followUpTypeDistribution'),
-    minWidth: 100,
-    formatter: ({ cellValue }) => `${cellValue}%`,
-  },
-];
-
 const [Grid, gridApi] = useVbenVxeGrid({
   gridOptions: {
-    columns,
+    columns: followUpTypeColumns,
     height: 400,
     data: [],
   },

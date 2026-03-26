@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import type { EchartsUIType } from '@vben/plugins/echarts';
 
-import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 import type { CrmStatisticsCustomerApi } from '#/api/crm/statistics/customer';
 
 import { nextTick, ref } from 'vue';
@@ -16,9 +15,8 @@ import {
   getCustomerSummaryByDate,
 } from '#/api/crm/statistics/customer';
 import { $t } from '#/locales';
-import { DICT_TYPE } from '#/utils';
 
-defineOptions({ name: 'CustomerConversionStat' });
+import { conversionStatColumns } from '../data';
 
 const props = defineProps<{
   queryParams: {
@@ -34,6 +32,14 @@ const chartData = ref<any[]>([]);
 
 const chartRef = ref<EchartsUIType>();
 const { renderEcharts } = useEcharts(chartRef);
+
+const [Grid, gridApi] = useVbenVxeGrid({
+  gridOptions: {
+    columns: conversionStatColumns,
+    height: 400,
+    data: [],
+  },
+});
 
 function renderChart() {
   const textColor = '#666';
@@ -105,39 +111,6 @@ function renderChart() {
     ],
   });
 }
-
-const columns: VxeTableGridOptions['columns'] = [
-  { type: 'seq', width: 60, title: '#' },
-  { field: 'customerName', title: $t('crm.common.customerName'), minWidth: 150 },
-  { field: 'contractName', title: $t('crm.contract.name'), minWidth: 150 },
-  {
-    field: 'totalPrice',
-    title: $t('crm.contract.totalPrice'),
-    minWidth: 120,
-    formatter: 'formatAmount2',
-  },
-  {
-    field: 'receivablePrice',
-    title: $t('crm.contract.receivablePrice'),
-    minWidth: 120,
-    formatter: 'formatAmount2',
-  },
-  {
-    field: 'orderDate',
-    title: $t('crm.contract.orderDate'),
-    minWidth: 160,
-    formatter: 'formatDateTime',
-  },
-  { field: 'ownerUserName', title: $t('crm.common.ownerUser'), minWidth: 100 },
-];
-
-const [Grid, gridApi] = useVbenVxeGrid({
-  gridOptions: {
-    columns,
-    height: 400,
-    data: [],
-  },
-});
 
 async function loadData() {
   if (!props.queryParams.deptId) return;
