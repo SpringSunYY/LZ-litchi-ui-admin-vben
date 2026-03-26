@@ -45,12 +45,12 @@ const columns: VxeTableGridOptions['columns'] = [
   { field: 'ownerUserName', title: $t('crm.customer.employee'), minWidth: 120 },
   {
     field: 'followUpRecordCount',
-    title: $t('crm.customer.statistics.followUpCount'),
+    title: $t('crm.customer.followUpCount'),
     minWidth: 100,
   },
   {
     field: 'followUpCustomerCount',
-    title: $t('crm.customer.statistics.followUpCustomerCount'),
+    title: $t('crm.customer.followUpCustomerCount'),
     minWidth: 100,
   },
 ];
@@ -75,8 +75,8 @@ function renderChart() {
     tooltip: { trigger: 'axis' },
     legend: {
       data: [
-        $t('crm.customer.statistics.followUpCount'),
-        $t('crm.customer.statistics.followUpCustomerCount'),
+        $t('crm.customer.followUpCount'),
+        $t('crm.customer.followUpCustomerCount'),
       ],
       bottom: 0,
       textStyle: { color: textColor },
@@ -101,14 +101,14 @@ function renderChart() {
     },
     series: [
       {
-        name: $t('crm.customer.statistics.followUpCount'),
+        name: $t('crm.customer.followUpCount'),
         type: 'bar',
         barMaxWidth: 40,
         itemStyle: { color: '#5ab1ef', borderRadius: [4, 4, 0, 0] },
         data: recordCounts,
       },
       {
-        name: $t('crm.customer.statistics.followUpCustomerCount'),
+        name: $t('crm.customer.followUpCustomerCount'),
         type: 'bar',
         barMaxWidth: 40,
         itemStyle: { color: '#2fc25b', borderRadius: [4, 4, 0, 0] },
@@ -167,7 +167,7 @@ defineExpose({ loadData });
       <Col :span="8">
         <Card :bordered="false">
           <Statistic
-            :title="$t('crm.customer.statistics.totalFollowUpCount')"
+            :title="$t('crm.customer.totalFollowUpCount')"
             :value="totalStats.followUpRecordCount"
           />
         </Card>
@@ -175,7 +175,7 @@ defineExpose({ loadData });
       <Col :span="8">
         <Card :bordered="false">
           <Statistic
-            :title="$t('crm.customer.statistics.followUpCustomerCount')"
+            :title="$t('crm.customer.followUpCustomerCount')"
             :value="totalStats.followUpCustomerCount"
           />
         </Card>
@@ -183,7 +183,7 @@ defineExpose({ loadData });
       <Col :span="8">
         <Card :bordered="false">
           <Statistic
-            :title="$t('crm.customer.statistics.avgFollowUpPerCustomer')"
+            :title="$t('crm.customer.avgFollowUpPerCustomer')"
             :value="totalStats.avgPerCustomer"
           />
         </Card>
@@ -191,7 +191,7 @@ defineExpose({ loadData });
     </Row>
 
     <Card
-      :title="$t('crm.customer.statistics.followUpCountTrend')"
+      :title="$t('crm.customer.followUpCountTrend')"
       :bordered="false"
       class="mb-4"
     >
@@ -199,7 +199,7 @@ defineExpose({ loadData });
     </Card>
 
     <Card
-      :title="$t('crm.customer.statistics.followUpCountRankByEmployee')"
+      :title="$t('crm.customer.followUpCountRankByEmployee')"
       :bordered="false"
     >
       <Grid />

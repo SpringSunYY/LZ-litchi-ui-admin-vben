@@ -151,7 +151,7 @@ onMounted(async () => {
           />
         </Form.Item>
 
-        <Form.Item :label="$t('crm.customer.department')">
+        <Form.Item :label="$t('crm.common.department')">
           <TreeSelect
             v-model:value="formState.deptId"
             :dropdown-style="{ maxHeight: '400px', overflow: 'auto' }"
@@ -163,7 +163,7 @@ onMounted(async () => {
           />
         </Form.Item>
 
-        <Form.Item :label="$t('crm.customer.employee')">
+        <Form.Item :label="$t('crm.common.employee')">
           <Select
             v-model:value="formState.userId"
             :disabled="!formState.deptId"

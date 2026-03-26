@@ -46,7 +46,7 @@ const columns: VxeTableGridOptions['columns'] = [
   { type: 'seq', width: 60, title: '#' },
   {
     field: 'endStatus',
-    title: $t('crm.business.endStatus'),
+    title: $t('crm.funnel.endStatus'),
     width: 200,
     cellRender: {
       name: 'CellDict',

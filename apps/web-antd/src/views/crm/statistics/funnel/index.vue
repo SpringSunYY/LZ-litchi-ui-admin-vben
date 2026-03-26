@@ -221,27 +221,27 @@ onMounted(async () => {
           />
         </Form.Item>
 
-        <Form.Item :label="$t('crm.customer.interval')">
+        <Form.Item :label="$t('crm.common.interval')">
           <Select v-model:value="formState.interval" style="width: 140px">
             <Select.Option :value="1">
-              {{ $t('crm.customer.intervalDay') }}
+              {{ $t('crm.common.intervalDay') }}
             </Select.Option>
             <Select.Option :value="2">
-              {{ $t('crm.customer.intervalWeek') }}
+              {{ $t('crm.common.intervalWeek') }}
             </Select.Option>
             <Select.Option :value="3">
-              {{ $t('crm.customer.intervalMonth') }}
+              {{ $t('crm.common.intervalMonth') }}
             </Select.Option>
             <Select.Option :value="4">
-              {{ $t('crm.customer.intervalQuarter') }}
+              {{ $t('crm.common.intervalQuarter') }}
             </Select.Option>
             <Select.Option :value="5">
-              {{ $t('crm.customer.intervalYear') }}
+              {{ $t('crm.common.intervalYear') }}
             </Select.Option>
           </Select>
         </Form.Item>
 
-        <Form.Item :label="$t('crm.customer.department')">
+        <Form.Item :label="$t('crm.common.department')">
           <TreeSelect
             v-model:value="formState.deptId"
             :dropdown-style="{ maxHeight: '400px', overflow: 'auto' }"
@@ -253,7 +253,7 @@ onMounted(async () => {
           />
         </Form.Item>
 
-        <Form.Item :label="$t('crm.customer.employee')">
+        <Form.Item :label="$t('crm.common.employee')">
           <Select
             v-model:value="formState.userId"
             :disabled="!formState.deptId"

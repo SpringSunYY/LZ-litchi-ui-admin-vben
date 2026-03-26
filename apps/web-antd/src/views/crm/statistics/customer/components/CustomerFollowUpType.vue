@@ -51,7 +51,7 @@ const columns: VxeTableGridOptions['columns'] = [
   { type: 'seq', width: 60, title: '#' },
   {
     field: 'followUpType',
-    title: $t('crm.customer.statistics.followUpType'),
+    title: $t('crm.customer.followUpType'),
     minWidth: 120,
     cellRender: {
       name: 'CellDict',
@@ -60,12 +60,12 @@ const columns: VxeTableGridOptions['columns'] = [
   },
   {
     field: 'followUpRecordCount',
-    title: $t('crm.customer.statistics.followUpCount'),
+    title: $t('crm.customer.followUpCount'),
     minWidth: 100,
   },
   {
     field: 'portion',
-    title: $t('crm.customer.statistics.followUpTypeDistribution'),
+    title: $t('crm.customer.followUpTypeDistribution'),
     minWidth: 100,
     formatter: ({ cellValue }) => `${cellValue}%`,
   },
@@ -172,7 +172,7 @@ defineExpose({ loadData });
 <template>
   <div v-loading="loading">
     <Card
-      :title="$t('crm.customer.statistics.followUpTypeDistribution')"
+      :title="$t('crm.customer.followUpTypeDistribution')"
       :bordered="false"
       class="mb-4"
     >

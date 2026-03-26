@@ -45,17 +45,17 @@ const columns: VxeTableGridOptions['columns'] = [
   { field: 'ownerUserName', title: $t('crm.customer.employee'), minWidth: 120 },
   {
     field: 'customerCreateCount',
-    title: $t('crm.customer.statistics.newCustomerCount'),
+    title: $t('crm.customer.newCustomerCount'),
     minWidth: 100,
   },
   {
     field: 'customerDealCount',
-    title: $t('crm.customer.statistics.dealCustomerCount'),
+    title: $t('crm.customer.dealCustomerCount'),
     minWidth: 100,
   },
   {
     field: 'dealRate',
-    title: $t('crm.customer.statistics.dealRate'),
+    title: $t('crm.customer.dealRate'),
     minWidth: 100,
     formatter: ({ cellValue }) => `${cellValue}%`,
   },
@@ -79,7 +79,7 @@ const columns: VxeTableGridOptions['columns'] = [
   },
   {
     field: 'receivableRate',
-    title: $t('crm.customer.statistics.receivableRate'),
+    title: $t('crm.customer.receivableRate'),
     minWidth: 100,
     formatter: ({ cellValue }) => `${cellValue}%`,
   },
@@ -102,8 +102,8 @@ function drawChart() {
     tooltip: { trigger: 'axis' },
     legend: {
       data: [
-        $t('crm.customer.statistics.newCustomer'),
-        $t('crm.customer.statistics.dealCustomer'),
+        $t('crm.customer.newCustomer'),
+        $t('crm.customer.dealCustomer'),
       ],
       bottom: 0,
     },
@@ -123,14 +123,14 @@ function drawChart() {
     },
     series: [
       {
-        name: $t('crm.customer.statistics.newCustomer'),
+        name: $t('crm.customer.newCustomer'),
         type: 'bar',
         barMaxWidth: 40,
         itemStyle: { color: '#5ab1ef', borderRadius: [4, 4, 0, 0] },
         data: createCounts,
       },
       {
-        name: $t('crm.customer.statistics.dealCustomer'),
+        name: $t('crm.customer.dealCustomer'),
         type: 'bar',
         barMaxWidth: 40,
         itemStyle: { color: '#2fc25b', borderRadius: [4, 4, 0, 0] },
@@ -205,7 +205,7 @@ defineExpose({ loadData });
       <Col :span="6">
         <Card :bordered="false">
           <Statistic
-            :title="$t('crm.customer.statistics.newCustomerCount')"
+            :title="$t('crm.customer.newCustomerCount')"
             :value="totalStats.customerCreateCount"
           />
         </Card>
@@ -213,7 +213,7 @@ defineExpose({ loadData });
       <Col :span="6">
         <Card :bordered="false">
           <Statistic
-            :title="$t('crm.customer.statistics.dealCustomerCount')"
+            :title="$t('crm.customer.dealCustomerCount')"
             :value="totalStats.customerDealCount"
           />
         </Card>
@@ -221,7 +221,7 @@ defineExpose({ loadData });
       <Col :span="12">
         <Card :bordered="false">
           <Statistic
-            :title="$t('crm.customer.statistics.dealRate')"
+            :title="$t('crm.customer.dealRate')"
             :value="totalStats.dealRate"
             suffix="%"
           />
@@ -230,7 +230,7 @@ defineExpose({ loadData });
     </Row>
 
     <Card
-      :title="$t('crm.customer.statistics.customerTotalTrend')"
+      :title="$t('crm.customer.customerTotalTrend')"
       :bordered="false"
       class="mb-4"
     >
@@ -238,7 +238,7 @@ defineExpose({ loadData });
     </Card>
 
     <Card
-      :title="$t('crm.customer.statistics.customerTotalRankByEmployee')"
+      :title="$t('crm.customer.customerTotalRankByEmployee')"
       :bordered="false"
     >
       <Grid />

@@ -120,13 +120,13 @@ const columns: VxeTableGridOptions['columns'] = [
   },
   {
     field: 'totalProductPrice',
-    title: $t('crm.business.totalProductPrice'),
+    title: $t('crm.funnel.totalProductPrice'),
     minWidth: 120,
     formatter: 'formatAmount2',
   },
   {
     field: 'discountPercent',
-    title: $t('crm.business.discountPercent'),
+    title: $t('crm.funnel.discountPercent'),
     minWidth: 120,
     formatter: ({ cellValue }) => (cellValue ? `${cellValue}%` : '-'),
   },
@@ -144,7 +144,7 @@ const columns: VxeTableGridOptions['columns'] = [
   },
   {
     field: 'creatorName',
-    title: $t('crm.business.creator'),
+    title: $t('crm.funnel.creator'),
     minWidth: 120,
   },
 ];

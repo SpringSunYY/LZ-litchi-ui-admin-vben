@@ -45,12 +45,12 @@ const columns: VxeTableGridOptions['columns'] = [
   { field: 'ownerUserName', title: $t('crm.customer.employee'), minWidth: 120 },
   {
     field: 'customerPutCount',
-    title: $t('crm.customer.statistics.putIntoPoolCount'),
+    title: $t('crm.customer.putIntoPoolCount'),
     minWidth: 100,
   },
   {
     field: 'customerTakeCount',
-    title: $t('crm.customer.statistics.takeFromPoolCount'),
+    title: $t('crm.customer.takeFromPoolCount'),
     minWidth: 100,
   },
 ];
@@ -75,8 +75,8 @@ function renderChart() {
     tooltip: { trigger: 'axis' },
     legend: {
       data: [
-        $t('crm.customer.statistics.putIntoPool'),
-        $t('crm.customer.statistics.takeFromPool'),
+        $t('crm.customer.putIntoPool'),
+        $t('crm.customer.takeFromPool'),
       ],
       bottom: 0,
       textStyle: { color: textColor },
@@ -101,14 +101,14 @@ function renderChart() {
     },
     series: [
       {
-        name: $t('crm.customer.statistics.putIntoPool'),
+        name: $t('crm.customer.putIntoPool'),
         type: 'bar',
         barMaxWidth: 40,
         itemStyle: { color: '#ff7875', borderRadius: [4, 4, 0, 0] },
         data: putCounts,
       },
       {
-        name: $t('crm.customer.statistics.takeFromPool'),
+        name: $t('crm.customer.takeFromPool'),
         type: 'bar',
         barMaxWidth: 40,
         itemStyle: { color: '#5ab1ef', borderRadius: [4, 4, 0, 0] },
@@ -165,7 +165,7 @@ defineExpose({ loadData });
       <Col :span="8">
         <Card :bordered="false">
           <Statistic
-            :title="$t('crm.customer.statistics.putIntoPoolCount')"
+            :title="$t('crm.customer.putIntoPoolCount')"
             :value="totalStats.customerPutCount"
           />
         </Card>
@@ -173,7 +173,7 @@ defineExpose({ loadData });
       <Col :span="8">
         <Card :bordered="false">
           <Statistic
-            :title="$t('crm.customer.statistics.takeFromPoolCount')"
+            :title="$t('crm.customer.takeFromPoolCount')"
             :value="totalStats.customerTakeCount"
           />
         </Card>
@@ -181,7 +181,7 @@ defineExpose({ loadData });
       <Col :span="8">
         <Card :bordered="false">
           <Statistic
-            :title="$t('crm.customer.statistics.netGrowthCustomerCount')"
+            :title="$t('crm.customer.netGrowthCustomerCount')"
             :value="totalStats.netGrowth"
           />
         </Card>
@@ -189,7 +189,7 @@ defineExpose({ loadData });
     </Row>
 
     <Card
-      :title="$t('crm.customer.statistics.poolCustomerTrend')"
+      :title="$t('crm.customer.poolCustomerTrend')"
       :bordered="false"
       class="mb-4"
     >
@@ -197,7 +197,7 @@ defineExpose({ loadData });
     </Card>
 
     <Card
-      :title="$t('crm.customer.statistics.poolCustomerRankByEmployee')"
+      :title="$t('crm.customer.poolCustomerRankByEmployee')"
       :bordered="false"
     >
       <Grid />

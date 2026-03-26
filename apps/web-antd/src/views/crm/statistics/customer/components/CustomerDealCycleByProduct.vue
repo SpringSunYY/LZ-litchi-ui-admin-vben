@@ -41,12 +41,12 @@ const columns: VxeTableGridOptions['columns'] = [
   { field: 'productName', title: $t('crm.common.productName'), minWidth: 120 },
   {
     field: 'customerDealCount',
-    title: $t('crm.customer.statistics.dealCustomerCount'),
+    title: $t('crm.customer.dealCustomerCount'),
     minWidth: 100,
   },
   {
     field: 'customerDealCycle',
-    title: $t('crm.customer.statistics.dealCycleDays'),
+    title: $t('crm.customer.dealCycleDays'),
     minWidth: 100,
   },
 ];
@@ -68,7 +68,7 @@ function renderChart() {
 
   renderEcharts({
     tooltip: { trigger: 'axis' },
-    legend: { data: [$t('crm.customer.statistics.dealCycleDays')], bottom: 0, textStyle: { color: textColor } },
+    legend: { data: [$t('crm.customer.dealCycleDays')], bottom: 0, textStyle: { color: textColor } },
     grid: {
       left: '3%',
       right: '4%',
@@ -89,7 +89,7 @@ function renderChart() {
     },
     series: [
       {
-        name: $t('crm.customer.statistics.dealCycleDays'),
+        name: $t('crm.customer.dealCycleDays'),
         type: 'bar',
         barMaxWidth: 40,
         itemStyle: { color: '#5ab1ef', borderRadius: [4, 4, 0, 0] },
@@ -151,16 +151,16 @@ defineExpose({ loadData });
       <Col :span="12">
         <Card :bordered="false">
           <Statistic
-            :title="$t('crm.customer.statistics.avgDealCycle')"
+            :title="$t('crm.customer.avgDealCycle')"
             :value="totalStats.avgDealCycle"
-            :suffix="$t('crm.customer.statistics.days')"
+            :suffix="$t('crm.customer.days')"
           />
         </Card>
       </Col>
       <Col :span="12">
         <Card :bordered="false">
           <Statistic
-            :title="$t('crm.customer.statistics.dealCustomerCount')"
+            :title="$t('crm.customer.dealCustomerCount')"
             :value="totalStats.totalDealCount"
           />
         </Card>
@@ -168,7 +168,7 @@ defineExpose({ loadData });
     </Row>
 
     <Card
-      :title="$t('crm.customer.statistics.dealCycleRankByProduct')"
+      :title="$t('crm.customer.dealCycleRankByProduct')"
       :bordered="false"
       class="mb-4"
     >
