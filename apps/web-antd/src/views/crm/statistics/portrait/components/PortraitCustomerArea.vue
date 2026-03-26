@@ -4,10 +4,9 @@ import type { EchartsUIType } from '@vben/plugins/echarts';
 import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 import type { CrmStatisticsPortraitApi } from '#/api/crm/statistics/portrait';
 
-import { nextTick, ref } from 'vue';
+import { nextTick, ref, watch } from 'vue';
 
 import { EchartsUI, registerMap, useEcharts } from '@vben/plugins/echarts';
-import { usePreferences } from '@vben/preferences';
 
 import { Card, Col, Row } from 'ant-design-vue';
 
@@ -33,7 +32,6 @@ const leftChartRef = ref<EchartsUIType>();
 const rightChartRef = ref<EchartsUIType>();
 const { renderEcharts: renderLeftChart } = useEcharts(leftChartRef);
 const { renderEcharts: renderRightChart } = useEcharts(rightChartRef);
-const { isDark } = usePreferences();
 
 const MAP_NAME = 'china';
 
@@ -47,10 +45,9 @@ async function renderLeftMap(mapJson: any) {
 
   const min = 0;
   const max = Math.max(...chartData.value.map((i) => i.customerCount || 0), 1);
-  const dark = isDark.value;
 
   renderLeftChart({
-    title: { text: $t('crm.portrait.allCustomer'), left: 'center', textStyle: { color: dark ? '#e5eaf3' : '#666' } },
+    title: { text: $t('crm.portrait.allCustomer'), left: 'center' },
     tooltip: {
       trigger: 'item',
       showDelay: 0,
@@ -62,7 +59,7 @@ async function renderLeftMap(mapJson: any) {
       realtime: false,
       calculable: true,
       top: 'middle',
-      inRange: { color: dark ? ['#1e3a5f', '#3b82f6'] : ['#fff', '#3b82f6'] },
+      inRange: { color: ['#e8f4ff', '#3b82f6'] },
       min,
       max,
     },
@@ -74,8 +71,8 @@ async function renderLeftMap(mapJson: any) {
         roam: false,
         selectedMode: false,
         itemStyle: {
-          areaColor: dark ? '#1f3a5f' : '#f0f5ff',
-          borderColor: dark ? '#3a5a7a' : '#a0c4ff',
+          areaColor: '#e8f4ff',
+          borderColor: '#a0c4ff',
         },
         data: chartData.value.map((item) => ({
           name: areaReplace(item.areaName),
@@ -91,10 +88,9 @@ async function renderRightMap(mapJson: any) {
 
   const min = 0;
   const max = Math.max(...chartData.value.map((i) => i.dealCount || 0), 1);
-  const dark = isDark.value;
 
   renderRightChart({
-    title: { text: $t('crm.portrait.dealCustomer'), left: 'center', textStyle: { color: dark ? '#e5eaf3' : '#666' } },
+    title: { text: $t('crm.portrait.dealCustomer'), left: 'center' },
     tooltip: {
       trigger: 'item',
       showDelay: 0,
@@ -106,7 +102,7 @@ async function renderRightMap(mapJson: any) {
       realtime: false,
       calculable: true,
       top: 'middle',
-      inRange: { color: dark ? ['#1a3d2b', '#2fc25b'] : ['#fff', '#2fc25b'] },
+      inRange: { color: ['#e8fff0', '#2fc25b'] },
       min,
       max,
     },
@@ -118,8 +114,8 @@ async function renderRightMap(mapJson: any) {
         roam: false,
         selectedMode: false,
         itemStyle: {
-          areaColor: dark ? '#1f3a2b' : '#f0fff0',
-          borderColor: dark ? '#3a5a4a' : '#a0e0a0',
+          areaColor: '#e8fff0',
+          borderColor: '#a0e0a0',
         },
         data: chartData.value.map((item) => ({
           name: areaReplace(item.areaName),
@@ -199,6 +195,12 @@ async function loadData() {
     loading.value = false;
   }
 }
+
+watch(
+  () => props.queryParams,
+  () => loadData(),
+  { deep: true },
+);
 
 defineExpose({ loadData });
 </script>

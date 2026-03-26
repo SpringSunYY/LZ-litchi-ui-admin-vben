@@ -47,12 +47,22 @@ const loadingDirective: Directive = {
 };
 
 function getOptions(binding: DirectiveBinding) {
-  if (binding.value === undefined) {
+  let value = binding.value;
+  // 兼容 Ref / computed 等响应式对象，unref 取出真实值
+  if (
+    value !== null &&
+    typeof value === 'object' &&
+    'value' in value
+  ) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    value = (value as any).value;
+  }
+  if (value === undefined) {
     return { spinning: true };
-  } else if (typeof binding.value === 'boolean') {
-    return { spinning: binding.value };
+  } else if (typeof value === 'boolean') {
+    return { spinning: value };
   } else {
-    return { ...binding.value };
+    return { ...value };
   }
 }
 

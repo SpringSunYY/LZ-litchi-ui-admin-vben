@@ -6,7 +6,23 @@
     "businessCount": "Business Count",
     "businessWinCount": "Win Count",
     "businessStage": "Stage",
-    "businessAmount": "Business Amount"
+    "businessAmount": "Business Amount",
+    "customerName": "Customer Name",
+    "ownerUser": "Owner",
+    "date": "Date",
+    "productName": "Product Name"
+  },
+  "business": {
+    "creator": "Creator",
+    "totalProductPrice": "Product Total Price",
+    "discountPercent": "Discount Rate",
+    "endStatus": "End Status"
+  },
+  "contract": {
+    "name": "Contract Name",
+    "totalPrice": "Contract Amount",
+    "receivablePrice": "Received Amount",
+    "orderDate": "Order Date"
   },
   "customer": {
     "department": "Department",
@@ -15,6 +31,7 @@
     "intervalDay": "By Day",
     "intervalWeek": "By Week",
     "intervalMonth": "By Month",
+    "intervalQuarter": "By Quarter",
     "intervalYear": "By Year",
     "statistics": {
       "employee": "Employee",
@@ -54,7 +71,17 @@
       "dealCycleRankByArea": "Deal Cycle Rank (By Area)",
       "dealCycleRankByProduct": "Deal Cycle Rank (By Product)",
       "dealCycleDays": "Deal Cycle (Days)",
-      "avgDealCycle": "Avg Deal Cycle"
+      "avgDealCycle": "Avg Deal Cycle",
+      "dealCycleByEmployee": "Deal Cycle (By Employee)",
+      "dealCycleByArea": "Deal Cycle (By Area)",
+      "dealCycleByProduct": "Deal Cycle (By Product)",
+      "dealContractCount": "Deal Contract Count",
+      "dealReceivableCount": "Deal Receivable Count",
+      "days": "days",
+      "followUpStatus": "Follow-up Status",
+      "lastFollowUpTime": "Last Follow-up Time",
+      "receivableRate": "Receivable Rate",
+      "receivableNotPrice": "Unreceived Amount"
     }
   },
   "funnel": {
@@ -67,7 +94,8 @@
     "newBusinessAmount": "New Business Amount",
     "winRate": "Win Rate",
     "totalBusinessCount": "Total Business Count",
-    "winBusinessCount": "Win Business Count"
+    "winBusinessCount": "Win Business Count",
+    "businessName": "Business Name"
   },
   "performance": {
     "title": "Employee Performance",
@@ -87,7 +115,9 @@
     "lastMonthReceivable": "Last Month Receivable",
     "lastYearReceivable": "Last Year Receivable",
     "byEmployee": "By Employee",
-    "byMonth": "By Month"
+    "byMonth": "By Month",
+    "monthChainRate": "Month-on-Month Growth",
+    "yearChainRate": "Year-on-Year Growth"
   },
   "portrait": {
     "title": "Customer Portrait",
@@ -108,6 +138,12 @@
     "level": "Customer Level",
     "source": "Customer Source",
     "industry": "Customer Industry",
-    "areaName": "Area"
+    "areaName": "Area",
+    "businessName": "Business Name",
+    "productName": "Product Name",
+    "contractName": "Contract Name",
+    "totalPrice": "Total Price",
+    "receivablePrice": "Received Amount",
+    "orderDate": "Order Date"
   }
 }

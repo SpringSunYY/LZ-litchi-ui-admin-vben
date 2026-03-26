@@ -6,7 +6,23 @@
     "businessCount": "商机数",
     "businessWinCount": "赢单数",
     "businessStage": "阶段",
-    "businessAmount": "商机总金额"
+    "businessAmount": "商机总金额",
+    "customerName": "客户名称",
+    "ownerUser": "负责人",
+    "date": "日期",
+    "productName": "产品名称"
+  },
+  "business": {
+    "creator": "创建人",
+    "totalProductPrice": "产品总金额",
+    "discountPercent": "折扣率",
+    "endStatus": "结束状态"
+  },
+  "contract": {
+    "name": "合同名称",
+    "totalPrice": "合同金额",
+    "receivablePrice": "已收款金额",
+    "orderDate": "成交日期"
   },
   "customer": {
     "department": "部门",
@@ -15,6 +31,7 @@
     "intervalDay": "按天",
     "intervalWeek": "按周",
     "intervalMonth": "按月",
+    "intervalQuarter": "按季度",
     "intervalYear": "按年",
     "statistics": {
       "customerTotal": "客户总量",
@@ -53,7 +70,17 @@
       "dealCycleRankByArea": "成交周期排行(按地区)",
       "dealCycleRankByProduct": "成交周期排行(按产品)",
       "dealCycleDays": "成交周期(天)",
-      "avgDealCycle": "平均成交周期"
+      "avgDealCycle": "平均成交周期",
+      "dealCycleByEmployee": "成交周期(按员工)",
+      "dealCycleByArea": "成交周期(按地区)",
+      "dealCycleByProduct": "成交周期(按产品)",
+      "dealContractCount": "成交合同数",
+      "dealReceivableCount": "成交回款数",
+      "days": "天",
+      "followUpStatus": "跟进状态",
+      "lastFollowUpTime": "最后跟进时间",
+      "receivableRate": "回款率",
+      "receivableNotPrice": "未回款金额"
     }
   },
   "funnel": {
@@ -66,7 +93,8 @@
     "newBusinessAmount": "新增商机金额",
     "winRate": "赢单转化率",
     "totalBusinessCount": "商机总数",
-    "winBusinessCount": "赢单商机数"
+    "winBusinessCount": "赢单商机数",
+    "businessName": "商机名称"
   },
   "performance": {
     "title": "员工业绩",
@@ -86,7 +114,9 @@
     "lastMonthReceivable": "上月回款金额",
     "lastYearReceivable": "去年回款金额",
     "byEmployee": "按员工",
-    "byMonth": "按月份"
+    "byMonth": "按月份",
+    "monthChainRate": "环比增长率",
+    "yearChainRate": "同比增长率"
   },
   "portrait": {
     "title": "客户画像",
@@ -107,6 +137,12 @@
     "level": "客户级别",
     "source": "客户来源",
     "industry": "客户行业",
-    "areaName": "地区"
+    "areaName": "地区",
+    "businessName": "商机名称",
+    "productName": "产品名称",
+    "contractName": "合同名称",
+    "totalPrice": "合同金额",
+    "receivablePrice": "已收款金额",
+    "orderDate": "成交日期"
   }
 }

@@ -37,6 +37,12 @@ export namespace CrmStatisticsFunnelApi {
     id: number;
     name: string;
     customerName: string;
+    customerId: number;
+    ownerUserName: string;
+    totalPrice: number;
+    businessStatus: number;
+    contactLastTime: string | null;
+    dealTime: string | number | null;
   }
 }
 

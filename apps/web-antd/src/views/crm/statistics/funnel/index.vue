@@ -10,10 +10,8 @@ import {
   Button,
   Card,
   DatePicker,
-  Form,
-  Select,
+  Form, Select,
   Space,
-  Spin,
   Tabs,
   TreeSelect,
 } from 'ant-design-vue';
@@ -22,6 +20,7 @@ import dayjs from 'dayjs';
 import { getSimpleDeptList } from '#/api/system/dept';
 import { getSimpleUserList } from '#/api/system/user';
 import { $t } from '#/locales';
+import { getRangePickerDefaultProps } from '#/utils';
 
 import BusinessInversionRateSummary from './components/BusinessInversionRateSummary.vue';
 import BusinessSummary from './components/BusinessSummary.vue';
@@ -29,18 +28,15 @@ import FunnelBusiness from './components/FunnelBusiness.vue';
 
 defineOptions({ name: 'CrmStatisticsFunnel' });
 
-const loading = ref(false);
 const hasDept = computed(() => deptList.value && deptList.value.length > 0);
 
-// 部门树形数据
 const deptList = ref<any[]>([]);
-// 全量用户清单
 const userList = ref<any[]>([]);
 
 const formState = reactive({
   deptId: undefined as number | undefined,
   userId: undefined as number | undefined,
-  interval: 2, // WEEK, 周
+  interval: 2,
   times: [
     dayjs().subtract(7, 'day').startOf('day'),
     dayjs().subtract(1, 'day').endOf('day'),
@@ -51,12 +47,11 @@ const queryParams = computed(() => ({
   deptId: formState.deptId,
   userId: formState.userId,
   interval: formState.interval,
-  times: formState.times.map(
-    (d: Dayjs) => d?.format('YYYY-MM-DD HH:mm:ss') ?? '',
+  times: (formState.times as [Dayjs, Dayjs]).map((d: Dayjs) =>
+    d ? dayjs(d).format('YYYY-MM-DD HH:mm:ss') : '',
   ),
 }));
 
-// 根据选择的部门筛选员工
 const userOptions = computed(() => {
   if (!formState.deptId) return [];
   return userList.value
@@ -83,6 +78,9 @@ const pickerType = computed(() => {
       return 'month';
     }
     case 4: {
+      return 'quarter';
+    }
+    case 5: {
       return 'year';
     }
     default: {
@@ -105,12 +103,20 @@ function resetTimeRange() {
     case 3: {
       // 月
       formState.times = [
-        dayjs().subtract(1, 'month').startOf('month'),
-        dayjs().subtract(3, 'day').endOf('day'),
+        dayjs().subtract(30, 'day').startOf('day'),
+        dayjs().subtract(1, 'day').endOf('day'),
       ];
       break;
     }
     case 4: {
+      // 季度
+      formState.times = [
+        dayjs().subtract(1, 'quarter').startOf('quarter'),
+        dayjs().subtract(1, 'day').endOf('day'),
+      ];
+      break;
+    }
+    case 5: {
       // 年
       formState.times = [
         dayjs().subtract(2, 'year').startOf('year'),
@@ -137,7 +143,6 @@ watch(
   },
 );
 
-// 用 computed 确保 $t() 在组件 setup 时执行，此时 locale 已加载
 const chartTabs = computed(() => [
   { label: $t('crm.funnel.title'), value: 'funnel' },
   { label: $t('crm.funnel.businessAnalysis'), value: 'business' },
@@ -177,15 +182,23 @@ function handleReset() {
   loadActiveTab();
 }
 
+/** 切换 Tab 时刷新当前 Tab */
 watch(activeTab, () => {
   loadActiveTab();
 });
 
+/** 日期变化时刷新数据 */
+watch(
+  () => formState.times,
+  () => {
+    loadActiveTab();
+  },
+  { deep: true },
+);
+
 onMounted(async () => {
-  // 将扁平部门列表转成树形
   deptList.value = handleTree(await getSimpleDeptList());
   userList.value = await getSimpleUserList();
-  // 自动选中第一个部门
   if (deptList.value.length > 0) {
     formState.deptId = deptList.value[0]!.id;
   }
@@ -201,8 +214,9 @@ onMounted(async () => {
         <Form.Item :label="$t('common.date')">
           <DatePicker.RangePicker
             v-model:value="formState.times"
+            v-bind="getRangePickerDefaultProps()"
+            format="YYYY-MM-DD"
             :picker="pickerType"
-            format="YYYY-MM-DD HH:mm:ss"
             style="width: 320px"
           />
         </Form.Item>
@@ -219,6 +233,9 @@ onMounted(async () => {
               {{ $t('crm.customer.intervalMonth') }}
             </Select.Option>
             <Select.Option :value="4">
+              {{ $t('crm.customer.intervalQuarter') }}
+            </Select.Option>
+            <Select.Option :value="5">
               {{ $t('crm.customer.intervalYear') }}
             </Select.Option>
           </Select>
@@ -260,26 +277,21 @@ onMounted(async () => {
       </Form>
     </Card>
 
-    <Spin :spinning="loading">
-      <Tabs v-model:active-key="activeTab">
-        <Tabs.TabPane key="funnel" :tab="chartTabs[0]!.label">
-          <FunnelBusiness ref="refFunnelBusiness" :query-params="queryParams" />
-        </Tabs.TabPane>
+    <Tabs v-model:active-key="activeTab">
+      <Tabs.TabPane key="funnel" :tab="chartTabs[0]!.label">
+        <FunnelBusiness ref="refFunnelBusiness" :query-params="queryParams" />
+      </Tabs.TabPane>
 
-        <Tabs.TabPane key="business" :tab="chartTabs[1]!.label">
-          <BusinessSummary
-            ref="refBusinessSummary"
-            :query-params="queryParams"
-          />
-        </Tabs.TabPane>
+      <Tabs.TabPane key="business" :tab="chartTabs[1]!.label">
+        <BusinessSummary ref="refBusinessSummary" :query-params="queryParams" />
+      </Tabs.TabPane>
 
-        <Tabs.TabPane key="inversionRate" :tab="chartTabs[2]!.label">
-          <BusinessInversionRateSummary
-            ref="refBusinessInversionRateSummary"
-            :query-params="queryParams"
-          />
-        </Tabs.TabPane>
-      </Tabs>
-    </Spin>
+      <Tabs.TabPane key="inversionRate" :tab="chartTabs[2]!.label">
+        <BusinessInversionRateSummary
+          ref="refBusinessInversionRateSummary"
+          :query-params="queryParams"
+        />
+      </Tabs.TabPane>
+    </Tabs>
   </Page>
 </template>

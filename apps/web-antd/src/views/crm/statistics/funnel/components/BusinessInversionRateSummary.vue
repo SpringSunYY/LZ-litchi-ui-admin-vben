@@ -2,6 +2,7 @@
 import type { EchartsUIType } from '@vben/plugins/echarts';
 
 import type { VxeTableGridOptions } from '#/adapter/vxe-table';
+import type { CrmStatisticsFunnelApi } from '#/api/crm/statistics/funnel';
 
 import { nextTick, ref, watch } from 'vue';
 
@@ -15,6 +16,7 @@ import {
   getBusinessPageByDate,
 } from '#/api/crm/statistics/funnel';
 import { $t } from '#/locales';
+import { DICT_TYPE } from '#/utils';
 
 defineOptions({ name: 'BusinessInversionRateSummary' });
 
@@ -28,7 +30,7 @@ const props = defineProps<{
 }>();
 
 const loading = ref(false);
-const chartData = ref<any[]>([]);
+const chartData = ref<CrmStatisticsFunnelApi.BusinessInversionRateSummaryByDate[]>([]);
 
 const chartRef = ref<EchartsUIType>();
 const { renderEcharts: renderChart } = useEcharts(chartRef);
@@ -62,6 +64,7 @@ function renderMixedChart() {
       ],
       bottom: '0px',
       itemWidth: 14,
+      textStyle: { color: '#666' },
     },
     grid: {
       top: '40px',
@@ -75,8 +78,8 @@ function renderMixedChart() {
         type: 'category',
         data: times,
         axisTick: { alignWithLabel: true, lineStyle: { width: 0 } },
-        axisLabel: { color: '#BDBDBD' },
-        axisLine: { lineStyle: { color: '#BDBDBD' } },
+        axisLabel: { color: '#666' },
+        axisLine: { lineStyle: { color: '#666' } },
         splitLine: { show: false },
       },
     ],
@@ -84,15 +87,17 @@ function renderMixedChart() {
       {
         type: 'value',
         name: $t('crm.funnel.winRate'),
-        axisLabel: { color: '#BDBDBD', formatter: '{value}%' },
-        axisLine: { lineStyle: { color: '#BDBDBD' } },
+        nameTextStyle: { color: '#666' },
+        axisLabel: { color: '#666', formatter: '{value}%' },
+        axisLine: { lineStyle: { color: '#666' } },
         splitLine: { show: false },
       },
       {
         type: 'value',
         name: $t('crm.common.businessCount'),
-        axisLabel: { color: '#BDBDBD' },
-        axisLine: { lineStyle: { color: '#BDBDBD' } },
+        nameTextStyle: { color: '#666' },
+        axisLabel: { color: '#666' },
+        axisLine: { lineStyle: { color: '#666' } },
         splitLine: { show: false },
       },
     ],
@@ -122,9 +127,56 @@ function renderMixedChart() {
 }
 
 const columns: VxeTableGridOptions['columns'] = [
-  { type: 'seq', width: 60, title: '序号' },
-  { field: 'name', title: '商机名称', minWidth: 150 },
-  { field: 'customerName', title: '客户名称', minWidth: 150 },
+  { type: 'seq', width: 60, title: '#' },
+  {
+    field: 'name',
+    title: $t('crm.funnel.businessName'),
+    minWidth: 180,
+  },
+  {
+    field: 'customerName',
+    title: $t('crm.common.customerName'),
+    minWidth: 180,
+  },
+  {
+    field: 'statusTypeName',
+    title: $t('crm.common.businessStage'),
+    minWidth: 120,
+  },
+  {
+    field: 'ownerUserName',
+    title: $t('crm.customer.employee'),
+    minWidth: 120,
+  },
+  {
+    field: 'totalProductPrice',
+    title: $t('crm.business.totalProductPrice'),
+    minWidth: 120,
+    formatter: 'formatAmount2',
+  },
+  {
+    field: 'discountPercent',
+    title: $t('crm.business.discountPercent'),
+    minWidth: 120,
+    formatter: ({ cellValue }) => (cellValue ? `${cellValue}%` : '-'),
+  },
+  {
+    field: 'totalPrice',
+    title: $t('crm.common.businessAmount'),
+    minWidth: 120,
+    formatter: 'formatAmount2',
+  },
+  {
+    field: 'dealTime',
+    title: $t('crm.contract.orderDate'),
+    minWidth: 160,
+    formatter: 'formatDate',
+  },
+  {
+    field: 'creatorName',
+    title: $t('crm.business.creator'),
+    minWidth: 120,
+  },
 ];
 
 const [Grid, gridApi] = useVbenVxeGrid({
@@ -175,10 +227,11 @@ defineExpose({ loadData });
     <Card
       :title="$t('crm.funnel.businessInversionRateAnalysis')"
       :bordered="false"
+      class="mb-4"
     >
       <EchartsUI ref="chartRef" style="height: 300px" />
     </Card>
-    <Card :bordered="false" class="mt-4">
+    <Card :bordered="false">
       <Grid />
     </Card>
   </div>

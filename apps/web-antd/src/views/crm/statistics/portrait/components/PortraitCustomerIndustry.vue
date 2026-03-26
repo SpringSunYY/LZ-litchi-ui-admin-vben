@@ -4,7 +4,7 @@ import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 
 import type { CrmStatisticsPortraitApi } from '#/api/crm/statistics/portrait';
 
-import { nextTick, ref } from 'vue';
+import { nextTick, ref, watch } from 'vue';
 
 import { EchartsUI, useEcharts } from '@vben/plugins/echarts';
 
@@ -55,7 +55,7 @@ function renderLeftPie() {
   renderLeftChart({
     title: { text: $t('crm.portrait.allCustomer'), left: 'center' },
     tooltip: { trigger: 'item', formatter: '{b}: {c} ({d}%)' },
-    legend: { orient: 'vertical', right: 10, top: 'center', textStyle: { color: '#666' } },
+    legend: { orient: 'vertical', right: 10, top: 'center' },
     series: [
       {
         name: $t('crm.portrait.allCustomer'),
@@ -84,7 +84,7 @@ function renderRightPie() {
   renderRightChart({
     title: { text: $t('crm.portrait.dealCustomer'), left: 'center' },
     tooltip: { trigger: 'item', formatter: '{b}: {c} ({d}%)' },
-    legend: { orient: 'vertical', right: 10, top: 'center', textStyle: { color: '#666' } },
+    legend: { orient: 'vertical', right: 10, top: 'center' },
     series: [
       {
         name: $t('crm.portrait.dealCustomer'),
@@ -172,6 +172,12 @@ async function loadData() {
     loading.value = false;
   }
 }
+
+watch(
+  () => props.queryParams,
+  () => loadData(),
+  { deep: true },
+);
 
 defineExpose({ loadData });
 </script>

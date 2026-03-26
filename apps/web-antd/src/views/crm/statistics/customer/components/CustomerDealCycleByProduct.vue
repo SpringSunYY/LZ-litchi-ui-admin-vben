@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import type { EchartsUIType } from '@vben/plugins/echarts';
 
+import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 import type { CrmStatisticsCustomerApi } from '#/api/crm/statistics/customer';
 
 import { nextTick, reactive, ref, watch } from 'vue';
@@ -9,6 +10,7 @@ import { EchartsUI, useEcharts } from '@vben/plugins/echarts';
 
 import { Card, Col, Row, Statistic } from 'ant-design-vue';
 
+import { useVbenVxeGrid } from '#/adapter/vxe-table';
 import { getCustomerDealCycleByProduct } from '#/api/crm/statistics/customer';
 import { $t } from '#/locales';
 
@@ -17,6 +19,7 @@ defineOptions({ name: 'CustomerDealCycleByProduct' });
 const props = defineProps<{
   queryParams: {
     deptId?: number;
+    interval: number;
     times: string[];
     userId?: number;
   };
@@ -27,20 +30,45 @@ const totalStats = reactive({
   avgDealCycle: '0.00',
   totalDealCount: 0,
 });
-const chartData = ref<CrmStatisticsCustomerApi.CustomerDealCycleByProduct[]>(
-  [],
-);
+const chartData = ref<CrmStatisticsCustomerApi.CustomerDealCycleByProduct[]>([]);
+const tableData = ref<CrmStatisticsCustomerApi.CustomerDealCycleByProduct[]>([]);
 
 const chartRef = ref<EchartsUIType>();
 const { renderEcharts } = useEcharts(chartRef);
 
+const columns: VxeTableGridOptions['columns'] = [
+  { type: 'seq', width: 60, title: '#' },
+  { field: 'productName', title: $t('crm.common.productName'), minWidth: 120 },
+  {
+    field: 'customerDealCount',
+    title: $t('crm.customer.statistics.dealCustomerCount'),
+    minWidth: 100,
+  },
+  {
+    field: 'customerDealCycle',
+    title: $t('crm.customer.statistics.dealCycleDays'),
+    minWidth: 100,
+  },
+];
+
+const [Grid, gridApi] = useVbenVxeGrid({
+  gridOptions: {
+    columns,
+    height: 400,
+    data: [],
+  },
+});
+
 function renderChart() {
+  const textColor = '#666';
+  const splitLineColor = '#f0f0f0';
+
   const products = chartData.value.map((i) => i.productName);
   const cycles = chartData.value.map((i) => i.customerDealCycle);
 
   renderEcharts({
     tooltip: { trigger: 'axis' },
-    legend: { data: [$t('crm.customer.statistics.dealCycleDays')], bottom: 0 },
+    legend: { data: [$t('crm.customer.statistics.dealCycleDays')], bottom: 0, textStyle: { color: textColor } },
     grid: {
       left: '3%',
       right: '4%',
@@ -51,13 +79,13 @@ function renderChart() {
     xAxis: {
       type: 'category',
       data: products,
-      axisLabel: { color: '#666' },
-      axisLine: { lineStyle: { color: '#ddd' } },
+      axisLabel: { color: textColor },
+      axisLine: { lineStyle: { color: textColor } },
     },
     yAxis: {
       type: 'value',
-      axisLabel: { color: '#666' },
-      splitLine: { lineStyle: { color: '#f0f0f0', type: 'dashed' } },
+      axisLabel: { color: textColor },
+      splitLine: { lineStyle: { color: splitLineColor, type: 'dashed' } },
     },
     series: [
       {
@@ -71,7 +99,6 @@ function renderChart() {
   });
 }
 
-/** 加载数据 */
 async function loadData() {
   if (!props.queryParams.deptId) return;
   loading.value = true;
@@ -83,8 +110,9 @@ async function loadData() {
       times: props.queryParams.times,
     };
 
-    const res = await getCustomerDealCycleByProduct(params);
+    const res = await getCustomerDealCycleByProduct(params as any);
     chartData.value = res;
+    tableData.value = res;
 
     const totalCycle = res.reduce(
       (sum, item) => sum + item.customerDealCycle * item.customerDealCount,
@@ -98,6 +126,8 @@ async function loadData() {
       totalStats.totalDealCount > 0
         ? (totalCycle / totalStats.totalDealCount).toFixed(2)
         : '0.00';
+
+    gridApi.grid?.loadData(tableData.value);
 
     await nextTick();
     renderChart();
@@ -140,8 +170,13 @@ defineExpose({ loadData });
     <Card
       :title="$t('crm.customer.statistics.dealCycleRankByProduct')"
       :bordered="false"
+      class="mb-4"
     >
       <EchartsUI ref="chartRef" style="height: 400px" />
+    </Card>
+
+    <Card :bordered="false">
+      <Grid />
     </Card>
   </div>
 </template>

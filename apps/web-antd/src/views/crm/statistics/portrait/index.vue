@@ -11,7 +11,6 @@ import {
   Form,
   Select,
   Space,
-  Spin,
   Tabs,
   TreeSelect,
 } from 'ant-design-vue';
@@ -20,7 +19,6 @@ import dayjs from 'dayjs';
 import { getSimpleDeptList } from '#/api/system/dept';
 import { getSimpleUserList } from '#/api/system/user';
 import { $t } from '#/locales';
-
 import { getRangePickerDefaultProps } from '#/utils';
 
 import PortraitCustomerArea from './components/PortraitCustomerArea.vue';
@@ -30,7 +28,6 @@ import PortraitCustomerSource from './components/PortraitCustomerSource.vue';
 
 defineOptions({ name: 'CrmStatisticsPortrait' });
 
-const loading = ref(false);
 const hasDept = computed(() => deptList.value && deptList.value.length > 0);
 
 // 部门树形数据
@@ -50,7 +47,9 @@ const formState = reactive({
 const queryParams = computed(() => ({
   deptId: formState.deptId,
   userId: formState.userId,
-  times: formState.times.map((d) => (d ? dayjs(d).format('YYYY-MM-DD HH:mm:ss') : '')),
+  times: formState.times.map((d) =>
+    d ? dayjs(d).format('YYYY-MM-DD HH:mm:ss') : '',
+  ),
 }));
 
 // 根据选择的部门筛选员工
@@ -86,16 +85,16 @@ function loadActiveTab() {
       refArea.value?.loadData?.();
       break;
     }
+    case 'industry': {
+      refIndustry.value?.loadData?.();
+      break;
+    }
     case 'level': {
       refLevel.value?.loadData?.();
       break;
     }
     case 'source': {
       refSource.value?.loadData?.();
-      break;
-    }
-    case 'industry': {
-      refIndustry.value?.loadData?.();
       break;
     }
   }
@@ -110,6 +109,7 @@ function handleReset() {
     dayjs().subtract(7, 'day').startOf('day'),
     dayjs().subtract(1, 'day').endOf('day'),
   ];
+  console.log(formState.times);
   loadActiveTab();
 }
 
@@ -157,8 +157,7 @@ onMounted(async () => {
           <DatePicker.RangePicker
             v-model:value="formState.times"
             v-bind="getRangePickerDefaultProps()"
-            :format="undefined"
-            :showTime="false"
+            :format="'YYYY-MM-DD'"
             style="width: 320px"
           />
         </Form.Item>
@@ -199,27 +198,25 @@ onMounted(async () => {
       </Form>
     </Card>
 
-    <Spin :spinning="loading">
-      <Tabs v-model:active-key="activeTab">
-        <Tabs.TabPane key="area" :tab="chartTabs[0]!.label">
-          <PortraitCustomerArea ref="refArea" :query-params="queryParams" />
-        </Tabs.TabPane>
+    <Tabs v-model:active-key="activeTab">
+      <Tabs.TabPane key="area" :tab="chartTabs[0]!.label">
+        <PortraitCustomerArea ref="refArea" :query-params="queryParams" />
+      </Tabs.TabPane>
 
-        <Tabs.TabPane key="level" :tab="chartTabs[1]!.label">
-          <PortraitCustomerLevel ref="refLevel" :query-params="queryParams" />
-        </Tabs.TabPane>
+      <Tabs.TabPane key="level" :tab="chartTabs[1]!.label">
+        <PortraitCustomerLevel ref="refLevel" :query-params="queryParams" />
+      </Tabs.TabPane>
 
-        <Tabs.TabPane key="source" :tab="chartTabs[2]!.label">
-          <PortraitCustomerSource ref="refSource" :query-params="queryParams" />
-        </Tabs.TabPane>
+      <Tabs.TabPane key="source" :tab="chartTabs[2]!.label">
+        <PortraitCustomerSource ref="refSource" :query-params="queryParams" />
+      </Tabs.TabPane>
 
-        <Tabs.TabPane key="industry" :tab="chartTabs[3]!.label">
-          <PortraitCustomerIndustry
-            ref="refIndustry"
-            :query-params="queryParams"
-          />
-        </Tabs.TabPane>
-      </Tabs>
-    </Spin>
+      <Tabs.TabPane key="industry" :tab="chartTabs[3]!.label">
+        <PortraitCustomerIndustry
+          ref="refIndustry"
+          :query-params="queryParams"
+        />
+      </Tabs.TabPane>
+    </Tabs>
   </Page>
 </template>

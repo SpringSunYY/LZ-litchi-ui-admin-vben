@@ -1,14 +1,16 @@
 <script lang="ts" setup>
 import type { EchartsUIType } from '@vben/plugins/echarts';
 
+import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 import type { CrmStatisticsCustomerApi } from '#/api/crm/statistics/customer';
 
-import { nextTick, reactive, ref, watch } from 'vue';
+import { nextTick, reactive, ref } from 'vue';
 
 import { EchartsUI, useEcharts } from '@vben/plugins/echarts';
 
 import { Card, Col, Row, Statistic } from 'ant-design-vue';
 
+import { useVbenVxeGrid } from '#/adapter/vxe-table';
 import {
   getPoolSummaryByDate,
   getPoolSummaryByUser,
@@ -20,6 +22,7 @@ defineOptions({ name: 'CustomerPoolSummary' });
 const props = defineProps<{
   queryParams: {
     deptId?: number;
+    interval: number;
     times: string[];
     userId?: number;
   };
@@ -31,21 +34,44 @@ const totalStats = reactive({
   customerTakeCount: 0,
   netGrowth: 0,
 });
-const dateChartData = ref<CrmStatisticsCustomerApi.PoolSummaryByDate[]>([]);
-const userChartData = ref<CrmStatisticsCustomerApi.PoolSummaryByUser[]>([]);
+const chartData = ref<CrmStatisticsCustomerApi.PoolSummaryByDate[]>([]);
+const tableData = ref<CrmStatisticsCustomerApi.PoolSummaryByUser[]>([]);
 
-const dateChartRef = ref<EchartsUIType>();
-const userChartRef = ref<EchartsUIType>();
-const { renderEcharts: renderDateChart } = useEcharts(dateChartRef);
-const { renderEcharts: renderUserChart } = useEcharts(userChartRef);
+const chartRef = ref<EchartsUIType>();
+const { renderEcharts } = useEcharts(chartRef);
 
-/** 渲染日期趋势图 */
-function renderDateTrendChart() {
-  const times = dateChartData.value.map((i) => i.time);
-  const putCounts = dateChartData.value.map((i) => i.customerPutCount);
-  const takeCounts = dateChartData.value.map((i) => i.customerTakeCount);
+const columns: VxeTableGridOptions['columns'] = [
+  { type: 'seq', width: 60, title: '#' },
+  { field: 'ownerUserName', title: $t('crm.customer.employee'), minWidth: 120 },
+  {
+    field: 'customerPutCount',
+    title: $t('crm.customer.statistics.putIntoPoolCount'),
+    minWidth: 100,
+  },
+  {
+    field: 'customerTakeCount',
+    title: $t('crm.customer.statistics.takeFromPoolCount'),
+    minWidth: 100,
+  },
+];
 
-  renderDateChart({
+const [Grid, gridApi] = useVbenVxeGrid({
+  gridOptions: {
+    columns,
+    height: 300,
+    data: [],
+  },
+});
+
+function renderChart() {
+  const textColor = '#666';
+  const splitLineColor = '#f0f0f0';
+
+  const times = chartData.value.map((i) => i.time);
+  const putCounts = chartData.value.map((i) => i.customerPutCount);
+  const takeCounts = chartData.value.map((i) => i.customerTakeCount);
+
+  renderEcharts({
     tooltip: { trigger: 'axis' },
     legend: {
       data: [
@@ -53,6 +79,7 @@ function renderDateTrendChart() {
         $t('crm.customer.statistics.takeFromPool'),
       ],
       bottom: 0,
+      textStyle: { color: textColor },
     },
     grid: {
       left: '3%',
@@ -64,13 +91,13 @@ function renderDateTrendChart() {
     xAxis: {
       type: 'category',
       data: times,
-      axisLabel: { color: '#666' },
-      axisLine: { lineStyle: { color: '#ddd' } },
+      axisLabel: { color: textColor },
+      axisLine: { lineStyle: { color: textColor } },
     },
     yAxis: {
       type: 'value',
-      axisLabel: { color: '#666' },
-      splitLine: { lineStyle: { color: '#f0f0f0', type: 'dashed' } },
+      axisLabel: { color: textColor },
+      splitLine: { lineStyle: { color: splitLineColor, type: 'dashed' } },
     },
     series: [
       {
@@ -91,59 +118,6 @@ function renderDateTrendChart() {
   });
 }
 
-/** 渲染员工排行图 */
-function renderUserRankChart() {
-  const names = userChartData.value.map((i) => i.ownerUserName);
-  const putCounts = userChartData.value.map((i) => i.customerPutCount);
-  const takeCounts = userChartData.value.map((i) => i.customerTakeCount);
-
-  renderUserChart({
-    tooltip: { trigger: 'axis' },
-    legend: {
-      data: [
-        $t('crm.customer.statistics.putIntoPool'),
-        $t('crm.customer.statistics.takeFromPool'),
-      ],
-      bottom: 0,
-    },
-    grid: {
-      left: '3%',
-      right: '4%',
-      bottom: '15%',
-      top: '8%',
-      containLabel: true,
-    },
-    xAxis: {
-      type: 'category',
-      data: names,
-      axisLabel: { color: '#666' },
-      axisLine: { lineStyle: { color: '#ddd' } },
-    },
-    yAxis: {
-      type: 'value',
-      axisLabel: { color: '#666' },
-      splitLine: { lineStyle: { color: '#f0f0f0', type: 'dashed' } },
-    },
-    series: [
-      {
-        name: $t('crm.customer.statistics.putIntoPool'),
-        type: 'bar',
-        barMaxWidth: 40,
-        itemStyle: { color: '#ff7875', borderRadius: [4, 4, 0, 0] },
-        data: putCounts,
-      },
-      {
-        name: $t('crm.customer.statistics.takeFromPool'),
-        type: 'bar',
-        barMaxWidth: 40,
-        itemStyle: { color: '#5ab1ef', borderRadius: [4, 4, 0, 0] },
-        data: takeCounts,
-      },
-    ],
-  });
-}
-
-/** 加载数据 */
 async function loadData() {
   if (!props.queryParams.deptId) return;
   loading.value = true;
@@ -171,22 +145,16 @@ async function loadData() {
     totalStats.netGrowth =
       totalStats.customerTakeCount - totalStats.customerPutCount;
 
-    dateChartData.value = dateRes;
-    userChartData.value = userRes;
+    chartData.value = dateRes;
+    tableData.value = userRes;
+    gridApi.grid?.loadData(tableData.value);
 
     await nextTick();
-    renderDateTrendChart();
-    renderUserRankChart();
+    renderChart();
   } finally {
     loading.value = false;
   }
 }
-
-watch(
-  () => props.queryParams,
-  () => loadData(),
-  { deep: true },
-);
 
 defineExpose({ loadData });
 </script>
@@ -220,23 +188,19 @@ defineExpose({ loadData });
       </Col>
     </Row>
 
-    <Row :gutter="16">
-      <Col :span="12">
-        <Card
-          :title="$t('crm.customer.statistics.poolCustomerTrend')"
-          :bordered="false"
-        >
-          <EchartsUI ref="dateChartRef" style="height: 300px" />
-        </Card>
-      </Col>
-      <Col :span="12">
-        <Card
-          :title="$t('crm.customer.statistics.poolCustomerRankByEmployee')"
-          :bordered="false"
-        >
-          <EchartsUI ref="userChartRef" style="height: 300px" />
-        </Card>
-      </Col>
-    </Row>
+    <Card
+      :title="$t('crm.customer.statistics.poolCustomerTrend')"
+      :bordered="false"
+      class="mb-4"
+    >
+      <EchartsUI ref="chartRef" style="height: 300px" />
+    </Card>
+
+    <Card
+      :title="$t('crm.customer.statistics.poolCustomerRankByEmployee')"
+      :bordered="false"
+    >
+      <Grid />
+    </Card>
   </div>
 </template>

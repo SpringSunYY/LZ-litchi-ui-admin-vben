@@ -22,6 +22,8 @@ export namespace CrmStatisticsCustomerApi {
     customerDealCount: number;
     contractPrice: number;
     receivablePrice: number;
+    receivableRate: string;
+    receivableNotPrice?: number;
   }
 
   /** 客户跟进次数分析(按日期) */
@@ -34,8 +36,8 @@ export namespace CrmStatisticsCustomerApi {
   /** 客户跟进次数分析(按用户) */
   export interface FollowUpSummaryByUser {
     ownerUserName: string;
-    followupRecordCount: number;
-    followupCustomerCount: number;
+    followUpRecordCount: number;
+    followUpCustomerCount: number;
   }
 
   /** 客户跟进方式统计 */

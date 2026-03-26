@@ -1,14 +1,16 @@
 <script lang="ts" setup>
 import type { EchartsUIType } from '@vben/plugins/echarts';
 
+import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 import type { CrmStatisticsCustomerApi } from '#/api/crm/statistics/customer';
 
-import { nextTick, reactive, ref, watch } from 'vue';
+import { nextTick, reactive, ref } from 'vue';
 
 import { EchartsUI, useEcharts } from '@vben/plugins/echarts';
 
 import { Card, Col, Row, Statistic } from 'ant-design-vue';
 
+import { useVbenVxeGrid } from '#/adapter/vxe-table';
 import {
   getCustomerSummaryByDate,
   getCustomerSummaryByUser,
@@ -20,6 +22,7 @@ defineOptions({ name: 'CustomerSummary' });
 const props = defineProps<{
   queryParams: {
     deptId?: number;
+    interval: number;
     times: string[];
     userId?: number;
   };
@@ -31,21 +34,71 @@ const totalStats = reactive({
   customerDealCount: 0,
   dealRate: '0.00',
 });
-const dateChartData = ref<CrmStatisticsCustomerApi.CustomerSummaryByDate[]>([]);
-const userChartData = ref<CrmStatisticsCustomerApi.CustomerSummaryByUser[]>([]);
+const chartData = ref<CrmStatisticsCustomerApi.CustomerSummaryByDate[]>([]);
+const tableData = ref<CrmStatisticsCustomerApi.CustomerSummaryByUser[]>([]);
 
-const dateChartRef = ref<EchartsUIType>();
-const userChartRef = ref<EchartsUIType>();
-const { renderEcharts: renderDateChart } = useEcharts(dateChartRef);
-const { renderEcharts: renderUserChart } = useEcharts(userChartRef);
+const chartRef = ref<EchartsUIType>();
+const { renderEcharts } = useEcharts(chartRef);
 
-/** 渲染日期趋势图 */
-function renderDateTrendChart() {
-  const times = dateChartData.value.map((i) => i.time);
-  const createCounts = dateChartData.value.map((i) => i.customerCreateCount);
-  const dealCounts = dateChartData.value.map((i) => i.customerDealCount);
+const columns: VxeTableGridOptions['columns'] = [
+  { type: 'seq', width: 60, title: '#' },
+  { field: 'ownerUserName', title: $t('crm.customer.employee'), minWidth: 120 },
+  {
+    field: 'customerCreateCount',
+    title: $t('crm.customer.statistics.newCustomerCount'),
+    minWidth: 100,
+  },
+  {
+    field: 'customerDealCount',
+    title: $t('crm.customer.statistics.dealCustomerCount'),
+    minWidth: 100,
+  },
+  {
+    field: 'dealRate',
+    title: $t('crm.customer.statistics.dealRate'),
+    minWidth: 100,
+    formatter: ({ cellValue }) => `${cellValue}%`,
+  },
+  {
+    field: 'contractPrice',
+    title: $t('crm.portrait.totalPrice'),
+    minWidth: 120,
+    formatter: 'formatAmount2',
+  },
+  {
+    field: 'receivablePrice',
+    title: $t('crm.portrait.receivablePrice'),
+    minWidth: 120,
+    formatter: 'formatAmount2',
+  },
+  {
+    field: 'receivableNotPrice',
+    title: $t('crm.portrait.receivableNotPrice'),
+    minWidth: 120,
+    formatter: 'formatAmount2',
+  },
+  {
+    field: 'receivableRate',
+    title: $t('crm.customer.statistics.receivableRate'),
+    minWidth: 100,
+    formatter: ({ cellValue }) => `${cellValue}%`,
+  },
+];
 
-  renderDateChart({
+const [Grid, gridApi] = useVbenVxeGrid({
+  gridOptions: {
+    columns,
+    height: 300,
+    data: [],
+  },
+});
+
+function drawChart() {
+  const times = chartData.value.map((i) => i.time);
+  const createCounts = chartData.value.map((i) => i.customerCreateCount);
+  const dealCounts = chartData.value.map((i) => i.customerDealCount);
+
+  renderEcharts({
     tooltip: { trigger: 'axis' },
     legend: {
       data: [
@@ -64,13 +117,9 @@ function renderDateTrendChart() {
     xAxis: {
       type: 'category',
       data: times,
-      axisLabel: { color: '#666' },
-      axisLine: { lineStyle: { color: '#ddd' } },
     },
     yAxis: {
       type: 'value',
-      axisLabel: { color: '#666' },
-      splitLine: { lineStyle: { color: '#f0f0f0', type: 'dashed' } },
     },
     series: [
       {
@@ -91,59 +140,6 @@ function renderDateTrendChart() {
   });
 }
 
-/** 渲染员工排行图 */
-function renderUserRankChart() {
-  const names = userChartData.value.map((i) => i.ownerUserName);
-  const createCounts = userChartData.value.map((i) => i.customerCreateCount);
-  const dealCounts = userChartData.value.map((i) => i.customerDealCount);
-
-  renderUserChart({
-    tooltip: { trigger: 'axis' },
-    legend: {
-      data: [
-        $t('crm.customer.statistics.newCustomer'),
-        $t('crm.customer.statistics.dealCustomer'),
-      ],
-      bottom: 0,
-    },
-    grid: {
-      left: '3%',
-      right: '4%',
-      bottom: '15%',
-      top: '8%',
-      containLabel: true,
-    },
-    xAxis: {
-      type: 'category',
-      data: names,
-      axisLabel: { color: '#666' },
-      axisLine: { lineStyle: { color: '#ddd' } },
-    },
-    yAxis: {
-      type: 'value',
-      axisLabel: { color: '#666' },
-      splitLine: { lineStyle: { color: '#f0f0f0', type: 'dashed' } },
-    },
-    series: [
-      {
-        name: $t('crm.customer.statistics.newCustomer'),
-        type: 'bar',
-        barMaxWidth: 40,
-        itemStyle: { color: '#5ab1ef', borderRadius: [4, 4, 0, 0] },
-        data: createCounts,
-      },
-      {
-        name: $t('crm.customer.statistics.dealCustomer'),
-        type: 'bar',
-        barMaxWidth: 40,
-        itemStyle: { color: '#2fc25b', borderRadius: [4, 4, 0, 0] },
-        data: dealCounts,
-      },
-    ],
-  });
-}
-
-/** 加载数据 */
 async function loadData() {
   if (!props.queryParams.deptId) return;
   loading.value = true;
@@ -176,22 +172,29 @@ async function loadData() {
           ).toFixed(2)
         : '0.00';
 
-    dateChartData.value = dateRes;
-    userChartData.value = userRes;
+    const tableRows = userRes.map((item) => ({
+      ...item,
+      dealRate:
+        item.customerCreateCount > 0
+          ? ((item.customerDealCount / item.customerCreateCount) * 100).toFixed(2)
+          : '0.00',
+      receivableRate:
+        item.contractPrice > 0
+          ? ((item.receivablePrice / item.contractPrice) * 100).toFixed(2)
+          : '0.00',
+      receivableNotPrice: item.contractPrice - item.receivablePrice,
+    }));
+
+    chartData.value = dateRes;
+    tableData.value = userRes;
+    gridApi.grid?.loadData(tableRows);
 
     await nextTick();
-    renderDateTrendChart();
-    renderUserRankChart();
+    drawChart();
   } finally {
     loading.value = false;
   }
 }
-
-watch(
-  () => props.queryParams,
-  () => loadData(),
-  { deep: true },
-);
 
 defineExpose({ loadData });
 </script>
@@ -226,23 +229,19 @@ defineExpose({ loadData });
       </Col>
     </Row>
 
-    <Row :gutter="16">
-      <Col :span="12">
-        <Card
-          :title="$t('crm.customer.statistics.customerTotalTrend')"
-          :bordered="false"
-        >
-          <EchartsUI ref="dateChartRef" style="height: 300px" />
-        </Card>
-      </Col>
-      <Col :span="12">
-        <Card
-          :title="$t('crm.customer.statistics.customerTotalRankByEmployee')"
-          :bordered="false"
-        >
-          <EchartsUI ref="userChartRef" style="height: 300px" />
-        </Card>
-      </Col>
-    </Row>
+    <Card
+      :title="$t('crm.customer.statistics.customerTotalTrend')"
+      :bordered="false"
+      class="mb-4"
+    >
+      <EchartsUI ref="chartRef" style="height: 300px" />
+    </Card>
+
+    <Card
+      :title="$t('crm.customer.statistics.customerTotalRankByEmployee')"
+      :bordered="false"
+    >
+      <Grid />
+    </Card>
   </div>
 </template>

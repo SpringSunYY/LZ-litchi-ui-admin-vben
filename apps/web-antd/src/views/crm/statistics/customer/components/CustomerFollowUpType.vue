@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import type { EchartsUIType } from '@vben/plugins/echarts';
 
+import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 import type { CrmStatisticsCustomerApi } from '#/api/crm/statistics/customer';
 
 import { nextTick, reactive, ref, watch } from 'vue';
@@ -9,14 +10,17 @@ import { EchartsUI, useEcharts } from '@vben/plugins/echarts';
 
 import { Card, Statistic } from 'ant-design-vue';
 
+import { useVbenVxeGrid } from '#/adapter/vxe-table';
 import { getFollowUpSummaryByType } from '#/api/crm/statistics/customer';
 import { $t } from '#/locales';
+import { DICT_TYPE, getDictLabel } from '#/utils';
 
 defineOptions({ name: 'CustomerFollowUpType' });
 
 const props = defineProps<{
   queryParams: {
     deptId?: number;
+    interval: number;
     times: string[];
     userId?: number;
   };
@@ -43,9 +47,43 @@ const COLORS = [
   '#fffb96',
 ];
 
+const columns: VxeTableGridOptions['columns'] = [
+  { type: 'seq', width: 60, title: '#' },
+  {
+    field: 'followUpType',
+    title: $t('crm.customer.statistics.followUpType'),
+    minWidth: 120,
+    cellRender: {
+      name: 'CellDict',
+      props: { type: DICT_TYPE.CRM_FOLLOW_UP_TYPE },
+    },
+  },
+  {
+    field: 'followUpRecordCount',
+    title: $t('crm.customer.statistics.followUpCount'),
+    minWidth: 100,
+  },
+  {
+    field: 'portion',
+    title: $t('crm.customer.statistics.followUpTypeDistribution'),
+    minWidth: 100,
+    formatter: ({ cellValue }) => `${cellValue}%`,
+  },
+];
+
+const [Grid, gridApi] = useVbenVxeGrid({
+  gridOptions: {
+    columns,
+    height: 400,
+    data: [],
+  },
+});
+
 function renderPieChart() {
+  const textColor = '#666';
+
   const data = chartData.value.map((item, index) => ({
-    name: item.followUpType,
+    name: getDictLabel(DICT_TYPE.CRM_FOLLOW_UP_TYPE, item.followUpType),
     value: item.followUpRecordCount,
     itemStyle: { color: COLORS[index % COLORS.length] },
   }));
@@ -59,7 +97,7 @@ function renderPieChart() {
       orient: 'vertical',
       right: 10,
       top: 'center',
-      textStyle: { color: '#666' },
+      textStyle: { color: textColor },
     },
     series: [
       {
@@ -105,6 +143,16 @@ async function loadData() {
       0,
     );
 
+    const tableRows = res.map((item) => {
+      const portion =
+        totalStats.totalCount > 0
+          ? ((item.followUpRecordCount / totalStats.totalCount) * 100).toFixed(2)
+          : '0.00';
+      return { ...item, portion };
+    });
+
+    gridApi.grid?.loadData(tableRows);
+
     await nextTick();
     renderPieChart();
   } finally {
@@ -126,6 +174,7 @@ defineExpose({ loadData });
     <Card
       :title="$t('crm.customer.statistics.followUpTypeDistribution')"
       :bordered="false"
+      class="mb-4"
     >
       <div class="flex items-center">
         <div style="width: 35%">
@@ -150,12 +199,16 @@ defineExpose({ loadData });
                   backgroundColor: COLORS[index % COLORS.length],
                 }"
               ></span>
-              <span>{{ item.followUpType }}</span>
+              <span>{{ getDictLabel(DICT_TYPE.CRM_FOLLOW_UP_TYPE, item.followUpType) }}</span>
             </div>
             <span class="font-semibold">{{ item.followUpRecordCount }}</span>
           </div>
         </div>
       </div>
+    </Card>
+
+    <Card :bordered="false">
+      <Grid />
     </Card>
   </div>
 </template>

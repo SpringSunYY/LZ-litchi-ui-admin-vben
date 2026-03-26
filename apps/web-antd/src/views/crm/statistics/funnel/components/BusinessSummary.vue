@@ -2,6 +2,7 @@
 import type { EchartsUIType } from '@vben/plugins/echarts';
 
 import type { VxeTableGridOptions } from '#/adapter/vxe-table';
+import type { CrmStatisticsFunnelApi } from '#/api/crm/statistics/funnel';
 
 import { nextTick, ref, watch } from 'vue';
 
@@ -28,12 +29,11 @@ const props = defineProps<{
 }>();
 
 const loading = ref(false);
-const chartData = ref<any[]>([]);
+const chartData = ref<CrmStatisticsFunnelApi.BusinessSummaryByDate[]>([]);
 
 const chartRef = ref<EchartsUIType>();
 const { renderEcharts: renderChart } = useEcharts(chartRef);
 
-/** 渲染柱状图 */
 function renderBarChart() {
   const times = chartData.value.map((i) => i.time);
   const businessCounts = chartData.value.map((i) => i.businessCreateCount);
@@ -46,7 +46,7 @@ function renderBarChart() {
       bottom: 20,
       containLabel: true,
     },
-    legend: {},
+    legend: { textStyle: { color: '#666' } },
     tooltip: {
       trigger: 'axis',
       axisPointer: { type: 'shadow' },
@@ -55,19 +55,28 @@ function renderBarChart() {
       type: 'category',
       name: '日期',
       data: times,
+      axisLabel: { color: '#666' },
+      axisLine: { lineStyle: { color: '#666' } },
     },
     yAxis: [
       {
         type: 'value',
         name: $t('crm.funnel.newBusinessCount'),
+        nameTextStyle: { color: '#666' },
         min: 0,
         minInterval: 1,
+        axisLabel: { color: '#666' },
+        axisLine: { lineStyle: { color: '#666' } },
+        splitLine: { lineStyle: { color: '#f0f0f0' } },
       },
       {
         type: 'value',
         name: $t('crm.funnel.newBusinessAmount'),
+        nameTextStyle: { color: '#666' },
         min: 0,
-        splitLine: { lineStyle: { type: 'dotted', opacity: 0.7 } },
+        axisLabel: { color: '#666' },
+        axisLine: { lineStyle: { color: '#666' } },
+        splitLine: { lineStyle: { color: '#f0f0f0' } },
       },
     ],
     series: [
@@ -88,9 +97,56 @@ function renderBarChart() {
 }
 
 const columns: VxeTableGridOptions['columns'] = [
-  { type: 'seq', width: 60, title: '序号' },
-  { field: 'name', title: '商机名称', minWidth: 150 },
-  { field: 'customerName', title: '客户名称', minWidth: 150 },
+  { type: 'seq', width: 60, title: '#' },
+  {
+    field: 'name',
+    title: $t('crm.funnel.businessName'),
+    minWidth: 180,
+  },
+  {
+    field: 'customerName',
+    title: $t('crm.common.customerName'),
+    minWidth: 180,
+  },
+  {
+    field: 'statusTypeName',
+    title: $t('crm.common.businessStage'),
+    minWidth: 120,
+  },
+  {
+    field: 'ownerUserName',
+    title: $t('crm.customer.employee'),
+    minWidth: 120,
+  },
+  {
+    field: 'totalProductPrice',
+    title: $t('crm.business.totalProductPrice'),
+    minWidth: 120,
+    formatter: 'formatAmount2',
+  },
+  {
+    field: 'discountPercent',
+    title: $t('crm.business.discountPercent'),
+    minWidth: 120,
+    formatter: ({ cellValue }) => (cellValue ? `${cellValue}%` : '-'),
+  },
+  {
+    field: 'totalPrice',
+    title: $t('crm.common.businessAmount'),
+    minWidth: 120,
+    formatter: 'formatAmount2',
+  },
+  {
+    field: 'dealTime',
+    title: $t('crm.contract.orderDate'),
+    minWidth: 160,
+    formatter: 'formatDate',
+  },
+  {
+    field: 'creatorName',
+    title: $t('crm.business.creator'),
+    minWidth: 120,
+  },
 ];
 
 const [Grid, gridApi] = useVbenVxeGrid({
@@ -138,10 +194,14 @@ defineExpose({ loadData });
 
 <template>
   <div v-loading="loading">
-    <Card :title="$t('crm.funnel.businessAnalysis')" :bordered="false">
+    <Card
+      :title="$t('crm.funnel.businessAnalysis')"
+      :bordered="false"
+      class="mb-4"
+    >
       <EchartsUI ref="chartRef" style="height: 300px" />
     </Card>
-    <Card :bordered="false" class="mt-4">
+    <Card :bordered="false">
       <Grid />
     </Card>
   </div>

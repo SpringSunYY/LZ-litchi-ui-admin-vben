@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import type { EchartsUIType } from '@vben/plugins/echarts';
 
+import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 import type { CrmStatisticsCustomerApi } from '#/api/crm/statistics/customer';
 
 import { nextTick, reactive, ref, watch } from 'vue';
@@ -9,9 +10,11 @@ import { EchartsUI, useEcharts } from '@vben/plugins/echarts';
 
 import { Card, Col, Row, Statistic } from 'ant-design-vue';
 
+import { useVbenVxeGrid } from '#/adapter/vxe-table';
 import {
   getCustomerDealCycleByDate,
   getCustomerDealCycleByUser,
+  getCustomerSummaryByDate,
 } from '#/api/crm/statistics/customer';
 import { $t } from '#/locales';
 
@@ -20,6 +23,7 @@ defineOptions({ name: 'CustomerDealCycleByUser' });
 const props = defineProps<{
   queryParams: {
     deptId?: number;
+    interval: number;
     times: string[];
     userId?: number;
   };
@@ -30,26 +34,53 @@ const totalStats = reactive({
   avgDealCycle: '0.00',
   totalDealCount: 0,
 });
-const dateChartData = ref<CrmStatisticsCustomerApi.CustomerDealCycleByDate[]>(
-  [],
-);
-const userChartData = ref<CrmStatisticsCustomerApi.CustomerDealCycleByUser[]>(
-  [],
-);
+const chartData = ref<CrmStatisticsCustomerApi.CustomerDealCycleByDate[]>([]);
+const tableData = ref<CrmStatisticsCustomerApi.CustomerDealCycleByUser[]>([]);
 
-const dateChartRef = ref<EchartsUIType>();
-const userChartRef = ref<EchartsUIType>();
-const { renderEcharts: renderDateChart } = useEcharts(dateChartRef);
-const { renderEcharts: renderUserChart } = useEcharts(userChartRef);
+const chartRef = ref<EchartsUIType>();
+const { renderEcharts } = useEcharts(chartRef);
 
-/** 渲染日期趋势图 */
-function renderDateTrendChart() {
-  const times = dateChartData.value.map((i) => i.time);
-  const cycles = dateChartData.value.map((i) => i.customerDealCycle);
+const columns: VxeTableGridOptions['columns'] = [
+  { type: 'seq', width: 60, title: '#' },
+  { field: 'ownerUserName', title: $t('crm.customer.employee'), minWidth: 120 },
+  {
+    field: 'customerDealCount',
+    title: $t('crm.customer.statistics.dealCustomerCount'),
+    minWidth: 100,
+  },
+  {
+    field: 'customerDealCycle',
+    title: $t('crm.customer.statistics.dealCycleDays'),
+    minWidth: 100,
+  },
+];
 
-  renderDateChart({
+const [Grid, gridApi] = useVbenVxeGrid({
+  gridOptions: {
+    columns,
+    height: 300,
+    data: [],
+  },
+});
+
+function renderChart() {
+  const textColor = '#666';
+  const splitLineColor = '#f0f0f0';
+
+  const times = chartData.value.map((i) => i.time);
+  const cycles = chartData.value.map((i) => i.customerDealCycle);
+  const dealCounts = chartData.value.map((i) => i.customerDealCount);
+
+  renderEcharts({
     tooltip: { trigger: 'axis' },
-    legend: { data: [$t('crm.customer.statistics.dealCycleDays')], bottom: 0 },
+    legend: {
+      data: [
+        $t('crm.customer.statistics.dealCycleDays'),
+        $t('crm.customer.statistics.dealCustomerCount'),
+      ],
+      bottom: 0,
+      textStyle: { color: textColor },
+    },
     grid: {
       left: '3%',
       right: '4%',
@@ -60,65 +91,44 @@ function renderDateTrendChart() {
     xAxis: {
       type: 'category',
       data: times,
-      axisLabel: { color: '#666' },
-      axisLine: { lineStyle: { color: '#ddd' } },
+      axisLabel: { color: textColor },
+      axisLine: { lineStyle: { color: textColor } },
     },
-    yAxis: {
-      type: 'value',
-      axisLabel: { color: '#666' },
-      splitLine: { lineStyle: { color: '#f0f0f0', type: 'dashed' } },
-    },
+    yAxis: [
+      {
+        type: 'value',
+        name: $t('crm.customer.statistics.dealCycleDays'),
+        axisLabel: { color: textColor },
+        splitLine: { lineStyle: { color: splitLineColor, type: 'dashed' } },
+      },
+      {
+        type: 'value',
+        name: $t('crm.customer.statistics.dealCustomerCount'),
+        axisLabel: { color: textColor },
+        splitLine: { show: false },
+      },
+    ],
     series: [
       {
         name: $t('crm.customer.statistics.dealCycleDays'),
         type: 'bar',
         barMaxWidth: 40,
+        yAxisIndex: 0,
         itemStyle: { color: '#5ab1ef', borderRadius: [4, 4, 0, 0] },
         data: cycles,
       },
-    ],
-  });
-}
-
-/** 渲染员工排行图 */
-function renderUserRankChart() {
-  const names = userChartData.value.map((i) => i.ownerUserName);
-  const cycles = userChartData.value.map((i) => i.customerDealCycle);
-
-  renderUserChart({
-    tooltip: { trigger: 'axis' },
-    legend: { data: [$t('crm.customer.statistics.dealCycleDays')], bottom: 0 },
-    grid: {
-      left: '3%',
-      right: '4%',
-      bottom: '15%',
-      top: '8%',
-      containLabel: true,
-    },
-    xAxis: {
-      type: 'category',
-      data: names,
-      axisLabel: { color: '#666' },
-      axisLine: { lineStyle: { color: '#ddd' } },
-    },
-    yAxis: {
-      type: 'value',
-      axisLabel: { color: '#666' },
-      splitLine: { lineStyle: { color: '#f0f0f0', type: 'dashed' } },
-    },
-    series: [
       {
-        name: $t('crm.customer.statistics.dealCycleDays'),
+        name: $t('crm.customer.statistics.dealCustomerCount'),
         type: 'bar',
         barMaxWidth: 40,
-        itemStyle: { color: '#5ab1ef', borderRadius: [4, 4, 0, 0] },
-        data: cycles,
+        yAxisIndex: 1,
+        itemStyle: { color: '#2fc25b', borderRadius: [4, 4, 0, 0] },
+        data: dealCounts,
       },
     ],
   });
 }
 
-/** 加载数据 */
 async function loadData() {
   if (!props.queryParams.deptId) return;
   loading.value = true;
@@ -130,20 +140,18 @@ async function loadData() {
       times: props.queryParams.times,
     };
 
-    const [dateRes, userRes] = await Promise.all([
+    const [cycleDateRes, cycleUserRes, customerDateRes] = await Promise.all([
       getCustomerDealCycleByDate(params),
       getCustomerDealCycleByUser(params),
+      getCustomerSummaryByDate(params),
     ]);
 
-    dateChartData.value = dateRes;
-    userChartData.value = userRes;
-
-    const totalCycle = userRes.reduce(
-      (sum, item) => sum + item.customerDealCycle * item.customerDealCount,
+    totalStats.totalDealCount = customerDateRes.reduce(
+      (sum, item) => sum + item.customerDealCount,
       0,
     );
-    totalStats.totalDealCount = userRes.reduce(
-      (sum, item) => sum + item.customerDealCount,
+    const totalCycle = cycleUserRes.reduce(
+      (sum, item) => sum + item.customerDealCycle * item.customerDealCount,
       0,
     );
     totalStats.avgDealCycle =
@@ -151,19 +159,16 @@ async function loadData() {
         ? (totalCycle / totalStats.totalDealCount).toFixed(2)
         : '0.00';
 
+    chartData.value = cycleDateRes;
+    tableData.value = cycleUserRes;
+    gridApi.grid?.loadData(tableData.value);
+
     await nextTick();
-    renderDateTrendChart();
-    renderUserRankChart();
+    renderChart();
   } finally {
     loading.value = false;
   }
 }
-
-watch(
-  () => props.queryParams,
-  () => loadData(),
-  { deep: true },
-);
 
 defineExpose({ loadData });
 </script>
@@ -190,23 +195,19 @@ defineExpose({ loadData });
       </Col>
     </Row>
 
-    <Row :gutter="16">
-      <Col :span="12">
-        <Card
-          :title="$t('crm.customer.statistics.dealCycleTrend')"
-          :bordered="false"
-        >
-          <EchartsUI ref="dateChartRef" style="height: 300px" />
-        </Card>
-      </Col>
-      <Col :span="12">
-        <Card
-          :title="$t('crm.customer.statistics.dealCycleRankByEmployee')"
-          :bordered="false"
-        >
-          <EchartsUI ref="userChartRef" style="height: 300px" />
-        </Card>
-      </Col>
-    </Row>
+    <Card
+      :title="$t('crm.customer.statistics.dealCycleTrend')"
+      :bordered="false"
+      class="mb-4"
+    >
+      <EchartsUI ref="chartRef" style="height: 300px" />
+    </Card>
+
+    <Card
+      :title="$t('crm.customer.statistics.dealCycleRankByEmployee')"
+      :bordered="false"
+    >
+      <Grid />
+    </Card>
   </div>
 </template>
