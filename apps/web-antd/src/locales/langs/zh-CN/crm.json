@@ -87,5 +87,26 @@
     "lastYearReceivable": "去年回款金额",
     "byEmployee": "按员工",
     "byMonth": "按月份"
+  },
+  "portrait": {
+    "title": "客户画像",
+    "areaAnalysis": "客户地区分布",
+    "levelAnalysis": "客户级别分布",
+    "sourceAnalysis": "客户来源分布",
+    "industryAnalysis": "客户行业分布",
+    "customerCount": "客户数",
+    "dealCount": "成交数",
+    "dealRate": "成交率",
+    "allCustomer": "全部客户",
+    "dealCustomer": "成交客户",
+    "levelPortion": "全部客户占比",
+    "dealPortion": "成交客户占比",
+    "sourcePortion": "全部客户占比",
+    "industryPortion": "全部客户占比",
+    "areaPortion": "全部客户占比",
+    "level": "客户级别",
+    "source": "客户来源",
+    "industry": "客户行业",
+    "areaName": "地区"
   }
 }

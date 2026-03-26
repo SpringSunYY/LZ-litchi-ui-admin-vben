@@ -88,5 +88,26 @@
     "lastYearReceivable": "Last Year Receivable",
     "byEmployee": "By Employee",
     "byMonth": "By Month"
+  },
+  "portrait": {
+    "title": "Customer Portrait",
+    "areaAnalysis": "Customer Area Distribution",
+    "levelAnalysis": "Customer Level Distribution",
+    "sourceAnalysis": "Customer Source Distribution",
+    "industryAnalysis": "Customer Industry Distribution",
+    "customerCount": "Customer Count",
+    "dealCount": "Deal Count",
+    "dealRate": "Deal Rate",
+    "allCustomer": "All Customers",
+    "dealCustomer": "Deal Customers",
+    "levelPortion": "All Customer Portion",
+    "dealPortion": "Deal Customer Portion",
+    "sourcePortion": "All Customer Portion",
+    "industryPortion": "All Customer Portion",
+    "areaPortion": "All Customer Portion",
+    "level": "Customer Level",
+    "source": "Customer Source",
+    "industry": "Customer Industry",
+    "areaName": "Area"
   }
 }

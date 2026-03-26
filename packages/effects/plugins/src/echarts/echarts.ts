@@ -19,12 +19,13 @@ import {
   FunnelChart,
   GaugeChart,
   LineChart,
+  MapChart,
   PieChart,
   RadarChart,
 } from 'echarts/charts';
 import {
-  // 数据集组件
   DatasetComponent,
+  GeoComponent,
   GridComponent,
   LegendComponent,
   TitleComponent,
@@ -32,6 +33,7 @@ import {
   TooltipComponent,
   // 内置数据转换器组件 (filter, sort)
   TransformComponent,
+  VisualMapComponent,
 } from 'echarts/components';
 import * as echarts from 'echarts/core';
 import { LabelLayout, UniversalTransition } from 'echarts/features';
@@ -67,6 +69,10 @@ echarts.use([
   CanvasRenderer,
   LegendComponent,
   ToolboxComponent,
+  MapChart,
+  GeoComponent,
+  VisualMapComponent,
 ]);
 
 export default echarts;
+export const registerMap = echarts.registerMap;

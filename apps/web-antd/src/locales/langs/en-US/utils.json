@@ -8,6 +8,9 @@
     "thisMonth": "This Month",
     "lastWeek": "Last Week",
     "lastMonth": "Last Month",
+    "last3Months": "Last 3 Months",
+    "lastYear": "Last Year",
+    "last3Years": "Last 3 Years",
     "beginTime": "Begin Time",
     "endTime": "End Time"
   }

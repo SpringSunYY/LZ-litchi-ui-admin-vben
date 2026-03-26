@@ -8,6 +8,9 @@
     "thisMonth": "本月",
     "lastWeek": "上周",
     "lastMonth": "上月",
+    "last3Months": "近三月",
+    "lastYear": "近一年",
+    "last3Years": "近三年",
     "beginTime": "开始时间",
     "endTime": "结束时间"
   }
