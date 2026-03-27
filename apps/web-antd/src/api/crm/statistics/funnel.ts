@@ -41,8 +41,8 @@ export namespace CrmStatisticsFunnelApi {
     ownerUserName: string;
     totalPrice: number;
     businessStatus: number;
-    contactLastTime: string | null;
-    dealTime: string | number | null;
+    contactLastTime: null | string;
+    dealTime: null | number | string;
   }
 }
 

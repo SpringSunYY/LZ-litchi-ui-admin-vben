@@ -18,7 +18,8 @@
     "intervalWeek": "按周",
     "intervalMonth": "按月",
     "intervalQuarter": "按季度",
-    "intervalYear": "按年"
+    "intervalYear": "按年",
+    "noDeptAndTime": "请选择和部门时间间隔"
   },
   "contract": {
     "name": "合同名称",
@@ -141,5 +142,25 @@
     "receivablePrice": "已收款金额",
     "receivableNotPrice": "未收款金额",
     "orderDate": "成交日期"
+  },
+  "rank": {
+    "title": "排行榜",
+    "count": "数量",
+    "contractPrice": "合同金额",
+    "contractPriceAnalysis": "合同金额排行",
+    "receivablePrice": "回款金额",
+    "receivablePriceAnalysis": "回款金额排行",
+    "contractCount": "签约合同数",
+    "contractCountAnalysis": "签约合同排行",
+    "productSales": "产品销量",
+    "productSalesAnalysis": "产品销量排行",
+    "customerCount": "新增客户数",
+    "customerCountAnalysis": "新增客户数排行",
+    "contactsCount": "新增联系人数",
+    "contactCountAnalysis": "新增联系人数排行",
+    "followCount": "跟进次数",
+    "followCountAnalysis": "跟进次数排行",
+    "followCustomerCount": "跟进客户数",
+    "followCustomerCountAnalysis": "跟进客户数排行"
   }
 }

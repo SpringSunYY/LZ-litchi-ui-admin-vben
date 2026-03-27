@@ -18,7 +18,8 @@
     "customerName": "Customer Name",
     "ownerUser": "Owner",
     "date": "Date",
-    "productName": "Product Name"
+    "productName": "Product Name",
+    "noDeptAndTime": "please select dept and time"
   },
   "contract": {
     "name": "Contract Name",
@@ -142,5 +143,25 @@
     "receivablePrice": "Received Amount",
     "receivableNotPrice": "Unreceived Amount",
     "orderDate": "Order Date"
+  },
+  "rank": {
+    "title": "Ranking",
+    "count": "Count",
+    "contractPrice": "Contract Amount",
+    "contractPriceAnalysis": "Contract Amount Ranking",
+    "receivablePrice": "Receivable Amount",
+    "receivablePriceAnalysis": "Receivable Amount Ranking",
+    "contractCount": "Contract Count",
+    "contractCountAnalysis": "Contract Count Ranking",
+    "productSales": "Product Sales",
+    "productSalesAnalysis": "Product Sales Ranking",
+    "customerCount": "New Customer Count",
+    "customerCountAnalysis": "New Customer Count Ranking",
+    "contactsCount": "New Contacts Count",
+    "contactCountAnalysis": "New Contacts Count Ranking",
+    "followCount": "Follow-up Count",
+    "followCountAnalysis": "Follow-up Count Ranking",
+    "followCustomerCount": "Follow-up Customer Count",
+    "followCustomerCountAnalysis": "Follow-up Customer Count Ranking"
   }
 }
