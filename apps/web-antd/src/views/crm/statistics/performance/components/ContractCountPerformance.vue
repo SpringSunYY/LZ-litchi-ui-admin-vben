@@ -3,7 +3,7 @@ import type { EchartsUIType } from '@vben/plugins/echarts';
 
 import type { CrmStatisticsPerformanceApi } from '#/api/crm/statistics/performance';
 
-import { nextTick, reactive, ref, watch } from 'vue';
+import { nextTick, reactive, ref } from 'vue';
 
 import { EchartsUI, useEcharts } from '@vben/plugins/echarts';
 
@@ -19,8 +19,8 @@ const props = defineProps<{
   queryParams: {
     deptId?: number;
     interval?: number;
-    userId?: number;
     times: string[];
+    userId?: number;
   };
 }>();
 
@@ -61,7 +61,13 @@ function renderLineChart() {
       bottom: 0,
       textStyle: { color: '#666' },
     },
-    grid: { left: '3%', right: '4%', bottom: '15%', top: '8%', containLabel: true },
+    grid: {
+      left: '3%',
+      right: '4%',
+      bottom: '15%',
+      top: '8%',
+      containLabel: true,
+    },
     xAxis: {
       type: 'category',
       data: times,
@@ -109,24 +115,44 @@ async function loadData() {
       userId: props.queryParams.userId,
       times: props.queryParams.times,
     };
-    const res = await getContractCountPerformance(params as any);
+    const res = await getContractCountPerformance(params);
 
     const tableRows = res.map((item) => {
       const monthChainRate =
-        item.lastMonthCount !== 0
-          ? (((item.currentMonthCount - item.lastMonthCount) / item.lastMonthCount) * 100).toFixed(2)
-          : 'NULL';
+        item.lastMonthCount === 0
+          ? 'NULL'
+          : (
+              ((item.currentMonthCount - item.lastMonthCount) /
+                item.lastMonthCount) *
+              100
+            ).toFixed(2);
       const yearChainRate =
-        item.lastYearCount !== 0
-          ? (((item.currentMonthCount - item.lastYearCount) / item.lastYearCount) * 100).toFixed(2)
-          : 'NULL';
+        item.lastYearCount === 0
+          ? 'NULL'
+          : (
+              ((item.currentMonthCount - item.lastYearCount) /
+                item.lastYearCount) *
+              100
+            ).toFixed(2);
       return { ...item, monthChainRate, yearChainRate };
     });
 
-    totalStats.currentMonthCount = res.reduce((sum, item) => sum + item.currentMonthCount, 0);
-    totalStats.lastMonthCount = res.reduce((sum, item) => sum + item.lastMonthCount, 0);
-    totalStats.lastYearCount = res.reduce((sum, item) => sum + item.lastYearCount, 0);
-    totalStats.totalContractCount = res.reduce((sum, item) => sum + item.currentMonthCount, 0);
+    totalStats.currentMonthCount = res.reduce(
+      (sum, item) => sum + item.currentMonthCount,
+      0,
+    );
+    totalStats.lastMonthCount = res.reduce(
+      (sum, item) => sum + item.lastMonthCount,
+      0,
+    );
+    totalStats.lastYearCount = res.reduce(
+      (sum, item) => sum + item.lastYearCount,
+      0,
+    );
+    totalStats.totalContractCount = res.reduce(
+      (sum, item) => sum + item.currentMonthCount,
+      0,
+    );
 
     chartData.value = res;
     gridApi.grid?.loadData(tableRows);
@@ -137,12 +163,6 @@ async function loadData() {
     loading.value = false;
   }
 }
-
-watch(
-  () => props.queryParams,
-  () => loadData(),
-  { deep: true },
-);
 
 defineExpose({ loadData });
 </script>

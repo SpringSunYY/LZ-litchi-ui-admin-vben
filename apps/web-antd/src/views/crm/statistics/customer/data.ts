@@ -157,7 +157,11 @@ export const dealCycleByProductColumns: VxeTableGridOptions['columns'] = [
 /** 客户转化-表格列 */
 export const conversionStatColumns: VxeTableGridOptions['columns'] = [
   { type: 'seq', width: 60, title: '#' },
-  { field: 'customerName', title: $t('crm.common.customerName'), minWidth: 150 },
+  {
+    field: 'customerName',
+    title: $t('crm.common.customerName'),
+    minWidth: 150,
+  },
   { field: 'contractName', title: $t('crm.contract.name'), minWidth: 150 },
   {
     field: 'totalPrice',

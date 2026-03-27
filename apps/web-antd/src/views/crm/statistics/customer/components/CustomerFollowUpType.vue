@@ -3,7 +3,7 @@ import type { EchartsUIType } from '@vben/plugins/echarts';
 
 import type { CrmStatisticsCustomerApi } from '#/api/crm/statistics/customer';
 
-import { nextTick, reactive, ref, watch } from 'vue';
+import { nextTick, reactive, ref } from 'vue';
 
 import { EchartsUI, useEcharts } from '@vben/plugins/echarts';
 
@@ -121,7 +121,9 @@ async function loadData() {
     const tableRows = res.map((item) => {
       const portion =
         totalStats.totalCount > 0
-          ? ((item.followUpRecordCount / totalStats.totalCount) * 100).toFixed(2)
+          ? ((item.followUpRecordCount / totalStats.totalCount) * 100).toFixed(
+              2,
+            )
           : '0.00';
       return { ...item, portion };
     });
@@ -134,12 +136,6 @@ async function loadData() {
     loading.value = false;
   }
 }
-
-watch(
-  () => props.queryParams,
-  () => loadData(),
-  { deep: true },
-);
 
 defineExpose({ loadData });
 </script>
@@ -174,7 +170,9 @@ defineExpose({ loadData });
                   backgroundColor: COLORS[index % COLORS.length],
                 }"
               ></span>
-              <span>{{ getDictLabel(DICT_TYPE.CRM_FOLLOW_UP_TYPE, item.followUpType) }}</span>
+              <span>{{
+                getDictLabel(DICT_TYPE.CRM_FOLLOW_UP_TYPE, item.followUpType)
+              }}</span>
             </div>
             <span class="font-semibold">{{ item.followUpRecordCount }}</span>
           </div>

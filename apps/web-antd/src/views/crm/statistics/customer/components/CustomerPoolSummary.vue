@@ -14,6 +14,7 @@ import {
   getPoolSummaryByDate,
   getPoolSummaryByUser,
 } from '#/api/crm/statistics/customer';
+import { $t } from '#/locales';
 
 import { poolSummaryColumns } from '../data';
 
@@ -59,10 +60,7 @@ function renderChart() {
   renderEcharts({
     tooltip: { trigger: 'axis' },
     legend: {
-      data: [
-        $t('crm.customer.putIntoPool'),
-        $t('crm.customer.takeFromPool'),
-      ],
+      data: [$t('crm.customer.putIntoPool'), $t('crm.customer.takeFromPool')],
       bottom: 0,
       textStyle: { color: textColor },
     },

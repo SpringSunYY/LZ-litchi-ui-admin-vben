@@ -30,7 +30,9 @@ const props = defineProps<{
 }>();
 
 const loading = ref(false);
-const chartData = ref<CrmStatisticsFunnelApi.BusinessInversionRateSummaryByDate[]>([]);
+const chartData = ref<
+  CrmStatisticsFunnelApi.BusinessInversionRateSummaryByDate[]
+>([]);
 
 const chartRef = ref<EchartsUIType>();
 const { renderEcharts: renderChart } = useEcharts(chartRef);
@@ -146,8 +148,8 @@ async function loadData() {
     };
 
     const [chartRes, listRes] = await Promise.all([
-      getBusinessInversionRateSummaryByDate(params as any),
-      getBusinessPageByDate(params as any),
+      getBusinessInversionRateSummaryByDate(params),
+      getBusinessPageByDate(params),
     ]);
 
     chartData.value = chartRes;
@@ -159,12 +161,6 @@ async function loadData() {
     loading.value = false;
   }
 }
-
-watch(
-  () => props.queryParams,
-  () => loadData(),
-  { deep: true },
-);
 
 defineExpose({ loadData });
 </script>

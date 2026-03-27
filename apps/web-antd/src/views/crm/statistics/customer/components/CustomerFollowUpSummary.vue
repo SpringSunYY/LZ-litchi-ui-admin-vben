@@ -14,6 +14,7 @@ import {
   getFollowUpSummaryByDate,
   getFollowUpSummaryByUser,
 } from '#/api/crm/statistics/customer';
+import { $t } from '#/locales';
 
 import { followUpSummaryColumns } from '../data';
 
@@ -129,7 +130,9 @@ async function loadData() {
     );
     totalStats.avgPerCustomer =
       totalStats.followUpCustomerCount > 0
-        ? (totalStats.followUpRecordCount / totalStats.followUpCustomerCount).toFixed(2)
+        ? (
+            totalStats.followUpRecordCount / totalStats.followUpCustomerCount
+          ).toFixed(2)
         : '0.00';
 
     chartData.value = dateRes;

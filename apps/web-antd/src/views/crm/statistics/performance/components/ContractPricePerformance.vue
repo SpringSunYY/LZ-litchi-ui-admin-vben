@@ -19,8 +19,8 @@ const props = defineProps<{
   queryParams: {
     deptId?: number;
     interval?: number;
-    userId?: number;
     times: string[];
+    userId?: number;
   };
 }>();
 
@@ -61,7 +61,13 @@ function renderLineChart() {
       bottom: 0,
       textStyle: { color: '#666' },
     },
-    grid: { left: '3%', right: '4%', bottom: '15%', top: '8%', containLabel: true },
+    grid: {
+      left: '3%',
+      right: '4%',
+      bottom: '15%',
+      top: '8%',
+      containLabel: true,
+    },
     xAxis: {
       type: 'category',
       data: times,
@@ -109,24 +115,44 @@ async function loadData() {
       userId: props.queryParams.userId,
       times: props.queryParams.times,
     };
-    const res = await getContractPricePerformance(params as any);
+    const res = await getContractPricePerformance(params);
 
     const tableRows = res.map((item) => {
       const monthChainRate =
-        item.lastMonthCount !== 0
-          ? (((item.currentMonthCount - item.lastMonthCount) / item.lastMonthCount) * 100).toFixed(2)
-          : 'NULL';
+        item.lastMonthCount === 0
+          ? 'NULL'
+          : (
+              ((item.currentMonthCount - item.lastMonthCount) /
+                item.lastMonthCount) *
+              100
+            ).toFixed(2);
       const yearChainRate =
-        item.lastYearCount !== 0
-          ? (((item.currentMonthCount - item.lastYearCount) / item.lastYearCount) * 100).toFixed(2)
-          : 'NULL';
+        item.lastYearCount === 0
+          ? 'NULL'
+          : (
+              ((item.currentMonthCount - item.lastYearCount) /
+                item.lastYearCount) *
+              100
+            ).toFixed(2);
       return { ...item, monthChainRate, yearChainRate };
     });
 
-    totalStats.currentMonthAmount = res.reduce((sum, item) => sum + item.currentMonthCount, 0);
-    totalStats.lastMonthAmount = res.reduce((sum, item) => sum + item.lastMonthCount, 0);
-    totalStats.lastYearAmount = res.reduce((sum, item) => sum + item.lastYearCount, 0);
-    totalStats.totalContractAmount = res.reduce((sum, item) => sum + item.currentMonthCount, 0);
+    totalStats.currentMonthAmount = res.reduce(
+      (sum, item) => sum + item.currentMonthCount,
+      0,
+    );
+    totalStats.lastMonthAmount = res.reduce(
+      (sum, item) => sum + item.lastMonthCount,
+      0,
+    );
+    totalStats.lastYearAmount = res.reduce(
+      (sum, item) => sum + item.lastYearCount,
+      0,
+    );
+    totalStats.totalContractAmount = res.reduce(
+      (sum, item) => sum + item.currentMonthCount,
+      0,
+    );
 
     chartData.value = res;
     gridApi.grid?.loadData(tableRows);

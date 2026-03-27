@@ -147,12 +147,6 @@ async function fetchData() {
   }
 }
 
-watch(
-  () => props.queryParams,
-  () => fetchData(),
-  { deep: true },
-);
-
 watch(active, () => {
   nextTick(() => renderFunnelChart(buildOptions()));
 });

@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import type { Dayjs } from 'dayjs';
 
-import { computed, onMounted, reactive, ref, watch } from 'vue';
+import { computed, nextTick, onMounted, reactive, ref, watch } from 'vue';
 
 import { Page } from '@vben/common-ui';
 import { handleTree } from '@vben/utils';
@@ -11,6 +11,7 @@ import {
   Card,
   DatePicker,
   Form,
+  message,
   Select,
   Space,
   Tabs,
@@ -44,7 +45,7 @@ const formState = reactive({
   userId: undefined as number | undefined,
   interval: 2,
   times: [
-    dayjs().subtract(7, 'day').startOf('day'),
+    dayjs().subtract(14, 'day').startOf('day'),
     dayjs().subtract(1, 'day').endOf('day'),
   ] as [Dayjs, Dayjs],
 });
@@ -78,7 +79,15 @@ const refDealCycleByProduct = ref();
 const refConversionStat = ref();
 
 /** 刷新当前 Tab 的数据 */
-function loadActiveTab() {
+async function loadActiveTab() {
+  await nextTick();
+  if (!queryParams.value.deptId || !queryParams.value.times) {
+    message.warn({
+      content: $t('crm.common.noDeptAndTime'),
+      key: 'action_key_msg',
+    });
+    return;
+  }
   switch (activeTab.value) {
     case 'conversion': {
       refConversionStat.value?.loadData?.();
@@ -169,7 +178,7 @@ function resetTimeRange() {
     case 2: {
       // 周
       formState.times = [
-        dayjs().subtract(7, 'day').startOf('day'),
+        dayjs().subtract(14, 'day').startOf('day'),
         dayjs().subtract(1, 'day').endOf('day'),
       ];
       break;
@@ -177,7 +186,7 @@ function resetTimeRange() {
     case 3: {
       // 月
       formState.times = [
-        dayjs().subtract(30, 'day').startOf('day'),
+        dayjs().subtract(3, 'month').startOf('month'),
         dayjs().subtract(1, 'day').endOf('day'),
       ];
       break;
@@ -185,7 +194,7 @@ function resetTimeRange() {
     case 4: {
       // 季度
       formState.times = [
-        dayjs().subtract(1, 'quarter').startOf('quarter'),
+        dayjs().subtract(3, 'quarter').startOf('quarter'),
         dayjs().subtract(1, 'day').endOf('day'),
       ];
       break;
@@ -193,7 +202,7 @@ function resetTimeRange() {
     case 5: {
       // 年
       formState.times = [
-        dayjs().subtract(1, 'year').startOf('year'),
+        dayjs().subtract(3, 'year').startOf('year'),
         dayjs().subtract(1, 'day').endOf('day'),
       ];
       break;
@@ -207,15 +216,6 @@ watch(
   () => {
     resetTimeRange();
   },
-);
-
-/** 日期变化时刷新数据 */
-watch(
-  () => formState.times,
-  () => {
-    loadActiveTab();
-  },
-  { deep: true },
 );
 
 const chartTabs = computed(() => [
@@ -246,11 +246,6 @@ const chartTabs = computed(() => [
 
 const activeTab = ref('summary');
 
-/** 切换 Tab 时刷新当前 Tab */
-watch(activeTab, () => {
-  loadActiveTab();
-});
-
 onMounted(async () => {
   deptList.value = handleTree(await getSimpleDeptList());
   userList.value = await getSimpleUserList();
@@ -258,7 +253,7 @@ onMounted(async () => {
     formState.deptId = deptList.value[0]!.id;
   }
   resetTimeRange();
-  loadActiveTab();
+  await loadActiveTab();
 });
 </script>
 
@@ -332,7 +327,7 @@ onMounted(async () => {
       </Form>
     </Card>
 
-    <Tabs v-model:active-key="activeTab">
+    <Tabs v-model:active-key="activeTab" @change="loadActiveTab">
       <Tabs.TabPane key="summary" :tab="chartTabs[0]!.label">
         <CustomerSummary ref="refSummary" :query-params="queryParams" />
       </Tabs.TabPane>

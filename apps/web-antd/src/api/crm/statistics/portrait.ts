@@ -1,5 +1,3 @@
-import type { PageParam } from '@vben/request';
-
 import { requestClient } from '#/api/request';
 
 export namespace CrmStatisticsPortraitApi {
@@ -34,10 +32,19 @@ export namespace CrmStatisticsPortraitApi {
     areaName: string;
     areaPortion: number | string;
   }
+
+  /** 统计查询参数 */
+  export interface StatisticsParams {
+    deptId?: number;
+    userId?: number;
+    times: string[];
+  }
 }
 
 /** 获取客户行业统计数据 */
-export function getCustomerIndustry(params: PageParam) {
+export function getCustomerIndustry(
+  params: CrmStatisticsPortraitApi.StatisticsParams,
+) {
   return requestClient.get<CrmStatisticsPortraitApi.CustomerIndustry[]>(
     '/crm/statistics-portrait/get-customer-industry-summary',
     { params },
@@ -45,7 +52,9 @@ export function getCustomerIndustry(params: PageParam) {
 }
 
 /** 获取客户来源统计数据 */
-export function getCustomerSource(params: PageParam) {
+export function getCustomerSource(
+  params: CrmStatisticsPortraitApi.StatisticsParams,
+) {
   return requestClient.get<CrmStatisticsPortraitApi.CustomerSource[]>(
     '/crm/statistics-portrait/get-customer-source-summary',
     { params },
@@ -53,7 +62,9 @@ export function getCustomerSource(params: PageParam) {
 }
 
 /** 获取客户级别统计数据 */
-export function getCustomerLevel(params: PageParam) {
+export function getCustomerLevel(
+  params: CrmStatisticsPortraitApi.StatisticsParams,
+) {
   return requestClient.get<CrmStatisticsPortraitApi.CustomerLevel[]>(
     '/crm/statistics-portrait/get-customer-level-summary',
     { params },
@@ -61,7 +72,9 @@ export function getCustomerLevel(params: PageParam) {
 }
 
 /** 获取客户地区统计数据 */
-export function getCustomerArea(params: PageParam) {
+export function getCustomerArea(
+  params: CrmStatisticsPortraitApi.StatisticsParams,
+) {
   return requestClient.get<CrmStatisticsPortraitApi.CustomerArea[]>(
     '/crm/statistics-portrait/get-customer-area-summary',
     { params },

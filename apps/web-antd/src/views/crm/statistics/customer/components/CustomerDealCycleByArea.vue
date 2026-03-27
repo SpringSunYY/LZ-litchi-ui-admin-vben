@@ -147,11 +147,6 @@ async function loadData() {
   }
 }
 
-watch(
-  () => props.queryParams,
-  () => loadData(),
-  { deep: true },
-);
 
 defineExpose({ loadData });
 </script>

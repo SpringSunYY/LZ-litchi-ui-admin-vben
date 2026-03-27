@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { computed, onMounted, reactive, ref, watch } from 'vue';
+import { computed, nextTick, onMounted, reactive, ref, watch } from 'vue';
 
 import { Page } from '@vben/common-ui';
 import { handleTree } from '@vben/utils';
@@ -9,6 +9,7 @@ import {
   Card,
   DatePicker,
   Form,
+  message,
   Select,
   Space,
   Tabs,
@@ -36,7 +37,7 @@ const formState = reactive({
   deptId: undefined as number | undefined,
   userId: undefined as number | undefined,
   times: [
-    dayjs().subtract(1, 'year').startOf('year'),
+    dayjs().subtract(14, 'day').startOf('day'),
     dayjs().subtract(1, 'day').endOf('day'),
   ] as [ReturnType<typeof dayjs>, ReturnType<typeof dayjs>],
 });
@@ -81,7 +82,15 @@ const chartTabs = computed(() => [
 const activeTab = ref('contractCount');
 
 /** 刷新当前 Tab 的数据 */
-function loadActiveTab() {
+async function loadActiveTab() {
+  await nextTick();
+  if (!queryParams.value.deptId || !queryParams.value.times) {
+    message.warn({
+      content: $t('crm.common.noDeptAndTime'),
+      key: 'action_key_msg',
+    });
+    return;
+  }
   switch (activeTab.value) {
     case 'contractCount': {
       refContractCount.value?.loadData?.();
@@ -114,27 +123,13 @@ watch(
   },
 );
 
-/** 切换 Tab 时刷新当前 Tab */
-watch(activeTab, () => {
-  loadActiveTab();
-});
-
-/** 日期变化时刷新数据 */
-watch(
-  () => formState.times,
-  () => {
-    loadActiveTab();
-  },
-  { deep: true },
-);
-
 onMounted(async () => {
   deptList.value = handleTree(await getSimpleDeptList());
   userList.value = await getSimpleUserList();
   if (deptList.value.length > 0) {
     formState.deptId = deptList.value[0]!.id;
   }
-  loadActiveTab();
+  await loadActiveTab();
 });
 </script>
 
@@ -187,7 +182,7 @@ onMounted(async () => {
       </Form>
     </Card>
 
-    <Tabs v-model:active-key="activeTab">
+    <Tabs v-model:active-key="activeTab" @change="loadActiveTab">
       <Tabs.TabPane key="contractCount" :tab="chartTabs[0]!.label">
         <ContractCountPerformance
           ref="refContractCount"

@@ -1,4 +1,4 @@
-import type { PageParam, PageResult } from '@vben/request';
+import type { PageResult } from '@vben/request';
 
 import { requestClient } from '#/api/request';
 
@@ -44,10 +44,20 @@ export namespace CrmStatisticsFunnelApi {
     contactLastTime: null | string;
     dealTime: null | number | string;
   }
+
+  /** 统计查询参数 */
+  export interface StatisticsParams {
+    deptId?: number;
+    userId?: number;
+    times: string[];
+    interval?: number;
+  }
 }
 
 /** 获取销售漏斗统计数据 */
-export function getFunnelSummary(params: PageParam) {
+export function getFunnelSummary(
+  params: CrmStatisticsFunnelApi.StatisticsParams,
+) {
   return requestClient.get<CrmStatisticsFunnelApi.FunnelSummary>(
     '/crm/statistics-funnel/get-funnel-summary',
     { params },
@@ -55,7 +65,9 @@ export function getFunnelSummary(params: PageParam) {
 }
 
 /** 获取商机结束状态统计 */
-export function getBusinessSummaryByEndStatus(params: PageParam) {
+export function getBusinessSummaryByEndStatus(
+  params: CrmStatisticsFunnelApi.StatisticsParams,
+) {
   return requestClient.get<CrmStatisticsFunnelApi.BusinessEndStatusSummary[]>(
     '/crm/statistics-funnel/get-business-summary-by-end-status',
     { params },
@@ -63,7 +75,9 @@ export function getBusinessSummaryByEndStatus(params: PageParam) {
 }
 
 /** 获取新增商机分析(按日期) */
-export function getBusinessSummaryByDate(params: PageParam) {
+export function getBusinessSummaryByDate(
+  params: CrmStatisticsFunnelApi.StatisticsParams,
+) {
   return requestClient.get<CrmStatisticsFunnelApi.BusinessSummaryByDate[]>(
     '/crm/statistics-funnel/get-business-summary-by-date',
     { params },
@@ -71,7 +85,9 @@ export function getBusinessSummaryByDate(params: PageParam) {
 }
 
 /** 获取商机转化率分析(按日期) */
-export function getBusinessInversionRateSummaryByDate(params: PageParam) {
+export function getBusinessInversionRateSummaryByDate(
+  params: CrmStatisticsFunnelApi.StatisticsParams,
+) {
   return requestClient.get<
     CrmStatisticsFunnelApi.BusinessInversionRateSummaryByDate[]
   >('/crm/statistics-funnel/get-business-inversion-rate-summary-by-date', {
@@ -80,7 +96,9 @@ export function getBusinessInversionRateSummaryByDate(params: PageParam) {
 }
 
 /** 获取商机列表(按日期) */
-export function getBusinessPageByDate(params: PageParam) {
+export function getBusinessPageByDate(
+  params: CrmStatisticsFunnelApi.StatisticsParams,
+) {
   return requestClient.get<PageResult<CrmStatisticsFunnelApi.BusinessPageItem>>(
     '/crm/statistics-funnel/get-business-page-by-date',
     { params },

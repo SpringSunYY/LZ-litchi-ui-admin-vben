@@ -3,7 +3,7 @@ import type { EchartsUIType } from '@vben/plugins/echarts';
 
 import type { CrmStatisticsCustomerApi } from '#/api/crm/statistics/customer';
 
-import { nextTick, reactive, ref, watch } from 'vue';
+import { nextTick, reactive, ref } from 'vue';
 
 import { EchartsUI, useEcharts } from '@vben/plugins/echarts';
 
@@ -29,8 +29,12 @@ const totalStats = reactive({
   avgDealCycle: '0.00',
   totalDealCount: 0,
 });
-const chartData = ref<CrmStatisticsCustomerApi.CustomerDealCycleByProduct[]>([]);
-const tableData = ref<CrmStatisticsCustomerApi.CustomerDealCycleByProduct[]>([]);
+const chartData = ref<CrmStatisticsCustomerApi.CustomerDealCycleByProduct[]>(
+  [],
+);
+const tableData = ref<CrmStatisticsCustomerApi.CustomerDealCycleByProduct[]>(
+  [],
+);
 
 const chartRef = ref<EchartsUIType>();
 const { renderEcharts } = useEcharts(chartRef);
@@ -52,7 +56,11 @@ function renderChart() {
 
   renderEcharts({
     tooltip: { trigger: 'axis' },
-    legend: { data: [$t('crm.customer.dealCycleDays')], bottom: 0, textStyle: { color: textColor } },
+    legend: {
+      data: [$t('crm.customer.dealCycleDays')],
+      bottom: 0,
+      textStyle: { color: textColor },
+    },
     grid: {
       left: '3%',
       right: '4%',
@@ -119,12 +127,6 @@ async function loadData() {
     loading.value = false;
   }
 }
-
-watch(
-  () => props.queryParams,
-  () => loadData(),
-  { deep: true },
-);
 
 defineExpose({ loadData });
 </script>

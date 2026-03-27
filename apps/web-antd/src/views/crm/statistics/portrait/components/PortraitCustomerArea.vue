@@ -3,7 +3,7 @@ import type { EchartsUIType } from '@vben/plugins/echarts';
 
 import type { CrmStatisticsPortraitApi } from '#/api/crm/statistics/portrait';
 
-import { nextTick, ref, watch } from 'vue';
+import { nextTick, ref } from 'vue';
 
 import { EchartsUI, registerMap, useEcharts } from '@vben/plugins/echarts';
 
@@ -19,8 +19,8 @@ import { areaColumns } from '../data';
 const props = defineProps<{
   queryParams: {
     deptId?: number;
-    userId?: number;
     times: string[];
+    userId?: number;
   };
 }>();
 
@@ -169,12 +169,6 @@ async function loadData() {
     loading.value = false;
   }
 }
-
-watch(
-  () => props.queryParams,
-  () => loadData(),
-  { deep: true },
-);
 
 defineExpose({ loadData });
 </script>

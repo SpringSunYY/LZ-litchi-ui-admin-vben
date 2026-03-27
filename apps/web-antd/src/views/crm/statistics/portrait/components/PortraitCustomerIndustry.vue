@@ -19,8 +19,8 @@ import { industryColumns } from '../data';
 const props = defineProps<{
   queryParams: {
     deptId?: number;
-    userId?: number;
     times: string[];
+    userId?: number;
   };
 }>();
 
@@ -131,7 +131,10 @@ async function loadData() {
 
     const tableRows = res.map((item) => ({
       ...item,
-      industryName: getDictLabel(DICT_TYPE.CRM_CUSTOMER_INDUSTRY, item.industryId),
+      industryName: getDictLabel(
+        DICT_TYPE.CRM_CUSTOMER_INDUSTRY,
+        item.industryId,
+      ),
       industryPortion: calcPortion(item.customerCount, totalCustomer),
       dealPortion: calcPortion(item.dealCount, totalDeal),
     }));

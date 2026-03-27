@@ -42,7 +42,7 @@ const formState = reactive({
   deptId: undefined as number | undefined,
   userId: undefined as number | undefined,
   times: [
-    dayjs().subtract(7, 'day').startOf('day'),
+    dayjs().subtract(14, 'day').startOf('day'),
     dayjs().subtract(1, 'day').endOf('day'),
   ] as [ReturnType<typeof dayjs>, ReturnType<typeof dayjs>],
 });
@@ -142,7 +142,7 @@ function handleReset() {
     deptList.value.length > 0 ? deptList.value[0]!.id : undefined;
   formState.userId = undefined;
   formState.times = [
-    dayjs().subtract(7, 'day').startOf('day'),
+    dayjs().subtract(14, 'day').startOf('day'),
     dayjs().subtract(1, 'day').endOf('day'),
   ];
   loadActiveTab();

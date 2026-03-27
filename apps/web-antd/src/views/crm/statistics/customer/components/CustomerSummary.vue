@@ -57,10 +57,7 @@ function renderChart() {
   renderEcharts({
     tooltip: { trigger: 'axis' },
     legend: {
-      data: [
-        $t('crm.customer.newCustomer'),
-        $t('crm.customer.dealCustomer'),
-      ],
+      data: [$t('crm.customer.newCustomer'), $t('crm.customer.dealCustomer')],
       bottom: 0,
     },
     grid: {
@@ -132,7 +129,9 @@ async function loadData() {
       ...item,
       dealRate:
         item.customerCreateCount > 0
-          ? ((item.customerDealCount / item.customerCreateCount) * 100).toFixed(2)
+          ? ((item.customerDealCount / item.customerCreateCount) * 100).toFixed(
+              2,
+            )
           : '0.00',
       receivableRate:
         item.contractPrice > 0

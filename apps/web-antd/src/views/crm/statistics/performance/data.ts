@@ -25,13 +25,15 @@ export const contractCountColumns: VxeTableGridOptions['columns'] = [
     field: 'monthChainRate',
     title: $t('crm.performance.monthChainRate'),
     minWidth: 120,
-    formatter: ({ cellValue }) => (cellValue !== 'NULL' ? `${cellValue}%` : '-'),
+    formatter: ({ cellValue }) =>
+      cellValue === 'NULL' ? '-' : `${cellValue}%`,
   },
   {
     field: 'yearChainRate',
     title: $t('crm.performance.yearChainRate'),
     minWidth: 120,
-    formatter: ({ cellValue }) => (cellValue !== 'NULL' ? `${cellValue}%` : '-'),
+    formatter: ({ cellValue }) =>
+      cellValue === 'NULL' ? '-' : `${cellValue}%`,
   },
 ];
 
@@ -61,13 +63,15 @@ export const contractPriceColumns: VxeTableGridOptions['columns'] = [
     field: 'monthChainRate',
     title: $t('crm.performance.monthChainRate'),
     minWidth: 120,
-    formatter: ({ cellValue }) => (cellValue !== 'NULL' ? `${cellValue}%` : '-'),
+    formatter: ({ cellValue }) =>
+      cellValue === 'NULL' ? '-' : `${cellValue}%`,
   },
   {
     field: 'yearChainRate',
     title: $t('crm.performance.yearChainRate'),
     minWidth: 120,
-    formatter: ({ cellValue }) => (cellValue !== 'NULL' ? `${cellValue}%` : '-'),
+    formatter: ({ cellValue }) =>
+      cellValue === 'NULL' ? '-' : `${cellValue}%`,
   },
 ];
 
@@ -97,12 +101,14 @@ export const receivablePriceColumns: VxeTableGridOptions['columns'] = [
     field: 'monthChainRate',
     title: $t('crm.performance.monthChainRate'),
     minWidth: 120,
-    formatter: ({ cellValue }) => (cellValue !== 'NULL' ? `${cellValue}%` : '-'),
+    formatter: ({ cellValue }) =>
+      cellValue === 'NULL' ? '-' : `${cellValue}%`,
   },
   {
     field: 'yearChainRate',
     title: $t('crm.performance.yearChainRate'),
     minWidth: 120,
-    formatter: ({ cellValue }) => (cellValue !== 'NULL' ? `${cellValue}%` : '-'),
+    formatter: ({ cellValue }) =>
+      cellValue === 'NULL' ? '-' : `${cellValue}%`,
   },
 ];
