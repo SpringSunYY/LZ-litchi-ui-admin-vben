@@ -262,6 +262,9 @@ enum DICT_TYPE {
   SYSTEM_SMS_TEMPLATE_TYPE = 'system_sms_template_type',
 
   SYSTEM_SOCIAL_TYPE = 'system_social_type',
+  SYSTEM_TENANT_INDUSTRY = 'system_tenant_industry', // 租户行业
+  SYSTEM_TENANT_STATUS = 'system_tenant_status', // 租户状态
+  SYSTEM_TENANT_TYPE = 'system_tenant_type', // 租户类型
   // ========== SYSTEM 模块 ==========
   SYSTEM_USER_SEX = 'system_user_sex',
   TERMINAL = 'terminal', // 终端

@@ -5,15 +5,26 @@ import { requestClient } from '#/api/request';
 export namespace SystemTenantApi {
   /** 租户信息 */
   export interface Tenant {
-    id?: number;
-    name: string;
-    packageId: number;
-    contactName: string;
-    contactMobile: string;
-    accountCount: number;
-    expireTime: Date;
-    website: string;
-    status: number;
+    id: number; // 租户编号
+    name?: string; // 租户名
+    code?: string; // 编码
+    contactUserId: number; // 联系人的用户编号
+    contactName?: string; // 联系人
+    contactMobile: string; // 联系手机
+    industry?: number; // 行业
+    type?: number; // 类型
+    addressCode: string; // 地区
+    addressDetail: string; // 地址
+    qualifications: string; // 相关资质
+    status?: number; // 租户状态（0正常 1停用）
+    menuIds: string; // 关联菜单
+    website: string; // 绑定域名
+    rechargeAmount?: number; // 充值金额
+    paymentAmount?: number; // 支付金额
+    balanceAmount?: number; // 余额
+    paymentPassword?: string; // 支付密码
+    accountCount?: number; // 账号数量
+    currentAccountCount?: number; // 当前数量
   }
 }
 
