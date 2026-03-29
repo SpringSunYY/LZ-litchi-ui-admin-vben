@@ -5,15 +5,19 @@ import { requestClient } from '#/api/request';
 export namespace SystemTenantPackageApi {
   /** 租户套餐信息 */
   export interface TenantPackage {
-    id: number;
-    name: string;
-    status: number;
-    remark: string;
-    creator: string;
-    updater: string;
-    updateTime: string;
-    menuIds: number[];
-    createTime: Date;
+    id: number; // 套餐编号
+    name?: string; // 套餐名
+    code?: string; // 套餐编码
+    type?: boolean; // 套餐类型
+    logo?: string; // LOGO
+    price?: number; // 套餐价格
+    description: string; // 套餐描述
+    status?: number; // 套餐状态
+    orderNum?: number; // 排序
+    subscriptionNum?: number; // 订阅数
+    subscriptionTotalAmount?: number; // 订阅总额
+    remark: string; // 备注
+    menuIds?: string; // 关联的菜单编号
   }
 }
 
