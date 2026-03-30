@@ -27,7 +27,6 @@ import { globalShareState } from '@vben-core/shared/global-state';
 import { cn } from '@vben-core/shared/utils';
 
 import { vbenConfirm } from '../alert/AlertBuilder';
-
 import { useModalDraggable } from './use-modal-draggable';
 
 interface Props extends ModalProps {
@@ -50,7 +49,6 @@ const headerRef = ref();
 const footerRef = ref();
 
 const id = useId();
-
 provide('DISMISSABLE_MODAL_ID', id);
 
 const { $t } = useSimpleLocale();
@@ -129,17 +127,17 @@ watch(
   { immediate: true },
 );
 
-// watch(
-//   () => [showLoading.value, submitting.value],
-//   ([l, s]) => {
-//     if ((s || l) && wrapperRef.value) {
-//       wrapperRef.value.scrollTo({
-//         // behavior: 'smooth',
-//         top: 0,
-//       });
-//     }
-//   },
-// );
+watch(
+  () => [showLoading.value, submitting.value],
+  ([l, s]) => {
+    if ((s || l) && wrapperRef.value) {
+      wrapperRef.value.scrollTo({
+        behavior: 'smooth',
+        top: 0,
+      });
+    }
+  },
+);
 
 function handleFullscreen() {
   props.modalApi?.setState((prev) => {
@@ -149,12 +147,14 @@ function handleFullscreen() {
     return { ...prev, fullscreen: !fullscreen.value };
   });
 }
+
 function interactOutside(e: Event) {
   if (!closeOnClickModal.value || submitting.value) {
     e.preventDefault();
     e.stopPropagation();
   }
 }
+
 function escapeKeyDown(e: KeyboardEvent) {
   if (!closeOnPressEscape.value || submitting.value) {
     e.preventDefault();
@@ -189,8 +189,12 @@ async function pointerDownOutside(e: Event) {
   }
   try {
     await vbenConfirm({
-      content: externalCloseConfirmTip.value || $t.value('ui.actionMessage.externalCloseTip'),
-      title: externalCloseConfirmTitle.value || $t.value('ui.actionMessage.externalCloseConfirm'),
+      content:
+        externalCloseConfirmTip.value ||
+        $t.value('ui.actionMessage.externalCloseTip'),
+      title:
+        externalCloseConfirmTitle.value ||
+        $t.value('ui.actionMessage.externalCloseConfirm'),
       icon: 'warning',
       showCancel: true,
     });
@@ -204,6 +208,7 @@ function handleFocusOutside(e: Event) {
   e.preventDefault();
   e.stopPropagation();
 }
+
 const getAppendTo = computed(() => {
   return appendToMain.value
     ? `#${ELEMENT_ID_MAIN_CONTENT}>div:not(.absolute)>div`

@@ -3,9 +3,9 @@ import type { SystemTenantPackageApi } from '#/api/system/tenant-package';
 
 import { computed, ref } from 'vue';
 
-import { useVbenModal } from '@vben/common-ui';
+import { useVbenModelDrawer } from '@vben/common-ui';
 
-import { message } from 'ant-design-vue';
+import { Checkbox, message } from 'ant-design-vue';
 
 import { useVbenForm } from '#/adapter/form';
 import {
@@ -38,13 +38,13 @@ const [Form, formApi] = useVbenForm({
   showDefaultActions: false,
 });
 
-const [Modal, modalApi] = useVbenModal({
+const [FormModelDrawer, formModelDrawerApi] = useVbenModelDrawer({
   async onConfirm() {
     const { valid } = await formApi.validate();
     if (!valid) {
       return;
     }
-    modalApi.lock();
+    formModelDrawerApi.lock();
     // 提交表单
     const data =
       (await formApi.getValues()) as SystemTenantPackageApi.TenantPackage;
@@ -53,11 +53,11 @@ const [Modal, modalApi] = useVbenModal({
         ? updateTenantPackage(data)
         : createTenantPackage(data));
       // 关闭并提示
-      await modalApi.close();
+      await formModelDrawerApi.close();
       emit('success');
       message.success($t('ui.actionMessage.operationSuccess'));
     } finally {
-      modalApi.unlock();
+      formModelDrawerApi.unlock();
     }
   },
   async onOpenChange(isOpen: boolean) {
@@ -65,23 +65,37 @@ const [Modal, modalApi] = useVbenModal({
       formData.value = undefined;
       return;
     }
-    const data = modalApi.getData<SystemTenantPackageApi.TenantPackage>();
+    const data =
+      formModelDrawerApi.getData<SystemTenantPackageApi.TenantPackage>();
     if (!data || !data.id) {
       return;
     }
-    modalApi.lock();
+    formModelDrawerApi.lock();
     try {
       formData.value = await getTenantPackage(data.id as number);
-      await formApi.setValues(formData.value);
+      await formApi.setValues(formData.value as Record<string, any>);
     } finally {
-      modalApi.unlock();
+      formModelDrawerApi.unlock();
     }
   },
 });
 </script>
 
 <template>
-  <Modal :title="getTitle" class="w-[60%]">
+  <FormModelDrawer class="w-[60%]" :title="getTitle">
     <Form class="mx-6" />
-  </Modal>
+    <template #prepend-footer>
+      <div class="flex flex-auto items-center gap-4">
+        <Checkbox :checked="isAllSelected" @change="toggleSelectAll">
+          {{ $t('common.selectAll') }}
+        </Checkbox>
+        <Checkbox :checked="isExpanded" @change="toggleExpandAll">
+          {{ $t('common.expandAll') }}
+        </Checkbox>
+        <Checkbox :checked="checkStrictly" @change="toggleCheckStrictly">
+          {{ $t('common.checkStrictly') }}
+        </Checkbox>
+      </div>
+    </template>
+  </FormModelDrawer>
 </template>

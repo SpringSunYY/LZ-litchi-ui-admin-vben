@@ -88,17 +88,17 @@ const {
   zIndex,
 } = usePriorityValues(props, state);
 
-// watch(
-//   () => showLoading.value,
-//   (v) => {
-//     if (v && wrapperRef.value) {
-//       wrapperRef.value.scrollTo({
-//         // behavior: 'smooth',
-//         top: 0,
-//       });
-//     }
-//   },
-// );
+watch(
+  () => showLoading.value,
+  (v) => {
+    if (v && wrapperRef.value) {
+      wrapperRef.value.scrollTo({
+        behavior: 'smooth',
+        top: 0,
+      });
+    }
+  },
+);
 
 function interactOutside(e: Event) {
   if (!closeOnClickModal.value || submitting.value) {
@@ -122,7 +122,6 @@ async function pointerDownOutside(e: Event) {
     e.preventDefault();
     return;
   }
-  // 点击遮罩关闭，弹出确认
   e.preventDefault();
   if (!externalCloseConfirm.value) {
     await props.drawerApi?.close();
@@ -170,9 +169,9 @@ const hasOpened = ref(false);
 const isClosed = ref(true);
 watch(
   () => state?.value?.isOpen,
-  (value) => {
+  async (v) => {
     isClosed.value = false;
-    if (value && !unref(hasOpened)) {
+    if (v && !unref(hasOpened)) {
       hasOpened.value = true;
     }
   },
@@ -250,7 +249,8 @@ const getForceMount = computed(() => {
           <SheetTitle v-if="title" class="text-left">
             <slot name="title">
               {{ title }}
-
+            </slot>
+            <slot name="titleTooltip">
               <VbenHelpTooltip v-if="titleTooltip" trigger-class="pb-1">
                 {{ titleTooltip }}
               </VbenHelpTooltip>

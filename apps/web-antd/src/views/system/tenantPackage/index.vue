@@ -2,9 +2,12 @@
 import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 import type { SystemTenantPackageApi } from '#/api/system/tenant-package';
 
-import { ref } from 'vue';
-
-import { DocAlert, Page, useVbenDrawer, useVbenModal } from '@vben/common-ui';
+import {
+  DocAlert,
+  Page,
+  useVbenDrawer,
+  useVbenModelDrawer,
+} from '@vben/common-ui';
 
 import { message } from 'ant-design-vue';
 
@@ -19,9 +22,10 @@ import { useGridColumns, useGridFormSchema } from './data';
 import Form from './modules/form.vue';
 import MenuAuthDrawer from './modules/MenuAuthDrawer.vue';
 
-const [FormModal, formModalApi] = useVbenModal({
+const [FormModelDrawer, formModelDrawerApi] = useVbenModelDrawer({
   connectedComponent: Form,
   destroyOnClose: true,
+  type: 'drawer',
 });
 
 const [DrawerModal, formDrawerApi] = useVbenDrawer({
@@ -36,12 +40,12 @@ function onRefresh() {
 
 /** 创建租户套餐 */
 function handleCreate() {
-  formModalApi.setData(null).open();
+  formModelDrawerApi.setData(null).open();
 }
 
 /** 编辑租户套餐 */
 function handleEdit(row: SystemTenantPackageApi.TenantPackage) {
-  formModalApi.setData(row).open();
+  formModelDrawerApi.setData(row).open();
 }
 
 /** 菜单授权 */
@@ -103,7 +107,7 @@ const [Grid, gridApi] = useVbenVxeGrid({
       <DocAlert title="SaaS 多租户" url="https://doc.iocoder.cn/saas-tenant/" />
     </template>
 
-    <FormModal @success="onRefresh" />
+    <FormModelDrawer @success="onRefresh" />
     <DrawerModal />
     <Grid table-title="租户套餐列表">
       <template #toolbar-tools>
