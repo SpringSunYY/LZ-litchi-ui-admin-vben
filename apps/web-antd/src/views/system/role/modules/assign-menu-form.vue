@@ -1,91 +1,53 @@
 <script lang="ts" setup>
-import type { Recordable } from '@vben/types';
-
 import type { SystemDeptApi } from '#/api/system/dept';
 import type { SystemRoleApi } from '#/api/system/role';
 
-import { ref } from 'vue';
+import { nextTick, ref } from 'vue';
 
-import { useVbenModal, VbenTree } from '@vben/common-ui';
+import { useVbenDrawer, VbenTree } from '@vben/common-ui';
 import { handleTree } from '@vben/utils';
 
-import { Checkbox, message } from 'ant-design-vue';
+import { Checkbox, message, Spin, Tooltip } from 'ant-design-vue';
 
-import { useVbenForm } from '#/adapter/form';
 import { getMenuList } from '#/api/system/menu';
 import { assignRoleMenu, getRoleMenuList } from '#/api/system/permission';
 import { $t } from '#/locales';
-import { SystemMenuTypeEnum } from '#/utils';
-
-import { useAssignMenuFormSchema } from '../data';
 
 const emit = defineEmits(['success']);
 
-const menuTree = ref<SystemDeptApi.Dept[]>([]); // 菜单树
-const menuLoading = ref(false); // 加载菜单列表
-const isAllSelected = ref(false); // 全选状态
-const isExpanded = ref(false); // 展开状态
-const expandedKeys = ref<number[]>([]); // 展开的节点
-
-const [Form, formApi] = useVbenForm({
-  commonConfig: {
-    componentProps: {
-      class: 'w-full',
-    },
-    formItemClass: 'col-span-2',
-    labelWidth: 80,
-  },
-  layout: 'horizontal',
-  schema: useAssignMenuFormSchema(),
-  showDefaultActions: false,
-});
-
-const [Modal, modalApi] = useVbenModal({
-  async onConfirm() {
-    const { valid } = await formApi.validate();
-    if (!valid) {
-      return;
-    }
-    modalApi.lock();
-    // 提交表单
-    const data = await formApi.getValues();
-    try {
-      await assignRoleMenu({
-        roleId: data.id,
-        menuIds: data.menuIds,
-      });
-      // 关闭并提示
-      await modalApi.close();
-      emit('success');
-      message.success($t('ui.actionMessage.operationSuccess'));
-    } finally {
-      modalApi.unlock();
-    }
+const [Drawer, drawerApi] = useVbenDrawer({
+  onConfirm: handleConfirm,
+  onCancel() {
+    drawerApi.close();
   },
   async onOpenChange(isOpen: boolean) {
-    if (!isOpen) {
-      return;
-    }
-    const data = modalApi.getData<SystemRoleApi.Role>();
-    if (!data || !data.id) {
-      return;
-    }
-    modalApi.lock();
-    try {
-      await formApi.setValues(data);
+    if (!isOpen) return;
+    selectedMenuIds.value = [];
+    isAllSelected.value = false;
+    isExpanded.value = false;
+    expandedKeys.value = [];
 
-      // 加载角色菜单
+    await loadMenuTree();
+    await nextTick();
+
+    const data = drawerApi.getData<SystemRoleApi.Role>();
+    if (data?.id) {
+      roleName.value = data.name;
       const menuIds = await getRoleMenuList(data.id as number);
-      await formApi.setFieldValue('menuIds', menuIds);
-      // 加载菜单列表
-      await loadMenuTree();
-    } finally {
-      modalApi.unlock();
+      selectedMenuIds.value = Array.isArray(menuIds) ? menuIds : [];
     }
   },
 });
 
-/** 加载菜单树 */
+const menuTree = ref<SystemDeptApi.Dept[]>([]);
+const menuLoading = ref(false);
+const selectedMenuIds = ref<number[]>([]);
+const isAllSelected = ref(false);
+const isExpanded = ref(false);
+const expandedKeys = ref<number[]>([]);
+const checkStrictly = ref(true);
+const roleName = ref('');
+
 async function loadMenuTree() {
   menuLoading.value = true;
   try {
@@ -96,25 +58,39 @@ async function loadMenuTree() {
   }
 }
 
-/** 全选/全不选 */
-function toggleSelectAll() {
-  isAllSelected.value = !isAllSelected.value;
-  if (isAllSelected.value) {
-    const allIds = getAllNodeIds(menuTree.value);
-    formApi.setFieldValue('menuIds', allIds);
-  } else {
-    formApi.setFieldValue('menuIds', []);
+async function handleConfirm() {
+  const data = drawerApi.getData<SystemRoleApi.Role>();
+  if (!data?.id) return;
+  drawerApi.lock();
+  try {
+    await assignRoleMenu({
+      roleId: data.id as number,
+      menuIds: selectedMenuIds.value,
+    });
+    message.success($t('ui.actionMessage.operationSuccess'));
+    await drawerApi.close();
+    emit('success');
+  } finally {
+    drawerApi.unlock();
   }
 }
 
-/** 展开/折叠所有节点 */
+function toggleSelectAll() {
+  isAllSelected.value = !isAllSelected.value;
+  selectedMenuIds.value = isAllSelected.value
+    ? getAllNodeIds(menuTree.value)
+    : [];
+}
+
 function toggleExpandAll() {
   isExpanded.value = !isExpanded.value;
-  // 获取所有节点的 ID
   expandedKeys.value = isExpanded.value ? getAllNodeIds(menuTree.value) : [];
 }
 
-/** 递归获取所有节点 ID */
+function toggleCheckStrictly() {
+  checkStrictly.value = !checkStrictly.value;
+}
+
 function getAllNodeIds(nodes: any[], ids: number[] = []): number[] {
   nodes.forEach((node: any) => {
     ids.push(node.id);
@@ -124,48 +100,52 @@ function getAllNodeIds(nodes: any[], ids: number[] = []): number[] {
   });
   return ids;
 }
-
-function getNodeClass(node: Recordable<any>) {
-  const classes: string[] = [];
-  if (node.value?.type === SystemMenuTypeEnum.BUTTON) {
-    classes.push('inline-flex');
-    if (node.index % 3 >= 1) {
-      classes.push('!pl-0');
-    }
-  }
-
-  return classes.join(' ');
-}
 </script>
 
 <template>
-  <Modal title="数据权限" class="w-[40%]">
-    <Form class="mx-4">
-      <template #menuIds="slotProps">
-        <!-- TODO @YY：可优化，使用 antd 的 tree？原因是，更原生 -->
-        <VbenTree
-          :spinning="menuLoading"
-          :tree-data="menuTree"
-          multiple
-          bordered
-          :expanded="expandedKeys"
-          :get-node-class="getNodeClass"
-          v-bind="slotProps"
-          value-field="id"
-          label-field="name"
-          icon-field="meta.icon"
-        />
-      </template>
-    </Form>
+  <Drawer :title="$t('common.grant')" class="min-h-full w-[60%]">
+    <div class="mb-4 text-lg">
+      <span class="ml-2">{{ roleName }}</span>
+    </div>
+    <Spin
+      :spinning="menuLoading"
+      class="flex min-h-[60vh] w-full items-center justify-center"
+    >
+      <VbenTree
+        class="max-h-[100%] overflow-y-auto"
+        :tree-data="menuTree"
+        multiple
+        bordered
+        v-model:expanded="expandedKeys"
+        :check-strictly="!checkStrictly"
+        v-model="selectedMenuIds"
+        value-field="id"
+        label-field="name"
+      >
+        <template #node="{ value }">
+          <Tooltip v-if="value.remark" :title="value.remark">
+            <div class="flex min-w-0 flex-1 items-center gap-2">
+              <span class="truncate">{{ value.name }}</span>
+              <span class="shrink-0 truncate text-gray-400"
+                >({{ value.remark }})</span>
+            </div>
+          </Tooltip>
+          <span v-else>{{ value.name }}</span>
+        </template>
+      </VbenTree>
+    </Spin>
     <template #prepend-footer>
-      <div class="flex flex-auto items-center">
+      <div class="flex flex-auto items-center gap-4">
         <Checkbox :checked="isAllSelected" @change="toggleSelectAll">
-          全选
+          {{ $t('common.selectAll') }}
         </Checkbox>
         <Checkbox :checked="isExpanded" @change="toggleExpandAll">
-          全部展开
+          {{ $t('common.expandAll') }}
+        </Checkbox>
+        <Checkbox :checked="checkStrictly" @change="toggleCheckStrictly">
+          {{ $t('common.checkStrictly') }}
         </Checkbox>
       </div>
     </template>
-  </Modal>
+  </Drawer>
 </template>

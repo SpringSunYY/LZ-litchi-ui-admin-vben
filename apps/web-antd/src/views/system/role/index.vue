@@ -2,7 +2,7 @@
 import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 import type { SystemRoleApi } from '#/api/system/role';
 
-import { DocAlert, Page, useVbenModal } from '@vben/common-ui';
+import { DocAlert, Page, useVbenDrawer, useVbenModal } from '@vben/common-ui';
 import { downloadFileFromBlobPart } from '@vben/utils';
 
 import { message } from 'ant-design-vue';
@@ -27,7 +27,7 @@ const [AssignDataPermissionFormModel, assignDataPermissionFormApi] =
     destroyOnClose: true,
   });
 
-const [AssignMenuFormModel, assignMenuFormApi] = useVbenModal({
+const [AssignMenuFormModel, assignMenuFormApi] = useVbenDrawer({
   connectedComponent: AssignMenuForm,
   destroyOnClose: true,
 });
