@@ -16,6 +16,7 @@ export function useFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'id',
       component: 'Input',
+      formItemClass: 'col-span-1',
       dependencies: {
         triggerFields: [''],
         show: () => false,
@@ -24,6 +25,7 @@ export function useFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'name',
       label: '套餐名',
+      formItemClass: 'col-span-1',
       rules: 'required',
       component: 'Input',
       componentProps: {
@@ -33,6 +35,7 @@ export function useFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'code',
       label: '套餐编码',
+      formItemClass: 'col-span-1',
       rules: 'required',
       component: 'Input',
       componentProps: {
@@ -40,14 +43,56 @@ export function useFormSchema(): VbenFormSchema[] {
       },
     },
     {
-      fieldName: 'menuIds',
-      label: '菜单权限',
-      component: 'Input',
-      formItemClass: 'items-start',
+      fieldName: 'price',
+      label: '套餐价格',
+      rules: 'required',
+      formItemClass: 'col-span-1',
+      component: 'InputNumber',
+      componentProps: {
+        min: 0,
+        precision: 2,
+        placeholder: '请输入套餐价格',
+      },
+    },
+    {
+      fieldName: 'orderNum',
+      label: '排序',
+      rules: 'required',
+      formItemClass: 'col-span-1',
+      component: 'InputNumber',
+      componentProps: {
+        min: 0,
+        max: 10,
+        placeholder: '请输入排序',
+      },
+    },
+    {
+      fieldName: 'subscriptionNum',
+      label: '订阅数',
+      rules: 'required',
+      formItemClass: 'col-span-1',
+      component: 'InputNumber',
+      componentProps: {
+        min: 0,
+        placeholder: '请输入订阅数',
+      },
+    },
+    {
+      fieldName: 'subscriptionTotalAmount',
+      label: '订阅总额',
+      rules: 'required',
+      component: 'InputNumber',
+      formItemClass: 'col-span-1',
+      componentProps: {
+        min: 0,
+        precision: 2,
+        placeholder: '请输入订阅总额',
+      },
     },
     {
       fieldName: 'status',
       label: '状态',
+      formItemClass: 'col-span-1',
       component: 'RadioGroup',
       componentProps: {
         options: getDictOptions(
@@ -62,6 +107,7 @@ export function useFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'type',
       label: '套餐类型',
+      formItemClass: 'col-span-1',
       rules: 'required',
       component: 'Select',
       componentProps: {
@@ -70,13 +116,15 @@ export function useFormSchema(): VbenFormSchema[] {
       },
     },
     {
-      fieldName: 'orderNum',
-      label: '排序',
-      rules: 'required',
+      fieldName: 'description',
+      label: '套餐描述',
+      component: 'RichTextarea',
+    },
+    {
+      fieldName: 'menuIds',
+      label: '菜单权限',
       component: 'Input',
-      componentProps: {
-        placeholder: '请输入排序',
-      },
+      formItemClass: 'items-start',
     },
     {
       fieldName: 'logo',
@@ -88,6 +136,10 @@ export function useFormSchema(): VbenFormSchema[] {
       fieldName: 'remark',
       label: '备注',
       component: 'Textarea',
+      componentProps: {
+        placeholder: '请输入备注',
+        rows: 3,
+      },
     },
   ];
 }
@@ -189,6 +241,13 @@ export function useGridColumns(): VxeTableGridOptions<SystemTenantPackageApi.Ten
       field: 'logo',
       title: 'LOGO',
       minWidth: 120,
+      cellRender: {
+        name: 'CellImage',
+        props: {
+          width: 40,
+          height: 40,
+        },
+      },
     },
     {
       field: 'price',

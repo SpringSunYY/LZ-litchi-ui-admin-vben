@@ -47,6 +47,7 @@ const [Form, formApi] = useVbenForm({
 });
 
 const [Modal, modalApi] = useVbenModal({
+  class: 'w-[1800px]',
   async onConfirm() {
     const { valid } = await formApi.validate();
     if (!valid) {

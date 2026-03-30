@@ -21,9 +21,9 @@ import { $t } from '@vben/locales';
 
 import { notification } from 'ant-design-vue';
 
+import { NumberRange } from '#/components/number-range';
 import { Tinymce as RichTextarea } from '#/components/tinymce';
 import { FileUpload, ImageUpload } from '#/components/upload';
-import { NumberRange } from '#/components/number-range';
 
 const AutoComplete = defineAsyncComponent(
   () => import('ant-design-vue/es/auto-complete'),
