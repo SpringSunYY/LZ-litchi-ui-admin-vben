@@ -26,6 +26,8 @@ import { ELEMENT_ID_MAIN_CONTENT } from '@vben-core/shared/constants';
 import { globalShareState } from '@vben-core/shared/global-state';
 import { cn } from '@vben-core/shared/utils';
 
+import { vbenConfirm } from '../alert/AlertBuilder';
+
 import { useModalDraggable } from './use-modal-draggable';
 
 interface Props extends ModalProps {
@@ -35,6 +37,7 @@ interface Props extends ModalProps {
 const props = withDefaults(defineProps<Props>(), {
   appendToMain: false,
   destroyOnClose: false,
+  externalCloseConfirm: true,
   modalApi: undefined,
 });
 
@@ -70,6 +73,9 @@ const {
   description,
   destroyOnClose,
   draggable,
+  externalCloseConfirm,
+  externalCloseConfirmTip,
+  externalCloseConfirmTitle,
   footer: showFooter,
   footerClass,
   fullscreen,
@@ -162,7 +168,7 @@ function handerOpenAutoFocus(e: Event) {
 }
 
 // pointer-down-outside
-function pointerDownOutside(e: Event) {
+async function pointerDownOutside(e: Event) {
   const target = e.target as HTMLElement;
   const isDismissableModal = target?.dataset.dismissableModal;
   if (
@@ -172,6 +178,25 @@ function pointerDownOutside(e: Event) {
   ) {
     e.preventDefault();
     e.stopPropagation();
+    return;
+  }
+  // 点击遮罩关闭，弹出确认
+  e.preventDefault();
+  e.stopPropagation();
+  if (!externalCloseConfirm.value) {
+    await props.modalApi?.close();
+    return;
+  }
+  try {
+    await vbenConfirm({
+      content: externalCloseConfirmTip.value || $t.value('ui.actionMessage.externalCloseTip'),
+      title: externalCloseConfirmTitle.value || $t.value('ui.actionMessage.externalCloseConfirm'),
+      icon: 'warning',
+      showCancel: true,
+    });
+    await props.modalApi?.close();
+  } catch {
+    // user cancelled
   }
 }
 

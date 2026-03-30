@@ -36,7 +36,9 @@
     "updating": "Updating {0}...",
     "cascadeDelete": "Cascade Delete",
     "cascadeDeleteTip": "When enabled, all child data will be deleted together",
-    "cascadeDeleteTipOff": "When disabled, only this item is deleted, child data remains"
+    "cascadeDeleteTipOff": "When disabled, only this item is deleted, child data remains",
+    "externalCloseConfirm": "Are you sure you want to exit?",
+    "externalCloseTip": "Your data will be lost after closing"
   },
   "placeholder": {
     "input": "Please enter",

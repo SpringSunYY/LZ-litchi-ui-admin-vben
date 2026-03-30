@@ -32,7 +32,9 @@
     "importSuccess": "导入成功",
     "importFail": "导入失败",
     "downloadTemplateFail": "下载模板失败",
-    "updating": "正在更新 {0}..."
+    "updating": "正在更新 {0}...",
+    "externalCloseConfirm": "确定要退出吗？",
+    "externalCloseTip": "关闭后你所填写的数据将会丢失"
   },
   "placeholder": {
     "input": "请输入",

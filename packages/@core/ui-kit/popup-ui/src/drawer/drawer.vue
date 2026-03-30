@@ -28,6 +28,8 @@ import { ELEMENT_ID_MAIN_CONTENT } from '@vben-core/shared/constants';
 import { globalShareState } from '@vben-core/shared/global-state';
 import { cn } from '@vben-core/shared/utils';
 
+import { vbenConfirm } from '../alert/AlertBuilder';
+
 interface Props extends DrawerProps {
   drawerApi?: ExtendedDrawerApi;
 }
@@ -37,6 +39,7 @@ const props = withDefaults(defineProps<Props>(), {
   closeIconPlacement: 'right',
   destroyOnClose: false,
   drawerApi: undefined,
+  externalCloseConfirm: true,
   submitting: false,
   zIndex: 1000,
 });
@@ -65,6 +68,9 @@ const {
   contentClass,
   description,
   destroyOnClose,
+  externalCloseConfirm,
+  externalCloseConfirmTip,
+  externalCloseConfirmTitle,
   footer: showFooter,
   footerClass,
   header: showHeader,
@@ -105,7 +111,7 @@ function escapeKeyDown(e: KeyboardEvent) {
   }
 }
 // pointer-down-outside
-function pointerDownOutside(e: Event) {
+async function pointerDownOutside(e: Event) {
   const target = e.target as HTMLElement;
   const dismissableDrawer = target?.dataset.dismissableDrawer;
   if (
@@ -114,6 +120,28 @@ function pointerDownOutside(e: Event) {
     dismissableDrawer !== id
   ) {
     e.preventDefault();
+    return;
+  }
+  // 点击遮罩关闭，弹出确认
+  e.preventDefault();
+  if (!externalCloseConfirm.value) {
+    await props.drawerApi?.close();
+    return;
+  }
+  try {
+    await vbenConfirm({
+      content:
+        externalCloseConfirmTip.value ||
+        $t.value('ui.actionMessage.externalCloseTip'),
+      title:
+        externalCloseConfirmTitle.value ||
+        $t.value('ui.actionMessage.externalCloseConfirm'),
+      icon: 'warning',
+      showCancel: true,
+    });
+    await props.drawerApi?.close();
+  } catch {
+    // user cancelled
   }
 }
 

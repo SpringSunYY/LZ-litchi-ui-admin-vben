@@ -57,6 +57,21 @@ export interface DrawerProps {
    */
   destroyOnClose?: boolean;
   /**
+   * 点击遮罩关闭时是否显示确认弹窗（用于防止误操作导致数据丢失）
+   * @default true
+   */
+  externalCloseConfirm?: boolean;
+  /**
+   * 点击遮罩关闭时确认弹窗的内容
+   * @default '关闭后你所填写的数据将会丢失'
+   */
+  externalCloseConfirmTip?: string;
+  /**
+   * 点击遮罩关闭时确认弹窗的标题
+   * @default '确定要退出吗？'
+   */
+  externalCloseConfirmTitle?: string;
+  /**
    * 是否显示底部
    * @default true
    */
@@ -70,6 +85,7 @@ export interface DrawerProps {
    * @default true
    */
   header?: boolean;
+
   /**
    * 弹窗头部样式
    */
@@ -98,7 +114,6 @@ export interface DrawerProps {
    * @default right
    */
   placement?: DrawerPlacement;
-
   /**
    * 是否显示取消按钮
    * @default true
@@ -128,6 +143,18 @@ export interface DrawerProps {
 }
 
 export interface DrawerState extends DrawerProps {
+  /**
+   * 点击遮罩关闭时是否显示确认弹窗
+   */
+  externalCloseConfirm?: boolean;
+  /**
+   * 点击遮罩关闭时确认弹窗的内容
+   */
+  externalCloseConfirmTip?: string;
+  /**
+   * 点击遮罩关闭时确认弹窗的标题
+   */
+  externalCloseConfirmTitle?: string;
   /** 弹窗打开状态 */
   isOpen?: boolean;
   /**

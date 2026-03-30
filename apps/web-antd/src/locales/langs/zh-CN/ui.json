@@ -36,7 +36,9 @@
     "updating": "正在更新 {0}...",
     "cascadeDelete": "级联删除",
     "cascadeDeleteTip": "开启后，将连同所有子数据一并删除",
-    "cascadeDeleteTipOff": "关闭则只删除当前数据，不影响子数据"
+    "cascadeDeleteTipOff": "关闭则只删除当前数据，不影响子数据",
+    "externalCloseConfirm": "确定要退出吗？",
+    "externalCloseTip": "关闭后你所填写的数据将会丢失"
   },
   "placeholder": {
     "input": "请输入",

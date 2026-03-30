@@ -32,7 +32,9 @@
     "importSuccess": "Import succeeded",
     "importFail": "Import failed",
     "downloadTemplateFail": "Download template failed",
-    "updating": "Updating {0}..."
+    "updating": "Updating {0}...",
+    "externalCloseConfirm": "Are you sure you want to exit?",
+    "externalCloseTip": "Your data will be lost after closing"
   },
   "placeholder": {
     "input": "Please enter",
