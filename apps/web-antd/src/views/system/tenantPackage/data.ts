@@ -111,7 +111,7 @@ export function useFormSchema(): VbenFormSchema[] {
       rules: 'required',
       component: 'Select',
       componentProps: {
-        options: getDictOptions(DICT_TYPE.SYSTEM_TENANT_PACKAGE_TYPE, 'number'),
+        options: getDictOptions(DICT_TYPE.SYSTEM_TENANT_PACKAGE_TYPE),
         placeholder: '请选择套餐类型',
       },
     },
@@ -119,12 +119,6 @@ export function useFormSchema(): VbenFormSchema[] {
       fieldName: 'description',
       label: '套餐描述',
       component: 'RichTextarea',
-    },
-    {
-      fieldName: 'menuIds',
-      label: '菜单权限',
-      component: 'Input',
-      formItemClass: 'items-start',
     },
     {
       fieldName: 'logo',

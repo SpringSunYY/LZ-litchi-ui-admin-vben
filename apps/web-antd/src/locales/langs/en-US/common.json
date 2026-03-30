@@ -22,8 +22,12 @@
   "deleteBatch": "Delete Batch",
   "create": "Create",
   "detail": "Detail",
+  "grant": "Grant",
   "yes": "Yes",
   "no": "No",
   "showSearchPanel": "Show search panel",
-  "hideSearchPanel": "Hide search panel"
+  "hideSearchPanel": "Hide search panel",
+  "selectAll": "Select All",
+  "expandAll": "Expand All",
+  "checkStrictly": "父子联动"
 }

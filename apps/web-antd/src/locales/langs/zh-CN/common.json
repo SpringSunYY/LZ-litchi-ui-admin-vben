@@ -22,8 +22,12 @@
   "deleteBatch": "批量删除",
   "create": "新增",
   "detail": "详情",
+  "grant": "授权",
   "yes": "是",
   "no": "否",
   "showSearchPanel": "显示搜索面板",
-  "hideSearchPanel": "隐藏搜索面板"
+  "hideSearchPanel": "隐藏搜索面板",
+  "selectAll": "全选",
+  "expandAll": "全部展开",
+  "checkStrictly": "父子联动"
 }

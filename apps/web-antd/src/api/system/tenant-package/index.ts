@@ -19,6 +19,10 @@ export namespace SystemTenantPackageApi {
     remark: string; // 备注
     menuIds?: string; // 关联的菜单编号
   }
+  export interface TenantPackageGrant {
+    id: number; // 授权编号
+    menuIds?: number[]; // 关联的菜单编号
+  }
 }
 
 /** 租户套餐列表 */
@@ -47,7 +51,12 @@ export function updateTenantPackage(
 ) {
   return requestClient.put('/system/tenant-package/update', data);
 }
-
+/** 授权租户套餐 */
+export function grantTenantPackage(
+  data: SystemTenantPackageApi.TenantPackageGrant,
+) {
+  return requestClient.put('/system/tenant-package/grant', data);
+}
 /** 删除租户套餐 */
 export function deleteTenantPackage(id: number) {
   return requestClient.delete(`/system/tenant-package/delete?id=${id}`);

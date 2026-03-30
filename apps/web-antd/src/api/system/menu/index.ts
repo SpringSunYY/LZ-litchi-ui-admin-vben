@@ -17,6 +17,7 @@ export namespace SystemMenuApi {
     visible: boolean;
     keepAlive: boolean;
     alwaysShow?: boolean;
+    remark?: string;
     createTime: Date;
   }
 }

@@ -2,7 +2,9 @@
 import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 import type { SystemTenantPackageApi } from '#/api/system/tenant-package';
 
-import { DocAlert, Page, useVbenModal } from '@vben/common-ui';
+import { ref } from 'vue';
+
+import { DocAlert, Page, useVbenDrawer, useVbenModal } from '@vben/common-ui';
 
 import { message } from 'ant-design-vue';
 
@@ -15,9 +17,15 @@ import { $t } from '#/locales';
 
 import { useGridColumns, useGridFormSchema } from './data';
 import Form from './modules/form.vue';
+import MenuAuthDrawer from './modules/MenuAuthDrawer.vue';
 
 const [FormModal, formModalApi] = useVbenModal({
   connectedComponent: Form,
+  destroyOnClose: true,
+});
+
+const [DrawerModal, formDrawerApi] = useVbenDrawer({
+  connectedComponent: MenuAuthDrawer,
   destroyOnClose: true,
 });
 
@@ -34,6 +42,11 @@ function handleCreate() {
 /** 编辑租户套餐 */
 function handleEdit(row: SystemTenantPackageApi.TenantPackage) {
   formModalApi.setData(row).open();
+}
+
+/** 菜单授权 */
+function handleGrant(row: SystemTenantPackageApi.TenantPackage) {
+  formDrawerApi.setData(row).open();
 }
 
 /** 删除租户套餐 */
@@ -91,6 +104,7 @@ const [Grid, gridApi] = useVbenVxeGrid({
     </template>
 
     <FormModal @success="onRefresh" />
+    <DrawerModal />
     <Grid table-title="租户套餐列表">
       <template #toolbar-tools>
         <TableAction
@@ -114,6 +128,13 @@ const [Grid, gridApi] = useVbenVxeGrid({
               icon: ACTION_ICON.EDIT,
               auth: ['system:tenant-package:update'],
               onClick: handleEdit.bind(null, row),
+            },
+            {
+              label: $t('common.grant'),
+              type: 'link',
+              icon: ACTION_ICON.GRANT as string,
+              auth: ['system:tenant-package:update'],
+              onClick: handleGrant.bind(null, row),
             },
             {
               label: $t('common.delete'),
