@@ -18,6 +18,6 @@ const logo = computed(() => preferences.logo.source);
     :page-title="$t('authentication.pageTitle')"
   >
     <!-- 自定义工具栏 -->
-    <!-- <template #toolbar></template> -->
+     <template #toolbar></template>
   </AuthPageLayout>
 </template>

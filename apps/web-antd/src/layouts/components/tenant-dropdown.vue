@@ -9,6 +9,7 @@ import { useAccess } from '@vben/access';
 import { isTenantEnable, useTabs } from '@vben/hooks';
 import { useAccessStore } from '@vben/stores';
 
+import { useDebounceFn } from '@vueuse/core';
 import { message, Select } from 'ant-design-vue';
 
 import { getSimpleTenantList } from '#/api/system/tenant';
@@ -39,11 +40,43 @@ async function handleChange(id: SelectValue) {
   }
 }
 
+// 租户搜索状态
+const tenantKeyword = ref('');
+const tenantOptions = ref<any[]>([]);
+const tenantLoading = ref(false);
+// 加载租户列表
+const loadTenants = async (keyword?: string) => {
+  tenantLoading.value = true;
+  try {
+    const res = await getSimpleTenantList({
+      pageNo: 1,
+      pageSize: 50,
+      name: keyword || '',
+    });
+    tenantOptions.value = res.list || [];
+  } finally {
+    tenantLoading.value = false;
+  }
+};
+
+// 租户搜索
+const handleTenantSearch = useDebounceFn((_value: string) => {
+  tenantKeyword.value = _value;
+  loadTenants(_value);
+}, 300);
+
+// 租户下拉打开时加载数据
+const handleTenantOpenChange = (open: boolean) => {
+  if (open) {
+    loadTenants();
+  }
+};
+
 onMounted(async () => {
   if (!tenantEnable) {
     return;
   }
-  tenants.value = await getSimpleTenantList();
+  await loadTenants();
 });
 </script>
 <template>
@@ -51,12 +84,17 @@ onMounted(async () => {
     <Select
       v-model:value="value"
       :field-names="{ label: 'name', value: 'id' }"
-      :options="tenants"
+      :options="tenantOptions"
       :placeholder="$t('page.tenant.placeholder')"
       :dropdown-style="{ position: 'fixed', zIndex: 1666 }"
       allow-clear
       class="w-40"
       @change="handleChange"
+      :show-search="true"
+      :loading="tenantLoading"
+      :filter-option="false"
+      @search="handleTenantSearch"
+      @dropdown-open-change="handleTenantOpenChange"
     />
   </div>
 </template>

@@ -264,6 +264,8 @@ enum DICT_TYPE {
   SYSTEM_SOCIAL_TYPE = 'system_social_type',
   SYSTEM_TENANT_INDUSTRY = 'system_tenant_industry', // 租户行业
   SYSTEM_TENANT_PACKAGE_STATUS = 'system_tenant_package_status', // 租户套餐状态
+  SYSTEM_TENANT_PACKAGE_SUBSCRIBE_PAY_STATUS = 'system_tenant_package_subscribe_pay_status', // 租户套餐订阅付费状态
+  SYSTEM_TENANT_PACKAGE_SUBSCRIBE_STATUS = 'system_tenant_package_subscribe_status', // 租户套餐订阅状态
   SYSTEM_TENANT_PACKAGE_TYPE = 'system_tenant_package_type', // 租户套餐类型
   SYSTEM_TENANT_STATUS = 'system_tenant_status', // 租户状态
   SYSTEM_TENANT_TYPE = 'system_tenant_type', // 租户类型
@@ -280,4 +282,5 @@ enum DICT_TYPE {
   TRADE_ORDER_TYPE = 'trade_order_type', // 订单 - 类型
   USER_TYPE = 'user_type',
 }
+
 export { DICT_TYPE, getDictLabel, getDictObj, getDictOptions };

@@ -42,7 +42,7 @@ async function fetchTenantList() {
   try {
     // 获取租户列表、域名对应租户
     const websiteTenantPromise = getTenantByWebsite(window.location.hostname);
-    tenantList.value = await getTenantSimpleList();
+    tenantList.value = (await getTenantSimpleList())?.list || [];
 
     // 选中租户：域名 > store 中的租户 > 首个租户
     let tenantId: null | number = null;

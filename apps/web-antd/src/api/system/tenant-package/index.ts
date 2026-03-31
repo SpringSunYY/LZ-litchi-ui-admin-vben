@@ -63,8 +63,9 @@ export function deleteTenantPackage(id: number) {
 }
 
 /** 获取租户套餐精简信息列表 */
-export function getTenantPackageList() {
-  return requestClient.get<SystemTenantPackageApi.TenantPackage[]>(
+export function getTenantPackageList(params: PageParam) {
+  return requestClient.get<PageResult<SystemTenantPackageApi.TenantPackage>>(
     '/system/tenant-package/get-simple-list',
+    { params },
   );
 }

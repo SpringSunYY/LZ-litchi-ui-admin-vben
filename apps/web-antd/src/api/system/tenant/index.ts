@@ -37,9 +37,10 @@ export function getTenantPage(params: PageParam) {
 }
 
 /** 获取租户精简信息列表 */
-export function getSimpleTenantList() {
-  return requestClient.get<SystemTenantApi.Tenant[]>(
+export function getSimpleTenantList(params: PageParam) {
+  return requestClient.get<PageResult<SystemTenantApi.Tenant>>(
     '/system/tenant/simple-list',
+    { params },
   );
 }
 

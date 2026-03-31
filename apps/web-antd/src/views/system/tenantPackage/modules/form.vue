@@ -84,18 +84,5 @@ const [FormModelDrawer, formModelDrawerApi] = useVbenModelDrawer({
 <template>
   <FormModelDrawer class="w-[60%]" :title="getTitle">
     <Form class="mx-6" />
-    <template #prepend-footer>
-      <div class="flex flex-auto items-center gap-4">
-        <Checkbox :checked="isAllSelected" @change="toggleSelectAll">
-          {{ $t('common.selectAll') }}
-        </Checkbox>
-        <Checkbox :checked="isExpanded" @change="toggleExpandAll">
-          {{ $t('common.expandAll') }}
-        </Checkbox>
-        <Checkbox :checked="checkStrictly" @change="toggleCheckStrictly">
-          {{ $t('common.checkStrictly') }}
-        </Checkbox>
-      </div>
-    </template>
   </FormModelDrawer>
 </template>
