@@ -2,12 +2,7 @@ import type { VbenFormSchema } from '#/adapter/form';
 import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 import type { TenantPackageSubscribeApi } from '#/api/system/tenantPackageSubscribe';
 
-import { z } from '#/adapter/form';
-import {
-    DICT_TYPE,
-    getDictOptions,
-    getRangePickerDefaultProps
-} from '#/utils';
+import { DICT_TYPE, getDictOptions, getRangePickerDefaultProps } from '#/utils';
 
 /** 新增/修改的表单 */
 export function useFormSchema(): VbenFormSchema[] {
@@ -32,6 +27,7 @@ export function useFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'packageCode',
       label: '套餐编码',
+      disabled: true,
       rules: 'required',
       component: 'Input',
       componentProps: {
@@ -39,20 +35,14 @@ export function useFormSchema(): VbenFormSchema[] {
       },
     },
     {
-      fieldName: 'type',
-      label: '套餐类型',
+      fieldName: 'price',
+      label: '套餐价格',
       rules: 'required',
-      component: 'Select',
+      disabled: true,
+      component: 'Input',
       componentProps: {
-        options: getDictOptions(DICT_TYPE.SYSTEM_TENANT_PACKAGE_TYPE, 'boolean'),
-        placeholder: '请选择套餐类型',
+        placeholder: '请输入套餐价格',
       },
-    },
-    {
-      fieldName: 'logo',
-      label: 'LOGO',
-      rules: 'required',
-      component: 'FileUpload',
     },
     {
       fieldName: 'tenantName',
@@ -67,26 +57,21 @@ export function useFormSchema(): VbenFormSchema[] {
       fieldName: 'tenantCode',
       label: '租户编码',
       rules: 'required',
+      disabled: true,
       component: 'Input',
       componentProps: {
         placeholder: '请输入租户编码',
       },
     },
     {
-      fieldName: 'price',
-      label: '套餐价格',
-      rules: 'required',
-      component: 'Input',
-      componentProps: {
-        placeholder: '请输入套餐价格',
-      },
-    },
-    {
       fieldName: 'discountPrice',
       label: '优惠价格',
       rules: 'required',
-      component: 'Input',
+      component: 'InputNumber',
       componentProps: {
+        min: 0,
+        precision: 2,
+        defaultValue: 0,
         placeholder: '请输入优惠价格',
       },
     },
@@ -94,8 +79,10 @@ export function useFormSchema(): VbenFormSchema[] {
       fieldName: 'days',
       label: '天数',
       rules: 'required',
-      component: 'Input',
+      component: 'InputNumber',
       componentProps: {
+        min: 0,
+        defaultValue: 30,
         placeholder: '请输入天数',
       },
     },
@@ -103,8 +90,13 @@ export function useFormSchema(): VbenFormSchema[] {
       fieldName: 'totalPrice',
       label: '总价格',
       rules: 'required',
-      component: 'Input',
+      disabled: true,
+      component: 'InputNumber',
       componentProps: {
+        min: 0,
+        precision: 2,
+        defaultValue: 0,
+        readOnly: true,
         placeholder: '请输入总价格',
       },
     },
@@ -114,7 +106,9 @@ export function useFormSchema(): VbenFormSchema[] {
       rules: 'required',
       component: 'RadioGroup',
       componentProps: {
-        options: getDictOptions(DICT_TYPE.SYSTEM_TENANT_PACKAGE_SUBSCRIBE_STATUS, 'number'),
+        options: getDictOptions(
+          DICT_TYPE.SYSTEM_TENANT_PACKAGE_SUBSCRIBE_STATUS,
+        ),
         buttonStyle: 'solid',
         optionType: 'button',
       },
@@ -125,7 +119,9 @@ export function useFormSchema(): VbenFormSchema[] {
       rules: 'required',
       component: 'RadioGroup',
       componentProps: {
-        options: getDictOptions(DICT_TYPE.SYSTEM_TENANT_PACKAGE_SUBSCRIBE_PAY_STATUS, 'number'),
+        options: getDictOptions(
+          DICT_TYPE.SYSTEM_TENANT_PACKAGE_SUBSCRIBE_PAY_STATUS,
+        ),
         buttonStyle: 'solid',
         optionType: 'button',
       },
@@ -137,7 +133,7 @@ export function useFormSchema(): VbenFormSchema[] {
       component: 'DatePicker',
       componentProps: {
         showTime: true,
-        format: 'YYYY-MM-DD HH:mm:ss',
+        format: 'YYYY-MM-DD',
         valueFormat: 'x',
       },
     },
@@ -146,9 +142,10 @@ export function useFormSchema(): VbenFormSchema[] {
       label: '结束时间',
       rules: 'required',
       component: 'DatePicker',
+      disabled: true,
       componentProps: {
         showTime: true,
-        format: 'YYYY-MM-DD HH:mm:ss',
+        format: 'YYYY-MM-DD',
         valueFormat: 'x',
       },
     },
@@ -158,6 +155,7 @@ export function useFormSchema(): VbenFormSchema[] {
       component: 'Textarea',
       componentProps: {
         placeholder: '请输入备注',
+        rows: 3,
       },
     },
   ];
@@ -185,13 +183,26 @@ export function useGridFormSchema(): VbenFormSchema[] {
       },
     },
     {
-      fieldName: 'type',
+      fieldName: 'packageType',
       label: '套餐类型',
       component: 'Select',
       componentProps: {
         allowClear: true,
-        options: getDictOptions(DICT_TYPE.SYSTEM_TENANT_PACKAGE_TYPE, 'boolean'),
+        options: getDictOptions(DICT_TYPE.SYSTEM_TENANT_PACKAGE_TYPE, 'number'),
         placeholder: '请选择套餐类型',
+      },
+    },
+    {
+      fieldName: 'packageStatus',
+      label: '套餐状态',
+      component: 'Select',
+      componentProps: {
+        allowClear: true,
+        options: getDictOptions(
+          DICT_TYPE.SYSTEM_TENANT_PACKAGE_STATUS,
+          'number',
+        ),
+        placeholder: '请选择套餐状态',
       },
     },
     {
@@ -218,7 +229,10 @@ export function useGridFormSchema(): VbenFormSchema[] {
       component: 'Select',
       componentProps: {
         allowClear: true,
-        options: getDictOptions(DICT_TYPE.SYSTEM_TENANT_PACKAGE_SUBSCRIBE_STATUS, 'number'),
+        options: getDictOptions(
+          DICT_TYPE.SYSTEM_TENANT_PACKAGE_SUBSCRIBE_STATUS,
+          'number',
+        ),
         placeholder: '请选择订阅状态',
       },
     },
@@ -228,7 +242,10 @@ export function useGridFormSchema(): VbenFormSchema[] {
       component: 'Select',
       componentProps: {
         allowClear: true,
-        options: getDictOptions(DICT_TYPE.SYSTEM_TENANT_PACKAGE_SUBSCRIBE_PAY_STATUS, 'number'),
+        options: getDictOptions(
+          DICT_TYPE.SYSTEM_TENANT_PACKAGE_SUBSCRIBE_PAY_STATUS,
+          'number',
+        ),
         placeholder: '请选择支付状态',
       },
     },
@@ -265,7 +282,7 @@ export function useGridFormSchema(): VbenFormSchema[] {
 /** 列表的字段 */
 export function useGridColumns(): VxeTableGridOptions<TenantPackageSubscribeApi.TenantPackageSubscribe>['columns'] {
   return [
-  { type: 'checkbox', width: 40 },
+    { type: 'checkbox', width: 40 },
     {
       field: 'id',
       title: '套餐编号',
@@ -282,7 +299,7 @@ export function useGridColumns(): VxeTableGridOptions<TenantPackageSubscribeApi.
       minWidth: 120,
     },
     {
-      field: 'type',
+      field: 'packageType',
       title: '套餐类型',
       minWidth: 120,
       cellRender: {
@@ -291,7 +308,16 @@ export function useGridColumns(): VxeTableGridOptions<TenantPackageSubscribeApi.
       },
     },
     {
-      field: 'logo',
+      field: 'packageStatus',
+      title: '套餐状态',
+      minWidth: 120,
+      cellRender: {
+        name: 'CellDict',
+        props: { type: DICT_TYPE.SYSTEM_TENANT_PACKAGE_STATUS },
+      },
+    },
+    {
+      field: 'packageLogo',
       title: 'LOGO',
       minWidth: 120,
     },
@@ -374,4 +400,3 @@ export function useGridColumns(): VxeTableGridOptions<TenantPackageSubscribeApi.
     },
   ];
 }
-

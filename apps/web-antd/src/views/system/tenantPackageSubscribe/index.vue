@@ -2,25 +2,30 @@
 import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 import type { TenantPackageSubscribeApi } from '#/api/system/tenantPackageSubscribe';
 
-import { Page, useVbenModal } from '@vben/common-ui';
-import { message,Tabs } from 'ant-design-vue';
-import Form from './modules/form.vue';
+import { ref } from 'vue';
 
-
-import { ref, computed } from 'vue';
-import { $t } from '#/locales';
-import { ACTION_ICON, TableAction, useVbenVxeGrid } from '#/adapter/vxe-table';
-import { getTenantPackageSubscribePage, deleteTenantPackageSubscribe, deleteTenantPackageSubscribeList, exportTenantPackageSubscribe } from '#/api/system/tenantPackageSubscribe';
+import { Page, useVbenModelDrawer } from '@vben/common-ui';
 import { downloadFileFromBlobPart, isEmpty } from '@vben/utils';
 
+import { message } from 'ant-design-vue';
+
+import { ACTION_ICON, TableAction, useVbenVxeGrid } from '#/adapter/vxe-table';
+import {
+  deleteTenantPackageSubscribe,
+  deleteTenantPackageSubscribeList,
+  exportTenantPackageSubscribe,
+  getTenantPackageSubscribePage,
+} from '#/api/system/tenantPackageSubscribe';
+import { $t } from '#/locales';
+
 import { useGridColumns, useGridFormSchema } from './data';
+import Form from './modules/form.vue';
 
-
-const [FormModal, formModalApi] = useVbenModal({
+const [FormModalDrawer, formModalDrawerApi] = useVbenModelDrawer({
   connectedComponent: Form,
-  destroyOnClose: true
+  destroyOnClose: true,
+  type: 'drawer',
 });
-
 
 /** 刷新表格 */
 function onRefresh() {
@@ -29,20 +34,21 @@ function onRefresh() {
 
 /** 创建租户套餐订阅 */
 function handleCreate() {
-  formModalApi.setData({}).open();
+  formModalDrawerApi.setData({}).open();
 }
 
 /** 编辑租户套餐订阅 */
 function handleEdit(row: TenantPackageSubscribeApi.TenantPackageSubscribe) {
-  formModalApi.setData(row).open();
+  formModalDrawerApi.setData(row).open();
 }
 
-
 /** 删除租户套餐订阅 */
-async function handleDelete(row: TenantPackageSubscribeApi.TenantPackageSubscribe) {
+async function handleDelete(
+  row: TenantPackageSubscribeApi.TenantPackageSubscribe,
+) {
   const hideLoading = message.loading({
     content: $t('ui.actionMessage.deleting', [row.id]),
-    key: 'action_key_msg'
+    key: 'action_key_msg',
   });
   try {
     await deleteTenantPackageSubscribe(row.id as number);
@@ -60,7 +66,7 @@ async function handleDelete(row: TenantPackageSubscribeApi.TenantPackageSubscrib
 async function handleDeleteBatch() {
   const hideLoading = message.loading({
     content: $t('ui.actionMessage.deleting'),
-    key: 'action_key_msg'
+    key: 'action_key_msg',
   });
   try {
     await deleteTenantPackageSubscribeList(checkedIds.value);
@@ -74,9 +80,9 @@ async function handleDeleteBatch() {
   }
 }
 
-const checkedIds = ref<number[]>([])
+const checkedIds = ref<number[]>([]);
 function handleRowCheckboxChange({
-  records
+  records,
 }: {
   records: TenantPackageSubscribeApi.TenantPackageSubscribe[];
 }) {
@@ -85,13 +91,15 @@ function handleRowCheckboxChange({
 
 /** 导出表格 */
 async function handleExport() {
-  const data = await exportTenantPackageSubscribe(await gridApi.formApi.getValues());
+  const data = await exportTenantPackageSubscribe(
+    await gridApi.formApi.getValues(),
+  );
   downloadFileFromBlobPart({ fileName: '租户套餐订阅.xls', source: data });
 }
 
 const [Grid, gridApi] = useVbenVxeGrid({
   formOptions: {
-    schema: useGridFormSchema()
+    schema: useGridFormSchema(),
   },
   gridOptions: {
     columns: useGridColumns(),
@@ -117,18 +125,18 @@ const [Grid, gridApi] = useVbenVxeGrid({
     toolbarConfig: {
       refresh: { code: 'query' },
       search: true,
-    }
+    },
   } as VxeTableGridOptions<TenantPackageSubscribeApi.TenantPackageSubscribe>,
-  gridEvents:{
-      checkboxAll: handleRowCheckboxChange,
-      checkboxChange: handleRowCheckboxChange
-  }
+  gridEvents: {
+    checkboxAll: handleRowCheckboxChange,
+    checkboxChange: handleRowCheckboxChange,
+  },
 });
 </script>
 
 <template>
   <Page auto-content-height>
-    <FormModal @success="onRefresh" />
+    <FormModalDrawer @success="onRefresh" />
 
     <Grid table-title="租户套餐订阅列表">
       <template #toolbar-tools>
@@ -185,6 +193,5 @@ const [Grid, gridApi] = useVbenVxeGrid({
         />
       </template>
     </Grid>
-
   </Page>
 </template>

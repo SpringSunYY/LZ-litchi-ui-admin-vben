@@ -51,6 +51,11 @@ export function getTenant(id: number) {
   );
 }
 
+/** 获取租户菜单列表*/
+export function getTenantMenuList(code: string) {
+  return requestClient.get(`/system/tenant/menu?code=${code}`);
+}
+
 /** 获取租户精简信息列表 */
 export function getTenantList() {
   return requestClient.get<SystemTenantApi.Tenant[]>(

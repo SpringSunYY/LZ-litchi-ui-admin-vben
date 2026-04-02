@@ -105,13 +105,28 @@ export function useFormSchema(): VbenFormSchema[] {
       rules: z.number().default(CommonStatusEnum.ENABLE),
     },
     {
+      fieldName: 'published',
+      label: '是否发布',
+      rules: 'required',
+      formItemClass: 'col-span-1',
+      component: 'RadioGroup',
+      componentProps: {
+        options: getDictOptions(
+          DICT_TYPE.SYSTEM_TENANT_PACKAGE_PUBLISHED,
+          'number',
+        ),
+        buttonStyle: 'solid',
+        optionType: 'button',
+      },
+    },
+    {
       fieldName: 'type',
       label: '套餐类型',
       formItemClass: 'col-span-1',
       rules: 'required',
       component: 'Select',
       componentProps: {
-        options: getDictOptions(DICT_TYPE.SYSTEM_TENANT_PACKAGE_TYPE),
+        options: getDictOptions(DICT_TYPE.SYSTEM_TENANT_PACKAGE_TYPE, 'number'),
         placeholder: '请选择套餐类型',
       },
     },
@@ -192,6 +207,19 @@ export function useGridFormSchema(): VbenFormSchema[] {
       },
     },
     {
+      fieldName: 'published',
+      label: '是否发布',
+      component: 'Select',
+      componentProps: {
+        allowClear: true,
+        options: getDictOptions(
+          DICT_TYPE.SYSTEM_TENANT_PACKAGE_PUBLISHED,
+          'number',
+        ),
+        placeholder: '请选择是否发布',
+      },
+    },
+    {
       fieldName: 'createTime',
       label: '创建时间',
       component: 'RangePicker',
@@ -260,6 +288,15 @@ export function useGridColumns(): VxeTableGridOptions<SystemTenantPackageApi.Ten
       cellRender: {
         name: 'CellDict',
         props: { type: DICT_TYPE.SYSTEM_TENANT_PACKAGE_STATUS },
+      },
+    },
+    {
+      field: 'published',
+      title: '是否发布',
+      minWidth: 120,
+      cellRender: {
+        name: 'CellDict',
+        props: { type: DICT_TYPE.SYSTEM_TENANT_PACKAGE_PUBLISHED },
       },
     },
     {

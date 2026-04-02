@@ -24,7 +24,8 @@
     "confirm": "Confirm",
     "reset": "Reset",
     "search": "Search",
-    "more": "More"
+    "more": "More",
+    "view": "View"
   },
   "tenant": {
     "placeholder": "Please select tenant",

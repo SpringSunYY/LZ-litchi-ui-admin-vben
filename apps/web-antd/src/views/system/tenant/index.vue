@@ -2,7 +2,7 @@
 import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 import type { SystemTenantApi } from '#/api/system/tenant';
 
-import { DocAlert, Page, useVbenModal } from '@vben/common-ui';
+import { DocAlert, Page, useVbenDrawer, useVbenModal } from '@vben/common-ui';
 import { downloadFileFromBlobPart } from '@vben/utils';
 
 import { message } from 'ant-design-vue';
@@ -10,6 +10,7 @@ import { message } from 'ant-design-vue';
 import { ACTION_ICON, TableAction, useVbenVxeGrid } from '#/adapter/vxe-table';
 import { deleteTenant, exportTenant, getTenantPage } from '#/api/system/tenant';
 import { $t } from '#/locales';
+import MenuDrawer from '#/views/system/tenant/modules/MenuDrawer.vue';
 
 import { useGridColumns, useGridFormSchema } from './data';
 import Form from './modules/form.vue';
@@ -18,6 +19,17 @@ const [FormModal, formModalApi] = useVbenModal({
   connectedComponent: Form,
   destroyOnClose: true,
 });
+
+const [DrawerModal, formDrawerApi] = useVbenDrawer({
+  connectedComponent: MenuDrawer,
+  destroyOnClose: true,
+  externalCloseConfirm: false,
+});
+
+/** 菜单授权 */
+function handleGrant(row: SystemTenantApi.Tenant) {
+  formDrawerApi.setData(row).open();
+}
 
 /** 刷新表格 */
 function onRefresh() {
@@ -90,7 +102,7 @@ const [Grid, gridApi] = useVbenVxeGrid({
     <template #doc>
       <DocAlert title="SaaS 多租户" url="https://doc.iocoder.cn/saas-tenant/" />
     </template>
-
+    <DrawerModal />
     <FormModal @success="onRefresh" />
     <Grid table-title="租户列表">
       <template #toolbar-tools>
@@ -116,6 +128,13 @@ const [Grid, gridApi] = useVbenVxeGrid({
       <template #actions="{ row }">
         <TableAction
           :actions="[
+            {
+              label: $t('common.viewMenu'),
+              type: 'link',
+              icon: ACTION_ICON.VIEW as string,
+              auth: ['system:tenant-package:update'],
+              onClick: handleGrant.bind(null, row),
+            },
             {
               label: $t('common.edit'),
               type: 'link',

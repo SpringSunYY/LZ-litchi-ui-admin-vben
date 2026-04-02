@@ -3,6 +3,7 @@ import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 import type { SystemTenantApi } from '#/api/system/tenant';
 
 import { z } from '#/adapter/form';
+import { getAreaTree } from '#/api/system/area';
 import {
   CommonStatusEnum,
   DICT_TYPE,
@@ -52,9 +53,7 @@ export function useFormSchema(): VbenFormSchema[] {
       fieldName: 'contactMobile',
       label: '联系手机',
       component: 'Input',
-      componentProps: {
-        placeholder: '请输入联系手机',
-      },
+      rules: 'mobile',
     },
     {
       fieldName: 'industry',
@@ -87,9 +86,10 @@ export function useFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'addressDetail',
       label: '地址',
-      component: 'Input',
+      component: 'ApiTreeSelect',
       componentProps: {
-        placeholder: '请输入地址',
+        api: () => getAreaTree(),
+        fieldNames: { label: 'name', value: 'id', children: 'children' },
       },
     },
     {

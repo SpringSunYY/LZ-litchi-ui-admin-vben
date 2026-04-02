@@ -5,7 +5,7 @@ import { computed, ref } from 'vue';
 
 import { useVbenModelDrawer } from '@vben/common-ui';
 
-import { Checkbox, message } from 'ant-design-vue';
+import { message } from 'ant-design-vue';
 
 import { useVbenForm } from '#/adapter/form';
 import {

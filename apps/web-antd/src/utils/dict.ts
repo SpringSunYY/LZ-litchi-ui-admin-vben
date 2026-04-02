@@ -263,6 +263,7 @@ enum DICT_TYPE {
 
   SYSTEM_SOCIAL_TYPE = 'system_social_type',
   SYSTEM_TENANT_INDUSTRY = 'system_tenant_industry', // 租户行业
+  SYSTEM_TENANT_PACKAGE_PUBLISHED = 'system_tenant_package_published', // 租户套餐发布状态
   SYSTEM_TENANT_PACKAGE_STATUS = 'system_tenant_package_status', // 租户套餐状态
   SYSTEM_TENANT_PACKAGE_SUBSCRIBE_PAY_STATUS = 'system_tenant_package_subscribe_pay_status', // 租户套餐订阅付费状态
   SYSTEM_TENANT_PACKAGE_SUBSCRIBE_STATUS = 'system_tenant_package_subscribe_status', // 租户套餐订阅状态

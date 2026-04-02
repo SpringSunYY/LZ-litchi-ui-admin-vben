@@ -23,6 +23,7 @@
   "create": "Create",
   "detail": "Detail",
   "grant": "Grant",
+  "viewMenu": "View Menu {0}",
   "yes": "Yes",
   "no": "No",
   "showSearchPanel": "Show search panel",

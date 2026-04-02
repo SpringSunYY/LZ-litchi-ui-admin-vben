@@ -13,6 +13,7 @@ export namespace SystemTenantPackageApi {
     price?: number; // 套餐价格
     description: string; // 套餐描述
     status?: number; // 套餐状态
+    published?: number;// 发布状态
     orderNum?: number; // 排序
     subscriptionNum?: number; // 订阅数
     subscriptionTotalAmount?: number; // 订阅总额

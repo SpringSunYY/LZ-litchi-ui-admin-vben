@@ -1,5 +1,6 @@
-import type { PageParam, PageResult } from '@vben/request';
 import type { Dayjs } from 'dayjs';
+
+import type { PageParam, PageResult } from '@vben/request';
 
 import { requestClient } from '#/api/request';
 
@@ -19,43 +20,58 @@ export namespace TenantPackageSubscribeApi {
     totalPrice?: number; // 总价格
     status?: number; // 订阅状态
     payStatus?: number; // 支付状态
-    startTime?: string | Dayjs; // 开始时间
-    endTime?: string | Dayjs; // 结束时间
+    startTime?: Dayjs | string; // 开始时间
+    endTime?: Dayjs | string; // 结束时间
     remark: string; // 备注
   }
 }
 
 /** 查询租户套餐订阅分页 */
 export function getTenantPackageSubscribePage(params: PageParam) {
-  return requestClient.get<PageResult<TenantPackageSubscribeApi.TenantPackageSubscribe>>('/system/tenant-package-subscribe/page', { params });
+  return requestClient.get<
+    PageResult<TenantPackageSubscribeApi.TenantPackageSubscribe>
+  >('/system/tenant-package-subscribe/page', { params });
 }
 
 /** 查询租户套餐订阅详情 */
 export function getTenantPackageSubscribe(id: number) {
-  return requestClient.get<TenantPackageSubscribeApi.TenantPackageSubscribe>(`/system/tenant-package-subscribe/get?id=${id}`);
+  return requestClient.get<TenantPackageSubscribeApi.TenantPackageSubscribe>(
+    `/system/tenant-package-subscribe/get?id=${id}`,
+  );
 }
 
 /** 新增租户套餐订阅 */
-export function createTenantPackageSubscribe(data: TenantPackageSubscribeApi.TenantPackageSubscribe) {
+export function createTenantPackageSubscribe(
+  data: TenantPackageSubscribeApi.TenantPackageSubscribe,
+) {
   return requestClient.post('/system/tenant-package-subscribe/create', data);
 }
 
 /** 修改租户套餐订阅 */
-export function updateTenantPackageSubscribe(data: TenantPackageSubscribeApi.TenantPackageSubscribe) {
+export function updateTenantPackageSubscribe(
+  data: TenantPackageSubscribeApi.TenantPackageSubscribe,
+) {
   return requestClient.put('/system/tenant-package-subscribe/update', data);
 }
 
 /** 删除租户套餐订阅 */
 export function deleteTenantPackageSubscribe(id: number) {
-  return requestClient.delete(`/system/tenant-package-subscribe/delete?id=${id}`);
+  return requestClient.delete(
+    `/system/tenant-package-subscribe/delete?id=${id}`,
+  );
 }
 
 /** 批量删除租户套餐订阅 */
 export function deleteTenantPackageSubscribeList(ids: number[]) {
-  return requestClient.delete(`/system/tenant-package-subscribe/delete-list?ids=${ids.join(',')}`)
+  return requestClient.delete(
+    `/system/tenant-package-subscribe/delete-list?ids=${ids.join(',')}`,
+  );
 }
 
 /** 导出租户套餐订阅 */
 export function exportTenantPackageSubscribe(params: any) {
-  return requestClient.download('/system/tenant-package-subscribe/export-excel', params);
+  return requestClient.download(
+    '/system/tenant-package-subscribe/export-excel',
+    params,
+  );
 }

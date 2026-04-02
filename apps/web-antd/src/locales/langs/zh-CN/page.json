@@ -24,7 +24,8 @@
     "confirm": "确认",
     "reset": "重置",
     "search": "搜索",
-    "more": "更多"
+    "more": "更多",
+    "view": "查看"
   },
   "tenant": {
     "placeholder": "请选择租户",
