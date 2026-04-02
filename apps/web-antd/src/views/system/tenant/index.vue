@@ -104,7 +104,6 @@ const [Grid, gridApi] = useVbenVxeGrid({
 const addressList = ref<SystemAreaApi.Area[]>([]);
 const addressMap = ref<Map<number, SystemAreaApi.Area>>(new Map());
 
-
 function getAddressList() {
   getAreaTree().then((res) => {
     addressList.value = res;

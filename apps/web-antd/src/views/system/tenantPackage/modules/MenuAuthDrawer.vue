@@ -9,7 +9,7 @@ import { handleTree } from '@vben/utils';
 
 import { Checkbox, message, Spin, Tooltip } from 'ant-design-vue';
 
-import { getMenuList } from '#/api/system/menu';
+import { getSimpleMenusList } from '#/api/system/menu';
 import {
   getTenantPackage,
   grantTenantPackage,
@@ -52,7 +52,7 @@ const checkStrictly = ref(true); // 默认勾选，父子联动
 async function loadMenuTree() {
   menuLoading.value = true;
   try {
-    const data = await getMenuList();
+    const data = await getSimpleMenusList();
     menuTree.value = handleTree(data) as SystemDeptApi.Dept[];
   } finally {
     menuLoading.value = false;

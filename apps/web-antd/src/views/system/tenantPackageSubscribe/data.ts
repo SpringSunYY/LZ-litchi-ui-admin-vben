@@ -108,6 +108,7 @@ export function useFormSchema(): VbenFormSchema[] {
       componentProps: {
         options: getDictOptions(
           DICT_TYPE.SYSTEM_TENANT_PACKAGE_SUBSCRIBE_STATUS,
+          'number',
         ),
         buttonStyle: 'solid',
         optionType: 'button',
@@ -121,6 +122,7 @@ export function useFormSchema(): VbenFormSchema[] {
       componentProps: {
         options: getDictOptions(
           DICT_TYPE.SYSTEM_TENANT_PACKAGE_SUBSCRIBE_PAY_STATUS,
+          'number',
         ),
         buttonStyle: 'solid',
         optionType: 'button',

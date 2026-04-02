@@ -9,7 +9,7 @@ import { handleTree } from '@vben/utils';
 
 import { Checkbox, Spin, Tooltip } from 'ant-design-vue';
 
-import { getMenuList } from '#/api/system/menu';
+import { getSimpleMenusList } from '#/api/system/menu';
 import { getTenantMenuList } from '#/api/system/tenant';
 import { $t } from '#/locales';
 
@@ -50,7 +50,7 @@ const expandedKeys = ref<number[]>([]);
 async function loadMenuTree() {
   menuLoading.value = true;
   try {
-    const data = await getMenuList();
+    const data = await getSimpleMenusList();
     menuTree.value = handleTree(data) as SystemDeptApi.Dept[];
   } finally {
     menuLoading.value = false;

@@ -5,9 +5,9 @@ import { computed, onMounted, ref } from 'vue';
 
 import { useVbenModelDrawer } from '@vben/common-ui';
 
-import dayjs from 'dayjs';
 import { useDebounceFn } from '@vueuse/core';
 import { message } from 'ant-design-vue';
+import dayjs from 'dayjs';
 
 import { useVbenForm } from '#/adapter/form';
 import { getSimpleTenantList } from '#/api/system/tenant';
@@ -21,13 +21,14 @@ import { $t } from '#/locales';
 
 import { useFormSchema } from '../data';
 
+const emit = defineEmits(['success']);
+
 const getTodayStart = () => {
   const now = new Date();
   now.setHours(0, 0, 0, 0);
   return now.getTime();
 };
 
-const emit = defineEmits(['success']);
 const formData = ref<TenantPackageSubscribeApi.TenantPackageSubscribe>();
 const getTitle = computed(() => {
   return formData.value?.id
@@ -52,10 +53,12 @@ const [Form, formApi] = useVbenForm({
     const discountPrice = Number(values.discountPrice) || 0;
     const startTime = dayjs(values.startTime);
 
-    if (fieldsChanged.includes('startTime') || fieldsChanged.includes('days')) {
-      if (startTime.isValid() && days > 0) {
-        formApi.setFieldValue('endTime', startTime.add(days, 'day'));
-      }
+    if (
+      (fieldsChanged.includes('startTime') || fieldsChanged.includes('days')) &&
+      startTime.isValid() &&
+      days > 0
+    ) {
+      formApi.setFieldValue('endTime', startTime.add(days, 'day'));
     }
 
     if (
