@@ -1,13 +1,17 @@
 <script lang="ts" setup>
 import type { VxeTableGridOptions } from '#/adapter/vxe-table';
+import type { SystemAreaApi } from '#/api/system/area';
 import type { SystemTenantApi } from '#/api/system/tenant';
+
+import { onMounted, ref } from 'vue';
 
 import { DocAlert, Page, useVbenDrawer, useVbenModal } from '@vben/common-ui';
 import { downloadFileFromBlobPart } from '@vben/utils';
 
-import { message } from 'ant-design-vue';
+import { message, TreeSelect } from 'ant-design-vue';
 
 import { ACTION_ICON, TableAction, useVbenVxeGrid } from '#/adapter/vxe-table';
+import { getAreaTree } from '#/api/system/area';
 import { deleteTenant, exportTenant, getTenantPage } from '#/api/system/tenant';
 import { $t } from '#/locales';
 import MenuDrawer from '#/views/system/tenant/modules/MenuDrawer.vue';
@@ -96,6 +100,66 @@ const [Grid, gridApi] = useVbenVxeGrid({
     },
   } as VxeTableGridOptions<SystemTenantApi.Tenant>,
 });
+
+const addressList = ref<SystemAreaApi.Area[]>([]);
+const addressMap = ref<Map<number, SystemAreaApi.Area>>(new Map());
+
+interface AreaNode extends SystemAreaApi.Area {
+  children?: AreaNode[];
+}
+
+function getAddressList() {
+  getAreaTree().then((res) => {
+    addressList.value = res;
+    getAddressMap();
+  });
+}
+
+function getAddressMap() {
+  const map = new Map<number, SystemAreaApi.Area & { children?: any[] }>();
+  function traverse(nodes: any[], parentId?: number) {
+    for (const node of nodes) {
+      // 显式设置 parentId
+      if (parentId !== undefined) {
+        node.parentId = parentId;
+      }
+      if (node.id) {
+        map.set(node.id, node);
+      }
+      // 递归处理子节点，传入当前节点的 id 作为父级 id
+      if (node.children?.length) {
+        traverse(node.children, node.id);
+      }
+    }
+  }
+  traverse(addressList.value);
+  addressMap.value = map as any;
+}
+
+function getAreaFullName(addressCode: string): string {
+  if (!addressCode || addressList.value.length === 0) return '';
+  const flatMap = addressMap.value;
+  const target = [...flatMap.values()].find(
+    (n) => n.id === Number(addressCode),
+  );
+  if (!target || !target.id) {
+    return '';
+  }
+  const names: string[] = [];
+  let current: SystemAreaApi.Area | undefined = target;
+  let count = 0;
+  while (current && count < 10) {
+    // 添加循环保护
+    names.unshift(current.name);
+    if (current.parentId === null || current.parentId === undefined) break;
+    current = flatMap.get(current.parentId);
+    count++;
+  }
+  return names.join('/');
+}
+onMounted(() => {
+  getAddressList();
+});
 </script>
 <template>
   <Page auto-content-height>
@@ -105,6 +169,19 @@ const [Grid, gridApi] = useVbenVxeGrid({
     <DrawerModal />
     <FormModal @success="onRefresh" />
     <Grid table-title="租户列表">
+      <template #form-addressCode="slotProps">
+        <TreeSelect
+          v-bind="slotProps"
+          :tree-data="addressList"
+          :dropdown-style="{ maxHeight: '400px', overflow: 'auto' }"
+          :field-names="{ label: 'name', value: 'id', children: 'children' }"
+          :placeholder="$t('ui.placeholder.select')"
+          allow-clear
+        />
+      </template>
+      <template #addressCode="{ row }">
+        {{ getAreaFullName(row.addressCode) }}
+      </template>
       <template #toolbar-tools>
         <TableAction
           :actions="[

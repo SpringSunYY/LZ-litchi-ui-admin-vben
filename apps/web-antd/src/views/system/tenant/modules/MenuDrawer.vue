@@ -7,7 +7,7 @@ import { nextTick, ref } from 'vue';
 import { useVbenDrawer, VbenTree } from '@vben/common-ui';
 import { handleTree } from '@vben/utils';
 
-import { Spin, Tooltip } from 'ant-design-vue';
+import { Checkbox, Spin, Tooltip } from 'ant-design-vue';
 
 import { getMenuList } from '#/api/system/menu';
 import { getTenantMenuList } from '#/api/system/tenant';
@@ -23,7 +23,6 @@ const [Drawer, drawerApi] = useVbenDrawer({
   async onOpenChange(isOpen: boolean) {
     if (!isOpen) return;
     selectedMenuIds.value = [];
-    isAllSelected.value = false;
     isExpanded.value = false;
     expandedKeys.value = [];
 
@@ -45,10 +44,8 @@ const tenantName = ref('');
 const menuTree = ref<SystemDeptApi.Dept[]>([]);
 const menuLoading = ref(false);
 const selectedMenuIds = ref<number[]>([]);
-const isAllSelected = ref(false);
 const isExpanded = ref(false);
 const expandedKeys = ref<number[]>([]);
-const checkStrictly = ref(true); // 默认勾选，父子联动
 
 async function loadMenuTree() {
   menuLoading.value = true;
@@ -58,6 +55,21 @@ async function loadMenuTree() {
   } finally {
     menuLoading.value = false;
   }
+}
+
+function toggleExpandAll() {
+  isExpanded.value = !isExpanded.value;
+  expandedKeys.value = isExpanded.value ? getAllNodeIds(menuTree.value) : [];
+}
+/** 递归获取所有节点 ID */
+function getAllNodeIds(nodes: any[], ids: number[] = []): number[] {
+  nodes.forEach((node: any) => {
+    ids.push(node.id);
+    if (node.children && node.children.length > 0) {
+      getAllNodeIds(node.children, ids);
+    }
+  });
+  return ids;
 }
 </script>
 
@@ -76,7 +88,6 @@ async function loadMenuTree() {
         multiple
         bordered
         v-model:expanded="expandedKeys"
-        :check-strictly="!checkStrictly"
         v-model="selectedMenuIds"
         value-field="id"
         label-field="name"
@@ -91,5 +102,12 @@ async function loadMenuTree() {
         </template>
       </VbenTree>
     </Spin>
+    <template #prepend-footer>
+      <div class="flex flex-auto items-center gap-4">
+        <Checkbox :checked="isExpanded" @change="toggleExpandAll">
+          {{ $t('common.expandAll') }}
+        </Checkbox>
+      </div>
+    </template>
   </Drawer>
 </template>

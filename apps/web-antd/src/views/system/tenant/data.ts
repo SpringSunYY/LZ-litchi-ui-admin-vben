@@ -78,18 +78,18 @@ export function useFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'addressCode',
       label: '地区',
-      component: 'Input',
+      component: 'ApiTreeSelect',
       componentProps: {
-        placeholder: '请输入地区',
+        api: () => getAreaTree(),
+        fieldNames: { label: 'name', value: 'id', children: 'children' },
       },
     },
     {
       fieldName: 'addressDetail',
       label: '地址',
-      component: 'ApiTreeSelect',
+      component: 'Input',
       componentProps: {
-        api: () => getAreaTree(),
-        fieldNames: { label: 'name', value: 'id', children: 'children' },
+        placeholder: '请输入地址',
       },
     },
     {
@@ -207,6 +207,15 @@ export function useGridFormSchema(): VbenFormSchema[] {
       },
     },
     {
+      fieldName: 'addressCode',
+      label: '地区',
+      component: 'Input',
+      componentProps: {
+        allowClear: true,
+        placeholder: '请输入地区',
+      },
+    },
+    {
       fieldName: 'createTime',
       label: '创建时间',
       component: 'RangePicker',
@@ -274,7 +283,8 @@ export function useGridColumns(): VxeTableGridOptions<SystemTenantApi.Tenant>['c
     {
       field: 'addressCode',
       title: '地区',
-      minWidth: 120,
+      minWidth: 160,
+      slots: { default: 'addressCode' },
     },
     {
       field: 'addressDetail',
