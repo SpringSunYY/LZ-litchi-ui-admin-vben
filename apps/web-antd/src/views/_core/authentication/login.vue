@@ -40,34 +40,45 @@ async function fetchTenant() {
   if (!tenantEnable) {
     return;
   }
-  try {
-    // 获取租户列表、域名对应租户
-    const websiteTenantPromise = getTenantByWebsite(window.location.hostname);
 
-    // 选中租户：域名 > store 中的租户 > 首个租户
-    let tenantId: null | number = null;
-    let tenantCode: null | string = null;
-    const websiteTenant = await websiteTenantPromise;
-    if (websiteTenant?.id) {
-      tenantId = websiteTenant.id;
-    }
-    if (websiteTenant?.code) {
-      tenantCode = websiteTenant.code;
-    }
-    // 如果没有从域名获取到租户，尝试从 store 中获取
-    if (!tenantId && accessStore.tenantId) {
-      tenantId = accessStore.tenantId;
-    }
-    if (!tenantCode && accessStore.tenantCode) {
-      tenantCode = accessStore.tenantCode;
-    }
-    // 设置选中的租户编号
-    accessStore.setTenantId(tenantId);
-    accessStore.setTenantCode(tenantCode);
-    loginRef.value.getFormApi().setFieldValue('tenantCode', tenantCode);
+  // 等待下一个 tick，确保持久化数据已加载
+  await new Promise((resolve) => setTimeout(resolve, 0));
+
+  // 选中租户：域名 > store 中的租户（持久化）> 默认租户
+  let tenantId: null | number = null;
+  let code: null | string = null;
+
+  // 1. 优先从域名获取租户
+  const websiteTenant = await getTenantByWebsite(window.location.hostname);
+  if (websiteTenant?.id) {
+    tenantId = websiteTenant.id;
+  }
+  if (websiteTenant?.code) {
+    code = websiteTenant.code;
+  }
+
+  // 2. 如果域名没有获取到，尝试从持久化的 store 中获取
+  if (!tenantId && accessStore.tenantId) {
+    tenantId = accessStore.tenantId;
+  }
+  if (!code && accessStore.tenantCode) {
+    code = accessStore.tenantCode;
+  }
+
+  // 3. 如果还是没有，使用默认租户
+  if (!code) {
+    code = import.meta.env.VITE_APP_DEFAULT_TENANT_CODE || null;
+  }
+
+  // 设置选中的租户编号
+  accessStore.setTenantId(tenantId);
+  accessStore.setTenantCode(code);
+  tenantCode.value = code || '';
+
+  // 更新表单字段
+  if (loginRef.value) {
+    loginRef.value.getFormApi().setFieldValue('tenantCode', code);
     loginRef.value.getFormApi().setFieldValue('tenantId', tenantId?.toString());
-  } catch (error) {
-    console.error('获取租户列表失败:', error);
   }
 }
 
@@ -86,9 +97,11 @@ async function fetchTenantByCode(code: string) {
   }
   accessStore.setTenantId(tenant.id);
   accessStore.setTenantCode(tenant.code);
+  tenantCode.value = tenant.code || '';
+  loginRef.value.getFormApi().setFieldValue('tenantCode', tenant.code);
+  loginRef.value.getFormApi().setFieldValue('tenantId', tenant.id?.toString());
   return true;
 }
-
 /** 处理登录 */
 async function handleLogin(values: any) {
   // 如果开启验证码，则先验证验证码
@@ -155,21 +168,10 @@ const formSchema = computed((): VbenFormSchema[] => {
       dependencies: {
         triggerFields: ['tenantCode'],
         if: tenantEnable,
-        trigger(values) {
-          if (values.tenantCode) {
-            tenantCode.value = values.tenantCode;
-          }
-        },
       },
       fieldName: 'tenantCode',
       label: $t('authentication.tenant'),
-      rules: z
-        .string()
-        .min(1, { message: $t('authentication.tenantTip') })
-        .default(
-          tenantCode.value !== '' ||
-            import.meta.env.VITE_APP_DEFAULT_TENANT_CODE,
-        ),
+      rules: z.string().min(1, { message: $t('authentication.tenantTip') }),
     },
     {
       component: 'VbenInput',

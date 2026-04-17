@@ -59,7 +59,6 @@ export const useAuthStore = defineStore('auth', () => {
       if (accessToken) {
         accessStore.setAccessToken(accessToken);
         accessStore.setRefreshToken(refreshToken);
-
         // 获取用户信息并存储到 userStore、accessStore 中
         // TODO @YY：清理掉 accessCodes 相关的逻辑
         // const [fetchUserInfoResult, accessCodes] = await Promise.all([

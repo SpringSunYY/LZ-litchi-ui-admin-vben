@@ -28,9 +28,9 @@ export async function initStores(app: App, options: InitStoreOptions) {
     // @ts-ignore secure-ls does not have a type definition for this
     metaKey: `${namespace}-secure-meta`,
   });
+
   pinia.use(
     createPersistedState({
-      // key $appName-$store.id
       key: (storeKey) => `${namespace}-${storeKey}`,
       storage: import.meta.env.DEV
         ? localStorage
