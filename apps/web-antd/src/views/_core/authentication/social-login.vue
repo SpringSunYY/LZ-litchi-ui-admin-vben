@@ -45,24 +45,30 @@ async function fetchTenant() {
 
     // 选中租户：域名 > store 中的租户 > 首个租户
     let tenantId: null | number = null;
-    let tenantCode: null | string = null;
+    let code: null | string = '';
     const websiteTenant = await websiteTenantPromise;
     if (websiteTenant?.id) {
       tenantId = websiteTenant.id;
     }
     if (websiteTenant?.code) {
-      tenantCode = websiteTenant.code;
+      code = websiteTenant.code;
     }
     // 如果没有从域名获取到租户，尝试从 store 中获取
     if (!tenantId && accessStore.tenantId) {
       tenantId = accessStore.tenantId;
     }
-    if (!tenantCode && accessStore.tenantCode) {
-      tenantCode = accessStore.tenantCode;
+    if (!code && accessStore.tenantCode) {
+      code = accessStore.tenantCode;
+    }
+    if (!code) {
+      code = import.meta.env.VITE_APP_DEFAULT_TENANT_CODE;
     }
     // 设置选中的租户编号
     accessStore.setTenantId(tenantId);
-    accessStore.setTenantCode(tenantCode);
+    accessStore.setTenantCode(code || '');
+    accessStore.setTenantId(tenantId);
+    accessStore.setTenantCode(code || '');
+    tenantCode.value = code || ''; // 同步更新响应式变量
     loginRef.value.getFormApi().setFieldValue('tenantCode', tenantCode);
     loginRef.value.getFormApi().setFieldValue('tenantId', tenantId?.toString());
   } catch (error) {

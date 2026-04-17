@@ -57,37 +57,6 @@ interface AccessState {
   visitTenantId: null | number;
 }
 
-const PERSIST_KEY = 'core-access-tenant';
-
-/**
- * 手动持久化租户信息
- */
-function loadPersistedTenant(): {
-  tenantCode: null | string;
-  tenantId: null | number;
-} {
-  try {
-    const raw = localStorage.getItem(PERSIST_KEY);
-    if (raw) {
-      return JSON.parse(raw);
-    }
-  } catch {
-    // ignore
-  }
-  return { tenantCode: null, tenantId: null };
-}
-
-function savePersistedTenant(
-  tenantCode: null | string,
-  tenantId: null | number,
-) {
-  try {
-    localStorage.setItem(PERSIST_KEY, JSON.stringify({ tenantCode, tenantId }));
-  } catch {
-    // ignore
-  }
-}
-
 /**
  * @zh_CN 访问权限相关
  */
@@ -110,13 +79,11 @@ export const useAccessStore = defineStore('core-access', {
           }
         }
       }
-
       return findMenu(this.accessMenus, path);
     },
     lockScreen(password: string) {
       this.isLockScreen = true;
       this.lockScreenPassword = password;
-      savePersistedTenant(this.tenantCode, this.tenantId);
     },
     setAccessCodes(codes: string[]) {
       this.accessCodes = codes;
@@ -141,38 +108,58 @@ export const useAccessStore = defineStore('core-access', {
     },
     setTenantId(tenantId: null | number) {
       this.tenantId = tenantId;
-      savePersistedTenant(this.tenantCode, tenantId);
+    },
+    setTenantCode(tenantCode: string) {
+      this.tenantCode = tenantCode;
     },
     setVisitTenantId(visitTenantId: number) {
       this.visitTenantId = visitTenantId;
-    },
-    setTenantCode(tenantCode: null | string) {
-      this.tenantCode = tenantCode;
-      savePersistedTenant(tenantCode, this.tenantId);
     },
     unlockScreen() {
       this.isLockScreen = false;
       this.lockScreenPassword = undefined;
     },
+    $reset() {
+      this.accessCodes = [];
+      this.accessMenus = [];
+      this.accessRoutes = [];
+      this.accessToken = null;
+      this.isAccessChecked = false;
+      this.isLockScreen = false;
+      this.lockScreenPassword = undefined;
+      this.loginExpired = false;
+      this.refreshToken = null;
+      this.tenantId = null;
+      this.visitTenantId = null;
+    },
   },
-  // @ts-ignore
-  state: (): AccessState => {
-    const persisted = loadPersistedTenant();
-    return {
-      accessCodes: [],
-      accessMenus: [],
-      accessRoutes: [],
-      accessToken: null,
-      isAccessChecked: false,
-      isLockScreen: false,
-      lockScreenPassword: undefined,
-      loginExpired: false,
-      refreshToken: null,
-      tenantId: persisted.tenantId,
-      tenantCode: persisted.tenantCode,
-      visitTenantId: null,
-    };
+  persist: {
+    // 持久化
+    pick: [
+      'accessToken',
+      'refreshToken',
+      'accessCodes',
+      'tenantId',
+      'tenantCode',
+      'visitTenantId',
+      'isLockScreen',
+      'lockScreenPassword',
+    ],
   },
+  state: (): AccessState => ({
+    accessCodes: [],
+    accessMenus: [],
+    accessRoutes: [],
+    accessToken: null,
+    isAccessChecked: false,
+    isLockScreen: false,
+    lockScreenPassword: undefined,
+    loginExpired: false,
+    refreshToken: null,
+    tenantId: null,
+    tenantCode: null,
+    visitTenantId: null,
+  }),
 });
 
 // 解决热更新问题

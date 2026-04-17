@@ -60,9 +60,10 @@ export const useAuthStore = defineStore('auth', () => {
                 userInfo.homePath || preferences.app.defaultHomePath,
               );
         }
-
+        // @ts-ignore
         if (userInfo?.realName) {
           notification.success({
+            // @ts-ignore
             description: `${$t('authentication.loginSuccessDesc')}:${userInfo?.realName}`,
             duration: 3,
             message: $t('authentication.loginSuccess'),
