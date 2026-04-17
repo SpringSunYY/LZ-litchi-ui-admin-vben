@@ -205,7 +205,7 @@ onMounted(() => {
               label: $t('common.viewMenu'),
               type: 'link',
               icon: ACTION_ICON.VIEW as string,
-              auth: ['system:tenant-package:update'],
+              auth: ['system:tenantPackage:update'],
               onClick: handleGrant.bind(null, row),
             },
             {

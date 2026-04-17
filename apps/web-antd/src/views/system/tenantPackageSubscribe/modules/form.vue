@@ -11,7 +11,7 @@ import dayjs from 'dayjs';
 
 import { useVbenForm } from '#/adapter/form';
 import { getSimpleTenantList } from '#/api/system/tenant';
-import { getTenantPackageList } from '#/api/system/tenant-package';
+import { getTenantPackageList } from '#/api/system/tenantPackage';
 import {
   createTenantPackageSubscribe,
   getTenantPackageSubscribe,

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { SystemTenantPackageApi } from '#/api/system/tenant-package';
+import type { SystemTenantPackageApi } from '#/api/system/tenantPackage';
 
 import { computed, ref } from 'vue';
 
@@ -12,7 +12,7 @@ import {
   createTenantPackage,
   getTenantPackage,
   updateTenantPackage,
-} from '#/api/system/tenant-package';
+} from '#/api/system/tenantPackage';
 import { $t } from '#/locales';
 
 import { useFormSchema } from '../data';

@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import type { VxeTableGridOptions } from '#/adapter/vxe-table';
-import type { SystemTenantPackageApi } from '#/api/system/tenant-package';
+import type { SystemTenantPackageApi } from '#/api/system/tenantPackage';
 
 import {
   DocAlert,
@@ -15,7 +15,7 @@ import { ACTION_ICON, TableAction, useVbenVxeGrid } from '#/adapter/vxe-table';
 import {
   deleteTenantPackage,
   getTenantPackagePage,
-} from '#/api/system/tenant-package';
+} from '#/api/system/tenantPackage';
 import { $t } from '#/locales';
 
 import { useGridColumns, useGridFormSchema } from './data';
@@ -117,7 +117,7 @@ const [Grid, gridApi] = useVbenVxeGrid({
               label: $t('ui.actionTitle.create', ['套餐']),
               type: 'primary',
               icon: ACTION_ICON.ADD,
-              auth: ['system:tenant-package:create'],
+              auth: ['system:tenantPackage:create'],
               onClick: handleCreate,
             },
           ]"
@@ -130,14 +130,14 @@ const [Grid, gridApi] = useVbenVxeGrid({
               label: $t('common.edit'),
               type: 'link',
               icon: ACTION_ICON.EDIT,
-              auth: ['system:tenant-package:update'],
+              auth: ['system:tenantPackage:update'],
               onClick: handleEdit.bind(null, row),
             },
             {
               label: $t('common.grant'),
               type: 'link',
               icon: ACTION_ICON.GRANT as string,
-              auth: ['system:tenant-package:update'],
+              auth: ['system:tenantPackage:update'],
               onClick: handleGrant.bind(null, row),
             },
             {
@@ -145,7 +145,7 @@ const [Grid, gridApi] = useVbenVxeGrid({
               type: 'link',
               danger: true,
               icon: ACTION_ICON.DELETE,
-              auth: ['system:tenant-package:delete'],
+              auth: ['system:tenantPackage:delete'],
               popConfirm: {
                 title: $t('ui.actionMessage.deleteConfirm', [row.name]),
                 confirm: handleDelete.bind(null, row),

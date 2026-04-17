@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import type { SystemDeptApi } from '#/api/system/dept';
-import type { SystemTenantPackageApi } from '#/api/system/tenant-package';
+import type { SystemTenantPackageApi } from '#/api/system/tenantPackage';
 
 import { nextTick, ref } from 'vue';
 
@@ -13,7 +13,7 @@ import { getSimpleMenusList } from '#/api/system/menu';
 import {
   getTenantPackage,
   grantTenantPackage,
-} from '#/api/system/tenant-package';
+} from '#/api/system/tenantPackage';
 import { $t } from '#/locales';
 
 const emit = defineEmits(['success']);

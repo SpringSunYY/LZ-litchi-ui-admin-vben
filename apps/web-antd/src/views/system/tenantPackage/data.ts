@@ -1,6 +1,6 @@
 import type { VbenFormSchema } from '#/adapter/form';
 import type { VxeTableGridOptions } from '#/adapter/vxe-table';
-import type { SystemTenantPackageApi } from '#/api/system/tenant-package';
+import type { SystemTenantPackageApi } from '#/api/system/tenantPackage';
 
 import { z } from '#/adapter/form';
 import {
