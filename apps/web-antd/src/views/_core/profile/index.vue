@@ -39,14 +39,14 @@ onMounted(loadProfile);
 
 <template>
   <Page auto-content-height>
-    <div class="flex">
+    <div class="flex flex-col lg:flex-row">
       <!-- 左侧 个人信息 -->
-      <Card class="w-2/5" title="个人信息">
+      <Card class="w-full lg:w-2/5" title="个人信息">
         <ProfileUser :profile="profile" @success="refreshProfile" />
       </Card>
 
       <!-- 右侧 标签页 -->
-      <Card class="ml-3 w-3/5">
+      <Card class="mt-3 lg:mt-0 lg:ml-3 w-full lg:w-3/5">
         <Tabs v-model:active-key="activeName" class="-mt-4">
           <Tabs.TabPane key="basicInfo" tab="基本设置">
             <BaseInfo :profile="profile" @success="refreshProfile" />

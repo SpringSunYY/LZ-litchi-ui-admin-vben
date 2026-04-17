@@ -76,7 +76,7 @@ async function handelUpload({
               所属角色
             </div>
           </template>
-          {{ profile.roles.map((role) => role.name).join(',') }}
+          {{ profile.roles?.map((role) => role.name).join(',') }}
         </DescriptionsItem>
         <DescriptionsItem>
           <template #label>
@@ -115,7 +115,7 @@ async function handelUpload({
               所属岗位
             </div>
           </template>
-          {{ profile.posts.map((post) => post.name).join(',') }}
+          {{ profile.posts?.map((post) => post.name).join(',') }}
         </DescriptionsItem>
         <DescriptionsItem>
           <template #label>
