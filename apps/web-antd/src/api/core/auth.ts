@@ -26,6 +26,7 @@ export namespace AuthApi {
   export interface TenantResult {
     id: number;
     name: string;
+    code: string;
   }
 
   /** 手机验证码获取接口参数 */
@@ -105,6 +106,13 @@ export async function getTenantSimpleList() {
 export async function getTenantByWebsite(website: string) {
   return requestClient.get<AuthApi.TenantResult>(
     `/system/tenant/get-by-website?website=${website}`,
+  );
+}
+
+/** 使用租户编号查询租户信息 */
+export async function getTenantByCode(code: string) {
+  return requestClient.get<AuthApi.TenantResult>(
+    `/system/tenant/get-by-code?code=${code}`,
   );
 }
 

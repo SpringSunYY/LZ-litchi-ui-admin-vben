@@ -1,8 +1,6 @@
 <script lang="ts" setup>
 import type { VbenFormSchema } from '@vben/common-ui';
 
-import type { AuthApi } from '#/api/core/auth';
-
 import { computed, onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 
@@ -11,11 +9,13 @@ import { isCaptchaEnable, isTenantEnable } from '@vben/hooks';
 import { $t } from '@vben/locales';
 import { useAccessStore } from '@vben/stores';
 
+import { message } from 'ant-design-vue';
+
 import {
   checkCaptcha,
   getCaptcha,
+  getTenantByCode,
   getTenantByWebsite,
-  getTenantSimpleList,
   socialAuthRedirect,
 } from '#/api/core/auth';
 import { useAuthStore } from '#/store';
@@ -34,37 +34,59 @@ const verifyRef = ref();
 const captchaType = 'blockPuzzle'; // 验证码类型：'blockPuzzle' | 'clickWord'
 
 /** 获取租户列表，并默认选中 */
-const tenantList = ref<AuthApi.TenantResult[]>([]); // 租户列表
-async function fetchTenantList() {
+const tenantCode = ref('');
+
+async function fetchTenant() {
   if (!tenantEnable) {
     return;
   }
   try {
     // 获取租户列表、域名对应租户
     const websiteTenantPromise = getTenantByWebsite(window.location.hostname);
-    tenantList.value = (await getTenantSimpleList())?.list || [];
 
     // 选中租户：域名 > store 中的租户 > 首个租户
     let tenantId: null | number = null;
+    let tenantCode: null | string = null;
     const websiteTenant = await websiteTenantPromise;
     if (websiteTenant?.id) {
       tenantId = websiteTenant.id;
+    }
+    if (websiteTenant?.code) {
+      tenantCode = websiteTenant.code;
     }
     // 如果没有从域名获取到租户，尝试从 store 中获取
     if (!tenantId && accessStore.tenantId) {
       tenantId = accessStore.tenantId;
     }
-    // 如果还是没有租户，使用列表中的第一个
-    if (!tenantId && tenantList.value?.[0]?.id) {
-      tenantId = tenantList.value[0].id;
+    if (!tenantCode && accessStore.tenantCode) {
+      tenantCode = accessStore.tenantCode;
     }
-
     // 设置选中的租户编号
     accessStore.setTenantId(tenantId);
+    accessStore.setTenantCode(tenantCode);
+    loginRef.value.getFormApi().setFieldValue('tenantCode', tenantCode);
     loginRef.value.getFormApi().setFieldValue('tenantId', tenantId?.toString());
   } catch (error) {
     console.error('获取租户列表失败:', error);
   }
+}
+
+async function fetchTenantByCode(code: string) {
+  if (!tenantEnable) {
+    return true;
+  }
+  // 如果是4-32位长度
+  if (code.length < 4 || code.length > 32) {
+    return false;
+  }
+  // 根据租户编码查询租户信息
+  const tenant = await getTenantByCode(code);
+  if (!tenant) {
+    return false;
+  }
+  accessStore.setTenantId(tenant.id);
+  accessStore.setTenantCode(tenant.code);
+  return true;
 }
 
 /** 处理登录 */
@@ -72,6 +94,11 @@ async function handleLogin(values: any) {
   // 如果开启验证码，则先验证验证码
   if (captchaEnable) {
     verifyRef.value.show();
+    return;
+  }
+  const isValid = await fetchTenantByCode(values.tenantCode);
+  if (!isValid) {
+    message.warn($t('authentication.tenantErrorTip'));
     return;
   }
   // 无验证码，直接登录
@@ -92,6 +119,7 @@ async function handleVerifySuccess({ captchaVerification }: any) {
 
 /** 处理第三方登录 */
 const redirect = query?.redirect;
+
 async function handleThirdLogin(type: number) {
   if (type <= 0) {
     return;
@@ -114,32 +142,34 @@ async function handleThirdLogin(type: number) {
 
 /** 组件挂载时获取租户信息 */
 onMounted(() => {
-  fetchTenantList();
+  fetchTenant();
 });
 
 const formSchema = computed((): VbenFormSchema[] => {
   return [
     {
-      component: 'VbenSelect',
+      component: 'VbenInput',
       componentProps: {
-        options: tenantList.value.map((item) => ({
-          label: item.name,
-          value: item.id.toString(),
-        })),
         placeholder: $t('authentication.tenantTip'),
       },
-      fieldName: 'tenantId',
-      label: $t('authentication.tenant'),
-      rules: z.string().min(1, { message: $t('authentication.tenantTip') }),
       dependencies: {
-        triggerFields: ['tenantId'],
+        triggerFields: ['tenantCode'],
         if: tenantEnable,
         trigger(values) {
-          if (values.tenantId) {
-            accessStore.setTenantId(Number(values.tenantId));
+          if (values.tenantCode) {
+            tenantCode.value = values.tenantCode;
           }
         },
       },
+      fieldName: 'tenantCode',
+      label: $t('authentication.tenant'),
+      rules: z
+        .string()
+        .min(1, { message: $t('authentication.tenantTip') })
+        .default(
+          tenantCode.value !== '' ||
+            import.meta.env.VITE_APP_DEFAULT_TENANT_CODE,
+        ),
     },
     {
       component: 'VbenInput',

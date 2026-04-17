@@ -46,6 +46,10 @@ interface AccessState {
   /**
    * 登录租户编号
    */
+  tenantCode: null | string;
+  /**
+   * 登录租户编号
+   */
   tenantId: null | number;
   /**
    * 访问租户编号
@@ -75,6 +79,7 @@ export const useAccessStore = defineStore('core-access', {
           }
         }
       }
+
       return findMenu(this.accessMenus, path);
     },
     lockScreen(password: string) {
@@ -108,6 +113,9 @@ export const useAccessStore = defineStore('core-access', {
     setVisitTenantId(visitTenantId: number) {
       this.visitTenantId = visitTenantId;
     },
+    setTenantCode(tenantCode: null | string) {
+      this.tenantCode = tenantCode;
+    },
     unlockScreen() {
       this.isLockScreen = false;
       this.lockScreenPassword = undefined;
@@ -125,6 +133,7 @@ export const useAccessStore = defineStore('core-access', {
       'lockScreenPassword',
     ],
   },
+  // @ts-ignore
   state: (): AccessState => ({
     accessCodes: [],
     accessMenus: [],

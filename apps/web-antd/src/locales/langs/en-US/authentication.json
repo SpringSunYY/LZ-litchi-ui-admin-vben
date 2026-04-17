@@ -1,7 +1,7 @@
 {
   "welcomeBack": "Welcome Back",
   "pageTitle": "Plug-and-play Admin system",
-  "pageDesc": "Efficient, versatile frontend template",
+  "pageDesc": "litchi frontend template",
   "loginSuccess": "Login Successful",
   "noReadMessage": "No read message",
   "loginSuccessDesc": "Welcome Back",
@@ -15,7 +15,8 @@
   "passwordErrorTip": "Password is incorrect",
   "passwordTip": "Please enter password",
   "nicknameTip": "Please enter nickname",
-  "tenantTip": "Please select tenant",
+  "tenantTip": "Please select enter tenant code",
+  "tenantErrorTip":"tenant code error,not found tenant",
   "verifyRequiredTip": "Please complete the verification first",
   "rememberMe": "Remember Me",
   "createAnAccount": "Create an Account",
