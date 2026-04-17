@@ -2,8 +2,6 @@
 import type { VbenFormSchema } from '@vben/common-ui';
 import type { Recordable } from '@vben/types';
 
-import type { AuthApi } from '#/api';
-
 import { computed, onMounted, ref } from 'vue';
 
 import { AuthenticationCodeLogin, z } from '@vben/common-ui';
@@ -13,14 +11,13 @@ import { useAccessStore } from '@vben/stores';
 
 import { message } from 'ant-design-vue';
 
-import { sendSmsCode } from '#/api';
-import { getTenantByWebsite, getTenantSimpleList } from '#/api/core/auth';
+import { getTenantByCode, sendSmsCode } from '#/api';
+import { getTenantByWebsite } from '#/api/core/auth';
 import { useAuthStore } from '#/store';
 
 defineOptions({ name: 'CodeLogin' });
 
 const authStore = useAuthStore();
-const accessStore = useAccessStore();
 const tenantEnable = isTenantEnable();
 
 const loading = ref(false);
@@ -28,68 +25,94 @@ const CODE_LENGTH = 4;
 
 const loginRef = ref();
 
-/** 获取租户列表，并默认选中 */
-const tenantList = ref<AuthApi.TenantResult[]>([]); // 租户列表
-async function fetchTenantList() {
+const tenantCode = ref('');
+
+async function fetchTenant() {
   if (!tenantEnable) {
     return;
   }
   try {
+    const accessStore = useAccessStore();
+
     // 获取租户列表、域名对应租户
     const websiteTenantPromise = getTenantByWebsite(window.location.hostname);
-    tenantList.value = await getTenantSimpleList();
 
     // 选中租户：域名 > store 中的租户 > 首个租户
     let tenantId: null | number = null;
+    let tenantCode: null | string = null;
     const websiteTenant = await websiteTenantPromise;
     if (websiteTenant?.id) {
       tenantId = websiteTenant.id;
+    }
+    if (websiteTenant?.code) {
+      tenantCode = websiteTenant.code;
     }
     // 如果没有从域名获取到租户，尝试从 store 中获取
     if (!tenantId && accessStore.tenantId) {
       tenantId = accessStore.tenantId;
     }
-    // 如果还是没有租户，使用列表中的第一个
-    if (!tenantId && tenantList.value?.[0]?.id) {
-      tenantId = tenantList.value[0].id;
+    if (!tenantCode && accessStore.tenantCode) {
+      tenantCode = accessStore.tenantCode;
     }
-
     // 设置选中的租户编号
     accessStore.setTenantId(tenantId);
+    accessStore.setTenantCode(tenantCode);
+    loginRef.value.getFormApi().setFieldValue('tenantCode', tenantCode);
     loginRef.value.getFormApi().setFieldValue('tenantId', tenantId?.toString());
   } catch (error) {
     console.error('获取租户列表失败:', error);
   }
 }
 
+async function fetchTenantByCode(code: string) {
+  if (!tenantEnable) {
+    return true;
+  }
+  // 如果是4-32位长度
+  if (code.length < 4 || code.length > 32) {
+    return false;
+  }
+  // 根据租户编码查询租户信息
+  const tenant = await getTenantByCode(code);
+  if (!tenant) {
+    return false;
+  }
+  const accessStore = useAccessStore();
+  accessStore.setTenantId(tenant.id);
+  accessStore.setTenantCode(tenant.code);
+  return true;
+}
+
 /** 组件挂载时获取租户信息 */
 onMounted(() => {
-  fetchTenantList();
+  fetchTenant();
 });
 
 const formSchema = computed((): VbenFormSchema[] => {
   return [
     {
-      component: 'VbenSelect',
+      component: 'VbenInput',
       componentProps: {
-        options: tenantList.value.map((item) => ({
-          label: item.name,
-          value: item.id.toString(),
-        })),
         placeholder: $t('authentication.tenantTip'),
       },
-      fieldName: 'tenantId',
-      label: $t('authentication.tenant'),
-      rules: z.string().min(1, { message: $t('authentication.tenantTip') }),
       dependencies: {
-        triggerFields: ['tenantId'],
+        triggerFields: ['tenantCode'],
         if: tenantEnable,
         trigger(values) {
-          if (values.tenantId) {
-            accessStore.setTenantId(Number(values.tenantId));
+          if (values.tenantCode) {
+            tenantCode.value = values.tenantCode;
           }
         },
       },
+      fieldName: 'tenantCode',
+      label: $t('authentication.tenant'),
+      rules: z
+        .string()
+        .min(1, { message: $t('authentication.tenantTip') })
+        .default(
+          tenantCode.value !== '' ||
+            import.meta.env.VITE_APP_DEFAULT_TENANT_CODE,
+        ),
     },
     {
       component: 'VbenInput',
@@ -149,6 +172,7 @@ const formSchema = computed((): VbenFormSchema[] => {
     },
   ];
 });
+
 /**
  * 异步处理登录操作
  * Asynchronously handle the login process
@@ -156,6 +180,11 @@ const formSchema = computed((): VbenFormSchema[] => {
  */
 async function handleLogin(values: Recordable<any>) {
   try {
+    const isValid = await fetchTenantByCode(values.tenantCode);
+    if (!isValid) {
+      message.warn($t('authentication.tenantErrorTip'));
+      return;
+    }
     await authStore.authLogin('mobile', values);
   } catch (error) {
     console.error('Error in handleLogin:', error);
