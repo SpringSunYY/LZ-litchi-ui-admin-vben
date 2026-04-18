@@ -15,7 +15,7 @@ export interface InitStoreOptions {
 }
 
 /**
- * @zh_CN åå§åpinia
+ * @zh_CN pinia
  */
 export async function initStores(app: App, options: InitStoreOptions) {
   const { createPersistedState } = await import('pinia-plugin-persistedstate');

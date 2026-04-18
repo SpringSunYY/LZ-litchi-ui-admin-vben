@@ -113,8 +113,14 @@ async function handleLogin(values: any) {
 /** 验证码通过，执行登录 */
 async function handleVerifySuccess({ captchaVerification }: any) {
   try {
+    const values = await loginRef.value.getFormApi().getValues();
+    const isValid = await fetchTenantByCode(values.tenantCode);
+    if (!isValid) {
+      message.warn($t('authentication.tenantErrorTip'));
+      return;
+    }
     await authStore.authLogin('username', {
-      ...(await loginRef.value.getFormApi().getValues()),
+      ...values,
       captchaVerification,
     });
   } catch (error) {
@@ -155,7 +161,7 @@ const formSchema = computed((): VbenFormSchema[] => {
     {
       component: 'VbenInput',
       componentProps: {
-        placeholder: $t('authentication.tenantTip'),
+        placeholder: $t('authentication.tenantCodeTip'),
       },
       dependencies: {
         triggerFields: ['tenantCode'],
@@ -170,7 +176,7 @@ const formSchema = computed((): VbenFormSchema[] => {
       label: $t('authentication.tenant'),
       rules: z
         .string()
-        .min(1, { message: $t('authentication.tenantTip') })
+        .min(1, { message: $t('authentication.tenantCodeTip') })
         .default(
           tenantCode.value !== '' ||
             import.meta.env.VITE_APP_DEFAULT_TENANT_CODE,

@@ -1,21 +1,15 @@
 <script lang="ts" setup>
 import type { VbenFormSchema } from '@vben/common-ui';
 
-import type { AuthApi } from '#/api/core/auth';
-
-import { computed, h, onMounted, ref } from 'vue';
+import { computed, h, ref } from 'vue';
+import { useRouter } from 'vue-router';
 
 import { AuthenticationRegister, Verification, z } from '@vben/common-ui';
 import { isCaptchaEnable, isTenantEnable } from '@vben/hooks';
 import { $t } from '@vben/locales';
 import { useAccessStore } from '@vben/stores';
 
-import {
-  checkCaptcha,
-  getCaptcha,
-  getTenantByWebsite,
-  getTenantSimpleList,
-} from '#/api/core/auth';
+import { checkCaptcha, getCaptcha } from '#/api/core/auth';
 import { useAuthStore } from '#/store';
 
 defineOptions({ name: 'Register' });
@@ -26,46 +20,13 @@ const accessStore = useAccessStore();
 const authStore = useAuthStore();
 const tenantEnable = isTenantEnable();
 const captchaEnable = isCaptchaEnable();
-
 const registerRef = ref();
 const verifyRef = ref();
-
+const loginPath = ref('/auth/login');
 const captchaType = 'blockPuzzle'; // 验证码类型：'blockPuzzle' | 'clickWord'
-
-/** 获取租户列表，并默认选中 */
-const tenantList = ref<AuthApi.TenantResult[]>([]); // 租户列表
-async function fetchTenantList() {
-  if (!tenantEnable) {
-    return;
-  }
-  try {
-    // 获取租户列表、域名对应租户
-    const websiteTenantPromise = getTenantByWebsite(window.location.hostname);
-    tenantList.value = await getTenantSimpleList();
-
-    // 选中租户：域名 > store 中的租户 > 首个租户
-    let tenantId: null | number = null;
-    const websiteTenant = await websiteTenantPromise;
-    if (websiteTenant?.id) {
-      tenantId = websiteTenant.id;
-    }
-    // 如果没有从域名获取到租户，尝试从 store 中获取
-    if (!tenantId && accessStore.tenantId) {
-      tenantId = accessStore.tenantId;
-    }
-    // 如果还是没有租户，使用列表中的第一个
-    if (!tenantId && tenantList.value?.[0]?.id) {
-      tenantId = tenantList.value[0].id;
-    }
-
-    // 设置选中的租户编号
-    accessStore.setTenantId(tenantId);
-    registerRef.value
-      .getFormApi()
-      .setFieldValue('tenantId', tenantId?.toString());
-  } catch (error) {
-    console.error('获取租户列表失败:', error);
-  }
+const router = useRouter();
+function handleGoLogin() {
+  router.push(loginPath.value);
 }
 
 /** 执行注册 */
@@ -75,50 +36,85 @@ async function handleRegister(values: any) {
     verifyRef.value.show();
     return;
   }
-
+  // 先清除租户标志
+  accessStore.resetTenant();
+  accessStore.$reset();
   // 无验证码，直接登录
   await authStore.authLogin('register', values);
+  handleGoLogin();
 }
 
 /** 验证码通过，执行注册 */
 const handleVerifySuccess = async ({ captchaVerification }: any) => {
   try {
+    accessStore.resetTenant();
+    accessStore.$reset();
     await authStore.authLogin('register', {
       ...(await registerRef.value.getFormApi().getValues()),
       captchaVerification,
     });
+    handleGoLogin();
   } catch (error) {
     console.error('Error in handleRegister:', error);
   }
 };
 
-/** 组件挂载时获取租户信息 */
-onMounted(() => {
-  fetchTenantList();
-});
-
 const formSchema = computed((): VbenFormSchema[] => {
   return [
     {
-      component: 'VbenSelect',
+      component: 'VbenInput',
       componentProps: {
-        options: tenantList.value.map((item) => ({
-          label: item.name,
-          value: item.id.toString(),
-        })),
-        placeholder: $t('authentication.tenantTip'),
+        placeholder: $t('authentication.tenantCodeTip'),
       },
-      fieldName: 'tenantId',
-      label: $t('authentication.tenant'),
-      rules: z.string().min(1, { message: $t('authentication.tenantTip') }),
       dependencies: {
-        triggerFields: ['tenantId'],
+        triggerFields: ['tenantCode'],
         if: tenantEnable,
-        trigger(values) {
-          if (values.tenantId) {
-            accessStore.setTenantId(Number(values.tenantId));
-          }
-        },
+      },
+      fieldName: 'tenantCode',
+      label: $t('authentication.tenant'),
+      rules: z
+        .string()
+        .min(1, { message: $t('authentication.createTenantCodeInputTip') }),
+    },
+    {
+      component: 'VbenInput',
+      componentProps: {
+        placeholder: $t('authentication.tenantNameTip'),
+      },
+      dependencies: {
+        triggerFields: ['tenantName'],
+        if: tenantEnable,
+      },
+      fieldName: 'tenantName',
+      label: $t('authentication.tenantName'),
+      rules: z
+        .string()
+        .min(1, { message: $t('authentication.createTenantNameInputTip') }),
+    },
+    {
+      fieldName: 'contactName',
+      label: $t('authentication.tenantContactName'),
+      rules: 'required',
+      dependencies: {
+        triggerFields: ['contactName'],
+        if: tenantEnable,
+      },
+      component: 'VbenInput',
+      componentProps: {
+        placeholder: $t('authentication.tenantContactNameTip'),
+      },
+    },
+    {
+      dependencies: {
+        triggerFields: ['contactMobile'],
+        if: tenantEnable,
+      },
+      fieldName: 'contactMobile',
+      label: $t('authentication.tenantContactMobileTip'),
+      component: 'VbenInput',
+      rules: 'mobileRequired',
+      componentProps: {
+        placeholder: $t('authentication.tenantContactMobile'),
       },
     },
     {

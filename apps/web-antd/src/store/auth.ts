@@ -6,6 +6,7 @@ import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 
 import { LOGIN_PATH } from '@vben/constants';
+import { isTenantEnable } from '@vben/hooks';
 import { preferences } from '@vben/preferences';
 import { resetAllStores, useAccessStore, useUserStore } from '@vben/stores';
 
@@ -14,6 +15,7 @@ import { defineStore } from 'pinia';
 
 import {
   getAuthPermissionInfoApi,
+  getTenantByCode,
   loginApi,
   logoutApi,
   register,
@@ -26,7 +28,7 @@ export const useAuthStore = defineStore('auth', () => {
   const accessStore = useAccessStore();
   const userStore = useUserStore();
   const router = useRouter();
-
+  const tenantEnable = isTenantEnable();
   const loginLoading = ref(false);
 
   /**
@@ -55,6 +57,15 @@ export const useAuthStore = defineStore('auth', () => {
               ? await socialLogin(params as AuthApi.SocialLoginParams)
               : await loginApi(params);
 
+      // 如果是注册且开启多租户
+      if (type === 'register' && tenantEnable) {
+        // 根据租户编码查询租户信息
+        const tenant = await getTenantByCode(params.tenantCode);
+        if (tenant) {
+          accessStore.setTenantId(tenant.id);
+          accessStore.setTenantCode(tenant.code);
+        }
+      }
       // 如果成功获取到 accessToken
       if (accessToken) {
         accessStore.setAccessToken(accessToken);

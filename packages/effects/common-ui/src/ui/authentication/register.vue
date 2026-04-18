@@ -88,7 +88,7 @@ defineExpose({
   <div>
     <Title>
       <slot name="title">
-        {{ title || $t('authentication.createAnAccount') }} 🚀
+        {{ title || $t('authentication.createAnTenant') }} 🚀
       </slot>
       <template #desc>
         <slot name="subTitle">
@@ -112,7 +112,7 @@ defineExpose({
       </slot>
     </VbenButton>
     <div class="mt-4 text-center text-sm">
-      {{ $t('authentication.alreadyHaveAccount') }}
+      {{ $t('authentication.alreadyHaveTenant') }}
       <span class="vben-link text-sm font-normal" @click="goToLogin()">
         {{ $t('authentication.goToLogin') }}
       </span>

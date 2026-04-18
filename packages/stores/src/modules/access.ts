@@ -119,6 +119,10 @@ export const useAccessStore = defineStore('core-access', {
       this.isLockScreen = false;
       this.lockScreenPassword = undefined;
     },
+    resetTenant() {
+      this.tenantId = null;
+      this.tenantCode = null;
+    },
     $reset() {
       this.accessCodes = [];
       this.accessMenus = [];

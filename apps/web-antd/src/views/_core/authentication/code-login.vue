@@ -61,7 +61,7 @@ async function fetchTenant() {
     accessStore.setTenantId(tenantId);
     accessStore.setTenantCode(code || '');
     tenantCode.value = code || ''; // 同步更新响应式变量
-    loginRef.value.getFormApi().setFieldValue('tenantCode', code|| '');
+    loginRef.value.getFormApi().setFieldValue('tenantCode', code || '');
     loginRef.value.getFormApi().setFieldValue('tenantId', tenantId?.toString());
   } catch (error) {
     console.error('获取租户列表失败:', error);
@@ -97,7 +97,7 @@ const formSchema = computed((): VbenFormSchema[] => {
     {
       component: 'VbenInput',
       componentProps: {
-        placeholder: $t('authentication.tenantTip'),
+        placeholder: $t('authentication.tenantCodeTip'),
       },
       dependencies: {
         triggerFields: ['tenantCode'],
@@ -112,7 +112,7 @@ const formSchema = computed((): VbenFormSchema[] => {
       label: $t('authentication.tenant'),
       rules: z
         .string()
-        .min(1, { message: $t('authentication.tenantTip') })
+        .min(1, { message: $t('authentication.tenantCodeTip') })
         .default(
           tenantCode.value !== '' ||
             import.meta.env.VITE_APP_DEFAULT_TENANT_CODE,
