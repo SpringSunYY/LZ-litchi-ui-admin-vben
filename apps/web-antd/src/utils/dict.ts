@@ -234,12 +234,13 @@ enum DICT_TYPE {
   // ========== MALL - 营销模块 ==========
   PROMOTION_DISCOUNT_TYPE = 'promotion_discount_type', // 优惠类型
   PROMOTION_PRODUCT_SCOPE = 'promotion_product_scope', // 营销的商品范围
+  SYSTEM_AREA_LEVEL = 'system_area_level', // 地区等级
   SYSTEM_DATA_SCOPE = 'system_data_scope',
+
   SYSTEM_LOGIN_RESULT = 'system_login_result',
-
   SYSTEM_LOGIN_TYPE = 'system_login_type',
-  SYSTEM_MAIL_SEND_STATUS = 'system_mail_send_status',
 
+  SYSTEM_MAIL_SEND_STATUS = 'system_mail_send_status',
   SYSTEM_MENU_TYPE = 'system_menu_type',
   SYSTEM_NOTICE_TYPE = 'system_notice_type',
   SYSTEM_NOTIFY_TEMPLATE_TYPE = 'system_notify_template_type',
@@ -248,8 +249,8 @@ enum DICT_TYPE {
   SYSTEM_SMS_CHANNEL_CODE = 'system_sms_channel_code',
   SYSTEM_SMS_RECEIVE_STATUS = 'system_sms_receive_status',
   SYSTEM_SMS_SEND_STATUS = 'system_sms_send_status',
-  SYSTEM_SMS_TEMPLATE_TYPE = 'system_sms_template_type',
 
+  SYSTEM_SMS_TEMPLATE_TYPE = 'system_sms_template_type',
   SYSTEM_SOCIAL_TYPE = 'system_social_type',
   SYSTEM_TENANT_INDUSTRY = 'system_tenant_industry', // 租户行业
   SYSTEM_TENANT_PACKAGE_PUBLISHED = 'system_tenant_package_published', // 租户套餐发布状态

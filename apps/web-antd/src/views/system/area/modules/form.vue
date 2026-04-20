@@ -1,15 +1,27 @@
 <script lang="ts" setup>
-import { useVbenModal } from '@vben/common-ui';
+import type { AreaApi } from '#/api/system/area';
+
+import { computed, ref } from 'vue';
+
+import { useVbenModelDrawer } from '@vben/common-ui';
 
 import { message } from 'ant-design-vue';
 
 import { useVbenForm } from '#/adapter/form';
-import { getAreaByIp } from '#/api/system/area';
+import { createArea, getArea, updateArea } from '#/api/system/area';
 import { $t } from '#/locales';
 
 import { useFormSchema } from '../data';
 
-const [Form, { setFieldValue, validate, getValues }] = useVbenForm({
+const emit = defineEmits(['success']);
+const formData = ref<AreaApi.Area>();
+const getTitle = computed(() => {
+  return formData.value?.id
+    ? $t('ui.actionTitle.edit', ['地区信息'])
+    : $t('ui.actionTitle.create', ['地区信息']);
+});
+
+const [Form, formApi] = useVbenForm({
   commonConfig: {
     componentProps: {
       class: 'w-full',
@@ -22,29 +34,52 @@ const [Form, { setFieldValue, validate, getValues }] = useVbenForm({
   showDefaultActions: false,
 });
 
-const [Modal, modalApi] = useVbenModal({
+const [Modal, modalApi] = useVbenModelDrawer({
   async onConfirm() {
-    const { valid } = await validate();
+    const { valid } = await formApi.validate();
     if (!valid) {
       return;
     }
     modalApi.lock();
     // 提交表单
-    const data = await getValues();
+    const data = (await formApi.getValues()) as AreaApi.Area;
     try {
-      const result = await getAreaByIp(data.ip);
-      // 设置结果
-      await setFieldValue('result', result);
+      await (formData.value?.id ? updateArea(data) : createArea(data));
+      // 关闭并提示
+      await modalApi.close();
+      emit('success');
       message.success($t('ui.actionMessage.operationSuccess'));
     } finally {
       modalApi.unlock();
     }
   },
+  async onOpenChange(isOpen: boolean) {
+    if (!isOpen) {
+      formData.value = undefined;
+      return;
+    }
+    // 加载数据
+    let data = modalApi.getData<AreaApi.Area>();
+    if (!data) {
+      return;
+    }
+    if (data.id) {
+      modalApi.lock();
+      try {
+        data = await getArea(data.id);
+      } finally {
+        modalApi.unlock();
+      }
+    }
+    // 设置到 values
+    formData.value = data;
+    await formApi.setValues(formData.value);
+  },
 });
 </script>
 
 <template>
-  <Modal title="IP 查询">
+  <Modal :title="getTitle">
     <Form class="mx-4" />
   </Modal>
 </template>
