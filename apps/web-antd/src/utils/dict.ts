@@ -205,18 +205,7 @@ enum DICT_TYPE {
   INFRA_JOB_STATUS = 'infra_job_status',
 
   INFRA_OPERATE_TYPE = 'infra_operate_type',
-  IOT_DATA_FORMAT = 'iot_data_format', // IOT 数据格式
-  IOT_DATA_TYPE = 'iot_data_type', // IOT 数据类型
-  IOT_DEVICE_STATUS = 'iot_device_status', // IOT 设备状态
-  // ========== IOT - 物联网模块  ==========
-  IOT_NET_TYPE = 'iot_net_type', // IOT 联网方式
-  IOT_PRODUCT_DEVICE_TYPE = 'iot_product_device_type', // IOT 产品设备类型
-  IOT_PRODUCT_FUNCTION_TYPE = 'iot_product_function_type', // IOT 产品功能类型
-  IOT_PRODUCT_STATUS = 'iot_product_status', // IOT 产品状态
-  IOT_PROTOCOL_TYPE = 'iot_protocol_type', // IOT 接入网关协议
-  IOT_RW_TYPE = 'iot_rw_type', // IOT 读写类型
-  IOT_UNIT_TYPE = 'iot_unit_type', // IOT 单位类型
-  IOT_VALIDATE_TYPE = 'iot_validate_type', // IOT 数据校验级别
+
   MEMBER_EXPERIENCE_BIZ_TYPE = 'member_experience_biz_type', // 会员经验业务类型
   // ========== Member 会员模块 ==========
   MEMBER_POINT_BIZ_TYPE = 'member_point_biz_type', // 积分的业务类型
