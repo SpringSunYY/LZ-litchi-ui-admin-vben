@@ -23,11 +23,11 @@ const [FormModal, formModalApi] = useVbenModelDrawer({
 });
 
 /** 切换树形展开/收缩状态 */
-const isExpanded = ref(true);
+const isExpanded = ref(false);
 
 function toggleExpand() {
   isExpanded.value = !isExpanded.value;
-  gridApi.grid.setAllTreeExpand(isExpanded.value);
+  gridApi.grid?.setAllTreeExpand(isExpanded.value);
 }
 
 /** 刷新表格 */
@@ -74,6 +74,13 @@ async function handleExport() {
   downloadFileFromBlobPart({ fileName: '地区信息.xls', source: data });
 }
 
+/** 查看 GeoJson 详情 */
+function handleViewURL(url: string) {
+  if (url) {
+    window.open(url, '_blank');
+  }
+}
+
 const [Grid, gridApi] = useVbenVxeGrid({
   formOptions: {
     schema: useGridFormSchema(),
@@ -109,13 +116,6 @@ const [Grid, gridApi] = useVbenVxeGrid({
   } as VxeTableGridOptions<AreaApi.Area>,
   gridEvents: {},
 });
-
-/** 查看GeoJson详情 */
-function handleViewURL(url: string) {
-  if (url) {
-    window.open(url, '_blank');
-  }
-}
 </script>
 
 <template>

@@ -9,7 +9,7 @@ let pinia: Pinia;
 
 export interface InitStoreOptions {
   /**
-   * @zh_CN åºç¨å,ç±äº @vben/stores æ¯å¬ç¨çï¼åç»­å¯è½æå¤ä¸ªappï¼ä¸ºäºé²æ­¢å¤ä¸ªappç¼å­å²çªï¼å¯å¨è¿ééç½®åºç¨å,åºç¨åå°è¢«ç¨äºæä¹åçåç¼
+   * @zh_CN
    */
   namespace: string;
 }

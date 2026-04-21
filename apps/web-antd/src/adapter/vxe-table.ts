@@ -18,9 +18,9 @@ import {
 } from '@vben/utils';
 
 import { Button, Image, Popconfirm, Switch } from 'ant-design-vue';
-import CellImage from '#/components/image/cell-image.vue';
 
 import { DictTag } from '#/components/dict-tag';
+import CellImage from '#/components/image/cell-image.vue';
 import { $t } from '#/locales';
 
 import { useVbenForm } from './form';
@@ -70,6 +70,18 @@ setupVbenVxeTable({
         round: true,
         showOverflow: true,
         size: 'small',
+        /** 全局开启 Y 轴虚拟滚动 - 解决树形表格展开大量节点时的性能问题
+         *  当数据行数超过 gt 配置值时自动启用虚拟滚动
+         *  gt: 50 表示超过 50 行时启用
+         *  cacheSize: 50 滚动缓存行数
+         *  oSize: 20 渲染 overscan 行数，减少滚动时的白屏
+         */
+        scrollY: {
+          enabled: true,
+          gt: 200,
+          cacheSize: 200,
+          oSize: 20,
+        },
       } as VxeTableGridOptions,
     });
 
