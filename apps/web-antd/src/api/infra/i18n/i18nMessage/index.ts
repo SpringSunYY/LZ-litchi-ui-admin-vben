@@ -9,7 +9,7 @@ export namespace I18nMessageApi {
     messageName?: string; // 名称
     messageKey?: string; // 键
     locale?: string; // 简称
-    target?: number; // 使用端
+    localeTarget?: number; // 使用端
     isSystem?: number; // 是否内置
     moduleType?: number; // 模块
     useType?: number; // 使用类型

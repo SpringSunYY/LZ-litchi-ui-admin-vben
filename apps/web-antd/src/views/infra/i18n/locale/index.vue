@@ -1,24 +1,24 @@
 <script lang="ts" setup>
-import type {VxeTableGridOptions} from '#/adapter/vxe-table';
-import type {I18nMessageApi} from '#/api/infra/i18nMessage';
+import type { VxeTableGridOptions } from '#/adapter/vxe-table';
+import type { I18nLocaleApi } from '#/api/infra/i18n/i18nLocale';
 
-import {ref} from 'vue';
+import { ref } from 'vue';
 
-import {Page, useVbenModal} from '@vben/common-ui';
-import {downloadFileFromBlobPart, isEmpty} from '@vben/utils';
+import { Page, useVbenModal } from '@vben/common-ui';
+import { downloadFileFromBlobPart, isEmpty } from '@vben/utils';
 
-import {message} from 'ant-design-vue';
+import { message } from 'ant-design-vue';
 
-import {ACTION_ICON, TableAction, useVbenVxeGrid} from '#/adapter/vxe-table';
+import { ACTION_ICON, TableAction, useVbenVxeGrid } from '#/adapter/vxe-table';
 import {
-  deleteI18nMessage,
-  deleteI18nMessageList,
-  exportI18nMessage,
-  getI18nMessagePage,
-} from '#/api/infra/i18nMessage';
-import {$t} from '#/locales';
+  deleteI18nLocale,
+  deleteI18nLocaleList,
+  exportI18nLocale,
+  getI18nLocalePage,
+} from '#/api/infra/i18n/i18nLocale';
+import { $t } from '#/locales';
 
-import {useGridColumns, useGridFormSchema} from './data';
+import { useGridColumns, useGridFormSchema } from './data';
 import Form from './modules/form.vue';
 
 const [FormModal, formModalApi] = useVbenModal({
@@ -31,24 +31,24 @@ function onRefresh() {
   gridApi.query();
 }
 
-/** 创建国际化信息 */
+/** 创建国际化国家 */
 function handleCreate() {
   formModalApi.setData({}).open();
 }
 
-/** 编辑国际化信息 */
-function handleEdit(row: I18nMessageApi.I18nMessage) {
+/** 编辑国际化国家 */
+function handleEdit(row: I18nLocaleApi.I18nLocale) {
   formModalApi.setData(row).open();
 }
 
-/** 删除国际化信息 */
-async function handleDelete(row: I18nMessageApi.I18nMessage) {
+/** 删除国际化国家 */
+async function handleDelete(row: I18nLocaleApi.I18nLocale) {
   const hideLoading = message.loading({
     content: $t('ui.actionMessage.deleting', [row.id]),
     key: 'action_key_msg',
   });
   try {
-    await deleteI18nMessage(row.id as number);
+    await deleteI18nLocale(row.id as number);
     message.success({
       content: $t('ui.actionMessage.deleteSuccess', [row.id]),
       key: 'action_key_msg',
@@ -59,14 +59,14 @@ async function handleDelete(row: I18nMessageApi.I18nMessage) {
   }
 }
 
-/** 批量删除国际化信息 */
+/** 批量删除国际化国家 */
 async function handleDeleteBatch() {
   const hideLoading = message.loading({
     content: $t('ui.actionMessage.deleting'),
     key: 'action_key_msg',
   });
   try {
-    await deleteI18nMessageList(checkedIds.value);
+    await deleteI18nLocaleList(checkedIds.value);
     message.success({
       content: $t('ui.actionMessage.deleteSuccess'),
       key: 'action_key_msg',
@@ -78,19 +78,18 @@ async function handleDeleteBatch() {
 }
 
 const checkedIds = ref<number[]>([]);
-
 function handleRowCheckboxChange({
-                                   records,
-                                 }: {
-  records: I18nMessageApi.I18nMessage[];
+  records,
+}: {
+  records: I18nLocaleApi.I18nLocale[];
 }) {
   checkedIds.value = records.map((item) => item.id);
 }
 
 /** 导出表格 */
 async function handleExport() {
-  const data = await exportI18nMessage(await gridApi.formApi.getValues());
-  downloadFileFromBlobPart({fileName: '国际化信息.xls', source: data});
+  const data = await exportI18nLocale(await gridApi.formApi.getValues());
+  downloadFileFromBlobPart({ fileName: '国际化国家.xls', source: data });
 }
 
 const [Grid, gridApi] = useVbenVxeGrid({
@@ -105,8 +104,8 @@ const [Grid, gridApi] = useVbenVxeGrid({
     },
     proxyConfig: {
       ajax: {
-        query: async ({page}, formValues) => {
-          return await getI18nMessagePage({
+        query: async ({ page }, formValues) => {
+          return await getI18nLocalePage({
             pageNo: page.currentPage,
             pageSize: page.pageSize,
             ...formValues,
@@ -119,10 +118,10 @@ const [Grid, gridApi] = useVbenVxeGrid({
       isHover: true,
     },
     toolbarConfig: {
-      refresh: {code: 'query'},
+      refresh: { code: 'query' },
       search: true,
     },
-  } as VxeTableGridOptions<I18nMessageApi.I18nMessage>,
+  } as VxeTableGridOptions<I18nLocaleApi.I18nLocale>,
   gridEvents: {
     checkboxAll: handleRowCheckboxChange,
     checkboxChange: handleRowCheckboxChange,
@@ -132,24 +131,24 @@ const [Grid, gridApi] = useVbenVxeGrid({
 
 <template>
   <Page auto-content-height>
-    <FormModal @success="onRefresh"/>
+    <FormModal @success="onRefresh" />
 
-    <Grid table-title="国际化信息列表">
+    <Grid table-title="国际化国家列表">
       <template #toolbar-tools>
         <TableAction
           :actions="[
             {
-              label: $t('ui.actionTitle.create', ['国际化信息']),
+              label: $t('ui.actionTitle.create', ['国际化国家']),
               type: 'primary',
               icon: ACTION_ICON.ADD,
-              auth: ['infra:i18n-key:create'],
+              auth: ['infra:locale:create'],
               onClick: handleCreate,
             },
             {
               label: $t('ui.actionTitle.export'),
               type: 'primary',
               icon: ACTION_ICON.DOWNLOAD,
-              auth: ['infra:i18n-key:export'],
+              auth: ['infra:locale:export'],
               onClick: handleExport,
             },
             {
@@ -158,7 +157,7 @@ const [Grid, gridApi] = useVbenVxeGrid({
               danger: true,
               icon: ACTION_ICON.DELETE,
               disabled: isEmpty(checkedIds),
-              auth: ['infra:i18n-key:delete'],
+              auth: ['infra:locale:delete'],
               onClick: handleDeleteBatch,
             },
           ]"
@@ -171,7 +170,7 @@ const [Grid, gridApi] = useVbenVxeGrid({
               label: $t('common.edit'),
               type: 'link',
               icon: ACTION_ICON.EDIT,
-              auth: ['infra:i18n-key:update'],
+              auth: ['infra:locale:update'],
               onClick: handleEdit.bind(null, row),
             },
             {
@@ -179,7 +178,7 @@ const [Grid, gridApi] = useVbenVxeGrid({
               type: 'link',
               danger: true,
               icon: ACTION_ICON.DELETE,
-              auth: ['infra:i18n-key:delete'],
+              auth: ['infra:locale:delete'],
               popConfirm: {
                 title: $t('ui.actionMessage.deleteConfirm', [row.id]),
                 confirm: handleDelete.bind(null, row),

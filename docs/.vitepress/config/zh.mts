@@ -182,7 +182,7 @@ function sidebarComponents(): DefaultTheme.SidebarItem[] {
         },
         {
           link: 'common-ui/vben-form',
-          text: 'Form 表单',
+          text: 'KeyForm 表单',
         },
         {
           link: 'common-ui/vben-vxe-table',

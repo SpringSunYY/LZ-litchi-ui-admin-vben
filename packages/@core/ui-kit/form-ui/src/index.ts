@@ -8,5 +8,5 @@ export type {
 } from './types';
 
 export * from './use-vben-form';
-// export { default as VbenForm } from './vben-form.vue';
+// export { default as VbenForm } from './vben-key-message-form.vue';
 export * as z from 'zod';

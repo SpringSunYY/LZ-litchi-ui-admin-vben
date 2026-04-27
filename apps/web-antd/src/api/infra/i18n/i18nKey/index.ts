@@ -8,7 +8,7 @@ export namespace I18nKeyApi {
     id: number; // 编号
     messageName?: string; // 名称
     messageKey?: string; // 键
-    target?: number; // 使用端
+    localeTarget?: number; // 使用端
     isSystem?: number; // 是否内置
     moduleType?: number; // 模块
     useType?: number; // 使用类型

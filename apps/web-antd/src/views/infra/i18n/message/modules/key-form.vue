@@ -1,24 +1,29 @@
 <script lang="ts" setup>
-import type { I18nMessageApi } from '#/api/infra/i18nMessage';
-
-import { useVbenModal } from '@vben/common-ui';
-import { message, Tabs, Checkbox, Input, Textarea, Select,RadioGroup,CheckboxGroup, DatePicker } from 'ant-design-vue';
+import type { I18nKeyApi } from '#/api/infra/i18n/i18nKey';
 
 import { computed, ref } from 'vue';
-import { $t } from '#/locales';
-import { useVbenForm } from '#/adapter/form';
-import { getI18nMessage, createI18nMessage, updateI18nMessage } from '#/api/infra/i18nMessage';
 
-import { useFormSchema } from '../data';
+import { useVbenModal } from '@vben/common-ui';
+
+import { message } from 'ant-design-vue';
+
+import { useVbenForm } from '#/adapter/form';
+import {
+  createI18nKey,
+  getI18nKey,
+  updateI18nKey,
+} from '#/api/infra/i18n/i18nKey';
+import { $t } from '#/locales';
+
+import { useKeyFormSchema } from '../data';
 
 const emit = defineEmits(['success']);
-const formData = ref<I18nMessageApi.I18nMessage>();
+const formData = ref<I18nKeyApi.I18nKey>();
 const getTitle = computed(() => {
   return formData.value?.id
-    ? $t('ui.actionTitle.edit', ['国际化信息'])
-    : $t('ui.actionTitle.create', ['国际化信息']);
+    ? $t('ui.actionTitle.edit', ['国际化键名'])
+    : $t('ui.actionTitle.create', ['国际化键名']);
 });
-
 
 const [Form, formApi] = useVbenForm({
   commonConfig: {
@@ -26,11 +31,11 @@ const [Form, formApi] = useVbenForm({
       class: 'w-full',
     },
     formItemClass: 'col-span-2',
-    labelWidth: 80
+    labelWidth: 80,
   },
   layout: 'horizontal',
-  schema: useFormSchema(),
-  showDefaultActions: false
+  schema: useKeyFormSchema(),
+  showDefaultActions: false,
 });
 
 const [Modal, modalApi] = useVbenModal({
@@ -39,15 +44,15 @@ const [Modal, modalApi] = useVbenModal({
     if (!valid) {
       return;
     }
-        modalApi.lock();
+    modalApi.lock();
     // 提交表单
-    const data = (await formApi.getValues()) as I18nMessageApi.I18nMessage;
-        try {
-      await (formData.value?.id ? updateI18nMessage(data) : createI18nMessage(data));
+    const data = (await formApi.getValues()) as I18nKeyApi.I18nKey;
+    try {
+      await (formData.value?.id ? updateI18nKey(data) : createI18nKey(data));
       // 关闭并提示
       await modalApi.close();
       emit('success');
-      message.success( $t('ui.actionMessage.operationSuccess') );
+      message.success($t('ui.actionMessage.operationSuccess'));
     } finally {
       modalApi.unlock();
     }
@@ -58,14 +63,14 @@ const [Modal, modalApi] = useVbenModal({
       return;
     }
     // 加载数据
-    let data = modalApi.getData<I18nMessageApi.I18nMessage>();
+    let data = modalApi.getData<I18nKeyApi.I18nKey>();
     if (!data) {
       return;
     }
     if (data.id) {
       modalApi.lock();
       try {
-        data = await getI18nMessage(data.id);
+        data = await getI18nKey(data.id);
       } finally {
         modalApi.unlock();
       }
@@ -73,12 +78,12 @@ const [Modal, modalApi] = useVbenModal({
     // 设置到 values
     formData.value = data;
     await formApi.setValues(formData.value);
-  }
+  },
 });
 </script>
 
 <template>
   <Modal :title="getTitle">
     <Form class="mx-4" />
-      </Modal>
+  </Modal>
 </template>

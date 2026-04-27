@@ -263,7 +263,7 @@ export class FormApi {
   }
 
   /**
-   * 设置表单提交按钮的加载状态：用于非 Modal 中使用 Form 时，需要 Form 自己控制 loading 状态
+   * 设置表单提交按钮的加载状态：用于非 Modal 中使用 KeyForm 时，需要 KeyForm 自己控制 loading 状态
    * @author 荔枝源码
    * @param loading 是否加载中
    */
