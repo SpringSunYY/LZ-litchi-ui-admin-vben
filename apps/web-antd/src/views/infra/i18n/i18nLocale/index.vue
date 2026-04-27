@@ -1,26 +1,30 @@
 <script lang="ts" setup>
 import type { VxeTableGridOptions } from '#/adapter/vxe-table';
-import type { I18nLocaleApi } from '#/api/infra/i18nLocale';
+import type { I18nLocaleApi } from '#/api/infra/i18n/i18nLocale';
+
+import { ref } from 'vue';
 
 import { Page, useVbenModal } from '@vben/common-ui';
-import { message,Tabs } from 'ant-design-vue';
-import Form from './modules/form.vue';
-
-
-import { ref, computed } from 'vue';
-import { $t } from '#/locales';
-import { ACTION_ICON, TableAction, useVbenVxeGrid } from '#/adapter/vxe-table';
-import { getI18nLocalePage, deleteI18nLocale, deleteI18nLocaleList, exportI18nLocale } from '#/api/infra/i18nLocale';
 import { downloadFileFromBlobPart, isEmpty } from '@vben/utils';
 
-import { useGridColumns, useGridFormSchema } from './data';
+import { message } from 'ant-design-vue';
 
+import { ACTION_ICON, TableAction, useVbenVxeGrid } from '#/adapter/vxe-table';
+import {
+  deleteI18nLocale,
+  deleteI18nLocaleList,
+  exportI18nLocale,
+  getI18nLocalePage,
+} from '#/api/infra/i18n/i18nLocale';
+import { $t } from '#/locales';
+
+import { useGridColumns, useGridFormSchema } from './data';
+import Form from './modules/form.vue';
 
 const [FormModal, formModalApi] = useVbenModal({
   connectedComponent: Form,
-  destroyOnClose: true
+  destroyOnClose: true,
 });
-
 
 /** 刷新表格 */
 function onRefresh() {
@@ -37,12 +41,11 @@ function handleEdit(row: I18nLocaleApi.I18nLocale) {
   formModalApi.setData(row).open();
 }
 
-
 /** 删除国际化国家 */
 async function handleDelete(row: I18nLocaleApi.I18nLocale) {
   const hideLoading = message.loading({
     content: $t('ui.actionMessage.deleting', [row.id]),
-    key: 'action_key_msg'
+    key: 'action_key_msg',
   });
   try {
     await deleteI18nLocale(row.id as number);
@@ -60,7 +63,7 @@ async function handleDelete(row: I18nLocaleApi.I18nLocale) {
 async function handleDeleteBatch() {
   const hideLoading = message.loading({
     content: $t('ui.actionMessage.deleting'),
-    key: 'action_key_msg'
+    key: 'action_key_msg',
   });
   try {
     await deleteI18nLocaleList(checkedIds.value);
@@ -74,9 +77,9 @@ async function handleDeleteBatch() {
   }
 }
 
-const checkedIds = ref<number[]>([])
+const checkedIds = ref<number[]>([]);
 function handleRowCheckboxChange({
-  records
+  records,
 }: {
   records: I18nLocaleApi.I18nLocale[];
 }) {
@@ -91,7 +94,7 @@ async function handleExport() {
 
 const [Grid, gridApi] = useVbenVxeGrid({
   formOptions: {
-    schema: useGridFormSchema()
+    schema: useGridFormSchema(),
   },
   gridOptions: {
     columns: useGridColumns(),
@@ -117,12 +120,12 @@ const [Grid, gridApi] = useVbenVxeGrid({
     toolbarConfig: {
       refresh: { code: 'query' },
       search: true,
-    }
+    },
   } as VxeTableGridOptions<I18nLocaleApi.I18nLocale>,
-  gridEvents:{
-      checkboxAll: handleRowCheckboxChange,
-      checkboxChange: handleRowCheckboxChange
-  }
+  gridEvents: {
+    checkboxAll: handleRowCheckboxChange,
+    checkboxChange: handleRowCheckboxChange,
+  },
 });
 </script>
 
@@ -138,14 +141,14 @@ const [Grid, gridApi] = useVbenVxeGrid({
               label: $t('ui.actionTitle.create', ['国际化国家']),
               type: 'primary',
               icon: ACTION_ICON.ADD,
-              auth: ['infra:I18n-locale:create'],
+              auth: ['infra:i18n-locale:create'],
               onClick: handleCreate,
             },
             {
               label: $t('ui.actionTitle.export'),
               type: 'primary',
               icon: ACTION_ICON.DOWNLOAD,
-              auth: ['infra:I18n-locale:export'],
+              auth: ['infra:i18n-locale:export'],
               onClick: handleExport,
             },
             {
@@ -154,7 +157,7 @@ const [Grid, gridApi] = useVbenVxeGrid({
               danger: true,
               icon: ACTION_ICON.DELETE,
               disabled: isEmpty(checkedIds),
-              auth: ['infra:I18n-locale:delete'],
+              auth: ['infra:i18n-locale:delete'],
               onClick: handleDeleteBatch,
             },
           ]"
@@ -167,7 +170,7 @@ const [Grid, gridApi] = useVbenVxeGrid({
               label: $t('common.edit'),
               type: 'link',
               icon: ACTION_ICON.EDIT,
-              auth: ['infra:I18n-locale:update'],
+              auth: ['infra:i18n-locale:update'],
               onClick: handleEdit.bind(null, row),
             },
             {
@@ -175,7 +178,7 @@ const [Grid, gridApi] = useVbenVxeGrid({
               type: 'link',
               danger: true,
               icon: ACTION_ICON.DELETE,
-              auth: ['infra:I18n-locale:delete'],
+              auth: ['infra:i18n-locale:delete'],
               popConfirm: {
                 title: $t('ui.actionMessage.deleteConfirm', [row.id]),
                 confirm: handleDelete.bind(null, row),
@@ -185,6 +188,5 @@ const [Grid, gridApi] = useVbenVxeGrid({
         />
       </template>
     </Grid>
-
   </Page>
 </template>

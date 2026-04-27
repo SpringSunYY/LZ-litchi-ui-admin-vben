@@ -200,10 +200,12 @@ enum DICT_TYPE {
   INFRA_CONFIG_TYPE = 'infra_config_type',
   INFRA_FILE_STORAGE = 'infra_file_storage',
 
+  INFRA_I18N_KEY_IS_SYSTEM = 'infra_i18n_key_is_system', // 是否内置
+  INFRA_I18N_KEY_MODULE_TYPE = 'infra_i18n_key_module_type', // 模块类型
+  INFRA_I18N_KEY_USE_TYPE = 'infra_i18n_key_use_type', // 使用类型
   INFRA_I18N_LOCALE_IS_DEFAULT = 'infra_i18n_locale_is_default', // 国际化国家信息是否默认
   INFRA_I18N_LOCALE_STATUS = 'infra_i18n_locale_status', // 国际化国家信息状态
-
-  INFRA_I18N_LOCALE_TYPE = 'infra_i18n_locale_type', // 国际化国家信息类型
+  INFRA_I18N_LOCALE_TARGET = 'infra_i18n_locale_target', // 国际化键端
   INFRA_JOB_LOG_STATUS = 'infra_job_log_status',
 
   INFRA_JOB_STATUS = 'infra_job_status',

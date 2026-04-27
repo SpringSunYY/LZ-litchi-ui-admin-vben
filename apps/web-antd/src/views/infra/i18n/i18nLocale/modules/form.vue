@@ -1,13 +1,19 @@
 <script lang="ts" setup>
 import type { I18nLocaleApi } from '#/api/infra/i18nLocale';
 
-import { useVbenModal } from '@vben/common-ui';
-import { message, Tabs, Checkbox, Input, Textarea, Select,RadioGroup,CheckboxGroup, DatePicker } from 'ant-design-vue';
-
 import { computed, ref } from 'vue';
-import { $t } from '#/locales';
+
+import { useVbenModal } from '@vben/common-ui';
+
+import { message } from 'ant-design-vue';
+
 import { useVbenForm } from '#/adapter/form';
-import { getI18nLocale, createI18nLocale, updateI18nLocale } from '#/api/infra/i18nLocale';
+import {
+  createI18nLocale,
+  getI18nLocale,
+  updateI18nLocale,
+} from '#/api/infra/i18n/i18nLocale';
+import { $t } from '#/locales';
 
 import { useFormSchema } from '../data';
 
@@ -19,18 +25,17 @@ const getTitle = computed(() => {
     : $t('ui.actionTitle.create', ['国际化国家']);
 });
 
-
 const [Form, formApi] = useVbenForm({
   commonConfig: {
     componentProps: {
       class: 'w-full',
     },
     formItemClass: 'col-span-2',
-    labelWidth: 80
+    labelWidth: 80,
   },
   layout: 'horizontal',
   schema: useFormSchema(),
-  showDefaultActions: false
+  showDefaultActions: false,
 });
 
 const [Modal, modalApi] = useVbenModal({
@@ -39,15 +44,17 @@ const [Modal, modalApi] = useVbenModal({
     if (!valid) {
       return;
     }
-        modalApi.lock();
+    modalApi.lock();
     // 提交表单
     const data = (await formApi.getValues()) as I18nLocaleApi.I18nLocale;
-        try {
-      await (formData.value?.id ? updateI18nLocale(data) : createI18nLocale(data));
+    try {
+      await (formData.value?.id
+        ? updateI18nLocale(data)
+        : createI18nLocale(data));
       // 关闭并提示
       await modalApi.close();
       emit('success');
-      message.success( $t('ui.actionMessage.operationSuccess') );
+      message.success($t('ui.actionMessage.operationSuccess'));
     } finally {
       modalApi.unlock();
     }
@@ -73,12 +80,12 @@ const [Modal, modalApi] = useVbenModal({
     // 设置到 values
     formData.value = data;
     await formApi.setValues(formData.value);
-  }
+  },
 });
 </script>
 
 <template>
   <Modal :title="getTitle">
     <Form class="mx-4" />
-      </Modal>
+  </Modal>
 </template>
