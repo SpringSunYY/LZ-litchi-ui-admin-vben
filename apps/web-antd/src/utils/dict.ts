@@ -190,16 +190,20 @@ enum DICT_TYPE {
   ERP_STOCK_RECORD_BIZ_TYPE = 'erp_stock_record_biz_type', // 库存明细的业务类型
   // ========== MALL - 交易模块 ==========
   EXPRESS_CHARGE_MODE = 'trade_delivery_express_charge_mode', // 快递的计费方式
-  INFRA_API_ERROR_LOG_PROCESS_STATUS = 'infra_api_error_log_process_status',
+
   // ========== INFRA 模块 ==========
+  INFRA_API_ERROR_LOG_PROCESS_STATUS = 'infra_api_error_log_process_status',
   INFRA_BOOLEAN_STRING = 'infra_boolean_string',
   INFRA_CODEGEN_FRONT_TYPE = 'infra_codegen_front_type',
   INFRA_CODEGEN_SCENE = 'infra_codegen_scene',
-
   INFRA_CODEGEN_TEMPLATE_TYPE = 'infra_codegen_template_type',
   INFRA_CONFIG_TYPE = 'infra_config_type',
-
   INFRA_FILE_STORAGE = 'infra_file_storage',
+
+  INFRA_I18N_LOCALE_IS_DEFAULT = 'infra_i18n_locale_is_default', // 国际化国家信息是否默认
+  INFRA_I18N_LOCALE_STATUS = 'infra_i18n_locale_status', // 国际化国家信息状态
+
+  INFRA_I18N_LOCALE_TYPE = 'infra_i18n_locale_type', // 国际化国家信息类型
   INFRA_JOB_LOG_STATUS = 'infra_job_log_status',
 
   INFRA_JOB_STATUS = 'infra_job_status',
