@@ -1,8 +1,8 @@
-import type { VbenFormSchema } from '#/adapter/form';
-import type { VxeTableGridOptions } from '#/adapter/vxe-table';
-import type { I18nLocaleApi } from '#/api/infra/i18nLocale';
+import type {VbenFormSchema} from '#/adapter/form';
+import type {VxeTableGridOptions} from '#/adapter/vxe-table';
+import type {I18nLocaleApi} from '#/api/infra/i18nLocale';
 
-import { DICT_TYPE, getDictOptions, getRangePickerDefaultProps } from '#/utils';
+import {DICT_TYPE, getDictOptions, getRangePickerDefaultProps} from '#/utils';
 
 /** 新增/修改的表单 */
 export function useFormSchema(): VbenFormSchema[] {
@@ -36,9 +36,10 @@ export function useFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'orderNum',
       label: '显示顺序',
-      component: 'Input',
+      component: 'InputNumber',
       componentProps: {
         placeholder: '请输入显示顺序',
+        min: 0,
       },
     },
     {
@@ -55,6 +56,7 @@ export function useFormSchema(): VbenFormSchema[] {
       fieldName: 'localeType',
       label: '类型',
       rules: 'required',
+      help: '展示的区域，例如通用所有端都展示，后台只是后台展示',
       component: 'Select',
       componentProps: {
         options: getDictOptions(DICT_TYPE.INFRA_I18N_LOCALE_TYPE, 'number'),
@@ -64,6 +66,7 @@ export function useFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'isDefault',
       label: '默认',
+      help: '是否是默认语言，每个类型只允许一个默认',
       rules: 'required',
       component: 'Select',
       componentProps: {
@@ -154,7 +157,7 @@ export function useGridFormSchema(): VbenFormSchema[] {
 /** 列表的字段 */
 export function useGridColumns(): VxeTableGridOptions<I18nLocaleApi.I18nLocale>['columns'] {
   return [
-    { type: 'checkbox', width: 40 },
+    {type: 'checkbox', width: 40},
     {
       field: 'id',
       title: '编号',
@@ -181,7 +184,7 @@ export function useGridColumns(): VxeTableGridOptions<I18nLocaleApi.I18nLocale>[
       minWidth: 120,
       cellRender: {
         name: 'CellDict',
-        props: { type: DICT_TYPE.INFRA_I18N_LOCALE_STATUS },
+        props: {type: DICT_TYPE.INFRA_I18N_LOCALE_STATUS},
       },
     },
     {
@@ -190,7 +193,7 @@ export function useGridColumns(): VxeTableGridOptions<I18nLocaleApi.I18nLocale>[
       minWidth: 120,
       cellRender: {
         name: 'CellDict',
-        props: { type: DICT_TYPE.INFRA_I18N_LOCALE_TYPE },
+        props: {type: DICT_TYPE.INFRA_I18N_LOCALE_TYPE},
       },
     },
     {
@@ -199,7 +202,7 @@ export function useGridColumns(): VxeTableGridOptions<I18nLocaleApi.I18nLocale>[
       minWidth: 120,
       cellRender: {
         name: 'CellDict',
-        props: { type: DICT_TYPE.INFRA_I18N_LOCALE_IS_DEFAULT },
+        props: {type: DICT_TYPE.INFRA_I18N_LOCALE_IS_DEFAULT},
       },
     },
     {
@@ -217,7 +220,7 @@ export function useGridColumns(): VxeTableGridOptions<I18nLocaleApi.I18nLocale>[
       title: '操作',
       width: 200,
       fixed: 'right',
-      slots: { default: 'actions' },
+      slots: {default: 'actions'},
     },
   ];
 }

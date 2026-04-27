@@ -146,14 +146,14 @@ const [Grid, gridApi] = useVbenVxeGrid({
               label: $t('ui.actionTitle.create', ['租户套餐订阅']),
               type: 'primary',
               icon: ACTION_ICON.ADD,
-              auth: ['system:tenantPackage-subscribe:create'],
+              auth: ['system:tenantPackageSubscribe:create'],
               onClick: handleCreate,
             },
             {
               label: $t('ui.actionTitle.export'),
               type: 'primary',
               icon: ACTION_ICON.DOWNLOAD,
-              auth: ['system:tenantPackage-subscribe:export'],
+              auth: ['system:tenantPackageSubscribe:export'],
               onClick: handleExport,
             },
             {
@@ -162,7 +162,7 @@ const [Grid, gridApi] = useVbenVxeGrid({
               danger: true,
               icon: ACTION_ICON.DELETE,
               disabled: isEmpty(checkedIds),
-              auth: ['system:tenantPackage-subscribe:delete'],
+              auth: ['system:tenantPackageSubscribe:delete'],
               onClick: handleDeleteBatch,
             },
           ]"
@@ -175,7 +175,7 @@ const [Grid, gridApi] = useVbenVxeGrid({
               label: $t('common.edit'),
               type: 'link',
               icon: ACTION_ICON.EDIT,
-              auth: ['system:tenantPackage-subscribe:update'],
+              auth: ['system:tenantPackageSubscribe:update'],
               onClick: handleEdit.bind(null, row),
             },
             {
@@ -183,7 +183,7 @@ const [Grid, gridApi] = useVbenVxeGrid({
               type: 'link',
               danger: true,
               icon: ACTION_ICON.DELETE,
-              auth: ['system:tenantPackage-subscribe:delete'],
+              auth: ['system:tenantPackageSubscribe:delete'],
               popConfirm: {
                 title: $t('ui.actionMessage.deleteConfirm', [row.id]),
                 confirm: handleDelete.bind(null, row),
