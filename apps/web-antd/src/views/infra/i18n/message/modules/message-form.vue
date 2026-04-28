@@ -3,7 +3,7 @@ import type { I18nMessageApi } from '#/api/infra/i18n/i18nMessage';
 
 import { computed, ref } from 'vue';
 
-import { useVbenModal } from '@vben/common-ui';
+import { useVbenModelDrawer } from '@vben/common-ui';
 
 import { message } from 'ant-design-vue';
 
@@ -38,7 +38,7 @@ const [Form, formApi] = useVbenForm({
   showDefaultActions: false,
 });
 
-const [Modal, modalApi] = useVbenModal({
+const [Modal, modalApi] = useVbenModelDrawer({
   async onConfirm() {
     const { valid } = await formApi.validate();
     if (!valid) {
@@ -96,7 +96,7 @@ const [Modal, modalApi] = useVbenModal({
 </script>
 
 <template>
-  <Modal :title="getTitle">
+  <Modal class="w-[50%]" :title="getTitle">
     <Form class="mx-4" />
   </Modal>
 </template>

@@ -7,7 +7,7 @@ import type { I18nKeyApi } from '#/api/infra/i18n/i18nKey';
 
 import { ref } from 'vue';
 
-import { useVbenModal } from '@vben/common-ui';
+import { useVbenModelDrawer } from '@vben/common-ui';
 import { downloadFileFromBlobPart } from '@vben/utils';
 
 import { message } from 'ant-design-vue';
@@ -15,23 +15,24 @@ import { message } from 'ant-design-vue';
 import { ACTION_ICON, TableAction, useVbenVxeGrid } from '#/adapter/vxe-table';
 import {
   deleteI18nKey,
-  deleteI18nKeyList,
   exportI18nKey,
   getI18nKeyPage,
 } from '#/api/infra/i18n/i18nKey';
+import { CascadeDeleteSwitch } from '#/components/cascade-delete-switch';
 import { $t } from '#/locales';
 
 import { useKeyGridColumns, useKeyGridFormSchema } from '../data';
 import KeyForm from './key-form.vue';
 
 const emit = defineEmits<{
-  select: [row: I18nKeyApi.I18nKey];
   deleted: [];
+  select: [row: I18nKeyApi.I18nKey];
 }>();
 
-const [FormModal, formModalApi] = useVbenModal({
+const [FormModal, formModalApi] = useVbenModelDrawer({
   connectedComponent: KeyForm,
   destroyOnClose: true,
+  type: 'drawer',
 });
 
 /** 刷新表格 */
@@ -55,6 +56,9 @@ function handleEdit(row: I18nKeyApi.I18nKey) {
   formModalApi.setData(row).open();
 }
 
+/** 全局级联删除开关（默认 false） */
+const isDeleteChildren = ref(false);
+
 /** 删除国际化键名 */
 async function handleDelete(row: I18nKeyApi.I18nKey) {
   const hideLoading = message.loading({
@@ -62,7 +66,7 @@ async function handleDelete(row: I18nKeyApi.I18nKey) {
     key: 'action_key_msg',
   });
   try {
-    await deleteI18nKey(row.id as number);
+    await deleteI18nKey(row.id as number, isDeleteChildren.value);
     message.success({
       content: $t('ui.actionMessage.deleteSuccess', [row.id]),
       key: 'action_key_msg',
@@ -72,33 +76,6 @@ async function handleDelete(row: I18nKeyApi.I18nKey) {
   } finally {
     hideLoading();
   }
-}
-
-/** 批量删除国际化键名 */
-async function handleDeleteBatch() {
-  const hideLoading = message.loading({
-    content: $t('ui.actionMessage.deleting'),
-    key: 'action_key_msg',
-  });
-  try {
-    await deleteI18nKeyList(checkedIds.value);
-    message.success({
-      content: $t('ui.actionMessage.deleteSuccess'),
-      key: 'action_key_msg',
-    });
-    onRefresh();
-  } finally {
-    hideLoading();
-  }
-}
-
-const checkedIds = ref<number[]>([]);
-function handleRowCheckboxChange({
-  records,
-}: {
-  records: I18nKeyApi.I18nKey[];
-}) {
-  checkedIds.value = records.map((item) => item.id);
 }
 
 /** 表格事件 */
@@ -140,11 +117,7 @@ const [Grid, gridApi] = useVbenVxeGrid({
       search: true,
     },
   } as VxeTableGridOptions<I18nKeyApi.I18nKey>,
-  gridEvents: {
-    checkboxAll: handleRowCheckboxChange,
-    checkboxChange: handleRowCheckboxChange,
-    ...gridEvents,
-  },
+  gridEvents,
 });
 
 defineExpose({ onRefresh });
@@ -172,17 +145,9 @@ defineExpose({ onRefresh });
               auth: ['infra:message:export'],
               onClick: handleExport,
             },
-            {
-              label: $t('ui.actionTitle.deleteBatch'),
-              type: 'primary',
-              danger: true,
-              icon: ACTION_ICON.DELETE,
-              disabled: checkedIds.length === 0,
-              auth: ['infra:message:delete'],
-              onClick: handleDeleteBatch,
-            },
           ]"
         />
+        <CascadeDeleteSwitch v-model="isDeleteChildren" />
       </template>
       <template #actions="{ row }">
         <TableAction

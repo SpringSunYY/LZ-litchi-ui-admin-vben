@@ -41,8 +41,10 @@ export function updateI18nKey(data: I18nKeyApi.I18nKey) {
 }
 
 /** 删除国际化键名 */
-export function deleteI18nKey(id: number) {
-  return requestClient.delete(`/infra/i18n/key/delete?id=${id}`);
+export function deleteI18nKey(id: number, deleteChildren = false) {
+  return requestClient.delete(
+    `/infra/i18n/key/delete?id=${id}&isDeleteChildren=${deleteChildren}`,
+  );
 }
 
 /** 批量删除国际化键名 */

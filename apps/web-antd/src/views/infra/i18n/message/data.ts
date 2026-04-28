@@ -31,8 +31,11 @@ export function useKeyFormSchema(): VbenFormSchema[] {
       label: '键',
       rules: 'required',
       component: 'Input',
-      componentProps: {
-        placeholder: '请输入键',
+      componentProps: (values) => {
+        return {
+          placeholder: '请输入键',
+          readOnly: !!values.id,
+        };
       },
     },
     {
@@ -151,7 +154,6 @@ export function useKeyGridFormSchema(): VbenFormSchema[] {
 /** 键名 - 列表的字段 */
 export function useKeyGridColumns(): VxeTableGridOptions<I18nKeyApi.I18nKey>['columns'] {
   return [
-    { type: 'checkbox', width: 40 },
     {
       field: 'id',
       title: '编号',

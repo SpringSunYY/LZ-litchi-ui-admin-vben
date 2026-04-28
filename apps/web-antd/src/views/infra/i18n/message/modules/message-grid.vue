@@ -5,7 +5,7 @@ import type { I18nMessageApi } from '#/api/infra/i18n/i18nMessage';
 
 import { ref, watch } from 'vue';
 
-import { useVbenModal } from '@vben/common-ui';
+import { useVbenModelDrawer } from '@vben/common-ui';
 import { downloadFileFromBlobPart } from '@vben/utils';
 
 import { message } from 'ant-design-vue';
@@ -34,9 +34,11 @@ const emit = defineEmits<{
   select: [row: I18nMessageApi.I18nMessage];
 }>();
 
-const [FormModal, formModalApi] = useVbenModal({
+const [FormModal, formModalApi] = useVbenModelDrawer({
   connectedComponent: MessageForm,
   destroyOnClose: true,
+  type: 'drawer',
+  placement: 'left',
 });
 
 /** 刷新表格 */
