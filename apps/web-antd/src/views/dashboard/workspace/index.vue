@@ -21,6 +21,8 @@ import { preferences } from '@vben/preferences';
 import { useUserStore } from '@vben/stores';
 import { openWindow } from '@vben/utils';
 
+import { $t } from '#/locales';
+
 import AnalyticsVisitsSource from '../analytics/analytics-visits-source.vue';
 
 const userStore = useUserStore();
@@ -235,7 +237,7 @@ function navTo(nav: WorkbenchProjectItem | WorkbenchQuickNavItem) {
       <template #title>
         早安, {{ userStore.userInfo?.nickname }}, 开始您一天的工作吧！
       </template>
-      <template #description> 今日晴，20℃ - 32℃！ </template>
+      <template #description> 今日晴，20℃ - 32℃！{{ $t('test') }} </template>
     </WorkbenchHeader>
 
     <div class="mt-5 flex flex-col lg:flex-row">

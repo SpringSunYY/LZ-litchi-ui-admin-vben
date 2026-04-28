@@ -42,11 +42,11 @@ async function bootstrap(namespace: string) {
     spinning: 'spinning',
   });
 
+  // 配置 pinia-store (必须在 setupI18n 之前，因为 i18n 会调用 API)
+  await initStores(app, { namespace });
+
   // 国际化 i18n 配置
   await setupI18n(app);
-
-  // 配置 pinia-store
-  await initStores(app, { namespace });
 
   // 安装权限指令
   registerAccessDirective(app);

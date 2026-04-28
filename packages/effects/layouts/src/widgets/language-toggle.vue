@@ -87,6 +87,7 @@ async function handleUpdate(value: string | undefined) {
       locale: lang,
     },
   });
+  // loadLocaleMessages 内部会自动调用 mergeRemoteMessages
   await loadLocaleMessages(lang);
 }
 
@@ -102,6 +103,7 @@ function syncCurrentValue() {
     currentValue.value = defaultBackendLocale.value;
     const frameworkLocale = toFrameworkLocale(defaultBackendLocale.value);
     updatePreferences({ app: { locale: frameworkLocale } });
+    // loadLocaleMessages 内部会自动调用 mergeRemoteMessages
     loadLocaleMessages(frameworkLocale);
   }
 }

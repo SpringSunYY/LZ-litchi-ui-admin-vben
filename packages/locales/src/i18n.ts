@@ -33,6 +33,40 @@ const localesMap = loadLocalesMapFromDir(
 );
 let loadMessages: LoadMessageFn;
 
+/** 远程消息加载器，可在应用初始化时设置 */
+let remoteMessageLoader:
+  | ((lang: SupportedLanguagesType) => Promise<null | Record<string, string>>)
+  | null = null;
+
+/**
+ * 设置远程消息加载器
+ * @param loader - 异步函数，接收语言代码，返回翻译数据或null
+ */
+function setRemoteMessageLoader(
+  loader: (
+    lang: SupportedLanguagesType,
+  ) => Promise<null | Record<string, string>>,
+) {
+  remoteMessageLoader = loader;
+}
+
+/**
+ * 合并远程消息到 i18n
+ * @param lang 语言代码
+ */
+async function mergeRemoteMessages(lang: SupportedLanguagesType) {
+  if (remoteMessageLoader) {
+    try {
+      const messages = await remoteMessageLoader(lang);
+      if (messages) {
+        i18n.global.mergeLocaleMessage(lang, messages);
+      }
+    } catch (error) {
+      console.error(`Failed to merge remote messages for ${lang}:`, error);
+    }
+  }
+}
+
 /**
  * Load locale modules
  * @param modules
@@ -140,6 +174,9 @@ async function loadLocaleMessages(lang: SupportedLanguagesType) {
     i18n.global.mergeLocaleMessage(lang, mergeMessage);
   }
 
+  // 加载完成后合并远程消息
+  await mergeRemoteMessages(lang);
+
   return setI18nLanguage(lang);
 }
 
@@ -148,5 +185,7 @@ export {
   loadLocaleMessages,
   loadLocalesMap,
   loadLocalesMapFromDir,
+  mergeRemoteMessages,
+  setRemoteMessageLoader,
   setupI18n,
 };

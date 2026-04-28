@@ -56,7 +56,7 @@ export function useFormSchema(): VbenFormSchema[] {
       fieldName: 'localeTarget',
       label: '使用端',
       rules: 'required',
-      help: '展示的区域，例如通用所有端都展示，后台只是后台展示',
+      help: '展示的区域，例如通用所有端都展示，后台只是后台展示，请不要随意修改，如若修改请及时同步message',
       component: 'Select',
       componentProps: {
         options: getDictOptions(DICT_TYPE.INFRA_I18N_LOCALE_TARGET, 'number'),

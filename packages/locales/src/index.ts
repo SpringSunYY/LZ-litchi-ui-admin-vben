@@ -3,6 +3,8 @@ import {
   loadLocaleMessages,
   loadLocalesMap,
   loadLocalesMapFromDir,
+  mergeRemoteMessages,
+  setRemoteMessageLoader,
   setupI18n,
 } from './i18n';
 
@@ -16,6 +18,8 @@ export {
   loadLocaleMessages,
   loadLocalesMap,
   loadLocalesMapFromDir,
+  mergeRemoteMessages,
+  setRemoteMessageLoader,
   setupI18n,
 };
 export {

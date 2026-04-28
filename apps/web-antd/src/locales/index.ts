@@ -10,12 +10,16 @@ import {
   $t,
   setupI18n as coreSetup,
   loadLocalesMapFromDir,
+  mergeRemoteMessages,
+  setRemoteMessageLoader,
 } from '@vben/locales';
 import { preferences } from '@vben/preferences';
 
 import antdEnLocale from 'ant-design-vue/es/locale/en_US';
 import antdDefaultLocale from 'ant-design-vue/es/locale/zh_CN';
 import dayjs from 'dayjs';
+
+import { getI18nLocaleMessage } from '#/api/infra/i18n/i18n';
 
 const antdLocale = ref<Locale>(antdDefaultLocale);
 
@@ -25,9 +29,35 @@ const localesMap = loadLocalesMapFromDir(
   /\.\/langs\/([^/]+)\/(.*)\.json$/,
   modules,
 );
+
+/**
+ * 从后端加载翻译消息
+ * @param lang 语言代码
+ */
+async function fetchRemoteMessages(
+  lang: SupportedLanguagesType,
+): Promise<null | Record<string, string>> {
+  try {
+    const res = await getI18nLocaleMessage(2);
+    // API 返回格式: { code, data: [{ messageKey, locale, message }], msg }
+    const data = (res as any)?.data ?? res;
+    if (Array.isArray(data)) {
+      const remoteMessages: Record<string, string> = {};
+      for (const item of data) {
+        if (item.messageKey && item.message) {
+          remoteMessages[item.messageKey] = item.message;
+        }
+      }
+      return remoteMessages;
+    }
+  } catch (error) {
+    console.error(`Failed to load remote messages for ${lang}:`, error);
+  }
+  return null;
+}
+
 /**
  * 加载应用特有的语言包
- * 这里也可以改造为从服务端获取翻译数据
  * @param lang
  */
 async function loadMessages(lang: SupportedLanguagesType) {
@@ -138,6 +168,9 @@ async function loadAntdLocale(lang: SupportedLanguagesType) {
 }
 
 async function setupI18n(app: App, options: LocaleSetupOptions = {}) {
+  // 注册远程消息加载器
+  setRemoteMessageLoader(fetchRemoteMessages);
+
   await coreSetup(app, {
     defaultLocale: preferences.app.locale,
     loadMessages,
@@ -146,4 +179,4 @@ async function setupI18n(app: App, options: LocaleSetupOptions = {}) {
   });
 }
 
-export { $t, antdLocale, setupI18n };
+export { $t, antdLocale, mergeRemoteMessages, setupI18n };
