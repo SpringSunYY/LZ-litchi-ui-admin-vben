@@ -51,25 +51,45 @@ async function loadThirdPartyMessage(lang: SupportedLanguagesType) {
  * @param lang
  */
 async function loadDayjsLocale(lang: SupportedLanguagesType) {
-  let locale;
-  switch (lang) {
-    case 'en-US': {
-      locale = await import('dayjs/locale/en');
-      break;
-    }
-    case 'zh-CN': {
-      locale = await import('dayjs/locale/zh-cn');
-      break;
-    }
-    // 默认使用英语
-    default: {
-      locale = await import('dayjs/locale/en');
-    }
-  }
-  if (locale) {
+  // dayjs 的 locale 代码映射
+  const dayjsLocaleMap: Record<string, string> = {
+    'en-US': 'en',
+    'zh-CN': 'zh-cn',
+    'zh-TW': 'zh-tw',
+    'ja-JP': 'ja',
+    'ko-KR': 'ko',
+    'es-ES': 'es',
+    'fr-FR': 'fr',
+    'de-DE': 'de',
+    'ru-RU': 'ru',
+    'pt-BR': 'pt-br',
+    'ar-SA': 'ar',
+    'it-IT': 'it',
+    'vi-VN': 'vi',
+    'th-TH': 'th',
+    'id-ID': 'id',
+    'ms-MY': 'ms',
+    'hi-IN': 'hi',
+    'uk-UA': 'uk',
+    'pl-PL': 'pl',
+    'nl-NL': 'nl',
+  };
+
+  const localeName = dayjsLocaleMap[lang];
+  if (!localeName) {
+    // 未知的语言，回退到英语
+    const locale = await import('dayjs/locale/en');
     dayjs.locale(locale);
-  } else {
-    console.error(`Failed to load dayjs locale for ${lang}`);
+    return;
+  }
+
+  try {
+    const locale = await import(`dayjs/locale/${localeName}`);
+    dayjs.locale(locale);
+  } catch {
+    // 加载失败，回退到英语
+    const locale = await import('dayjs/locale/en');
+    dayjs.locale(locale);
   }
 }
 
@@ -78,15 +98,42 @@ async function loadDayjsLocale(lang: SupportedLanguagesType) {
  * @param lang
  */
 async function loadAntdLocale(lang: SupportedLanguagesType) {
-  switch (lang) {
-    case 'en-US': {
-      antdLocale.value = antdEnLocale;
-      break;
-    }
-    case 'zh-CN': {
-      antdLocale.value = antdDefaultLocale;
-      break;
-    }
+  // antd 的 locale 代码映射
+  const antdLocaleMap: Record<string, () => Promise<{ default: Locale }>> = {
+    'en-US': () => import('ant-design-vue/es/locale/en_US'),
+    'zh-CN': () => import('ant-design-vue/es/locale/zh_CN'),
+    'zh-TW': () => import('ant-design-vue/es/locale/zh_TW'),
+    'ja-JP': () => import('ant-design-vue/es/locale/ja_JP'),
+    'ko-KR': () => import('ant-design-vue/es/locale/ko_KR'),
+    'es-ES': () => import('ant-design-vue/es/locale/es_ES'),
+    'fr-FR': () => import('ant-design-vue/es/locale/fr_FR'),
+    'de-DE': () => import('ant-design-vue/es/locale/de_DE'),
+    'ru-RU': () => import('ant-design-vue/es/locale/ru_RU'),
+    'pt-BR': () => import('ant-design-vue/es/locale/pt_BR'),
+    'it-IT': () => import('ant-design-vue/es/locale/it_IT'),
+    'vi-VN': () => import('ant-design-vue/es/locale/vi_VN'),
+    'th-TH': () => import('ant-design-vue/es/locale/th_TH'),
+    'id-ID': () => import('ant-design-vue/es/locale/id_ID'),
+    'ms-MY': () => import('ant-design-vue/es/locale/ms_MY'),
+    'hi-IN': () => import('ant-design-vue/es/locale/hi_IN'),
+    'uk-UA': () => import('ant-design-vue/es/locale/uk_UA'),
+    'pl-PL': () => import('ant-design-vue/es/locale/pl_PL'),
+    'nl-NL': () => import('ant-design-vue/es/locale/nl_NL'),
+  };
+
+  const loader = antdLocaleMap[lang];
+  if (!loader) {
+    // 未知的语言，回退到英语
+    antdLocale.value = antdEnLocale;
+    return;
+  }
+
+  try {
+    const module = await loader();
+    antdLocale.value = module.default;
+  } catch {
+    // 加载失败，回退到英语
+    antdLocale.value = antdEnLocale;
   }
 }
 

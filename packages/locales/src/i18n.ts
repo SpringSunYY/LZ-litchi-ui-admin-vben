@@ -13,10 +13,13 @@ import { createI18n } from 'vue-i18n';
 
 import { useSimpleLocale } from '@vben-core/composables';
 
+const DEFAULT_LOCALE: SupportedLanguagesType = 'en-US';
+
 const i18n = createI18n({
   globalInjection: true,
   legacy: false,
   locale: '',
+  fallbackLocale: DEFAULT_LOCALE,
   messages: {},
 });
 
@@ -133,7 +136,9 @@ async function loadLocaleMessages(lang: SupportedLanguagesType) {
   }
 
   const mergeMessage = await loadMessages(lang);
-  i18n.global.mergeLocaleMessage(lang, mergeMessage);
+  if (mergeMessage) {
+    i18n.global.mergeLocaleMessage(lang, mergeMessage);
+  }
 
   return setI18nLanguage(lang);
 }

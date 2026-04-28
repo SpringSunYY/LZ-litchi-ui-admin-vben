@@ -72,23 +72,23 @@ const [Grid, gridApi] = useVbenVxeGrid({
   <Page auto-content-height>
     <template #doc>
       <DocAlert
-        title="OAuth 2.0（SSO 单点登录）"
+        :title="$t('page.oauth2.sso')"
         url="https://doc.iocoder.cn/oauth2/"
       />
     </template>
 
-    <Grid table-title="令牌列表">
+    <Grid :table-title="$t('page.oauth2.token') + '列表'">
       <template #actions="{ row }">
         <TableAction
           :actions="[
             {
-              label: '强退',
+              label: $t('common.forceLogout'),
               type: 'link',
               danger: true,
               icon: ACTION_ICON.DELETE,
               auth: ['system:oauth2-token:delete'],
               popConfirm: {
-                title: $t('ui.actionMessage.deleteConfirm', [row.name]),
+                title: $t('ui.actionMessage.deleteConfirm', [row.accessToken]),
                 confirm: handleDelete.bind(null, row),
               },
             },

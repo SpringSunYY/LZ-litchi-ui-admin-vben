@@ -30,5 +30,10 @@
   "tenant": {
     "placeholder": "请选择租户",
     "success": "切换租户成功"
+  },
+  "oauth2": {
+    "client": "OAuth2 客户端",
+    "token": "OAuth2 令牌",
+    "sso": "OAuth 2.0（SSO 单点登录）"
   }
 }

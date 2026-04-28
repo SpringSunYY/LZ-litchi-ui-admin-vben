@@ -30,5 +30,6 @@
   "hideSearchPanel": "隐藏搜索面板",
   "selectAll": "全选",
   "expandAll": "全部展开",
-  "checkStrictly": "父子联动"
+  "checkStrictly": "父子联动",
+  "forceLogout": "强退"
 }

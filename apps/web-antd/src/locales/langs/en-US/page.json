@@ -30,5 +30,10 @@
   "tenant": {
     "placeholder": "Please select tenant",
     "success": "Switch tenant success"
+  },
+  "oauth2": {
+    "client": "OAuth2 Client",
+    "token": "OAuth2 Token",
+    "sso": "OAuth 2.0 (SSO Single Sign-On)"
   }
 }

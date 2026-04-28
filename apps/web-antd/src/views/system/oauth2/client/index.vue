@@ -88,18 +88,18 @@ const [Grid, gridApi] = useVbenVxeGrid({
   <Page auto-content-height>
     <template #doc>
       <DocAlert
-        title="OAuth 2.0（SSO 单点登录）"
+        :title="$t('page.oauth2.sso')"
         url="https://doc.iocoder.cn/oauth2/"
       />
     </template>
 
     <FormModal @success="onRefresh" />
-    <Grid table-title="OAuth2 客户端列表">
+    <Grid :table-title="$t('page.oauth2.client') + '列表'">
       <template #toolbar-tools>
         <TableAction
           :actions="[
             {
-              label: $t('ui.actionTitle.create', [' OAuth2.0 客户端']),
+              label: $t('ui.actionTitle.create', [$t('page.oauth2.client')]),
               type: 'primary',
               icon: ACTION_ICON.ADD,
               auth: ['system:oauth2-client:create'],
