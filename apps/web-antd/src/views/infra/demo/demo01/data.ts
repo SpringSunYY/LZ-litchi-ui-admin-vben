@@ -39,18 +39,16 @@ export function useFormSchema(): VbenFormSchema[] {
       fieldName: 'birthday',
       label: '出生年',
       rules: 'required',
-      component: 'DatePicker',
+      component: 'Input',
       componentProps: {
-        showTime: true,
-        format: 'YYYY-MM-DD HH:mm:ss',
-        valueFormat: 'x',
+        placeholder: '请输入出生年',
       },
     },
     {
       fieldName: 'description',
       label: '简介',
       rules: 'required',
-      component: 'RichTextarea',
+      component: 'FileUpload',
     },
     {
       fieldName: 'avatar',
@@ -80,6 +78,15 @@ export function useGridFormSchema(): VbenFormSchema[] {
         allowClear: true,
         options: getDictOptions(DICT_TYPE.SYSTEM_USER_SEX, 'number'),
         placeholder: '请选择性别',
+      },
+    },
+    {
+      fieldName: 'birthday',
+      label: '出生年',
+      component: 'Input',
+      componentProps: {
+        allowClear: true,
+        placeholder: '请输入出生年',
       },
     },
     {
@@ -127,11 +134,21 @@ export function useGridColumns(): VxeTableGridOptions<Demo01ContactApi.Demo01Con
       field: 'description',
       title: '简介',
       minWidth: 120,
+      cellRender: {
+        name: 'CellFilePreview',
+      },
     },
     {
       field: 'avatar',
       title: '头像',
       minWidth: 120,
+      cellRender: {
+        name: 'CellImage',
+        props: {
+          width: 40,
+          height: 40,
+        },
+      },
     },
     {
       field: 'createTime',
@@ -141,7 +158,7 @@ export function useGridColumns(): VxeTableGridOptions<Demo01ContactApi.Demo01Con
     },
     {
       title: '操作',
-      width: 160,
+      width: 200,
       fixed: 'right',
       slots: { default: 'actions' },
     },

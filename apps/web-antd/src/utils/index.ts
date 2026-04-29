@@ -18,3 +18,19 @@ export const areaReplace = (areaName: string) => {
     .replace('省', '')
     .replace('市', '');
 };
+
+export function normalizeSortOrder(order: unknown): 'asc' | 'desc' | undefined {
+  if (!order) return undefined;
+  const str = String(order).toLowerCase();
+  if (str === 'asc' || str === 'ascend') return 'asc';
+  if (str === 'desc' || str === 'descend') return 'desc';
+  return undefined;
+}
+
+export function pickSort(ctx: any): { sort?: string[]; sortBy?: string[] } {
+  const sorts = Array.isArray(ctx?.sorts) ? ctx.sorts : undefined;
+  const activeSorts = (sorts || []).filter((s: any) => s?.order);
+  const sortBy = activeSorts.map((s: any) => String(s.field));
+  const sort = activeSorts.map((s: any) => normalizeSortOrder(s.order)!);
+  return { sortBy, sort };
+}

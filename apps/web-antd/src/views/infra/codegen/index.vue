@@ -19,6 +19,7 @@ import {
 } from '#/api/infra/codegen';
 import { getDataSourceConfigList } from '#/api/infra/data-source-config';
 import { $t } from '#/locales';
+import { pickSort } from '#/utils';
 
 import { useGridColumns, useGridFormSchema } from './data';
 import ImportTable from './modules/import-table.vue';
@@ -132,13 +133,20 @@ const [Grid, gridApi] = useVbenVxeGrid({
     columns: useGridColumns(getDataSourceConfigName),
     height: 'auto',
     keepSource: true,
+    sortConfig: {
+      remote: true,
+      multiple: true,
+    },
     proxyConfig: {
       ajax: {
-        query: async ({ page }, formValues) => {
+        query: async (ctx, formValues) => {
+          const { page } = ctx || {};
+          const { sortBy, sort } = pickSort(ctx);
           return await getCodegenTablePage({
             pageNo: page.currentPage,
             pageSize: page.pageSize,
             ...formValues,
+            ...(sortBy?.length ? { sortBy, sort } : {}),
           });
         },
       },
@@ -151,6 +159,9 @@ const [Grid, gridApi] = useVbenVxeGrid({
       search: true,
     },
   } as VxeTableGridOptions<InfraCodegenApi.CodegenTable>,
+  gridEvents: {
+    sortChange: () => gridApi.query(),
+  },
 });
 
 /** 获取数据源配置列表 */

@@ -51,6 +51,7 @@ export namespace InfraCodegenApi {
     updateOperation: number;
     listOperation: number;
     listOperationCondition: string;
+    sortOperation: number;
     listOperationResult: number;
     htmlType: string;
   }

@@ -474,24 +474,29 @@ export function useGridColumns(
     {
       field: 'tableName',
       title: '表名称',
+      sortable: true,
     },
     {
       field: 'tableComment',
       title: '表描述',
+      sortable: true,
     },
     {
       field: 'className',
       title: '实体',
+      sortable: true,
     },
     {
       field: 'createTime',
       title: '创建时间',
       formatter: 'formatDateTime',
+      sortable: true,
     },
     {
       field: 'updateTime',
       title: '更新时间',
       formatter: 'formatDateTime',
+      sortable: true,
     },
     {
       title: '操作',
@@ -559,6 +564,12 @@ export function useCodegenColumnTableColumns(): VxeTableGridOptions['columns'] {
       title: '查询',
       width: 40,
       slots: { default: 'listOperation' },
+    },
+    {
+      field: 'sortOperation',
+      title: '排序',
+      width: 40,
+      slots: { default: 'sortOperation' },
     },
     {
       field: 'listOperationCondition',

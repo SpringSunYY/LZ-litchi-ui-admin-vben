@@ -102,6 +102,10 @@ onMounted(async () => {
     <template #listOperation="{ row }">
       <Checkbox v-model:checked="row.listOperation" />
     </template>
+    <!-- 排序 -->
+    <template #sortOperation="{ row }">
+      <Checkbox v-model:checked="row.sortOperation" />
+    </template>
 
     <!-- 查询方式 -->
     <template #listOperationCondition="{ row, column }">
