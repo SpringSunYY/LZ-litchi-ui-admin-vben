@@ -20,6 +20,7 @@ import {
 import { Button, Image, Popconfirm, Switch } from 'ant-design-vue';
 
 import { DictTag } from '#/components/dict-tag';
+import { FilePreview } from '#/components/file-preview';
 import CellImage from '#/components/image/cell-image.vue';
 import { $t } from '#/locales';
 
@@ -111,6 +112,19 @@ setupVbenVxeTable({
           }
         }
         return '';
+      },
+    });
+
+    // 表格配置项可以用 cellRender: { name: 'CellFilePreview' },
+    // 支持单个文件URL或 || 分隔的多个URL字符串
+    vxeUI.renderer.add('CellFilePreview', {
+      renderTableDefault(renderOpts, params) {
+        const { props } = renderOpts;
+        const { column, row } = params;
+        return h(FilePreview, {
+          fileUrl: row[column.field],
+          text: props?.text ?? '查看文件',
+        });
       },
     });
 

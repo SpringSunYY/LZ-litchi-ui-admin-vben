@@ -24,6 +24,7 @@ import { notification } from 'ant-design-vue';
 import { NumberRange } from '#/components/number-range';
 import { Tinymce as RichTextarea } from '#/components/tinymce';
 import { FileUpload, ImageUpload } from '#/components/upload';
+import { FilePreview } from '#/components/file-preview';
 
 const AutoComplete = defineAsyncComponent(
   () => import('ant-design-vue/es/auto-complete'),
@@ -116,6 +117,7 @@ export type ComponentType =
   | 'DatePicker'
   | 'DefaultButton'
   | 'Divider'
+  | 'FilePreview'
   | 'FileUpload'
   | 'IconPicker'
   | 'ImageUpload'
@@ -207,6 +209,7 @@ async function initComponentAdapter() {
     TimePicker,
     TreeSelect: withDefaultPlaceholder(TreeSelect, 'select'),
     Upload,
+    FilePreview,
     FileUpload,
     ImageUpload,
   };

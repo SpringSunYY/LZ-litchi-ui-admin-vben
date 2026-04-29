@@ -17,7 +17,7 @@ interface ImportExcelProps {
   templateApi: () => Promise<Blob>;
   templateFileName: string;
   formSchema: () => VbenFormSchema[];
-  width?: string | number;
+  width?: number | string;
 }
 
 interface ImportExcelEmits {

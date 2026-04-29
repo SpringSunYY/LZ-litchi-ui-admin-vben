@@ -159,6 +159,9 @@
     "i18nModuleType": "国际化模块",
     "i18nModuleTypeHelp": "选择国际化信息的所属模块，用于生成对应的国际化 key"
   },
+  "filePreview": {
+    "viewFile": "查看文件"
+  },
   "common": {
     "yes": "是",
     "no": "否"

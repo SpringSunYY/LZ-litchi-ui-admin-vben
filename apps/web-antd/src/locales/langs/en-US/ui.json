@@ -159,6 +159,9 @@
     "i18nModuleType": "I18n Module",
     "i18nModuleTypeHelp": "Select the module for i18n messages, used to generate corresponding i18n keys"
   },
+  "filePreview": {
+    "viewFile": "View File"
+  },
   "common": {
     "yes": "Yes",
     "no": "No"

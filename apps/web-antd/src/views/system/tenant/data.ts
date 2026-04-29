@@ -295,6 +295,9 @@ export function useGridColumns(): VxeTableGridOptions<SystemTenantApi.Tenant>['c
       field: 'qualifications',
       title: '相关资质',
       minWidth: 120,
+      cellRender: {
+        name: 'CellFilePreview',
+      },
     },
     {
       field: 'status',

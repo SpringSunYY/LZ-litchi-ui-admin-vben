@@ -322,6 +322,13 @@ export function useGridColumns(): VxeTableGridOptions<TenantPackageSubscribeApi.
       field: 'packageLogo',
       title: 'LOGO',
       minWidth: 120,
+      cellRender: {
+        name: 'CellImage',
+        props: {
+          width: 40,
+          height: 40,
+        },
+      },
     },
     {
       field: 'tenantName',
