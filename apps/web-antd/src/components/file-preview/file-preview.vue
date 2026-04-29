@@ -54,7 +54,9 @@ const fileList = computed(() => {
           </a>
         </div>
       </template>
-      <span style="cursor: pointer; color: #1677ff">{{ $t('ui.filePreview.viewFile') }}</span>
+      <span style="cursor: pointer; color: #1677ff">{{
+        $t('ui.filePreview.viewFile')
+      }}</span>
     </a-popover>
   </template>
   <span v-else>-</span>
