@@ -114,7 +114,9 @@ async function loadDayjsLocale(lang: SupportedLanguagesType) {
   }
 
   try {
-    const locale = await import(`dayjs/locale/${localeName}`);
+    const locale = await import(
+      /* @vite-ignore */ `dayjs/locale/${localeName}`
+    );
     dayjs.locale(locale);
   } catch {
     // 加载失败，回退到英语
