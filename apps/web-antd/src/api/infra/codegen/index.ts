@@ -29,6 +29,8 @@ export namespace InfraCodegenApi {
   export interface CodegenExtendConfig {
     isI18n?: string;
     isImport?: string;
+    popupType?: string;
+    i18nModuleType?: string;
   }
 
   /** 代码生成字段定义 */

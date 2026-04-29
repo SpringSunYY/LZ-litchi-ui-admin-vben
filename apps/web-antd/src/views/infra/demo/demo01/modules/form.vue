@@ -3,7 +3,7 @@ import type { Demo01ContactApi } from '#/api/infra/demo/demo01';
 
 import { computed, ref } from 'vue';
 
-import { useVbenModal } from '@vben/common-ui';
+import { useVbenModelDrawer } from '@vben/common-ui';
 
 import { message } from 'ant-design-vue';
 
@@ -38,13 +38,13 @@ const [Form, formApi] = useVbenForm({
   showDefaultActions: false,
 });
 
-const [Modal, modalApi] = useVbenModal({
+const [ModalDrawer, modalDrawerApi] = useVbenModelDrawer({
   async onConfirm() {
     const { valid } = await formApi.validate();
     if (!valid) {
       return;
     }
-    modalApi.lock();
+    modalDrawerApi.lock();
     // 提交表单
     const data = (await formApi.getValues()) as Demo01ContactApi.Demo01Contact;
     try {
@@ -52,14 +52,11 @@ const [Modal, modalApi] = useVbenModal({
         ? updateDemo01Contact(data)
         : createDemo01Contact(data));
       // 关闭并提示
-      await modalApi.close();
+      await modalDrawerApi.close();
       emit('success');
-      message.success({
-        content: $t('ui.actionMessage.operationSuccess'),
-        key: 'action_process_msg',
-      });
+      message.success($t('ui.actionMessage.operationSuccess'));
     } finally {
-      modalApi.unlock();
+      modalDrawerApi.unlock();
     }
   },
   async onOpenChange(isOpen: boolean) {
@@ -67,18 +64,17 @@ const [Modal, modalApi] = useVbenModal({
       formData.value = undefined;
       return;
     }
-
     // 加载数据
-    let data = modalApi.getData<Demo01ContactApi.Demo01Contact>();
+    let data = modalDrawerApi.getData<Demo01ContactApi.Demo01Contact>();
     if (!data) {
       return;
     }
     if (data.id) {
-      modalApi.lock();
+      modalDrawerApi.lock();
       try {
         data = await getDemo01Contact(data.id);
       } finally {
-        modalApi.unlock();
+        modalDrawerApi.unlock();
       }
     }
     // 设置到 values
@@ -89,7 +85,7 @@ const [Modal, modalApi] = useVbenModal({
 </script>
 
 <template>
-  <Modal :title="getTitle">
+  <ModalDrawer :title="getTitle">
     <Form class="mx-4" />
-  </Modal>
+  </ModalDrawer>
 </template>

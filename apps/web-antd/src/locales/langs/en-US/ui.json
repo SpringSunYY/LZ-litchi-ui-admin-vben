@@ -151,7 +151,13 @@
     "isI18n": "Internationalization",
     "isI18nHelp": "When enabled, internationalization configuration will be generated in the code",
     "isImport": "Import",
-    "isImportHelp": "When enabled, Excel import functionality will be generated in the code"
+    "isImportHelp": "When enabled, Excel import functionality will be generated in the code",
+    "popupType": "Popup Type",
+    "popupTypeHelp": "Select the display mode for the detail page popup",
+    "drawer": "Drawer",
+    "modal": "Modal",
+    "i18nModuleType": "I18n Module",
+    "i18nModuleTypeHelp": "Select the module for i18n messages, used to generate corresponding i18n keys"
   },
   "common": {
     "yes": "Yes",

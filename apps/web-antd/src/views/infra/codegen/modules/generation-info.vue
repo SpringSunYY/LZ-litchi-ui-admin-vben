@@ -101,8 +101,15 @@ async function getAllFormValues(): Promise<Record<string, any>> {
   if (baseValues.isImport !== undefined) {
     extendConfig.isImport = baseValues.isImport;
   }
+  if (baseValues.popupType !== undefined) {
+    extendConfig.popupType = baseValues.popupType;
+  }
+  if (baseValues.i18nModuleType !== undefined) {
+    extendConfig.i18nModuleType = String(baseValues.i18nModuleType);
+  }
   // 移除 baseValues 中的 extendConfig 字段
-  const { isI18n, isImport, ...restBaseValues } = baseValues;
+  const { isI18n, isImport, popupType, i18nModuleType, ...restBaseValues } =
+    baseValues;
   // 合并表单值
   return { ...restBaseValues, ...extraValues, extendConfig };
 }
@@ -132,7 +139,7 @@ function setAllFormValues(values: Record<string, any>): void {
   // 记录模板类型
   currentTemplateType.value = values.templateType;
 
-  // 从 extendConfig 中提取 isI18n 和 isImport
+  // 从 extendConfig 中提取 isI18n、isImport、popupType 和 i18nModuleType
   const { extendConfig, ...restValues } = values;
   const formValues = { ...restValues };
   if (extendConfig) {
@@ -141,6 +148,12 @@ function setAllFormValues(values: Record<string, any>): void {
     }
     if (extendConfig.isImport !== undefined) {
       formValues.isImport = extendConfig.isImport;
+    }
+    if (extendConfig.popupType !== undefined) {
+      formValues.popupType = extendConfig.popupType;
+    }
+    if (extendConfig.i18nModuleType !== undefined) {
+      formValues.i18nModuleType = Number(extendConfig.i18nModuleType);
     }
   }
 

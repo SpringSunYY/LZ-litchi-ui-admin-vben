@@ -73,6 +73,13 @@ const [Grid] = useVbenVxeGrid({
     }) => {
       formData.tableNames = records.map((item) => item.name);
     },
+    checkboxAll: ({
+      records,
+    }: {
+      records: InfraCodegenApi.DatabaseTable[];
+    }) => {
+      formData.tableNames = records.map((item) => item.name);
+    },
   },
 });
 
@@ -81,7 +88,6 @@ const [Modal, modalApi] = useVbenModal({
   title: '导入表',
   class: 'w-1/2',
   async onConfirm() {
-    modalApi.lock();
     // 1.1 获取表单值
     if (formData?.dataSourceConfigId === undefined) {
       message.error('请选择数据源');
@@ -92,7 +98,7 @@ const [Modal, modalApi] = useVbenModal({
       message.error('请选择需要导入的表');
       return;
     }
-
+    modalApi.lock();
     // 2. 提交请求
     const hideLoading = message.loading({
       content: '导入中...',

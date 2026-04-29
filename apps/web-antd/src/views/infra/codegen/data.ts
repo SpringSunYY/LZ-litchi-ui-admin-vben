@@ -248,6 +248,21 @@ export function useGenerationInfoBaseFormSchema(): VbenFormSchema[] {
       defaultValue: '0',
     },
     {
+      component: 'Select',
+      fieldName: 'i18nModuleType',
+      label: () => $t('ui.codegen.i18nModuleType'),
+      help: () => $t('ui.codegen.i18nModuleTypeHelp'),
+      componentProps: {
+        class: 'w-full',
+        options: getDictOptions(DICT_TYPE.INFRA_I18N_KEY_MODULE_TYPE, 'number'),
+      },
+      defaultValue: undefined,
+      dependencies: {
+        triggerFields: ['isI18n'],
+        show: (values) => values.isI18n === '0',
+      },
+    },
+    {
       component: 'RadioGroup',
       fieldName: 'isImport',
       label: () => $t('ui.codegen.isImport'),
@@ -265,6 +280,25 @@ export function useGenerationInfoBaseFormSchema(): VbenFormSchema[] {
         ],
       },
       defaultValue: '1',
+    },
+    {
+      component: 'RadioGroup',
+      fieldName: 'popupType',
+      label: () => $t('ui.codegen.popupType'),
+      help: () => $t('ui.codegen.popupTypeHelp'),
+      componentProps: {
+        options: [
+          {
+            label: $t('ui.codegen.drawer'),
+            value: 'drawer',
+          },
+          {
+            label: $t('ui.codegen.modal'),
+            value: 'modal',
+          },
+        ],
+      },
+      defaultValue: 'drawer',
     },
   ];
 }

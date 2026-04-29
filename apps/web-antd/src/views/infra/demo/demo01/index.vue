@@ -4,7 +4,7 @@ import type { Demo01ContactApi } from '#/api/infra/demo/demo01';
 
 import { ref } from 'vue';
 
-import { Page, useVbenModal } from '@vben/common-ui';
+import { Page, useVbenModelDrawer } from '@vben/common-ui';
 import { downloadFileFromBlobPart, isEmpty } from '@vben/utils';
 
 import { message } from 'ant-design-vue';
@@ -21,9 +21,10 @@ import { $t } from '#/locales';
 import { useGridColumns, useGridFormSchema } from './data';
 import Form from './modules/form.vue';
 
-const [FormModal, formModalApi] = useVbenModal({
+const [FormModalDrawer, formModalDrawerApi] = useVbenModelDrawer({
   connectedComponent: Form,
   destroyOnClose: true,
+  type: 'drawer',
 });
 
 /** 刷新表格 */
@@ -33,24 +34,26 @@ function onRefresh() {
 
 /** 创建示例联系人 */
 function handleCreate() {
-  formModalApi.setData({}).open();
+  formModalDrawerApi.setData({}).open();
 }
 
 /** 编辑示例联系人 */
 function handleEdit(row: Demo01ContactApi.Demo01Contact) {
-  formModalApi.setData(row).open();
+  formModalDrawerApi.setData(row).open();
 }
 
 /** 删除示例联系人 */
 async function handleDelete(row: Demo01ContactApi.Demo01Contact) {
   const hideLoading = message.loading({
     content: $t('ui.actionMessage.deleting', [row.id]),
-    duration: 0,
-    key: 'action_process_msg',
+    key: 'action_key_msg',
   });
   try {
     await deleteDemo01Contact(row.id as number);
-    message.success($t('ui.actionMessage.deleteSuccess', [row.id]));
+    message.success({
+      content: $t('ui.actionMessage.deleteSuccess', [row.id]),
+      key: 'action_key_msg',
+    });
     onRefresh();
   } finally {
     hideLoading();
@@ -61,12 +64,14 @@ async function handleDelete(row: Demo01ContactApi.Demo01Contact) {
 async function handleDeleteBatch() {
   const hideLoading = message.loading({
     content: $t('ui.actionMessage.deleting'),
-    duration: 0,
-    key: 'action_process_msg',
+    key: 'action_key_msg',
   });
   try {
     await deleteDemo01ContactList(checkedIds.value);
-    message.success($t('ui.actionMessage.deleteSuccess'));
+    message.success({
+      content: $t('ui.actionMessage.deleteSuccess'),
+      key: 'action_key_msg',
+    });
     onRefresh();
   } finally {
     hideLoading();
@@ -127,7 +132,7 @@ const [Grid, gridApi] = useVbenVxeGrid({
 
 <template>
   <Page auto-content-height>
-    <FormModal @success="onRefresh" />
+    <FormModalDrawer @success="onRefresh" />
 
     <Grid table-title="示例联系人列表">
       <template #toolbar-tools>
@@ -148,11 +153,11 @@ const [Grid, gridApi] = useVbenVxeGrid({
               onClick: handleExport,
             },
             {
-              label: '批量删除',
+              label: $t('ui.actionTitle.deleteBatch'),
               type: 'primary',
               danger: true,
-              disabled: isEmpty(checkedIds),
               icon: ACTION_ICON.DELETE,
+              disabled: isEmpty(checkedIds),
               auth: ['infra:demo01-contact:delete'],
               onClick: handleDeleteBatch,
             },
@@ -176,7 +181,7 @@ const [Grid, gridApi] = useVbenVxeGrid({
               icon: ACTION_ICON.DELETE,
               auth: ['infra:demo01-contact:delete'],
               popConfirm: {
-                title: $t('ui.actionMessage.deleteConfirm', [row.name]),
+                title: $t('ui.actionMessage.deleteConfirm', [row.id]),
                 confirm: handleDelete.bind(null, row),
               },
             },
