@@ -22,6 +22,13 @@ export namespace InfraCodegenApi {
     updateTime: Date;
     templateType: number;
     parentMenuId: number;
+    extendConfig?: CodegenExtendConfig;
+  }
+
+  /** 代码生成扩展配置 */
+  export interface CodegenExtendConfig {
+    isI18n?: string;
+    isImport?: string;
   }
 
   /** 代码生成字段定义 */

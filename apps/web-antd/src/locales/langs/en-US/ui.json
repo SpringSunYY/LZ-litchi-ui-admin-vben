@@ -146,5 +146,15 @@
     "btn_zoom_in": "Zoom in",
     "btn_zoom_out": "Zoom out",
     "preview": "Preview"
+  },
+  "codegen": {
+    "isI18n": "Internationalization",
+    "isI18nHelp": "When enabled, internationalization configuration will be generated in the code",
+    "isImport": "Import",
+    "isImportHelp": "When enabled, Excel import functionality will be generated in the code"
+  },
+  "common": {
+    "yes": "Yes",
+    "no": "No"
   }
 }

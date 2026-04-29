@@ -93,8 +93,18 @@ async function getAllFormValues(): Promise<Record<string, any>> {
   } else if (isSubTable.value) {
     extraValues = await subFormApi.getValues();
   }
+  // 构建 extendConfig 对象
+  const extendConfig: Record<string, string> = {};
+  if (baseValues.isI18n !== undefined) {
+    extendConfig.isI18n = baseValues.isI18n;
+  }
+  if (baseValues.isImport !== undefined) {
+    extendConfig.isImport = baseValues.isImport;
+  }
+  // 移除 baseValues 中的 extendConfig 字段
+  const { isI18n, isImport, ...restBaseValues } = baseValues;
   // 合并表单值
-  return { ...baseValues, ...extraValues };
+  return { ...restBaseValues, ...extraValues, extendConfig };
 }
 
 /** 验证所有表单 */
@@ -122,13 +132,25 @@ function setAllFormValues(values: Record<string, any>): void {
   // 记录模板类型
   currentTemplateType.value = values.templateType;
 
+  // 从 extendConfig 中提取 isI18n 和 isImport
+  const { extendConfig, ...restValues } = values;
+  const formValues = { ...restValues };
+  if (extendConfig) {
+    if (extendConfig.isI18n !== undefined) {
+      formValues.isI18n = extendConfig.isI18n;
+    }
+    if (extendConfig.isImport !== undefined) {
+      formValues.isImport = extendConfig.isImport;
+    }
+  }
+
   // 设置基础表单值
-  baseFormApi.setValues(values);
+  baseFormApi.setValues(formValues);
   // 根据模板类型设置对应的额外表单值
   if (isTreeTable.value) {
-    treeFormApi.setValues(values);
+    treeFormApi.setValues(formValues);
   } else if (isSubTable.value) {
-    subFormApi.setValues(values);
+    subFormApi.setValues(formValues);
   }
 }
 

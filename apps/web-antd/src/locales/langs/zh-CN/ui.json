@@ -146,5 +146,15 @@
     "btn_zoom_in": "放大",
     "btn_zoom_out": "缩小",
     "preview": "预览"
+  },
+  "codegen": {
+    "isI18n": "国际化",
+    "isI18nHelp": "开启后，将在代码中生成国际化相关的配置",
+    "isImport": "导入",
+    "isImportHelp": "开启后，将在代码中生成 Excel 导入功能"
+  },
+  "common": {
+    "yes": "是",
+    "no": "否"
   }
 }

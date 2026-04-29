@@ -228,6 +228,44 @@ export function useGenerationInfoBaseFormSchema(): VbenFormSchema[] {
       help: '用作类描述，例如 用户',
       rules: 'required',
     },
+    {
+      component: 'RadioGroup',
+      fieldName: 'isI18n',
+      label: () => $t('ui.codegen.isI18n'),
+      help: () => $t('ui.codegen.isI18nHelp'),
+      componentProps: {
+        options: [
+          {
+            label: $t('ui.common.yes'),
+            value: '0',
+          },
+          {
+            label: $t('ui.common.no'),
+            value: '1',
+          },
+        ],
+      },
+      defaultValue: '0',
+    },
+    {
+      component: 'RadioGroup',
+      fieldName: 'isImport',
+      label: () => $t('ui.codegen.isImport'),
+      help: () => $t('ui.codegen.isImportHelp'),
+      componentProps: {
+        options: [
+          {
+            label: $t('ui.common.yes'),
+            value: '0',
+          },
+          {
+            label: $t('ui.common.no'),
+            value: '1',
+          },
+        ],
+      },
+      defaultValue: '1',
+    },
   ];
 }
 
