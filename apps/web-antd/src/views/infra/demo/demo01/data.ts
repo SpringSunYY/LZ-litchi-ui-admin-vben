@@ -30,7 +30,7 @@ export function useFormSchema(): VbenFormSchema[] {
       rules: 'required',
       component: 'RadioGroup',
       componentProps: {
-        options: getDictOptions(DICT_TYPE.SYSTEM_USER_SEX, 'number'),
+        options: getDictOptions(DICT_TYPE.SYSTEM_USER_SEX, 'boolean'),
         buttonStyle: 'solid',
         optionType: 'button',
       },
@@ -39,9 +39,11 @@ export function useFormSchema(): VbenFormSchema[] {
       fieldName: 'birthday',
       label: '出生年',
       rules: 'required',
-      component: 'Input',
+      component: 'DatePicker',
       componentProps: {
-        placeholder: '请输入出生年',
+        showTime: true,
+        format: 'YYYY-MM-DD HH:mm:ss',
+        valueFormat: 'x',
       },
     },
     {
@@ -49,6 +51,14 @@ export function useFormSchema(): VbenFormSchema[] {
       label: '简介',
       rules: 'required',
       component: 'FileUpload',
+    },
+    {
+      fieldName: 'age',
+      label: '年龄',
+      component: 'Input',
+      componentProps: {
+        placeholder: '请输入年龄',
+      },
     },
     {
       fieldName: 'avatar',
@@ -76,18 +86,23 @@ export function useGridFormSchema(): VbenFormSchema[] {
       component: 'Select',
       componentProps: {
         allowClear: true,
-        options: getDictOptions(DICT_TYPE.SYSTEM_USER_SEX, 'number'),
+        options: getDictOptions(DICT_TYPE.SYSTEM_USER_SEX, 'boolean'),
         placeholder: '请选择性别',
       },
     },
     {
       fieldName: 'birthday',
       label: '出生年',
-      component: 'Input',
+      component: 'RangePicker',
       componentProps: {
+        ...getRangePickerDefaultProps(),
         allowClear: true,
-        placeholder: '请输入出生年',
       },
+    },
+    {
+      fieldName: 'age',
+      label: '年龄',
+      component: 'NumberRange',
     },
     {
       fieldName: 'createTime',
@@ -128,6 +143,7 @@ export function useGridColumns(): VxeTableGridOptions<Demo01ContactApi.Demo01Con
       field: 'birthday',
       title: '出生年',
       minWidth: 120,
+      sortable: true,
       formatter: 'formatDateTime',
     },
     {
@@ -137,6 +153,12 @@ export function useGridColumns(): VxeTableGridOptions<Demo01ContactApi.Demo01Con
       cellRender: {
         name: 'CellFilePreview',
       },
+    },
+    {
+      field: 'age',
+      title: '年龄',
+      minWidth: 120,
+      sortable: true,
     },
     {
       field: 'avatar',
@@ -154,6 +176,7 @@ export function useGridColumns(): VxeTableGridOptions<Demo01ContactApi.Demo01Con
       field: 'createTime',
       title: '创建时间',
       minWidth: 120,
+      sortable: true,
       formatter: 'formatDateTime',
     },
     {

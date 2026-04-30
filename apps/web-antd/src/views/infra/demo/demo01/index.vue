@@ -17,6 +17,7 @@ import {
   getDemo01ContactPage,
 } from '#/api/infra/demo/demo01';
 import { $t } from '#/locales';
+import { pickSort } from '#/utils';
 
 import { useGridColumns, useGridFormSchema } from './data';
 import Form from './modules/form.vue';
@@ -105,11 +106,14 @@ const [Grid, gridApi] = useVbenVxeGrid({
     },
     proxyConfig: {
       ajax: {
-        query: async ({ page }, formValues) => {
+        query: async (ctx, formValues) => {
+          const { page } = ctx || {};
+          const { sortBy, sort } = pickSort(ctx);
           return await getDemo01ContactPage({
             pageNo: page.currentPage,
             pageSize: page.pageSize,
             ...formValues,
+            ...(sortBy?.length ? { sortBy, sort } : {}),
           });
         },
       },
@@ -122,10 +126,15 @@ const [Grid, gridApi] = useVbenVxeGrid({
       refresh: { code: 'query' },
       search: true,
     },
+    sortConfig: {
+      remote: true,
+      multiple: true,
+    },
   } as VxeTableGridOptions<Demo01ContactApi.Demo01Contact>,
   gridEvents: {
     checkboxAll: handleRowCheckboxChange,
     checkboxChange: handleRowCheckboxChange,
+    sortChange: () => gridApi.query(),
   },
 });
 </script>

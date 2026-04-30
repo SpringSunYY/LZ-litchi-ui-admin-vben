@@ -568,7 +568,12 @@ export function useCodegenColumnTableColumns(): VxeTableGridOptions['columns'] {
     {
       field: 'sortOperation',
       title: '排序',
-      width: 40,
+      titleHelp: {
+        message:
+          '设置字段在列表中的排序规则，且字段必须可以查询才有效，勾选后该字段将参与排序',
+        icon: 'vxe-icon-question-circle-fill',
+      },
+      width: 60,
       slots: { default: 'sortOperation' },
     },
     {
