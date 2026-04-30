@@ -4,7 +4,7 @@ import type { Demo01ContactApi } from '#/api/infra/demo/demo01';
 
 import { ref } from 'vue';
 
-import { Page, useVbenModelDrawer } from '@vben/common-ui';
+import { Page, useVbenModal, useVbenModelDrawer } from '@vben/common-ui';
 import { downloadFileFromBlobPart, isEmpty } from '@vben/utils';
 
 import { message } from 'ant-design-vue';
@@ -21,12 +21,23 @@ import { pickSort } from '#/utils';
 
 import { useGridColumns, useGridFormSchema } from './data';
 import Form from './modules/form.vue';
+import ImportForm from './modules/import-form.vue';
 
 const [FormModalDrawer, formModalDrawerApi] = useVbenModelDrawer({
   connectedComponent: Form,
   destroyOnClose: true,
   type: 'drawer',
 });
+
+const [ImportModal, importModalApi] = useVbenModal({
+  connectedComponent: ImportForm,
+  destroyOnClose: true,
+});
+
+/** 导入示例联系人 */
+function handleImport() {
+  importModalApi.open();
+}
 
 /** 刷新表格 */
 function onRefresh() {
@@ -142,6 +153,7 @@ const [Grid, gridApi] = useVbenVxeGrid({
 <template>
   <Page auto-content-height>
     <FormModalDrawer @success="onRefresh" />
+    <ImportModal @success="onRefresh" />
 
     <Grid table-title="示例联系人列表">
       <template #toolbar-tools>
@@ -169,6 +181,13 @@ const [Grid, gridApi] = useVbenVxeGrid({
               disabled: isEmpty(checkedIds),
               auth: ['infra:demo01-contact:delete'],
               onClick: handleDeleteBatch,
+            },
+            {
+              label: $t('ui.actionTitle.import', ['示例联系人']),
+              type: 'primary',
+              icon: ACTION_ICON.UPLOAD,
+              auth: ['infra:demo01-contact:import'],
+              onClick: handleImport,
             },
           ]"
         />

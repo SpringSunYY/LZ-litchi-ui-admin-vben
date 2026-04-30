@@ -1,8 +1,8 @@
-import type { Dayjs } from 'dayjs';
+import type {Dayjs} from 'dayjs';
 
-import type { PageParam, PageResult } from '@vben/request';
+import type {PageParam, PageResult} from '@vben/request';
 
-import { requestClient } from '#/api/request';
+import {requestClient} from '#/api/request';
 
 export namespace Demo01ContactApi {
   /** 示例联系人信息 */
@@ -20,7 +20,7 @@ export namespace Demo01ContactApi {
 export function getDemo01ContactPage(params: PageParam) {
   return requestClient.get<PageResult<Demo01ContactApi.Demo01Contact>>(
     '/infra/demo01-contact/page',
-    { params },
+    {params},
   );
 }
 
@@ -56,4 +56,16 @@ export function deleteDemo01ContactList(ids: number[]) {
 /** 导出示例联系人 */
 export function exportDemo01Contact(params: any) {
   return requestClient.download('/infra/demo01-contact/export-excel', params);
+}
+
+/** 获取示例联系人导入模板 */
+export function importDemo01ContactTemplate() {
+  return requestClient.download('/infra/demo01-contact/get-import-template');
+}
+
+/** 导入示例联系人 */
+export function importDemo01Contact(file: File) {
+  return requestClient.upload('/infra/demo01-contact/import', {
+    file
+  });
 }

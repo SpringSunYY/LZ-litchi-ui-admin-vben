@@ -187,3 +187,23 @@ export function useGridColumns(): VxeTableGridOptions<Demo01ContactApi.Demo01Con
     },
   ];
 }
+
+/** 示例联系人导入的表单 */
+export function useDemo01ContactImportSchema(): VbenFormSchema[] {
+  return [
+    {
+      fieldName: 'file',
+      label: '示例联系人',
+      component: 'Upload',
+      rules: 'required',
+      componentProps: {
+        accept: '.xls,.xlsx',
+        maxSize: 10,
+        maxNumber: 1,
+        uploadParams: {
+          type: 'file',
+        },
+      },
+    },
+  ];
+}
