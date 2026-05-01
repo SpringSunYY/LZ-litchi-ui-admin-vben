@@ -2,6 +2,8 @@ import type { VbenFormSchema } from '#/adapter/form';
 import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 import type { Demo01ContactApi } from '#/api/infra/demo/demo01';
 
+import { $t } from '@vben/locales';
+
 import { DICT_TYPE, getDictOptions, getRangePickerDefaultProps } from '#/utils';
 
 /** 新增/修改的表单 */
@@ -17,16 +19,18 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'name',
-      label: '名字',
+      label: $t('infra:demo01-contact:field:name'),
       rules: 'required',
       component: 'Input',
       componentProps: {
-        placeholder: '请输入名字',
+        placeholder: $t('ui.placeholder.input', [
+          $t('infra:demo01-contact:field:name'),
+        ]),
       },
     },
     {
       fieldName: 'sex',
-      label: '性别',
+      label: $t('infra:demo01-contact:field:sex'),
       rules: 'required',
       component: 'RadioGroup',
       componentProps: {
@@ -37,7 +41,7 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'birthday',
-      label: '出生年',
+      label: $t('infra:demo01-contact:field:birthday'),
       rules: 'required',
       component: 'DatePicker',
       componentProps: {
@@ -48,21 +52,23 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'description',
-      label: '简介',
+      label: $t('infra:demo01-contact:field:description'),
       rules: 'required',
       component: 'FileUpload',
     },
     {
       fieldName: 'age',
-      label: '年龄',
+      label: $t('infra:demo01-contact:field:age'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入年龄',
+        placeholder: $t('ui.placeholder.input', [
+          $t('infra:demo01-contact:field:age'),
+        ]),
       },
     },
     {
       fieldName: 'avatar',
-      label: '头像',
+      label: $t('infra:demo01-contact:field:avatar'),
       component: 'ImageUpload',
     },
   ];
@@ -73,26 +79,30 @@ export function useGridFormSchema(): VbenFormSchema[] {
   return [
     {
       fieldName: 'name',
-      label: '名字',
+      label: $t('infra:demo01-contact:field:name'),
       component: 'Input',
       componentProps: {
         allowClear: true,
-        placeholder: '请输入名字',
+        placeholder: $t('ui.placeholder.input', [
+          $t('infra:demo01-contact:field:name'),
+        ]),
       },
     },
     {
       fieldName: 'sex',
-      label: '性别',
+      label: $t('infra:demo01-contact:field:sex'),
       component: 'Select',
       componentProps: {
         allowClear: true,
         options: getDictOptions(DICT_TYPE.SYSTEM_USER_SEX, 'boolean'),
-        placeholder: '请选择性别',
+        placeholder: $t('ui.placeholder.select', [
+          $t('infra:demo01-contact:field:sex'),
+        ]),
       },
     },
     {
       fieldName: 'birthday',
-      label: '出生年',
+      label: $t('infra:demo01-contact:field:birthday'),
       component: 'RangePicker',
       componentProps: {
         ...getRangePickerDefaultProps(),
@@ -101,12 +111,12 @@ export function useGridFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'age',
-      label: '年龄',
+      label: $t('infra:demo01-contact:field:age'),
       component: 'NumberRange',
     },
     {
       fieldName: 'createTime',
-      label: '创建时间',
+      label: $t('infra:demo01-contact:field:createTime'),
       component: 'RangePicker',
       componentProps: {
         ...getRangePickerDefaultProps(),
@@ -122,17 +132,17 @@ export function useGridColumns(): VxeTableGridOptions<Demo01ContactApi.Demo01Con
     { type: 'checkbox', width: 40 },
     {
       field: 'id',
-      title: '编号',
+      title: $t('infra:demo01-contact:field:id'),
       minWidth: 120,
     },
     {
       field: 'name',
-      title: '名字',
+      title: $t('infra:demo01-contact:field:name'),
       minWidth: 120,
     },
     {
       field: 'sex',
-      title: '性别',
+      title: $t('infra:demo01-contact:field:sex'),
       minWidth: 120,
       cellRender: {
         name: 'CellDict',
@@ -141,14 +151,14 @@ export function useGridColumns(): VxeTableGridOptions<Demo01ContactApi.Demo01Con
     },
     {
       field: 'birthday',
-      title: '出生年',
+      title: $t('infra:demo01-contact:field:birthday'),
       minWidth: 120,
       sortable: true,
       formatter: 'formatDateTime',
     },
     {
       field: 'description',
-      title: '简介',
+      title: $t('infra:demo01-contact:field:description'),
       minWidth: 120,
       cellRender: {
         name: 'CellFilePreview',
@@ -156,13 +166,13 @@ export function useGridColumns(): VxeTableGridOptions<Demo01ContactApi.Demo01Con
     },
     {
       field: 'age',
-      title: '年龄',
+      title: $t('infra:demo01-contact:field:age'),
       minWidth: 120,
       sortable: true,
     },
     {
       field: 'avatar',
-      title: '头像',
+      title: $t('infra:demo01-contact:field:avatar'),
       minWidth: 120,
       cellRender: {
         name: 'CellImage',
@@ -174,13 +184,13 @@ export function useGridColumns(): VxeTableGridOptions<Demo01ContactApi.Demo01Con
     },
     {
       field: 'createTime',
-      title: '创建时间',
+      title: $t('infra:demo01-contact:field:createTime'),
       minWidth: 120,
       sortable: true,
       formatter: 'formatDateTime',
     },
     {
-      title: '操作',
+      title: $t('common.operation'),
       width: 200,
       fixed: 'right',
       slots: { default: 'actions' },
@@ -193,7 +203,7 @@ export function useDemo01ContactImportSchema(): VbenFormSchema[] {
   return [
     {
       fieldName: 'file',
-      label: '示例联系人',
+      label: $t('ui.actionTitle.import'),
       component: 'Upload',
       rules: 'required',
       componentProps: {

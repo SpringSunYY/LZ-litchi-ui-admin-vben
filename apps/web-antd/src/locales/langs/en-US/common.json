@@ -22,6 +22,8 @@
   "deleteBatch": "Delete Batch",
   "create": "Create",
   "detail": "Detail",
+  "import": "Import",
+  "operation": "Operation",
   "grant": "Grant",
   "viewMenu": "View Menu {0}",
   "yes": "Yes",

@@ -19,11 +19,16 @@
     "deleteBatch": "批量删除",
     "detail": "详情{0}",
     "view": "查看{0}",
-    "import": "导入",
+    "import": "导入{0}",
+    "importTemplate": "导入模板{0}",
     "export": "导出"
   },
+  "actionName": {
+    "reset": "重置",
+    "search": "搜索"
+  },
   "actionMessage": {
-    "deleteConfirm": "确定删除 {0} 吗？",
+    "deleteConfirm": "确认删除{0}？",
     "deleteCascadeConfirm": "确定删除 {0} 吗？",
     "deleting": "正在删除 {0} ...",
     "deleteSuccess": "{0} 删除成功",
@@ -41,8 +46,9 @@
     "externalCloseTip": "关闭后你所填写的数据将会丢失"
   },
   "placeholder": {
-    "input": "请输入",
-    "select": "请选择"
+    "input": "请输入{0}",
+    "select": "请选择{0}",
+    "date": "请选择{0}"
   },
   "captcha": {
     "title": "请完成安全验证",
@@ -161,6 +167,18 @@
   },
   "filePreview": {
     "viewFile": "查看文件"
+  },
+  "select": {
+    "dictPlaceholder": "请选择"
+  },
+  "dateRange": {
+    "separator": "至",
+    "start": "开始日期",
+    "end": "结束日期"
+  },
+  "treeRoot": "顶级",
+  "validation": {
+    "required": "{0}不能为空"
   },
   "common": {
     "yes": "是",

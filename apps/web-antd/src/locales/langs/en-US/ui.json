@@ -19,8 +19,13 @@
     "deleteBatch": "Delete Batch",
     "detail": "Detail {0}",
     "view": "View {0}",
-    "import": "Import",
+    "import": "Import {0}",
+    "importTemplate": "Import Template {0}",
     "export": "Export"
+  },
+  "actionName": {
+    "reset": "Reset",
+    "search": "Search"
   },
   "actionMessage": {
     "deleteConfirm": "Are you sure to delete {0}?",
@@ -41,17 +46,18 @@
     "externalCloseTip": "Your data will be lost after closing"
   },
   "placeholder": {
-    "input": "Please enter",
-    "select": "Please select"
+    "input": "Please enter {0}",
+    "select": "Please select {0}",
+    "date": "Please select {0}"
   },
   "captcha": {
     "title": "Please complete the security verification",
     "sliderSuccessText": "Passed",
-    "sliderDefaultText": "Slider and drag",
-    "alt": "Supports img tag src attribute value",
+    "sliderDefaultText": "Slide and drag",
     "sliderRotateDefaultTip": "Click picture to refresh",
     "sliderRotateFailTip": "Validation failed",
     "sliderRotateSuccessTip": "Validation successful, time {0} seconds",
+    "alt": "Supports img tag src attribute value",
     "refreshAriaLabel": "Refresh captcha",
     "confirmAriaLabel": "Confirm selection",
     "confirm": "Confirm",
@@ -161,6 +167,18 @@
   },
   "filePreview": {
     "viewFile": "View File"
+  },
+  "select": {
+    "dictPlaceholder": "Please select"
+  },
+  "dateRange": {
+    "separator": "to",
+    "start": "Start Date",
+    "end": "End Date"
+  },
+  "treeRoot": "Top Level",
+  "validation": {
+    "required": "{0} cannot be empty"
   },
   "common": {
     "yes": "Yes",

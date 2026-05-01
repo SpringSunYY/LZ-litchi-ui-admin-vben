@@ -91,6 +91,7 @@ async function handleDeleteBatch() {
 }
 
 const checkedIds = ref<number[]>([]);
+
 function handleRowCheckboxChange({
   records,
 }: {
@@ -102,7 +103,10 @@ function handleRowCheckboxChange({
 /** 导出表格 */
 async function handleExport() {
   const data = await exportDemo01Contact(await gridApi.formApi.getValues());
-  downloadFileFromBlobPart({ fileName: '示例联系人.xls', source: data });
+  downloadFileFromBlobPart({
+    fileName: `${$t('infra:demo01-contact')}.xls`,
+    source: data,
+  });
 }
 
 const [Grid, gridApi] = useVbenVxeGrid({
@@ -155,26 +159,28 @@ const [Grid, gridApi] = useVbenVxeGrid({
     <FormModalDrawer @success="onRefresh" />
     <ImportModal @success="onRefresh" />
 
-    <Grid table-title="示例联系人列表">
+    <Grid :table-title="$t('infra:demo01-contact')">
       <template #toolbar-tools>
         <TableAction
           :actions="[
             {
-              label: $t('ui.actionTitle.create', ['示例联系人']),
+              label: $t('ui.actionTitle.create', [$t('infra:demo01-contact')]),
               type: 'primary',
               icon: ACTION_ICON.ADD,
               auth: ['infra:demo01-contact:create'],
               onClick: handleCreate,
             },
             {
-              label: $t('ui.actionTitle.export'),
+              label: $t('ui.actionTitle.export', [$t('infra:demo01-contact')]),
               type: 'primary',
               icon: ACTION_ICON.DOWNLOAD,
               auth: ['infra:demo01-contact:export'],
               onClick: handleExport,
             },
             {
-              label: $t('ui.actionTitle.deleteBatch'),
+              label: $t('ui.actionTitle.deleteBatch', [
+                $t('infra:demo01-contact'),
+              ]),
               type: 'primary',
               danger: true,
               icon: ACTION_ICON.DELETE,
@@ -183,7 +189,7 @@ const [Grid, gridApi] = useVbenVxeGrid({
               onClick: handleDeleteBatch,
             },
             {
-              label: $t('ui.actionTitle.import', ['示例联系人']),
+              label: $t('ui.actionTitle.import', [$t('infra:demo01-contact')]),
               type: 'primary',
               icon: ACTION_ICON.UPLOAD,
               auth: ['infra:demo01-contact:import'],
@@ -196,20 +202,23 @@ const [Grid, gridApi] = useVbenVxeGrid({
         <TableAction
           :actions="[
             {
-              label: $t('common.edit'),
+              label: $t('common.edit', [$t('infra:demo01-contact')]),
               type: 'link',
               icon: ACTION_ICON.EDIT,
               auth: ['infra:demo01-contact:update'],
               onClick: handleEdit.bind(null, row),
             },
             {
-              label: $t('common.delete'),
+              label: $t('common.delete', [$t('infra:demo01-contact')]),
               type: 'link',
               danger: true,
               icon: ACTION_ICON.DELETE,
               auth: ['infra:demo01-contact:delete'],
               popConfirm: {
-                title: $t('ui.actionMessage.deleteConfirm', [row.id]),
+                title: $t('ui.actionMessage.deleteConfirm', [
+                  row.id,
+                  $t('infra:demo01-contact'),
+                ]),
                 confirm: handleDelete.bind(null, row),
               },
             },

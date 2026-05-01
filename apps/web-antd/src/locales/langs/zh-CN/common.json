@@ -22,6 +22,8 @@
   "deleteBatch": "批量删除",
   "create": "新增",
   "detail": "详情",
+  "import": "导入",
+  "operation": "操作",
   "grant": "授权",
   "viewMenu": "查看菜单 {0}",
   "yes": "是",

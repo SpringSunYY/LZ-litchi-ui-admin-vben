@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import { $t } from '@vben/locales';
+
 import {
   importDemo01Contact,
   importDemo01ContactTemplate,
@@ -12,10 +14,12 @@ const emit = defineEmits(['success']);
 
 <template>
   <ImportExcel
-    title="导入示例联系人"
+    :title="`${$t('ui.actionTitle.import', [$t('infra:demo01-contact')])}.xlsx`"
     :import-api="importDemo01Contact"
     :template-api="importDemo01ContactTemplate"
-    template-file-name="示例联系人导入模板.xls"
+    :template-file-name="`${$t('ui.actionTitle.importTemplate', [
+      $t('infra:demo01-contact'),
+    ])}.xlsx`"
     :form-schema="useDemo01ContactImportSchema"
     @success="emit('success')"
   />
