@@ -31,16 +31,61 @@ const localesMap = loadLocalesMapFromDir(
 );
 
 /**
- * 从后端加载翻译消息
+ * 生成当天的缓存键
+ * @param lang 语言代码
+ */
+function getCacheKey(lang: SupportedLanguagesType): string {
+  const today = new Date().toISOString().split('T')[0]; // 格式: YYYY-MM-DD
+  return `i18n_messages_${lang}_${today}`;
+}
+
+/**
+ * 清除所有旧的 i18n 缓存（非当天的所有语言缓存）
+ */
+function clearOldI18nCache(): void {
+  const today = new Date().toISOString().split('T')[0];
+  const prefix = 'i18n_messages_';
+  const keysToRemove: string[] = [];
+
+  for (let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i);
+    if (
+      key &&
+      key.startsWith(prefix) && // 检查是否不是今天的缓存
+      //@ts-ignore
+      !key.endsWith(today)
+    ) {
+      keysToRemove.push(key);
+    }
+  }
+
+  // 删除所有旧缓存
+  keysToRemove.forEach((key) => {
+    localStorage.removeItem(key);
+  });
+}
+
+/**
+ * 从后端加载翻译消息，带本地缓存
  * @param lang 语言代码
  */
 async function fetchRemoteMessages(
   lang: SupportedLanguagesType,
 ): Promise<null | Record<string, string>> {
   try {
+    const cacheKey = getCacheKey(lang);
+
+    // 尝试从缓存中获取当天的数据
+    const cachedData = localStorage.getItem(cacheKey);
+    if (cachedData) {
+      return JSON.parse(cachedData);
+    }
+
+    // 缓存未命中，从后端获取数据
     const res = await getI18nLocaleMessage(2);
     // API 返回格式: { code, data: [{ messageKey, locale, message }], msg }
     const data = (res as any)?.data ?? res;
+
     if (Array.isArray(data)) {
       const remoteMessages: Record<string, string> = {};
       for (const item of data) {
@@ -48,6 +93,13 @@ async function fetchRemoteMessages(
           remoteMessages[item.messageKey] = item.message;
         }
       }
+
+      // 清除所有旧的缓存数据（所有语言的旧缓存）
+      clearOldI18nCache();
+
+      // 存储新的缓存数据
+      localStorage.setItem(cacheKey, JSON.stringify(remoteMessages));
+
       return remoteMessages;
     }
   } catch (error) {

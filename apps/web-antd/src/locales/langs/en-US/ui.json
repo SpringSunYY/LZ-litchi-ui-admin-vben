@@ -181,5 +181,11 @@
     "yes": "Yes",
     "no": "No",
     "table": "Table"
+  },
+  "menu": {
+    "clearCache": "Clear Cache"
+  },
+  "alert": {
+    "clearCacheSuccess": "Cleared {count} cache entries. Page will refresh in 1 second"
   }
 }

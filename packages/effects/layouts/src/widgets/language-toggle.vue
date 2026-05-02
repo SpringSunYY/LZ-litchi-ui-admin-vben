@@ -1,14 +1,16 @@
 <script setup lang="ts">
 import type { SupportedLanguagesType } from '@vben/locales';
 
-import { onMounted, ref, watch } from 'vue';
+import { computed, onMounted, ref, watch } from 'vue';
 
 import { SUPPORT_LANGUAGES } from '@vben/constants';
 import { Languages } from '@vben/icons';
-import { loadLocaleMessages } from '@vben/locales';
+import { $t, loadLocaleMessages } from '@vben/locales';
 import { preferences, updatePreferences } from '@vben/preferences';
 
 import { VbenDropdownRadioMenu, VbenIconButton } from '@vben-core/shadcn-ui';
+
+import { Trash2 } from 'lucide-vue-next';
 
 interface I18nLocale {
   localeName?: string;
@@ -79,6 +81,31 @@ async function loadMenu() {
   }
 }
 
+/** 清除所有 i18n 缓存 */
+function clearI18nCache() {
+  const prefix = 'i18n_messages_';
+  const keysToRemove: string[] = [];
+
+  for (let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i);
+    if (key && key.startsWith(prefix)) {
+      keysToRemove.push(key);
+    }
+  }
+
+  keysToRemove.forEach((key) => {
+    localStorage.removeItem(key);
+  });
+
+  // 显示提示消息（使用国际化）
+  alert($t('ui.alert.clearCacheSuccess', { count: keysToRemove.length }));
+
+  // 延迟刷新页面以重新加载翻译
+  setTimeout(() => {
+    window.location.reload();
+  }, 1000);
+}
+
 async function handleUpdate(value: string | undefined) {
   if (!value) return;
   const lang = toFrameworkLocale(value);
@@ -108,6 +135,28 @@ function syncCurrentValue() {
   }
 }
 
+/** 构建下拉菜单项 */
+const dropdownMenus = computed(() => {
+  const languages =
+    menuItems.value.length > 0 ? menuItems.value : SUPPORT_LANGUAGES;
+
+  const languageMenus = languages.map((item) => ({
+    label: item.label,
+    value: item.value,
+  }));
+
+  return [
+    ...languageMenus,
+    { separator: true, label: '', value: 'separator-1' },
+    {
+      label: $t('ui.menu.clearCache'),
+      value: 'clear-cache',
+      icon: Trash2,
+      handler: clearI18nCache,
+    },
+  ];
+});
+
 watch(
   () => preferences.app.locale,
   () => {
@@ -124,7 +173,7 @@ onMounted(async () => {
 <template>
   <div>
     <VbenDropdownRadioMenu
-      :menus="menuItems.length > 0 ? menuItems : SUPPORT_LANGUAGES"
+      :menus="dropdownMenus"
       :model-value="currentValue"
       @update:model-value="handleUpdate"
     >

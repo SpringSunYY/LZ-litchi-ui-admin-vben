@@ -181,5 +181,11 @@
     "yes": "是",
     "no": "否",
     "table": "表"
+  },
+  "menu": {
+    "clearCache": "清除缓存"
+  },
+  "alert": {
+    "clearCacheSuccess": "已清除 {count} 条缓存数据，页面将在 1 秒后刷新"
   }
 }
