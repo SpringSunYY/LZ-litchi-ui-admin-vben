@@ -157,6 +157,11 @@
   "filePreview": {
     "viewFile": "View File"
   },
+  "link": {
+    "view": "View",
+    "openLink": "Open Link",
+    "copyLink": "Copy Link"
+  },
   "select": {
     "dictPlaceholder": "Please select"
   },

@@ -166,28 +166,25 @@ export function useGridColumns(): VxeTableGridOptions<AreaApi.Area>['columns'] {
     {
       field: 'id',
       title: 'ID',
-      minWidth: 120,
     },
     {
       field: 'name',
       title: '地区名称',
-      minWidth: 120,
+      minWidth: 150,
       treeNode: true,
     },
     {
       field: 'postalCode',
       title: '邮政编码',
-      minWidth: 120,
     },
     {
       field: 'parentId',
       title: '父级ID',
-      minWidth: 120,
+      visible: false,
     },
     {
       field: 'level',
       title: '层级',
-      minWidth: 120,
       cellRender: {
         name: 'CellDict',
         props: { type: DICT_TYPE.SYSTEM_AREA_LEVEL },
@@ -196,29 +193,29 @@ export function useGridColumns(): VxeTableGridOptions<AreaApi.Area>['columns'] {
     {
       field: 'longitude',
       title: '经度',
-      minWidth: 120,
     },
     {
       field: 'latitude',
       title: '纬度',
-      minWidth: 120,
     },
     {
       field: 'source',
       title: '数据来源',
-      minWidth: 120,
-      slots: { default: 'source' },
+      cellRender: {
+        name: 'CellLink',
+      },
     },
     {
       field: 'geoJson',
       title: 'GeoJson',
-      minWidth: 120,
-      slots: { default: 'geoJson' },
+      cellRender: {
+        name: 'CellLink',
+      },
     },
     {
       field: 'sortNum',
       title: '排序号',
-      minWidth: 120,
+      visible: false,
     },
     {
       field: 'createTime',

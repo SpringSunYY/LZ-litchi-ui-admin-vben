@@ -179,18 +179,6 @@ const [Grid, gridApi] = useVbenVxeGrid({
           ]"
         />
       </template>
-      <template #source="{ row }">
-        <a v-if="row.source" @click="handleViewURL(row.source)">
-          {{ row.source }}
-        </a>
-        <span v-else>-</span>
-      </template>
-      <template #geoJson="{ row }">
-        <a v-if="row.geoJson" @click="handleViewURL(row.geoJson)">
-          {{ row.geoJson }}
-        </a>
-        <span v-else>-</span>
-      </template>
     </Grid>
   </Page>
 </template>

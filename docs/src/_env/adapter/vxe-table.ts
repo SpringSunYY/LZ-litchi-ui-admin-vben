@@ -2,7 +2,7 @@ import { h } from 'vue';
 
 import { setupVbenVxeTable, useVbenVxeGrid } from '@vben/plugins/vxe-table';
 
-import { Button, Image } from 'ant-design-vue';
+import { Button, Image, Tooltip } from 'ant-design-vue';
 
 import { useVbenForm } from './form';
 
@@ -48,12 +48,28 @@ if (!import.meta.env.SSR) {
 
       // 表格配置项可以用 cellRender: { name: 'CellLink' },
       vxeUI.renderer.add('CellLink', {
-        renderTableDefault(renderOpts) {
-          const { props } = renderOpts;
+        renderTableDefault(_renderOpts, params) {
+          const { column, row } = params;
+          const value = row[column.field];
           return h(
-            Button,
-            { size: 'small', type: 'link' },
-            { default: () => props?.text },
+            Tooltip,
+            { title: value ? `在新窗口打开链接: ${value}` : '无链接' },
+            {
+              default: () =>
+                h(
+                  Button,
+                  {
+                    size: 'small',
+                    type: 'link',
+                    disabled: !value,
+                    onClick: (e: MouseEvent) => {
+                      e.stopPropagation();
+                      if (value) window.open(value, '_blank');
+                    },
+                  },
+                  { default: () => value ?? '-' },
+                ),
+            },
           );
         },
       });

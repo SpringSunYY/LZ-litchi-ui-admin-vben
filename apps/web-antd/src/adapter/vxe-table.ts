@@ -22,6 +22,7 @@ import { Button, Image, Popconfirm, Switch } from 'ant-design-vue';
 import { DictTag } from '#/components/dict-tag';
 import { FilePreview } from '#/components/file-preview';
 import CellImage from '#/components/image/cell-image.vue';
+import CellLink from '#/components/link/cell-link.vue';
 import { $t } from '#/locales';
 
 import { useVbenForm } from './form';
@@ -130,13 +131,11 @@ setupVbenVxeTable({
 
     // 表格配置项可以用 cellRender: { name: 'CellLink' },
     vxeUI.renderer.add('CellLink', {
-      renderTableDefault(renderOpts) {
-        const { props } = renderOpts;
-        return h(
-          Button,
-          { size: 'small', type: 'link' },
-          { default: () => props?.text },
-        );
+      //@ts-ignore
+      renderTableDefault(renderOpts, params) {
+        const { column, row } = params;
+        const value = row[column.field];
+        return h(CellLink, { url: value });
       },
     });
 

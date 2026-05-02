@@ -157,6 +157,11 @@
   "filePreview": {
     "viewFile": "查看文件"
   },
+  "link": {
+    "view": "查看",
+    "openLink": "打开链接",
+    "copyLink": "复制链接"
+  },
   "select": {
     "dictPlaceholder": "请选择"
   },
