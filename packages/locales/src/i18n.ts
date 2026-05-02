@@ -20,6 +20,8 @@ const i18n = createI18n({
   legacy: false,
   locale: '',
   fallbackLocale: DEFAULT_LOCALE,
+  missingWarn: false,
+  fallbackWarn: false,
   messages: {},
 });
 
@@ -143,14 +145,9 @@ async function setupI18n(app: App, options: LocaleSetupOptions = {}) {
   app.use(i18n);
   await loadLocaleMessages(defaultLocale);
 
-  // 在控制台打印警告
-  i18n.global.setMissingHandler((locale, key) => {
-    if (options.missingWarn && key.includes('.')) {
-      console.warn(
-        `[intlify] Not found '${key}' key in '${locale}' locale messages.`,
-      );
-    }
-  });
+  // 禁用控制台警告，避免大量缺失翻译的日志输出
+  // i18n.global.missingWarn = false;
+  // i18n.global.mustUseParams = false;
 }
 
 /**

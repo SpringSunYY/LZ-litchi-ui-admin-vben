@@ -126,6 +126,8 @@ async function loadApplicationPlugins(
             compositionOnly: true,
             fullInstall: true,
             runtimeOnly: true,
+            strictMessage: false,
+            warning: false,
           }),
         ];
       },
