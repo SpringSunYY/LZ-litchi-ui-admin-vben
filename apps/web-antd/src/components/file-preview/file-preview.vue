@@ -37,7 +37,7 @@ const fileList = computed(() => {
 
 <template>
   <template v-if="fileList.length > 0">
-    <a-popover v-model:open="visible" placement="top" trigger="click">
+    <a-popover v-model:open="visible" placement="top" trigger="hover">
       <template #title>{{ $t('ui.filePreview.viewFile') }}</template>
       <template #content>
         <div
