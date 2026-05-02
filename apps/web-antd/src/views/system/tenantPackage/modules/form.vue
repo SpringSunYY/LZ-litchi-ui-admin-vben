@@ -31,7 +31,6 @@ const [Form, formApi] = useVbenForm({
       class: 'w-full',
     },
     formItemClass: 'col-span-2',
-    labelWidth: 80,
   },
   layout: 'horizontal',
   schema: useFormSchema(),
@@ -39,6 +38,7 @@ const [Form, formApi] = useVbenForm({
 });
 
 const [FormModelDrawer, formModelDrawerApi] = useVbenModelDrawer({
+  contentClass: '!px-4',
   async onConfirm() {
     const { valid } = await formApi.validate();
     if (!valid) {
@@ -82,7 +82,7 @@ const [FormModelDrawer, formModelDrawerApi] = useVbenModelDrawer({
 </script>
 
 <template>
-  <FormModelDrawer class="w-[60%]" :title="getTitle">
+  <FormModelDrawer :title="getTitle">
     <Form class="mx-6" />
   </FormModelDrawer>
 </template>

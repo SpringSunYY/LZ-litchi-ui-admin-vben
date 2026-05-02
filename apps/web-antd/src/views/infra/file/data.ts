@@ -66,7 +66,9 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
     {
       field: 'url',
       title: 'URL',
-      showOverflow: true,
+      cellRender: {
+        name: 'CellLink',
+      },
     },
     {
       field: 'size',

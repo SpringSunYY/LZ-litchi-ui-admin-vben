@@ -3,7 +3,7 @@ import type { SystemTenantApi } from '#/api/system/tenant';
 
 import { computed, ref } from 'vue';
 
-import { useVbenModal } from '@vben/common-ui';
+import {useVbenModal, useVbenModelDrawer} from '@vben/common-ui';
 
 import { message } from 'ant-design-vue';
 
@@ -34,23 +34,23 @@ const [Form, formApi] = useVbenForm({
   showDefaultActions: false,
 });
 
-const [Modal, modalApi] = useVbenModal({
+const [ModalDrawer, modalDrawerApi] = useVbenModelDrawer({
   async onConfirm() {
     const { valid } = await formApi.validate();
     if (!valid) {
       return;
     }
-    modalApi.lock();
+    modalDrawerApi.lock();
     // 提交表单
     const data = (await formApi.getValues()) as SystemTenantApi.Tenant;
     try {
       await (formData.value ? updateTenant(data) : createTenant(data));
       // 关闭并提示
-      await modalApi.close();
+      await modalDrawerApi.close();
       emit('success');
       message.success($t('ui.actionMessage.operationSuccess'));
     } finally {
-      modalApi.unlock();
+      modalDrawerApi.unlock();
     }
   },
   async onOpenChange(isOpen: boolean) {
@@ -59,23 +59,23 @@ const [Modal, modalApi] = useVbenModal({
       return;
     }
     // 加载数据
-    const data = modalApi.getData<SystemTenantApi.Tenant>();
+    const data = modalDrawerApi.getData<SystemTenantApi.Tenant>();
     if (!data || !data.id) {
       return;
     }
-    modalApi.lock();
+    modalDrawerApi.lock();
     try {
       formData.value = await getTenant(data.id as number);
       // 设置到 values
       await formApi.setValues(formData.value);
     } finally {
-      modalApi.unlock();
+      modalDrawerApi.unlock();
     }
   },
 });
 </script>
 <template>
-  <Modal :title="getTitle">
+  <ModalDrawer :title="getTitle">
     <Form class="mx-4" />
-  </Modal>
+  </ModalDrawer>
 </template>

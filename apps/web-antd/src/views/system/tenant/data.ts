@@ -121,7 +121,6 @@ export function useFormSchema(): VbenFormSchema[] {
       label: '绑定域名',
       fieldName: 'website',
       component: 'Input',
-      rules: 'required',
     },
     {
       fieldName: 'status',
@@ -346,7 +345,7 @@ export function useGridColumns(): VxeTableGridOptions<SystemTenantApi.Tenant>['c
     },
     {
       title: '操作',
-      width: 200,
+      width: 220,
       fixed: 'right',
       slots: { default: 'actions' },
     },

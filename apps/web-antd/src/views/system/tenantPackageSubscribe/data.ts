@@ -27,10 +27,10 @@ export function useFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'packageCode',
       label: '套餐编码',
-      disabled: true,
       rules: 'required',
       component: 'Input',
       componentProps: {
+        readOnly: true,
         placeholder: '请输入套餐编码',
       },
     },
@@ -38,9 +38,9 @@ export function useFormSchema(): VbenFormSchema[] {
       fieldName: 'price',
       label: '套餐价格',
       rules: 'required',
-      disabled: true,
       component: 'Input',
       componentProps: {
+        readOnly: true,
         placeholder: '请输入套餐价格',
       },
     },
@@ -57,9 +57,9 @@ export function useFormSchema(): VbenFormSchema[] {
       fieldName: 'tenantCode',
       label: '租户编码',
       rules: 'required',
-      disabled: true,
       component: 'Input',
       componentProps: {
+        readOnly: true,
         placeholder: '请输入租户编码',
       },
     },
@@ -90,13 +90,12 @@ export function useFormSchema(): VbenFormSchema[] {
       fieldName: 'totalPrice',
       label: '总价格',
       rules: 'required',
-      disabled: true,
       component: 'InputNumber',
       componentProps: {
+        readonly: true,
         min: 0,
         precision: 2,
         defaultValue: 0,
-        readOnly: true,
         placeholder: '请输入总价格',
       },
     },
@@ -105,6 +104,7 @@ export function useFormSchema(): VbenFormSchema[] {
       label: '订阅状态',
       rules: 'required',
       component: 'RadioGroup',
+      defaultValue: 1,
       componentProps: {
         options: getDictOptions(
           DICT_TYPE.SYSTEM_TENANT_PACKAGE_SUBSCRIBE_STATUS,
@@ -119,6 +119,7 @@ export function useFormSchema(): VbenFormSchema[] {
       label: '支付状态',
       rules: 'required',
       component: 'RadioGroup',
+      defaultValue: 0,
       componentProps: {
         options: getDictOptions(
           DICT_TYPE.SYSTEM_TENANT_PACKAGE_SUBSCRIBE_PAY_STATUS,

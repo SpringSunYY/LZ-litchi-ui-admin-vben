@@ -16,6 +16,8 @@ import {
   ref,
 } from 'vue';
 
+import dayjs from 'dayjs';
+
 import { ApiComponent, globalShareState, IconPicker } from '@vben/common-ui';
 import { $t } from '@vben/locales';
 
@@ -57,6 +59,36 @@ const RadioGroup = defineAsyncComponent(() =>
 const RangePicker = defineAsyncComponent(() =>
   import('ant-design-vue/es/date-picker').then((res) => res.RangePicker),
 );
+
+// Number 转 dayjs 包装器
+const withDayjsValue = (component: Component) => {
+  return defineComponent({
+    name: (component as any).name ? `${(component as any).name}Wrapper` : 'DayjsValueWrapper',
+    inheritAttrs: false,
+    setup: (_props, { attrs, slots }) => {
+      const handleChange = (value: any) => {
+        const onUpdate = attrs['onUpdate:value'] as Function | undefined;
+        const onChange = attrs['onChange'] as Function | undefined;
+        onUpdate?.(value);
+        onChange?.(value);
+      };
+      return () => {
+        const { value, onChange, ...rest } = attrs;
+        let dayjsValue = value;
+        if (typeof value === 'number') {
+          dayjsValue = dayjs(value);
+        } else if (Array.isArray(value)) {
+          dayjsValue = value.map((v) => (typeof v === 'number' ? dayjs(v) : v));
+        }
+        return h(
+          component,
+          { ...rest, value: dayjsValue, onChange: handleChange },
+          slots,
+        );
+      };
+    },
+  });
+};
 const Rate = defineAsyncComponent(() => import('ant-design-vue/es/rate'));
 const Select = defineAsyncComponent(() => import('ant-design-vue/es/select'));
 const Space = defineAsyncComponent(() => import('ant-design-vue/es/space'));
@@ -177,7 +209,7 @@ async function initComponentAdapter() {
     AutoComplete,
     Checkbox,
     CheckboxGroup,
-    DatePicker,
+    DatePicker: withDayjsValue(DatePicker),
     // 自定义默认按钮
     DefaultButton: (props, { attrs, slots }) => {
       return h(Button, { ...props, attrs, type: 'default' }, slots);
@@ -199,14 +231,14 @@ async function initComponentAdapter() {
     },
     Radio,
     RadioGroup,
-    RangePicker,
+    RangePicker: withDayjsValue(RangePicker),
     Rate,
     Select: withDefaultPlaceholder(Select, 'select'),
     Space,
     Switch,
     Textarea: withDefaultPlaceholder(Textarea, 'input'),
     RichTextarea,
-    TimePicker,
+    TimePicker: withDayjsValue(TimePicker),
     TreeSelect: withDefaultPlaceholder(TreeSelect, 'select'),
     Upload,
     FilePreview,

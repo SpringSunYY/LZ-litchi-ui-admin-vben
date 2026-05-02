@@ -5,7 +5,12 @@ import type { SystemTenantApi } from '#/api/system/tenant';
 
 import { onMounted, ref } from 'vue';
 
-import { DocAlert, Page, useVbenDrawer, useVbenModal } from '@vben/common-ui';
+import {
+  DocAlert,
+  Page,
+  useVbenDrawer,
+  useVbenModelDrawer,
+} from '@vben/common-ui';
 import { downloadFileFromBlobPart } from '@vben/utils';
 
 import { message, TreeSelect } from 'ant-design-vue';
@@ -24,11 +29,14 @@ import MenuDrawer from '#/views/system/tenant/modules/MenuDrawer.vue';
 import { useGridColumns, useGridFormSchema } from './data';
 import Form from './modules/form.vue';
 
-const [FormModal, formModalApi] = useVbenModal({
+/** 表单弹窗 */
+const [FormModalDrawer, formModalDrawerApi] = useVbenModelDrawer({
   connectedComponent: Form,
   destroyOnClose: true,
+  type: 'drawer',
 });
 
+/** 菜单授权弹窗 */
 const [DrawerModal, formDrawerApi] = useVbenDrawer({
   connectedComponent: MenuDrawer,
   destroyOnClose: true,
@@ -53,12 +61,12 @@ async function handleExport() {
 
 /** 创建租户 */
 function handleCreate() {
-  formModalApi.setData(null).open();
+  formModalDrawerApi.setData(null).open();
 }
 
 /** 编辑租户 */
 function handleEdit(row: SystemTenantApi.Tenant) {
-  formModalApi.setData(row).open();
+  formModalDrawerApi.setData(row).open();
 }
 
 /** 删除租户 */
@@ -183,7 +191,7 @@ onMounted(() => {
       <DocAlert title="SaaS 多租户" url="https://doc.iocoder.cn/saas-tenant/" />
     </template>
     <DrawerModal />
-    <FormModal @success="onRefresh" />
+    <FormModalDrawer @success="onRefresh" />
     <Grid table-title="租户列表">
       <template #form-addressCode="slotProps">
         <TreeSelect

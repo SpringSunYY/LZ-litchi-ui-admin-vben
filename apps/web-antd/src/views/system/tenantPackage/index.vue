@@ -22,12 +22,14 @@ import { useGridColumns, useGridFormSchema } from './data';
 import Form from './modules/form.vue';
 import MenuAuthDrawer from './modules/MenuAuthDrawer.vue';
 
+/** 创建/修改的表单 */
 const [FormModelDrawer, formModelDrawerApi] = useVbenModelDrawer({
   connectedComponent: Form,
   destroyOnClose: true,
   type: 'drawer',
 });
 
+/** 菜单授权 */
 const [DrawerModal, formDrawerApi] = useVbenDrawer({
   connectedComponent: MenuAuthDrawer,
   destroyOnClose: true,

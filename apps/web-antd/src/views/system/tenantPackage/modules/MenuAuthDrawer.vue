@@ -105,7 +105,7 @@ function getAllNodeIds(nodes: any[], ids: number[] = []): number[] {
 </script>
 
 <template>
-  <Drawer :title="$t('common.grant')" class="min-h-full w-[60%]">
+  <Drawer :title="$t('common.grant')" class="min-h-full w-[50%]">
     <Spin
       :spinning="menuLoading"
       class="flex min-h-[80vh] w-full items-center justify-center"

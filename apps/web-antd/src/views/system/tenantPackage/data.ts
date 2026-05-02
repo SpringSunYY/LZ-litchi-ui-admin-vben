@@ -38,8 +38,11 @@ export function useFormSchema(): VbenFormSchema[] {
       formItemClass: 'col-span-1',
       rules: 'required',
       component: 'Input',
-      componentProps: {
-        placeholder: '请输入套餐编码',
+      componentProps: (values) => {
+        return {
+          placeholder: '请输入键',
+          readOnly: !!values.id,
+        };
       },
     },
     {
@@ -48,6 +51,7 @@ export function useFormSchema(): VbenFormSchema[] {
       rules: 'required',
       formItemClass: 'col-span-1',
       component: 'InputNumber',
+      defaultValue: 0,
       componentProps: {
         min: 0,
         precision: 2,
@@ -60,6 +64,7 @@ export function useFormSchema(): VbenFormSchema[] {
       rules: 'required',
       formItemClass: 'col-span-1',
       component: 'InputNumber',
+      defaultValue: 1,
       componentProps: {
         min: 0,
         max: 10,
@@ -72,6 +77,7 @@ export function useFormSchema(): VbenFormSchema[] {
       rules: 'required',
       formItemClass: 'col-span-1',
       component: 'InputNumber',
+      defaultValue: 0,
       componentProps: {
         min: 0,
         placeholder: '请输入订阅数',
@@ -83,6 +89,7 @@ export function useFormSchema(): VbenFormSchema[] {
       rules: 'required',
       component: 'InputNumber',
       formItemClass: 'col-span-1',
+      defaultValue: 0,
       componentProps: {
         min: 0,
         precision: 2,
@@ -94,6 +101,7 @@ export function useFormSchema(): VbenFormSchema[] {
       label: '状态',
       formItemClass: 'col-span-1',
       component: 'RadioGroup',
+      defaultValue: 0,
       componentProps: {
         options: getDictOptions(
           DICT_TYPE.SYSTEM_TENANT_PACKAGE_STATUS,
@@ -110,6 +118,7 @@ export function useFormSchema(): VbenFormSchema[] {
       rules: 'required',
       formItemClass: 'col-span-1',
       component: 'RadioGroup',
+      defaultValue: 0,
       componentProps: {
         options: getDictOptions(
           DICT_TYPE.SYSTEM_TENANT_PACKAGE_PUBLISHED,
@@ -125,21 +134,22 @@ export function useFormSchema(): VbenFormSchema[] {
       formItemClass: 'col-span-1',
       rules: 'required',
       component: 'Select',
+      defaultValue: 0,
       componentProps: {
         options: getDictOptions(DICT_TYPE.SYSTEM_TENANT_PACKAGE_TYPE, 'number'),
         placeholder: '请选择套餐类型',
       },
     },
     {
-      fieldName: 'description',
-      label: '套餐描述',
-      component: 'RichTextarea',
-    },
-    {
       fieldName: 'logo',
       label: 'LOGO',
       rules: 'required',
       component: 'ImageUpload',
+    },
+    {
+      fieldName: 'description',
+      label: '套餐描述',
+      component: 'RichTextarea',
     },
     {
       fieldName: 'remark',

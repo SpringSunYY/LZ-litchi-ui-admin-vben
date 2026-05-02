@@ -51,7 +51,7 @@ const [Form, formApi] = useVbenForm({
     const price = Number(values.price) || 0;
     const days = Number(values.days) || 0;
     const discountPrice = Number(values.discountPrice) || 0;
-    const startTime = dayjs(values.startTime);
+    const startTime = dayjs(Number(values.startTime));
 
     if (
       (fieldsChanged.includes('startTime') || fieldsChanged.includes('days')) &&
@@ -76,7 +76,7 @@ const doRecalc = (values: Record<string, any>) => {
   const price = Number(values.price) || 0;
   const days = Number(values.days) || 0;
   const discountPrice = Number(values.discountPrice) || 0;
-  const startTime = dayjs(values.startTime);
+  const startTime = dayjs(Number(values.startTime));
 
   if (startTime.isValid() && days > 0) {
     formApi.setFieldValue('endTime', startTime.add(days, 'day'));
@@ -210,7 +210,7 @@ const handleTenantPackageOpenChange = (open: boolean) => {
 </script>
 
 <template>
-  <ModalDrawer class="w-[60%]" :title="getTitle">
+  <ModalDrawer :title="getTitle">
     <Form class="mx-4">
       <template #tenantName="slotProps">
         <ASelect
@@ -222,6 +222,7 @@ const handleTenantPackageOpenChange = (open: boolean) => {
           :options="tenantOptions"
           :field-names="{ label: 'name', value: 'name', key: 'id' }"
           :filter-option="false"
+          :disabled="!!formData?.id"
           class="w-full"
           @search="handleTenantSearch"
           @change="handleTenantChange"
@@ -238,6 +239,7 @@ const handleTenantPackageOpenChange = (open: boolean) => {
           :options="tenantPackageOptions"
           :field-names="{ label: 'name', value: 'name', key: 'id' }"
           :filter-option="false"
+          :disabled="!!formData?.id"
           class="w-full"
           @search="handleTenantPackageSearch"
           @change="handleTenantPackageChange"
