@@ -17,6 +17,7 @@ import typescript from 'highlight.js/lib/languages/typescript';
 import xml from 'highlight.js/lib/languages/xml';
 
 import { previewCodegen } from '#/api/infra/codegen';
+import { $t } from '#/locales';
 
 /** 注册代码高亮语言 */
 hljs.registerLanguage('java', java);
@@ -80,7 +81,7 @@ async function copyCode() {
   );
   if (file) {
     await copy(file.code);
-    message.success('复制成功');
+    message.success($t('ui.actionMessage.copySuccess'));
   }
 }
 
@@ -226,7 +227,7 @@ const [Modal, modalApi] = useVbenModal({
 </script>
 
 <template>
-  <Modal title="代码预览">
+  <Modal :title="$t('infra.codegen.preview')">
     <div class="flex h-full" v-loading="loading">
       <!-- 文件树 -->
       <div
@@ -265,7 +266,7 @@ const [Modal, modalApi] = useVbenModal({
           </Tabs.TabPane>
           <template #rightExtra>
             <Button type="primary" ghost @click="copyCode" :icon="h(Copy)">
-              复制代码
+              {{ $t('ui.actionTitle.copy', [$t('infra.codegen.generateCode')]) }}
             </Button>
           </template>
         </Tabs>

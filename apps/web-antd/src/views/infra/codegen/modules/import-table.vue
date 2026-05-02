@@ -31,6 +31,7 @@ const [Grid] = useVbenVxeGrid({
   formOptions: {
     schema: useImportTableFormSchema(),
     submitOnChange: true,
+    labelWidth: 80,
   },
   gridOptions: {
     columns: useImportTableColumns(),
@@ -85,23 +86,23 @@ const [Grid] = useVbenVxeGrid({
 
 /** 模态框实例 */
 const [Modal, modalApi] = useVbenModal({
-  title: '导入表',
+  title: $t('infra.codegen.importTable'),
   class: 'w-1/2',
   async onConfirm() {
     // 1.1 获取表单值
     if (formData?.dataSourceConfigId === undefined) {
-      message.error('请选择数据源');
+      message.error($t('infra.codegen.selectDataSource'));
       return;
     }
     // 1.2 校验是否选择了表
     if (formData.tableNames.length === 0) {
-      message.error('请选择需要导入的表');
+      message.error($t('infra.codegen.selectTables'));
       return;
     }
     modalApi.lock();
     // 2. 提交请求
     const hideLoading = message.loading({
-      content: '导入中...',
+      content: () => $t('infra.codegen.importing'),
       key: 'action_key_msg',
     });
     try {

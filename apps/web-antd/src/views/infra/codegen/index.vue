@@ -3,15 +3,17 @@ import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 import type { InfraCodegenApi } from '#/api/infra/codegen';
 import type { InfraDataSourceConfigApi } from '#/api/infra/data-source-config';
 
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import { useRouter } from 'vue-router';
 
 import { DocAlert, Page, useVbenModal } from '@vben/common-ui';
+import { downloadFileFromBlobPart } from '@vben/utils';
 
 import { message } from 'ant-design-vue';
 
 import { ACTION_ICON, TableAction, useVbenVxeGrid } from '#/adapter/vxe-table';
 import {
+  batchDownloadCodegen,
   deleteCodegenTable,
   downloadCodegen,
   getCodegenTablePage,
@@ -29,6 +31,8 @@ const router = useRouter();
 const dataSourceConfigList = ref<InfraDataSourceConfigApi.DataSourceConfig[]>(
   [],
 );
+const selectedRows = ref<InfraCodegenApi.CodegenTable[]>([]);
+const selectedRowsCount = computed(() => selectedRows.value?.length ?? 0);
 
 /** 获取数据源名称 */
 const getDataSourceConfigName = (dataSourceConfigId: number) => {
@@ -70,13 +74,13 @@ function handleEdit(row: InfraCodegenApi.CodegenTable) {
 /** 删除代码生成配置 */
 async function handleDelete(row: InfraCodegenApi.CodegenTable) {
   const hideLoading = message.loading({
-    content: $t('ui.actionMessage.deleting', [row.tableName]),
+    content: $t('infra.actionMessage.deleting', [row.tableName]),
     duration: 0,
     key: 'action_process_msg',
   });
   try {
     await deleteCodegenTable(row.id);
-    message.success($t('ui.actionMessage.deleteSuccess', [row.tableName]));
+    message.success($t('infra.actionMessage.deleteSuccess', [row.tableName]));
     onRefresh();
   } finally {
     hideLoading();
@@ -86,13 +90,13 @@ async function handleDelete(row: InfraCodegenApi.CodegenTable) {
 /** 同步数据库 */
 async function handleSync(row: InfraCodegenApi.CodegenTable) {
   const hideLoading = message.loading({
-    content: $t('ui.actionMessage.updating', [row.tableName]),
+    content: $t('infra.actionMessage.updating', [row.tableName]),
     key: 'action_key_msg',
   });
   try {
     await syncCodegenFromDB(row.id);
     message.success({
-      content: $t('ui.actionMessage.updateSuccess', [row.tableName]),
+      content: $t('infra.actionMessage.updateSuccess', [row.tableName]),
       key: 'action_key_msg',
     });
     onRefresh();
@@ -104,7 +108,7 @@ async function handleSync(row: InfraCodegenApi.CodegenTable) {
 /** 生成代码 */
 async function handleGenerate(row: InfraCodegenApi.CodegenTable) {
   const hideLoading = message.loading({
-    content: '正在生成代码...',
+    content: $t('infra.codegen.generatingCode'),
     key: 'action_key_msg',
   });
   try {
@@ -117,7 +121,38 @@ async function handleGenerate(row: InfraCodegenApi.CodegenTable) {
     link.click();
     window.URL.revokeObjectURL(url);
     message.success({
-      content: '代码生成成功',
+      content: $t('infra.codegen.generateSuccess'),
+      key: 'action_key_msg',
+    });
+  } finally {
+    hideLoading();
+  }
+}
+
+/** 批量生成代码 */
+async function handleBatchGenerate() {
+  if (selectedRows.value.length === 0) {
+    message.warning($t('infra.codegen.selectTablesTip'));
+    return;
+  }
+  const hideLoading = message.loading({
+    content: $t('infra.codegen.batchGeneratingCode', [
+      selectedRows.value.length,
+    ]),
+    duration: 0,
+    key: 'action_key_msg',
+  });
+  try {
+    const tableIds = selectedRows.value.map((row) => row.id);
+    const res = await batchDownloadCodegen(tableIds);
+    downloadFileFromBlobPart({
+      source: res,
+      fileName: `codegen-batch-${Date.now()}.zip`,
+    });
+    message.success({
+      content: $t('infra.codegen.batchGenerateSuccess', [
+        selectedRows.value.length,
+      ]),
       key: 'action_key_msg',
     });
   } finally {
@@ -131,6 +166,9 @@ const [Grid, gridApi] = useVbenVxeGrid({
   },
   gridOptions: {
     columns: useGridColumns(getDataSourceConfigName),
+    checkboxConfig: {
+      highlight: true,
+    },
     height: 'auto',
     keepSource: true,
     sortConfig: {
@@ -160,6 +198,12 @@ const [Grid, gridApi] = useVbenVxeGrid({
     },
   } as VxeTableGridOptions<InfraCodegenApi.CodegenTable>,
   gridEvents: {
+    checkboxChange: ({ records }) => {
+      selectedRows.value = records;
+    },
+    checkboxAll: ({ records }) => {
+      selectedRows.value = records;
+    },
     sortChange: () => gridApi.query(),
   },
 });
@@ -169,7 +213,7 @@ async function initDataSourceConfig() {
   try {
     dataSourceConfigList.value = await getDataSourceConfigList();
   } catch (error) {
-    console.error('获取数据源配置失败', error);
+    console.error($t('infra.codegen.getDataSourceConfigFailed'), error);
   }
 }
 
@@ -196,16 +240,24 @@ initDataSourceConfig();
 
     <ImportModal @success="onRefresh" />
     <PreviewModal />
-    <Grid table-title="代码生成列表">
+    <Grid :table-title="$t('infra.codegen.listTitle')">
       <template #toolbar-tools>
         <TableAction
           :actions="[
             {
-              label: $t('ui.actionTitle.import'),
+              label: $t('common.import', [$t('infra.common.table')]),
               type: 'primary',
               icon: ACTION_ICON.ADD,
               auth: ['infra:codegen:create'],
               onClick: handleImport,
+            },
+            {
+              label: $t('infra.codegen.batchGenerateCode'),
+              type: 'primary',
+              icon: ACTION_ICON.DOWNLOAD,
+              auth: ['infra:codegen:download'],
+              onClick: handleBatchGenerate,
+              disabled: selectedRowsCount === 0,
             },
           ]"
         />
@@ -214,14 +266,14 @@ initDataSourceConfig();
         <TableAction
           :actions="[
             {
-              label: '预览',
+              label: $t('infra.codegen.preview'),
               type: 'link',
               icon: ACTION_ICON.VIEW,
               auth: ['infra:codegen:preview'],
               onClick: handlePreview.bind(null, row),
             },
             {
-              label: '生成代码',
+              label: $t('infra.codegen.generateCode'),
               type: 'link',
               icon: ACTION_ICON.DOWNLOAD,
               auth: ['infra:codegen:download'],
@@ -236,7 +288,7 @@ initDataSourceConfig();
               onClick: handleEdit.bind(null, row),
             },
             {
-              label: '同步',
+              label: $t('infra.codegen.sync'),
               type: 'link',
               auth: ['infra:codegen:update'],
               onClick: handleSync.bind(null, row),
@@ -247,7 +299,7 @@ initDataSourceConfig();
               danger: true,
               auth: ['infra:codegen:delete'],
               popConfirm: {
-                title: $t('ui.actionMessage.deleteConfirm', [row.tableName]),
+                title: $t('infra.actionMessage.deleteConfirm', [row.tableName]),
                 confirm: handleDelete.bind(null, row),
               },
             },

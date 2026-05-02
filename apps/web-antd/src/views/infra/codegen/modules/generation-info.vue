@@ -33,8 +33,11 @@ const isSubTable = computed(
 
 /** 基础表单实例 */
 const [BaseForm, baseFormApi] = useVbenForm({
-  wrapperClass: 'grid grid-cols-1 md:grid-cols-2 gap-4', // 配置表单布局为两列
+  wrapperClass: 'grid grid-cols-1 md:grid-cols-2 gap-4',
   layout: 'horizontal',
+  commonConfig: {
+    labelWidth: 100,
+  },
   showDefaultActions: false,
   schema: useGenerationInfoBaseFormSchema(),
   handleValuesChange: (values) => {
@@ -50,16 +53,22 @@ const [BaseForm, baseFormApi] = useVbenForm({
 
 /** 树表信息表单实例 */
 const [TreeForm, treeFormApi] = useVbenForm({
-  wrapperClass: 'grid grid-cols-1 md:grid-cols-2 gap-4', // 配置表单布局为两列
+  wrapperClass: 'grid grid-cols-1 md:grid-cols-2 gap-4',
   layout: 'horizontal',
+  commonConfig: {
+    labelWidth: 100,
+  },
   showDefaultActions: false,
   schema: [],
 });
 
 /** 主子表信息表单实例 */
 const [SubForm, subFormApi] = useVbenForm({
-  wrapperClass: 'grid grid-cols-1 md:grid-cols-2 gap-4', // 配置表单布局为两列
+  wrapperClass: 'grid grid-cols-1 md:grid-cols-2 gap-4',
   layout: 'horizontal',
+  commonConfig: {
+    labelWidth: 100,
+  },
   showDefaultActions: false,
   schema: [],
 });

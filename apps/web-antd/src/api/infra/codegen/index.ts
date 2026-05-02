@@ -137,6 +137,14 @@ export function downloadCodegen(tableId: number) {
   return requestClient.download(`/infra/codegen/download?tableId=${tableId}`);
 }
 
+/** 批量下载生成代码 */
+export function batchDownloadCodegen(tableIds: number[]) {
+  return requestClient.download('/infra/codegen/batch-download', {
+    method: 'GET',
+    params: { tableIds },
+  });
+}
+
 /** 获得表定义 */
 export function getSchemaTableList(params: any) {
   return requestClient.get<InfraCodegenApi.DatabaseTable[]>(

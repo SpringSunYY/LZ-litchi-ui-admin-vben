@@ -43,7 +43,8 @@
     "cascadeDeleteTip": "开启后，将连同所有子数据一并删除",
     "cascadeDeleteTipOff": "关闭则只删除当前数据，不影响子数据",
     "externalCloseConfirm": "确定要退出吗？",
-    "externalCloseTip": "关闭后你所填写的数据将会丢失"
+    "externalCloseTip": "关闭后你所填写的数据将会丢失",
+    "copySuccess": "复制成功"
   },
   "placeholder": {
     "input": "请输入{0}",
@@ -153,18 +154,6 @@
     "btn_zoom_out": "缩小",
     "preview": "预览"
   },
-  "codegen": {
-    "isI18n": "国际化",
-    "isI18nHelp": "开启后，将在代码中生成国际化相关的配置",
-    "isImport": "导入",
-    "isImportHelp": "开启后，将在代码中生成 Excel 导入功能",
-    "popupType": "弹窗类型",
-    "popupTypeHelp": "选择详情页弹窗的展示方式",
-    "drawer": "抽屉",
-    "modal": "弹窗",
-    "i18nModuleType": "国际化模块",
-    "i18nModuleTypeHelp": "选择国际化信息的所属模块，用于生成对应的国际化 key"
-  },
   "filePreview": {
     "viewFile": "查看文件"
   },
@@ -182,6 +171,7 @@
   },
   "common": {
     "yes": "是",
-    "no": "否"
+    "no": "否",
+    "table": "表"
   }
 }
