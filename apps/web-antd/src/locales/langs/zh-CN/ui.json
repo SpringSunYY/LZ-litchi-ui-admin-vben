@@ -21,7 +21,8 @@
     "view": "查看{0}",
     "import": "导入{0}",
     "importTemplate": "导入模板{0}",
-    "export": "导出"
+    "export": "导出",
+    "updateAllMenu": "更新所有菜单"
   },
   "actionName": {
     "reset": "重置",
@@ -44,7 +45,9 @@
     "cascadeDeleteTipOff": "关闭则只删除当前数据，不影响子数据",
     "externalCloseConfirm": "确定要退出吗？",
     "externalCloseTip": "关闭后你所填写的数据将会丢失",
-    "copySuccess": "复制成功"
+    "copySuccess": "复制成功",
+    "grant": "授予菜单权限成功",
+    "updateConfirm": "您确定要更新吗？"
   },
   "placeholder": {
     "input": "请输入{0}",

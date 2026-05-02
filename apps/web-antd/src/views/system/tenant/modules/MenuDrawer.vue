@@ -7,10 +7,13 @@ import { nextTick, ref } from 'vue';
 import { useVbenDrawer, VbenTree } from '@vben/common-ui';
 import { handleTree } from '@vben/utils';
 
-import { Checkbox, Spin, Tooltip } from 'ant-design-vue';
+import { Checkbox, message, Spin, Tooltip } from 'ant-design-vue';
 
 import { getSimpleMenusList } from '#/api/system/menu';
-import { getTenantMenuList } from '#/api/system/tenant';
+import {
+  getTenantMenuList,
+  updateTenantMenuByTenantCode,
+} from '#/api/system/tenant';
 import { $t } from '#/locales';
 
 const [Drawer, drawerApi] = useVbenDrawer({
@@ -18,6 +21,11 @@ const [Drawer, drawerApi] = useVbenDrawer({
     drawerApi.close();
   },
   onConfirm() {
+    if (tenantInfo.value?.code) {
+      updateTenantMenuByTenantCode(tenantInfo.value.code).then(() => {
+        message.success($t('ui.actionMessage.grant'));
+      });
+    }
     drawerApi.close();
   },
   async onOpenChange(isOpen: boolean) {
@@ -61,6 +69,7 @@ function toggleExpandAll() {
   isExpanded.value = !isExpanded.value;
   expandedKeys.value = isExpanded.value ? getAllNodeIds(menuTree.value) : [];
 }
+
 /** 递归获取所有节点 ID */
 function getAllNodeIds(nodes: any[], ids: number[] = []): number[] {
   nodes.forEach((node: any) => {

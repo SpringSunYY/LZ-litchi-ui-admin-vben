@@ -21,7 +21,8 @@
     "view": "View {0}",
     "import": "Import {0}",
     "importTemplate": "Import Template {0}",
-    "export": "Export"
+    "export": "Export",
+    "updateAllMenu": "update All Menu"
   },
   "actionName": {
     "reset": "Reset",
@@ -44,7 +45,9 @@
     "cascadeDeleteTipOff": "When disabled, only this item is deleted, child data remains",
     "externalCloseConfirm": "Are you sure you want to exit?",
     "externalCloseTip": "Your data will be lost after closing",
-    "copySuccess": "Copied successfully"
+    "copySuccess": "Copied successfully",
+    "grant": "Grant Menu Success",
+    "updateConfirm": "Confirm Update?"
   },
   "placeholder": {
     "input": "Please enter {0}",

@@ -73,6 +73,16 @@ export function updateTenant(data: SystemTenantApi.Tenant) {
   return requestClient.put('/system/tenant/update', data);
 }
 
+/** 修改租户菜单 */
+export function updateTenantMenuByTenantCode(code: string) {
+  return requestClient.get(`/system/tenant/update/code?code=${code}`);
+}
+
+/** 修改所有租户菜单 */
+export function updateAllTenantMenu() {
+  return requestClient.get(`/system/tenant/update/all-tenant-menu`);
+}
+
 /** 删除租户 */
 export function deleteTenant(id: number) {
   return requestClient.delete(`/system/tenant/delete?id=${id}`);

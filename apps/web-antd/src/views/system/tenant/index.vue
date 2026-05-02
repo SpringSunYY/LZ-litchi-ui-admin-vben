@@ -12,7 +12,12 @@ import { message, TreeSelect } from 'ant-design-vue';
 
 import { ACTION_ICON, TableAction, useVbenVxeGrid } from '#/adapter/vxe-table';
 import { getAreaTree } from '#/api/system/area';
-import { deleteTenant, exportTenant, getTenantPage } from '#/api/system/tenant';
+import {
+  deleteTenant,
+  exportTenant,
+  getTenantPage,
+  updateAllTenantMenu,
+} from '#/api/system/tenant';
 import { $t } from '#/locales';
 import MenuDrawer from '#/views/system/tenant/modules/MenuDrawer.vue';
 
@@ -74,6 +79,18 @@ async function handleDelete(row: SystemTenantApi.Tenant) {
   }
 }
 
+const updateAllMenuLoading = ref(false);
+const handleUpdateAllMenu = () => {
+  updateAllMenuLoading.value = true;
+  updateAllTenantMenu()
+    .then((res) => {
+      message.success($t('ui.actionMessage.grant'));
+    })
+    .finally(() => {
+      updateAllMenuLoading.value = false;
+    });
+};
+
 const [Grid, gridApi] = useVbenVxeGrid({
   formOptions: {
     schema: useGridFormSchema(),
@@ -113,6 +130,7 @@ function getAddressList() {
 
 function getAddressMap() {
   const map = new Map<number, SystemAreaApi.Area & { children?: any[] }>();
+
   function traverse(nodes: any[], parentId?: number) {
     for (const node of nodes) {
       // 显式设置 parentId
@@ -128,6 +146,7 @@ function getAddressMap() {
       }
     }
   }
+
   traverse(addressList.value);
   addressMap.value = map as any;
 }
@@ -153,6 +172,7 @@ function getAreaFullName(addressCode: string): string {
   }
   return names.join('/');
 }
+
 onMounted(() => {
   getAddressList();
 });
@@ -194,6 +214,17 @@ onMounted(() => {
               icon: ACTION_ICON.DOWNLOAD,
               auth: ['system:tenant:export'],
               onClick: handleExport,
+            },
+            {
+              label: $t('ui.actionTitle.updateAllMenu'),
+              type: 'primary',
+              icon: ACTION_ICON.EDIT,
+              auth: ['system:tenant:update'],
+              loading: updateAllMenuLoading,
+              popConfirm: {
+                title: $t('ui.actionMessage.updateConfirm'),
+                confirm: handleUpdateAllMenu,
+              },
             },
           ]"
         />
