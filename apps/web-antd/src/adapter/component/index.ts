@@ -16,17 +16,17 @@ import {
   ref,
 } from 'vue';
 
-import dayjs from 'dayjs';
-
 import { ApiComponent, globalShareState, IconPicker } from '@vben/common-ui';
 import { $t } from '@vben/locales';
 
 import { notification } from 'ant-design-vue';
+import dayjs from 'dayjs';
 
+import { FilePreview } from '#/components/file-preview';
 import { NumberRange } from '#/components/number-range';
+import { SelectToString } from '#/components/select-to-string';
 import { Tinymce as RichTextarea } from '#/components/tinymce';
 import { FileUpload, ImageUpload } from '#/components/upload';
-import { FilePreview } from '#/components/file-preview';
 
 const AutoComplete = defineAsyncComponent(
   () => import('ant-design-vue/es/auto-complete'),
@@ -63,12 +63,14 @@ const RangePicker = defineAsyncComponent(() =>
 // Number 转 dayjs 包装器
 const withDayjsValue = (component: Component) => {
   return defineComponent({
-    name: (component as any).name ? `${(component as any).name}Wrapper` : 'DayjsValueWrapper',
+    name: (component as any).name
+      ? `${(component as any).name}Wrapper`
+      : 'DayjsValueWrapper',
     inheritAttrs: false,
     setup: (_props, { attrs, slots }) => {
       const handleChange = (value: any) => {
         const onUpdate = attrs['onUpdate:value'] as Function | undefined;
-        const onChange = attrs['onChange'] as Function | undefined;
+        const onChange = attrs.onChange as Function | undefined;
         onUpdate?.(value);
         onChange?.(value);
       };
@@ -165,6 +167,7 @@ export type ComponentType =
   | 'Rate'
   | 'RichTextarea'
   | 'Select'
+  | 'SelectToString'
   | 'Space'
   | 'Switch'
   | 'Textarea'
@@ -223,6 +226,7 @@ async function initComponentAdapter() {
     Input: withDefaultPlaceholder(Input, 'input'),
     InputNumber: withDefaultPlaceholder(InputNumber, 'input'),
     NumberRange,
+    SelectToString,
     InputPassword: withDefaultPlaceholder(InputPassword, 'input'),
     Mentions: withDefaultPlaceholder(Mentions, 'input'),
     // 自定义主要按钮

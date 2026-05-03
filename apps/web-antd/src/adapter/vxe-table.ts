@@ -150,18 +150,20 @@ setupVbenVxeTable({
       },
     });
 
-    // 表格配置项可以用 cellRender: { name: 'CellDict', props:{dictType: ''} },
+    // 表格配置项可以用 cellRender: { name: 'CellDict', props:{type: ''} },
+    // 支持单个值或多个值（separator 分隔），未匹配时显示原字符
     vxeUI.renderer.add('CellDict', {
       renderTableDefault(renderOpts, params) {
         const { props } = renderOpts;
         const { column, row } = params;
-        if (!props) {
+        if (!props?.type) {
           return '';
         }
-        // 使用 DictTag 组件替代原来的实现
         return h(DictTag, {
           type: props.type,
-          value: row[column.field]?.toString(),
+          value: row[column.field],
+          separator: props.separator,
+          useOriginal: props.useOriginal,
         });
       },
     });
