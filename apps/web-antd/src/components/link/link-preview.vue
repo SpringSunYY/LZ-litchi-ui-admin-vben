@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
+import { message } from 'ant-design-vue';
+
 import { $t } from '#/locales';
 
 const props = defineProps<{
@@ -19,6 +21,7 @@ const openLink = () => {
 const copyLink = async () => {
   if (props.url) {
     await navigator.clipboard.writeText(props.url);
+    message.success($t('ui.link.copySuccess'));
   }
   visible.value = false;
 };
@@ -28,9 +31,9 @@ const copyLink = async () => {
   <span v-if="!url">-</span>
   <a-popover v-else v-model:open="visible" placement="top" trigger="hover">
     <template #content>
-      <div class="link-popover-content">
-        <div class="link-popover-url">{{ url }}</div>
-        <div class="link-popover-actions">
+      <div class="link-preview-content">
+        <div class="link-preview-url">{{ url }}</div>
+        <div class="link-preview-actions">
           <a-button type="link" size="small" @click="openLink">
             {{ $t('ui.link.openLink') }}
           </a-button>
@@ -47,15 +50,14 @@ const copyLink = async () => {
 </template>
 
 <style scoped>
-.link-popover-content {
+.link-preview-content {
   display: flex;
   flex-direction: column;
   gap: 4px;
   min-width: 200px;
   max-width: 400px;
 }
-
-.link-popover-url {
+.link-preview-url {
   font-size: 12px;
   color: #666;
   word-break: break-all;
@@ -63,8 +65,7 @@ const copyLink = async () => {
   border-bottom: 1px solid #f0f0f0;
   margin-bottom: 4px;
 }
-
-.link-popover-actions {
+.link-preview-actions {
   display: flex;
   flex-direction: column;
   gap: 4px;

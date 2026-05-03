@@ -163,7 +163,13 @@
   "link": {
     "view": "View",
     "openLink": "Open Link",
-    "copyLink": "Copy Link"
+    "copyLink": "Copy Link",
+    "copySuccess": "Copied"
+  },
+  "json": {
+    "view": "View",
+    "copyJson": "Copy JSON",
+    "copySuccess": "Copied"
   },
   "select": {
     "dictPlaceholder": "Please select"

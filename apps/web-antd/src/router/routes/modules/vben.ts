@@ -69,7 +69,7 @@ const routes: RouteRecordRaw[] = [
   // {
   //   name: 'VbenAbout',
   //   path: '/vben-admin/about',
-  //   component: () => import('#/views/_core/about/index.vue'),
+  //   component: () => import('#/views/_core/about/json-preview.vue'),
   //   meta: {
   //     icon: 'lucide:copyright',
   //     title: $t('demos.vben.about'),

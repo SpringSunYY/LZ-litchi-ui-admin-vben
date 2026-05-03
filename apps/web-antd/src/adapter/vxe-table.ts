@@ -21,8 +21,9 @@ import { Button, Image, Popconfirm, Switch } from 'ant-design-vue';
 
 import { DictTag } from '#/components/dict-tag';
 import { FilePreview } from '#/components/file-preview';
-import CellImage from '#/components/image/cell-image.vue';
-import CellLink from '#/components/link/cell-link.vue';
+import CellImage from '#/components/image/image-preview.vue';
+import JsonPreview from '#/components/json-preview/json-preview.vue';
+import CellLink from '#/components/link/link-preview.vue';
 import { $t } from '#/locales';
 
 import { useVbenForm } from './form';
@@ -99,6 +100,16 @@ setupVbenVxeTable({
       },
     });
 
+    // 表格配置项可以用 cellRender: { name: 'CellJson' },
+    // 将 JSON 对象解析为 key: value 形式显示，支持复制 JSON
+    vxeUI.renderer.add('CellJson', {
+      renderTableDefault(_renderOpts, params) {
+        const { column, row } = params;
+        const value = row[column.field];
+        return h(JsonPreview, { value });
+      },
+    });
+
     vxeUI.renderer.add('CellImages', {
       renderTableDefault(_renderOpts, params) {
         const { column, row } = params;
@@ -131,7 +142,7 @@ setupVbenVxeTable({
 
     // 表格配置项可以用 cellRender: { name: 'CellLink' },
     vxeUI.renderer.add('CellLink', {
-      //@ts-ignore
+      // @ts-ignore
       renderTableDefault(renderOpts, params) {
         const { column, row } = params;
         const value = row[column.field];
