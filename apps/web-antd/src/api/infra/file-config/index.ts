@@ -21,14 +21,16 @@ export namespace InfraFileConfigApi {
 
   /** 文件配置信息 */
   export interface FileConfig {
-    id?: number;
-    name: string;
-    storage?: number;
-    master: boolean;
-    visible: boolean;
-    config: FileClientConfig;
-    remark: string;
-    createTime?: Date;
+    id: number; // 编号
+    configKey?: string; // 配置键
+    name?: string; // 配置名
+    storage?: number; // 存储器
+    pathType?: number; // 路径类型
+    maxSize?: number; // 文件大小
+    fileType: string; // 文件类型
+    remark: string; // 备注
+    master?: boolean; // 是否为主配置
+    config?: string; // 存储配置
   }
 }
 

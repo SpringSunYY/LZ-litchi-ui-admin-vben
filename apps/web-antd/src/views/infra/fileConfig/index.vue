@@ -2,7 +2,7 @@
 import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 import type { InfraFileConfigApi } from '#/api/infra/file-config';
 
-import { confirm, Page, useVbenModal } from '@vben/common-ui';
+import { confirm, Page, useVbenModelDrawer } from '@vben/common-ui';
 import { openWindow } from '@vben/utils';
 
 import { message } from 'ant-design-vue';
@@ -19,9 +19,10 @@ import { $t } from '#/locales';
 import { useGridColumns, useGridFormSchema } from './data';
 import Form from './modules/form.vue';
 
-const [FormModal, formModalApi] = useVbenModal({
+const [FormModal, formModalApi] = useVbenModelDrawer({
   connectedComponent: Form,
   destroyOnClose: true,
+  type: 'drawer',
 });
 
 /** 刷新表格 */

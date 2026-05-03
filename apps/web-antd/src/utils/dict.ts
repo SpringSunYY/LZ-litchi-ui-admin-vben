@@ -200,6 +200,7 @@ enum DICT_TYPE {
   INFRA_CONFIG_TYPE = 'infra_config_type',
   INFRA_FILE_FILE_TYPE = 'infra_file_file_type', // 文件类型
   INFRA_FILE_PATH_TYPE = 'infra_file_path_type', // 文件路径类型
+  INFRA_FILE_RETURN_TYPE = 'infra_file_return_type', // 文件返回类型
   INFRA_FILE_STORAGE = 'infra_file_storage',
 
   INFRA_I18N_KEY_IS_SYSTEM = 'infra_i18n_key_is_system', // 是否内置

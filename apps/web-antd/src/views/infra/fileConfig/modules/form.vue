@@ -3,7 +3,7 @@ import type { InfraFileConfigApi } from '#/api/infra/file-config';
 
 import { computed, ref } from 'vue';
 
-import { useVbenModal } from '@vben/common-ui';
+import { useVbenModelDrawer } from '@vben/common-ui';
 
 import { message } from 'ant-design-vue';
 
@@ -31,20 +31,20 @@ const [Form, formApi] = useVbenForm({
       class: 'w-full',
     },
     formItemClass: 'col-span-2',
-    labelWidth: 120,
+    labelWidth: 100,
   },
   layout: 'horizontal',
   schema: useFormSchema(),
   showDefaultActions: false,
 });
 
-const [Modal, modalApi] = useVbenModal({
+const [ModalDrawer, modalDrawerApi] = useVbenModelDrawer({
   async onConfirm() {
     const { valid } = await formApi.validate();
     if (!valid) {
       return;
     }
-    modalApi.lock();
+    modalDrawerApi.lock();
     // 提交表单
     const data = (await formApi.getValues()) as InfraFileConfigApi.FileConfig;
     try {
@@ -52,11 +52,11 @@ const [Modal, modalApi] = useVbenModal({
         ? updateFileConfig(data)
         : createFileConfig(data));
       // 关闭并提示
-      await modalApi.close();
+      await modalDrawerApi.close();
       emit('success');
       message.success($t('ui.actionMessage.operationSuccess'));
     } finally {
-      modalApi.unlock();
+      modalDrawerApi.unlock();
     }
   },
   async onOpenChange(isOpen: boolean) {
@@ -65,24 +65,27 @@ const [Modal, modalApi] = useVbenModal({
       return;
     }
     // 加载数据
-    const data = modalApi.getData<InfraFileConfigApi.FileConfig>();
-    if (!data || !data.id) {
+    let data = modalDrawerApi.getData<InfraFileConfigApi.FileConfig>();
+    if (!data) {
       return;
     }
-    modalApi.lock();
-    try {
-      formData.value = await getFileConfig(data.id as number);
-      // 设置到 values
-      await formApi.setValues(formData.value);
-    } finally {
-      modalApi.unlock();
+    if (data.id) {
+      modalDrawerApi.lock();
+      try {
+        data = await getFileConfig(data.id);
+      } finally {
+        modalDrawerApi.unlock();
+      }
     }
+    // 设置到 values
+    formData.value = data;
+    await formApi.setValues(formData.value);
   },
 });
 </script>
 
 <template>
-  <Modal :title="getTitle" class="w-[40%]">
+  <ModalDrawer :title="getTitle">
     <Form class="mx-4" />
-  </Modal>
+  </ModalDrawer>
 </template>
