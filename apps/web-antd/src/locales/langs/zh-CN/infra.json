@@ -80,6 +80,7 @@
     "oneToMany": "一对多",
     "oneToOne": "一对一",
     "htmlTypeInput": "文本框",
+    "htmlTypeInputNumber": "数字输入框",
     "htmlTypeTextarea": "文本域",
     "htmlTypeSelect": "下拉框",
     "htmlTypeRadio": "单选框",

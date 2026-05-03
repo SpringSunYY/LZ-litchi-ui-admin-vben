@@ -299,7 +299,7 @@ initDataSourceConfig();
               danger: true,
               auth: ['infra:codegen:delete'],
               popConfirm: {
-                title: $t('infra.actionMessage.deleteConfirm', [row.tableName]),
+                title: $t('ui.actionMessage.deleteConfirm', [row.tableName]),
                 confirm: handleDelete.bind(null, row),
               },
             },

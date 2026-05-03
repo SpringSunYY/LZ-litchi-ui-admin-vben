@@ -634,6 +634,10 @@ export function useCodegenColumnTableColumns(): VxeTableGridOptions['columns'] {
       params: {
         options: [
           { label: $t('infra.codegen.htmlTypeInput'), value: 'input' },
+          {
+            label: $t('infra.codegen.htmlTypeInputNumber'),
+            value: 'inputNumber',
+          },
           { label: $t('infra.codegen.htmlTypeTextarea'), value: 'textarea' },
           { label: $t('infra.codegen.htmlTypeSelect'), value: 'select' },
           { label: $t('infra.codegen.htmlTypeRadio'), value: 'radio' },

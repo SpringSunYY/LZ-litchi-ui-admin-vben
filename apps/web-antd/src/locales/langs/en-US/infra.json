@@ -80,6 +80,7 @@
     "oneToMany": "One to Many",
     "oneToOne": "One to One",
     "htmlTypeInput": "Input",
+    "htmlTypeInputNumber": "InputNumber",
     "htmlTypeTextarea": "Textarea",
     "htmlTypeSelect": "Select",
     "htmlTypeRadio": "Radio",
