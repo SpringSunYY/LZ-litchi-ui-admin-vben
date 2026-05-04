@@ -111,12 +111,6 @@ const [Grid, gridApi] = useVbenVxeGrid({
           ]"
         />
       </template>
-      <template #file-content="{ row }">
-        <Image v-if="row.type && row.type.includes('image')" :src="row.url" />
-        <Button v-else type="link" @click="() => openWindow(row.url)">
-          {{ row.type && row.type.includes('pdf') ? '预览' : '下载' }}
-        </Button>
-      </template>
       <template #actions="{ row }">
         <TableAction
           :actions="[

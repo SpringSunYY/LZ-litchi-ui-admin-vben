@@ -1,7 +1,9 @@
 import type { VbenFormSchema } from '#/adapter/form';
 import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 
-import { getRangePickerDefaultProps } from '#/utils';
+import { $t } from '@vben/locales';
+
+import { DICT_TYPE, getDictOptions, getRangePickerDefaultProps } from '#/utils';
 
 /** 表单的字段 */
 export function useFormSchema(): VbenFormSchema[] {
@@ -22,21 +24,46 @@ export function useFormSchema(): VbenFormSchema[] {
 export function useGridFormSchema(): VbenFormSchema[] {
   return [
     {
-      fieldName: 'path',
-      label: '文件路径',
+      fieldName: 'configKey',
+      label: '配置',
       component: 'Input',
       componentProps: {
-        placeholder: '请输入文件路径',
-        clearable: true,
+        allowClear: true,
+        placeholder: $t('ui.placeholder.input', ['配置']),
+      },
+    },
+    {
+      fieldName: 'name',
+      label: '文件名',
+      component: 'Input',
+      componentProps: {
+        allowClear: true,
+        placeholder: $t('ui.placeholder.input', ['文件名']),
       },
     },
     {
       fieldName: 'type',
       label: '文件类型',
-      component: 'Input',
+      component: 'Select',
       componentProps: {
-        placeholder: '请输入文件类型',
-        clearable: true,
+        allowClear: true,
+        options: getDictOptions(DICT_TYPE.INFRA_FILE_FILE_TYPE, 'string'),
+        placeholder: $t('ui.placeholder.select', ['文件类型']),
+      },
+    },
+    {
+      fieldName: 'size',
+      label: '文件大小',
+      component: 'NumberRange',
+    },
+    {
+      fieldName: 'moduleType',
+      label: '模块',
+      component: 'Select',
+      componentProps: {
+        allowClear: true,
+        options: getDictOptions(DICT_TYPE.INFRA_FILE_MODULE_TYPE, 'string'),
+        placeholder: $t('ui.placeholder.select', ['模块']),
       },
     },
     {
@@ -55,19 +82,42 @@ export function useGridFormSchema(): VbenFormSchema[] {
 export function useGridColumns(): VxeTableGridOptions['columns'] {
   return [
     {
+      field: 'id',
+      title: '文件编号',
+    },
+    {
+      field: 'configKey',
+      title: '配置',
+    },
+    {
       field: 'name',
       title: '文件名',
     },
     {
       field: 'path',
       title: '文件路径',
-      showOverflow: true,
+      minWidth: 120,
     },
     {
-      field: 'url',
-      title: 'URL',
+      field: 'absolutePath',
+      title: '绝对路径',
       cellRender: {
-        name: 'CellLink',
+        name: 'CellFileAndImages',
+      },
+    },
+    {
+      field: 'relativePath',
+      title: '相对路径',
+      cellRender: {
+        name: 'CellFileAndImages',
+      },
+    },
+    {
+      field: 'type',
+      title: '文件类型',
+      cellRender: {
+        name: 'CellDict',
+        props: { type: DICT_TYPE.INFRA_FILE_FILE_TYPE },
       },
     },
     {
@@ -84,13 +134,12 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
       },
     },
     {
-      field: 'type',
-      title: '文件类型',
-    },
-    {
-      field: 'file-content',
-      title: '文件内容',
-      slots: { default: 'file-content' },
+      field: 'moduleType',
+      title: '模块',
+      cellRender: {
+        name: 'CellDict',
+        props: { type: DICT_TYPE.INFRA_FILE_MODULE_TYPE },
+      },
     },
     {
       field: 'createTime',

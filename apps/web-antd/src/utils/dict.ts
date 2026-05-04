@@ -199,6 +199,7 @@ enum DICT_TYPE {
   INFRA_CODEGEN_TEMPLATE_TYPE = 'infra_codegen_template_type',
   INFRA_CONFIG_TYPE = 'infra_config_type',
   INFRA_FILE_FILE_TYPE = 'infra_file_file_type', // 文件类型
+  INFRA_FILE_MODULE_TYPE = 'infra_file_module_type', // 文件模块类型
   INFRA_FILE_PATH_TYPE = 'infra_file_path_type', // 文件路径类型
   INFRA_FILE_RETURN_TYPE = 'infra_file_return_type', // 文件返回类型
   INFRA_FILE_STORAGE = 'infra_file_storage',
