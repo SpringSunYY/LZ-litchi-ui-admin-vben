@@ -21,6 +21,7 @@ import { Button, Image, Popconfirm, Switch } from 'ant-design-vue';
 
 import { DictTag } from '#/components/dict-tag';
 import { FilePreview } from '#/components/file-preview';
+import CellFileAndImages from '#/components/file-and-images/file-and-images-preview.vue';
 import CellImage from '#/components/image/image-preview.vue';
 import JsonPreview from '#/components/json-preview/json-preview.vue';
 import CellLink from '#/components/link/link-preview.vue';
@@ -147,6 +148,22 @@ setupVbenVxeTable({
         const { column, row } = params;
         const value = row[column.field];
         return h(CellLink, { url: value });
+      },
+    });
+
+    // 表格配置项可以用 cellRender: { name: 'CellFileAndImages', props: { separator: '||', type: 'auto' } },
+    // type 可选值：'auto' 自动判断，'image' 强制图片，'file' 强制文件
+    // 支持单个或多个文件/图片 URL，多个用 separator 分隔
+    // 自动判断文件类型：图片扩展名使用图片预览，否则使用文件预览
+    vxeUI.renderer.add('CellFileAndImages', {
+      renderTableDefault(renderOpts, params) {
+        const { props } = renderOpts;
+        const { column, row } = params;
+        return h(CellFileAndImages, {
+          value: row[column.field],
+          separator: props?.separator ?? '||',
+          type: props?.type ?? 'auto',
+        });
       },
     });
 
