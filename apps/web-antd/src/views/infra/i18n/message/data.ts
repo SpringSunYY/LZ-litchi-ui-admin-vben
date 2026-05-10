@@ -54,7 +54,7 @@ export function useKeyFormSchema(): VbenFormSchema[] {
       rules: 'required',
       component: 'Select',
       componentProps: {
-        options: getDictOptions(DICT_TYPE.INFRA_I18N_KEY_MODULE_TYPE, 'number'),
+        options: getDictOptions(DICT_TYPE.INFRA_I18N_KEY_MODULE_TYPE),
         placeholder: '请选择模块',
       },
     },
@@ -125,7 +125,7 @@ export function useKeyGridFormSchema(): VbenFormSchema[] {
       component: 'Select',
       componentProps: {
         allowClear: true,
-        options: getDictOptions(DICT_TYPE.INFRA_I18N_KEY_MODULE_TYPE, 'number'),
+        options: getDictOptions(DICT_TYPE.INFRA_I18N_KEY_MODULE_TYPE),
         placeholder: '请选择模块',
       },
     },
@@ -273,7 +273,7 @@ export function useMessageFormSchema(): VbenFormSchema[] {
       rules: 'required',
       component: 'Select',
       componentProps: {
-        options: getDictOptions(DICT_TYPE.INFRA_I18N_KEY_MODULE_TYPE, 'number'),
+        options: getDictOptions(DICT_TYPE.INFRA_I18N_KEY_MODULE_TYPE),
         placeholder: '请选择模块',
         disabled: true,
       },
@@ -395,7 +395,7 @@ export function useMessageGridFormSchema(): VbenFormSchema[] {
     //   component: 'Select',
     //   componentProps: {
     //     allowClear: true,
-    //     options: getDictOptions(DICT_TYPE.INFRA_I18N_KEY_MODULE_TYPE, 'number'),
+    //     options: getDictOptions(DICT_TYPE.INFRA_I18N_KEY_MODULE_TYPE),
     //     placeholder: '请选择模块',
     //   },
     // },

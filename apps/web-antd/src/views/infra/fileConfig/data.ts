@@ -49,7 +49,7 @@ export function useFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'returnType',
       label: '返回类型',
-      help: '请求后端返回的类型，后端下载表示后端先下载再返回，返回URL表示后端直接返回URL。',
+      help: '请求后端返回的类型，后端下载表示后端先下载再返回，返回URL表示后端直接返回URL重定向。',
       rules: 'required',
       component: 'Select',
       componentProps: {

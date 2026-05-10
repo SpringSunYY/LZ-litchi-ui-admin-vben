@@ -272,7 +272,7 @@ export function useGenerationInfoBaseFormSchema(): VbenFormSchema[] {
       help: $t('infra.codegen.i18nModuleTypeHelp'),
       componentProps: {
         class: 'w-full',
-        options: getDictOptions(DICT_TYPE.INFRA_I18N_KEY_MODULE_TYPE, 'number'),
+        options: getDictOptions(DICT_TYPE.INFRA_I18N_KEY_MODULE_TYPE),
       },
       defaultValue: undefined,
       dependencies: {
