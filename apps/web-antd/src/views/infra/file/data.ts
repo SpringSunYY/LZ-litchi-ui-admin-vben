@@ -62,7 +62,7 @@ export function useGridFormSchema(): VbenFormSchema[] {
       component: 'Select',
       componentProps: {
         allowClear: true,
-        options: getDictOptions(DICT_TYPE.INFRA_FILE_MODULE_TYPE, 'string'),
+        options: getDictOptions(DICT_TYPE.SYSTEM_MODULE_TYPE, 'string'),
         placeholder: $t('ui.placeholder.select', ['模块']),
       },
     },
@@ -138,7 +138,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
       title: '模块',
       cellRender: {
         name: 'CellDict',
-        props: { type: DICT_TYPE.INFRA_FILE_MODULE_TYPE },
+        props: { type: DICT_TYPE.SYSTEM_MODULE_TYPE },
       },
     },
     {

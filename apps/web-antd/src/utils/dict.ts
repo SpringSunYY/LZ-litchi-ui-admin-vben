@@ -199,30 +199,28 @@ enum DICT_TYPE {
   INFRA_CODEGEN_TEMPLATE_TYPE = 'infra_codegen_template_type',
   INFRA_CONFIG_TYPE = 'infra_config_type',
   INFRA_FILE_FILE_TYPE = 'infra_file_file_type', // 文件类型
-  INFRA_FILE_MODULE_TYPE = 'infra_file_module_type', // 文件模块类型
   INFRA_FILE_PATH_TYPE = 'infra_file_path_type', // 文件路径类型
   INFRA_FILE_RETURN_TYPE = 'infra_file_return_type', // 文件返回类型
   INFRA_FILE_STORAGE = 'infra_file_storage',
-
   INFRA_I18N_KEY_IS_SYSTEM = 'infra_i18n_key_is_system', // 是否内置
-  INFRA_I18N_KEY_MODULE_TYPE = 'infra_i18n_key_module_type', // 模块类型
+
   INFRA_I18N_KEY_USE_TYPE = 'infra_i18n_key_use_type', // 使用类型
   INFRA_I18N_LOCALE_IS_DEFAULT = 'infra_i18n_locale_is_default', // 国际化国家信息是否默认
   INFRA_I18N_LOCALE_STATUS = 'infra_i18n_locale_status', // 国际化国家信息状态
   INFRA_I18N_LOCALE_TARGET = 'infra_i18n_locale_target', // 国际化键端
   INFRA_JOB_LOG_STATUS = 'infra_job_log_status',
-
   INFRA_JOB_STATUS = 'infra_job_status',
 
   INFRA_OPERATE_TYPE = 'infra_operate_type',
 
   MEMBER_EXPERIENCE_BIZ_TYPE = 'member_experience_biz_type', // 会员经验业务类型
+
   // ========== Member 会员模块 ==========
   MEMBER_POINT_BIZ_TYPE = 'member_point_biz_type', // 积分的业务类型
   // ========== MP 模块 ==========
   MP_AUTO_REPLY_REQUEST_MATCH = 'mp_auto_reply_request_match', // 自动回复请求匹配类型
-
   MP_MESSAGE_TYPE = 'mp_message_type', // 消息类型
+
   // ========== PAY 模块 ==========
   PAY_CHANNEL_CODE = 'pay_channel_code', // 支付渠道编码类型
   PAY_NOTIFY_STATUS = 'pay_notify_status', // 商户支付回调状态
@@ -233,8 +231,8 @@ enum DICT_TYPE {
   PAY_TRANSFER_TYPE = 'pay_transfer_type', // 转账订单状态
   // ========== MALL - 商品模块 ==========
   PRODUCT_SPU_STATUS = 'product_spu_status', // 商品状态
-
   PROMOTION_BANNER_POSITION = 'promotion_banner_position', // banner 定位
+
   PROMOTION_BARGAIN_RECORD_STATUS = 'promotion_bargain_record_status', // 砍价记录的状态
   PROMOTION_COMBINATION_RECORD_STATUS = 'promotion_combination_record_status', // 拼团记录的状态
   PROMOTION_CONDITION_TYPE = 'promotion_condition_type', // 营销的条件类型枚举
@@ -246,12 +244,13 @@ enum DICT_TYPE {
   PROMOTION_PRODUCT_SCOPE = 'promotion_product_scope', // 营销的商品范围
   SYSTEM_AREA_LEVEL = 'system_area_level', // 地区等级
   SYSTEM_DATA_SCOPE = 'system_data_scope',
-
   SYSTEM_LOGIN_RESULT = 'system_login_result',
-  SYSTEM_LOGIN_TYPE = 'system_login_type',
 
+  SYSTEM_LOGIN_TYPE = 'system_login_type',
   SYSTEM_MAIL_SEND_STATUS = 'system_mail_send_status',
+
   SYSTEM_MENU_TYPE = 'system_menu_type',
+  SYSTEM_MODULE_TYPE = 'system_module_type', // 文件模块类型
   SYSTEM_NOTICE_TYPE = 'system_notice_type',
   SYSTEM_NOTIFY_TEMPLATE_TYPE = 'system_notify_template_type',
   SYSTEM_OAUTH2_GRANT_TYPE = 'system_oauth2_grant_type',

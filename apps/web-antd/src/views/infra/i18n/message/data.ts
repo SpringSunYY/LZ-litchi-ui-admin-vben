@@ -1,10 +1,10 @@
-import type { VbenFormSchema } from '#/adapter/form';
-import type { VxeTableGridOptions } from '#/adapter/vxe-table';
-import type { I18nKeyApi } from '#/api/infra/i18n/i18nKey';
-import type { I18nMessageApi } from '#/api/infra/i18n/i18nMessage';
+import type {VbenFormSchema} from '#/adapter/form';
+import type {VxeTableGridOptions} from '#/adapter/vxe-table';
+import type {I18nKeyApi} from '#/api/infra/i18n/i18nKey';
+import type {I18nMessageApi} from '#/api/infra/i18n/i18nMessage';
 
-import { getI18nLocalePage } from '#/api/infra/i18n/i18nLocale';
-import { DICT_TYPE, getDictLabel, getDictOptions } from '#/utils';
+import {getI18nLocalePage} from '#/api/infra/i18n/i18nLocale';
+import {DICT_TYPE, getDictLabel, getDictOptions} from '#/utils';
 
 /** 键名 - 新增/修改的表单 */
 export function useKeyFormSchema(): VbenFormSchema[] {
@@ -54,7 +54,7 @@ export function useKeyFormSchema(): VbenFormSchema[] {
       rules: 'required',
       component: 'Select',
       componentProps: {
-        options: getDictOptions(DICT_TYPE.INFRA_I18N_KEY_MODULE_TYPE),
+        options: getDictOptions(DICT_TYPE.SYSTEM_MODULE_TYPE),
         placeholder: '请选择模块',
       },
     },
@@ -125,7 +125,7 @@ export function useKeyGridFormSchema(): VbenFormSchema[] {
       component: 'Select',
       componentProps: {
         allowClear: true,
-        options: getDictOptions(DICT_TYPE.INFRA_I18N_KEY_MODULE_TYPE),
+        options: getDictOptions(DICT_TYPE.SYSTEM_MODULE_TYPE),
         placeholder: '请选择模块',
       },
     },
@@ -176,7 +176,7 @@ export function useKeyGridColumns(): VxeTableGridOptions<I18nKeyApi.I18nKey>['co
       minWidth: 120,
       cellRender: {
         name: 'CellDict',
-        props: { type: DICT_TYPE.INFRA_I18N_KEY_IS_SYSTEM },
+        props: {type: DICT_TYPE.INFRA_I18N_KEY_IS_SYSTEM},
       },
     },
     {
@@ -185,7 +185,7 @@ export function useKeyGridColumns(): VxeTableGridOptions<I18nKeyApi.I18nKey>['co
       minWidth: 120,
       cellRender: {
         name: 'CellDict',
-        props: { type: DICT_TYPE.INFRA_I18N_KEY_MODULE_TYPE },
+        props: {type: DICT_TYPE.SYSTEM_MODULE_TYPE},
       },
     },
     {
@@ -194,7 +194,7 @@ export function useKeyGridColumns(): VxeTableGridOptions<I18nKeyApi.I18nKey>['co
       minWidth: 120,
       cellRender: {
         name: 'CellDict',
-        props: { type: DICT_TYPE.INFRA_I18N_KEY_USE_TYPE },
+        props: {type: DICT_TYPE.INFRA_I18N_KEY_USE_TYPE},
       },
     },
     {
@@ -220,7 +220,7 @@ export function useKeyGridColumns(): VxeTableGridOptions<I18nKeyApi.I18nKey>['co
       title: '操作',
       width: 200,
       fixed: 'right',
-      slots: { default: 'actions' },
+      slots: {default: 'actions'},
     },
   ];
 }
@@ -273,7 +273,7 @@ export function useMessageFormSchema(): VbenFormSchema[] {
       rules: 'required',
       component: 'Select',
       componentProps: {
-        options: getDictOptions(DICT_TYPE.INFRA_I18N_KEY_MODULE_TYPE),
+        options: getDictOptions(DICT_TYPE.SYSTEM_MODULE_TYPE),
         placeholder: '请选择模块',
         disabled: true,
       },
@@ -433,7 +433,7 @@ export function useMessageGridFormSchema(): VbenFormSchema[] {
 /** 信息 - 列表的字段 */
 export function useMessageGridColumns(): VxeTableGridOptions<I18nMessageApi.I18nMessage>['columns'] {
   return [
-    { type: 'checkbox', width: 40 },
+    {type: 'checkbox', width: 40},
     {
       field: 'id',
       title: '主键',
@@ -464,7 +464,7 @@ export function useMessageGridColumns(): VxeTableGridOptions<I18nMessageApi.I18n
       minWidth: 120,
       cellRender: {
         name: 'CellDict',
-        props: { type: DICT_TYPE.INFRA_I18N_LOCALE_TARGET },
+        props: {type: DICT_TYPE.INFRA_I18N_LOCALE_TARGET},
       },
     },
     {
@@ -474,7 +474,7 @@ export function useMessageGridColumns(): VxeTableGridOptions<I18nMessageApi.I18n
       minWidth: 120,
       cellRender: {
         name: 'CellDict',
-        props: { type: DICT_TYPE.INFRA_I18N_KEY_IS_SYSTEM },
+        props: {type: DICT_TYPE.INFRA_I18N_KEY_IS_SYSTEM},
       },
     },
     {
@@ -484,7 +484,7 @@ export function useMessageGridColumns(): VxeTableGridOptions<I18nMessageApi.I18n
       minWidth: 120,
       cellRender: {
         name: 'CellDict',
-        props: { type: DICT_TYPE.INFRA_I18N_KEY_MODULE_TYPE },
+        props: {type: DICT_TYPE.SYSTEM_MODULE_TYPE},
       },
     },
     {
@@ -494,7 +494,7 @@ export function useMessageGridColumns(): VxeTableGridOptions<I18nMessageApi.I18n
       minWidth: 120,
       cellRender: {
         name: 'CellDict',
-        props: { type: DICT_TYPE.INFRA_I18N_KEY_USE_TYPE },
+        props: {type: DICT_TYPE.INFRA_I18N_KEY_USE_TYPE},
       },
     },
     {
@@ -519,7 +519,7 @@ export function useMessageGridColumns(): VxeTableGridOptions<I18nMessageApi.I18n
       title: '操作',
       width: 200,
       fixed: 'right',
-      slots: { default: 'actions' },
+      slots: {default: 'actions'},
     },
   ];
 }

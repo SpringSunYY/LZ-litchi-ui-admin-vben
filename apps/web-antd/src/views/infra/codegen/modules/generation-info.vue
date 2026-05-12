@@ -162,7 +162,7 @@ function setAllFormValues(values: Record<string, any>): void {
       formValues.popupType = extendConfig.popupType;
     }
     if (extendConfig.i18nModuleType !== undefined) {
-      formValues.i18nModuleType = Number(extendConfig.i18nModuleType);
+      formValues.i18nModuleType = extendConfig.i18nModuleType;
     }
   }
 

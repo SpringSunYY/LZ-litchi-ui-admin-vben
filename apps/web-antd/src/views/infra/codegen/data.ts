@@ -272,9 +272,8 @@ export function useGenerationInfoBaseFormSchema(): VbenFormSchema[] {
       help: $t('infra.codegen.i18nModuleTypeHelp'),
       componentProps: {
         class: 'w-full',
-        options: getDictOptions(DICT_TYPE.INFRA_I18N_KEY_MODULE_TYPE),
+        options: getDictOptions(DICT_TYPE.SYSTEM_MODULE_TYPE, 'string'),
       },
-      defaultValue: undefined,
       dependencies: {
         triggerFields: ['isI18n'],
         show: (values) => values.isI18n === '0',
