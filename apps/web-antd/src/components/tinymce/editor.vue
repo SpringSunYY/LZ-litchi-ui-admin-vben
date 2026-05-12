@@ -25,6 +25,7 @@ import Editor from '@tinymce/tinymce-vue';
 import { useUpload } from '#/components/upload/use-upload';
 
 import { bindHandlers } from './helper';
+import FileUpload from './file-upload.vue';
 import ImgUpload from './img-upload.vue';
 import {
   plugins as defaultPlugins,
@@ -61,6 +62,15 @@ const props = defineProps({
   showImageUpload: {
     type: Boolean,
     default: true,
+  },
+  showFileUpload: {
+    type: Boolean,
+    default: true,
+  },
+  moduleType: {
+    // 文件模块类型
+    default: '',
+    type: String,
   },
 });
 
@@ -154,7 +164,7 @@ const initOptions = computed((): InitOptions => {
     images_upload_handler: (blobInfo) => {
       return new Promise((resolve, reject) => {
         const file = blobInfo.blob() as File;
-        const { httpRequest } = useUpload();
+        const { httpRequest } = useUpload(undefined, props.moduleType);
         httpRequest(file)
           .then((url) => {
             resolve(url);
@@ -309,6 +319,20 @@ function handleError(name: string) {
   const val = content?.replace(getUploadingImgName(name), '') ?? '';
   setValue(editor, val);
 }
+
+function handleFileDone(name: string, url: string) {
+  const editor = unref(editorRef);
+  if (!editor) {
+    return;
+  }
+  // 插入文件链接
+  const linkHtml = `<a href="${url}" target="_blank">${name}</a>&nbsp;`;
+  editor.execCommand('mceInsertContent', false, linkHtml);
+}
+
+function handleFileError(name: string) {
+  // 文件上传失败，不需要特殊处理
+}
 </script>
 
 <template>
@@ -318,9 +342,19 @@ function handleError(name: string) {
       v-show="editorRef"
       :disabled="disabled"
       :fullscreen="fullscreen"
+      :module-type="moduleType"
       @done="handleDone"
       @error="handleError"
       @uploading="handleImageUploading"
+    />
+    <FileUpload
+      v-if="showFileUpload"
+      v-show="editorRef"
+      :disabled="disabled"
+      :fullscreen="fullscreen"
+      :module-type="moduleType"
+      @done="handleFileDone"
+      @error="handleFileError"
     />
     <Editor
       v-if="!initOptions.inline && init"

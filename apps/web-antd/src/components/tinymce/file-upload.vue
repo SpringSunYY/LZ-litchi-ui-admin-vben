@@ -9,7 +9,7 @@ import { Button, Upload } from 'ant-design-vue';
 
 import { useUpload } from '#/components/upload/use-upload';
 
-defineOptions({ name: 'TinymceImageUpload' });
+defineOptions({ name: 'TinymceFileUpload' });
 
 const props = defineProps({
   disabled: {
@@ -17,7 +17,7 @@ const props = defineProps({
     type: Boolean,
   },
   fullscreen: {
-    // 图片上传，是否放到全屏的位置
+    // 文件上传，是否放到全屏的位置
     default: false,
     type: Boolean,
   },
@@ -40,7 +40,6 @@ const getButtonProps = computed(() => {
 });
 
 async function customRequest(info: UploadRequestOption<any>) {
-  // 1. emit 上传中
   const file = info.file as File;
   const name = file?.name;
   if (!uploading.value) {
@@ -48,7 +47,6 @@ async function customRequest(info: UploadRequestOption<any>) {
     uploading.value = true;
   }
 
-  // 2. 执行上传
   const { httpRequest } = useUpload(undefined, props.moduleType);
   try {
     const url = await httpRequest(file);
@@ -61,25 +59,24 @@ async function customRequest(info: UploadRequestOption<any>) {
 }
 </script>
 <template>
-  <div :class="[{ fullscreen }]" class="tinymce-image-upload">
+  <div :class="[{ fullscreen }]" class="tinymce-file-upload">
     <Upload
       :show-upload-list="false"
-      accept=".jpg,.jpeg,.gif,.png,.webp"
       multiple
       :custom-request="customRequest"
     >
-      <Button type="primary" v-bind="{ ...getButtonProps }">
-        {{ $t('ui.upload.imgUpload') }}
+      <Button v-bind="{ ...getButtonProps }">
+        {{ $t('ui.upload.fileUpload') }}
       </Button>
     </Upload>
   </div>
 </template>
 
 <style lang="scss" scoped>
-.tinymce-image-upload {
+.tinymce-file-upload {
   position: absolute;
   top: 4px;
-  right: 10px;
+  right: 100px;
   z-index: 20;
 
   &.fullscreen {

@@ -43,6 +43,9 @@ export function useFormSchema(): VbenFormSchema[] {
       label: '公告内容',
       component: 'RichTextarea',
       rules: 'required',
+      componentProps: {
+        moduleType: 'system',
+      },
     },
     {
       fieldName: 'appendixUrl',
