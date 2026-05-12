@@ -96,6 +96,9 @@ export function useFormSchema(): VbenFormSchema[] {
       fieldName: 'qualifications',
       label: '相关资质',
       component: 'FileUpload',
+      componentProps: {
+        moduleType: 'system',
+      },
     },
     {
       label: '用户名称',

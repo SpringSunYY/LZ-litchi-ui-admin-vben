@@ -50,6 +50,7 @@ export function useFormSchema(): VbenFormSchema[] {
       component: 'FileUpload',
       componentProps: {
         maxSize: 100,
+        moduleType: 'system',
       },
     },
     {

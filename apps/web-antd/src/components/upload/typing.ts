@@ -37,5 +37,7 @@ export interface FileUploadProps {
   showDescription?: boolean;
   // 上传超时时间(毫秒)，0 表示不限制
   timeout?: number;
+  // 模块类型，默认 'infra'
+  moduleType?: string;
   value?: string | string[];
 }

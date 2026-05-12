@@ -54,6 +54,7 @@ export function useFormSchema(): VbenFormSchema[] {
       label: '等级图标',
       componentProps: {
         maxSize: 1,
+        moduleType: 'member',
       },
     },
     {
@@ -62,6 +63,7 @@ export function useFormSchema(): VbenFormSchema[] {
       label: '等级背景图',
       componentProps: {
         maxSize: 1,
+        moduleType: 'member',
       },
     },
     {

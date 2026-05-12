@@ -283,7 +283,7 @@ defineExpose({ validate });
         </Select>
       </Form.Item>
       <Form.Item label="流程图标" class="mb-5">
-        <ImageUpload v-model:value="modelData.icon" />
+        <ImageUpload v-model:value="modelData.icon" module-type="bpm" />
       </Form.Item>
       <Form.Item label="流程描述" name="description" class="mb-5">
         <Input.TextArea v-model:value="modelData.description" allow-clear />

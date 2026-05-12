@@ -17,6 +17,7 @@ const props = defineProps<{
   inputProps?: InputProps;
   inputType?: 'input' | 'textarea';
   modelValue?: number | string;
+  moduleType?: string;
   textareaProps?: TextAreaProps;
 }>();
 
@@ -55,6 +56,7 @@ const textareaProps = computed(() => {
 const fileUploadProps = computed(() => {
   return {
     ...props.fileUploadProps,
+    moduleType: props.moduleType ?? 'infra',
   };
 });
 </script>

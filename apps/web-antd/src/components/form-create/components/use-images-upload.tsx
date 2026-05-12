@@ -58,6 +58,11 @@ export const useImagesUpload = () => {
         type: [Array, String] as PropType<string | string[]>,
         default: () => ['jpg', 'jpeg', 'png', 'gif', 'webp'],
       },
+      // 模块类型
+      moduleType: {
+        type: String,
+        default: 'bpm',
+      },
     },
     setup(props, { emit }) {
       const attrs = useAttrs();
@@ -93,6 +98,7 @@ export const useImagesUpload = () => {
           listType={drag.value ? 'picture-card' : 'picture-card'}
           maxNumber={limit.value}
           maxSize={fileSize.value}
+          moduleType={props.moduleType}
           onChange={handleChange}
           value={bindValue}
         />

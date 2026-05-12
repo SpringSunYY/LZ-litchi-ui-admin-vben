@@ -10,7 +10,7 @@ interface CellFileAndImagesProps {
   /** 多个文件 URL 之间的分隔符 */
   separator?: string;
   /** 强制指定类型：'image' | 'file' | 'auto'，默认 auto */
-  type?: 'image' | 'file' | 'auto';
+  type?: 'auto' | 'file' | 'image';
 }
 
 const props = withDefaults(defineProps<CellFileAndImagesProps>(), {
@@ -20,21 +20,21 @@ const props = withDefaults(defineProps<CellFileAndImagesProps>(), {
 });
 
 /** 图片扩展名 */
-const IMAGE_EXTENSIONS = [
-  '.jpg',
-  '.jpeg',
-  '.png',
-  '.gif',
+const IMAGE_EXTENSIONS = new Set([
   '.bmp',
-  '.webp',
-  '.svg',
+  '.gif',
   '.ico',
-  '.tiff',
-  '.tif',
   '.jfif',
-  '.pjpeg',
+  '.jpeg',
+  '.jpg',
   '.pjp',
-];
+  '.pjpeg',
+  '.png',
+  '.svg',
+  '.tif',
+  '.tiff',
+  '.webp',
+]);
 
 /** 获取文件扩展名（转小写） */
 function getExtension(url: string): string {
@@ -46,7 +46,7 @@ function getExtension(url: string): string {
 /** 判断是否为图片 URL */
 function isImageUrl(url: string): boolean {
   const ext = getExtension(url);
-  return IMAGE_EXTENSIONS.includes(`.${ext}`);
+  return IMAGE_EXTENSIONS.has(`.${ext}`);
 }
 
 /** 获取文件列表 */
@@ -73,12 +73,18 @@ const filesWithType = computed(() => {
 
 /** 是否全部是图片 */
 const allAreImages = computed(() => {
-  return filesWithType.value.length > 0 && filesWithType.value.every((f) => f.isImage);
+  return (
+    filesWithType.value.length > 0 &&
+    filesWithType.value.every((f) => f.isImage)
+  );
 });
 
 /** 是否全部是文件 */
 const allAreFiles = computed(() => {
-  return filesWithType.value.length > 0 && filesWithType.value.every((f) => !f.isImage);
+  return (
+    filesWithType.value.length > 0 &&
+    filesWithType.value.every((f) => !f.isImage)
+  );
 });
 
 /** 全部转为图片 URL */
@@ -92,17 +98,18 @@ const imageUrls = computed(() => {
     <!-- 全部是图片 -->
     <CellImage v-if="allAreImages" :src="imageUrls" />
     <!-- 混合类型或文件 -->
-    <div v-else style="display: flex; flex-wrap: wrap; gap: 4px">
+    <div v-else>
       <template v-for="(file, index) in filesWithType" :key="index">
         <CellImage
           v-if="file.isImage"
           :src="file.url"
-          style="max-width: 80px"
+          style="max-width: 80px; vertical-align: middle"
         />
         <FilePreview
           v-else
           :file-url="file.url"
           :separator="separator"
+          style="margin: 0 auto"
         />
       </template>
     </div>

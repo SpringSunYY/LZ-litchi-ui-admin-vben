@@ -16,6 +16,7 @@ export namespace InfraFileApi {
     size?: number;
     type?: string;
     createTime?: Date;
+    moduleType?: string;
   }
 
   /** 文件预签名地址 */
@@ -30,6 +31,7 @@ export namespace InfraFileApi {
   export interface FileUploadReqVO {
     file: globalThis.File;
     directory?: string;
+    moduleType?: string;
   }
 }
 

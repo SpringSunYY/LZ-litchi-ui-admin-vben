@@ -33,7 +33,7 @@ async function handelUpload({
   filename: string;
 }) {
   // 1. 上传头像，获取 URL
-  const { httpRequest } = useUpload();
+  const { httpRequest } = useUpload(undefined, 'system');
   // 将 Blob 转换为 File
   const fileObj = new File([file], filename, { type: file.type });
   const avatar = await httpRequest(fileObj);

@@ -118,13 +118,17 @@
   },
   "upload": {
     "upload": "Upload",
-    "imgUpload": "ImageUpload",
+    "imgUpload": "Image Upload",
     "accept": "Support {0} format",
     "acceptUpload": "Only upload files in {0} format",
     "maxSize": "A single file does not exceed {0}MB",
     "maxSizeMultiple": "Only upload files up to {0}MB!",
     "maxNumber": "Only upload up to {0} files",
-    "uploadSuccess": "Upload successfully"
+    "uploadSuccess": "Upload successfully",
+    "minSize": "A single file must be at least {0}MB",
+    "minSizeMultiple": "File size must be at least {0}MB!",
+    "uploadTip": "Upload files up to {0}MB{1}{2}, up to {3}",
+    "uploadTipImage": "Upload images up to {0}MB in {1} format, up to {2}"
   },
   "cropper": {
     "selectImage": "Select Image",

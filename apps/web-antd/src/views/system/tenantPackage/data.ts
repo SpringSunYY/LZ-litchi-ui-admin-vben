@@ -145,6 +145,9 @@ export function useFormSchema(): VbenFormSchema[] {
       label: 'LOGO',
       rules: 'required',
       component: 'ImageUpload',
+      componentProps: {
+        moduleType: 'system',
+      },
     },
     {
       fieldName: 'description',

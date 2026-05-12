@@ -33,6 +33,7 @@ export function useFormSchema(): VbenFormSchema[] {
       label: '公司 logo',
       componentProps: {
         maxSize: 1,
+        moduleType: 'mall',
       },
       rules: 'required',
     },

@@ -33,6 +33,7 @@ export function useFormSchema(): VbenFormSchema[] {
       component: 'ImageUpload',
       componentProps: {
         maxSize: 1,
+        moduleType: 'mall',
       },
       rules: 'required',
     },
@@ -66,6 +67,7 @@ export function useFormSchema(): VbenFormSchema[] {
       component: 'ImageUpload',
       componentProps: {
         maxSize: 9,
+        moduleType: 'mall',
       },
       rules: 'required',
     },

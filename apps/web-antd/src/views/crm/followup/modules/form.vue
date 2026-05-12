@@ -75,6 +75,9 @@ const [Form, formApi] = useVbenForm({
       fieldName: 'picUrls',
       label: '图片',
       component: 'ImageUpload',
+      componentProps: {
+        moduleType: 'crm',
+      },
     },
     {
       fieldName: 'fileUrls',

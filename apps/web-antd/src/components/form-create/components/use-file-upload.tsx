@@ -53,6 +53,11 @@ export const useFileUpload = () => {
         type: Boolean,
         default: false,
       },
+      // 模块类型
+      moduleType: {
+        type: String,
+        default: 'bpm',
+      },
     },
     setup(props, { emit }) {
       const attrs = useAttrs();
@@ -87,6 +92,7 @@ export const useFileUpload = () => {
           disabled={props.disabled}
           maxNumber={props.limit}
           maxSize={props.fileSize}
+          moduleType={props.moduleType}
           onChange={handleChange}
           showDescription={props.isShowTip}
           value={bindValue}

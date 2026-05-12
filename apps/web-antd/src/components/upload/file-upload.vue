@@ -26,6 +26,7 @@ const props = withDefaults(defineProps<FileUploadProps>(), {
   disabled: false,
   helpText: '',
   maxSize: 500,
+  minSize: 0,
   maxNumber: 100,
   accept: () => [],
   multiple: true,
@@ -33,15 +34,17 @@ const props = withDefaults(defineProps<FileUploadProps>(), {
   resultField: '',
   showDescription: true,
   timeout: 0,
+  moduleType: 'infra',
 });
 const emit = defineEmits(['change', 'update:value', 'delete', 'returnText']);
-const { accept, helpText, maxNumber, maxSize } = toRefs(props);
+const { accept, helpText, maxNumber, maxSize, minSize } = toRefs(props);
 const isInnerOperate = ref<boolean>(false);
-const { getAccept, getStringAccept } = useUploadType({
+const { getStringAccept, getHelpText } = useUploadType({
   acceptRef: accept,
   helpTextRef: helpText,
   maxNumberRef: maxNumber,
   maxSizeRef: maxSize,
+  minSizeRef: minSize,
 });
 
 const fileList = ref<UploadProps['fileList']>([]);
@@ -102,7 +105,7 @@ async function handleRemove(file: UploadFile) {
 }
 
 async function beforeUpload(file: File) {
-  const { maxSize, accept } = props;
+  const { maxSize, minSize, accept } = props;
   const isAct = checkFileType(file, accept);
   if (!isAct) {
     message.error($t('ui.upload.acceptUpload', [accept]));
@@ -117,13 +120,18 @@ async function beforeUpload(file: File) {
     // 防止弹出多个错误提示
     setTimeout(() => (isLtMsg.value = true), 1000);
   }
+  // 检查最小文件大小
+  if (minSize && minSize > 0 && file.size / 1024 / 1024 < minSize) {
+    message.error($t('ui.upload.minSizeMultiple', [minSize]));
+    return Upload.LIST_IGNORE;
+  }
   return (isAct && !isLt) || Upload.LIST_IGNORE;
 }
 
 async function customRequest(info: UploadRequestOption<any>) {
   let { api, timeout } = props;
   if (!api || !isFunction(api)) {
-    api = useUpload(props.directory).httpRequest;
+    api = useUpload(props.directory, props.moduleType).httpRequest;
   }
   try {
     // 上传文件
@@ -215,24 +223,9 @@ function handlePreview(file: UploadFile) {
           {{ $t('ui.upload.upload') }}
         </Button>
       </div>
-      <Tooltip
-        v-if="showDescription"
-        :title="`请上传不超过 ${maxSize}MB 的文件${getAccept.length > 0 ? `，支持 ${getAccept.join('/')} 格式` : ''}，最多 ${maxNumber} 个`"
-      >
+      <Tooltip v-if="showDescription" :title="getHelpText">
         <div class="mt-2 flex flex-wrap items-center">
-          请上传不超过
-          <div class="text-primary mx-1 font-bold">{{ maxSize }}MB</div>
-          的文件
-          <template v-if="getAccept.length > 0">
-            ，支持
-            <div class="text-primary mx-1 font-bold">
-              {{ getAccept.join('/') }}
-            </div>
-            格式
-          </template>
-          ，最多
-          <div class="text-primary mx-1 font-bold">{{ maxNumber }}</div>
-          个
+          {{ getHelpText }}
         </div>
       </Tooltip>
     </Upload>

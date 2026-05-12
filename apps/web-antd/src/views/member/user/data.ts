@@ -58,6 +58,7 @@ export function useFormSchema(): VbenFormSchema[] {
       label: '头像',
       componentProps: {
         maxSize: 1,
+        moduleType: 'member',
       },
     },
     {

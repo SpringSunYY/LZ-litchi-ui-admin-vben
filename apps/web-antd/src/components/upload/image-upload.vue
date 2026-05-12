@@ -6,7 +6,7 @@ import type { FileUploadProps } from './typing';
 
 import type { AxiosProgressEvent } from '#/api/infra/file';
 
-import { computed, nextTick, ref, toRefs, watch } from 'vue';
+import { computed, nextTick, ref, toRefs, unref, watch } from 'vue';
 
 import { CloudUpload } from '@vben/icons';
 import { $t } from '@vben/locales';
@@ -34,17 +34,19 @@ const props = withDefaults(defineProps<FileUploadProps>(), {
   api: undefined,
   resultField: '',
   showDescription: true,
+  moduleType: 'infra',
 });
 const emit = defineEmits(['change', 'update:value', 'delete']);
-const { accept, helpText, maxNumber, maxSize } = toRefs(props);
+const { accept, helpText, maxNumber, maxSize, minSize } = toRefs(props);
 const isInnerOperate = ref<boolean>(false);
-const maxSizeValue = computed(() => props.maxSize);
-const { getAccept, getStringAccept, getHelpText } = useUploadType({
+const { getAccept, getStringAccept } = useUploadType({
   acceptRef: accept,
   helpTextRef: helpText,
   maxNumberRef: maxNumber,
   maxSizeRef: maxSize,
+  minSizeRef: minSize,
 });
+
 const previewOpen = ref<boolean>(false); // 是否展示预览
 const previewImage = ref<string>(''); // 预览图片
 const previewTitle = ref<string>(''); // 预览标题
@@ -53,6 +55,21 @@ const fileList = ref<UploadProps['fileList']>([]);
 const isLtMsg = ref<boolean>(true); // 文件大小错误提示
 const isActMsg = ref<boolean>(true); // 文件类型错误提示
 const isFirstRender = ref<boolean>(true); // 是否第一次渲染
+
+const getImageHelpText = computed(() => {
+  const texts: string[] = [];
+  const accept = unref(getAccept);
+  const maxSizeVal = unref(maxSize);
+  const maxNumberVal = unref(maxNumber);
+  if (maxSizeVal) {
+    texts.push($t('ui.upload.maxSize', [maxSizeVal]));
+  }
+  if (accept.length > 0) {
+    texts.push($t('ui.upload.accept', [accept.join('/')]));
+  }
+  texts.push($t('ui.upload.maxNumber', [maxNumberVal]));
+  return texts.join('，');
+});
 
 watch(
   () => props.value,
@@ -164,7 +181,7 @@ async function beforeUpload(file: File) {
 async function customRequest(info: UploadRequestOption<any>) {
   let { api } = props;
   if (!api || !isFunction(api)) {
-    api = useUpload(props.directory).httpRequest;
+    api = useUpload(props.directory, props.moduleType).httpRequest;
   }
   try {
     // 上传文件
@@ -235,13 +252,7 @@ function getValue() {
       v-if="showDescription"
       class="mt-2 flex flex-wrap items-center text-[14px]"
     >
-      请上传不超过
-      <div class="text-primary mx-1 font-bold">{{ maxSizeValue }}MB</div>
-      的
-      <div class="text-primary mx-1 font-bold">{{ getAccept.join('/') }}</div>
-      格式文件，最多
-      <div class="text-primary mx-1 font-bold">{{ maxNumber }}</div>
-      张
+      {{ getImageHelpText }}
     </div>
     <Modal
       :footer="null"

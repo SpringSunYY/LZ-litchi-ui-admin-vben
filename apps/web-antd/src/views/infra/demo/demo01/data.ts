@@ -55,6 +55,9 @@ export function useFormSchema(): VbenFormSchema[] {
       label: $t('infra:demo01-contact:field:description'),
       rules: 'required',
       component: 'FileUpload',
+      componentProps: {
+        moduleType: 'infra',
+      },
     },
     {
       fieldName: 'age',
@@ -70,6 +73,9 @@ export function useFormSchema(): VbenFormSchema[] {
       fieldName: 'avatar',
       label: $t('infra:demo01-contact:field:avatar'),
       component: 'ImageUpload',
+      componentProps: {
+        moduleType: 'infra',
+      },
     },
   ];
 }

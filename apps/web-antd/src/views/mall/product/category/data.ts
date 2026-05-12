@@ -59,6 +59,7 @@ export function useFormSchema(): VbenFormSchema[] {
       component: 'ImageUpload',
       componentProps: {
         maxSize: 1,
+        moduleType: 'mall',
       },
       rules: 'required',
     },

@@ -30,7 +30,7 @@ export function useUploadType({
   maxSizeRef,
   minSizeRef,
 }: {
-  acceptRef: Ref<string[] | string>;
+  acceptRef: Ref<string | string[]>;
   helpTextRef: Ref<string>;
   maxNumberRef: Ref<number>;
   maxSizeRef: Ref<number>;
@@ -91,12 +91,13 @@ export function useUploadType({
 }
 
 // TODO @芋艿：目前保持和 admin-vue3 一致，后续可能重构
-export function useUpload(directory?: string) {
+export function useUpload(directory?: string, moduleType?: string) {
   // 后端上传地址
   const uploadUrl = getUploadUrl();
   // 是否使用前端直连上传
   const isClientUpload =
     UPLOAD_TYPE.CLIENT === import.meta.env.VITE_UPLOAD_TYPE;
+
   // 重写ElUpload上传方法
   async function httpRequest(
     file: File,
@@ -118,13 +119,16 @@ export function useUpload(directory?: string) {
         })
         .then(() => {
           // 1.4. 记录文件信息到后端（异步）
-          createFile0(presignedInfo, file);
+          createFile0(presignedInfo, file, moduleType);
           // 通知成功，数据格式保持与后端上传的返回结果一致
           return { url: presignedInfo.url };
         });
     } else {
       // 模式二：后端上传（timeout: 0 防止大文件上传超时）
-      return uploadFile({ file, directory }, onUploadProgress, { timeout: 0 });
+      //@ts-ignore
+      return uploadFile({ file, directory, moduleType }, onUploadProgress, {
+        timeout: 0,
+      });
     }
   }
 
@@ -150,6 +154,7 @@ export function getUploadUrl(): string {
 function createFile0(
   vo: InfraFileApi.FilePresignedUrlRespVO,
   file: File,
+  moduleType?: string,
 ): InfraFileApi.File {
   const fileVO = {
     configId: vo.configId,
@@ -158,6 +163,7 @@ function createFile0(
     name: file.name,
     type: file.type,
     size: file.size,
+    moduleType,
   };
   createFile(fileVO);
   return fileVO;
