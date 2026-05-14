@@ -21,8 +21,8 @@ const emit = defineEmits(['success']);
 const formData = ref<InfraFileConfigApi.FileConfig>();
 const getTitle = computed(() => {
   return formData.value?.id
-    ? $t('ui.actionTitle.edit', ['文件配置'])
-    : $t('ui.actionTitle.create', ['文件配置']);
+    ? $t('ui.actionTitle.edit', [$t('infra.fileConfig.fileConfig')])
+    : $t('ui.actionTitle.create', [$t('infra.fileConfig.fileConfig')]);
 });
 
 const [Form, formApi] = useVbenForm({

@@ -7,6 +7,8 @@ import { onMounted, ref, watch } from 'vue';
 
 import { EchartsUI, useEcharts } from '@vben/plugins/echarts';
 
+import { $t } from '#/locales';
+
 const props = defineProps<{
   redisData?: InfraRedisApi.RedisMonitorInfo;
 }>();
@@ -20,8 +22,7 @@ function parseMemoryValue(memStr: string | undefined): number {
     return 0;
   }
   try {
-    // 从字符串中提取数字部分，例如 "1.2M" 中的 1.2
-    const str = String(memStr); // 显式转换为字符串类型
+    const str = String(memStr);
     const match = str.match(/^([\d.]+)/);
     return match ? Number.parseFloat(match[1] as string) : 0;
   } catch {
@@ -35,14 +36,12 @@ function renderMemoryChart() {
     return;
   }
 
-  // 处理数据
   const usedMemory = props.redisData.info.used_memory_human || '0';
   const memoryValue = parseMemoryValue(usedMemory);
 
-  // 渲染图表
   renderEcharts({
     title: {
-      text: '内存使用情况',
+      text: $t('infra.redis.field.memoryUsageTitle'),
       left: 'center',
     },
     tooltip: {
@@ -50,7 +49,7 @@ function renderMemoryChart() {
     },
     series: [
       {
-        name: '峰值',
+        name: $t('infra.redis.field.memoryConsume'),
         type: 'gauge',
         min: 0,
         max: 100,
@@ -104,7 +103,7 @@ function renderMemoryChart() {
         data: [
           {
             value: memoryValue,
-            name: '内存消耗',
+            name: $t('infra.redis.field.memoryConsume'),
           },
         ],
       },

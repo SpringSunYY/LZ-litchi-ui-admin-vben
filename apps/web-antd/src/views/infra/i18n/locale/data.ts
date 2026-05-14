@@ -2,6 +2,7 @@ import type { VbenFormSchema } from '#/adapter/form';
 import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 import type { I18nLocaleApi } from '#/api/infra/i18n/i18nLocale';
 
+import { $t } from '#/locales';
 import { DICT_TYPE, getDictOptions, getRangePickerDefaultProps } from '#/utils';
 
 /** 新增/修改的表单 */
@@ -17,56 +18,66 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'localeName',
-      label: '国家地区',
+      label: $t('infra.i18nLocale.field.localeName'),
       rules: 'required',
       component: 'Input',
       componentProps: {
-        placeholder: '请输入国家地区',
+        placeholder: $t('ui.placeholder.input', [
+          $t('infra.i18nLocale.field.localeName'),
+        ]),
       },
     },
     {
       fieldName: 'locale',
-      label: '简称',
+      label: $t('infra.i18nLocale.field.locale'),
       rules: 'required',
       component: 'Input',
       componentProps: {
-        placeholder: '请输入简称',
+        placeholder: $t('ui.placeholder.input', [
+          $t('infra.i18nLocale.field.locale'),
+        ]),
       },
     },
     {
       fieldName: 'orderNum',
-      label: '显示顺序',
+      label: $t('infra.i18nLocale.field.orderNum'),
       component: 'InputNumber',
       componentProps: {
-        placeholder: '请输入显示顺序',
+        placeholder: $t('ui.placeholder.input', [
+          $t('infra.i18nLocale.field.orderNum'),
+        ]),
         min: 0,
       },
     },
     {
       fieldName: 'localeStatus',
-      label: '状态',
+      label: $t('infra.i18nLocale.field.localeStatus'),
       rules: 'required',
       component: 'Select',
       componentProps: {
         options: getDictOptions(DICT_TYPE.INFRA_I18N_LOCALE_STATUS, 'number'),
-        placeholder: '请选择状态',
+        placeholder: $t('ui.placeholder.select', [
+          $t('infra.i18nLocale.field.localeStatus'),
+        ]),
       },
     },
     {
       fieldName: 'localeTarget',
-      label: '使用端',
+      label: $t('infra.i18nLocale.field.localeTarget'),
       rules: 'required',
-      help: '展示的区域，例如通用所有端都展示，后台只是后台展示，请不要随意修改，如若修改请及时同步message',
+      help: $t('infra.i18nLocale.help.localeTarget'),
       component: 'Select',
       componentProps: {
         options: getDictOptions(DICT_TYPE.INFRA_I18N_LOCALE_TARGET, 'number'),
-        placeholder: '请选择使用端',
+        placeholder: $t('ui.placeholder.select', [
+          $t('infra.i18nLocale.field.localeTarget'),
+        ]),
       },
     },
     {
       fieldName: 'isDefault',
-      label: '默认',
-      help: '是否是默认语言，每个使用端只允许一个默认',
+      label: $t('infra.i18nLocale.field.isDefault'),
+      help: $t('infra.i18nLocale.help.isDefault'),
       rules: 'required',
       component: 'Select',
       componentProps: {
@@ -74,15 +85,19 @@ export function useFormSchema(): VbenFormSchema[] {
           DICT_TYPE.INFRA_I18N_LOCALE_IS_DEFAULT,
           'number',
         ),
-        placeholder: '请选择默认',
+        placeholder: $t('ui.placeholder.select', [
+          $t('infra.i18nLocale.field.isDefault'),
+        ]),
       },
     },
     {
       fieldName: 'remark',
-      label: '备注',
+      label: $t('infra.i18nLocale.field.remark'),
       component: 'Textarea',
       componentProps: {
-        placeholder: '请输入备注',
+        placeholder: $t('ui.placeholder.input', [
+          $t('infra.i18nLocale.field.remark'),
+        ]),
       },
     },
   ];
@@ -93,45 +108,53 @@ export function useGridFormSchema(): VbenFormSchema[] {
   return [
     {
       fieldName: 'localeName',
-      label: '国家地区',
+      label: $t('infra.i18nLocale.field.localeName'),
       component: 'Input',
       componentProps: {
         allowClear: true,
-        placeholder: '请输入国家地区',
+        placeholder: $t('ui.placeholder.input', [
+          $t('infra.i18nLocale.field.localeName'),
+        ]),
       },
     },
     {
       fieldName: 'locale',
-      label: '简称',
+      label: $t('infra.i18nLocale.field.locale'),
       component: 'Input',
       componentProps: {
         allowClear: true,
-        placeholder: '请输入简称',
+        placeholder: $t('ui.placeholder.input', [
+          $t('infra.i18nLocale.field.locale'),
+        ]),
       },
     },
     {
       fieldName: 'localeStatus',
-      label: '状态',
+      label: $t('infra.i18nLocale.field.localeStatus'),
       component: 'Select',
       componentProps: {
         allowClear: true,
         options: getDictOptions(DICT_TYPE.INFRA_I18N_LOCALE_STATUS, 'number'),
-        placeholder: '请选择状态',
+        placeholder: $t('ui.placeholder.select', [
+          $t('infra.i18nLocale.field.localeStatus'),
+        ]),
       },
     },
     {
       fieldName: 'localeTarget',
-      label: '使用端',
+      label: $t('infra.i18nLocale.field.localeTarget'),
       component: 'Select',
       componentProps: {
         allowClear: true,
         options: getDictOptions(DICT_TYPE.INFRA_I18N_LOCALE_TARGET, 'number'),
-        placeholder: '请选择使用端',
+        placeholder: $t('ui.placeholder.select', [
+          $t('infra.i18nLocale.field.localeTarget'),
+        ]),
       },
     },
     {
       fieldName: 'isDefault',
-      label: '默认',
+      label: $t('infra.i18nLocale.field.isDefault'),
       component: 'Select',
       componentProps: {
         allowClear: true,
@@ -139,12 +162,14 @@ export function useGridFormSchema(): VbenFormSchema[] {
           DICT_TYPE.INFRA_I18N_LOCALE_IS_DEFAULT,
           'number',
         ),
-        placeholder: '请选择默认',
+        placeholder: $t('ui.placeholder.select', [
+          $t('infra.i18nLocale.field.isDefault'),
+        ]),
       },
     },
     {
       fieldName: 'createTime',
-      label: '创建时间',
+      label: $t('infra.i18nLocale.field.createTime'),
       component: 'RangePicker',
       componentProps: {
         ...getRangePickerDefaultProps(),
@@ -160,27 +185,27 @@ export function useGridColumns(): VxeTableGridOptions<I18nLocaleApi.I18nLocale>[
     { type: 'checkbox', width: 40 },
     {
       field: 'id',
-      title: '编号',
+      title: $t('infra.i18nLocale.field.id'),
       minWidth: 120,
     },
     {
       field: 'localeName',
-      title: '国家地区',
+      title: $t('infra.i18nLocale.field.localeName'),
       minWidth: 120,
     },
     {
       field: 'locale',
-      title: '简称',
+      title: $t('infra.i18nLocale.field.locale'),
       minWidth: 120,
     },
     {
       field: 'orderNum',
-      title: '显示顺序',
+      title: $t('infra.i18nLocale.field.orderNum'),
       minWidth: 120,
     },
     {
       field: 'localeStatus',
-      title: '状态',
+      title: $t('infra.i18nLocale.field.localeStatus'),
       minWidth: 120,
       cellRender: {
         name: 'CellDict',
@@ -189,7 +214,7 @@ export function useGridColumns(): VxeTableGridOptions<I18nLocaleApi.I18nLocale>[
     },
     {
       field: 'localeTarget',
-      title: '使用端',
+      title: $t('infra.i18nLocale.field.localeTarget'),
       minWidth: 120,
       cellRender: {
         name: 'CellDict',
@@ -198,7 +223,7 @@ export function useGridColumns(): VxeTableGridOptions<I18nLocaleApi.I18nLocale>[
     },
     {
       field: 'isDefault',
-      title: '默认',
+      title: $t('infra.i18nLocale.field.isDefault'),
       minWidth: 120,
       cellRender: {
         name: 'CellDict',
@@ -207,17 +232,17 @@ export function useGridColumns(): VxeTableGridOptions<I18nLocaleApi.I18nLocale>[
     },
     {
       field: 'remark',
-      title: '备注',
+      title: $t('infra.i18nLocale.field.remark'),
       minWidth: 120,
     },
     {
       field: 'createTime',
-      title: '创建时间',
+      title: $t('infra.i18nLocale.field.createTime'),
       minWidth: 120,
       formatter: 'formatDateTime',
     },
     {
-      title: '操作',
+      title: $t('common.operation'),
       width: 200,
       fixed: 'right',
       slots: { default: 'actions' },

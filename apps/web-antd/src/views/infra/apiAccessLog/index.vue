@@ -28,7 +28,10 @@ function onRefresh() {
 /** 导出表格 */
 async function handleExport() {
   const data = await exportApiAccessLog(await gridApi.formApi.getValues());
-  downloadFileFromBlobPart({ fileName: 'API 访问日志.xls', source: data });
+  downloadFileFromBlobPart({
+    fileName: `${$t('infra.apiAccessLog.list')}.xls`,
+    source: data,
+  });
 }
 
 /** 查看 API 访问日志详情 */
@@ -73,12 +76,12 @@ const [Grid, gridApi] = useVbenVxeGrid({
     </template>
 
     <DetailModal @success="onRefresh" />
-    <Grid table-title="API 访问日志列表">
+    <Grid :table-title="$t('infra.apiAccessLog.list')">
       <template #toolbar-tools>
         <TableAction
           :actions="[
             {
-              label: $t('ui.actionTitle.export'),
+              label: $t('infra.apiAccessLog.action.export'),
               type: 'primary',
               icon: ACTION_ICON.DOWNLOAD,
               auth: ['infra:api-access-log:export'],

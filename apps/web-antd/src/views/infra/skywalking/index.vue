@@ -5,6 +5,7 @@ import { DocAlert, Page } from '@vben/common-ui';
 
 import { getConfigKey } from '#/api/infra/config';
 import { IFrame } from '#/components/iframe';
+import { $t } from '#/locales';
 
 const loading = ref(true); // 是否加载中
 const src = ref('http://skywalking.shop.iocoder.cn');
@@ -25,7 +26,10 @@ onMounted(async () => {
 <template>
   <Page auto-content-height>
     <template #doc>
-      <DocAlert title="服务监控" url="https://doc.iocoder.cn/server-monitor/" />
+      <DocAlert
+        :title="$t('infra.skywalking.docTitle')"
+        url="https://doc.iocoder.cn/server-monitor/"
+      />
     </template>
 
     <IFrame v-if="!loading" v-loading="loading" :src="src" />

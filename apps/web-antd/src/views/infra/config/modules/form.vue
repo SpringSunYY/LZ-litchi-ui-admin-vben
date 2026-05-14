@@ -17,8 +17,8 @@ const emit = defineEmits(['success']);
 const formData = ref<InfraConfigApi.Config>();
 const getTitle = computed(() => {
   return formData.value?.id
-    ? $t('ui.actionTitle.edit', ['参数'])
-    : $t('ui.actionTitle.create', ['参数']);
+    ? $t('ui.actionTitle.edit', [$t('infra.config.config')])
+    : $t('ui.actionTitle.create', [$t('infra.config.config')]);
 });
 
 const [Form, formApi] = useVbenForm({

@@ -1,6 +1,8 @@
 import type { VbenFormSchema } from '#/adapter/form';
 import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 
+import { $t } from '#/locales';
+
 /** 新增/修改的表单 */
 export function useFormSchema(): VbenFormSchema[] {
   return [
@@ -14,37 +16,45 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'name',
-      label: '数据源名称',
+      label: $t('infra.dataSourceConfig.field.name'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入数据源名称',
+        placeholder: $t('ui.placeholder.input', [
+          $t('infra.dataSourceConfig.field.name'),
+        ]),
       },
       rules: 'required',
     },
     {
       fieldName: 'url',
-      label: '数据源连接',
+      label: $t('infra.dataSourceConfig.field.url'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入数据源连接',
+        placeholder: $t('ui.placeholder.input', [
+          $t('infra.dataSourceConfig.field.url'),
+        ]),
       },
       rules: 'required',
     },
     {
       fieldName: 'username',
-      label: '用户名',
+      label: $t('infra.dataSourceConfig.field.username'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入用户名',
+        placeholder: $t('ui.placeholder.input', [
+          $t('infra.dataSourceConfig.field.username'),
+        ]),
       },
       rules: 'required',
     },
     {
       fieldName: 'password',
-      label: '密码',
+      label: $t('infra.dataSourceConfig.field.password'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入密码',
+        placeholder: $t('ui.placeholder.input', [
+          $t('infra.dataSourceConfig.field.password'),
+        ]),
         type: 'password',
       },
       rules: 'required',
@@ -57,27 +67,27 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
   return [
     {
       field: 'id',
-      title: '主键编号',
+      title: $t('infra.dataSourceConfig.field.id'),
     },
     {
       field: 'name',
-      title: '数据源名称',
+      title: $t('infra.dataSourceConfig.field.name'),
     },
     {
       field: 'url',
-      title: '数据源连接',
+      title: $t('infra.dataSourceConfig.field.url'),
     },
     {
       field: 'username',
-      title: '用户名',
+      title: $t('infra.dataSourceConfig.field.username'),
     },
     {
       field: 'createTime',
-      title: '创建时间',
+      title: $t('infra.dataSourceConfig.field.createTime'),
       formatter: 'formatDateTime',
     },
     {
-      title: '操作',
+      title: $t('common.operation'),
       width: 160,
       fixed: 'right',
       slots: { default: 'actions' },

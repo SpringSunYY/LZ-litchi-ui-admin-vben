@@ -85,12 +85,14 @@ onMounted(() => {
 <template>
   <Page auto-content-height>
     <FormModal @success="handleLoadData" />
-    <Grid table-title="数据源列表">
+    <Grid :table-title="$t('infra.dataSourceConfig.list')">
       <template #toolbar-tools>
         <TableAction
           :actions="[
             {
-              label: $t('ui.actionTitle.create', ['数据源']),
+              label: $t('ui.actionTitle.create', [
+                $t('infra.dataSourceConfig.dataSourceConfig'),
+              ]),
               type: 'primary',
               icon: ACTION_ICON.ADD,
               auth: ['infra:data-source-config:create'],

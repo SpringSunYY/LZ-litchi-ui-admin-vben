@@ -190,7 +190,7 @@
     "start": "开始日期",
     "end": "结束日期"
   },
-  "treeRoot": "顶级",
+  "treeRoot": "顶级{0}",
   "validation": {
     "required": "{0}不能为空"
   },

@@ -36,7 +36,7 @@ const [Modal, modalApi] = useVbenModal({
 
 <template>
   <Modal
-    title="API错误日志详情"
+    :title="$t('infra.apiErrorLog.detail.title')"
     class="w-1/2"
     :show-cancel-button="false"
     :show-confirm-button="false"
@@ -48,50 +48,59 @@ const [Modal, modalApi] = useVbenModal({
       class="mx-4"
       :label-style="{ width: '110px' }"
     >
-      <Descriptions.Item label="日志编号">
+      <Descriptions.Item :label="$t('infra.apiErrorLog.field.id')">
         {{ formData?.id }}
       </Descriptions.Item>
-      <Descriptions.Item label="链路追踪">
+      <Descriptions.Item :label="$t('infra.apiErrorLog.field.traceId')">
         {{ formData?.traceId }}
       </Descriptions.Item>
-      <Descriptions.Item label="应用名">
+      <Descriptions.Item :label="$t('infra.apiErrorLog.field.applicationName')">
         {{ formData?.applicationName }}
       </Descriptions.Item>
-      <Descriptions.Item label="用户编号">
+      <Descriptions.Item :label="$t('infra.apiErrorLog.field.userId')">
         {{ formData?.userId }}
         <DictTag :type="DICT_TYPE.USER_TYPE" :value="formData?.userType" />
       </Descriptions.Item>
-      <Descriptions.Item label="用户IP">
+      <Descriptions.Item :label="$t('infra.apiErrorLog.field.userIp')">
         {{ formData?.userIp }}
       </Descriptions.Item>
-      <Descriptions.Item label="用户UA">
+      <Descriptions.Item :label="$t('infra.apiErrorLog.field.userAgent')">
         {{ formData?.userAgent }}
       </Descriptions.Item>
-      <Descriptions.Item label="请求信息">
+      <Descriptions.Item :label="$t('infra.apiErrorLog.field.requestMethod')">
         {{ formData?.requestMethod }} {{ formData?.requestUrl }}
       </Descriptions.Item>
-      <Descriptions.Item label="请求参数">
+      <Descriptions.Item :label="$t('infra.apiErrorLog.field.requestParams')">
         <JsonViewer :value="formData?.requestParams" preview-mode />
       </Descriptions.Item>
-      <Descriptions.Item label="异常时间">
+      <Descriptions.Item :label="$t('infra.apiErrorLog.field.exceptionTime')">
         {{ formatDateTime(formData?.exceptionTime || '') }}
       </Descriptions.Item>
-      <Descriptions.Item label="异常名">
+      <Descriptions.Item :label="$t('infra.apiErrorLog.field.exceptionName')">
         {{ formData?.exceptionName }}
       </Descriptions.Item>
-      <Descriptions.Item v-if="formData?.exceptionStackTrace" label="异常堆栈">
+      <Descriptions.Item
+        v-if="formData?.exceptionStackTrace"
+        :label="$t('infra.apiErrorLog.field.exceptionStackTrace')"
+      >
         <JsonViewer :value="formData?.exceptionStackTrace" preview-mode />
       </Descriptions.Item>
-      <Descriptions.Item label="处理状态">
+      <Descriptions.Item :label="$t('infra.apiErrorLog.field.processStatus')">
         <DictTag
           :type="DICT_TYPE.INFRA_API_ERROR_LOG_PROCESS_STATUS"
           :value="formData?.processStatus"
         />
       </Descriptions.Item>
-      <Descriptions.Item v-if="formData?.processUserId" label="处理人">
+      <Descriptions.Item
+        v-if="formData?.processUserId"
+        :label="$t('infra.apiErrorLog.field.processUserId')"
+      >
         {{ formData?.processUserId }}
       </Descriptions.Item>
-      <Descriptions.Item v-if="formData?.processTime" label="处理时间">
+      <Descriptions.Item
+        v-if="formData?.processTime"
+        :label="$t('infra.apiErrorLog.field.processTime')"
+      >
         {{ formatDateTime(formData?.processTime || '') }}
       </Descriptions.Item>
     </Descriptions>

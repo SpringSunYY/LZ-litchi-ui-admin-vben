@@ -59,7 +59,7 @@ async function handleMaster(row: InfraFileConfigApi.FileConfig) {
 /** 测试文件配置 */
 async function handleTest(row: InfraFileConfigApi.FileConfig) {
   const hideLoading = message.loading({
-    content: '测试上传中...',
+    content: $t('infra.fileConfig.message.testingUpload'),
     duration: 0,
     key: 'action_process_msg',
   });
@@ -68,10 +68,10 @@ async function handleTest(row: InfraFileConfigApi.FileConfig) {
     hideLoading();
     // 确认是否访问该文件
     confirm({
-      title: '测试上传成功',
-      content: '是否要访问该文件？',
-      confirmText: '访问',
-      cancelText: '取消',
+      title: $t('infra.fileConfig.message.testSuccessTitle'),
+      content: $t('infra.fileConfig.message.testSuccessContent'),
+      confirmText: $t('infra.fileConfig.message.visit'),
+      cancelText: $t('common.cancel'),
     }).then(() => {
       openWindow(response);
     });
@@ -131,12 +131,14 @@ const [Grid, gridApi] = useVbenVxeGrid({
 <template>
   <Page auto-content-height>
     <FormModal @success="onRefresh" />
-    <Grid table-title="文件配置列表">
+    <Grid :table-title="$t('infra.fileConfig.list')">
       <template #toolbar-tools>
         <TableAction
           :actions="[
             {
-              label: $t('ui.actionTitle.create', ['文件配置']),
+              label: $t('ui.actionTitle.create', [
+                $t('infra.fileConfig.fileConfig'),
+              ]),
               type: 'primary',
               icon: ACTION_ICON.ADD,
               auth: ['infra:file-config:create'],
@@ -156,7 +158,7 @@ const [Grid, gridApi] = useVbenVxeGrid({
               onClick: handleEdit.bind(null, row),
             },
             {
-              label: '测试',
+              label: $t('infra.fileConfig.action.test'),
               type: 'link',
               icon: 'lucide:test-tube-diagonal',
               auth: ['infra:file-config:update'],
@@ -165,11 +167,13 @@ const [Grid, gridApi] = useVbenVxeGrid({
           ]"
           :drop-down-actions="[
             {
-              label: '主配置',
+              label: $t('infra.fileConfig.message.master'),
               type: 'link',
               auth: ['infra:file-config:update'],
               popConfirm: {
-                title: `是否要将${row.name}设为主配置？`,
+                title: $t('infra.fileConfig.message.confirmSetMaster', [
+                  row.name,
+                ]),
                 confirm: handleMaster.bind(null, row),
               },
             },

@@ -8,6 +8,7 @@ import { DocAlert, Page } from '@vben/common-ui';
 import { Card } from 'ant-design-vue';
 
 import { getRedisMonitorInfo } from '#/api/infra/redis';
+import { $t } from '#/locales';
 
 import Commands from './modules/commands.vue';
 import Info from './modules/info.vue';
@@ -20,7 +21,7 @@ async function loadRedisData() {
   try {
     redisData.value = await getRedisMonitorInfo();
   } catch (error) {
-    console.error('加载 Redis 数据失败', error);
+    console.error($t('infra.redis.loadFailed'), error);
   }
 }
 
@@ -32,22 +33,25 @@ onMounted(async () => {
 <template>
   <Page auto-content-height>
     <template #doc>
-      <DocAlert title="Redis 缓存" url="https://doc.iocoder.cn/redis-cache/" />
+      <DocAlert
+        :title="$t('infra.redis.redis')"
+        url="https://doc.iocoder.cn/redis-cache/"
+      />
       <DocAlert title="本地缓存" url="https://doc.iocoder.cn/local-cache/" />
     </template>
 
     <div class="class=" mt-5>
-      <Card title="Redis 概览">
+      <Card :title="$t('infra.redis.overview')">
         <Info :redis-data="redisData" />
       </Card>
     </div>
 
     <div class="mt-5 grid grid-cols-1 gap-4 md:grid-cols-2">
-      <Card title="内存使用">
+      <Card :title="$t('infra.redis.memoryUsage')">
         <Memory :redis-data="redisData" />
       </Card>
 
-      <Card title="命令统计">
+      <Card :title="$t('infra.redis.commandStats')">
         <Commands :redis-data="redisData" />
       </Card>
     </div>

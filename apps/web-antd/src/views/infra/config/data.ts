@@ -1,6 +1,7 @@
 import type { VbenFormSchema } from '#/adapter/form';
 import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 
+import { $t } from '#/locales';
 import { DICT_TYPE, getDictOptions, getRangePickerDefaultProps } from '#/utils';
 
 /** 新增/修改的表单 */
@@ -16,43 +17,49 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'category',
-      label: '参数分类',
+      label: $t('infra.config.field.category'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入参数分类',
+        placeholder: $t('ui.placeholder.input', [
+          $t('infra.config.field.category'),
+        ]),
       },
       rules: 'required',
     },
     {
       fieldName: 'name',
-      label: '参数名称',
+      label: $t('infra.config.field.name'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入参数名称',
+        placeholder: $t('ui.placeholder.input', [
+          $t('infra.config.field.name'),
+        ]),
       },
       rules: 'required',
     },
     {
       fieldName: 'key',
-      label: '参数键名',
+      label: $t('infra.config.field.key'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入参数键名',
+        placeholder: $t('ui.placeholder.input', [$t('infra.config.field.key')]),
       },
       rules: 'required',
     },
     {
       fieldName: 'value',
-      label: '参数键值',
+      label: $t('infra.config.field.value'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入参数键值',
+        placeholder: $t('ui.placeholder.input', [
+          $t('infra.config.field.value'),
+        ]),
       },
       rules: 'required',
     },
     {
       fieldName: 'visible',
-      label: '是否可见',
+      label: $t('infra.config.field.visible'),
       component: 'RadioGroup',
       componentProps: {
         options: getDictOptions(DICT_TYPE.INFRA_BOOLEAN_STRING, 'boolean'),
@@ -64,10 +71,12 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'remark',
-      label: '备注',
+      label: $t('infra.config.field.remark'),
       component: 'Textarea',
       componentProps: {
-        placeholder: '请输入备注',
+        placeholder: $t('ui.placeholder.input', [
+          $t('infra.config.field.remark'),
+        ]),
       },
     },
   ];
@@ -78,35 +87,39 @@ export function useGridFormSchema(): VbenFormSchema[] {
   return [
     {
       fieldName: 'name',
-      label: '参数名称',
+      label: $t('infra.config.field.name'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入参数名称',
+        placeholder: $t('ui.placeholder.input', [
+          $t('infra.config.field.name'),
+        ]),
         clearable: true,
       },
     },
     {
       fieldName: 'key',
-      label: '参数键名',
+      label: $t('infra.config.field.key'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入参数键名',
+        placeholder: $t('ui.placeholder.input', [$t('infra.config.field.key')]),
         clearable: true,
       },
     },
     {
       fieldName: 'type',
-      label: '系统内置',
+      label: $t('infra.config.field.type'),
       component: 'Select',
       componentProps: {
         options: getDictOptions(DICT_TYPE.INFRA_CONFIG_TYPE, 'number'),
-        placeholder: '请选择系统内置',
+        placeholder: $t('ui.placeholder.select', [
+          $t('infra.config.field.type'),
+        ]),
         allowClear: true,
       },
     },
     {
       fieldName: 'createTime',
-      label: '创建时间',
+      label: $t('infra.config.field.createTime'),
       component: 'RangePicker',
       componentProps: {
         ...getRangePickerDefaultProps(),
@@ -121,27 +134,27 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
   return [
     {
       field: 'id',
-      title: '参数主键',
+      title: $t('infra.config.field.id'),
     },
     {
       field: 'category',
-      title: '参数分类',
+      title: $t('infra.config.field.category'),
     },
     {
       field: 'name',
-      title: '参数名称',
+      title: $t('infra.config.field.name'),
     },
     {
       field: 'key',
-      title: '参数键名',
+      title: $t('infra.config.field.key'),
     },
     {
       field: 'value',
-      title: '参数键值',
+      title: $t('infra.config.field.value'),
     },
     {
       field: 'visible',
-      title: '是否可见',
+      title: $t('infra.config.field.visible'),
       cellRender: {
         name: 'CellDict',
         props: { type: DICT_TYPE.INFRA_BOOLEAN_STRING },
@@ -149,7 +162,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
     },
     {
       field: 'type',
-      title: '系统内置',
+      title: $t('infra.config.field.type'),
       cellRender: {
         name: 'CellDict',
         props: { type: DICT_TYPE.INFRA_CONFIG_TYPE },
@@ -157,15 +170,15 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
     },
     {
       field: 'remark',
-      title: '备注',
+      title: $t('infra.config.field.remark'),
     },
     {
       field: 'createTime',
-      title: '创建时间',
+      title: $t('infra.config.field.createTime'),
       formatter: 'formatDateTime',
     },
     {
-      title: '操作',
+      title: $t('common.operation'),
       width: 160,
       fixed: 'right',
       slots: { default: 'actions' },

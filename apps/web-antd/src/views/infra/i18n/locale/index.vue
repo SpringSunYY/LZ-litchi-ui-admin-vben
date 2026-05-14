@@ -89,7 +89,10 @@ function handleRowCheckboxChange({
 /** 导出表格 */
 async function handleExport() {
   const data = await exportI18nLocale(await gridApi.formApi.getValues());
-  downloadFileFromBlobPart({ fileName: '国际化国家.xls', source: data });
+  downloadFileFromBlobPart({
+    fileName: `${$t('infra.i18nLocale.i18nLocale')}.xls`,
+    source: data,
+  });
 }
 
 const [Grid, gridApi] = useVbenVxeGrid({
@@ -133,12 +136,14 @@ const [Grid, gridApi] = useVbenVxeGrid({
   <Page auto-content-height>
     <FormModal @success="onRefresh" />
 
-    <Grid table-title="国际化国家列表">
+    <Grid :table-title="$t('infra.i18nLocale.list')">
       <template #toolbar-tools>
         <TableAction
           :actions="[
             {
-              label: $t('ui.actionTitle.create', ['国际化国家']),
+              label: $t('ui.actionTitle.create', [
+                $t('infra.i18nLocale.i18nLocale'),
+              ]),
               type: 'primary',
               icon: ACTION_ICON.ADD,
               auth: ['infra:locale:create'],

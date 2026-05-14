@@ -3,10 +3,9 @@ import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 import type { InfraFileApi } from '#/api/infra/file';
 
 import { Page, useVbenModal } from '@vben/common-ui';
-import { openWindow } from '@vben/utils';
 
 import { useClipboard } from '@vueuse/core';
-import { Button, Image, message } from 'ant-design-vue';
+import { message } from 'ant-design-vue';
 
 import { ACTION_ICON, TableAction, useVbenVxeGrid } from '#/adapter/vxe-table';
 import { deleteFile, getFilePage } from '#/api/infra/file';
@@ -34,15 +33,15 @@ function handleUpload() {
 const { copy } = useClipboard({ legacy: true });
 async function handleCopyUrl(row: InfraFileApi.File) {
   if (!row.url) {
-    message.error('文件 URL 为空');
+    message.error($t('infra.file.message.urlEmpty'));
     return;
   }
 
   try {
     await copy(row.url);
-    message.success('复制成功');
+    message.success($t('ui.actionMessage.copySuccess'));
   } catch {
-    message.error('复制失败');
+    message.error($t('infra.file.message.copyFailed'));
   }
 }
 
@@ -97,12 +96,12 @@ const [Grid, gridApi] = useVbenVxeGrid({
 <template>
   <Page auto-content-height>
     <FormModal @success="onRefresh" />
-    <Grid table-title="文件列表">
+    <Grid :table-title="$t('infra.file.list')">
       <template #toolbar-tools>
         <TableAction
           :actions="[
             {
-              label: '上传图片',
+              label: $t('infra.file.action.create'),
               type: 'primary',
               icon: ACTION_ICON.UPLOAD,
               auth: ['infra:file:create'],
@@ -115,7 +114,7 @@ const [Grid, gridApi] = useVbenVxeGrid({
         <TableAction
           :actions="[
             {
-              label: '复制链接',
+              label: $t('infra.file.copyUrl'),
               type: 'link',
               icon: ACTION_ICON.COPY,
               onClick: handleCopyUrl.bind(null, row),

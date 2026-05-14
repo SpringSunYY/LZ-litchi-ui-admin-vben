@@ -44,7 +44,10 @@ function onRefresh() {
 /** 导出表格 */
 async function handleExport() {
   const data = await exportJob(await gridApi.formApi.getValues());
-  downloadFileFromBlobPart({ fileName: '定时任务.xls', source: data });
+  downloadFileFromBlobPart({
+    fileName: `${$t('infra.job.job')}.xls`,
+    source: data,
+  });
 }
 
 /** 创建任务 */
@@ -68,10 +71,16 @@ async function handleUpdateStatus(row: InfraJobApi.Job) {
     row.status === InfraJobStatusEnum.STOP
       ? InfraJobStatusEnum.NORMAL
       : InfraJobStatusEnum.STOP;
-  const statusText = status === InfraJobStatusEnum.NORMAL ? '启用' : '停用';
+  // const statusText =
+  //   status === InfraJobStatusEnum.NORMAL
+  //     ? $t('infra.job.action.start')
+  //     : $t('infra.job.action.pause');
 
   confirm({
-    content: `确定${statusText} ${row.name} 吗？`,
+    content:
+      status === InfraJobStatusEnum.NORMAL
+        ? $t('infra.job.action.confirmStart', [row.name])
+        : $t('infra.job.action.confirmPause', [row.name]),
   }).then(async () => {
     await updateJobStatus(row.id as number, status);
     // 提示成功
@@ -83,7 +92,7 @@ async function handleUpdateStatus(row: InfraJobApi.Job) {
 /** 执行一次任务 */
 async function handleTrigger(row: InfraJobApi.Job) {
   confirm({
-    content: `确定执行一次 ${row.name} 吗？`,
+    content: $t('infra.job.action.confirmTrigger', [row.name]),
   }).then(async () => {
     await runJob(row.id as number);
     message.success($t('ui.actionMessage.operationSuccess'));
@@ -147,19 +156,22 @@ const [Grid, gridApi] = useVbenVxeGrid({
 <template>
   <Page auto-content-height>
     <template #doc>
-      <DocAlert title="定时任务" url="https://doc.iocoder.cn/job/" />
+      <DocAlert
+        :title="$t('infra.job.job')"
+        url="https://doc.iocoder.cn/job/"
+      />
       <DocAlert title="异步任务" url="https://doc.iocoder.cn/async-task/" />
       <DocAlert title="消息队列" url="https://doc.iocoder.cn/message-queue/" />
     </template>
 
     <FormModal @success="onRefresh" />
     <DetailModal />
-    <Grid table-title="定时任务列表">
+    <Grid :table-title="$t('infra.job.list')">
       <template #toolbar-tools>
         <TableAction
           :actions="[
             {
-              label: $t('ui.actionTitle.create', ['任务']),
+              label: $t('ui.actionTitle.create', [$t('infra.job.job')]),
               type: 'primary',
               icon: ACTION_ICON.ADD,
               auth: ['infra:job:create'],
@@ -173,11 +185,11 @@ const [Grid, gridApi] = useVbenVxeGrid({
               onClick: handleExport,
             },
             {
-              label: '执行日志',
+              label: $t('infra.job.log'),
               type: 'primary',
               icon: 'lucide:history',
               auth: ['infra:job:export'],
-              onClick: handleExport,
+              onClick: handleLog,
             },
           ]"
         />
@@ -193,7 +205,7 @@ const [Grid, gridApi] = useVbenVxeGrid({
               onClick: handleEdit.bind(null, row),
             },
             {
-              label: '开启',
+              label: $t('infra.job.action.start'),
               type: 'link',
               icon: 'lucide:circle-play',
               auth: ['infra:job:update'],
@@ -201,7 +213,7 @@ const [Grid, gridApi] = useVbenVxeGrid({
               onClick: handleUpdateStatus.bind(null, row),
             },
             {
-              label: '暂停',
+              label: $t('infra.job.action.pause'),
               type: 'link',
               icon: 'lucide:circle-pause',
               auth: ['infra:job:update'],
@@ -209,7 +221,7 @@ const [Grid, gridApi] = useVbenVxeGrid({
               onClick: handleUpdateStatus.bind(null, row),
             },
             {
-              label: '执行',
+              label: $t('infra.job.action.trigger'),
               type: 'link',
               icon: 'lucide:clock-plus',
               auth: ['infra:job:trigger'],
@@ -218,13 +230,13 @@ const [Grid, gridApi] = useVbenVxeGrid({
           ]"
           :drop-down-actions="[
             {
-              label: $t('common.detail'),
+              label: $t('infra.job.action.detail'),
               type: 'link',
               auth: ['infra:job:query'],
               onClick: handleDetail.bind(null, row),
             },
             {
-              label: '日志',
+              label: $t('infra.job.log'),
               type: 'link',
               auth: ['infra:job:query'],
               onClick: handleLog.bind(null, row),

@@ -1,6 +1,7 @@
 import type { VbenFormSchema } from '#/adapter/form';
 import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 
+import { $t } from '#/locales';
 import {
   DICT_TYPE,
   getDictOptions,
@@ -13,35 +14,41 @@ export function useGridFormSchema(): VbenFormSchema[] {
   return [
     {
       fieldName: 'userId',
-      label: '用户编号',
+      label: $t('infra.apiErrorLog.field.userId'),
       component: 'Input',
       componentProps: {
         allowClear: true,
-        placeholder: '请输入用户编号',
+        placeholder: $t('ui.placeholder.input', [
+          $t('infra.apiErrorLog.field.userId'),
+        ]),
       },
     },
     {
       fieldName: 'userType',
-      label: '用户类型',
+      label: $t('infra.apiErrorLog.field.userType'),
       component: 'Select',
       componentProps: {
         options: getDictOptions(DICT_TYPE.USER_TYPE, 'number'),
         allowClear: true,
-        placeholder: '请选择用户类型',
+        placeholder: $t('ui.placeholder.select', [
+          $t('infra.apiErrorLog.field.userType'),
+        ]),
       },
     },
     {
       fieldName: 'applicationName',
-      label: '应用名',
+      label: $t('infra.apiErrorLog.field.applicationName'),
       component: 'Input',
       componentProps: {
         allowClear: true,
-        placeholder: '请输入应用名',
+        placeholder: $t('ui.placeholder.input', [
+          $t('infra.apiErrorLog.field.applicationName'),
+        ]),
       },
     },
     {
       fieldName: 'exceptionTime',
-      label: '异常时间',
+      label: $t('infra.apiErrorLog.field.exceptionTime'),
       component: 'RangePicker',
       componentProps: {
         ...getRangePickerDefaultProps(),
@@ -50,7 +57,7 @@ export function useGridFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'processStatus',
-      label: '处理状态',
+      label: $t('infra.apiErrorLog.field.processStatus'),
       component: 'Select',
       componentProps: {
         options: getDictOptions(
@@ -58,7 +65,9 @@ export function useGridFormSchema(): VbenFormSchema[] {
           'number',
         ),
         allowClear: true,
-        placeholder: '请选择处理状态',
+        placeholder: $t('ui.placeholder.select', [
+          $t('infra.apiErrorLog.field.processStatus'),
+        ]),
       },
       defaultValue: InfraApiErrorLogProcessStatusEnum.INIT,
     },
@@ -70,15 +79,15 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
   return [
     {
       field: 'id',
-      title: '日志编号',
+      title: $t('infra.apiErrorLog.field.id'),
     },
     {
       field: 'userId',
-      title: '用户编号',
+      title: $t('infra.apiErrorLog.field.userId'),
     },
     {
       field: 'userType',
-      title: '用户类型',
+      title: $t('infra.apiErrorLog.field.userType'),
       cellRender: {
         name: 'CellDict',
         props: { type: DICT_TYPE.USER_TYPE },
@@ -86,35 +95,35 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
     },
     {
       field: 'applicationName',
-      title: '应用名',
+      title: $t('infra.apiErrorLog.field.applicationName'),
     },
     {
       field: 'requestMethod',
-      title: '请求方法',
+      title: $t('infra.apiErrorLog.field.requestMethod'),
     },
     {
       field: 'requestUrl',
-      title: '请求地址',
+      title: $t('infra.apiErrorLog.field.requestUrl'),
     },
     {
       field: 'exceptionTime',
-      title: '异常发生时间',
+      title: $t('infra.apiErrorLog.field.exceptionTime'),
       formatter: 'formatDateTime',
     },
     {
       field: 'exceptionName',
-      title: '异常名',
+      title: $t('infra.apiErrorLog.field.exceptionName'),
     },
     {
       field: 'processStatus',
-      title: '处理状态',
+      title: $t('infra.apiErrorLog.field.processStatus'),
       cellRender: {
         name: 'CellDict',
         props: { type: DICT_TYPE.INFRA_API_ERROR_LOG_PROCESS_STATUS },
       },
     },
     {
-      title: '操作',
+      title: $t('common.operation'),
       width: 200,
       fixed: 'right',
       slots: { default: 'actions' },

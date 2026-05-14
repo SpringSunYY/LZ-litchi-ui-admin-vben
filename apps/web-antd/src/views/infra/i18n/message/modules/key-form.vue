@@ -21,8 +21,8 @@ const emit = defineEmits(['success']);
 const formData = ref<I18nKeyApi.I18nKey>();
 const getTitle = computed(() => {
   return formData.value?.id
-    ? $t('ui.actionTitle.edit', ['国际化键名'])
-    : $t('ui.actionTitle.create', ['国际化键名']);
+    ? $t('ui.actionTitle.edit', [$t('infra.i18nMessage.key')])
+    : $t('ui.actionTitle.create', [$t('infra.i18nMessage.key')]);
 });
 
 const [Form, formApi] = useVbenForm({

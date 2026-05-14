@@ -57,7 +57,7 @@ function beforeUpload(file: FileType) {
 </script>
 
 <template>
-  <Modal title="上传图片">
+  <Modal :title="$t('infra.file.upload.modalTitle')">
     <Form class="mx-4">
       <template #file>
         <div class="w-full">
@@ -73,9 +73,11 @@ function beforeUpload(file: FileType) {
             <p class="ant-upload-drag-icon">
               <span class="icon-[ant-design--inbox-outlined] text-2xl"></span>
             </p>
-            <p class="ant-upload-text">点击或拖拽文件到此区域上传</p>
+            <p class="ant-upload-text">
+              {{ $t('infra.file.upload.dragText') }}
+            </p>
             <p class="ant-upload-hint">
-              支持 .jpg、.png、.gif、.webp 格式图片文件
+              {{ $t('infra.file.upload.hint') }}
             </p>
           </Upload.Dragger>
         </div>

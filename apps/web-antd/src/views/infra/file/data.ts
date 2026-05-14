@@ -1,8 +1,7 @@
 import type { VbenFormSchema } from '#/adapter/form';
 import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 
-import { $t } from '@vben/locales';
-
+import { $t } from '#/locales';
 import { DICT_TYPE, getDictOptions, getRangePickerDefaultProps } from '#/utils';
 
 /** 表单的字段 */
@@ -10,10 +9,10 @@ export function useFormSchema(): VbenFormSchema[] {
   return [
     {
       fieldName: 'file',
-      label: '文件上传',
+      label: $t('infra.file.field.file'),
       component: 'Upload',
       componentProps: {
-        placeholder: '请选择要上传的文件',
+        placeholder: $t('infra.file.upload.placeholder'),
       },
       rules: 'required',
     },
@@ -25,50 +24,54 @@ export function useGridFormSchema(): VbenFormSchema[] {
   return [
     {
       fieldName: 'configKey',
-      label: '配置',
+      label: $t('infra.file.field.configKey'),
       component: 'Input',
       componentProps: {
         allowClear: true,
-        placeholder: $t('ui.placeholder.input', ['配置']),
+        placeholder: $t('ui.placeholder.input', [
+          $t('infra.file.field.configKey'),
+        ]),
       },
     },
     {
       fieldName: 'name',
-      label: '文件名',
+      label: $t('infra.file.field.name'),
       component: 'Input',
       componentProps: {
         allowClear: true,
-        placeholder: $t('ui.placeholder.input', ['文件名']),
+        placeholder: $t('ui.placeholder.input', [$t('infra.file.field.name')]),
       },
     },
     {
       fieldName: 'type',
-      label: '文件类型',
+      label: $t('infra.file.field.type'),
       component: 'Select',
       componentProps: {
         allowClear: true,
         options: getDictOptions(DICT_TYPE.INFRA_FILE_FILE_TYPE, 'string'),
-        placeholder: $t('ui.placeholder.select', ['文件类型']),
+        placeholder: $t('ui.placeholder.select', [$t('infra.file.field.type')]),
       },
     },
     {
       fieldName: 'size',
-      label: '文件大小',
+      label: $t('infra.file.field.size'),
       component: 'NumberRange',
     },
     {
       fieldName: 'moduleType',
-      label: '模块',
+      label: $t('infra.file.field.moduleType'),
       component: 'Select',
       componentProps: {
         allowClear: true,
         options: getDictOptions(DICT_TYPE.SYSTEM_MODULE_TYPE, 'string'),
-        placeholder: $t('ui.placeholder.select', ['模块']),
+        placeholder: $t('ui.placeholder.select', [
+          $t('infra.file.field.moduleType'),
+        ]),
       },
     },
     {
       fieldName: 'createTime',
-      label: '创建时间',
+      label: $t('infra.file.field.createTime'),
       component: 'RangePicker',
       componentProps: {
         ...getRangePickerDefaultProps(),
@@ -83,38 +86,38 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
   return [
     {
       field: 'id',
-      title: '文件编号',
+      title: $t('infra.file.field.id'),
     },
     {
       field: 'configKey',
-      title: '配置',
+      title: $t('infra.file.field.configKey'),
     },
     {
       field: 'name',
-      title: '文件名',
+      title: $t('infra.file.field.name'),
     },
     {
       field: 'path',
-      title: '文件路径',
+      title: $t('infra.file.field.path'),
       minWidth: 120,
     },
     {
       field: 'absolutePath',
-      title: '绝对路径',
+      title: $t('infra.file.field.absolutePath'),
       cellRender: {
         name: 'CellFileAndImages',
       },
     },
     {
       field: 'relativePath',
-      title: '相对路径',
+      title: $t('infra.file.field.relativePath'),
       cellRender: {
         name: 'CellFileAndImages',
       },
     },
     {
       field: 'type',
-      title: '文件类型',
+      title: $t('infra.file.field.type'),
       cellRender: {
         name: 'CellDict',
         props: { type: DICT_TYPE.INFRA_FILE_FILE_TYPE },
@@ -122,10 +125,10 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
     },
     {
       field: 'size',
-      title: '文件大小',
+      title: $t('infra.file.field.size'),
       formatter: ({ cellValue }) => {
         // TODO @YY：后续优化下
-        if (!cellValue) return '0 B';
+        if (!cellValue) return $t('infra.file.sizeZero');
         const unitArr = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
         const index = Math.floor(Math.log(cellValue) / Math.log(1024));
         const size = cellValue / 1024 ** index;
@@ -135,7 +138,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
     },
     {
       field: 'moduleType',
-      title: '模块',
+      title: $t('infra.file.field.moduleType'),
       cellRender: {
         name: 'CellDict',
         props: { type: DICT_TYPE.SYSTEM_MODULE_TYPE },
@@ -143,11 +146,11 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
     },
     {
       field: 'createTime',
-      title: '上传时间',
+      title: $t('infra.file.field.uploadTime'),
       formatter: 'formatDateTime',
     },
     {
-      title: '操作',
+      title: $t('common.operation'),
       width: 160,
       fixed: 'right',
       slots: { default: 'actions' },

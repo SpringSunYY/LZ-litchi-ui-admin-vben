@@ -7,6 +7,8 @@ import { onMounted, ref, watch } from 'vue';
 
 import { EchartsUI, useEcharts } from '@vben/plugins/echarts';
 
+import { $t } from '#/locales';
+
 const props = defineProps<{
   redisData?: InfraRedisApi.RedisMonitorInfo;
 }>();
@@ -20,7 +22,6 @@ function renderCommandStats() {
     return;
   }
 
-  // 处理数据
   const commandStats = [] as any[];
   const nameList = [] as string[];
   props.redisData.commandStats.forEach((row) => {
@@ -31,10 +32,9 @@ function renderCommandStats() {
     nameList.push(row.command);
   });
 
-  // 渲染图表
   renderEcharts({
     title: {
-      text: '命令统计',
+      text: $t('infra.redis.field.commandTitle'),
       left: 'center',
     },
     tooltip: {
@@ -54,7 +54,7 @@ function renderCommandStats() {
     },
     series: [
       {
-        name: '命令',
+        name: $t('infra.redis.field.commandTitle'),
         type: 'pie',
         radius: [20, 120],
         center: ['40%', '60%'],

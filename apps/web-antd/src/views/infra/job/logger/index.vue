@@ -24,7 +24,10 @@ const [DetailModal, detailModalApi] = useVbenModal({
 /** 导出表格 */
 async function handleExport() {
   const data = await exportJobLog(await gridApi.formApi.getValues());
-  downloadFileFromBlobPart({ fileName: '任务日志.xls', source: data });
+  downloadFileFromBlobPart({
+    fileName: `${$t('infra.jobLog.jobLog')}.xls`,
+    source: data,
+  });
 }
 
 /** 查看日志详情 */
@@ -69,13 +72,16 @@ const [Grid, gridApi] = useVbenVxeGrid({
 <template>
   <Page auto-content-height>
     <template #doc>
-      <DocAlert title="定时任务" url="https://doc.iocoder.cn/job/" />
+      <DocAlert
+        :title="$t('infra.job.job')"
+        url="https://doc.iocoder.cn/job/"
+      />
       <DocAlert title="异步任务" url="https://doc.iocoder.cn/async-task/" />
       <DocAlert title="消息队列" url="https://doc.iocoder.cn/message-queue/" />
     </template>
 
     <DetailModal />
-    <Grid table-title="任务日志列表">
+    <Grid :table-title="$t('infra.jobLog.list')">
       <template #toolbar-tools>
         <TableAction
           :actions="[

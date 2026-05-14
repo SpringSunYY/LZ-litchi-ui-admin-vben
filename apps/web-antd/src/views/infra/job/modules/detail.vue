@@ -48,7 +48,7 @@ const [Description] = useDescription({
 
 <template>
   <Modal
-    title="任务详情"
+    :title="$t('infra.job.detail.title')"
     class="w-1/2"
     :show-cancel-button="false"
     :show-confirm-button="false"

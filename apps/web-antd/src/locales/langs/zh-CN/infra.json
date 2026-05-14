@@ -98,5 +98,416 @@
     "basicInfoValidationFailed": "保存失败，原因：基本信息表单校验失败请检查！！！",
     "generationInfoValidationFailed": "保存失败，原因：生成信息表单校验失败请检查！！！",
     "saveFailed": "保存失败"
+  },
+  "file": {
+    "file": "文件",
+    "menu": "文件管理",
+    "list": "文件列表",
+    "field": {
+      "id": "文件编号",
+      "configKey": "配置",
+      "name": "文件名",
+      "path": "文件路径",
+      "absolutePath": "绝对路径",
+      "relativePath": "相对路径",
+      "type": "文件类型",
+      "size": "文件大小",
+      "moduleType": "模块",
+      "createTime": "创建时间",
+      "file": "文件上传",
+      "uploadTime": "上传时间"
+    },
+    "action": {
+      "query": "文件查询",
+      "create": "上传图片",
+      "delete": "删除文件"
+    },
+    "copyUrl": "复制链接",
+    "message": {
+      "urlEmpty": "文件 URL 为空",
+      "copyFailed": "复制失败"
+    },
+    "upload": {
+      "modalTitle": "上传图片",
+      "dragText": "点击或拖拽文件到此区域上传",
+      "hint": "支持 .jpg、.png、.gif、.webp 格式图片文件",
+      "placeholder": "请选择要上传的文件"
+    },
+    "sizeZero": "0 B"
+  },
+  "fileConfig": {
+    "fileConfig": "文件配置",
+    "menu": "文件配置",
+    "list": "文件配置列表",
+    "field": {
+      "id": "编号",
+      "configKey": "配置键",
+      "name": "配置名",
+      "pathType": "路径类型",
+      "returnType": "返回类型",
+      "maxSize": "文件大小",
+      "fileType": "文件类型",
+      "storage": "存储器",
+      "basePath": "基础路径",
+      "host": "主机地址",
+      "port": "主机端口",
+      "username": "用户名",
+      "password": "密码",
+      "mode": "连接模式",
+      "endpoint": "节点地址",
+      "bucket": "存储 bucket",
+      "accessKey": "accessKey",
+      "accessSecret": "accessSecret",
+      "enablePathStyleAccess": "是否 Path Style",
+      "domain": "自定义域名",
+      "remark": "备注",
+      "master": "是否为主配置",
+      "createTime": "创建时间",
+      "config": "存储配置"
+    },
+    "help": {
+      "pathType": "返回的路径类型，绝对路径表示返回全路径，相对路径表示返回相对路径。",
+      "returnType": "请求后端返回的类型，后端下载表示后端先下载再返回，返回URL表示后端直接返回URL重定向。",
+      "maxSize": "文件最大上传大小，单位为MB，例如：1024表示1GB。",
+      "fileType": "限制的文件类型，all表示不限制，选择的例如png表示只可以上传png。"
+    },
+    "option": {
+      "activeMode": "主动模式",
+      "passiveMode": "被动模式",
+      "enable": "启用",
+      "disable": "禁用"
+    },
+    "action": {
+      "query": "文件配置查询",
+      "create": "新增文件配置",
+      "update": "修改文件配置",
+      "delete": "删除文件配置",
+      "test": "测试"
+    },
+    "message": {
+      "master": "主配置",
+      "confirmSetMaster": "是否要将 {0} 设为主配置？",
+      "testingUpload": "测试上传中...",
+      "testSuccessTitle": "测试上传成功",
+      "testSuccessContent": "是否要访问该文件？",
+      "visit": "访问"
+    }
+  },
+  "apiErrorLog": {
+    "apiErrorLog": "API 错误日志",
+    "menu": "API 错误日志",
+    "list": "API 错误日志列表",
+    "field": {
+      "id": "日志编号",
+      "traceId": "链路追踪",
+      "applicationName": "应用名",
+      "userId": "用户编号",
+      "userType": "用户类型",
+      "userIp": "用户IP",
+      "userAgent": "用户UA",
+      "requestMethod": "请求方法",
+      "requestUrl": "请求地址",
+      "requestParams": "请求参数",
+      "exceptionTime": "异常发生时间",
+      "exceptionName": "异常名",
+      "exceptionStackTrace": "异常堆栈",
+      "processStatus": "处理状态",
+      "processUserId": "处理人",
+      "processTime": "处理时间"
+    },
+    "action": {
+      "query": "API 错误日志查询",
+      "export": "导出 API 错误日志",
+      "markAsDone": "已处理",
+      "markAsIgnored": "已忽略",
+      "confirmMarkAsDone": "确认标记为已处理？",
+      "confirmMarkAsIgnored": "确认标记为已忽略？"
+    },
+    "detail": {
+      "title": "API 错误日志详情"
+    }
+  },
+  "apiAccessLog": {
+    "apiAccessLog": "API 访问日志",
+    "menu": "API 访问日志",
+    "list": "API 访问日志列表",
+    "field": {
+      "id": "日志编号",
+      "traceId": "链路追踪",
+      "applicationName": "应用名",
+      "userId": "用户编号",
+      "userType": "用户类型",
+      "userIp": "用户IP",
+      "userAgent": "用户UA",
+      "requestMethod": "请求方法",
+      "requestUrl": "请求地址",
+      "requestParams": "请求参数",
+      "responseBody": "请求结果",
+      "beginTime": "请求开始时间",
+      "endTime": "请求结束时间",
+      "duration": "请求耗时",
+      "resultCode": "结果码",
+      "resultMsg": "结果信息",
+      "operateModule": "操作模块",
+      "operateName": "操作名",
+      "operateType": "操作类型"
+    },
+    "action": {
+      "query": "API 访问日志查询",
+      "export": "导出 API 访问日志"
+    },
+    "detail": {
+      "title": "API 访问日志详情"
+    },
+    "result": {
+      "success": "成功",
+      "fail": "失败"
+    },
+    "unit": {
+      "duration": "ms"
+    }
+  },
+  "dataSourceConfig": {
+    "dataSourceConfig": "数据源",
+    "menu": "数据源管理",
+    "list": "数据源列表",
+    "field": {
+      "id": "主键编号",
+      "name": "数据源名称",
+      "url": "数据源连接",
+      "username": "用户名",
+      "password": "密码",
+      "createTime": "创建时间"
+    },
+    "action": {
+      "query": "数据源查询",
+      "create": "新增数据源",
+      "update": "修改数据源",
+      "delete": "删除数据源"
+    }
+  },
+  "config": {
+    "config": "参数配置",
+    "menu": "参数配置",
+    "list": "参数列表",
+    "field": {
+      "id": "参数主键",
+      "category": "参数分类",
+      "name": "参数名称",
+      "key": "参数键名",
+      "value": "参数键值",
+      "visible": "是否可见",
+      "type": "系统内置",
+      "remark": "备注",
+      "createTime": "创建时间"
+    },
+    "action": {
+      "query": "参数查询",
+      "create": "新增参数",
+      "update": "修改参数",
+      "delete": "删除参数",
+      "export": "导出参数"
+    }
+  },
+  "i18nLocale": {
+    "i18nLocale": "国家地区",
+    "menu": "国家地区",
+    "list": "国家地区列表",
+    "field": {
+      "id": "编号",
+      "localeName": "国家地区",
+      "locale": "简称",
+      "orderNum": "显示顺序",
+      "localeStatus": "状态",
+      "localeTarget": "使用端",
+      "isDefault": "默认",
+      "remark": "备注",
+      "createTime": "创建时间"
+    },
+    "help": {
+      "localeTarget": "展示的区域，例如通用所有端都展示，后台只是后台展示，请不要随意修改，如若修改请及时同步message",
+      "isDefault": "是否是默认语言，每个使用端只允许一个默认"
+    },
+    "action": {
+      "query": "国家地区查询",
+      "create": "新增国家地区",
+      "update": "修改国家地区",
+      "delete": "删除国家地区",
+      "export": "导出国家地区"
+    }
+  },
+  "i18nMessage": {
+    "i18nMessage": "国际化管理",
+    "menu": "国际化管理",
+    "locale": "国际化国家",
+    "localeList": "国家地区列表",
+    "key": "国际化键名",
+    "keyList": "国际化键名列表",
+    "messageLabel": "国际化信息",
+    "messageList": "国际化信息列表",
+    "field": {
+      "id": "编号",
+      "messageName": "名称",
+      "messageKey": "键",
+      "isSystem": "是否内置",
+      "moduleType": "模块",
+      "useType": "使用类型",
+      "orderNum": "显示顺序",
+      "locale": "简称",
+      "localeTarget": "使用端",
+      "messageContent": "消息",
+      "remark": "备注",
+      "createTime": "创建时间"
+    },
+    "action": {
+      "query": "国际化键名查询",
+      "create": "新增国际化键名",
+      "update": "修改国际化键名",
+      "delete": "删除国际化键名",
+      "export": "导出国际化键名"
+    },
+    "message": {
+      "confirmDelete": "确认删除国际化键名 {0} 吗？删除该键名会同步删除其所有语言的消息。"
+    }
+  },
+  "job": {
+    "job": "定时任务",
+    "menu": "定时任务",
+    "list": "定时任务列表",
+    "field": {
+      "id": "任务编号",
+      "name": "任务名称",
+      "handlerName": "处理器名称",
+      "handlerParam": "处理器参数",
+      "cronExpression": "CRON 表达式",
+      "status": "任务状态",
+      "retryCount": "重试次数",
+      "retryInterval": "重试间隔",
+      "monitorTimeout": "监控超时时间",
+      "nextTimes": "后续执行时间",
+      "noNextTimes": "无后续执行时间",
+      "monitorTimeoutUnit": "毫秒",
+      "monitorTimeoutDisabled": "未开启",
+      "createTime": "创建时间"
+    },
+    "action": {
+      "query": "任务查询",
+      "create": "新增任务",
+      "update": "修改任务",
+      "delete": "删除任务",
+      "export": "导出任务",
+      "trigger": "执行任务",
+      "start": "开启",
+      "pause": "暂停",
+      "confirmTrigger": "确定执行一次 {0} 吗？",
+      "confirmStart": "确定启用 {0} 吗？",
+      "confirmPause": "确定停用 {0} 吗？",
+      "detail": "任务详情"
+    },
+    "detail": {
+      "title": "任务详情"
+    },
+    "log": "执行日志"
+  },
+  "jobLog": {
+    "jobLog": "任务日志",
+    "menu": "任务日志",
+    "list": "任务日志列表",
+    "field": {
+      "id": "日志编号",
+      "jobId": "任务编号",
+      "handlerName": "处理器名称",
+      "handlerParam": "处理器参数",
+      "executeIndex": "第几次执行",
+      "beginTime": "执行开始时间",
+      "endTime": "执行结束时间",
+      "duration": "执行时长",
+      "durationUnit": "毫秒",
+      "status": "任务状态",
+      "result": "执行结果",
+      "createTime": "创建时间"
+    },
+    "action": {
+      "query": "任务日志查询",
+      "export": "导出任务日志"
+    },
+    "detail": {
+      "title": "日志详情"
+    }
+  },
+  "redis": {
+    "redis": "Redis 缓存",
+    "menu": "Redis 缓存",
+    "overview": "Redis 概览",
+    "memoryUsage": "内存使用",
+    "commandStats": "命令统计",
+    "field": {
+      "redisVersion": "Redis 版本",
+      "redisMode": "运行模式",
+      "standalone": "单机",
+      "cluster": "集群",
+      "port": "端口",
+      "clients": "客户端数",
+      "uptimeInDays": "运行时间(天)",
+      "usedMemory": "使用内存",
+      "usedCpu": "使用 CPU",
+      "maxMemory": "内存配置",
+      "aofEnabled": "AOF 是否开启",
+      "rdbStatus": "RDB 是否成功",
+      "keyCount": "Key 数量",
+      "networkTraffic": "网络入口/出口",
+      "memoryUsageTitle": "内存使用情况",
+      "memoryConsume": "内存消耗",
+      "commandTitle": "命令统计"
+    },
+    "loadFailed": "加载 Redis 数据失败"
+  },
+  "webSocket": {
+    "webSocket": "WebSocket 通信",
+    "menu": "WebSocket 通信",
+    "list": "WebSocket 消息列表",
+    "docTitle": "WebSocket 实时通信",
+    "connection": "连接管理",
+    "connectionStatus": "连接状态",
+    "serverAddress": "服务地址",
+    "openConnection": "开启连接",
+    "closeConnection": "关闭连接",
+    "messageSend": "消息发送",
+    "receiver": "接收人",
+    "selectReceiver": "请选择接收人",
+    "all": "所有人",
+    "inputMessage": "请输入你要发送的消息...",
+    "sendMessage": "发送消息",
+    "messageRecord": "消息记录",
+    "messageCount": "{0} 条",
+    "noMessage": "暂无消息记录",
+    "userId": "用户 ID",
+    "connected": "已连接",
+    "disconnected": "未连接",
+    "group": "群发",
+    "single": "单发",
+    "system": "系统",
+    "unknown": "未知",
+    "action": {
+      "query": "WebSocket 查询"
+    },
+    "message": {
+      "messageContentEmpty": "消息内容不能为空",
+      "unknownMessageType": "未知的消息类型：{0}",
+      "unhandledMessage": "未处理消息：{0}",
+      "messageError": "处理消息发生异常：{0}"
+    }
+  },
+  "skywalking": {
+    "skywalking": "SkyWalking 监控",
+    "menu": "SkyWalking 监控",
+    "list": "SkyWalking 监控列表",
+    "docTitle": "服务监控"
+  },
+  "server": {
+    "server": "服务监控",
+    "menu": "服务监控",
+    "list": "服务监控列表",
+    "docTitle": "服务监控"
   }
 }

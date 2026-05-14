@@ -43,7 +43,10 @@ function onRefresh() {
 /** 导出表格 */
 async function handleExport() {
   const data = await exportI18nKey(await gridApi.formApi.getValues());
-  downloadFileFromBlobPart({ fileName: '国际化键名.xls', source: data });
+  downloadFileFromBlobPart({
+    fileName: `${$t('infra.i18nMessage.key')}.xls`,
+    source: data,
+  });
 }
 
 /** 创建国际化键名 */
@@ -127,12 +130,12 @@ defineExpose({ onRefresh });
   <div class="h-full">
     <FormModal @success="onRefresh" />
 
-    <Grid table-title="国际化键名列表">
+    <Grid :table-title="$t('infra.i18nMessage.keyList')">
       <template #toolbar-tools>
         <TableAction
           :actions="[
             {
-              label: $t('ui.actionTitle.create', ['国际化键名']),
+              label: $t('ui.actionTitle.create', [$t('infra.i18nMessage.key')]),
               type: 'primary',
               icon: ACTION_ICON.ADD,
               auth: ['infra:message:create'],
@@ -166,7 +169,7 @@ defineExpose({ onRefresh });
               icon: ACTION_ICON.DELETE,
               auth: ['infra:message:delete'],
               popConfirm: {
-                title: $t('ui.actionMessage.deleteConfirm', [row.id]),
+                title: $t('infra.i18nMessage.message.confirmDelete', [row.id]),
                 confirm: handleDelete.bind(null, row),
               },
             },

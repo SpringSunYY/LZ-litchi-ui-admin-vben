@@ -32,7 +32,10 @@ function onRefresh() {
 /** 导出表格 */
 async function handleExport() {
   const data = await exportApiErrorLog(await gridApi.formApi.getValues());
-  downloadFileFromBlobPart({ fileName: 'API 错误日志.xls', source: data });
+  downloadFileFromBlobPart({
+    fileName: `${$t('infra.apiErrorLog.list')}.xls`,
+    source: data,
+  });
 }
 
 /** 查看 API 错误日志详情 */
@@ -43,7 +46,10 @@ function handleDetail(row: InfraApiErrorLogApi.ApiErrorLog) {
 /** 处理已处理 / 已忽略的操作 */
 async function handleProcess(id: number, processStatus: number) {
   confirm({
-    content: `确认标记为${InfraApiErrorLogProcessStatusEnum.DONE ? '已处理' : '已忽略'}?`,
+    content:
+      processStatus === InfraApiErrorLogProcessStatusEnum.DONE
+        ? $t('infra.apiErrorLog.action.confirmMarkAsDone')
+        : $t('infra.apiErrorLog.action.confirmMarkAsIgnored'),
   }).then(async () => {
     await updateApiErrorLogStatus(id, processStatus);
     // 关闭并提示
@@ -89,12 +95,12 @@ const [Grid, gridApi] = useVbenVxeGrid({
     </template>
 
     <DetailModal @success="onRefresh" />
-    <Grid table-title="API 错误日志列表">
+    <Grid :table-title="$t('infra.apiErrorLog.list')">
       <template #toolbar-tools>
         <TableAction
           :actions="[
             {
-              label: $t('ui.actionTitle.export'),
+              label: $t('infra.apiErrorLog.action.export'),
               type: 'primary',
               icon: ACTION_ICON.DOWNLOAD,
               auth: ['infra:api-error-log:export'],
@@ -114,7 +120,7 @@ const [Grid, gridApi] = useVbenVxeGrid({
               onClick: handleDetail.bind(null, row),
             },
             {
-              label: '已处理',
+              label: $t('infra.apiErrorLog.action.markAsDone'),
               type: 'link',
               auth: ['infra:api-error-log:update-status'],
               ifShow:
@@ -126,7 +132,7 @@ const [Grid, gridApi] = useVbenVxeGrid({
               ),
             },
             {
-              label: '已忽略',
+              label: $t('infra.apiErrorLog.action.markAsIgnored'),
               type: 'link',
               auth: ['infra:api-error-log:update-status'],
               ifShow:

@@ -2,6 +2,7 @@ import type { VbenFormSchema } from '#/adapter/form';
 import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 import type { Demo02CategoryApi } from '#/api/infra/demo/demo02';
 
+import { $t } from '@vben/locales';
 import { handleTree } from '@vben/utils';
 
 import { getDemo02CategoryList } from '#/api/infra/demo/demo02';
@@ -20,7 +21,7 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'parentId',
-      label: '上级示例分类',
+      label: $t('infra:demo02Category:field:parentId'),
       component: 'ApiTreeSelect',
       componentProps: {
         allowClear: true,
@@ -28,25 +29,31 @@ export function useFormSchema(): VbenFormSchema[] {
           const data = await getDemo02CategoryList({});
           data.unshift({
             id: 0,
-            name: '顶级示例分类',
+            name: $t('ui.treeRoot', [
+              $t('infra:demo02Category:field:parentId'),
+            ]),
           });
           return handleTree(data);
         },
         labelField: 'name',
         valueField: 'id',
         childrenField: 'children',
-        placeholder: '请选择上级示例分类',
+        placeholder: $t('ui.placeholder.select', [
+          $t('infra:demo02Category:field:parentId'),
+        ]),
         treeDefaultExpandAll: true,
       },
       rules: 'selectRequired',
     },
     {
       fieldName: 'name',
-      label: '名字',
+      label: $t('infra:demo02Category:field:name'),
       rules: 'required',
       component: 'Input',
       componentProps: {
-        placeholder: '请输入名字',
+        placeholder: $t('ui.placeholder.input', [
+          $t('infra:demo02Category:field:name'),
+        ]),
       },
     },
   ];
@@ -57,25 +64,29 @@ export function useGridFormSchema(): VbenFormSchema[] {
   return [
     {
       fieldName: 'name',
-      label: '名字',
+      label: $t('infra:demo02Category:field:name'),
       component: 'Input',
       componentProps: {
         allowClear: true,
-        placeholder: '请输入名字',
+        placeholder: $t('ui.placeholder.input', [
+          $t('infra:demo02Category:field:name'),
+        ]),
       },
     },
     {
       fieldName: 'parentId',
-      label: '父级编号',
+      label: $t('infra:demo02Category:field:parentId'),
       component: 'Input',
       componentProps: {
         allowClear: true,
-        placeholder: '请输入父级编号',
+        placeholder: $t('ui.placeholder.input', [
+          $t('infra:demo02Category:field:parentId'),
+        ]),
       },
     },
     {
       fieldName: 'createTime',
-      label: '创建时间',
+      label: $t('infra:demo02Category:field:createTime'),
       component: 'RangePicker',
       componentProps: {
         ...getRangePickerDefaultProps(),
@@ -90,29 +101,30 @@ export function useGridColumns(): VxeTableGridOptions<Demo02CategoryApi.Demo02Ca
   return [
     {
       field: 'id',
-      title: '编号',
+      title: $t('infra:demo02Category:field:id'),
       minWidth: 120,
     },
     {
       field: 'name',
-      title: '名字',
+      title: $t('infra:demo02Category:field:name'),
+      minWidth: 120,
+    },
+    {
+      field: 'parentId',
+      title: $t('infra:demo02Category:field:parentId'),
       minWidth: 120,
       treeNode: true,
     },
     {
-      field: 'parentId',
-      title: '父级编号',
-      minWidth: 120,
-    },
-    {
       field: 'createTime',
-      title: '创建时间',
+      title: $t('infra:demo02Category:field:createTime'),
       minWidth: 120,
+      sortable: true,
       formatter: 'formatDateTime',
     },
     {
-      title: '操作',
-      width: 220,
+      title: $t('common.operation'),
+      width: 200,
       fixed: 'right',
       slots: { default: 'actions' },
     },

@@ -36,7 +36,7 @@ const [Modal, modalApi] = useVbenModal({
 
 <template>
   <Modal
-    title="API 访问日志详情"
+    :title="$t('infra.apiAccessLog.detail.title')"
     class="w-1/2"
     :show-cancel-button="false"
     :show-confirm-button="false"
@@ -48,54 +48,59 @@ const [Modal, modalApi] = useVbenModal({
       class="mx-4"
       :label-style="{ width: '110px' }"
     >
-      <Descriptions.Item label="日志编号">
+      <Descriptions.Item :label="$t('infra.apiAccessLog.field.id')">
         {{ formData?.id }}
       </Descriptions.Item>
-      <Descriptions.Item label="链路追踪">
+      <Descriptions.Item :label="$t('infra.apiAccessLog.field.traceId')">
         {{ formData?.traceId }}
       </Descriptions.Item>
-      <Descriptions.Item label="应用名">
+      <Descriptions.Item
+        :label="$t('infra.apiAccessLog.field.applicationName')"
+      >
         {{ formData?.applicationName }}
       </Descriptions.Item>
-      <Descriptions.Item label="用户信息">
+      <Descriptions.Item :label="$t('infra.apiAccessLog.field.userId')">
         {{ formData?.userId }}
         <DictTag :type="DICT_TYPE.USER_TYPE" :value="formData?.userType" />
       </Descriptions.Item>
-      <Descriptions.Item label="用户IP">
+      <Descriptions.Item :label="$t('infra.apiAccessLog.field.userIp')">
         {{ formData?.userIp }}
       </Descriptions.Item>
-      <Descriptions.Item label="用户UA">
+      <Descriptions.Item :label="$t('infra.apiAccessLog.field.userAgent')">
         {{ formData?.userAgent }}
       </Descriptions.Item>
-      <Descriptions.Item label="请求信息">
+      <Descriptions.Item :label="$t('infra.apiAccessLog.field.requestMethod')">
         {{ formData?.requestMethod }} {{ formData?.requestUrl }}
       </Descriptions.Item>
-      <Descriptions.Item label="请求参数">
+      <Descriptions.Item :label="$t('infra.apiAccessLog.field.requestParams')">
         <JsonViewer :value="formData?.requestParams" preview-mode />
       </Descriptions.Item>
-      <Descriptions.Item label="请求结果">
+      <Descriptions.Item :label="$t('infra.apiAccessLog.field.responseBody')">
         {{ formData?.responseBody }}
       </Descriptions.Item>
-      <Descriptions.Item label="请求时间">
+      <Descriptions.Item :label="$t('infra.apiAccessLog.field.beginTime')">
         {{ formatDateTime(formData?.beginTime || '') }} ~
         {{ formatDateTime(formData?.endTime || '') }}
       </Descriptions.Item>
-      <Descriptions.Item label="请求耗时">
-        {{ formData?.duration }} ms
+      <Descriptions.Item :label="$t('infra.apiAccessLog.field.duration')">
+        {{ formData?.duration }} {{ $t('infra.apiAccessLog.unit.duration') }}
       </Descriptions.Item>
-      <Descriptions.Item label="操作结果">
-        <div v-if="formData?.resultCode === 0">正常</div>
+      <Descriptions.Item :label="$t('infra.apiAccessLog.field.resultCode')">
+        <div v-if="formData?.resultCode === 0">
+          {{ $t('infra.apiAccessLog.result.success') }}
+        </div>
         <div v-else-if="formData && formData?.resultCode > 0">
-          失败 | {{ formData?.resultCode }} | {{ formData?.resultMsg }}
+          {{ $t('infra.apiAccessLog.result.fail') }} |
+          {{ formData?.resultCode }} | {{ formData?.resultMsg }}
         </div>
       </Descriptions.Item>
-      <Descriptions.Item label="操作模块">
+      <Descriptions.Item :label="$t('infra.apiAccessLog.field.operateModule')">
         {{ formData?.operateModule }}
       </Descriptions.Item>
-      <Descriptions.Item label="操作名">
+      <Descriptions.Item :label="$t('infra.apiAccessLog.field.operateName')">
         {{ formData?.operateName }}
       </Descriptions.Item>
-      <Descriptions.Item label="操作类型">
+      <Descriptions.Item :label="$t('infra.apiAccessLog.field.operateType')">
         <DictTag
           :type="DICT_TYPE.INFRA_OPERATE_TYPE"
           :value="formData?.operateType"

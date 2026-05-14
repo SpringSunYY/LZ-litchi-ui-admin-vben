@@ -52,7 +52,10 @@ async function handleExport() {
     ...(await gridApi.formApi.getValues()),
     messageKey: props.row?.messageKey,
   });
-  downloadFileFromBlobPart({ fileName: '国际化信息.xls', source: data });
+  downloadFileFromBlobPart({
+    fileName: `${$t('infra.i18nMessage.messageLabel')}.xls`,
+    source: data,
+  });
 }
 
 /** 创建国际化信息 */
@@ -174,8 +177,8 @@ const [Grid, gridApi] = useVbenVxeGrid({
   gridEvents: {
     checkboxAll: handleRowCheckboxChange,
     checkboxChange: handleRowCheckboxChange,
-    cellClick: ({ row }) => {
-      emit('select', row);
+    cellClick: ({ row: currentRow }: { row: I18nMessageApi.I18nMessage }) => {
+      emit('select', currentRow);
     },
   },
 });
@@ -197,12 +200,14 @@ defineExpose({ onRefresh });
   <div class="flex h-full flex-col">
     <FormModal @success="onRefresh" />
 
-    <Grid table-title="国际化信息列表">
+    <Grid :table-title="$t('infra.i18nMessage.messageList')">
       <template #toolbar-tools>
         <TableAction
           :actions="[
             {
-              label: $t('ui.actionTitle.create', ['国际化信息']),
+              label: $t('ui.actionTitle.create', [
+                $t('infra.i18nMessage.messageLabel'),
+              ]),
               type: 'primary',
               icon: ACTION_ICON.ADD,
               auth: ['infra:message:create'],
@@ -228,7 +233,7 @@ defineExpose({ onRefresh });
           ]"
         />
       </template>
-      <template #actions="{ row }">
+      <template #actions="{ row: currentRow }">
         <TableAction
           :actions="[
             {
@@ -236,7 +241,7 @@ defineExpose({ onRefresh });
               type: 'link',
               icon: ACTION_ICON.EDIT,
               auth: ['infra:message:update'],
-              onClick: handleEdit.bind(null, row),
+              onClick: handleEdit.bind(null, currentRow),
             },
             {
               label: $t('common.delete'),
@@ -245,8 +250,8 @@ defineExpose({ onRefresh });
               icon: ACTION_ICON.DELETE,
               auth: ['infra:message:delete'],
               popConfirm: {
-                title: $t('ui.actionMessage.deleteConfirm', [row.id]),
-                confirm: handleDelete.bind(null, row),
+                title: $t('ui.actionMessage.deleteConfirm', [currentRow.id]),
+                confirm: handleDelete.bind(null, currentRow),
               },
             },
           ]"

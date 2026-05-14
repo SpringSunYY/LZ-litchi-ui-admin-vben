@@ -22,7 +22,9 @@ const loadingDirective: Directive = {
     const instance = el[LOADING_INSTANCE_KEY];
     el.classList.remove(CLASS_NAME_RELATIVE);
     render(null, el);
-    instance.el.remove();
+    if (instance?.el) {
+      instance.el.remove();
+    }
 
     el[LOADING_INSTANCE_KEY] = null;
   },
@@ -49,12 +51,7 @@ const loadingDirective: Directive = {
 function getOptions(binding: DirectiveBinding) {
   let value = binding.value;
   // 兼容 Ref / computed 等响应式对象，unref 取出真实值
-  if (
-    value !== null &&
-    typeof value === 'object' &&
-    'value' in value
-  ) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  if (value !== null && typeof value === 'object' && 'value' in value) {
     value = (value as any).value;
   }
   if (value === undefined) {
@@ -78,7 +75,9 @@ const spinningDirective: Directive = {
     const instance = el[SPINNER_INSTANCE_KEY];
     el.classList.remove(CLASS_NAME_RELATIVE);
     render(null, el);
-    instance.el.remove();
+    if (instance?.el) {
+      instance.el.remove();
+    }
 
     el[SPINNER_INSTANCE_KEY] = null;
   },

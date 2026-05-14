@@ -27,7 +27,10 @@ function onRefresh() {
 /** 导出表格 */
 async function handleExport() {
   const data = await exportConfig(await gridApi.formApi.getValues());
-  downloadFileFromBlobPart({ fileName: '参数配置.xls', source: data });
+  downloadFileFromBlobPart({
+    fileName: `${$t('infra.config.config')}.xls`,
+    source: data,
+  });
 }
 
 /** 创建参数 */
@@ -92,12 +95,12 @@ const [Grid, gridApi] = useVbenVxeGrid({
 <template>
   <Page auto-content-height>
     <FormModal @success="onRefresh" />
-    <Grid table-title="参数列表">
+    <Grid :table-title="$t('infra.config.list')">
       <template #toolbar-tools>
         <TableAction
           :actions="[
             {
-              label: $t('ui.actionTitle.create', ['参数列表']),
+              label: $t('ui.actionTitle.create', [$t('infra.config.config')]),
               type: 'primary',
               icon: ACTION_ICON.ADD,
               auth: ['infra:config:create'],

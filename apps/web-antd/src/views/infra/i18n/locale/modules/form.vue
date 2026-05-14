@@ -21,8 +21,8 @@ const emit = defineEmits(['success']);
 const formData = ref<I18nLocaleApi.I18nLocale>();
 const getTitle = computed(() => {
   return formData.value?.id
-    ? $t('ui.actionTitle.edit', ['国际化国家'])
-    : $t('ui.actionTitle.create', ['国际化国家']);
+    ? $t('ui.actionTitle.edit', [$t('infra.i18nLocale.i18nLocale')])
+    : $t('ui.actionTitle.create', [$t('infra.i18nLocale.i18nLocale')]);
 });
 
 const [Form, formApi] = useVbenForm({
