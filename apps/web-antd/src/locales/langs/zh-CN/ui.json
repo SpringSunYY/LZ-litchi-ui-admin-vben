@@ -54,6 +54,17 @@
     "select": "请选择{0}",
     "date": "请选择{0}"
   },
+  "validate": {
+    "email": "请输入正确的邮箱地址"
+  },
+  "color": {
+    "none": "无",
+    "primary": "主要",
+    "success": "成功",
+    "default": "默认",
+    "warning": "警告",
+    "danger": "危险"
+  },
   "captcha": {
     "title": "请完成安全验证",
     "sliderSuccessText": "验证通过",
@@ -193,5 +204,6 @@
   },
   "alert": {
     "clearCacheSuccess": "已清除 {count} 条缓存数据，页面将在 1 秒后刷新"
-  }
+  },
+  "none": "无"
 }

@@ -54,6 +54,17 @@
     "select": "Please select {0}",
     "date": "Please select {0}"
   },
+  "validate": {
+    "email": "Please enter a valid email address"
+  },
+  "color": {
+    "none": "None",
+    "primary": "Primary",
+    "success": "Success",
+    "default": "Default",
+    "warning": "Warning",
+    "danger": "Danger"
+  },
   "captcha": {
     "title": "Please complete the security verification",
     "sliderSuccessText": "Passed",
@@ -193,5 +204,6 @@
   },
   "alert": {
     "clearCacheSuccess": "Cleared {count} cache entries. Page will refresh in 1 second"
-  }
+  },
+  "none": "None"
 }

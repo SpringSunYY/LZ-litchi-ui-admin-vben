@@ -33,5 +33,8 @@
   "selectAll": "全选",
   "expandAll": "全部展开",
   "checkStrictly": "父子联动",
-  "forceLogout": "强退"
+  "forceLogout": "强退",
+  "expand": "展开",
+  "collapse": "收缩",
+  "append": "新增下级"
 }
