@@ -28,12 +28,12 @@ src/locales/langs/
 
 ### 2.2 文件命名
 
-| 模块名 | 文件名 | 示例 Key 前缀 |
-|--------|--------|---------------|
-| system | `system.json` | `system.xxx` |
-| infra | `infra.json` | `infra.xxx` |
-| crm | `crm.json` | `crm.xxx` |
-| 通用 | `common.json` | `common.xxx` |
+| 模块名 | 文件名        | 示例 Key 前缀 |
+| ------ | ------------- | ------------- |
+| system | `system.json` | `system.xxx`  |
+| infra  | `infra.json`  | `infra.xxx`   |
+| crm    | `crm.json`    | `crm.xxx`     |
+| 通用   | `common.json` | `common.xxx`  |
 
 > `common.json` 存放跨业务复用的短文案（如树表「展开/收缩」），与 `ui.json`（表单规则、操作标题模板等）区分使用。
 
@@ -64,7 +64,7 @@ src/locales/langs/
 ### 3.3 Key 类型说明
 
 | 类型 | 格式 | 示例 | 说明 |
-|------|------|------|------|
+| --- | --- | --- | --- |
 | 业务名称 | `{module}.{business}` | `system.area` | 表单/列表标题 |
 | 菜单名称 | `{module}.{business}.menu` | `system.area.menu` | 侧边栏菜单显示 |
 | 列表标题 | `{module}.{business}.list` | `system.area.list` | 列表页面标题 |
@@ -78,7 +78,7 @@ src/locales/langs/
 `{module}.{business}.action.*` 的 **后缀名** 与后端权限、SQL 中 `action:{name}` 段保持一致（小写），便于前后端与运维对照。
 
 | 键名 | 典型权限 / SQL 片段 | 说明 |
-|------|---------------------|------|
+| --- | --- | --- |
 | `query` | `:{business}:query` | 列表查询、刷新；业务上**默认存在**，建议在 `action` 中始终配置 |
 | `create` | `:{business}:create` | 新增 |
 | `update` | `:{business}:update` | 修改 |
@@ -170,7 +170,7 @@ data.unshift({
 常见场景：
 
 | 场景 | 示例 key | 说明 |
-|------|---------|------|
+| --- | --- | --- |
 | 复制链接 | `{module}.{business}.message.copyUrl` | 按钮文案 |
 | 复制失败 | `{module}.{business}.message.copyFailed` | 错误提示 |
 | 加载中 | `{module}.{business}.message.testingUpload` | `message.loading()` 内容 |
@@ -220,41 +220,41 @@ data.unshift({
 import { $t } from '#/locales';
 
 // 直接使用
-$t('system.area.field.name')
+$t('system.area.field.name');
 
 // 带参数（用于 placeholder、actionTitle 等）
-$t('ui.placeholder.input', [$t('system.area.field.name')])
-$t('ui.actionTitle.create', [$t('system.area.area')])
+$t('ui.placeholder.input', [$t('system.area.field.name')]);
+$t('ui.actionTitle.create', [$t('system.area.area')]);
 ```
 
 ### 5.2 占位符使用
 
-| 功能 | Key | 说明 |
-|------|-----|------|
-| 输入占位符 | `ui.placeholder.input` | `请输入{0}` |
-| 选择占位符 | `ui.placeholder.select` | `请选择{0}` |
-| 树根节点名 | `ui.treeRoot` | `顶级{0}`，配合父级字段 label |
+| 功能       | Key                     | 说明                          |
+| ---------- | ----------------------- | ----------------------------- |
+| 输入占位符 | `ui.placeholder.input`  | `请输入{0}`                   |
+| 选择占位符 | `ui.placeholder.select` | `请选择{0}`                   |
+| 树根节点名 | `ui.treeRoot`           | `顶级{0}`，配合父级字段 label |
 
 ```typescript
 // 使用方式
-$t('ui.placeholder.input', ['名称'])  // 中文：请输入名称
-$t('ui.placeholder.input', [$t('system.area.field.name')])  // 支持嵌套
-$t('ui.treeRoot', [$t('system.area.field.parentIdName')])  // 上级树：根节点显示名
+$t('ui.placeholder.input', ['名称']); // 中文：请输入名称
+$t('ui.placeholder.input', [$t('system.area.field.name')]); // 支持嵌套
+$t('ui.treeRoot', [$t('system.area.field.parentIdName')]); // 上级树：根节点显示名
 ```
 
 ### 5.3 动作按钮
 
-| 功能 | Key | 说明 |
-|------|-----|------|
-| 创建 | `ui.actionTitle.create` | `创建{0}` |
-| 编辑 | `ui.actionTitle.edit` | `编辑{0}` |
-| 删除 | `ui.actionTitle.delete` | `删除{0}` |
-| 导出 | `ui.actionTitle.export` | `导出` |
-| 导入 | `ui.actionTitle.import` | `导入{0}` |
+| 功能     | Key                          | 说明          |
+| -------- | ---------------------------- | ------------- |
+| 创建     | `ui.actionTitle.create`      | `创建{0}`     |
+| 编辑     | `ui.actionTitle.edit`        | `编辑{0}`     |
+| 删除     | `ui.actionTitle.delete`      | `删除{0}`     |
+| 导出     | `ui.actionTitle.export`      | `导出`        |
+| 导入     | `ui.actionTitle.import`      | `导入{0}`     |
 | 批量删除 | `ui.actionTitle.deleteBatch` | `批量删除{0}` |
 
 ```typescript
-label: $t('ui.actionTitle.create', [$t('system.area.area')])
+label: $t('ui.actionTitle.create', [$t('system.area.area')]);
 ```
 
 **与业务 `action` 的配合**：工具栏上「带业务名的创建/导出」等可继续用 `ui.actionTitle.*`；需要与权限名一一对应、或供其他模块/动态菜单引用时，使用 `{module}.{business}.action.{name}`，例如 `$t('system.area.action.query')`。
@@ -276,16 +276,16 @@ label: $t('ui.actionTitle.create', [$t('system.area.area')])
 
 > 注意：菜单国际化一般在路由配置或菜单数据中引用，不在业务组件中直接使用。
 
-| 功能 | Key | 说明 |
-|------|-----|------|
-| 操作成功 | `ui.actionMessage.operationSuccess` | `操作成功` |
-| 删除确认 | `ui.actionMessage.deleteConfirm` | `确认删除 {0} ({1}) 吗？` |
-| 删除中 | `ui.actionMessage.deleting` | `正在删除 {0}...` |
-| 删除成功 | `ui.actionMessage.deleteSuccess` | `删除 {0} 成功` |
+| 功能     | Key                                 | 说明                      |
+| -------- | ----------------------------------- | ------------------------- |
+| 操作成功 | `ui.actionMessage.operationSuccess` | `操作成功`                |
+| 删除确认 | `ui.actionMessage.deleteConfirm`    | `确认删除 {0} ({1}) 吗？` |
+| 删除中   | `ui.actionMessage.deleting`         | `正在删除 {0}...`         |
+| 删除成功 | `ui.actionMessage.deleteSuccess`    | `删除 {0} 成功`           |
 
 ```typescript
-message.success($t('ui.actionMessage.operationSuccess'))
-message.success($t('ui.actionMessage.deleteSuccess', [row.id]))
+message.success($t('ui.actionMessage.operationSuccess'));
+message.success($t('ui.actionMessage.deleteSuccess', [row.id]));
 ```
 
 ---
@@ -417,7 +417,6 @@ import { $t } from '#/locales';
 <template>
   <!-- 列表标题 -->
   <Grid :table-title="$t('system.area.list')">
-
     <!-- 工具栏：树表展开/收缩用 common，与权限无关 -->
     <TableAction
       :actions="[
@@ -458,7 +457,10 @@ import { $t } from '#/locales';
 
 <script setup>
 // 导出文件名
-downloadFileFromBlobPart({ fileName: $t('system.area.area') + '.xls', source: data });
+downloadFileFromBlobPart({
+  fileName: $t('system.area.area') + '.xls',
+  source: data,
+});
 </script>
 ```
 
@@ -513,32 +515,32 @@ const getTitle = computed(() => {
 
 ### 8.1 通用文本
 
-| Key | 中文 | 英文 |
-|-----|------|------|
-| `common.operation` | 操作 | Operation |
-| `common.edit` | 编辑 | Edit |
-| `common.delete` | 删除 | Delete |
-| `common.cancel` | 取消 | Cancel |
-| `common.confirm` | 确认 | Confirm |
-| `common.save` | 保存 | Save |
-| `common.search` | 搜索 | Search |
-| `common.reset` | 重置 | Reset |
-| `common.refresh` | 刷新 | Refresh |
-| `common.expand` | 展开 | Expand |
-| `common.collapse` | 收缩 | Collapse |
-| `common.append` | 新增下级 | Add Child |
-| `common.yes` | 是 | Yes |
-| `common.no` | 否 | No |
+| Key                | 中文     | 英文      |
+| ------------------ | -------- | --------- |
+| `common.operation` | 操作     | Operation |
+| `common.edit`      | 编辑     | Edit      |
+| `common.delete`    | 删除     | Delete    |
+| `common.cancel`    | 取消     | Cancel    |
+| `common.confirm`   | 确认     | Confirm   |
+| `common.save`      | 保存     | Save      |
+| `common.search`    | 搜索     | Search    |
+| `common.reset`     | 重置     | Reset     |
+| `common.refresh`   | 刷新     | Refresh   |
+| `common.expand`    | 展开     | Expand    |
+| `common.collapse`  | 收缩     | Collapse  |
+| `common.append`    | 新增下级 | Add Child |
+| `common.yes`       | 是       | Yes       |
+| `common.no`        | 否       | No        |
 
 > 状态、备注、创建时间等 **业务字段** 的展示名放在各自 `{module}.{business}.field.*`，**不要**在速查表里重复列举 `common.*` 字段键；本表仅列通用操作类短文案。
 
 ### 8.2 分页相关
 
-| Key | 中文 | 英文 |
-|-----|------|------|
-| `common.total` | 共 {0} 条 | {0} items total |
-| `common.pageSize` | 每页条数 | Page Size |
-| `common.current` | 当前页 | Current Page |
+| Key               | 中文      | 英文            |
+| ----------------- | --------- | --------------- |
+| `common.total`    | 共 {0} 条 | {0} items total |
+| `common.pageSize` | 每页条数  | Page Size       |
+| `common.current`  | 当前页    | Current Page    |
 
 ---
 
@@ -570,7 +572,7 @@ const getTitle = computed(() => {
 ### 9.1 Key 与 SQL 变量对照表
 
 | 前端 Key | SQL 变量 | 说明 |
-|----------|----------|------|
+| --- | --- | --- |
 | `{module}.{business}` | `${module}:${business}` | 业务名称 |
 | `{module}.{business}.menu` | `${module}:${business}:menu` | 菜单名称 |
 | `{module}.{business}.list` | - | 列表标题（前端专用） |
