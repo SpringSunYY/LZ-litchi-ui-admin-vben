@@ -2,13 +2,13 @@ import type { VbenFormSchema } from '#/adapter/form';
 import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 
 import { z } from '#/adapter/form';
+import { $t } from '#/locales';
 import {
   CommonStatusEnum,
   DICT_TYPE,
   getDictOptions,
   getRangePickerDefaultProps,
 } from '#/utils';
-import { $t } from '#/locales';
 
 /** 新增/修改的表单 */
 export function useFormSchema(): VbenFormSchema[] {

@@ -1,9 +1,9 @@
 <script lang="ts" setup>
-import type {CascadeDeleteSwitchProps} from './typing';
+import type { CascadeDeleteSwitchProps } from './typing';
 
-import {Tooltip} from 'ant-design-vue';
+import { Tooltip } from 'ant-design-vue';
 
-import {$t} from '#/locales';
+import { $t } from '#/locales';
 
 defineProps<CascadeDeleteSwitchProps>();
 const emit = defineEmits<{
@@ -26,7 +26,7 @@ const emit = defineEmits<{
         @change="(val: boolean) => emit('update:modelValue', val)"
       />
     </Tooltip>
-    <span class="cursor-default text-sm text-muted-foreground">
+    <span class="text-muted-foreground cursor-default text-sm">
       {{ $t('ui.actionMessage.cascadeDelete') }}
     </span>
   </div>

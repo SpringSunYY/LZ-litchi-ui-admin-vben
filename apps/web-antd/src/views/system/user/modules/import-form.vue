@@ -54,12 +54,18 @@ function beforeUpload(file: FileType) {
 /** 下载模版 */
 async function handleDownload() {
   const data = await importUserTemplate();
-  downloadFileFromBlobPart({ fileName: $t('system.user.message.importTemplate') + '.xls', source: data });
+  downloadFileFromBlobPart({
+    fileName: `${$t('system.user.message.importTemplate')}.xls`,
+    source: data,
+  });
 }
 </script>
 
 <template>
-  <Modal :title="$t('ui.actionTitle.import', [$t('system.user.user')])" class="w-[30%]">
+  <Modal
+    :title="$t('ui.actionTitle.import', [$t('system.user.user')])"
+    class="w-[30%]"
+  >
     <Form class="mx-4">
       <template #file>
         <div class="w-full">
@@ -75,7 +81,9 @@ async function handleDownload() {
     </Form>
     <template #prepend-footer>
       <div class="flex flex-auto items-center">
-        <Button @click="handleDownload"> {{ $t('ui.common.downloadTemplate') }} </Button>
+        <Button @click="handleDownload">
+          {{ $t('ui.common.downloadTemplate') }}
+        </Button>
       </div>
     </template>
   </Modal>

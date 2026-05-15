@@ -11,10 +11,10 @@ import { message } from 'ant-design-vue';
 
 import { ACTION_ICON, TableAction, useVbenVxeGrid } from '#/adapter/vxe-table';
 import { deleteMenu, getMenuList } from '#/api/system/menu';
+import { CascadeDeleteSwitch } from '#/components/cascade-delete-switch';
 import { $t } from '#/locales';
 import { SystemMenuTypeEnum } from '#/utils';
 
-import { CascadeDeleteSwitch } from '#/components/cascade-delete-switch';
 import { useGridColumns } from './data';
 import Form from './modules/form.vue';
 
@@ -109,7 +109,10 @@ const [Grid, gridApi] = useVbenVxeGrid({
         title="功能权限"
         url="https://doc.iocoder.cn/resource-permission"
       />
-      <DocAlert :title="$t('system.menu.message.route')" url="https://doc.iocoder.cn/vue3/route/" />
+      <DocAlert
+        :title="$t('system.menu.message.route')"
+        url="https://doc.iocoder.cn/vue3/route/"
+      />
     </template>
 
     <FormModal @success="onRefresh" />

@@ -222,9 +222,7 @@ const handleTenantPackageOpenChange = (open: boolean) => {
           :show-search="true"
           :allow-clear="true"
           :placeholder="
-            $t('ui.placeholder.select', [
-              $t('system.tenant.tenant'),
-            ])
+            $t('ui.placeholder.select', [$t('system.tenant.tenant')])
           "
           :loading="tenantLoading"
           :options="tenantOptions"

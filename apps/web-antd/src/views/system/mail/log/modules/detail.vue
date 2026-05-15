@@ -44,7 +44,9 @@ const [Modal, modalApi] = useVbenModal({
   >
     <div class="p-4">
       <Descriptions :column="2" bordered :label-style="{ width: '140px' }">
-        <Descriptions.Item :label="$t('system.mail.log.field.id')">{{ formData?.id }}</Descriptions.Item>
+        <Descriptions.Item :label="$t('system.mail.log.field.id')">
+          {{ formData?.id }}
+        </Descriptions.Item>
         <Descriptions.Item :label="$t('system.mail.log.field.createTime')">
           {{ formatDateTime(formData?.createTime || '') }}
         </Descriptions.Item>
@@ -66,10 +68,16 @@ const [Modal, modalApi] = useVbenModal({
         <Descriptions.Item :label="$t('system.mail.log.field.templateCode')">
           {{ formData?.templateCode }}
         </Descriptions.Item>
-        <Descriptions.Item :label="$t('system.mail.log.field.templateTitle')" :span="2">
+        <Descriptions.Item
+          :label="$t('system.mail.log.field.templateTitle')"
+          :span="2"
+        >
           {{ formData?.templateTitle }}
         </Descriptions.Item>
-        <Descriptions.Item :label="$t('system.mail.log.field.templateContent')" :span="2">
+        <Descriptions.Item
+          :label="$t('system.mail.log.field.templateContent')"
+          :span="2"
+        >
           <!-- eslint-disable-next-line vue/no-v-html -->
           <div v-html="formData?.templateContent"></div>
         </Descriptions.Item>

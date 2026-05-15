@@ -3,8 +3,8 @@ import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 
 import { z } from '#/adapter/form';
 import { getSimpleDictTypeList } from '#/api/system/dict/type';
-import { CommonStatusEnum, DICT_TYPE, getDictOptions } from '#/utils';
 import { $t } from '#/locales';
+import { CommonStatusEnum, DICT_TYPE, getDictOptions } from '#/utils';
 
 // ============================== 字典类型 ==============================
 
@@ -24,7 +24,9 @@ export function useTypeFormSchema(): VbenFormSchema[] {
       label: $t('system.dict.typeField.name'),
       component: 'Input',
       componentProps: {
-        placeholder: $t('ui.placeholder.input', [$t('system.dict.typeField.name')]),
+        placeholder: $t('ui.placeholder.input', [
+          $t('system.dict.typeField.name'),
+        ]),
       },
       rules: 'required',
     },
@@ -34,7 +36,9 @@ export function useTypeFormSchema(): VbenFormSchema[] {
       component: 'Input',
       componentProps: (values) => {
         return {
-          placeholder: $t('ui.placeholder.input', [$t('system.dict.typeField.type')]),
+          placeholder: $t('ui.placeholder.input', [
+            $t('system.dict.typeField.type'),
+          ]),
           disabled: !!values.id,
         };
       },
@@ -59,7 +63,9 @@ export function useTypeFormSchema(): VbenFormSchema[] {
       label: $t('system.dict.typeField.remark'),
       component: 'Textarea',
       componentProps: {
-        placeholder: $t('ui.placeholder.input', [$t('system.dict.typeField.remark')]),
+        placeholder: $t('ui.placeholder.input', [
+          $t('system.dict.typeField.remark'),
+        ]),
       },
     },
   ];
@@ -73,7 +79,9 @@ export function useTypeGridFormSchema(): VbenFormSchema[] {
       label: $t('system.dict.typeField.name'),
       component: 'Input',
       componentProps: {
-        placeholder: $t('ui.placeholder.input', [$t('system.dict.typeField.name')]),
+        placeholder: $t('ui.placeholder.input', [
+          $t('system.dict.typeField.name'),
+        ]),
         clearable: true,
       },
     },
@@ -82,7 +90,9 @@ export function useTypeGridFormSchema(): VbenFormSchema[] {
       label: $t('system.dict.typeField.type'),
       component: 'Input',
       componentProps: {
-        placeholder: $t('ui.placeholder.input', [$t('system.dict.typeField.type')]),
+        placeholder: $t('ui.placeholder.input', [
+          $t('system.dict.typeField.type'),
+        ]),
         clearable: true,
       },
     },
@@ -92,7 +102,9 @@ export function useTypeGridFormSchema(): VbenFormSchema[] {
       component: 'Select',
       componentProps: {
         options: getDictOptions(DICT_TYPE.COMMON_STATUS, 'number'),
-        placeholder: $t('ui.placeholder.select', [$t('system.dict.typeField.status')]),
+        placeholder: $t('ui.placeholder.select', [
+          $t('system.dict.typeField.status'),
+        ]),
         clearable: true,
       },
     },
@@ -180,7 +192,9 @@ export function useDataFormSchema(): VbenFormSchema[] {
       componentProps: (values) => {
         return {
           api: getSimpleDictTypeList,
-          placeholder: $t('ui.placeholder.select', [$t('system.dict.dataField.dictType')]),
+          placeholder: $t('ui.placeholder.select', [
+            $t('system.dict.dataField.dictType'),
+          ]),
           labelField: 'name',
           valueField: 'type',
           disabled: !!values.id,
@@ -196,7 +210,9 @@ export function useDataFormSchema(): VbenFormSchema[] {
       label: $t('system.dict.dataField.label'),
       component: 'Input',
       componentProps: {
-        placeholder: $t('ui.placeholder.input', [$t('system.dict.dataField.label')]),
+        placeholder: $t('ui.placeholder.input', [
+          $t('system.dict.dataField.label'),
+        ]),
       },
       rules: 'required',
     },
@@ -205,7 +221,9 @@ export function useDataFormSchema(): VbenFormSchema[] {
       label: $t('system.dict.dataField.value'),
       component: 'Input',
       componentProps: {
-        placeholder: $t('ui.placeholder.input', [$t('system.dict.dataField.value')]),
+        placeholder: $t('ui.placeholder.input', [
+          $t('system.dict.dataField.value'),
+        ]),
       },
       rules: 'required',
     },
@@ -214,7 +232,9 @@ export function useDataFormSchema(): VbenFormSchema[] {
       label: $t('system.dict.dataField.sort'),
       component: 'InputNumber',
       componentProps: {
-        placeholder: $t('ui.placeholder.input', [$t('system.dict.dataField.sort')]),
+        placeholder: $t('ui.placeholder.input', [
+          $t('system.dict.dataField.sort'),
+        ]),
       },
       rules: 'required',
     },
@@ -224,7 +244,9 @@ export function useDataFormSchema(): VbenFormSchema[] {
       component: 'RadioGroup',
       componentProps: {
         options: getDictOptions(DICT_TYPE.COMMON_STATUS, 'number'),
-        placeholder: $t('ui.placeholder.select', [$t('system.dict.dataField.status')]),
+        placeholder: $t('ui.placeholder.select', [
+          $t('system.dict.dataField.status'),
+        ]),
         buttonStyle: 'solid',
         optionType: 'button',
       },
@@ -236,7 +258,9 @@ export function useDataFormSchema(): VbenFormSchema[] {
       component: 'Select',
       componentProps: {
         options: colorOptions,
-        placeholder: $t('ui.placeholder.select', [$t('system.dict.dataField.colorType')]),
+        placeholder: $t('ui.placeholder.select', [
+          $t('system.dict.dataField.colorType'),
+        ]),
       },
     },
     {
@@ -244,7 +268,9 @@ export function useDataFormSchema(): VbenFormSchema[] {
       label: $t('system.dict.dataField.cssClass'),
       component: 'Input',
       componentProps: {
-        placeholder: $t('ui.placeholder.input', [$t('system.dict.dataField.cssClass')]),
+        placeholder: $t('ui.placeholder.input', [
+          $t('system.dict.dataField.cssClass'),
+        ]),
       },
       help: $t('system.dict.help.cssClass'),
     },
@@ -253,7 +279,9 @@ export function useDataFormSchema(): VbenFormSchema[] {
       label: $t('system.dict.dataField.remark'),
       component: 'Textarea',
       componentProps: {
-        placeholder: $t('ui.placeholder.input', [$t('system.dict.dataField.remark')]),
+        placeholder: $t('ui.placeholder.input', [
+          $t('system.dict.dataField.remark'),
+        ]),
       },
     },
   ];
@@ -267,7 +295,9 @@ export function useDataGridFormSchema(): VbenFormSchema[] {
       label: $t('system.dict.dataField.label'),
       component: 'Input',
       componentProps: {
-        placeholder: $t('ui.placeholder.input', [$t('system.dict.dataField.label')]),
+        placeholder: $t('ui.placeholder.input', [
+          $t('system.dict.dataField.label'),
+        ]),
         clearable: true,
       },
     },
@@ -277,7 +307,9 @@ export function useDataGridFormSchema(): VbenFormSchema[] {
       component: 'Select',
       componentProps: {
         options: getDictOptions(DICT_TYPE.COMMON_STATUS, 'number'),
-        placeholder: $t('ui.placeholder.select', [$t('system.dict.dataField.status')]),
+        placeholder: $t('ui.placeholder.select', [
+          $t('system.dict.dataField.status'),
+        ]),
         clearable: true,
       },
     },

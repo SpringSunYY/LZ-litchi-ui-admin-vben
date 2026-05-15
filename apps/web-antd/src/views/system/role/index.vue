@@ -40,7 +40,10 @@ function onRefresh() {
 /** 导出表格 */
 async function handleExport() {
   const data = await exportRole(await gridApi.formApi.getValues());
-  downloadFileFromBlobPart({ fileName: $t('system.role.role') + '.xls', source: data });
+  downloadFileFromBlobPart({
+    fileName: `${$t('system.role.role')}.xls`,
+    source: data,
+  });
 }
 
 /** 编辑角色 */

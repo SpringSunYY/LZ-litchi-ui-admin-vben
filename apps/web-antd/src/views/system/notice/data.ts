@@ -73,7 +73,9 @@ export function useFormSchema(): VbenFormSchema[] {
       label: $t('system.notice.field.remark'),
       component: 'Textarea',
       componentProps: {
-        placeholder: $t('ui.placeholder.input', [$t('system.notice.field.remark')]),
+        placeholder: $t('ui.placeholder.input', [
+          $t('system.notice.field.remark'),
+        ]),
       },
     },
   ];
@@ -87,7 +89,9 @@ export function useGridFormSchema(): VbenFormSchema[] {
       label: $t('system.notice.field.title'),
       component: 'Input',
       componentProps: {
-        placeholder: $t('ui.placeholder.input', [$t('system.notice.field.title')]),
+        placeholder: $t('ui.placeholder.input', [
+          $t('system.notice.field.title'),
+        ]),
         allowClear: true,
       },
     },
@@ -97,7 +101,9 @@ export function useGridFormSchema(): VbenFormSchema[] {
       component: 'Select',
       componentProps: {
         options: getDictOptions(DICT_TYPE.COMMON_STATUS, 'number'),
-        placeholder: $t('ui.placeholder.select', [$t('system.notice.field.status')]),
+        placeholder: $t('ui.placeholder.select', [
+          $t('system.notice.field.status'),
+        ]),
         allowClear: true,
       },
     },

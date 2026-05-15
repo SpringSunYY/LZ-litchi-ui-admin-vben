@@ -27,7 +27,9 @@ export function useFormSchema(): VbenFormSchema[] {
       label: $t('system.mail.template.field.name'),
       component: 'Input',
       componentProps: {
-        placeholder: $t('ui.placeholder.input', [$t('system.mail.template.field.name')]),
+        placeholder: $t('ui.placeholder.input', [
+          $t('system.mail.template.field.name'),
+        ]),
       },
       rules: 'required',
     },
@@ -36,7 +38,9 @@ export function useFormSchema(): VbenFormSchema[] {
       label: $t('system.mail.template.field.code'),
       component: 'Input',
       componentProps: {
-        placeholder: $t('ui.placeholder.input', [$t('system.mail.template.field.code')]),
+        placeholder: $t('ui.placeholder.input', [
+          $t('system.mail.template.field.code'),
+        ]),
       },
       rules: 'required',
     },
@@ -48,7 +52,9 @@ export function useFormSchema(): VbenFormSchema[] {
         api: async () => await getSimpleMailAccountList(),
         labelField: 'mail',
         valueField: 'id',
-        placeholder: $t('ui.placeholder.select', [$t('system.mail.template.field.accountId')]),
+        placeholder: $t('ui.placeholder.select', [
+          $t('system.mail.template.field.accountId'),
+        ]),
       },
       rules: 'required',
     },
@@ -57,7 +63,9 @@ export function useFormSchema(): VbenFormSchema[] {
       label: $t('system.mail.template.field.nickname'),
       component: 'Input',
       componentProps: {
-        placeholder: $t('ui.placeholder.input', [$t('system.mail.template.field.nickname')]),
+        placeholder: $t('ui.placeholder.input', [
+          $t('system.mail.template.field.nickname'),
+        ]),
       },
     },
     {
@@ -65,7 +73,9 @@ export function useFormSchema(): VbenFormSchema[] {
       label: $t('system.mail.template.field.title'),
       component: 'Input',
       componentProps: {
-        placeholder: $t('ui.placeholder.input', [$t('system.mail.template.field.title')]),
+        placeholder: $t('ui.placeholder.input', [
+          $t('system.mail.template.field.title'),
+        ]),
       },
       rules: 'required',
     },
@@ -74,7 +84,9 @@ export function useFormSchema(): VbenFormSchema[] {
       label: $t('system.mail.template.field.content'),
       component: 'Textarea',
       componentProps: {
-        placeholder: $t('ui.placeholder.input', [$t('system.mail.template.field.content')]),
+        placeholder: $t('ui.placeholder.input', [
+          $t('system.mail.template.field.content'),
+        ]),
         height: 300,
       },
       rules: 'required',
@@ -95,7 +107,9 @@ export function useFormSchema(): VbenFormSchema[] {
       label: $t('system.mail.template.field.remark'),
       component: 'Textarea',
       componentProps: {
-        placeholder: $t('ui.placeholder.input', [$t('system.mail.template.field.remark')]),
+        placeholder: $t('ui.placeholder.input', [
+          $t('system.mail.template.field.remark'),
+        ]),
       },
     },
   ];
@@ -126,7 +140,9 @@ export function useSendMailFormSchema(): VbenFormSchema[] {
       label: $t('system.mail.template.field.mail'),
       component: 'Input',
       componentProps: {
-        placeholder: $t('ui.placeholder.input', [$t('system.mail.template.field.mail')]),
+        placeholder: $t('ui.placeholder.input', [
+          $t('system.mail.template.field.mail'),
+        ]),
       },
       rules: z.string().email($t('ui.validate.email')),
     },
@@ -143,7 +159,9 @@ export function useGridFormSchema(): VbenFormSchema[] {
       componentProps: {
         options: getDictOptions(DICT_TYPE.COMMON_STATUS, 'number'),
         allowClear: true,
-        placeholder: $t('ui.placeholder.select', [$t('system.mail.template.field.status')]),
+        placeholder: $t('ui.placeholder.select', [
+          $t('system.mail.template.field.status'),
+        ]),
       },
     },
     {
@@ -152,7 +170,9 @@ export function useGridFormSchema(): VbenFormSchema[] {
       component: 'Input',
       componentProps: {
         allowClear: true,
-        placeholder: $t('ui.placeholder.input', [$t('system.mail.template.field.code')]),
+        placeholder: $t('ui.placeholder.input', [
+          $t('system.mail.template.field.code'),
+        ]),
       },
     },
     {
@@ -161,7 +181,9 @@ export function useGridFormSchema(): VbenFormSchema[] {
       component: 'Input',
       componentProps: {
         allowClear: true,
-        placeholder: $t('ui.placeholder.input', [$t('system.mail.template.field.name')]),
+        placeholder: $t('ui.placeholder.input', [
+          $t('system.mail.template.field.name'),
+        ]),
       },
     },
     {
@@ -173,7 +195,9 @@ export function useGridFormSchema(): VbenFormSchema[] {
         labelField: 'mail',
         valueField: 'id',
         allowClear: true,
-        placeholder: $t('ui.placeholder.select', [$t('system.mail.template.field.accountId')]),
+        placeholder: $t('ui.placeholder.select', [
+          $t('system.mail.template.field.accountId'),
+        ]),
       },
     },
     {
