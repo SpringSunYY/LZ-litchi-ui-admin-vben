@@ -21,8 +21,8 @@ const emit = defineEmits(['success']);
 const formData = ref<SystemNotifyTemplateApi.NotifyTemplate>();
 const getTitle = computed(() => {
   return formData.value?.id
-    ? $t('ui.actionTitle.edit', ['站内信模板'])
-    : $t('ui.actionTitle.create', ['站内信模板']);
+    ? $t('ui.actionTitle.edit', [$t('system.notify.template.template')])
+    : $t('ui.actionTitle.create', [$t('system.notify.template.template')]);
 });
 
 const [Form, formApi] = useVbenForm({

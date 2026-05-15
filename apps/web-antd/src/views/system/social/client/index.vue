@@ -87,16 +87,21 @@ const [Grid, gridApi] = useVbenVxeGrid({
 <template>
   <Page auto-content-height>
     <template #doc>
-      <DocAlert title="三方登录" url="https://doc.iocoder.cn/social-user/" />
+      <DocAlert
+        :title="$t('system.user.message.socialLogin')"
+        url="https://doc.iocoder.cn/social-user/"
+      />
     </template>
 
     <FormModal @success="onRefresh" />
-    <Grid table-title="社交客户端列表">
+    <Grid :table-title="$t('system.social.client.list')">
       <template #toolbar-tools>
         <TableAction
           :actions="[
             {
-              label: $t('ui.actionTitle.create', ['社交客户端']),
+              label: $t('ui.actionTitle.create', [
+                $t('system.social.client.client'),
+              ]),
               type: 'primary',
               icon: ACTION_ICON.ADD,
               auth: ['system:social-client:create'],

@@ -27,7 +27,10 @@ function onRefresh() {
 /** 导出表格 */
 async function handleExport() {
   const data = await exportPost(await gridApi.formApi.getValues());
-  downloadFileFromBlobPart({ fileName: '岗位.xls', source: data });
+  downloadFileFromBlobPart({
+    fileName: `${$t('system.post.post')}.xls`,
+    source: data,
+  });
 }
 
 /** 创建岗位 */
@@ -91,12 +94,12 @@ const [Grid, gridApi] = useVbenVxeGrid({
 <template>
   <Page auto-content-height>
     <FormModal @success="onRefresh" />
-    <Grid table-title="岗位列表">
+    <Grid :table-title="$t('system.post.list')">
       <template #toolbar-tools>
         <TableAction
           :actions="[
             {
-              label: $t('ui.actionTitle.create', ['岗位']),
+              label: $t('ui.actionTitle.create', [$t('system.post.post')]),
               type: 'primary',
               icon: ACTION_ICON.ADD,
               auth: ['system:post:create'],

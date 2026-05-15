@@ -8,6 +8,7 @@ import { z } from '#/adapter/form';
 import { getDeptList } from '#/api/system/dept';
 import { getSimplePostList } from '#/api/system/post';
 import { getSimpleRoleList } from '#/api/system/role';
+import { $t } from '#/locales';
 import {
   CommonStatusEnum,
   DICT_TYPE,
@@ -28,12 +29,12 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'username',
-      label: '用户名称',
+      label: $t('system.user.field.username'),
       component: 'Input',
       rules: 'required',
     },
     {
-      label: '用户密码',
+      label: $t('system.user.field.password'),
       fieldName: 'password',
       component: 'InputPassword',
       rules: 'required',
@@ -44,13 +45,13 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'nickname',
-      label: '用户昵称',
+      label: $t('system.user.field.nickname'),
       component: 'Input',
       rules: 'required',
     },
     {
       fieldName: 'deptId',
-      label: '归属部门',
+      label: $t('system.user.field.deptId'),
       component: 'ApiTreeSelect',
       componentProps: {
         api: async () => {
@@ -60,36 +61,44 @@ export function useFormSchema(): VbenFormSchema[] {
         labelField: 'name',
         valueField: 'id',
         childrenField: 'children',
-        placeholder: '请选择归属部门',
+        placeholder: $t('ui.placeholder.select', [
+          $t('system.user.field.deptId'),
+        ]),
         treeDefaultExpandAll: true,
       },
     },
     {
       fieldName: 'postIds',
-      label: '岗位',
+      label: $t('system.user.field.postIds'),
       component: 'ApiSelect',
       componentProps: {
         api: getSimplePostList,
         labelField: 'name',
         valueField: 'id',
         mode: 'multiple',
-        placeholder: '请选择岗位',
+        placeholder: $t('ui.placeholder.select', [
+          $t('system.user.field.postIds'),
+        ]),
       },
     },
     {
       fieldName: 'email',
-      label: '邮箱',
+      label: $t('system.user.field.email'),
       component: 'Input',
-      rules: z.string().email('邮箱格式不正确').or(z.literal('')).optional(),
+      rules: z
+        .string()
+        .email($t('ui.validate.email'))
+        .or(z.literal(''))
+        .optional(),
     },
     {
       fieldName: 'mobile',
-      label: '手机号码',
+      label: $t('system.user.field.mobile'),
       component: 'Input',
     },
     {
       fieldName: 'sex',
-      label: '用户性别',
+      label: $t('system.user.field.sex'),
       component: 'RadioGroup',
       componentProps: {
         options: getDictOptions(DICT_TYPE.SYSTEM_USER_SEX, 'number'),
@@ -100,7 +109,7 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'status',
-      label: '用户状态',
+      label: $t('system.user.field.status'),
       component: 'RadioGroup',
       componentProps: {
         options: getDictOptions(DICT_TYPE.COMMON_STATUS, 'number'),
@@ -111,7 +120,7 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'remark',
-      label: '备注',
+      label: $t('system.user.field.remark'),
       component: 'Textarea',
     },
   ];
@@ -130,27 +139,33 @@ export function useResetPasswordFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'newPassword',
-      label: '新密码',
+      label: $t('system.user.field.newPassword'),
       component: 'InputPassword',
       componentProps: {
-        placeholder: '请输入新密码',
+        placeholder: $t('ui.placeholder.input', [
+          $t('system.user.field.newPassword'),
+        ]),
       },
       rules: 'required',
     },
     {
       fieldName: 'confirmPassword',
-      label: '确认密码',
+      label: $t('system.user.field.confirmPassword'),
       component: 'InputPassword',
       componentProps: {
-        placeholder: '请再次输入新密码',
+        placeholder: $t('ui.placeholder.input', [
+          $t('system.user.field.confirmPassword'),
+        ]),
       },
       dependencies: {
         rules(values: Record<string, any>) {
           const { newPassword } = values;
           return z
             .string()
-            .nonempty('确认密码不能为空')
-            .refine((value) => value === newPassword, '两次输入的密码不一致');
+            .nonempty($t('system.user.message.confirmPasswordEmpty'))
+            .refine((value) => value === newPassword, {
+              message: $t('system.user.message.passwordMismatch'),
+            });
         },
         triggerFields: ['newPassword'],
       },
@@ -171,7 +186,7 @@ export function useAssignRoleFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'username',
-      label: '用户名称',
+      label: $t('system.user.field.username'),
       component: 'Input',
       componentProps: {
         disabled: true,
@@ -179,7 +194,7 @@ export function useAssignRoleFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'nickname',
-      label: '用户昵称',
+      label: $t('system.user.field.nickname'),
       component: 'Input',
       componentProps: {
         disabled: true,
@@ -187,14 +202,16 @@ export function useAssignRoleFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'roleIds',
-      label: '角色',
+      label: $t('system.user.field.roleIds'),
       component: 'ApiSelect',
       componentProps: {
         api: getSimpleRoleList,
         labelField: 'name',
         valueField: 'id',
         mode: 'multiple',
-        placeholder: '请选择角色',
+        placeholder: $t('ui.placeholder.select', [
+          $t('system.user.field.roleIds'),
+        ]),
       },
     },
   ];
@@ -205,21 +222,21 @@ export function useImportFormSchema(): VbenFormSchema[] {
   return [
     {
       fieldName: 'file',
-      label: '用户数据',
+      label: $t('system.user.field.file'),
       component: 'Upload',
       rules: 'required',
-      help: '仅允许导入 xls、xlsx 格式文件',
+      help: $t('system.user.help.fileType'),
     },
     {
       fieldName: 'updateSupport',
-      label: '是否覆盖',
+      label: $t('system.user.field.updateSupport'),
       component: 'Switch',
       componentProps: {
-        checkedChildren: '是',
-        unCheckedChildren: '否',
+        checkedChildren: $t('common.yes'),
+        unCheckedChildren: $t('common.no'),
       },
       rules: z.boolean().default(false),
-      help: '是否更新已经存在的用户数据',
+      help: $t('system.user.help.updateSupport'),
     },
   ];
 }
@@ -229,25 +246,29 @@ export function useGridFormSchema(): VbenFormSchema[] {
   return [
     {
       fieldName: 'username',
-      label: '用户名称',
+      label: $t('system.user.field.username'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入用户名称',
+        placeholder: $t('ui.placeholder.input', [
+          $t('system.user.field.username'),
+        ]),
         allowClear: true,
       },
     },
     {
       fieldName: 'mobile',
-      label: '手机号码',
+      label: $t('system.user.field.mobile'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入手机号码',
+        placeholder: $t('ui.placeholder.input', [
+          $t('system.user.field.mobile'),
+        ]),
         allowClear: true,
       },
     },
     {
       fieldName: 'createTime',
-      label: '创建时间',
+      label: $t('system.user.field.createTime'),
       component: 'RangePicker',
       componentProps: {
         ...getRangePickerDefaultProps(),
@@ -267,27 +288,27 @@ export function useGridColumns<T = SystemUserApi.User>(
   return [
     {
       field: 'id',
-      title: '用户编号',
+      title: $t('system.user.field.id'),
     },
     {
       field: 'username',
-      title: '用户名称',
+      title: $t('system.user.field.username'),
     },
     {
       field: 'nickname',
-      title: '用户昵称',
+      title: $t('system.user.field.nickname'),
     },
     {
       field: 'deptName',
-      title: '部门',
+      title: $t('system.user.field.deptName'),
     },
     {
       field: 'mobile',
-      title: '手机号码',
+      title: $t('system.user.field.mobile'),
     },
     {
       field: 'status',
-      title: '状态',
+      title: $t('system.user.field.status'),
       align: 'center',
       cellRender: {
         attrs: { beforeChange: onStatusChange },
@@ -300,11 +321,11 @@ export function useGridColumns<T = SystemUserApi.User>(
     },
     {
       field: 'createTime',
-      title: '创建时间',
+      title: $t('system.user.field.createTime'),
       formatter: 'formatDateTime',
     },
     {
-      title: '操作',
+      title: $t('common.operation'),
       width: 180,
       fixed: 'right',
       slots: { default: 'actions' },

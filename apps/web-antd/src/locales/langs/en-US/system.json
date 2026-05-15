@@ -1,0 +1,815 @@
+{
+  "area": {
+    "area": "area",
+    "menu": "area",
+    "list": "area list",
+    "field": {
+      "id": "id",
+      "name": "area name",
+      "parentId": "parent id",
+      "parentIdName": "parent area",
+      "postalCode": "postal code",
+      "level": "level",
+      "longitude": "longitude",
+      "latitude": "latitude",
+      "source": "data source",
+      "geoJson": "geo json",
+      "sortNum": "sort order",
+      "createTime": "create time"
+    },
+    "action": {
+      "query": "area query",
+      "create": "create area",
+      "export": "export area",
+      "update": "update area",
+      "delete": "delete area"
+    }
+  },
+  "dept": {
+    "dept": "department",
+    "menu": "department management",
+    "list": "department list",
+    "field": {
+      "id": "department id",
+      "name": "department name",
+      "parentId": "parent department",
+      "parentIdName": "parent department",
+      "sort": "sort order",
+      "leaderUserId": "leader",
+      "leaderUserIdName": "leader",
+      "phone": "phone",
+      "email": "email",
+      "status": "status",
+      "createTime": "create time"
+    },
+    "action": {
+      "query": "department query",
+      "create": "create department",
+      "update": "update department",
+      "delete": "delete department"
+    }
+  },
+  "dict": {
+    "dict": "dictionary",
+    "type": "dict type",
+    "typeList": "dict type list",
+    "data": "dict data",
+    "dataList": "dict data list",
+    "menu": "dictionary management",
+    "field": {
+      "id": "dict id",
+      "name": "dict name",
+      "type": "dict type",
+      "status": "status",
+      "remark": "remark",
+      "createTime": "create time"
+    },
+    "typeField": {
+      "id": "dict id",
+      "name": "dict name",
+      "type": "dict type",
+      "status": "status",
+      "remark": "remark",
+      "createTime": "create time"
+    },
+    "dataField": {
+      "id": "dict code",
+      "dictType": "dict type",
+      "label": "dict label",
+      "labelName": "dict label",
+      "value": "dict value",
+      "sort": "sort order",
+      "status": "status",
+      "colorType": "color type",
+      "cssClass": "css class",
+      "remark": "remark",
+      "createTime": "create time"
+    },
+    "action": {
+      "query": "dict query",
+      "create": "create dict",
+      "export": "export dict",
+      "update": "update dict",
+      "delete": "delete dict"
+    },
+    "help": {
+      "cssClass": "enter hex color code, e.g. #108ee9"
+    }
+  },
+  "post": {
+    "post": "post",
+    "menu": "post management",
+    "list": "post list",
+    "field": {
+      "id": "post id",
+      "Name": "post name",
+      "code": "post code",
+      "sort": "sort order",
+      "status": "post status",
+      "remark": "post remark",
+      "createTime": "create time"
+    },
+    "action": {
+      "query": "post query",
+      "create": "create post",
+      "export": "export post",
+      "update": "update post",
+      "delete": "delete post"
+    }
+  },
+  "role": {
+    "role": "role",
+    "menu": "role management",
+    "list": "role list",
+    "field": {
+      "id": "role id",
+      "name": "role name",
+      "code": "role code",
+      "sort": "sort order",
+      "status": "role status",
+      "remark": "role remark",
+      "dataScope": "data scope",
+      "dataScopeDeptIds": "department scope",
+      "menuIds": "menu permission",
+      "type": "role type",
+      "createTime": "create time"
+    },
+    "action": {
+      "query": "role query",
+      "create": "create role",
+      "export": "export role",
+      "update": "update role",
+      "delete": "delete role"
+    },
+    "message": {
+      "dataPermission": "data permission",
+      "menuPermission": "menu permission"
+    }
+  },
+  "user": {
+    "user": "user",
+    "menu": "user management",
+    "list": "user list",
+    "field": {
+      "id": "user id",
+      "username": "username",
+      "password": "password",
+      "nickname": "nickname",
+      "deptId": "department",
+      "deptName": "department",
+      "postIds": "posts",
+      "email": "email",
+      "mobile": "mobile",
+      "sex": "gender",
+      "status": "status",
+      "remark": "remark",
+      "newPassword": "new password",
+      "confirmPassword": "confirm password",
+      "roleIds": "roles",
+      "file": "user data",
+      "updateSupport": "overwrite",
+      "createTime": "create time"
+    },
+    "action": {
+      "query": "user query",
+      "create": "create user",
+      "export": "export user",
+      "import": "import user",
+      "update": "update user",
+      "delete": "delete user",
+      "resetPassword": "reset password",
+      "assignRole": "assign role"
+    },
+    "message": {
+      "socialLogin": "third-party login",
+      "assignRole": "assign role",
+      "resetPassword": "reset password",
+      "statusConfirm": "confirm switching {0}'s status to 【{1}】?",
+      "updateFailed": "update failed",
+      "cancelOperation": "cancel operation",
+      "confirmPasswordEmpty": "confirm password cannot be empty",
+      "passwordMismatch": "passwords do not match",
+      "importTemplate": "User Import Template"
+    },
+    "help": {
+      "updateSupport": "whether to update existing user data",
+      "fileType": "only xls and xlsx files are allowed"
+    }
+  },
+  "menu": {
+    "menu": "menu management",
+    "list": "menu list",
+    "field": {
+      "id": "menu id",
+      "parentId": "parent menu",
+      "name": "menu name",
+      "type": "menu type",
+      "icon": "menu icon",
+      "path": "route path",
+      "component": "component path",
+      "componentName": "component name",
+      "permission": "permission",
+      "sort": "sort order",
+      "status": "menu status",
+      "alwaysShow": "always show",
+      "keepAlive": "cache status",
+      "remark": "remark",
+      "createTime": "create time"
+    },
+    "action": {
+      "query": "menu query",
+      "create": "create menu",
+      "update": "update menu",
+      "delete": "delete menu"
+    },
+    "message": {
+      "route": "menu routes",
+      "expand": "expand",
+      "collapse": "collapse",
+      "append": "add child"
+    },
+    "help": {
+      "pathTip": "route path, e.g. `user`. for external urls, start with `http(s)://`",
+      "pathRootStart": "path must start with /",
+      "pathNoStart": "path cannot start with /",
+      "pathEmpty": "route path cannot be empty",
+      "keepAliveTip": "when enabled, the component will be cached by `keep-alive`. component name must be filled",
+      "alwaysShowTip": "when disabled, this menu and all child menus will not be displayed"
+    },
+    "alwaysShow": {
+      "yes": "always",
+      "no": "not"
+    },
+    "keepAlive": {
+      "yes": "cached",
+      "no": "not cached"
+    }
+  },
+  "tenant": {
+    "tenant": "tenant",
+    "menu": "tenant management",
+    "list": "tenant list",
+    "field": {
+      "id": "tenant id",
+      "name": "tenant name",
+      "code": "code",
+      "contactName": "contact name",
+      "contactMobile": "contact mobile",
+      "contactUserId": "contact user id",
+      "industry": "industry",
+      "type": "type",
+      "addressCode": "area",
+      "addressDetail": "address",
+      "qualifications": "qualifications",
+      "username": "username",
+      "password": "password",
+      "website": "domain",
+      "status": "tenant status",
+      "rechargeAmount": "recharge amount",
+      "paymentAmount": "payment amount",
+      "balanceAmount": "balance",
+      "accountCount": "account count",
+      "currentAccountCount": "current count",
+      "createTime": "create time"
+    },
+    "action": {
+      "query": "tenant query",
+      "create": "create tenant",
+      "export": "export tenant",
+      "update": "update tenant",
+      "delete": "delete tenant",
+      "grantMenu": "menu authorization"
+    },
+    "message": {
+      "saas": "saas multi-tenant"
+    }
+  },
+  "tenantPackage": {
+    "tenantPackage": "tenant package",
+    "menu": "tenant package management",
+    "list": "tenant package list",
+    "field": {
+      "id": "package id",
+      "name": "package name",
+      "code": "package code",
+      "price": "price",
+      "orderNum": "sort order",
+      "subscriptionNum": "subscription count",
+      "subscriptionTotalAmount": "subscription total",
+      "status": "status",
+      "published": "published",
+      "type": "package type",
+      "logo": "logo",
+      "description": "description",
+      "remark": "remark",
+      "createTime": "create time"
+    },
+    "action": {
+      "query": "tenant package query",
+      "create": "create tenant package",
+      "export": "export tenant package",
+      "update": "update tenant package",
+      "delete": "delete tenant package",
+      "grant": "menu authorization"
+    }
+  },
+  "tenantPackageSubscribe": {
+    "tenantPackageSubscribe": "tenant package subscription",
+    "menu": "tenant package subscription management",
+    "list": "tenant package subscription list",
+    "field": {
+      "id": "subscription id",
+      "packageName": "package name",
+      "packageCode": "package code",
+      "packageType": "package type",
+      "packageStatus": "package status",
+      "packageLogo": "logo",
+      "tenantName": "tenant name",
+      "tenantCode": "tenant code",
+      "price": "price",
+      "discountPrice": "discount price",
+      "days": "days",
+      "totalPrice": "total price",
+      "status": "subscription status",
+      "payStatus": "payment status",
+      "startTime": "start time",
+      "endTime": "end time",
+      "remark": "remark",
+      "createTime": "create time"
+    },
+    "action": {
+      "query": "tenant package subscription query",
+      "create": "create tenant package subscription",
+      "export": "export tenant package subscription",
+      "update": "update tenant package subscription",
+      "delete": "delete tenant package subscription"
+    }
+  },
+  "loginlog": {
+    "loginlog": "login log",
+    "menu": "login log",
+    "list": "login log list",
+    "field": {
+      "id": "log id",
+      "logType": "log type",
+      "username": "username",
+      "userIp": "login ip",
+      "userAgent": "browser",
+      "result": "login result",
+      "createTime": "login date"
+    },
+    "action": {
+      "query": "login log query",
+      "export": "export login log"
+    },
+    "message": {
+      "detail": "login log detail",
+      "systemLog": "system log"
+    }
+  },
+  "operatelog": {
+    "operatelog": "operation log",
+    "menu": "operation log",
+    "list": "operation log list",
+    "field": {
+      "id": "log id",
+      "traceId": "trace id",
+      "userId": "user id",
+      "userName": "operator name",
+      "userIp": "operator ip",
+      "userAgent": "operator ua",
+      "type": "module",
+      "subType": "operation name",
+      "action": "operation content",
+      "extra": "extra params",
+      "requestMethod": "request method",
+      "requestUrl": "request url",
+      "bizId": "business id",
+      "createTime": "operation time"
+    },
+    "action": {
+      "query": "operation log query",
+      "export": "export operation log"
+    },
+    "message": {
+      "detail": "operation log detail"
+    }
+  },
+  "notice": {
+    "notice": "notice",
+    "menu": "notice management",
+    "list": "notice list",
+    "field": {
+      "id": "notice id",
+      "title": "notice title",
+      "type": "notice type",
+      "content": "notice content",
+      "appendixUrl": "attachment",
+      "status": "notice status",
+      "remark": "remark",
+      "createTime": "create time"
+    },
+    "action": {
+      "query": "notice query",
+      "create": "create notice",
+      "export": "export notice",
+      "update": "update notice",
+      "delete": "delete notice",
+      "push": "push"
+    },
+    "message": {
+      "detail": "notice detail",
+      "push": "push",
+      "view": "view"
+    }
+  },
+  "notify": {
+    "template": {
+      "template": "notify template",
+      "menu": "notify template",
+      "list": "notify template list",
+      "field": {
+        "id": "id",
+        "name": "template name",
+        "code": "template code",
+        "nickname": "sender name",
+        "content": "template content",
+        "type": "template type",
+        "status": "status",
+        "remark": "remark",
+        "createTime": "create time",
+        "userType": "user type",
+        "userId": "receiver id",
+        "templateParams": "template params",
+        "receiverId": "receiver id",
+        "receiver": "receiver",
+        "params": "template params",
+        "param": "param {0}"
+      },
+      "action": {
+        "query": "notify template query",
+        "create": "create notify template",
+        "export": "export notify template",
+        "update": "update notify template",
+        "delete": "delete notify template",
+        "test": "test"
+      },
+      "message": {
+        "test": "test",
+        "testSend": "test send notify",
+        "sendSuccess": "sent successfully",
+        "sendFailed": "failed to send notify",
+        "param": "param {0}"
+      }
+    },
+    "message": {
+      "message": "notify message",
+      "menu": "notify message",
+      "list": "notify message list",
+      "field": {
+        "id": "id",
+        "userId": "user id",
+        "userType": "user type",
+        "templateId": "template id",
+        "templateCode": "template code",
+        "templateNickname": "sender name",
+        "templateContent": "template content",
+        "templateParams": "template params",
+        "templateType": "template type",
+        "readStatus": "read status",
+        "readTime": "read time",
+        "createTime": "create time"
+      },
+      "action": {
+        "query": "notify message query"
+      },
+      "detail": {
+        "detail": "notify message detail"
+      }
+    },
+    "my": {
+      "my": "my notify",
+      "menu": "my notify",
+      "list": "my notify messages",
+      "field": {
+        "id": "id",
+        "sendTime": "send time",
+        "templateNickname": "sender",
+        "templateType": "type",
+        "templateContent": "message content",
+        "readStatus": "read status",
+        "readTime": "read time",
+        "createTime": "send time"
+      },
+      "action": {
+        "query": "my notify query"
+      },
+      "message": {
+        "detail": "message detail",
+        "markRead": "mark as read",
+        "markReadSuccess": "marked as read successfully",
+        "markAllRead": "mark all as read",
+        "markAllReadSuccess": "all marked as read successfully",
+        "markingRead": "marking as read...",
+        "markingAllRead": "marking all as read...",
+        "view": "view",
+        "read": "read"
+      }
+    }
+  },
+  "mail": {
+    "account": {
+      "account": "mail account",
+      "mailAccount": "mail account",
+      "menu": "mail account",
+      "list": "mail account list",
+      "field": {
+        "id": "id",
+        "mail": "email",
+        "username": "username",
+        "password": "password",
+        "host": "smtp server",
+        "port": "smtp port",
+        "sslEnable": "enable ssl",
+        "starttlsEnable": "enable starttls",
+        "remark": "remark",
+        "createTime": "create time"
+      },
+      "action": {
+        "query": "mail account query",
+        "create": "create mail account",
+        "update": "update mail account",
+        "delete": "delete mail account"
+      },
+      "message": {
+        "config": "mail config"
+      }
+    },
+    "template": {
+      "template": "mail template",
+      "menu": "mail template",
+      "list": "mail template list",
+      "field": {
+        "id": "id",
+        "name": "template name",
+        "code": "template code",
+        "accountId": "mail account",
+        "nickname": "sender name",
+        "title": "template title",
+        "content": "template content",
+        "status": "status",
+        "remark": "remark",
+        "createTime": "create time",
+        "mail": "recipient email",
+        "params": "template params",
+        "templateParams": "template params"
+      },
+      "action": {
+        "query": "mail template query",
+        "create": "create mail template",
+        "export": "export mail template",
+        "update": "update mail template",
+        "delete": "delete mail template",
+        "test": "test"
+      },
+      "message": {
+        "test": "test",
+        "testSend": "test send mail",
+        "sendSuccess": "mail sent successfully",
+        "sendFailed": "failed to send mail",
+        "param": "param {0}"
+      }
+    },
+    "log": {
+      "log": "mail log",
+      "menu": "mail log",
+      "list": "mail log list",
+      "field": {
+        "id": "id",
+        "sendTime": "send time",
+        "userId": "user id",
+        "userType": "user type",
+        "toMail": "recipient",
+        "fromMail": "sender",
+        "templateTitle": "mail title",
+        "templateContent": "mail content",
+        "sendStatus": "send status",
+        "templateCode": "template code",
+        "templateId": "template id",
+        "accountId": "mail account",
+        "sendMessageId": "send message id",
+        "sendException": "send exception",
+        "createTime": "create time"
+      },
+      "action": {
+        "query": "mail log query",
+        "export": "export mail log"
+      },
+      "message": {
+        "detail": "mail log detail"
+      }
+    }
+  },
+  "sms": {
+    "channel": {
+      "channel": "sms channel",
+      "menu": "sms channel",
+      "list": "sms channel list",
+      "field": {
+        "id": "id",
+        "signature": "sms signature",
+        "code": "channel code",
+        "status": "status",
+        "apiKey": "sms api account",
+        "apiSecret": "sms api secret",
+        "callbackUrl": "sms callback url",
+        "remark": "remark",
+        "createTime": "create time"
+      },
+      "action": {
+        "query": "sms channel query",
+        "create": "create sms channel",
+        "export": "export sms channel",
+        "update": "update sms channel",
+        "delete": "delete sms channel"
+      }
+    },
+    "template": {
+      "template": "sms template",
+      "menu": "sms template",
+      "list": "sms template list",
+      "field": {
+        "id": "id",
+        "type": "sms type",
+        "name": "template name",
+        "code": "template code",
+        "channelId": "sms channel",
+        "status": "status",
+        "content": "template content",
+        "apiTemplateId": "sms api template id",
+        "channelCode": "sms channel",
+        "remark": "remark",
+        "createTime": "create time",
+        "mobile": "mobile",
+        "templateParams": "template params"
+      },
+      "action": {
+        "query": "sms template query",
+        "create": "create sms template",
+        "export": "export sms template",
+        "update": "update sms template",
+        "delete": "delete sms template",
+        "send": "send sms"
+      },
+      "message": {
+        "send": "send sms",
+        "sendSuccess": "sms sent successfully",
+        "sendFailed": "failed to send sms",
+        "param": "param {0}"
+      }
+    },
+    "log": {
+      "log": "sms log",
+      "menu": "sms log",
+      "list": "sms log list",
+      "field": {
+        "id": "id",
+        "mobile": "mobile",
+        "channelId": "sms channel",
+        "templateId": "template id",
+        "sendStatus": "send status",
+        "sendTime": "send time",
+        "receiveStatus": "receive status",
+        "receiveTime": "receive time",
+        "channelCode": "sms channel",
+        "templateType": "sms type",
+        "templateContent": "sms content",
+        "apiSendCode": "api send code",
+        "apiSendMsg": "api send message",
+        "apiReceiveCode": "api receive code",
+        "apiReceiveMsg": "api receive message",
+        "apiRequestId": "api request id",
+        "apiSerialNo": "api serial no",
+        "createTime": "create time"
+      },
+      "action": {
+        "query": "sms log query",
+        "export": "export sms log"
+      },
+      "message": {
+        "detail": "sms log detail"
+      }
+    }
+  },
+  "oauth2": {
+    "sso": "oAuth2.0",
+    "client": {
+      "client": "oauth2 client",
+      "menu": "oauth2 client management",
+      "list": "oauth2 client list",
+      "field": {
+        "id": "id",
+        "clientId": "client id",
+        "secret": "client secret",
+        "name": "app name",
+        "logo": "app logo",
+        "description": "app description",
+        "status": "status",
+        "accessTokenValiditySeconds": "access token validity",
+        "refreshTokenValiditySeconds": "refresh token validity",
+        "authorizedGrantTypes": "grant types",
+        "scopes": "scopes",
+        "autoApproveScopes": "auto approve scopes",
+        "redirectUris": "redirect uris",
+        "authorities": "authorities",
+        "resourceIds": "resource ids",
+        "additionalInformation": "additional info",
+        "createTime": "create time"
+      },
+      "action": {
+        "query": "oauth2 client query",
+        "create": "create oauth2 client",
+        "update": "update oauth2 client",
+        "delete": "delete oauth2 client"
+      },
+      "help": {
+        "accessTokenValidity": "access token validity, unit: seconds",
+        "refreshTokenValidity": "refresh token validity, unit: seconds",
+        "additionalInformation": "additional info, JSON format"
+      }
+    },
+    "token": {
+      "token": "oauth2 token",
+      "menu": "oauth2 token management",
+      "list": "oauth2 token list",
+      "field": {
+        "id": "id",
+        "accessToken": "access token",
+        "refreshToken": "refresh token",
+        "userId": "user id",
+        "userType": "user type",
+        "clientId": "client id",
+        "expiresTime": "expires at",
+        "createTime": "create time"
+      },
+      "action": {
+        "query": "oauth2 token query",
+        "delete": "force logout token"
+      },
+      "message": {
+        "forceLogout": "force logout",
+        "deleteTokenConfirm": "token will be invalidated immediately, confirm force logout?"
+      }
+    }
+  },
+  "social": {
+    "client": {
+      "client": "social client",
+      "menu": "social client management",
+      "list": "social client list",
+      "field": {
+        "id": "id",
+        "name": "app name",
+        "socialType": "social platform",
+        "userType": "user type",
+        "clientId": "client id",
+        "clientSecret": "client secret",
+        "agentId": "agent id",
+        "status": "status",
+        "createTime": "create time"
+      },
+      "action": {
+        "query": "social client query",
+        "create": "create social client",
+        "update": "update social client",
+        "delete": "delete social client"
+      }
+    },
+    "user": {
+      "user": "social user",
+      "menu": "social user management",
+      "list": "social user list",
+      "field": {
+        "id": "id",
+        "type": "social platform",
+        "openid": "social openid",
+        "userId": "user id",
+        "nickname": "nickname",
+        "avatar": "avatar",
+        "token": "social token",
+        "rawTokenInfo": "raw token info",
+        "rawUserInfo": "raw user info",
+        "code": "auth code",
+        "state": "auth state",
+        "createTime": "create time",
+        "updateTime": "update time"
+      },
+      "action": {
+        "query": "social user query"
+      },
+      "message": {
+        "detail": "social user detail"
+      }
+    }
+  }
+}

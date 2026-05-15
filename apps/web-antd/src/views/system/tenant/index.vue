@@ -56,7 +56,10 @@ function onRefresh() {
 /** 导出表格 */
 async function handleExport() {
   const data = await exportTenant(await gridApi.formApi.getValues());
-  downloadFileFromBlobPart({ fileName: '租户.xls', source: data });
+  downloadFileFromBlobPart({
+    fileName: `${$t('system.tenant.tenant')}.xls`,
+    source: data,
+  });
 }
 
 /** 创建租户 */
@@ -91,7 +94,7 @@ const updateAllMenuLoading = ref(false);
 const handleUpdateAllMenu = () => {
   updateAllMenuLoading.value = true;
   updateAllTenantMenu()
-    .then((res) => {
+    .then(() => {
       message.success($t('ui.actionMessage.grant'));
     })
     .finally(() => {
@@ -188,11 +191,14 @@ onMounted(() => {
 <template>
   <Page auto-content-height>
     <template #doc>
-      <DocAlert title="SaaS 多租户" url="https://doc.iocoder.cn/saas-tenant/" />
+      <DocAlert
+        :title="$t('system.tenant.message.saas')"
+        url="https://doc.iocoder.cn/saas-tenant/"
+      />
     </template>
     <DrawerModal />
     <FormModalDrawer @success="onRefresh" />
-    <Grid table-title="租户列表">
+    <Grid :table-title="$t('system.tenant.list')">
       <template #form-addressCode="slotProps">
         <TreeSelect
           v-bind="slotProps"
@@ -210,7 +216,7 @@ onMounted(() => {
         <TableAction
           :actions="[
             {
-              label: $t('ui.actionTitle.create', ['租户']),
+              label: $t('ui.actionTitle.create', [$t('system.tenant.tenant')]),
               type: 'primary',
               icon: ACTION_ICON.ADD,
               auth: ['system:tenant:create'],

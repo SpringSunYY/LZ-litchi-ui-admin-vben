@@ -1,6 +1,7 @@
 import type { VbenFormSchema } from '#/adapter/form';
 import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 
+import { $t } from '#/locales';
 import { DICT_TYPE, getDictOptions, getRangePickerDefaultProps } from '#/utils';
 
 /** 列表的搜索表单 */
@@ -8,35 +9,41 @@ export function useGridFormSchema(): VbenFormSchema[] {
   return [
     {
       fieldName: 'userId',
-      label: '用户编号',
+      label: $t('system.notify.message.field.userId'),
       component: 'Input',
       componentProps: {
         allowClear: true,
-        placeholder: '请输入用户编号',
+        placeholder: $t('ui.placeholder.input', [
+          $t('system.notify.message.field.userId'),
+        ]),
       },
     },
     {
       fieldName: 'userType',
-      label: '用户类型',
+      label: $t('system.notify.message.field.userType'),
       component: 'Select',
       componentProps: {
         allowClear: true,
         options: getDictOptions(DICT_TYPE.USER_TYPE, 'number'),
-        placeholder: '请选择用户类型',
+        placeholder: $t('ui.placeholder.select', [
+          $t('system.notify.message.field.userType'),
+        ]),
       },
     },
     {
       fieldName: 'templateCode',
-      label: '模板编码',
+      label: $t('system.notify.template.field.code'),
       component: 'Input',
       componentProps: {
         allowClear: true,
-        placeholder: '请输入模板编码',
+        placeholder: $t('ui.placeholder.input', [
+          $t('system.notify.template.field.code'),
+        ]),
       },
     },
     {
       fieldName: 'templateType',
-      label: '模版类型',
+      label: $t('system.notify.message.field.templateType'),
       component: 'Select',
       componentProps: {
         options: getDictOptions(
@@ -44,12 +51,14 @@ export function useGridFormSchema(): VbenFormSchema[] {
           'number',
         ),
         allowClear: true,
-        placeholder: '请选择模版类型',
+        placeholder: $t('ui.placeholder.select', [
+          $t('system.notify.message.field.templateType'),
+        ]),
       },
     },
     {
       fieldName: 'createTime',
-      label: '创建时间',
+      label: $t('system.notify.message.field.createTime'),
       component: 'RangePicker',
       componentProps: {
         ...getRangePickerDefaultProps(),
@@ -64,11 +73,11 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
   return [
     {
       field: 'id',
-      title: '编号',
+      title: $t('system.notify.message.field.id'),
     },
     {
       field: 'userType',
-      title: '用户类型',
+      title: $t('system.notify.message.field.userType'),
       cellRender: {
         name: 'CellDict',
         props: { type: DICT_TYPE.USER_TYPE },
@@ -76,23 +85,23 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
     },
     {
       field: 'userId',
-      title: '用户编号',
+      title: $t('system.notify.message.field.userId'),
     },
     {
       field: 'templateCode',
-      title: '模板编码',
+      title: $t('system.notify.template.field.code'),
     },
     {
       field: 'templateNickname',
-      title: '发送人名称',
+      title: $t('system.notify.template.field.nickname'),
     },
     {
       field: 'templateContent',
-      title: '模版内容',
+      title: $t('system.notify.message.field.templateContent'),
     },
     {
       field: 'templateParams',
-      title: '模版参数',
+      title: $t('system.notify.message.field.templateParams'),
       formatter: ({ cellValue }) => {
         try {
           return JSON.stringify(cellValue);
@@ -103,7 +112,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
     },
     {
       field: 'templateType',
-      title: '模版类型',
+      title: $t('system.notify.message.field.templateType'),
       cellRender: {
         name: 'CellDict',
         props: { type: DICT_TYPE.SYSTEM_NOTIFY_TEMPLATE_TYPE },
@@ -111,7 +120,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
     },
     {
       field: 'readStatus',
-      title: '是否已读',
+      title: $t('system.notify.message.field.readStatus'),
       cellRender: {
         name: 'CellDict',
         props: { type: DICT_TYPE.INFRA_BOOLEAN_STRING },
@@ -119,16 +128,16 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
     },
     {
       field: 'readTime',
-      title: '阅读时间',
+      title: $t('system.notify.message.field.readTime'),
       formatter: 'formatDateTime',
     },
     {
       field: 'createTime',
-      title: '创建时间',
+      title: $t('system.notify.message.field.createTime'),
       formatter: 'formatDateTime',
     },
     {
-      title: '操作',
+      title: $t('common.operation'),
       width: 80,
       fixed: 'right',
       slots: { default: 'actions' },

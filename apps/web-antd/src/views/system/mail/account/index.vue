@@ -86,16 +86,21 @@ const [Grid, gridApi] = useVbenVxeGrid({
 <template>
   <Page auto-content-height>
     <template #doc>
-      <DocAlert title="邮件配置" url="https://doc.iocoder.cn/mail" />
+      <DocAlert
+        :title="$t('system.mail.account.message.config')"
+        url="https://doc.iocoder.cn/mail"
+      />
     </template>
 
     <FormModal @success="onRefresh" />
-    <Grid table-title="邮箱账号列表">
+    <Grid :table-title="$t('system.mail.account.list')">
       <template #toolbar-tools>
         <TableAction
           :actions="[
             {
-              label: $t('ui.actionTitle.create', ['邮箱账号']),
+              label: $t('ui.actionTitle.create', [
+                $t('system.mail.account.mailAccount'),
+              ]),
               type: 'primary',
               icon: ACTION_ICON.ADD,
               auth: ['system:mail-account:create'],
@@ -121,7 +126,7 @@ const [Grid, gridApi] = useVbenVxeGrid({
               icon: ACTION_ICON.DELETE,
               auth: ['system:mail-account:delete'],
               popConfirm: {
-                title: $t('ui.actionMessage.deleteConfirm', [row.name]),
+                title: $t('ui.actionMessage.deleteConfirm', [row.mail]),
                 confirm: handleDelete.bind(null, row),
               },
             },

@@ -72,7 +72,7 @@ const [Modal, modalApi] = useVbenModal({
 </script>
 
 <template>
-  <Modal title="分配角色">
+  <Modal :title="$t('system.user.message.assignRole')">
     <Form class="mx-4" />
   </Modal>
 </template>

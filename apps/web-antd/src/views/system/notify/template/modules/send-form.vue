@@ -58,7 +58,7 @@ const [Modal, modalApi] = useVbenModal({
       emit('success');
       message.success($t('ui.actionMessage.operationSuccess'));
     } catch (error) {
-      console.error('发送站内信失败', error);
+      console.error($t('system.notify.template.message.sendFailed'), error);
     } finally {
       modalApi.unlock();
     }
@@ -92,11 +92,13 @@ function buildFormSchema() {
     formData.value.params.forEach((param: string) => {
       schema.push({
         fieldName: `param_${param}`,
-        label: `参数 ${param}`,
+        label: $t('system.notify.template.field.param', [param]),
         component: 'Input',
         rules: 'required',
         componentProps: {
-          placeholder: `请输入参数 ${param}`,
+          placeholder: $t('ui.placeholder.input', [
+            $t('system.notify.template.field.param', [param]),
+          ]),
         },
       });
     });
@@ -106,7 +108,7 @@ function buildFormSchema() {
 </script>
 
 <template>
-  <Modal title="测试发送站内信">
+  <Modal :title="$t('system.notify.template.action.testSend')">
     <Form class="mx-4" />
   </Modal>
 </template>

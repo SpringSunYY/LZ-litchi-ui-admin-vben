@@ -55,7 +55,10 @@ function onRefresh() {
 /** 导出表格 */
 async function handleExport() {
   const data = await exportUser(await gridApi.formApi.getValues());
-  downloadFileFromBlobPart({ fileName: '用户.xls', source: data });
+  downloadFileFromBlobPart({
+    fileName: `${$t('system.user.user')}.xls`,
+    source: data,
+  });
 }
 
 /** 选择部门 */
@@ -116,7 +119,10 @@ async function handleStatusChange(
 ): Promise<boolean | undefined> {
   return new Promise((resolve, reject) => {
     confirm({
-      content: `你要将${row.username}的状态切换为【${getDictLabel(DICT_TYPE.COMMON_STATUS, newStatus)}】吗？`,
+      content: $t('system.user.message.statusConfirm', [
+        row.username,
+        getDictLabel(DICT_TYPE.COMMON_STATUS, newStatus),
+      ]),
     })
       .then(async () => {
         // 更新用户状态
@@ -126,11 +132,11 @@ async function handleStatusChange(
           message.success($t('ui.actionMessage.operationSuccess'));
           resolve(true);
         } else {
-          reject(new Error('更新失败'));
+          reject(new Error($t('system.user.message.updateFailed')));
         }
       })
       .catch(() => {
-        reject(new Error('取消操作'));
+        reject(new Error($t('system.user.message.cancelOperation')));
       });
   });
 }
@@ -170,7 +176,10 @@ const [Grid, gridApi] = useVbenVxeGrid({
   <Page auto-content-height>
     <template #doc>
       <DocAlert title="用户体系" url="https://doc.iocoder.cn/user-center/" />
-      <DocAlert title="三方登陆" url="https://doc.iocoder.cn/social-user/" />
+      <DocAlert
+        :title="$t('system.user.message.socialLogin')"
+        url="https://doc.iocoder.cn/social-user/"
+      />
       <DocAlert
         title="Excel 导入导出"
         url="https://doc.iocoder.cn/excel-import-and-export/"
@@ -189,12 +198,12 @@ const [Grid, gridApi] = useVbenVxeGrid({
       </div>
       <!-- 右侧用户列表 -->
       <div class="w-5/6">
-        <Grid table-title="用户列表">
+        <Grid :table-title="$t('system.user.list')">
           <template #toolbar-tools>
             <TableAction
               :actions="[
                 {
-                  label: $t('ui.actionTitle.create', ['用户']),
+                  label: $t('ui.actionTitle.create', [$t('system.user.user')]),
                   type: 'primary',
                   icon: ACTION_ICON.ADD,
                   auth: ['system:user:create'],
@@ -208,7 +217,7 @@ const [Grid, gridApi] = useVbenVxeGrid({
                   onClick: handleExport,
                 },
                 {
-                  label: $t('ui.actionTitle.import', ['用户']),
+                  label: $t('ui.actionTitle.import', [$t('system.user.user')]),
                   type: 'primary',
                   icon: ACTION_ICON.UPLOAD,
                   auth: ['system:user:import'],
@@ -241,13 +250,13 @@ const [Grid, gridApi] = useVbenVxeGrid({
               ]"
               :drop-down-actions="[
                 {
-                  label: '分配角色',
+                  label: $t('system.user.message.assignRole'),
                   type: 'link',
                   auth: ['system:permission:assign-user-role'],
                   onClick: handleAssignRole.bind(null, row),
                 },
                 {
-                  label: '重置密码',
+                  label: $t('system.user.message.resetPassword'),
                   type: 'link',
                   auth: ['system:user:update-password'],
                   onClick: handleResetPassword.bind(null, row),

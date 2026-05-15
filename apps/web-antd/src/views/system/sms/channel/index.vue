@@ -31,7 +31,10 @@ function onRefresh() {
 /** 导出表格 */
 async function handleExport() {
   const data = await exportSmsChannel(await gridApi.formApi.getValues());
-  downloadFileFromBlobPart({ fileName: '短信渠道.xls', source: data });
+  downloadFileFromBlobPart({
+    fileName: `${$t('system.sms.channel.channel')}.xls`,
+    source: data,
+  });
 }
 
 /** 创建短信渠道 */
@@ -95,16 +98,21 @@ const [Grid, gridApi] = useVbenVxeGrid({
 <template>
   <Page auto-content-height>
     <template #doc>
-      <DocAlert title="短信配置" url="https://doc.iocoder.cn/sms/" />
+      <DocAlert
+        :title="$t('system.sms.channel.menu')"
+        url="https://doc.iocoder.cn/sms/"
+      />
     </template>
 
     <FormModal @success="onRefresh" />
-    <Grid table-title="短信渠道列表">
+    <Grid :table-title="$t('system.sms.channel.list')">
       <template #toolbar-tools>
         <TableAction
           :actions="[
             {
-              label: $t('ui.actionTitle.create', ['短信渠道']),
+              label: $t('ui.actionTitle.create', [
+                $t('system.sms.channel.channel'),
+              ]),
               type: 'primary',
               icon: ACTION_ICON.ADD,
               auth: ['system:sms-channel:create'],

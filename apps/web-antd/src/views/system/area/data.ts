@@ -5,6 +5,7 @@ import type { AreaApi } from '#/api/system/area';
 import { handleTree } from '@vben/utils';
 
 import { getAreaList } from '#/api/system/area';
+import { $t } from '#/locales';
 import { DICT_TYPE, getDictOptions, getRangePickerDefaultProps } from '#/utils';
 
 /** 新增/修改的表单 */
@@ -20,89 +21,108 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'parentId',
-      label: '上级地区',
+      label: $t('system.area.field.parentIdName'),
       component: 'ApiTreeSelect',
       componentProps: {
         allowClear: true,
         api: async () => {
           const data = await getAreaList({});
-          // @ts-ignore
-          data.unshift({ id: 0, name: '顶级地区信息' });
+          // @ts-ignore 提示有异常
+          data.unshift({
+            id: 0,
+            name: $t('ui.treeRoot', [$t('system.area.field.parentIdName')]),
+          });
           return handleTree(data);
         },
         labelField: 'name',
         valueField: 'id',
         childrenField: 'children',
-        placeholder: '请选择上级地区',
+        placeholder: $t('ui.placeholder.select', [
+          $t('system.area.field.parentIdName'),
+        ]),
         treeDefaultExpandAll: false,
       },
       rules: 'selectRequired',
     },
     {
       fieldName: 'name',
-      label: '地区名称',
+      label: $t('system.area.field.name'),
       rules: 'required',
       component: 'Input',
       componentProps: {
-        placeholder: '请输入地区名称',
+        placeholder: $t('ui.placeholder.input', [$t('system.area.field.name')]),
       },
     },
     {
       fieldName: 'postalCode',
-      label: '邮政编码',
+      label: $t('system.area.field.postalCode'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入邮政编码',
+        placeholder: $t('ui.placeholder.input', [
+          $t('system.area.field.postalCode'),
+        ]),
       },
     },
     {
       fieldName: 'level',
-      label: '层级',
+      label: $t('system.area.field.level'),
       rules: 'required',
       component: 'Select',
       componentProps: {
         options: getDictOptions(DICT_TYPE.SYSTEM_AREA_LEVEL, 'number'),
-        placeholder: '请选择层级',
+        placeholder: $t('ui.placeholder.select', [
+          $t('system.area.field.level'),
+        ]),
       },
     },
     {
       fieldName: 'longitude',
-      label: '经度',
+      label: $t('system.area.field.longitude'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入经度',
+        placeholder: $t('ui.placeholder.input', [
+          $t('system.area.field.longitude'),
+        ]),
       },
     },
     {
       fieldName: 'latitude',
-      label: '纬度',
+      label: $t('system.area.field.latitude'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入纬度',
+        placeholder: $t('ui.placeholder.input', [
+          $t('system.area.field.latitude'),
+        ]),
       },
     },
     {
       fieldName: 'source',
-      label: '数据来源',
+      label: $t('system.area.field.source'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入数据来源',
+        placeholder: $t('ui.placeholder.input', [
+          $t('system.area.field.source'),
+        ]),
       },
     },
     {
       fieldName: 'geoJson',
-      label: 'GeoJson',
+      label: $t('system.area.field.geoJson'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入GeoJson',
+        placeholder: $t('ui.placeholder.input', [
+          $t('system.area.field.geoJson'),
+        ]),
       },
     },
     {
       fieldName: 'sortNum',
-      label: '排序号',
+      label: $t('system.area.field.sortNum'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入排序号',
+        placeholder: $t('ui.placeholder.input', [
+          $t('system.area.field.sortNum'),
+        ]),
       },
     },
   ];
@@ -113,44 +133,50 @@ export function useGridFormSchema(): VbenFormSchema[] {
   return [
     {
       fieldName: 'name',
-      label: '地区名称',
+      label: $t('system.area.field.name'),
       component: 'Input',
       componentProps: {
         allowClear: true,
-        placeholder: '请输入地区名称',
+        placeholder: $t('ui.placeholder.input', [$t('system.area.field.name')]),
       },
     },
     {
       fieldName: 'postalCode',
-      label: '邮政编码',
+      label: $t('system.area.field.postalCode'),
       component: 'Input',
       componentProps: {
         allowClear: true,
-        placeholder: '请输入邮政编码',
+        placeholder: $t('ui.placeholder.input', [
+          $t('system.area.field.postalCode'),
+        ]),
       },
     },
     {
       fieldName: 'parentId',
-      label: '父级ID',
+      label: $t('system.area.field.parentId'),
       component: 'Input',
       componentProps: {
         allowClear: true,
-        placeholder: '请输入父级ID',
+        placeholder: $t('ui.placeholder.input', [
+          $t('system.area.field.parentId'),
+        ]),
       },
     },
     {
       fieldName: 'level',
-      label: '层级',
+      label: $t('system.area.field.level'),
       component: 'Select',
       componentProps: {
         allowClear: true,
         options: getDictOptions(DICT_TYPE.SYSTEM_AREA_LEVEL, 'number'),
-        placeholder: '请选择层级',
+        placeholder: $t('ui.placeholder.select', [
+          $t('system.area.field.level'),
+        ]),
       },
     },
     {
       fieldName: 'createTime',
-      label: '创建时间',
+      label: $t('system.area.field.createTime'),
       component: 'RangePicker',
       componentProps: {
         ...getRangePickerDefaultProps(),
@@ -165,26 +191,26 @@ export function useGridColumns(): VxeTableGridOptions<AreaApi.Area>['columns'] {
   return [
     {
       field: 'id',
-      title: 'ID',
+      title: $t('system.area.field.id'),
     },
     {
       field: 'name',
-      title: '地区名称',
+      title: $t('system.area.field.name'),
       minWidth: 150,
       treeNode: true,
     },
     {
       field: 'postalCode',
-      title: '邮政编码',
+      title: $t('system.area.field.postalCode'),
     },
     {
       field: 'parentId',
-      title: '父级ID',
+      title: $t('system.area.field.parentId'),
       visible: false,
     },
     {
       field: 'level',
-      title: '层级',
+      title: $t('system.area.field.level'),
       cellRender: {
         name: 'CellDict',
         props: { type: DICT_TYPE.SYSTEM_AREA_LEVEL },
@@ -192,39 +218,39 @@ export function useGridColumns(): VxeTableGridOptions<AreaApi.Area>['columns'] {
     },
     {
       field: 'longitude',
-      title: '经度',
+      title: $t('system.area.field.longitude'),
     },
     {
       field: 'latitude',
-      title: '纬度',
+      title: $t('system.area.field.latitude'),
     },
     {
       field: 'source',
-      title: '数据来源',
+      title: $t('system.area.field.source'),
       cellRender: {
         name: 'CellLink',
       },
     },
     {
       field: 'geoJson',
-      title: 'GeoJson',
+      title: $t('system.area.field.geoJson'),
       cellRender: {
         name: 'CellLink',
       },
     },
     {
       field: 'sortNum',
-      title: '排序号',
+      title: $t('system.area.field.sortNum'),
       visible: false,
     },
     {
       field: 'createTime',
-      title: '创建时间',
+      title: $t('system.area.field.createTime'),
       minWidth: 120,
       formatter: 'formatDateTime',
     },
     {
-      title: '操作',
+      title: $t('common.operation'),
       width: 200,
       fixed: 'right',
       slots: { default: 'actions' },

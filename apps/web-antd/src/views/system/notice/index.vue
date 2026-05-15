@@ -113,12 +113,12 @@ const [Grid, gridApi] = useVbenVxeGrid({
   <Page auto-content-height>
     <DetailModal />
     <FormModal @success="onRefresh" />
-    <Grid table-title="公告列表">
+    <Grid :table-title="$t('system.notice.list')">
       <template #toolbar-tools>
         <TableAction
           :actions="[
             {
-              label: $t('ui.actionTitle.create', ['公告']),
+              label: $t('ui.actionTitle.create', [$t('system.notice.notice')]),
               type: 'primary',
               icon: ACTION_ICON.ADD,
               auth: ['system:notice:create'],
@@ -131,7 +131,7 @@ const [Grid, gridApi] = useVbenVxeGrid({
         <TableAction
           :actions="[
             {
-              label: '查看',
+              label: $t('system.notice.message.view'),
               type: 'link',
               icon: ACTION_ICON.VIEW,
               onClick: handleDetail.bind(null, row),
@@ -144,7 +144,7 @@ const [Grid, gridApi] = useVbenVxeGrid({
               onClick: handleEdit.bind(null, row),
             },
             {
-              label: '推送',
+              label: $t('system.notice.message.push'),
               type: 'link',
               icon: ACTION_ICON.ADD,
               auth: ['system:notice:update'],
@@ -157,7 +157,7 @@ const [Grid, gridApi] = useVbenVxeGrid({
               icon: ACTION_ICON.DELETE,
               auth: ['system:notice:delete'],
               popConfirm: {
-                title: $t('ui.actionMessage.deleteConfirm', [row.name]),
+                title: $t('ui.actionMessage.deleteConfirm', [row.title]),
                 confirm: handleDelete.bind(null, row),
               },
             },

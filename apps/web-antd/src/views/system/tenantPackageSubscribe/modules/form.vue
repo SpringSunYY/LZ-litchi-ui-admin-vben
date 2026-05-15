@@ -32,8 +32,12 @@ const getTodayStart = () => {
 const formData = ref<TenantPackageSubscribeApi.TenantPackageSubscribe>();
 const getTitle = computed(() => {
   return formData.value?.id
-    ? $t('ui.actionTitle.edit', ['租户套餐订阅'])
-    : $t('ui.actionTitle.create', ['租户套餐订阅']);
+    ? $t('ui.actionTitle.edit', [
+        $t('system.tenantPackageSubscribe.tenantPackageSubscribe'),
+      ])
+    : $t('ui.actionTitle.create', [
+        $t('system.tenantPackageSubscribe.tenantPackageSubscribe'),
+      ]);
 });
 
 const [Form, formApi] = useVbenForm({
@@ -217,7 +221,11 @@ const handleTenantPackageOpenChange = (open: boolean) => {
           v-bind="slotProps"
           :show-search="true"
           :allow-clear="true"
-          placeholder="请选择租户"
+          :placeholder="
+            $t('ui.placeholder.select', [
+              $t('system.tenant.tenant'),
+            ])
+          "
           :loading="tenantLoading"
           :options="tenantOptions"
           :field-names="{ label: 'name', value: 'name', key: 'id' }"
@@ -234,7 +242,11 @@ const handleTenantPackageOpenChange = (open: boolean) => {
           v-bind="slotProps"
           :show-search="true"
           :allow-clear="true"
-          placeholder="请选择租户套餐"
+          :placeholder="
+            $t('ui.placeholder.select', [
+              $t('system.tenantPackage.tenantPackage'),
+            ])
+          "
           :loading="tenantPackageLoading"
           :options="tenantPackageOptions"
           :field-names="{ label: 'name', value: 'name', key: 'id' }"

@@ -71,14 +71,10 @@ async function handleDelete(row: AreaApi.Area) {
 /** 导出表格 */
 async function handleExport() {
   const data = await exportArea(await gridApi.formApi.getValues());
-  downloadFileFromBlobPart({ fileName: '地区信息.xls', source: data });
-}
-
-/** 查看 GeoJson 详情 */
-function handleViewURL(url: string) {
-  if (url) {
-    window.open(url, '_blank');
-  }
+  downloadFileFromBlobPart({
+    fileName: `${$t('system.area.area')}.xls`,
+    source: data,
+  });
 }
 
 const [Grid, gridApi] = useVbenVxeGrid({
@@ -122,17 +118,17 @@ const [Grid, gridApi] = useVbenVxeGrid({
   <Page auto-content-height>
     <FormModal @success="onRefresh" />
 
-    <Grid table-title="地区信息列表">
+    <Grid :table-title="$t('system.area.list')">
       <template #toolbar-tools>
         <TableAction
           :actions="[
             {
-              label: isExpanded ? '收缩' : '展开',
+              label: isExpanded ? $t('common.collapse') : $t('common.expand'),
               type: 'primary',
               onClick: toggleExpand,
             },
             {
-              label: $t('ui.actionTitle.create', ['地区信息']),
+              label: $t('ui.actionTitle.create', [$t('system.area.area')]),
               type: 'primary',
               icon: ACTION_ICON.ADD,
               auth: ['system:area:create'],
@@ -152,7 +148,7 @@ const [Grid, gridApi] = useVbenVxeGrid({
         <TableAction
           :actions="[
             {
-              label: '新增下级',
+              label: $t('common.append'),
               type: 'link',
               icon: ACTION_ICON.ADD,
               auth: ['system:area:create'],

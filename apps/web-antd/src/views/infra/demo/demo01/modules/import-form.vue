@@ -14,7 +14,7 @@ const emit = defineEmits(['success']);
 
 <template>
   <ImportExcel
-    :title="`${$t('ui.actionTitle.import', [$t('infra:demo01-contact')])}.xlsx`"
+    :title="`${$t('ui.actionTitle.import', [$t('infra:demo01-contact')])}`"
     :import-api="importDemo01Contact"
     :template-api="importDemo01ContactTemplate"
     :template-file-name="`${$t('ui.actionTitle.importTemplate', [

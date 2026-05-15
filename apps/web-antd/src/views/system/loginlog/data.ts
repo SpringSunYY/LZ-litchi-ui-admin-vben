@@ -1,6 +1,7 @@
 import type { VbenFormSchema } from '#/adapter/form';
 import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 
+import { $t } from '#/locales';
 import { DICT_TYPE, getRangePickerDefaultProps } from '#/utils';
 
 /** 列表的搜索表单 */
@@ -8,25 +9,29 @@ export function useGridFormSchema(): VbenFormSchema[] {
   return [
     {
       fieldName: 'username',
-      label: '用户名称',
+      label: $t('system.loginlog.field.username'),
       component: 'Input',
       componentProps: {
         allowClear: true,
-        placeholder: '请输入用户名称',
+        placeholder: $t('ui.placeholder.input', [
+          $t('system.loginlog.field.username'),
+        ]),
       },
     },
     {
       fieldName: 'userIp',
-      label: '登录地址',
+      label: $t('system.loginlog.field.userIp'),
       component: 'Input',
       componentProps: {
         allowClear: true,
-        placeholder: '请输入登录地址',
+        placeholder: $t('ui.placeholder.input', [
+          $t('system.loginlog.field.userIp'),
+        ]),
       },
     },
     {
       fieldName: 'createTime',
-      label: '登录时间',
+      label: $t('system.loginlog.field.createTime'),
       component: 'RangePicker',
       componentProps: {
         ...getRangePickerDefaultProps(),
@@ -41,11 +46,11 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
   return [
     {
       field: 'id',
-      title: '日志编号',
+      title: $t('system.loginlog.field.id'),
     },
     {
       field: 'logType',
-      title: '操作类型',
+      title: $t('system.loginlog.field.logType'),
       cellRender: {
         name: 'CellDict',
         props: { type: DICT_TYPE.SYSTEM_LOGIN_TYPE },
@@ -53,19 +58,19 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
     },
     {
       field: 'username',
-      title: '用户名称',
+      title: $t('system.loginlog.field.username'),
     },
     {
       field: 'userIp',
-      title: '登录地址',
+      title: $t('system.loginlog.field.userIp'),
     },
     {
       field: 'userAgent',
-      title: '浏览器',
+      title: $t('system.loginlog.field.userAgent'),
     },
     {
       field: 'result',
-      title: '登录结果',
+      title: $t('system.loginlog.field.result'),
       cellRender: {
         name: 'CellDict',
         props: { type: DICT_TYPE.SYSTEM_LOGIN_RESULT },
@@ -73,11 +78,11 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
     },
     {
       field: 'createTime',
-      title: '登录日期',
+      title: $t('system.loginlog.field.createTime'),
       formatter: 'formatDateTime',
     },
     {
-      title: '操作',
+      title: $t('common.operation'),
       width: 80,
       fixed: 'right',
       slots: { default: 'actions' },

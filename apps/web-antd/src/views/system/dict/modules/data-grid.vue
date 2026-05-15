@@ -40,7 +40,10 @@ function onRefresh() {
 /** 导出表格 */
 async function handleExport() {
   const data = await exportDictData(await gridApi.formApi.getValues());
-  downloadFileFromBlobPart({ fileName: '字典数据.xls', source: data });
+  downloadFileFromBlobPart({
+    fileName: `${$t('system.dict.dataList')}.xls`,
+    source: data,
+  });
 }
 
 /** 创建字典数据 */
@@ -118,12 +121,12 @@ defineExpose({ onRefresh });
   <div class="flex h-full flex-col">
     <DataFormModal @success="onRefresh" />
 
-    <Grid table-title="字典数据列表">
+    <Grid :table-title="$t('system.dict.dataList')">
       <template #toolbar-tools>
         <TableAction
           :actions="[
             {
-              label: $t('ui.actionTitle.create', ['字典数据']),
+              label: $t('ui.actionTitle.create', [$t('system.dict.data')]),
               type: 'primary',
               icon: ACTION_ICON.ADD,
               auth: ['system:dict:create'],
@@ -156,7 +159,10 @@ defineExpose({ onRefresh });
               icon: ACTION_ICON.DELETE,
               auth: ['system:dict:delete'],
               popConfirm: {
-                title: $t('ui.actionMessage.deleteConfirm', [row.label]),
+                title: $t('ui.actionMessage.deleteConfirm', [
+                  row.label,
+                  $t('system.dict.data'),
+                ]),
                 confirm: handleDelete.bind(null, row),
               },
             },

@@ -9,6 +9,7 @@ import { formatDateTime } from '@vben/utils';
 import { Descriptions } from 'ant-design-vue';
 
 import { DictTag } from '#/components/dict-tag';
+import { $t } from '#/locales';
 import { DICT_TYPE } from '#/utils';
 
 const formData = ref<SystemLoginLogApi.LoginLog>();
@@ -36,7 +37,7 @@ const [Modal, modalApi] = useVbenModal({
 
 <template>
   <Modal
-    title="登录日志详情"
+    :title="$t('system.loginlog.message.detail')"
     class="w-1/2"
     :show-cancel-button="false"
     :show-confirm-button="false"
@@ -48,31 +49,31 @@ const [Modal, modalApi] = useVbenModal({
       class="mx-4"
       :label-style="{ width: '110px' }"
     >
-      <Descriptions.Item label="日志编号">
+      <Descriptions.Item :label="$t('system.loginlog.field.id')">
         {{ formData?.id }}
       </Descriptions.Item>
-      <Descriptions.Item label="操作类型">
+      <Descriptions.Item :label="$t('system.loginlog.field.logType')">
         <DictTag
           :type="DICT_TYPE.SYSTEM_LOGIN_TYPE"
           :value="formData?.logType"
         />
       </Descriptions.Item>
-      <Descriptions.Item label="用户名称">
+      <Descriptions.Item :label="$t('system.loginlog.field.username')">
         {{ formData?.username }}
       </Descriptions.Item>
-      <Descriptions.Item label="登录地址">
+      <Descriptions.Item :label="$t('system.loginlog.field.userIp')">
         {{ formData?.userIp }}
       </Descriptions.Item>
-      <Descriptions.Item label="浏览器">
+      <Descriptions.Item :label="$t('system.loginlog.field.userAgent')">
         {{ formData?.userAgent }}
       </Descriptions.Item>
-      <Descriptions.Item label="登录结果">
+      <Descriptions.Item :label="$t('system.loginlog.field.result')">
         <DictTag
           :type="DICT_TYPE.SYSTEM_LOGIN_RESULT"
           :value="formData?.result"
         />
       </Descriptions.Item>
-      <Descriptions.Item label="登录日期">
+      <Descriptions.Item :label="$t('system.loginlog.field.createTime')">
         {{ formatDateTime(formData?.createTime || '') }}
       </Descriptions.Item>
     </Descriptions>

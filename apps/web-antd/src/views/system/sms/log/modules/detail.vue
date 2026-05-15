@@ -9,6 +9,7 @@ import { formatDateTime } from '@vben/utils';
 import { Descriptions } from 'ant-design-vue';
 
 import { DictTag } from '#/components/dict-tag';
+import { $t } from '#/locales';
 import { DICT_TYPE } from '#/utils';
 
 const formData = ref<SystemSmsLogApi.SmsLog>();
@@ -36,7 +37,7 @@ const [Modal, modalApi] = useVbenModal({
 
 <template>
   <Modal
-    title="短信日志详情"
+    :title="$t('system.sms.log.message.detail')"
     class="w-1/2"
     :show-cancel-button="false"
     :show-confirm-button="false"
@@ -48,61 +49,64 @@ const [Modal, modalApi] = useVbenModal({
       class="mx-4"
       :label-style="{ width: '140px' }"
     >
-      <Descriptions.Item label="创建时间">
+      <Descriptions.Item :label="$t('system.sms.log.field.createTime')">
         {{ formatDateTime(formData?.createTime || '') }}
       </Descriptions.Item>
-      <Descriptions.Item label="手机号">
+      <Descriptions.Item :label="$t('system.sms.log.field.mobile')">
         {{ formData?.mobile }}
       </Descriptions.Item>
-      <Descriptions.Item label="短信渠道">
+      <Descriptions.Item :label="$t('system.sms.log.field.channelCode')">
         {{ formData?.channelCode }}
       </Descriptions.Item>
-      <Descriptions.Item label="模板编号">
+      <Descriptions.Item :label="$t('system.sms.log.field.templateId')">
         {{ formData?.templateId }}
       </Descriptions.Item>
-      <Descriptions.Item label="模板类型">
+      <Descriptions.Item :label="$t('system.sms.log.field.templateType')">
         <DictTag
           :type="DICT_TYPE.SYSTEM_SMS_TEMPLATE_TYPE"
           :value="formData?.templateType"
         />
       </Descriptions.Item>
-      <Descriptions.Item label="短信内容">
+      <Descriptions.Item :label="$t('system.sms.log.field.templateContent')">
         {{ formData?.templateContent }}
       </Descriptions.Item>
-      <Descriptions.Item label="发送状态">
+      <Descriptions.Item :label="$t('system.sms.log.field.sendStatus')">
         <DictTag
           :type="DICT_TYPE.SYSTEM_SMS_SEND_STATUS"
           :value="formData?.sendStatus"
         />
       </Descriptions.Item>
-      <Descriptions.Item label="发送时间">
+      <Descriptions.Item :label="$t('system.sms.log.field.sendTime')">
         {{ formatDateTime(formData?.sendTime || '') }}
       </Descriptions.Item>
-      <Descriptions.Item label="API 发送编码">
+      <Descriptions.Item :label="$t('system.sms.log.field.apiSendCode')">
         {{ formData?.apiSendCode }}
       </Descriptions.Item>
-      <Descriptions.Item label="API 发送消息">
+      <Descriptions.Item :label="$t('system.sms.log.field.apiSendMsg')">
         {{ formData?.apiSendMsg }}
       </Descriptions.Item>
-      <Descriptions.Item label="接收状态">
+      <Descriptions.Item :label="$t('system.sms.log.field.receiveStatus')">
         <DictTag
           :type="DICT_TYPE.SYSTEM_SMS_RECEIVE_STATUS"
           :value="formData?.receiveStatus"
         />
       </Descriptions.Item>
-      <Descriptions.Item label="接收时间">
+      <Descriptions.Item :label="$t('system.sms.log.field.receiveTime')">
         {{ formatDateTime(formData?.receiveTime || '') }}
       </Descriptions.Item>
-      <Descriptions.Item label="API 接收编码">
+      <Descriptions.Item :label="$t('system.sms.log.field.apiReceiveCode')">
         {{ formData?.apiReceiveCode }}
       </Descriptions.Item>
-      <Descriptions.Item label="API 接收消息" :span="2">
+      <Descriptions.Item
+        :label="$t('system.sms.log.field.apiReceiveMsg')"
+        :span="2"
+      >
         {{ formData?.apiReceiveMsg }}
       </Descriptions.Item>
-      <Descriptions.Item label="API 请求 ID">
+      <Descriptions.Item :label="$t('system.sms.log.field.apiRequestId')">
         {{ formData?.apiRequestId }}
       </Descriptions.Item>
-      <Descriptions.Item label="API 序列号">
+      <Descriptions.Item :label="$t('system.sms.log.field.apiSerialNo')">
         {{ formData?.apiSerialNo }}
       </Descriptions.Item>
     </Descriptions>

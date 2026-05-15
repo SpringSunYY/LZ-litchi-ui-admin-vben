@@ -60,7 +60,7 @@ const [Modal, modalApi] = useVbenModal({
 </script>
 
 <template>
-  <Modal title="重置密码">
+  <Modal :title="$t('system.user.message.resetPassword')">
     <Form class="mx-4" />
   </Modal>
 </template>

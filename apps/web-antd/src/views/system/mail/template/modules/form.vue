@@ -21,8 +21,8 @@ const emit = defineEmits(['success']);
 const formData = ref<SystemMailTemplateApi.MailTemplate>();
 const getTitle = computed(() => {
   return formData.value?.id
-    ? $t('ui.actionTitle.edit', ['邮件模板'])
-    : $t('ui.actionTitle.create', ['邮件模板']);
+    ? $t('ui.actionTitle.edit', [$t('system.mail.template.template')])
+    : $t('ui.actionTitle.create', [$t('system.mail.template.template')]);
 });
 
 const [Form, formApi] = useVbenForm({

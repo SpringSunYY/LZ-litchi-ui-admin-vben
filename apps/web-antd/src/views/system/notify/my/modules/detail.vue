@@ -4,6 +4,7 @@ import type { SystemNotifyMessageApi } from '#/api/system/notify/message';
 import { useVbenModal } from '@vben/common-ui';
 
 import { useDescription } from '#/components/description';
+import { $t } from '#/locales';
 
 import { useDetailSchema } from '../data';
 
@@ -40,7 +41,7 @@ const [Modal, modalApi] = useVbenModal({
 
 <template>
   <Modal
-    title="消息详情"
+    :title="$t('system.notify.my.message.detail')"
     :show-cancel-button="false"
     :show-confirm-button="false"
   >

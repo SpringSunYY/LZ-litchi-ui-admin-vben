@@ -21,8 +21,8 @@ const emit = defineEmits(['success']);
 const formData = ref<SystemDictTypeApi.DictType>();
 const getTitle = computed(() => {
   return formData.value?.id
-    ? $t('ui.actionTitle.edit', ['字典类型'])
-    : $t('ui.actionTitle.create', ['字典类型']);
+    ? $t('ui.actionTitle.edit', [$t('system.dict.type')])
+    : $t('ui.actionTitle.create', [$t('system.dict.type')]);
 });
 
 const [Form, formApi] = useVbenForm({

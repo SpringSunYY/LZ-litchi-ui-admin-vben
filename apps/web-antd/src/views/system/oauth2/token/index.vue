@@ -23,13 +23,15 @@ function onRefresh() {
 /** 删除 OAuth2 令牌 */
 async function handleDelete(row: SystemOAuth2TokenApi.OAuth2Token) {
   const hideLoading = message.loading({
-    content: $t('ui.actionMessage.deleting', ['令牌']),
+    content: $t('ui.actionMessage.deleting', [$t('system.oauth2.token.token')]),
     key: 'action_key_msg',
   });
   try {
     await deleteOAuth2Token(row.accessToken);
     message.success({
-      content: $t('ui.actionMessage.deleteSuccess', ['令牌']),
+      content: $t('ui.actionMessage.deleteSuccess', [
+        $t('system.oauth2.token.token'),
+      ]),
       key: 'action_key_msg',
     });
     onRefresh();
@@ -77,7 +79,7 @@ const [Grid, gridApi] = useVbenVxeGrid({
       />
     </template>
 
-    <Grid :table-title="$t('page.oauth2.token') + '列表'">
+    <Grid :table-title="$t('system.oauth2.token.list')">
       <template #actions="{ row }">
         <TableAction
           :actions="[

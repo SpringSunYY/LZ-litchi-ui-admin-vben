@@ -24,9 +24,10 @@
     "export": "导出",
     "updateAllMenu": "更新所有菜单"
   },
-  "actionName": {
-    "reset": "重置",
-    "search": "搜索"
+    "actionName": {
+      "reset": "重置",
+      "search": "搜索",
+      "searchDept": "搜索部门"
   },
   "actionMessage": {
     "deleteConfirm": "确认删除{0}？",
@@ -47,7 +48,8 @@
     "externalCloseTip": "关闭后你所填写的数据将会丢失",
     "copySuccess": "复制成功",
     "grant": "授予菜单权限成功",
-    "updateConfirm": "您确定要更新吗？"
+    "updateConfirm": "您确定要更新吗？",
+    "selectRequired": "请选择{0}"
   },
   "placeholder": {
     "input": "请输入{0}",
@@ -197,7 +199,10 @@
   "common": {
     "yes": "是",
     "no": "否",
-    "table": "表"
+    "table": "表",
+    "noData": "暂无数据",
+    "selectFile": "选择文件",
+    "downloadTemplate": "下载模板"
   },
   "menu": {
     "clearCache": "清除缓存"

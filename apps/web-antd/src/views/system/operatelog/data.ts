@@ -2,6 +2,7 @@ import type { VbenFormSchema } from '#/adapter/form';
 import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 
 import { getSimpleUserList } from '#/api/system/user';
+import { $t } from '#/locales';
 import { getRangePickerDefaultProps } from '#/utils';
 
 /** 列表的搜索表单 */
@@ -9,7 +10,7 @@ export function useGridFormSchema(): VbenFormSchema[] {
   return [
     {
       fieldName: 'userId',
-      label: '操作人',
+      label: $t('system.operatelog.field.userId'),
       component: 'ApiSelect',
       componentProps: {
         api: getSimpleUserList,
@@ -18,39 +19,47 @@ export function useGridFormSchema(): VbenFormSchema[] {
           value: 'id',
         },
         allowClear: true,
-        placeholder: '请选择操作人员',
+        placeholder: $t('ui.placeholder.select', [
+          $t('system.operatelog.field.userId'),
+        ]),
       },
     },
     {
       fieldName: 'type',
-      label: '操作模块',
+      label: $t('system.operatelog.field.type'),
       component: 'Input',
       componentProps: {
         allowClear: true,
-        placeholder: '请输入操作模块',
+        placeholder: $t('ui.placeholder.input', [
+          $t('system.operatelog.field.type'),
+        ]),
       },
     },
     {
       fieldName: 'subType',
-      label: '操作名',
+      label: $t('system.operatelog.field.subType'),
       component: 'Input',
       componentProps: {
         allowClear: true,
-        placeholder: '请输入操作名',
+        placeholder: $t('ui.placeholder.input', [
+          $t('system.operatelog.field.subType'),
+        ]),
       },
     },
     {
       fieldName: 'action',
-      label: '操作内容',
+      label: $t('system.operatelog.field.action'),
       component: 'Input',
       componentProps: {
         allowClear: true,
-        placeholder: '请输入操作内容',
+        placeholder: $t('ui.placeholder.input', [
+          $t('system.operatelog.field.action'),
+        ]),
       },
     },
     {
       fieldName: 'createTime',
-      label: '操作时间',
+      label: $t('system.operatelog.field.createTime'),
       component: 'RangePicker',
       componentProps: {
         ...getRangePickerDefaultProps(),
@@ -59,11 +68,13 @@ export function useGridFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'bizId',
-      label: '业务编号',
+      label: $t('system.operatelog.field.bizId'),
       component: 'Input',
       componentProps: {
         allowClear: true,
-        placeholder: '请输入业务编号',
+        placeholder: $t('ui.placeholder.input', [
+          $t('system.operatelog.field.bizId'),
+        ]),
       },
     },
   ];
@@ -74,40 +85,40 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
   return [
     {
       field: 'id',
-      title: '日志编号',
+      title: $t('system.operatelog.field.id'),
     },
     {
       field: 'userName',
-      title: '操作人',
+      title: $t('system.operatelog.field.userName'),
     },
     {
       field: 'type',
-      title: '操作模块',
+      title: $t('system.operatelog.field.type'),
     },
     {
       field: 'subType',
-      title: '操作名',
+      title: $t('system.operatelog.field.subType'),
     },
     {
       field: 'action',
-      title: '操作内容',
+      title: $t('system.operatelog.field.action'),
     },
     {
       field: 'createTime',
-      title: '操作时间',
+      title: $t('system.operatelog.field.createTime'),
       formatter: 'formatDateTime',
     },
     {
       field: 'bizId',
-      title: '业务编号',
+      title: $t('system.operatelog.field.bizId'),
     },
     {
       field: 'userIp',
-      title: '操作IP',
+      title: $t('system.operatelog.field.userIp'),
     },
     {
-      title: '操作',
-      width: 80,
+      title: $t('common.operation'),
+      minWidth: 80,
       fixed: 'right',
       slots: { default: 'actions' },
     },

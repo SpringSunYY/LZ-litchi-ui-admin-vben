@@ -8,6 +8,7 @@ import { formatDateTime } from '@vben/utils';
 
 import { z } from '#/adapter/form';
 import { DictTag } from '#/components/dict-tag';
+import { $t } from '#/locales';
 import { CommonStatusEnum, DICT_TYPE, getDictOptions } from '#/utils';
 
 /** 新增/修改的表单 */
@@ -23,13 +24,13 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'title',
-      label: '公告标题',
+      label: $t('system.notice.field.title'),
       component: 'Input',
       rules: 'required',
     },
     {
       fieldName: 'type',
-      label: '公告类型',
+      label: $t('system.notice.field.type'),
       component: 'RadioGroup',
       componentProps: {
         options: getDictOptions(DICT_TYPE.SYSTEM_NOTICE_TYPE, 'number'),
@@ -40,7 +41,7 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'content',
-      label: '公告内容',
+      label: $t('system.notice.field.content'),
       component: 'RichTextarea',
       rules: 'required',
       componentProps: {
@@ -49,7 +50,7 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'appendixUrl',
-      label: '附件',
+      label: $t('system.notice.field.appendixUrl'),
       component: 'FileUpload',
       componentProps: {
         maxSize: 100,
@@ -58,7 +59,7 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'status',
-      label: '公告状态',
+      label: $t('system.notice.field.status'),
       component: 'RadioGroup',
       componentProps: {
         options: getDictOptions(DICT_TYPE.COMMON_STATUS, 'number'),
@@ -69,10 +70,10 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'remark',
-      label: '备注',
+      label: $t('system.notice.field.remark'),
       component: 'Textarea',
       componentProps: {
-        placeholder: '请输入备注',
+        placeholder: $t('ui.placeholder.input', [$t('system.notice.field.remark')]),
       },
     },
   ];
@@ -83,20 +84,20 @@ export function useGridFormSchema(): VbenFormSchema[] {
   return [
     {
       fieldName: 'title',
-      label: '公告标题',
+      label: $t('system.notice.field.title'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入公告标题',
+        placeholder: $t('ui.placeholder.input', [$t('system.notice.field.title')]),
         allowClear: true,
       },
     },
     {
       fieldName: 'status',
-      label: '公告状态',
+      label: $t('system.notice.field.status'),
       component: 'Select',
       componentProps: {
         options: getDictOptions(DICT_TYPE.COMMON_STATUS, 'number'),
-        placeholder: '请选择公告状态',
+        placeholder: $t('ui.placeholder.select', [$t('system.notice.field.status')]),
         allowClear: true,
       },
     },
@@ -108,15 +109,15 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
   return [
     {
       field: 'id',
-      title: '公告编号',
+      title: $t('system.notice.field.id'),
     },
     {
       field: 'title',
-      title: '公告标题',
+      title: $t('system.notice.field.title'),
     },
     {
       field: 'type',
-      title: '公告类型',
+      title: $t('system.notice.field.type'),
       cellRender: {
         name: 'CellDict',
         props: { type: DICT_TYPE.SYSTEM_NOTICE_TYPE },
@@ -124,7 +125,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
     },
     {
       field: 'status',
-      title: '公告状态',
+      title: $t('system.notice.field.status'),
       cellRender: {
         name: 'CellDict',
         props: { type: DICT_TYPE.COMMON_STATUS },
@@ -132,11 +133,11 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
     },
     {
       field: 'createTime',
-      title: '创建时间',
+      title: $t('system.notice.field.createTime'),
       formatter: 'formatDateTime',
     },
     {
-      title: '操作',
+      title: $t('common.operation'),
       width: 220,
       fixed: 'right',
       slots: { default: 'actions' },
@@ -149,12 +150,12 @@ export function useDetailSchema(): DescriptionItemSchema[] {
   return [
     {
       field: 'title',
-      label: '公告标题',
+      label: $t('system.notice.field.title'),
       span: 2,
     },
     {
       field: 'type',
-      label: '公告类型',
+      label: $t('system.notice.field.type'),
       span: 1,
       content: (data) =>
         h(DictTag, {
@@ -164,7 +165,7 @@ export function useDetailSchema(): DescriptionItemSchema[] {
     },
     {
       field: 'status',
-      label: '公告状态',
+      label: $t('system.notice.field.status'),
       span: 1,
       content: (data) =>
         h(DictTag, {
@@ -174,7 +175,7 @@ export function useDetailSchema(): DescriptionItemSchema[] {
     },
     {
       field: 'content',
-      label: '公告内容',
+      label: $t('system.notice.field.content'),
       span: 2,
       content: (data) =>
         data?.content
@@ -186,7 +187,7 @@ export function useDetailSchema(): DescriptionItemSchema[] {
     },
     {
       field: 'appendixUrl',
-      label: '附件',
+      label: $t('system.notice.field.appendixUrl'),
       span: 2,
       content: (data) => {
         if (!data?.appendixUrl) return '-';
@@ -220,13 +221,13 @@ export function useDetailSchema(): DescriptionItemSchema[] {
     },
     {
       field: 'createTime',
-      label: '创建时间',
+      label: $t('system.notice.field.createTime'),
       span: 1,
       content: (data) => formatDateTime(data?.createTime) as string,
     },
     {
       field: 'remark',
-      label: '备注',
+      label: $t('system.notice.field.remark'),
       span: 1,
     },
   ];

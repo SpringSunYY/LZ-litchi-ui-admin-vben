@@ -54,12 +54,12 @@ function beforeUpload(file: FileType) {
 /** 下载模版 */
 async function handleDownload() {
   const data = await importUserTemplate();
-  downloadFileFromBlobPart({ fileName: '用户导入模板.xls', source: data });
+  downloadFileFromBlobPart({ fileName: $t('system.user.message.importTemplate') + '.xls', source: data });
 }
 </script>
 
 <template>
-  <Modal title="导入用户" class="w-[30%]">
+  <Modal :title="$t('ui.actionTitle.import', [$t('system.user.user')])" class="w-[30%]">
     <Form class="mx-4">
       <template #file>
         <div class="w-full">
@@ -68,14 +68,14 @@ async function handleDownload() {
             accept=".xls,.xlsx"
             :before-upload="beforeUpload"
           >
-            <Button type="primary"> 选择 Excel 文件 </Button>
+            <Button type="primary"> {{ $t('ui.common.selectFile') }} </Button>
           </Upload>
         </div>
       </template>
     </Form>
     <template #prepend-footer>
       <div class="flex flex-auto items-center">
-        <Button @click="handleDownload"> 下载导入模板 </Button>
+        <Button @click="handleDownload"> {{ $t('ui.common.downloadTemplate') }} </Button>
       </div>
     </template>
   </Modal>

@@ -2,6 +2,7 @@ import type { VbenFormSchema } from '#/adapter/form';
 import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 
 import { z } from '#/adapter/form';
+import { $t } from '#/locales';
 import { CommonStatusEnum, DICT_TYPE, getDictOptions } from '#/utils';
 
 /** 新增/修改的表单 */
@@ -18,18 +19,18 @@ export function useFormSchema(): VbenFormSchema[] {
     {
       component: 'Input',
       fieldName: 'name',
-      label: '岗位名称',
+      label: $t('system.post.field.name'),
       rules: 'required',
     },
     {
       component: 'Input',
       fieldName: 'code',
-      label: '岗位编码',
+      label: $t('system.post.field.code'),
       rules: 'required',
     },
     {
       fieldName: 'sort',
-      label: '显示顺序',
+      label: $t('system.post.field.sort'),
       component: 'InputNumber',
       componentProps: {
         min: 0,
@@ -38,7 +39,7 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'status',
-      label: '岗位状态',
+      label: $t('system.post.field.status'),
       component: 'RadioGroup',
       componentProps: {
         options: getDictOptions(DICT_TYPE.COMMON_STATUS, 'number'),
@@ -49,7 +50,7 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'remark',
-      label: '岗位备注',
+      label: $t('system.post.field.remark'),
       component: 'Textarea',
     },
   ];
@@ -60,17 +61,17 @@ export function useGridFormSchema(): VbenFormSchema[] {
   return [
     {
       fieldName: 'name',
-      label: '岗位名称',
+      label: $t('system.post.field.name'),
       component: 'Input',
     },
     {
       fieldName: 'code',
-      label: '岗位编码',
+      label: $t('system.post.field.code'),
       component: 'Input',
     },
     {
       fieldName: 'status',
-      label: '岗位状态',
+      label: $t('system.post.field.status'),
       component: 'Select',
       componentProps: {
         allowClear: true,
@@ -85,27 +86,27 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
   return [
     {
       field: 'id',
-      title: '岗位编号',
+      title: $t('system.post.field.id'),
     },
     {
       field: 'name',
-      title: '岗位名称',
+      title: $t('system.post.field.name'),
     },
     {
       field: 'code',
-      title: '岗位编码',
+      title: $t('system.post.field.code'),
     },
     {
       field: 'sort',
-      title: '显示顺序',
+      title: $t('system.post.field.sort'),
     },
     {
       field: 'remark',
-      title: '岗位备注',
+      title: $t('system.post.field.remark'),
     },
     {
       field: 'status',
-      title: '岗位状态',
+      title: $t('system.post.field.status'),
       cellRender: {
         name: 'CellDict',
         props: { type: DICT_TYPE.COMMON_STATUS },
@@ -113,11 +114,11 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
     },
     {
       field: 'createTime',
-      title: '创建时间',
+      title: $t('system.post.field.createTime'),
       formatter: 'formatDateTime',
     },
     {
-      title: '操作',
+      title: $t('common.operation'),
       width: 130,
       fixed: 'right',
       slots: { default: 'actions' },

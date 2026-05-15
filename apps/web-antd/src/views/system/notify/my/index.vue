@@ -12,6 +12,7 @@ import {
   updateAllNotifyMessageRead,
   updateNotifyMessageRead,
 } from '#/api/system/notify/message';
+import { $t } from '#/locales';
 
 import { useGridColumns, useGridFormSchema } from './data';
 import Detail from './modules/detail.vue';
@@ -34,7 +35,9 @@ function handleDetail(row: SystemNotifyMessageApi.NotifyMessage) {
 /** 标记一条站内信已读 */
 async function handleRead(row: SystemNotifyMessageApi.NotifyMessage) {
   message.loading({
-    content: '正在标记已读...',
+    content: $t('ui.actionMessage.processing', [
+      $t('system.notify.my.message.markRead'),
+    ]),
     duration: 0,
     key: 'action_process_msg',
   });
@@ -42,7 +45,7 @@ async function handleRead(row: SystemNotifyMessageApi.NotifyMessage) {
   await updateNotifyMessageRead([row.id]);
   // 提示成功
   message.success({
-    content: '标记已读成功',
+    content: $t('ui.actionMessage.operationSuccess'),
     key: 'action_process_msg',
   });
   onRefresh();
@@ -55,13 +58,17 @@ async function handleRead(row: SystemNotifyMessageApi.NotifyMessage) {
 async function handleMarkRead() {
   const rows = gridApi.grid.getCheckboxRecords();
   if (!rows || rows.length === 0) {
-    message.warning('请选择需要标记的站内信');
+    message.warning(
+      $t('ui.actionMessage.selectRequired', [$t('system.notify.my.my')]),
+    );
     return;
   }
 
   const ids = rows.map((row: SystemNotifyMessageApi.NotifyMessage) => row.id);
   const hideLoading = message.loading({
-    content: '正在标记已读...',
+    content: $t('ui.actionMessage.processing', [
+      $t('system.notify.my.message.markRead'),
+    ]),
     key: 'action_key_msg',
   });
   try {
@@ -69,7 +76,7 @@ async function handleMarkRead() {
     await updateNotifyMessageRead(ids);
     // 提示成功
     message.success({
-      content: '标记已读成功',
+      content: $t('ui.actionMessage.operationSuccess'),
       key: 'action_key_msg',
     });
     await gridApi.grid.setAllCheckboxRow(false);
@@ -82,7 +89,9 @@ async function handleMarkRead() {
 /** 标记所有站内信为已读 */
 async function handleMarkAllRead() {
   const hideLoading = message.loading({
-    content: '正在标记全部已读...',
+    content: $t('ui.actionMessage.processing', [
+      $t('system.notify.my.message.markAllRead'),
+    ]),
     key: 'action_key_msg',
   });
   try {
@@ -90,7 +99,7 @@ async function handleMarkAllRead() {
     await updateAllNotifyMessageRead();
     // 提示成功
     message.success({
-      content: '全部标记已读成功',
+      content: $t('ui.actionMessage.operationSuccess'),
       key: 'action_key_msg',
     });
     await gridApi.grid.setAllCheckboxRow(false);
@@ -127,8 +136,6 @@ const [Grid, gridApi] = useVbenVxeGrid({
       search: true,
     },
     checkboxConfig: {
-      checkMethod: (params: { row: SystemNotifyMessageApi.NotifyMessage }) =>
-        !params.row.readStatus,
       highlight: true,
     },
   } as VxeTableGridOptions<SystemNotifyMessageApi.NotifyMessage>,
@@ -137,22 +144,25 @@ const [Grid, gridApi] = useVbenVxeGrid({
 <template>
   <Page auto-content-height>
     <template #doc>
-      <DocAlert title="站内信配置" url="https://doc.iocoder.cn/notify/" />
+      <DocAlert
+        :title="$t('system.notify.my.menu')"
+        url="https://doc.iocoder.cn/notify/"
+      />
     </template>
 
     <DetailModal @success="onRefresh" />
-    <Grid table-title="我的站内信">
+    <Grid :table-title="$t('system.notify.my.my')">
       <template #toolbar-tools>
         <TableAction
           :actions="[
             {
-              label: '标记已读',
+              label: $t('system.notify.my.message.markRead'),
               type: 'primary',
               icon: 'mdi:checkbox-marked-circle-outline',
               onClick: handleMarkRead,
             },
             {
-              label: '全部已读',
+              label: $t('system.notify.my.message.markAllRead'),
               type: 'primary',
               icon: 'mdi:checkbox-marked-circle-outline',
               onClick: handleMarkAllRead,
@@ -164,14 +174,14 @@ const [Grid, gridApi] = useVbenVxeGrid({
         <TableAction
           :actions="[
             {
-              label: '查看',
+              label: $t('system.notify.my.message.view'),
               type: 'link',
               ifShow: row.readStatus,
               icon: ACTION_ICON.VIEW,
               onClick: handleDetail.bind(null, row),
             },
             {
-              label: '已读',
+              label: $t('system.notify.my.message.markRead'),
               type: 'link',
               ifShow: !row.readStatus,
               icon: ACTION_ICON.DELETE,

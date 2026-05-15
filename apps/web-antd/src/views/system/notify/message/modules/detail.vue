@@ -9,6 +9,7 @@ import { formatDateTime } from '@vben/utils';
 import { Descriptions } from 'ant-design-vue';
 
 import { DictTag } from '#/components/dict-tag';
+import { $t } from '#/locales';
 import { DICT_TYPE } from '#/utils';
 
 const formData = ref<SystemNotifyMessageApi.NotifyMessage>();
@@ -36,50 +37,58 @@ const [Modal, modalApi] = useVbenModal({
 
 <template>
   <Modal
-    title="站内信详情"
+    :title="$t('system.notify.message.message.detail')"
     class="w-1/2"
     :show-cancel-button="false"
     :show-confirm-button="false"
   >
     <Descriptions bordered :column="1" size="middle" class="mx-4">
-      <Descriptions.Item label="编号">{{ formData?.id }}</Descriptions.Item>
-      <Descriptions.Item label="用户类型">
+      <Descriptions.Item :label="$t('system.notify.message.field.id')">
+        {{ formData?.id }}
+      </Descriptions.Item>
+      <Descriptions.Item :label="$t('system.notify.message.field.userType')">
         <DictTag :type="DICT_TYPE.USER_TYPE" :value="formData?.userType" />
       </Descriptions.Item>
-      <Descriptions.Item label="用户编号">
+      <Descriptions.Item :label="$t('system.notify.message.field.userId')">
         {{ formData?.userId }}
       </Descriptions.Item>
-      <Descriptions.Item label="模版编号">
+      <Descriptions.Item :label="$t('system.notify.message.field.templateId')">
         {{ formData?.templateId }}
       </Descriptions.Item>
-      <Descriptions.Item label="模板编码">
+      <Descriptions.Item :label="$t('system.notify.template.field.code')">
         {{ formData?.templateCode }}
       </Descriptions.Item>
-      <Descriptions.Item label="发送人名称">
+      <Descriptions.Item :label="$t('system.notify.template.field.nickname')">
         {{ formData?.templateNickname }}
       </Descriptions.Item>
-      <Descriptions.Item label="模版内容">
+      <Descriptions.Item
+        :label="$t('system.notify.message.field.templateContent')"
+      >
         {{ formData?.templateContent }}
       </Descriptions.Item>
-      <Descriptions.Item label="模版参数">
+      <Descriptions.Item
+        :label="$t('system.notify.message.field.templateParams')"
+      >
         {{ formData?.templateParams }}
       </Descriptions.Item>
-      <Descriptions.Item label="模版类型">
+      <Descriptions.Item
+        :label="$t('system.notify.message.field.templateType')"
+      >
         <DictTag
           :type="DICT_TYPE.SYSTEM_NOTIFY_TEMPLATE_TYPE"
           :value="formData?.templateType"
         />
       </Descriptions.Item>
-      <Descriptions.Item label="是否已读">
+      <Descriptions.Item :label="$t('system.notify.message.field.readStatus')">
         <DictTag
           :type="DICT_TYPE.INFRA_BOOLEAN_STRING"
           :value="formData?.readStatus"
         />
       </Descriptions.Item>
-      <Descriptions.Item label="阅读时间">
+      <Descriptions.Item :label="$t('system.notify.message.field.readTime')">
         {{ formatDateTime(formData?.readTime || '') }}
       </Descriptions.Item>
-      <Descriptions.Item label="创建时间">
+      <Descriptions.Item :label="$t('system.notify.message.field.createTime')">
         {{ formatDateTime(formData?.createTime || '') }}
       </Descriptions.Item>
     </Descriptions>

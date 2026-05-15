@@ -110,17 +110,22 @@ onMounted(async () => {
 <template>
   <Page auto-content-height>
     <template #doc>
-      <DocAlert title="邮件配置" url="https://doc.iocoder.cn/mail" />
+      <DocAlert
+        :title="$t('system.mail.account.message.config')"
+        url="https://doc.iocoder.cn/mail"
+      />
     </template>
 
     <FormModal @success="onRefresh" />
     <SendModal />
-    <Grid table-title="邮件模板列表">
+    <Grid :table-title="$t('system.mail.template.list')">
       <template #toolbar-tools>
         <TableAction
           :actions="[
             {
-              label: $t('ui.actionTitle.create', ['邮件模板']),
+              label: $t('ui.actionTitle.create', [
+                $t('system.mail.template.template'),
+              ]),
               type: 'primary',
               icon: ACTION_ICON.ADD,
               auth: ['system:mail-template:create'],
@@ -140,7 +145,7 @@ onMounted(async () => {
               onClick: handleEdit.bind(null, row),
             },
             {
-              label: '测试',
+              label: $t('system.mail.template.message.test'),
               type: 'link',
               icon: ACTION_ICON.EDIT,
               auth: ['system:mail-template:send-mail'],

@@ -1,6 +1,7 @@
 import type { VbenFormSchema } from '#/adapter/form';
 import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 
+import { $t } from '#/locales';
 import { DICT_TYPE, getDictOptions } from '#/utils';
 
 /** 列表的搜索表单 */
@@ -8,27 +9,33 @@ export function useGridFormSchema(): VbenFormSchema[] {
   return [
     {
       fieldName: 'userId',
-      label: '用户编号',
+      label: $t('system.oauth2.token.field.userId'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入用户编号',
+        placeholder: $t('ui.placeholder.input', [
+          $t('system.oauth2.token.field.userId'),
+        ]),
       },
     },
     {
       fieldName: 'userType',
-      label: '用户类型',
+      label: $t('system.oauth2.token.field.userType'),
       component: 'Select',
       componentProps: {
         options: getDictOptions(DICT_TYPE.USER_TYPE, 'number'),
-        placeholder: '请选择用户类型',
+        placeholder: $t('ui.placeholder.select', [
+          $t('system.oauth2.token.field.userType'),
+        ]),
       },
     },
     {
       fieldName: 'clientId',
-      label: '客户端编号',
+      label: $t('system.oauth2.token.field.clientId'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入客户端编号',
+        placeholder: $t('ui.placeholder.input', [
+          $t('system.oauth2.token.field.clientId'),
+        ]),
       },
     },
   ];
@@ -39,19 +46,19 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
   return [
     {
       field: 'accessToken',
-      title: '访问令牌',
+      title: $t('system.oauth2.token.field.accessToken'),
     },
     {
       field: 'refreshToken',
-      title: '刷新令牌',
+      title: $t('system.oauth2.token.field.refreshToken'),
     },
     {
       field: 'userId',
-      title: '用户编号',
+      title: $t('system.oauth2.token.field.userId'),
     },
     {
       field: 'userType',
-      title: '用户类型',
+      title: $t('system.oauth2.token.field.userType'),
       cellRender: {
         name: 'CellDict',
         props: { type: DICT_TYPE.USER_TYPE },
@@ -59,21 +66,21 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
     },
     {
       field: 'clientId',
-      title: '客户端编号',
+      title: $t('system.oauth2.token.field.clientId'),
     },
     {
       field: 'expiresTime',
-      title: '过期时间',
+      title: $t('system.oauth2.token.field.expiresTime'),
       formatter: 'formatDateTime',
     },
     {
       field: 'createTime',
-      title: '创建时间',
+      title: $t('system.oauth2.token.field.createTime'),
       formatter: 'formatDateTime',
     },
     {
-      title: '操作',
-      width: 80,
+      title: $t('common.operation'),
+      minWidth: 80,
       fixed: 'right',
       slots: { default: 'actions' },
     },

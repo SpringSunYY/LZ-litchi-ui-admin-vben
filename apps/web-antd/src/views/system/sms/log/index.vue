@@ -25,7 +25,10 @@ function onRefresh() {
 /** 导出表格 */
 async function handleExport() {
   const data = await exportSmsLog(await gridApi.formApi.getValues());
-  downloadFileFromBlobPart({ fileName: '短信日志.xls', source: data });
+  downloadFileFromBlobPart({
+    fileName: `${$t('system.sms.log.log')}.xls`,
+    source: data,
+  });
 }
 
 /** 查看短信日志详情 */
@@ -66,11 +69,14 @@ const [Grid, gridApi] = useVbenVxeGrid({
 <template>
   <Page auto-content-height>
     <template #doc>
-      <DocAlert title="短信配置" url="https://doc.iocoder.cn/sms/" />
+      <DocAlert
+        :title="$t('system.sms.channel.message.config')"
+        url="https://doc.iocoder.cn/sms/"
+      />
     </template>
 
     <DetailModal @success="onRefresh" />
-    <Grid table-title="短信日志列表">
+    <Grid :table-title="$t('system.sms.log.list')">
       <template #toolbar-tools>
         <TableAction
           :actions="[

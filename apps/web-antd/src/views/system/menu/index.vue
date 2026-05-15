@@ -109,23 +109,23 @@ const [Grid, gridApi] = useVbenVxeGrid({
         title="功能权限"
         url="https://doc.iocoder.cn/resource-permission"
       />
-      <DocAlert title="菜单路由" url="https://doc.iocoder.cn/vue3/route/" />
+      <DocAlert :title="$t('system.menu.message.route')" url="https://doc.iocoder.cn/vue3/route/" />
     </template>
 
     <FormModal @success="onRefresh" />
-    <Grid>
+    <Grid :table-title="$t('system.menu.list')">
       <template #toolbar-tools>
         <TableAction
           :actions="[
             {
-              label: $t('ui.actionTitle.create', ['菜单']),
+              label: $t('ui.actionTitle.create', [$t('system.menu.menu')]),
               type: 'primary',
               icon: ACTION_ICON.ADD,
               auth: ['system:menu:create'],
               onClick: handleCreate,
             },
             {
-              label: isExpanded ? '收缩' : '展开',
+              label: isExpanded ? $t('common.collapse') : $t('common.expand'),
               type: 'primary',
               onClick: toggleExpand,
             },
@@ -155,7 +155,7 @@ const [Grid, gridApi] = useVbenVxeGrid({
         <TableAction
           :actions="[
             {
-              label: '新增下级',
+              label: $t('system.menu.message.append'),
               type: 'link',
               icon: ACTION_ICON.ADD,
               auth: ['system:menu:create'],

@@ -7,6 +7,7 @@ import { h } from 'vue';
 import { formatDateTime } from '@vben/utils';
 
 import { DictTag } from '#/components/dict-tag';
+import { $t } from '#/locales';
 import { DICT_TYPE, getDictOptions, getRangePickerDefaultProps } from '#/utils';
 
 /** 列表的搜索表单 */
@@ -14,17 +15,19 @@ export function useGridFormSchema(): VbenFormSchema[] {
   return [
     {
       fieldName: 'readStatus',
-      label: '是否已读',
+      label: $t('system.notify.my.field.readStatus'),
       component: 'Select',
       componentProps: {
         options: getDictOptions(DICT_TYPE.INFRA_BOOLEAN_STRING, 'boolean'),
         allowClear: true,
-        placeholder: '请选择是否已读',
+        placeholder: $t('ui.placeholder.select', [
+          $t('system.notify.my.field.readStatus'),
+        ]),
       },
     },
     {
       fieldName: 'createTime',
-      label: '发送时间',
+      label: $t('system.notify.my.field.createTime'),
       component: 'RangePicker',
       componentProps: {
         allowClear: true,
@@ -44,16 +47,16 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
     },
     {
       field: 'templateNickname',
-      title: '发送人',
+      title: $t('system.notify.my.field.templateNickname'),
     },
     {
       field: 'createTime',
-      title: '发送时间',
+      title: $t('system.notify.my.field.createTime'),
       formatter: 'formatDateTime',
     },
     {
       field: 'templateType',
-      title: '类型',
+      title: $t('system.notify.my.field.templateType'),
       cellRender: {
         name: 'CellDict',
         props: { type: DICT_TYPE.SYSTEM_NOTIFY_TEMPLATE_TYPE },
@@ -61,11 +64,11 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
     },
     {
       field: 'templateContent',
-      title: '消息内容',
+      title: $t('system.notify.my.field.templateContent'),
     },
     {
       field: 'readStatus',
-      title: '是否已读',
+      title: $t('system.notify.my.field.readStatus'),
       cellRender: {
         name: 'CellDict',
         props: { type: DICT_TYPE.INFRA_BOOLEAN_STRING },
@@ -73,11 +76,11 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
     },
     {
       field: 'readTime',
-      title: '阅读时间',
+      title: $t('system.notify.my.field.readTime'),
       formatter: 'formatDateTime',
     },
     {
-      title: '操作',
+      title: $t('common.operation'),
       width: 130,
       fixed: 'right',
       slots: { default: 'actions' },
@@ -89,16 +92,16 @@ export function useDetailSchema(): DescriptionItemSchema[] {
   return [
     {
       field: 'templateNickname',
-      label: '发送人',
+      label: $t('system.notify.my.field.templateNickname'),
     },
     {
       field: 'createTime',
-      label: '发送时间',
+      label: $t('system.notify.my.field.createTime'),
       content: (data) => formatDateTime(data?.createTime) as string,
     },
     {
       field: 'templateType',
-      label: '消息类型',
+      label: $t('system.notify.my.field.templateType'),
       content: (data) =>
         h(DictTag, {
           type: DICT_TYPE.SYSTEM_NOTIFY_TEMPLATE_TYPE,
@@ -107,7 +110,7 @@ export function useDetailSchema(): DescriptionItemSchema[] {
     },
     {
       field: 'readStatus',
-      label: '是否已读',
+      label: $t('system.notify.my.field.readStatus'),
       content: (data) =>
         h(DictTag, {
           type: DICT_TYPE.INFRA_BOOLEAN_STRING,
@@ -116,12 +119,12 @@ export function useDetailSchema(): DescriptionItemSchema[] {
     },
     {
       field: 'readTime',
-      label: '阅读时间',
+      label: $t('system.notify.my.field.readTime'),
       content: (data) => formatDateTime(data?.readTime) as string,
     },
     {
       field: 'templateContent',
-      label: '消息内容',
+      label: $t('system.notify.my.field.templateContent'),
     },
   ];
 }

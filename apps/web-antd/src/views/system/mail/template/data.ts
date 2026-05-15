@@ -3,6 +3,7 @@ import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 
 import { z } from '#/adapter/form';
 import { getSimpleMailAccountList } from '#/api/system/mail/account';
+import { $t } from '#/locales';
 import {
   CommonStatusEnum,
   DICT_TYPE,
@@ -23,64 +24,64 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'name',
-      label: '模板名称',
+      label: $t('system.mail.template.field.name'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入模板名称',
+        placeholder: $t('ui.placeholder.input', [$t('system.mail.template.field.name')]),
       },
       rules: 'required',
     },
     {
       fieldName: 'code',
-      label: '模板编码',
+      label: $t('system.mail.template.field.code'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入模板编码',
+        placeholder: $t('ui.placeholder.input', [$t('system.mail.template.field.code')]),
       },
       rules: 'required',
     },
     {
       fieldName: 'accountId',
-      label: '邮箱账号',
+      label: $t('system.mail.template.field.accountId'),
       component: 'ApiSelect',
       componentProps: {
         api: async () => await getSimpleMailAccountList(),
         labelField: 'mail',
         valueField: 'id',
-        placeholder: '请选择邮箱账号',
+        placeholder: $t('ui.placeholder.select', [$t('system.mail.template.field.accountId')]),
       },
       rules: 'required',
     },
     {
       fieldName: 'nickname',
-      label: '发送人名称',
+      label: $t('system.mail.template.field.nickname'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入发送人名称',
+        placeholder: $t('ui.placeholder.input', [$t('system.mail.template.field.nickname')]),
       },
     },
     {
       fieldName: 'title',
-      label: '模板标题',
+      label: $t('system.mail.template.field.title'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入模板标题',
+        placeholder: $t('ui.placeholder.input', [$t('system.mail.template.field.title')]),
       },
       rules: 'required',
     },
     {
       fieldName: 'content',
-      label: '模板内容',
+      label: $t('system.mail.template.field.content'),
       component: 'Textarea',
       componentProps: {
-        placeholder: '请输入模板内容',
+        placeholder: $t('ui.placeholder.input', [$t('system.mail.template.field.content')]),
         height: 300,
       },
       rules: 'required',
     },
     {
       fieldName: 'status',
-      label: '开启状态',
+      label: $t('system.mail.template.field.status'),
       component: 'RadioGroup',
       componentProps: {
         options: getDictOptions(DICT_TYPE.COMMON_STATUS, 'number'),
@@ -91,10 +92,10 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'remark',
-      label: '备注',
+      label: $t('system.mail.template.field.remark'),
       component: 'Textarea',
       componentProps: {
-        placeholder: '请输入备注',
+        placeholder: $t('ui.placeholder.input', [$t('system.mail.template.field.remark')]),
       },
     },
   ];
@@ -105,7 +106,7 @@ export function useSendMailFormSchema(): VbenFormSchema[] {
   return [
     {
       fieldName: 'templateParams',
-      label: '模板参数',
+      label: $t('system.mail.template.field.params'),
       component: 'Input',
       dependencies: {
         triggerFields: [''],
@@ -114,7 +115,7 @@ export function useSendMailFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'content',
-      label: '模板内容',
+      label: $t('system.mail.template.field.content'),
       component: 'Textarea',
       componentProps: {
         disabled: true,
@@ -122,12 +123,12 @@ export function useSendMailFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'mail',
-      label: '收件邮箱',
+      label: $t('system.mail.template.field.mail'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入收件邮箱',
+        placeholder: $t('ui.placeholder.input', [$t('system.mail.template.field.mail')]),
       },
-      rules: z.string().email('请输入正确的邮箱'),
+      rules: z.string().email($t('ui.validate.email')),
     },
   ];
 }
@@ -137,47 +138,47 @@ export function useGridFormSchema(): VbenFormSchema[] {
   return [
     {
       fieldName: 'status',
-      label: '开启状态',
+      label: $t('system.mail.template.field.status'),
       component: 'Select',
       componentProps: {
         options: getDictOptions(DICT_TYPE.COMMON_STATUS, 'number'),
         allowClear: true,
-        placeholder: '请选择开启状态',
+        placeholder: $t('ui.placeholder.select', [$t('system.mail.template.field.status')]),
       },
     },
     {
       fieldName: 'code',
-      label: '模板编码',
+      label: $t('system.mail.template.field.code'),
       component: 'Input',
       componentProps: {
         allowClear: true,
-        placeholder: '请输入模板编码',
+        placeholder: $t('ui.placeholder.input', [$t('system.mail.template.field.code')]),
       },
     },
     {
       fieldName: 'name',
-      label: '模板名称',
+      label: $t('system.mail.template.field.name'),
       component: 'Input',
       componentProps: {
         allowClear: true,
-        placeholder: '请输入模板名称',
+        placeholder: $t('ui.placeholder.input', [$t('system.mail.template.field.name')]),
       },
     },
     {
       fieldName: 'accountId',
-      label: '邮箱账号',
+      label: $t('system.mail.template.field.accountId'),
       component: 'ApiSelect',
       componentProps: {
         api: async () => await getSimpleMailAccountList(),
         labelField: 'mail',
         valueField: 'id',
         allowClear: true,
-        placeholder: '请选择邮箱账号',
+        placeholder: $t('ui.placeholder.select', [$t('system.mail.template.field.accountId')]),
       },
     },
     {
       fieldName: 'createTime',
-      label: '创建时间',
+      label: $t('system.mail.template.field.createTime'),
       component: 'RangePicker',
       componentProps: {
         ...getRangePickerDefaultProps(),
@@ -194,32 +195,32 @@ export function useGridColumns(
   return [
     {
       field: 'id',
-      title: '编号',
+      title: $t('system.mail.template.field.id'),
     },
     {
       field: 'code',
-      title: '模板编码',
+      title: $t('system.mail.template.field.code'),
     },
     {
       field: 'name',
-      title: '模板名称',
+      title: $t('system.mail.template.field.name'),
     },
     {
       field: 'title',
-      title: '模板标题',
+      title: $t('system.mail.template.field.title'),
     },
     {
       field: 'accountId',
-      title: '邮箱账号',
+      title: $t('system.mail.template.field.accountId'),
       formatter: ({ cellValue }) => getAccountMail?.(cellValue) || '-',
     },
     {
       field: 'nickname',
-      title: '发送人名称',
+      title: $t('system.mail.template.field.nickname'),
     },
     {
       field: 'status',
-      title: '开启状态',
+      title: $t('system.mail.template.field.status'),
       cellRender: {
         name: 'CellDict',
         props: { type: DICT_TYPE.COMMON_STATUS },
@@ -227,11 +228,11 @@ export function useGridColumns(
     },
     {
       field: 'createTime',
-      title: '创建时间',
+      title: $t('system.mail.template.field.createTime'),
       formatter: 'formatDateTime',
     },
     {
-      title: '操作',
+      title: $t('common.operation'),
       width: 220,
       fixed: 'right',
       slots: { default: 'actions' },

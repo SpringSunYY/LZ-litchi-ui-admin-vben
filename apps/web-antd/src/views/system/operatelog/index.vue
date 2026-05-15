@@ -25,7 +25,10 @@ function onRefresh() {
 /** 导出表格 */
 async function handleExport() {
   const data = await exportOperateLog(await gridApi.formApi.getValues());
-  downloadFileFromBlobPart({ fileName: '操作日志.xls', source: data });
+  downloadFileFromBlobPart({
+    fileName: `${$t('system.operatelog.operatelog')}.xls`,
+    source: data,
+  });
 }
 
 /** 查看操作日志详情 */
@@ -66,11 +69,14 @@ const [Grid, gridApi] = useVbenVxeGrid({
 <template>
   <Page auto-content-height>
     <template #doc>
-      <DocAlert title="系统日志" url="https://doc.iocoder.cn/system-log/" />
+      <DocAlert
+        :title="$t('system.loginlog.message.systemLog')"
+        url="https://doc.iocoder.cn/system-log/"
+      />
     </template>
 
     <DetailModal @success="onRefresh" />
-    <Grid table-title="操作日志列表">
+    <Grid :table-title="$t('system.operatelog.list')">
       <template #toolbar-tools>
         <TableAction
           :actions="[

@@ -21,8 +21,8 @@ const emit = defineEmits(['success']);
 const formData = ref<SystemSocialClientApi.SocialClient>();
 const getTitle = computed(() => {
   return formData.value?.id
-    ? $t('ui.actionTitle.edit', ['社交客户端'])
-    : $t('ui.actionTitle.create', ['社交客户端']);
+    ? $t('ui.actionTitle.edit', [$t('system.social.client.client')])
+    : $t('ui.actionTitle.create', [$t('system.social.client.client')]);
 });
 
 const [Form, formApi] = useVbenForm({

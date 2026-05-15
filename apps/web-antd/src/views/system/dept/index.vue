@@ -114,19 +114,19 @@ onMounted(async () => {
 <template>
   <Page auto-content-height>
     <FormModal @success="onRefresh" />
-    <Grid table-title="部门列表">
+    <Grid :table-title="$t('system.dept.list')">
       <template #toolbar-tools>
         <TableAction
           :actions="[
             {
-              label: $t('ui.actionTitle.create', ['部门']),
+              label: $t('ui.actionTitle.create', [$t('system.dept.dept')]),
               type: 'primary',
               icon: ACTION_ICON.ADD,
               auth: ['system:dept:create'],
               onClick: handleCreate,
             },
             {
-              label: isExpanded ? '收缩' : '展开',
+              label: isExpanded ? $t('common.collapse') : $t('common.expand'),
               type: 'primary',
               onClick: toggleExpand,
             },
@@ -137,7 +137,7 @@ onMounted(async () => {
         <TableAction
           :actions="[
             {
-              label: '新增下级',
+              label: $t('common.append'),
               type: 'link',
               icon: ACTION_ICON.ADD,
               auth: ['system:dept:create'],
@@ -156,9 +156,12 @@ onMounted(async () => {
               danger: true,
               icon: ACTION_ICON.DELETE,
               auth: ['system:dept:delete'],
-              disabled: !!(row.children && row.children.length > 0),
+              disabled: row.children && row.children.length > 0,
               popConfirm: {
-                title: $t('ui.actionMessage.deleteConfirm', [row.name]),
+                title: $t('ui.actionMessage.deleteConfirm', [
+                  row.name,
+                  $t('system.dept.dept'),
+                ]),
                 confirm: handleDelete.bind(null, row),
               },
             },

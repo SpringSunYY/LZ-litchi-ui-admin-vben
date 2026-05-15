@@ -6,6 +6,7 @@ import { DocAlert, Page, useVbenModal } from '@vben/common-ui';
 
 import { ACTION_ICON, TableAction, useVbenVxeGrid } from '#/adapter/vxe-table';
 import { getMailLogPage } from '#/api/system/mail/log';
+import { $t } from '#/locales';
 
 import { useGridColumns, useGridFormSchema } from './data';
 import Detail from './modules/detail.vue';
@@ -54,14 +55,15 @@ const [Grid, gridApi] = useVbenVxeGrid({
   } as VxeTableGridOptions<SystemMailLogApi.MailLog>,
 });
 </script>
+
 <template>
   <Page auto-content-height>
     <template #doc>
-      <DocAlert title="邮件配置" url="https://doc.iocoder.cn/mail" />
+      <DocAlert :title="$t('system.mail.account.message.config')" url="https://doc.iocoder.cn/mail" />
     </template>
 
     <DetailModal @success="onRefresh" />
-    <Grid table-title="邮件日志列表">
+    <Grid :table-title="$t('system.mail.log.list')">
       <template #actions="{ row }">
         <TableAction
           :actions="[

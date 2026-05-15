@@ -2,6 +2,7 @@ import type { VbenFormSchema } from '#/adapter/form';
 import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 
 import { z } from '#/adapter/form';
+import { $t } from '#/locales';
 import {
   CommonStatusEnum,
   DICT_TYPE,
@@ -23,30 +24,30 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'name',
-      label: '角色名称',
+      label: $t('system.role.field.name'),
       component: 'Input',
       rules: 'required',
     },
     {
       fieldName: 'code',
-      label: '角色标识',
+      label: $t('system.role.field.code'),
       component: 'Input',
       rules: 'required',
     },
     {
       fieldName: 'sort',
-      label: '显示顺序',
+      label: $t('system.role.field.sort'),
       component: 'InputNumber',
       componentProps: {
         min: 0,
         controlsPosition: 'right',
-        placeholder: '请输入显示顺序',
+        placeholder: $t('ui.placeholder.input', [$t('system.role.field.sort')]),
       },
       rules: 'required',
     },
     {
       fieldName: 'status',
-      label: '角色状态',
+      label: $t('system.role.field.status'),
       component: 'RadioGroup',
       componentProps: {
         options: getDictOptions(DICT_TYPE.COMMON_STATUS, 'number'),
@@ -57,7 +58,7 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'remark',
-      label: '角色备注',
+      label: $t('system.role.field.remark'),
       component: 'Textarea',
     },
   ];
@@ -76,7 +77,7 @@ export function useAssignDataPermissionFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'name',
-      label: '角色名称',
+      label: $t('system.role.field.name'),
       component: 'Input',
       componentProps: {
         disabled: true,
@@ -85,7 +86,7 @@ export function useAssignDataPermissionFormSchema(): VbenFormSchema[] {
     {
       component: 'Input',
       fieldName: 'code',
-      label: '角色标识',
+      label: $t('system.role.field.code'),
       componentProps: {
         disabled: true,
       },
@@ -93,14 +94,14 @@ export function useAssignDataPermissionFormSchema(): VbenFormSchema[] {
     {
       component: 'Select',
       fieldName: 'dataScope',
-      label: '权限范围',
+      label: $t('system.role.field.dataScope'),
       componentProps: {
         options: getDictOptions(DICT_TYPE.SYSTEM_DATA_SCOPE, 'number'),
       },
     },
     {
       fieldName: 'dataScopeDeptIds',
-      label: '部门范围',
+      label: $t('system.role.field.dataScopeDeptIds'),
       component: 'Input',
       formItemClass: 'items-start',
       dependencies: {
@@ -126,7 +127,7 @@ export function useAssignMenuFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'name',
-      label: '角色名称',
+      label: $t('system.role.field.name'),
       component: 'Input',
       componentProps: {
         disabled: true,
@@ -134,7 +135,7 @@ export function useAssignMenuFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'code',
-      label: '角色标识',
+      label: $t('system.role.field.code'),
       component: 'Input',
       componentProps: {
         disabled: true,
@@ -142,7 +143,7 @@ export function useAssignMenuFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'menuIds',
-      label: '菜单权限',
+      label: $t('system.role.field.menuIds'),
       component: 'Input',
       formItemClass: 'items-start',
     },
@@ -154,17 +155,17 @@ export function useGridFormSchema(): VbenFormSchema[] {
   return [
     {
       fieldName: 'name',
-      label: '角色名称',
+      label: $t('system.role.field.name'),
       component: 'Input',
     },
     {
       fieldName: 'code',
-      label: '角色标识',
+      label: $t('system.role.field.code'),
       component: 'Input',
     },
     {
       fieldName: 'status',
-      label: '角色状态',
+      label: $t('system.role.field.status'),
       component: 'Select',
       componentProps: {
         allowClear: true,
@@ -173,7 +174,7 @@ export function useGridFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'createTime',
-      label: '创建时间',
+      label: $t('system.role.field.createTime'),
       component: 'RangePicker',
       componentProps: {
         ...getRangePickerDefaultProps(),
@@ -188,15 +189,15 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
   return [
     {
       field: 'id',
-      title: '角色编号',
+      title: $t('system.role.field.id'),
     },
     {
       field: 'name',
-      title: '角色名称',
+      title: $t('system.role.field.name'),
     },
     {
       field: 'type',
-      title: '角色类型',
+      title: $t('system.role.field.type'),
       cellRender: {
         name: 'CellDict',
         props: { type: DICT_TYPE.SYSTEM_ROLE_TYPE },
@@ -204,19 +205,19 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
     },
     {
       field: 'code',
-      title: '角色标识',
+      title: $t('system.role.field.code'),
     },
     {
       field: 'sort',
-      title: '显示顺序',
+      title: $t('system.role.field.sort'),
     },
     {
       field: 'remark',
-      title: '角色备注',
+      title: $t('system.role.field.remark'),
     },
     {
       field: 'status',
-      title: '角色状态',
+      title: $t('system.role.field.status'),
       cellRender: {
         name: 'CellDict',
         props: { type: DICT_TYPE.COMMON_STATUS },
@@ -224,11 +225,11 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
     },
     {
       field: 'createTime',
-      title: '创建时间',
+      title: $t('system.role.field.createTime'),
       formatter: 'formatDateTime',
     },
     {
-      title: '操作',
+      title: $t('common.operation'),
       width: 240,
       fixed: 'right',
       slots: { default: 'actions' },

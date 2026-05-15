@@ -9,6 +9,7 @@ import { handleTree } from '@vben/utils';
 import { Input, Tree } from 'ant-design-vue';
 
 import { getSimpleDeptList } from '#/api/system/dept';
+import { $t } from '#/locales';
 
 const emit = defineEmits(['select']);
 const deptList = ref<SystemDeptApi.Dept[]>([]); // 部门列表
@@ -55,7 +56,7 @@ onMounted(async () => {
   <div>
     <div class="mb-2">
       <Input
-        placeholder="搜索部门"
+        :placeholder="$t('ui.actionName.searchDept')"
         allow-clear
         v-model:value="searchValue"
         @change="handleSearch"
@@ -76,7 +77,7 @@ onMounted(async () => {
       :default-expand-all="true"
     />
     <div v-else-if="!loading" class="py-4 text-center text-gray-500">
-      暂无数据
+      {{ $t('ui.common.noData') }}
     </div>
   </div>
 </template>

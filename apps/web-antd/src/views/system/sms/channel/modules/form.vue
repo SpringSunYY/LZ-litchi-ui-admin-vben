@@ -21,8 +21,8 @@ const emit = defineEmits(['success']);
 const formData = ref<SystemSmsChannelApi.SmsChannel>();
 const getTitle = computed(() => {
   return formData.value?.id
-    ? $t('ui.actionTitle.edit', ['短信渠道'])
-    : $t('ui.actionTitle.create', ['短信渠道']);
+    ? $t('ui.actionTitle.edit', [$t('system.sms.channel.channel')])
+    : $t('ui.actionTitle.create', [$t('system.sms.channel.channel')]);
 });
 
 const [Form, formApi] = useVbenForm({

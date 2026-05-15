@@ -24,9 +24,10 @@
     "export": "Export",
     "updateAllMenu": "update All Menu"
   },
-  "actionName": {
-    "reset": "Reset",
-    "search": "Search"
+    "actionName": {
+      "reset": "Reset",
+      "search": "Search",
+      "searchDept": "Search department"
   },
   "actionMessage": {
     "deleteConfirm": "Are you sure to delete {0}?",
@@ -47,7 +48,8 @@
     "externalCloseTip": "Your data will be lost after closing",
     "copySuccess": "Copied successfully",
     "grant": "Grant Menu Success",
-    "updateConfirm": "Confirm Update?"
+    "updateConfirm": "Confirm Update?",
+    "selectRequired": "Please select {0}"
   },
   "placeholder": {
     "input": "Please enter {0}",
@@ -197,7 +199,10 @@
   "common": {
     "yes": "Yes",
     "no": "No",
-    "table": "Table"
+    "table": "Table",
+    "noData": "No Data",
+    "selectFile": "Select File",
+    "downloadTemplate": "Download Template"
   },
   "menu": {
     "clearCache": "Clear Cache"

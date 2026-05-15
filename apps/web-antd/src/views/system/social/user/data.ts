@@ -1,6 +1,7 @@
 import type { VbenFormSchema } from '#/adapter/form';
 import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 
+import { $t } from '#/locales';
 import { DICT_TYPE, getDictOptions, getRangePickerDefaultProps } from '#/utils';
 
 /** 列表的搜索表单 */
@@ -8,35 +9,41 @@ export function useGridFormSchema(): VbenFormSchema[] {
   return [
     {
       fieldName: 'type',
-      label: '社交平台',
+      label: $t('system.social.user.field.type'),
       component: 'Select',
       componentProps: {
         options: getDictOptions(DICT_TYPE.SYSTEM_SOCIAL_TYPE, 'number'),
-        placeholder: '请选择社交平台',
+        placeholder: $t('ui.placeholder.select', [
+          $t('system.social.user.field.type'),
+        ]),
         allowClear: true,
       },
     },
     {
       fieldName: 'nickname',
-      label: '用户昵称',
+      label: $t('system.social.user.field.nickname'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入用户昵称',
+        placeholder: $t('ui.placeholder.input', [
+          $t('system.social.user.field.nickname'),
+        ]),
         allowClear: true,
       },
     },
     {
       fieldName: 'openid',
-      label: '社交 openid',
+      label: $t('system.social.user.field.openid'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入社交 openid',
+        placeholder: $t('ui.placeholder.input', [
+          $t('system.social.user.field.openid'),
+        ]),
         allowClear: true,
       },
     },
     {
       fieldName: 'createTime',
-      label: '创建时间',
+      label: $t('system.social.user.field.createTime'),
       component: 'RangePicker',
       componentProps: {
         ...getRangePickerDefaultProps(),
@@ -51,7 +58,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
   return [
     {
       field: 'type',
-      title: '社交平台',
+      title: $t('system.social.user.field.type'),
       cellRender: {
         name: 'CellDict',
         props: { type: DICT_TYPE.SYSTEM_SOCIAL_TYPE },
@@ -59,31 +66,31 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
     },
     {
       field: 'openid',
-      title: '社交 openid',
+      title: $t('system.social.user.field.openid'),
     },
     {
       field: 'nickname',
-      title: '用户昵称',
+      title: $t('system.social.user.field.nickname'),
     },
     {
       field: 'avatar',
-      title: '用户头像',
+      title: $t('system.social.user.field.avatar'),
       cellRender: {
         name: 'CellImage',
       },
     },
     {
       field: 'createTime',
-      title: '创建时间',
+      title: $t('system.social.user.field.createTime'),
       formatter: 'formatDateTime',
     },
     {
       field: 'updateTime',
-      title: '更新时间',
+      title: $t('system.social.user.field.updateTime'),
       formatter: 'formatDateTime',
     },
     {
-      title: '操作',
+      title: $t('common.operation'),
       width: 80,
       fixed: 'right',
       slots: { default: 'actions' },

@@ -85,14 +85,16 @@ async function handleDownload() {
             accept=".xls,.xlsx"
             :before-upload="beforeUpload"
           >
-            <Button type="primary"> 选择 Excel 文件</Button>
+            <Button type="primary"> {{ $t('ui.common.selectFile') }}</Button>
           </Upload>
         </div>
       </template>
     </Form>
     <template #prepend-footer>
       <div class="flex flex-auto items-center">
-        <Button @click="handleDownload"> 下载导入模板</Button>
+        <Button @click="handleDownload">
+          {{ $t('ui.common.downloadTemplate') }}
+        </Button>
       </div>
     </template>
   </Modal>

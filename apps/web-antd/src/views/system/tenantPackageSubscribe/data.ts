@@ -2,6 +2,7 @@ import type { VbenFormSchema } from '#/adapter/form';
 import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 import type { TenantPackageSubscribeApi } from '#/api/system/tenantPackageSubscribe';
 
+import { $t } from '#/locales';
 import { DICT_TYPE, getDictOptions, getRangePickerDefaultProps } from '#/utils';
 
 /** 新增/修改的表单 */
@@ -17,78 +18,92 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'packageName',
-      label: '套餐名',
+      label: $t('system.tenantPackageSubscribe.field.packageName'),
       rules: 'required',
       component: 'Input',
       componentProps: {
-        placeholder: '请输入套餐名',
+        placeholder: $t('ui.placeholder.input', [
+          $t('system.tenantPackageSubscribe.field.packageName'),
+        ]),
       },
     },
     {
       fieldName: 'packageCode',
-      label: '套餐编码',
+      label: $t('system.tenantPackageSubscribe.field.packageCode'),
       rules: 'required',
       component: 'Input',
       componentProps: {
         readOnly: true,
-        placeholder: '请输入套餐编码',
+        placeholder: $t('ui.placeholder.input', [
+          $t('system.tenantPackageSubscribe.field.packageCode'),
+        ]),
       },
     },
     {
       fieldName: 'price',
-      label: '套餐价格',
+      label: $t('system.tenantPackageSubscribe.field.price'),
       rules: 'required',
       component: 'Input',
       componentProps: {
         readOnly: true,
-        placeholder: '请输入套餐价格',
+        placeholder: $t('ui.placeholder.input', [
+          $t('system.tenantPackageSubscribe.field.price'),
+        ]),
       },
     },
     {
       fieldName: 'tenantName',
-      label: '租户名',
+      label: $t('system.tenantPackageSubscribe.field.tenantName'),
       rules: 'required',
       component: 'Input',
       componentProps: {
-        placeholder: '请输入租户名',
+        placeholder: $t('ui.placeholder.input', [
+          $t('system.tenantPackageSubscribe.field.tenantName'),
+        ]),
       },
     },
     {
       fieldName: 'tenantCode',
-      label: '租户编码',
+      label: $t('system.tenantPackageSubscribe.field.tenantCode'),
       rules: 'required',
       component: 'Input',
       componentProps: {
         readOnly: true,
-        placeholder: '请输入租户编码',
+        placeholder: $t('ui.placeholder.input', [
+          $t('system.tenantPackageSubscribe.field.tenantCode'),
+        ]),
       },
     },
     {
       fieldName: 'discountPrice',
-      label: '优惠价格',
+      label: $t('system.tenantPackageSubscribe.field.discountPrice'),
       rules: 'required',
       component: 'InputNumber',
       componentProps: {
         min: 0,
         precision: 2,
         defaultValue: 0,
-        placeholder: '请输入优惠价格',
+        placeholder: $t('ui.placeholder.input', [
+          $t('system.tenantPackageSubscribe.field.discountPrice'),
+        ]),
       },
     },
     {
       fieldName: 'days',
-      label: '天数',
+      label: $t('system.tenantPackageSubscribe.field.days'),
       rules: 'required',
       component: 'InputNumber',
       componentProps: {
         min: 0,
         defaultValue: 30,
-        placeholder: '请输入天数',
+        placeholder: $t('ui.placeholder.input', [
+          $t('system.tenantPackageSubscribe.field.days'),
+        ]),
       },
     },
     {
       fieldName: 'totalPrice',
-      label: '总价格',
+      label: $t('system.tenantPackageSubscribe.field.totalPrice'),
       rules: 'required',
       component: 'InputNumber',
       componentProps: {
@@ -96,12 +111,14 @@ export function useFormSchema(): VbenFormSchema[] {
         min: 0,
         precision: 2,
         defaultValue: 0,
-        placeholder: '请输入总价格',
+        placeholder: $t('ui.placeholder.input', [
+          $t('system.tenantPackageSubscribe.field.totalPrice'),
+        ]),
       },
     },
     {
       fieldName: 'status',
-      label: '订阅状态',
+      label: $t('system.tenantPackageSubscribe.field.status'),
       rules: 'required',
       component: 'RadioGroup',
       defaultValue: 1,
@@ -116,7 +133,7 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'payStatus',
-      label: '支付状态',
+      label: $t('system.tenantPackageSubscribe.field.payStatus'),
       rules: 'required',
       component: 'RadioGroup',
       defaultValue: 0,
@@ -131,7 +148,7 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'startTime',
-      label: '开始时间',
+      label: $t('system.tenantPackageSubscribe.field.startTime'),
       rules: 'required',
       component: 'DatePicker',
       componentProps: {
@@ -142,7 +159,7 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'endTime',
-      label: '结束时间',
+      label: $t('system.tenantPackageSubscribe.field.endTime'),
       rules: 'required',
       component: 'DatePicker',
       disabled: true,
@@ -154,10 +171,12 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'remark',
-      label: '备注',
+      label: $t('system.tenantPackageSubscribe.field.remark'),
       component: 'Textarea',
       componentProps: {
-        placeholder: '请输入备注',
+        placeholder: $t('ui.placeholder.input', [
+          $t('system.tenantPackageSubscribe.field.remark'),
+        ]),
         rows: 3,
       },
     },
@@ -169,35 +188,41 @@ export function useGridFormSchema(): VbenFormSchema[] {
   return [
     {
       fieldName: 'packageName',
-      label: '套餐名',
+      label: $t('system.tenantPackageSubscribe.field.packageName'),
       component: 'Input',
       componentProps: {
         allowClear: true,
-        placeholder: '请输入套餐名',
+        placeholder: $t('ui.placeholder.input', [
+          $t('system.tenantPackageSubscribe.field.packageName'),
+        ]),
       },
     },
     {
       fieldName: 'packageCode',
-      label: '套餐编码',
+      label: $t('system.tenantPackageSubscribe.field.packageCode'),
       component: 'Input',
       componentProps: {
         allowClear: true,
-        placeholder: '请输入套餐编码',
+        placeholder: $t('ui.placeholder.input', [
+          $t('system.tenantPackageSubscribe.field.packageCode'),
+        ]),
       },
     },
     {
       fieldName: 'packageType',
-      label: '套餐类型',
+      label: $t('system.tenantPackageSubscribe.field.packageType'),
       component: 'Select',
       componentProps: {
         allowClear: true,
         options: getDictOptions(DICT_TYPE.SYSTEM_TENANT_PACKAGE_TYPE, 'number'),
-        placeholder: '请选择套餐类型',
+        placeholder: $t('ui.placeholder.select', [
+          $t('system.tenantPackageSubscribe.field.packageType'),
+        ]),
       },
     },
     {
       fieldName: 'packageStatus',
-      label: '套餐状态',
+      label: $t('system.tenantPackageSubscribe.field.packageStatus'),
       component: 'Select',
       componentProps: {
         allowClear: true,
@@ -205,30 +230,36 @@ export function useGridFormSchema(): VbenFormSchema[] {
           DICT_TYPE.SYSTEM_TENANT_PACKAGE_STATUS,
           'number',
         ),
-        placeholder: '请选择套餐状态',
+        placeholder: $t('ui.placeholder.select', [
+          $t('system.tenantPackageSubscribe.field.packageStatus'),
+        ]),
       },
     },
     {
       fieldName: 'tenantName',
-      label: '租户名',
+      label: $t('system.tenantPackageSubscribe.field.tenantName'),
       component: 'Input',
       componentProps: {
         allowClear: true,
-        placeholder: '请输入租户名',
+        placeholder: $t('ui.placeholder.input', [
+          $t('system.tenantPackageSubscribe.field.tenantName'),
+        ]),
       },
     },
     {
       fieldName: 'tenantCode',
-      label: '租户编码',
+      label: $t('system.tenantPackageSubscribe.field.tenantCode'),
       component: 'Input',
       componentProps: {
         allowClear: true,
-        placeholder: '请输入租户编码',
+        placeholder: $t('ui.placeholder.input', [
+          $t('system.tenantPackageSubscribe.field.tenantCode'),
+        ]),
       },
     },
     {
       fieldName: 'status',
-      label: '订阅状态',
+      label: $t('system.tenantPackageSubscribe.field.status'),
       component: 'Select',
       componentProps: {
         allowClear: true,
@@ -236,12 +267,14 @@ export function useGridFormSchema(): VbenFormSchema[] {
           DICT_TYPE.SYSTEM_TENANT_PACKAGE_SUBSCRIBE_STATUS,
           'number',
         ),
-        placeholder: '请选择订阅状态',
+        placeholder: $t('ui.placeholder.select', [
+          $t('system.tenantPackageSubscribe.field.status'),
+        ]),
       },
     },
     {
       fieldName: 'payStatus',
-      label: '支付状态',
+      label: $t('system.tenantPackageSubscribe.field.payStatus'),
       component: 'Select',
       componentProps: {
         allowClear: true,
@@ -249,12 +282,14 @@ export function useGridFormSchema(): VbenFormSchema[] {
           DICT_TYPE.SYSTEM_TENANT_PACKAGE_SUBSCRIBE_PAY_STATUS,
           'number',
         ),
-        placeholder: '请选择支付状态',
+        placeholder: $t('ui.placeholder.select', [
+          $t('system.tenantPackageSubscribe.field.payStatus'),
+        ]),
       },
     },
     {
       fieldName: 'startTime',
-      label: '开始时间',
+      label: $t('system.tenantPackageSubscribe.field.startTime'),
       component: 'RangePicker',
       componentProps: {
         ...getRangePickerDefaultProps(),
@@ -263,7 +298,7 @@ export function useGridFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'endTime',
-      label: '结束时间',
+      label: $t('system.tenantPackageSubscribe.field.endTime'),
       component: 'RangePicker',
       componentProps: {
         ...getRangePickerDefaultProps(),
@@ -272,7 +307,7 @@ export function useGridFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'createTime',
-      label: '创建时间',
+      label: $t('system.tenantPackageSubscribe.field.createTime'),
       component: 'RangePicker',
       componentProps: {
         ...getRangePickerDefaultProps(),
@@ -288,22 +323,22 @@ export function useGridColumns(): VxeTableGridOptions<TenantPackageSubscribeApi.
     { type: 'checkbox', width: 40 },
     {
       field: 'id',
-      title: '套餐编号',
+      title: $t('system.tenantPackageSubscribe.field.id'),
       minWidth: 120,
     },
     {
       field: 'packageName',
-      title: '套餐名',
+      title: $t('system.tenantPackageSubscribe.field.packageName'),
       minWidth: 120,
     },
     {
       field: 'packageCode',
-      title: '套餐编码',
+      title: $t('system.tenantPackageSubscribe.field.packageCode'),
       minWidth: 120,
     },
     {
       field: 'packageType',
-      title: '套餐类型',
+      title: $t('system.tenantPackageSubscribe.field.packageType'),
       minWidth: 120,
       cellRender: {
         name: 'CellDict',
@@ -312,7 +347,7 @@ export function useGridColumns(): VxeTableGridOptions<TenantPackageSubscribeApi.
     },
     {
       field: 'packageStatus',
-      title: '套餐状态',
+      title: $t('system.tenantPackageSubscribe.field.packageStatus'),
       minWidth: 120,
       cellRender: {
         name: 'CellDict',
@@ -321,7 +356,7 @@ export function useGridColumns(): VxeTableGridOptions<TenantPackageSubscribeApi.
     },
     {
       field: 'packageLogo',
-      title: 'LOGO',
+      title: $t('system.tenantPackageSubscribe.field.packageLogo'),
       minWidth: 120,
       cellRender: {
         name: 'CellImage',
@@ -333,37 +368,37 @@ export function useGridColumns(): VxeTableGridOptions<TenantPackageSubscribeApi.
     },
     {
       field: 'tenantName',
-      title: '租户名',
+      title: $t('system.tenantPackageSubscribe.field.tenantName'),
       minWidth: 120,
     },
     {
       field: 'tenantCode',
-      title: '租户编码',
+      title: $t('system.tenantPackageSubscribe.field.tenantCode'),
       minWidth: 120,
     },
     {
       field: 'price',
-      title: '套餐价格',
+      title: $t('system.tenantPackageSubscribe.field.price'),
       minWidth: 120,
     },
     {
       field: 'discountPrice',
-      title: '优惠价格',
+      title: $t('system.tenantPackageSubscribe.field.discountPrice'),
       minWidth: 120,
     },
     {
       field: 'days',
-      title: '天数',
+      title: $t('system.tenantPackageSubscribe.field.days'),
       minWidth: 120,
     },
     {
       field: 'totalPrice',
-      title: '总价格',
+      title: $t('system.tenantPackageSubscribe.field.totalPrice'),
       minWidth: 120,
     },
     {
       field: 'status',
-      title: '订阅状态',
+      title: $t('system.tenantPackageSubscribe.field.status'),
       minWidth: 120,
       cellRender: {
         name: 'CellDict',
@@ -372,7 +407,7 @@ export function useGridColumns(): VxeTableGridOptions<TenantPackageSubscribeApi.
     },
     {
       field: 'payStatus',
-      title: '支付状态',
+      title: $t('system.tenantPackageSubscribe.field.payStatus'),
       minWidth: 120,
       cellRender: {
         name: 'CellDict',
@@ -381,29 +416,29 @@ export function useGridColumns(): VxeTableGridOptions<TenantPackageSubscribeApi.
     },
     {
       field: 'startTime',
-      title: '开始时间',
+      title: $t('system.tenantPackageSubscribe.field.startTime'),
       minWidth: 120,
       formatter: 'formatDateTime',
     },
     {
       field: 'endTime',
-      title: '结束时间',
+      title: $t('system.tenantPackageSubscribe.field.endTime'),
       minWidth: 120,
       formatter: 'formatDateTime',
     },
     {
       field: 'remark',
-      title: '备注',
+      title: $t('system.tenantPackageSubscribe.field.remark'),
       minWidth: 120,
     },
     {
       field: 'createTime',
-      title: '创建时间',
+      title: $t('system.tenantPackageSubscribe.field.createTime'),
       minWidth: 120,
       formatter: 'formatDateTime',
     },
     {
-      title: '操作',
+      title: $t('common.operation'),
       width: 200,
       fixed: 'right',
       slots: { default: 'actions' },

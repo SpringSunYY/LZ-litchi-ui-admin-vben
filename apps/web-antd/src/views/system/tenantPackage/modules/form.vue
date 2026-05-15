@@ -21,8 +21,8 @@ const emit = defineEmits(['success']);
 const formData = ref<SystemTenantPackageApi.TenantPackage>();
 const getTitle = computed(() => {
   return formData.value
-    ? $t('ui.actionTitle.edit', ['套餐'])
-    : $t('ui.actionTitle.create', ['套餐']);
+    ? $t('ui.actionTitle.edit', [$t('system.tenantPackage.tenantPackage')])
+    : $t('ui.actionTitle.create', [$t('system.tenantPackage.tenantPackage')]);
 });
 
 const [Form, formApi] = useVbenForm({

@@ -37,7 +37,10 @@ function onRefresh() {
 /** 导出表格 */
 async function handleExport() {
   const data = await exportSmsTemplate(await gridApi.formApi.getValues());
-  downloadFileFromBlobPart({ fileName: '短信模板.xls', source: data });
+  downloadFileFromBlobPart({
+    fileName: `${$t('system.sms.template.template')}.xls`,
+    source: data,
+  });
 }
 
 /** 创建短信模板 */
@@ -111,12 +114,14 @@ const [Grid, gridApi] = useVbenVxeGrid({
 
     <FormModal @success="onRefresh" />
     <SendModal />
-    <Grid table-title="短信模板列表">
+    <Grid :table-title="$t('system.sms.template.list')">
       <template #toolbar-tools>
         <TableAction
           :actions="[
             {
-              label: $t('ui.actionTitle.create', ['短信模板']),
+              label: $t('ui.actionTitle.create', [
+                $t('system.sms.template.template'),
+              ]),
               type: 'primary',
               icon: ACTION_ICON.ADD,
               auth: ['system:sms-template:create'],
@@ -143,7 +148,7 @@ const [Grid, gridApi] = useVbenVxeGrid({
               onClick: handleEdit.bind(null, row),
             },
             {
-              label: '发送短信',
+              label: $t('system.sms.template.action.send'),
               type: 'link',
               icon: ACTION_ICON.ADD,
               auth: ['system:sms-template:send-sms'],

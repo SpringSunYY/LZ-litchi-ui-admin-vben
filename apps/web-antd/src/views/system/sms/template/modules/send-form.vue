@@ -9,6 +9,7 @@ import { message } from 'ant-design-vue';
 
 import { useVbenForm } from '#/adapter/form';
 import { sendSms } from '#/api/system/sms/template';
+import { $t } from '#/locales';
 
 import { useSendSmsFormSchema } from '../data';
 
@@ -54,7 +55,7 @@ const [Modal, modalApi] = useVbenModal({
       // 关闭并提示
       await modalApi.close();
       emit('success');
-      message.success('短信发送成功');
+      message.success($t('system.sms.template.message.sendSuccess'));
     } catch (error) {
       console.error('发送短信失败', error);
     } finally {
@@ -89,10 +90,12 @@ const buildFormSchema = () => {
     formData.value.params.forEach((param) => {
       schema.push({
         fieldName: `param_${param}`,
-        label: `参数 ${param}`,
+        label: $t('system.sms.template.message.param', [param]),
         component: 'Input',
         componentProps: {
-          placeholder: `请输入参数 ${param}`,
+          placeholder: $t('ui.placeholder.input', [
+            $t('system.sms.template.message.param', [param]),
+          ]),
         },
         rules: 'required',
       });
@@ -103,7 +106,7 @@ const buildFormSchema = () => {
 </script>
 
 <template>
-  <Modal class="w-[30%]" title="发送短信">
+  <Modal class="w-[30%]" :title="$t('system.sms.template.message.send')">
     <Form class="mx-4" />
   </Modal>
 </template>

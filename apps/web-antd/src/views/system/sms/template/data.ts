@@ -3,6 +3,7 @@ import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 
 import { z } from '#/adapter/form';
 import { getSimpleSmsChannelList } from '#/api/system/sms/channel';
+import { $t } from '#/locales';
 import {
   CommonStatusEnum,
   DICT_TYPE,
@@ -23,47 +24,55 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'type',
-      label: '短信类型',
+      label: $t('system.sms.template.field.type'),
       component: 'Select',
       componentProps: {
         options: getDictOptions(DICT_TYPE.SYSTEM_SMS_TEMPLATE_TYPE, 'number'),
-        placeholder: '请选择短信类型',
+        placeholder: $t('ui.placeholder.select', [
+          $t('system.sms.template.field.type'),
+        ]),
       },
       rules: 'required',
     },
     {
       fieldName: 'name',
-      label: '模板名称',
+      label: $t('system.sms.template.field.name'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入模板名称',
+        placeholder: $t('ui.placeholder.input', [
+          $t('system.sms.template.field.name'),
+        ]),
       },
       rules: 'required',
     },
     {
       fieldName: 'code',
-      label: '模板编码',
+      label: $t('system.sms.template.field.code'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入模板编码',
+        placeholder: $t('ui.placeholder.input', [
+          $t('system.sms.template.field.code'),
+        ]),
       },
       rules: 'required',
     },
     {
       fieldName: 'channelId',
-      label: '短信渠道',
+      label: $t('system.sms.template.field.channelId'),
       component: 'ApiSelect',
       componentProps: {
         api: async () => await getSimpleSmsChannelList(),
         labelField: 'signature',
         valueField: 'id',
-        placeholder: '请选择短信渠道',
+        placeholder: $t('ui.placeholder.select', [
+          $t('system.sms.template.field.channelId'),
+        ]),
       },
       rules: 'required',
     },
     {
       fieldName: 'status',
-      label: '开启状态',
+      label: $t('system.sms.template.field.status'),
       component: 'RadioGroup',
       componentProps: {
         options: getDictOptions(DICT_TYPE.COMMON_STATUS, 'number'),
@@ -74,29 +83,35 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'content',
-      label: '模板内容',
+      label: $t('system.sms.template.field.content'),
       component: 'Textarea',
       componentProps: {
-        placeholder: '请输入模板内容',
+        placeholder: $t('ui.placeholder.input', [
+          $t('system.sms.template.field.content'),
+        ]),
         rows: 4,
       },
       rules: 'required',
     },
     {
       fieldName: 'apiTemplateId',
-      label: '短信 API 的模板编号',
+      label: $t('system.sms.template.field.apiTemplateId'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入短信 API 的模板编号',
+        placeholder: $t('ui.placeholder.input', [
+          $t('system.sms.template.field.apiTemplateId'),
+        ]),
       },
       rules: 'required',
     },
     {
       fieldName: 'remark',
-      label: '备注',
+      label: $t('system.sms.template.field.remark'),
       component: 'Textarea',
       componentProps: {
-        placeholder: '请输入备注',
+        placeholder: $t('ui.placeholder.input', [
+          $t('system.sms.template.field.remark'),
+        ]),
       },
     },
   ];
@@ -107,57 +122,67 @@ export function useGridFormSchema(): VbenFormSchema[] {
   return [
     {
       fieldName: 'type',
-      label: '短信类型',
+      label: $t('system.sms.template.field.type'),
       component: 'Select',
       componentProps: {
         options: getDictOptions(DICT_TYPE.SYSTEM_SMS_TEMPLATE_TYPE, 'number'),
         allowClear: true,
-        placeholder: '请选择短信类型',
+        placeholder: $t('ui.placeholder.select', [
+          $t('system.sms.template.field.type'),
+        ]),
       },
     },
     {
       fieldName: 'status',
-      label: '开启状态',
+      label: $t('system.sms.template.field.status'),
       component: 'Select',
       componentProps: {
         options: getDictOptions(DICT_TYPE.COMMON_STATUS, 'number'),
         allowClear: true,
-        placeholder: '请选择开启状态',
+        placeholder: $t('ui.placeholder.select', [
+          $t('system.sms.template.field.status'),
+        ]),
       },
     },
     {
       fieldName: 'code',
-      label: '模板编码',
+      label: $t('system.sms.template.field.code'),
       component: 'Input',
       componentProps: {
         allowClear: true,
-        placeholder: '请输入模板编码',
+        placeholder: $t('ui.placeholder.input', [
+          $t('system.sms.template.field.code'),
+        ]),
       },
     },
     {
       fieldName: 'name',
-      label: '模板名称',
+      label: $t('system.sms.template.field.name'),
       component: 'Input',
       componentProps: {
         allowClear: true,
-        placeholder: '请输入模板名称',
+        placeholder: $t('ui.placeholder.input', [
+          $t('system.sms.template.field.name'),
+        ]),
       },
     },
     {
       fieldName: 'channelId',
-      label: '短信渠道',
+      label: $t('system.sms.template.field.channelId'),
       component: 'ApiSelect',
       componentProps: {
         api: async () => await getSimpleSmsChannelList(),
         labelField: 'signature',
         valueField: 'id',
         allowClear: true,
-        placeholder: '请选择短信渠道',
+        placeholder: $t('ui.placeholder.select', [
+          $t('system.sms.template.field.channelId'),
+        ]),
       },
     },
     {
       fieldName: 'createTime',
-      label: '创建时间',
+      label: $t('system.sms.template.field.createTime'),
       component: 'RangePicker',
       componentProps: {
         ...getRangePickerDefaultProps(),
@@ -172,7 +197,7 @@ export function useSendSmsFormSchema(): VbenFormSchema[] {
   return [
     {
       fieldName: 'content',
-      label: '模板内容',
+      label: $t('system.sms.template.field.content'),
       component: 'Textarea',
       componentProps: {
         disabled: true,
@@ -180,16 +205,18 @@ export function useSendSmsFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'mobile',
-      label: '手机号码',
+      label: $t('system.sms.template.field.mobile'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入手机号码',
+        placeholder: $t('ui.placeholder.input', [
+          $t('system.sms.template.field.mobile'),
+        ]),
       },
       rules: 'required',
     },
     {
       fieldName: 'templateParams',
-      label: '模板参数',
+      label: $t('system.sms.template.field.templateParams'),
       component: 'Input',
       dependencies: {
         triggerFields: [''],
@@ -204,11 +231,11 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
   return [
     {
       field: 'id',
-      title: '编号',
+      title: $t('system.sms.template.field.id'),
     },
     {
       field: 'type',
-      title: '短信类型',
+      title: $t('system.sms.template.field.type'),
       cellRender: {
         name: 'CellDict',
         props: { type: DICT_TYPE.SYSTEM_SMS_TEMPLATE_TYPE },
@@ -216,20 +243,20 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
     },
     {
       field: 'name',
-      title: '模板名称',
+      title: $t('system.sms.template.field.name'),
     },
     {
       field: 'code',
-      title: '模板编码',
+      title: $t('system.sms.template.field.code'),
     },
     {
       field: 'content',
-      title: '模板内容',
+      title: $t('system.sms.template.field.content'),
       minWidth: 200,
     },
     {
       field: 'status',
-      title: '开启状态',
+      title: $t('system.sms.template.field.status'),
       cellRender: {
         name: 'CellDict',
         props: { type: DICT_TYPE.COMMON_STATUS },
@@ -237,11 +264,11 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
     },
     {
       field: 'apiTemplateId',
-      title: '短信 API 的模板编号',
+      title: $t('system.sms.template.field.apiTemplateId'),
     },
     {
       field: 'channelCode',
-      title: '短信渠道',
+      title: $t('system.sms.template.field.channelCode'),
       cellRender: {
         name: 'CellDict',
         props: { type: DICT_TYPE.SYSTEM_SMS_CHANNEL_CODE },
@@ -249,15 +276,15 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
     },
     {
       field: 'createTime',
-      title: '创建时间',
+      title: $t('system.sms.template.field.createTime'),
       formatter: 'formatDateTime',
     },
     {
       field: 'remark',
-      title: '备注',
+      title: $t('system.sms.template.field.remark'),
     },
     {
-      title: '操作',
+      title: $t('common.operation'),
       width: 220,
       fixed: 'right',
       slots: { default: 'actions' },

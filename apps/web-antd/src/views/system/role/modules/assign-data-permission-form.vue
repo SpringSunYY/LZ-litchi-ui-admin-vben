@@ -132,7 +132,7 @@ function getAllNodeIds(nodes: any[], ids: number[] = []): number[] {
 </script>
 
 <template>
-  <Modal title="数据权限" class="w-[40%]">
+  <Modal :title="$t('system.role.message.dataPermission')" class="w-[40%]">
     <Form class="mx-4">
       <template #dataScopeDeptIds="slotProps">
         <!-- TODO @YY：可优化，使用 antd 的 tree？原因是，更原生 -->
@@ -153,13 +153,13 @@ function getAllNodeIds(nodes: any[], ids: number[] = []): number[] {
     <template #prepend-footer>
       <div class="flex flex-auto items-center">
         <Checkbox :checked="isAllSelected" @change="toggleSelectAll">
-          全选
+          {{ $t('common.selectAll') }}
         </Checkbox>
         <Checkbox :checked="isExpanded" @change="toggleExpandAll">
-          全部展开
+          {{ $t('common.expandAll') }}
         </Checkbox>
         <Checkbox :checked="isCheckStrictly" @change="toggleCheckStrictly">
-          父子联动
+          {{ $t('common.checkStrictly') }}
         </Checkbox>
       </div>
     </template>

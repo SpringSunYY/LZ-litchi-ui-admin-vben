@@ -2,6 +2,7 @@ import type { VbenFormSchema } from '#/adapter/form';
 import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 
 import { z } from '#/adapter/form';
+import { $t } from '#/locales';
 import { DICT_TYPE, getDictOptions } from '#/utils';
 
 /** 新增/修改的表单 */
@@ -17,46 +18,56 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'mail',
-      label: '邮箱',
+      label: $t('system.mail.account.field.mail'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入邮箱',
+        placeholder: $t('ui.placeholder.input', [
+          $t('system.mail.account.field.mail'),
+        ]),
       },
       rules: 'required',
     },
     {
       fieldName: 'username',
-      label: '用户名',
+      label: $t('system.mail.account.field.username'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入用户名',
+        placeholder: $t('ui.placeholder.input', [
+          $t('system.mail.account.field.username'),
+        ]),
       },
       rules: 'required',
     },
     {
       fieldName: 'password',
-      label: '密码',
+      label: $t('system.mail.account.field.password'),
       component: 'InputPassword',
       componentProps: {
-        placeholder: '请输入密码',
+        placeholder: $t('ui.placeholder.input', [
+          $t('system.mail.account.field.password'),
+        ]),
       },
       rules: 'required',
     },
     {
       fieldName: 'host',
-      label: 'SMTP 服务器域名',
+      label: $t('system.mail.account.field.host'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入 SMTP 服务器域名',
+        placeholder: $t('ui.placeholder.input', [
+          $t('system.mail.account.field.host'),
+        ]),
       },
       rules: 'required',
     },
     {
       fieldName: 'port',
-      label: 'SMTP 服务器端口',
+      label: $t('system.mail.account.field.port'),
       component: 'InputNumber',
       componentProps: {
-        placeholder: '请输入 SMTP 服务器端口',
+        placeholder: $t('ui.placeholder.input', [
+          $t('system.mail.account.field.port'),
+        ]),
         min: 0,
         max: 65_535,
       },
@@ -64,7 +75,7 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'sslEnable',
-      label: '是否开启 SSL',
+      label: $t('system.mail.account.field.sslEnable'),
       component: 'RadioGroup',
       componentProps: {
         options: getDictOptions(DICT_TYPE.INFRA_BOOLEAN_STRING, 'boolean'),
@@ -75,7 +86,7 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'starttlsEnable',
-      label: '是否开启 STARTTLS',
+      label: $t('system.mail.account.field.starttlsEnable'),
       component: 'RadioGroup',
       componentProps: {
         options: getDictOptions(DICT_TYPE.INFRA_BOOLEAN_STRING, 'boolean'),
@@ -86,10 +97,12 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'remark',
-      label: '备注',
+      label: $t('system.mail.account.field.remark'),
       component: 'Textarea',
       componentProps: {
-        placeholder: '请输入备注',
+        placeholder: $t('ui.placeholder.input', [
+          $t('system.mail.account.field.remark'),
+        ]),
       },
     },
   ];
@@ -100,19 +113,23 @@ export function useGridFormSchema(): VbenFormSchema[] {
   return [
     {
       fieldName: 'mail',
-      label: '邮箱',
+      label: $t('system.mail.account.field.mail'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入邮箱',
+        placeholder: $t('ui.placeholder.input', [
+          $t('system.mail.account.field.mail'),
+        ]),
         clearable: true,
       },
     },
     {
       fieldName: 'username',
-      label: '用户名',
+      label: $t('system.mail.account.field.username'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入用户名',
+        placeholder: $t('ui.placeholder.input', [
+          $t('system.mail.account.field.username'),
+        ]),
         clearable: true,
       },
     },
@@ -124,27 +141,27 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
   return [
     {
       field: 'id',
-      title: '编号',
+      title: $t('system.mail.account.field.id'),
     },
     {
       field: 'mail',
-      title: '邮箱',
+      title: $t('system.mail.account.field.mail'),
     },
     {
       field: 'username',
-      title: '用户名',
+      title: $t('system.mail.account.field.username'),
     },
     {
       field: 'host',
-      title: 'SMTP 服务器域名',
+      title: $t('system.mail.account.field.host'),
     },
     {
       field: 'port',
-      title: 'SMTP 服务器端口',
+      title: $t('system.mail.account.field.port'),
     },
     {
       field: 'sslEnable',
-      title: '是否开启 SSL',
+      title: $t('system.mail.account.field.sslEnable'),
       cellRender: {
         name: 'CellDict',
         props: { type: DICT_TYPE.INFRA_BOOLEAN_STRING },
@@ -152,7 +169,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
     },
     {
       field: 'starttlsEnable',
-      title: '是否开启 STARTTLS',
+      title: $t('system.mail.account.field.starttlsEnable'),
       cellRender: {
         name: 'CellDict',
         props: { type: DICT_TYPE.INFRA_BOOLEAN_STRING },
@@ -160,11 +177,11 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
     },
     {
       field: 'createTime',
-      title: '创建时间',
+      title: $t('system.mail.account.field.createTime'),
       formatter: 'formatDateTime',
     },
     {
-      title: '操作',
+      title: $t('common.operation'),
       width: 130,
       fixed: 'right',
       slots: { default: 'actions' },

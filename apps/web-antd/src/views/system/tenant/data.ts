@@ -4,6 +4,7 @@ import type { SystemTenantApi } from '#/api/system/tenant';
 
 import { z } from '#/adapter/form';
 import { getAreaTree } from '#/api/system/area';
+import { $t } from '#/locales';
 import {
   CommonStatusEnum,
   DICT_TYPE,
@@ -24,60 +25,70 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'name',
-      label: '租户名',
+      label: $t('system.tenant.field.name'),
       rules: 'required',
       component: 'Input',
       componentProps: {
-        placeholder: '请输入租户名',
+        placeholder: $t('ui.placeholder.input', [
+          $t('system.tenant.field.name'),
+        ]),
       },
     },
     {
       fieldName: 'code',
-      label: '编码',
+      label: $t('system.tenant.field.code'),
       rules: 'required',
       component: 'Input',
       componentProps: {
-        placeholder: '请输入编码',
+        placeholder: $t('ui.placeholder.input', [
+          $t('system.tenant.field.code'),
+        ]),
       },
     },
     {
       fieldName: 'contactName',
-      label: '联系人',
+      label: $t('system.tenant.field.contactName'),
       rules: 'required',
       component: 'Input',
       componentProps: {
-        placeholder: '请输入联系人',
+        placeholder: $t('ui.placeholder.input', [
+          $t('system.tenant.field.contactName'),
+        ]),
       },
     },
     {
       fieldName: 'contactMobile',
-      label: '联系手机',
+      label: $t('system.tenant.field.contactMobile'),
       component: 'Input',
       rules: 'mobile',
     },
     {
       fieldName: 'industry',
-      label: '行业',
+      label: $t('system.tenant.field.industry'),
       rules: 'required',
       component: 'Select',
       componentProps: {
         options: getDictOptions(DICT_TYPE.SYSTEM_TENANT_INDUSTRY, 'number'),
-        placeholder: '请选择行业',
+        placeholder: $t('ui.placeholder.select', [
+          $t('system.tenant.field.industry'),
+        ]),
       },
     },
     {
       fieldName: 'type',
-      label: '类型',
+      label: $t('system.tenant.field.type'),
       rules: 'required',
       component: 'Select',
       componentProps: {
         options: getDictOptions(DICT_TYPE.SYSTEM_TENANT_TYPE, 'number'),
-        placeholder: '请选择类型',
+        placeholder: $t('ui.placeholder.select', [
+          $t('system.tenant.field.type'),
+        ]),
       },
     },
     {
       fieldName: 'addressCode',
-      label: '地区',
+      label: $t('system.tenant.field.addressCode'),
       component: 'ApiTreeSelect',
       componentProps: {
         api: () => getAreaTree(),
@@ -86,22 +97,24 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'addressDetail',
-      label: '地址',
+      label: $t('system.tenant.field.addressDetail'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入地址',
+        placeholder: $t('ui.placeholder.input', [
+          $t('system.tenant.field.addressDetail'),
+        ]),
       },
     },
     {
       fieldName: 'qualifications',
-      label: '相关资质',
+      label: $t('system.tenant.field.qualifications'),
       component: 'FileUpload',
       componentProps: {
         moduleType: 'system',
       },
     },
     {
-      label: '用户名称',
+      label: $t('system.tenant.field.username'),
       fieldName: 'username',
       component: 'Input',
       rules: 'required',
@@ -111,7 +124,7 @@ export function useFormSchema(): VbenFormSchema[] {
       },
     },
     {
-      label: '用户密码',
+      label: $t('system.tenant.field.password'),
       fieldName: 'password',
       component: 'InputPassword',
       rules: 'required',
@@ -121,13 +134,13 @@ export function useFormSchema(): VbenFormSchema[] {
       },
     },
     {
-      label: '绑定域名',
+      label: $t('system.tenant.field.website'),
       fieldName: 'website',
       component: 'Input',
     },
     {
       fieldName: 'status',
-      label: '租户状态',
+      label: $t('system.tenant.field.status'),
       component: 'RadioGroup',
       componentProps: {
         options: getDictOptions(DICT_TYPE.COMMON_STATUS, 'number'),
@@ -144,82 +157,98 @@ export function useGridFormSchema(): VbenFormSchema[] {
   return [
     {
       fieldName: 'name',
-      label: '租户名',
+      label: $t('system.tenant.field.name'),
       component: 'Input',
       componentProps: {
         allowClear: true,
-        placeholder: '请输入租户名',
+        placeholder: $t('ui.placeholder.input', [
+          $t('system.tenant.field.name'),
+        ]),
       },
     },
     {
       fieldName: 'code',
-      label: '编码',
+      label: $t('system.tenant.field.code'),
       component: 'Input',
       componentProps: {
         allowClear: true,
-        placeholder: '请输入编码',
+        placeholder: $t('ui.placeholder.input', [
+          $t('system.tenant.field.code'),
+        ]),
       },
     },
     {
       fieldName: 'contactName',
-      label: '联系人',
+      label: $t('system.tenant.field.contactName'),
       component: 'Input',
       componentProps: {
         allowClear: true,
-        placeholder: '请输入联系人',
+        placeholder: $t('ui.placeholder.input', [
+          $t('system.tenant.field.contactName'),
+        ]),
       },
     },
     {
       fieldName: 'contactMobile',
-      label: '联系手机',
+      label: $t('system.tenant.field.contactMobile'),
       component: 'Input',
       componentProps: {
         allowClear: true,
-        placeholder: '请输入联系手机',
+        placeholder: $t('ui.placeholder.input', [
+          $t('system.tenant.field.contactMobile'),
+        ]),
       },
     },
     {
       fieldName: 'industry',
-      label: '行业',
+      label: $t('system.tenant.field.industry'),
       component: 'Select',
       componentProps: {
         allowClear: true,
         options: getDictOptions(DICT_TYPE.SYSTEM_TENANT_INDUSTRY, 'number'),
-        placeholder: '请选择行业',
+        placeholder: $t('ui.placeholder.select', [
+          $t('system.tenant.field.industry'),
+        ]),
       },
     },
     {
       fieldName: 'type',
-      label: '类型',
+      label: $t('system.tenant.field.type'),
       component: 'Select',
       componentProps: {
         allowClear: true,
         options: getDictOptions(DICT_TYPE.SYSTEM_TENANT_TYPE, 'number'),
-        placeholder: '请选择类型',
+        placeholder: $t('ui.placeholder.select', [
+          $t('system.tenant.field.type'),
+        ]),
       },
     },
     {
       fieldName: 'status',
-      label: '租户状态',
+      label: $t('system.tenant.field.status'),
       component: 'Select',
       componentProps: {
         allowClear: true,
         options: getDictOptions(DICT_TYPE.SYSTEM_TENANT_STATUS, 'number'),
-        placeholder: '请选择租户状态',
+        placeholder: $t('ui.placeholder.select', [
+          $t('system.tenant.field.status'),
+        ]),
       },
     },
     {
       fieldName: 'addressCode',
-      label: '地区',
+      label: $t('system.tenant.field.addressCode'),
       component: 'Input',
       componentProps: {
         allowClear: true,
-        placeholder: '请输入地区',
+        placeholder: $t('ui.placeholder.input', [
+          $t('system.tenant.field.addressCode'),
+        ]),
       },
     },
     {
       fieldName: 'createTime',
-      label: '创建时间',
+      label: $t('system.tenant.field.createTime'),
       component: 'RangePicker',
       componentProps: {
         ...getRangePickerDefaultProps(),
@@ -235,38 +264,38 @@ export function useGridColumns(): VxeTableGridOptions<SystemTenantApi.Tenant>['c
     { type: 'checkbox', width: 40 },
     {
       field: 'id',
-      title: '租户编号',
+      title: $t('system.tenant.field.id'),
       minWidth: 120,
     },
     {
       field: 'name',
-      title: '租户名',
+      title: $t('system.tenant.field.name'),
       minWidth: 120,
     },
     {
       field: 'code',
-      title: '编码',
+      title: $t('system.tenant.field.code'),
       minWidth: 120,
     },
     {
       field: 'contactUserId',
-      title: '联系人的用户编号',
+      title: $t('system.tenant.field.contactUserId'),
       minWidth: 120,
       visible: false,
     },
     {
       field: 'contactName',
-      title: '联系人',
+      title: $t('system.tenant.field.contactName'),
       minWidth: 120,
     },
     {
       field: 'contactMobile',
-      title: '联系手机',
+      title: $t('system.tenant.field.contactMobile'),
       minWidth: 120,
     },
     {
       field: 'industry',
-      title: '行业',
+      title: $t('system.tenant.field.industry'),
       minWidth: 120,
       cellRender: {
         name: 'CellDict',
@@ -275,7 +304,7 @@ export function useGridColumns(): VxeTableGridOptions<SystemTenantApi.Tenant>['c
     },
     {
       field: 'type',
-      title: '类型',
+      title: $t('system.tenant.field.type'),
       minWidth: 120,
       cellRender: {
         name: 'CellDict',
@@ -284,18 +313,18 @@ export function useGridColumns(): VxeTableGridOptions<SystemTenantApi.Tenant>['c
     },
     {
       field: 'addressCode',
-      title: '地区',
+      title: $t('system.tenant.field.addressCode'),
       minWidth: 160,
       slots: { default: 'addressCode' },
     },
     {
       field: 'addressDetail',
-      title: '地址',
+      title: $t('system.tenant.field.addressDetail'),
       minWidth: 120,
     },
     {
       field: 'qualifications',
-      title: '相关资质',
+      title: $t('system.tenant.field.qualifications'),
       minWidth: 120,
       cellRender: {
         name: 'CellFilePreview',
@@ -303,7 +332,7 @@ export function useGridColumns(): VxeTableGridOptions<SystemTenantApi.Tenant>['c
     },
     {
       field: 'status',
-      title: '租户状态',
+      title: $t('system.tenant.field.status'),
       minWidth: 120,
       cellRender: {
         name: 'CellDict',
@@ -312,42 +341,42 @@ export function useGridColumns(): VxeTableGridOptions<SystemTenantApi.Tenant>['c
     },
     {
       field: 'website',
-      title: '绑定域名',
+      title: $t('system.tenant.field.website'),
       minWidth: 120,
     },
     {
       field: 'rechargeAmount',
-      title: '充值金额',
+      title: $t('system.tenant.field.rechargeAmount'),
       minWidth: 120,
     },
     {
       field: 'paymentAmount',
-      title: '支付金额',
+      title: $t('system.tenant.field.paymentAmount'),
       minWidth: 120,
     },
     {
       field: 'balanceAmount',
-      title: '余额',
+      title: $t('system.tenant.field.balanceAmount'),
       minWidth: 120,
     },
     {
       field: 'accountCount',
-      title: '账号数量',
+      title: $t('system.tenant.field.accountCount'),
       minWidth: 120,
     },
     {
       field: 'currentAccountCount',
-      title: '当前数量',
+      title: $t('system.tenant.field.currentAccountCount'),
       minWidth: 120,
     },
     {
       field: 'createTime',
-      title: '创建时间',
+      title: $t('system.tenant.field.createTime'),
       minWidth: 120,
       formatter: 'formatDateTime',
     },
     {
-      title: '操作',
+      title: $t('common.operation'),
       width: 220,
       fixed: 'right',
       slots: { default: 'actions' },

@@ -38,7 +38,7 @@ const [Modal, modalApi] = useVbenModal({
 
 <template>
   <Modal
-    title="社交用户详情"
+    :title="$t('system.social.user.message.detail')"
     class="w-1/2"
     :show-cancel-button="false"
     :show-confirm-button="false"
@@ -50,28 +50,28 @@ const [Modal, modalApi] = useVbenModal({
       class="mx-4"
       :label-style="{ width: '185px' }"
     >
-      <DescriptionsItem label="社交平台">
+      <DescriptionsItem :label="$t('system.social.user.field.type')">
         <DictTag :type="DICT_TYPE.SYSTEM_SOCIAL_TYPE" :value="formData?.type" />
       </DescriptionsItem>
-      <DescriptionsItem label="用户昵称">
+      <DescriptionsItem :label="$t('system.social.user.field.nickname')">
         {{ formData?.nickname }}
       </DescriptionsItem>
-      <DescriptionsItem label="用户头像">
+      <DescriptionsItem :label="$t('system.social.user.field.avatar')">
         <Image :src="formData?.avatar" :width="30" :height="30" />
       </DescriptionsItem>
-      <DescriptionsItem label="社交 token">
+      <DescriptionsItem :label="$t('system.social.user.field.token')">
         {{ formData?.token }}
       </DescriptionsItem>
-      <DescriptionsItem label="原始 Token 数据">
+      <DescriptionsItem :label="$t('system.social.user.field.rawTokenInfo')">
         {{ formData?.rawTokenInfo }}
       </DescriptionsItem>
-      <DescriptionsItem label="原始 User 数据">
+      <DescriptionsItem :label="$t('system.social.user.field.rawUserInfo')">
         {{ formData?.rawUserInfo }}
       </DescriptionsItem>
-      <DescriptionsItem label="最后一次的认证 code">
+      <DescriptionsItem :label="$t('system.social.user.field.code')">
         {{ formData?.code }}
       </DescriptionsItem>
-      <DescriptionsItem label="最后一次的认证 state">
+      <DescriptionsItem :label="$t('system.social.user.field.state')">
         {{ formData?.state }}
       </DescriptionsItem>
     </Descriptions>

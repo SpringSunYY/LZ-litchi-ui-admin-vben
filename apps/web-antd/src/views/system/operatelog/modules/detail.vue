@@ -8,6 +8,8 @@ import { formatDateTime } from '@vben/utils';
 
 import { Descriptions } from 'ant-design-vue';
 
+import { $t } from '#/locales';
+
 const formData = ref<SystemOperateLogApi.OperateLog>();
 
 const [Modal, modalApi] = useVbenModal({
@@ -33,7 +35,7 @@ const [Modal, modalApi] = useVbenModal({
 
 <template>
   <Modal
-    title="操作日志详情"
+    :title="$t('system.operatelog.message.detail')"
     class="w-1/2"
     :show-cancel-button="false"
     :show-confirm-button="false"
@@ -45,43 +47,49 @@ const [Modal, modalApi] = useVbenModal({
       class="mx-4"
       :label-style="{ width: '110px' }"
     >
-      <Descriptions.Item label="日志编号">
+      <Descriptions.Item :label="$t('system.operatelog.field.id')">
         {{ formData?.id }}
       </Descriptions.Item>
-      <Descriptions.Item label="链路追踪" v-if="formData?.traceId">
+      <Descriptions.Item
+        v-if="formData?.traceId"
+        :label="$t('system.operatelog.field.traceId')"
+      >
         {{ formData?.traceId }}
       </Descriptions.Item>
-      <Descriptions.Item label="操作人编号">
+      <Descriptions.Item :label="$t('system.operatelog.field.userId')">
         {{ formData?.userId }}
       </Descriptions.Item>
-      <Descriptions.Item label="操作人名字">
+      <Descriptions.Item :label="$t('system.operatelog.field.userName')">
         {{ formData?.userName }}
       </Descriptions.Item>
-      <Descriptions.Item label="操作人IP">
+      <Descriptions.Item :label="$t('system.operatelog.field.userIp')">
         {{ formData?.userIp }}
       </Descriptions.Item>
-      <Descriptions.Item label="操作人UA">
+      <Descriptions.Item :label="$t('system.operatelog.field.userAgent')">
         {{ formData?.userAgent }}
       </Descriptions.Item>
-      <Descriptions.Item label="操作模块">
+      <Descriptions.Item :label="$t('system.operatelog.field.type')">
         {{ formData?.type }}
       </Descriptions.Item>
-      <Descriptions.Item label="操作名">
+      <Descriptions.Item :label="$t('system.operatelog.field.subType')">
         {{ formData?.subType }}
       </Descriptions.Item>
-      <Descriptions.Item label="操作内容">
+      <Descriptions.Item :label="$t('system.operatelog.field.action')">
         {{ formData?.action }}
       </Descriptions.Item>
-      <Descriptions.Item v-if="formData?.extra" label="操作拓展参数">
+      <Descriptions.Item
+        v-if="formData?.extra"
+        :label="$t('system.operatelog.field.extra')"
+      >
         {{ formData?.extra }}
       </Descriptions.Item>
-      <Descriptions.Item label="请求URL">
+      <Descriptions.Item :label="$t('system.operatelog.field.requestUrl')">
         {{ formData?.requestMethod }} {{ formData?.requestUrl }}
       </Descriptions.Item>
-      <Descriptions.Item label="操作时间">
+      <Descriptions.Item :label="$t('system.operatelog.field.createTime')">
         {{ formatDateTime(formData?.createTime || '') }}
       </Descriptions.Item>
-      <Descriptions.Item label="业务编号">
+      <Descriptions.Item :label="$t('system.operatelog.field.bizId')">
         {{ formData?.bizId }}
       </Descriptions.Item>
     </Descriptions>

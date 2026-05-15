@@ -17,8 +17,8 @@ const emit = defineEmits(['success']);
 const formData = ref<SystemRoleApi.Role>();
 const getTitle = computed(() => {
   return formData.value?.id
-    ? $t('ui.actionTitle.edit', ['角色'])
-    : $t('ui.actionTitle.create', ['角色']);
+    ? $t('ui.actionTitle.edit', [$t('system.role.role')])
+    : $t('ui.actionTitle.create', [$t('system.role.role')]);
 });
 
 const [Form, formApi] = useVbenForm({

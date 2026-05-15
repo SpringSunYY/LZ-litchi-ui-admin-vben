@@ -3,7 +3,7 @@ import type { SystemTenantApi } from '#/api/system/tenant';
 
 import { computed, ref } from 'vue';
 
-import {useVbenModal, useVbenModelDrawer} from '@vben/common-ui';
+import { useVbenModelDrawer } from '@vben/common-ui';
 
 import { message } from 'ant-design-vue';
 
@@ -17,8 +17,8 @@ const emit = defineEmits(['success']);
 const formData = ref<SystemTenantApi.Tenant>();
 const getTitle = computed(() => {
   return formData.value
-    ? $t('ui.actionTitle.edit', ['租户'])
-    : $t('ui.actionTitle.create', ['租户']);
+    ? $t('ui.actionTitle.edit', [$t('system.tenant.tenant')])
+    : $t('ui.actionTitle.create', [$t('system.tenant.tenant')]);
 });
 
 const [Form, formApi] = useVbenForm({

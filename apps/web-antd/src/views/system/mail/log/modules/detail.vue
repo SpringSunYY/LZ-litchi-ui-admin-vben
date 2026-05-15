@@ -9,6 +9,7 @@ import { formatDateTime } from '@vben/utils';
 import { Descriptions } from 'ant-design-vue';
 
 import { DictTag } from '#/components/dict-tag';
+import { $t } from '#/locales';
 import { DICT_TYPE } from '#/utils';
 
 const formData = ref<SystemMailLogApi.MailLog>();
@@ -36,55 +37,55 @@ const [Modal, modalApi] = useVbenModal({
 
 <template>
   <Modal
-    title="邮件日志详情"
+    :title="$t('system.mail.log.message.detail')"
     class="w-1/2"
     :show-cancel-button="false"
     :show-confirm-button="false"
   >
     <div class="p-4">
       <Descriptions :column="2" bordered :label-style="{ width: '140px' }">
-        <Descriptions.Item label="编号">{{ formData?.id }}</Descriptions.Item>
-        <Descriptions.Item label="创建时间">
+        <Descriptions.Item :label="$t('system.mail.log.field.id')">{{ formData?.id }}</Descriptions.Item>
+        <Descriptions.Item :label="$t('system.mail.log.field.createTime')">
           {{ formatDateTime(formData?.createTime || '') }}
         </Descriptions.Item>
-        <Descriptions.Item label="收件邮箱">
+        <Descriptions.Item :label="$t('system.mail.log.field.toMail')">
           {{ formData?.toMail }}
         </Descriptions.Item>
-        <Descriptions.Item label="发送邮箱">
+        <Descriptions.Item :label="$t('system.mail.log.field.fromMail')">
           {{ formData?.fromMail }}
         </Descriptions.Item>
-        <Descriptions.Item label="用户编号">
+        <Descriptions.Item :label="$t('system.mail.log.field.userId')">
           {{ formData?.userId }}
         </Descriptions.Item>
-        <Descriptions.Item label="用户类型">
+        <Descriptions.Item :label="$t('system.mail.log.field.userType')">
           {{ formData?.userType }}
         </Descriptions.Item>
-        <Descriptions.Item label="模板编号">
+        <Descriptions.Item :label="$t('system.mail.log.field.templateId')">
           {{ formData?.templateId }}
         </Descriptions.Item>
-        <Descriptions.Item label="模板编码">
+        <Descriptions.Item :label="$t('system.mail.log.field.templateCode')">
           {{ formData?.templateCode }}
         </Descriptions.Item>
-        <Descriptions.Item label="邮件标题" :span="2">
+        <Descriptions.Item :label="$t('system.mail.log.field.templateTitle')" :span="2">
           {{ formData?.templateTitle }}
         </Descriptions.Item>
-        <Descriptions.Item label="邮件内容" :span="2">
+        <Descriptions.Item :label="$t('system.mail.log.field.templateContent')" :span="2">
           <!-- eslint-disable-next-line vue/no-v-html -->
           <div v-html="formData?.templateContent"></div>
         </Descriptions.Item>
-        <Descriptions.Item label="发送状态">
+        <Descriptions.Item :label="$t('system.mail.log.field.sendStatus')">
           <DictTag
             :type="DICT_TYPE.SYSTEM_MAIL_SEND_STATUS"
             :value="formData?.sendStatus"
           />
         </Descriptions.Item>
-        <Descriptions.Item label="发送时间">
+        <Descriptions.Item :label="$t('system.mail.log.field.sendTime')">
           {{ formatDateTime(formData?.sendTime || '') }}
         </Descriptions.Item>
-        <Descriptions.Item label="发送消息编号">
+        <Descriptions.Item :label="$t('system.mail.log.field.sendMessageId')">
           {{ formData?.sendMessageId }}
         </Descriptions.Item>
-        <Descriptions.Item label="发送异常">
+        <Descriptions.Item :label="$t('system.mail.log.field.sendException')">
           {{ formData?.sendException }}
         </Descriptions.Item>
       </Descriptions>

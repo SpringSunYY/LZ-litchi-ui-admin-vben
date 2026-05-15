@@ -33,7 +33,7 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'parentId',
-      label: '上级菜单',
+      label: $t('system.menu.field.parentId'),
       component: 'ApiTreeSelect',
       componentProps: {
         allowClear: true,
@@ -41,14 +41,16 @@ export function useFormSchema(): VbenFormSchema[] {
           const data = await getMenuList();
           data.unshift({
             id: 0,
-            name: '顶级部门',
+            name: $t('ui.treeRoot', [$t('system.menu.field.parentId')]),
           } as SystemMenuApi.Menu);
           return handleTree(data);
         },
         labelField: 'name',
         valueField: 'id',
         childrenField: 'children',
-        placeholder: '请选择上级菜单',
+        placeholder: $t('ui.placeholder.select', [
+          $t('system.menu.field.parentId'),
+        ]),
         filterTreeNode(input: string, node: Recordable<any>) {
           if (!input || input.length === 0) {
             return true;
@@ -77,16 +79,16 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'name',
-      label: '菜单名称',
+      label: $t('system.menu.field.name'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入菜单名称',
+        placeholder: $t('ui.placeholder.input', [$t('system.menu.field.name')]),
       },
       rules: 'required',
     },
     {
       fieldName: 'type',
-      label: '菜单类型',
+      label: $t('system.menu.field.type'),
       component: 'RadioGroup',
       componentProps: {
         options: getDictOptions(DICT_TYPE.SYSTEM_MENU_TYPE, 'number'),
@@ -97,10 +99,12 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'icon',
-      label: '菜单图标',
+      label: $t('system.menu.field.icon'),
       component: 'IconPicker',
       componentProps: {
-        placeholder: '请选择菜单图标',
+        placeholder: $t('ui.placeholder.select', [
+          $t('system.menu.field.icon'),
+        ]),
         prefix: 'carbon',
       },
       rules: 'required',
@@ -115,13 +119,13 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'path',
-      label: '路由地址',
+      label: $t('system.menu.field.path'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入路由地址',
+        placeholder: $t('ui.placeholder.input', [$t('system.menu.field.path')]),
       },
+      help: $t('system.menu.help.pathTip'),
       rules: z.string(),
-      help: '访问的路由地址，如：`user`。如需外网地址时，则以 `http(s)://` 开头',
       dependencies: {
         triggerFields: ['type', 'parentId'],
         show: (values) => {
@@ -130,29 +134,31 @@ export function useFormSchema(): VbenFormSchema[] {
           );
         },
         rules: (values) => {
-          const schema = z.string().min(1, '路由地址不能为空');
+          const schema = z.string().min(1, $t('system.menu.help.pathEmpty'));
           if (isHttpUrl(values.path)) {
             return schema;
           }
           if (values.parentId === 0) {
             return schema.refine(
               (path) => path.charAt(0) === '/',
-              '路径必须以 / 开头',
+              $t('system.menu.help.pathRootStart'),
             );
           }
           return schema.refine(
             (path) => path.charAt(0) !== '/',
-            '路径不能以 / 开头',
+            $t('system.menu.help.pathNoStart'),
           );
         },
       },
     },
     {
       fieldName: 'component',
-      label: '组件地址',
+      label: $t('system.menu.field.component'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入组件地址',
+        placeholder: $t('ui.placeholder.input', [
+          $t('system.menu.field.component'),
+        ]),
       },
       dependencies: {
         triggerFields: ['type'],
@@ -163,14 +169,16 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'componentName',
-      label: '组件名称',
+      label: $t('system.menu.field.componentName'),
       component: 'AutoComplete',
       componentProps: {
         allowClear: true,
         filterOption(input: string, option: { value: string }) {
           return option.value.toLowerCase().includes(input.toLowerCase());
         },
-        placeholder: '请选择组件名称',
+        placeholder: $t('ui.placeholder.select', [
+          $t('system.menu.field.componentName'),
+        ]),
         options: componentKeys.map((v) => ({ value: v })),
       },
       dependencies: {
@@ -182,10 +190,12 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'permission',
-      label: '权限标识',
+      label: $t('system.menu.field.permission'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入菜单描述',
+        placeholder: $t('ui.placeholder.input', [
+          $t('system.menu.field.permission'),
+        ]),
       },
       dependencies: {
         show: (values) => {
@@ -198,18 +208,18 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'sort',
-      label: '显示顺序',
+      label: $t('system.menu.field.sort'),
       component: 'InputNumber',
       componentProps: {
         min: 0,
         controlsPosition: 'right',
-        placeholder: '请输入显示顺序',
+        placeholder: $t('ui.placeholder.input', [$t('system.menu.field.sort')]),
       },
       rules: 'required',
     },
     {
       fieldName: 'status',
-      label: '菜单状态',
+      label: $t('system.menu.field.status'),
       component: 'RadioGroup',
       componentProps: {
         options: getDictOptions(DICT_TYPE.COMMON_STATUS, 'number'),
@@ -220,19 +230,19 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'alwaysShow',
-      label: '总是显示',
+      label: $t('system.menu.field.alwaysShow'),
       component: 'RadioGroup',
       componentProps: {
         options: [
-          { label: '总是', value: true },
-          { label: '不是', value: false },
+          { label: $t('system.menu.alwaysShow.yes'), value: true },
+          { label: $t('system.menu.alwaysShow.no'), value: false },
         ],
         buttonStyle: 'solid',
         optionType: 'button',
       },
       rules: 'required',
       defaultValue: true,
-      help: '选择不是时，不显示自己以及所有子菜单',
+      help: $t('system.menu.help.alwaysShowTip'),
       dependencies: {
         triggerFields: ['type'],
         show: (values) => {
@@ -242,19 +252,19 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'keepAlive',
-      label: '缓存状态',
+      label: $t('system.menu.field.keepAlive'),
       component: 'RadioGroup',
       componentProps: {
         options: [
-          { label: '缓存', value: true },
-          { label: '不缓存', value: false },
+          { label: $t('system.menu.keepAlive.yes'), value: true },
+          { label: $t('system.menu.keepAlive.no'), value: false },
         ],
         buttonStyle: 'solid',
         optionType: 'button',
       },
       rules: 'required',
       defaultValue: true,
-      help: '选择缓存时，则会被 `keep-alive` 缓存，必须填写「组件名称」字段',
+      help: $t('system.menu.help.keepAliveTip'),
       dependencies: {
         triggerFields: ['type'],
         show: (values) => {
@@ -264,10 +274,12 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'remark',
-      label: '菜单备注',
+      label: $t('system.menu.field.remark'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入菜单备注',
+        placeholder: $t('ui.placeholder.input', [
+          $t('system.menu.field.remark'),
+        ]),
       },
     },
   ];
@@ -278,7 +290,7 @@ export function useGridColumns(): VxeTableGridOptions<SystemMenuApi.Menu>['colum
   return [
     {
       field: 'name',
-      title: '菜单名称',
+      title: $t('system.menu.field.name'),
       align: 'left',
       fixed: 'left',
       slots: { default: 'name' },
@@ -286,7 +298,7 @@ export function useGridColumns(): VxeTableGridOptions<SystemMenuApi.Menu>['colum
     },
     {
       field: 'type',
-      title: '菜单类型',
+      title: $t('system.menu.field.type'),
       cellRender: {
         name: 'CellDict',
         props: { type: DICT_TYPE.SYSTEM_MENU_TYPE },
@@ -294,23 +306,23 @@ export function useGridColumns(): VxeTableGridOptions<SystemMenuApi.Menu>['colum
     },
     {
       field: 'sort',
-      title: '显示排序',
+      title: $t('system.menu.field.sort'),
     },
     {
       field: 'permission',
-      title: '权限标识',
+      title: $t('system.menu.field.permission'),
     },
     {
       field: 'path',
-      title: '组件路径',
+      title: $t('system.menu.field.path'),
     },
     {
       field: 'componentName',
-      title: '组件名称',
+      title: $t('system.menu.field.componentName'),
     },
     {
       field: 'status',
-      title: '状态',
+      title: $t('system.menu.field.status'),
       cellRender: {
         name: 'CellDict',
         props: { type: DICT_TYPE.COMMON_STATUS },
@@ -318,11 +330,11 @@ export function useGridColumns(): VxeTableGridOptions<SystemMenuApi.Menu>['colum
     },
     {
       field: 'remark',
-      title: '菜单备注',
+      title: $t('system.menu.field.remark'),
       visible: false,
     },
     {
-      title: '操作',
+      title: $t('common.operation'),
       width: 220,
       fixed: 'right',
       slots: { default: 'actions' },

@@ -94,7 +94,10 @@ async function handleExport() {
   const data = await exportTenantPackageSubscribe(
     await gridApi.formApi.getValues(),
   );
-  downloadFileFromBlobPart({ fileName: '租户套餐订阅.xls', source: data });
+  downloadFileFromBlobPart({
+    fileName: `${$t('system.tenantPackageSubscribe.tenantPackageSubscribe')}.xls`,
+    source: data,
+  });
 }
 
 const [Grid, gridApi] = useVbenVxeGrid({
@@ -138,12 +141,14 @@ const [Grid, gridApi] = useVbenVxeGrid({
   <Page auto-content-height>
     <FormModalDrawer @success="onRefresh" />
 
-    <Grid table-title="租户套餐订阅列表">
+    <Grid :table-title="$t('system.tenantPackageSubscribe.list')">
       <template #toolbar-tools>
         <TableAction
           :actions="[
             {
-              label: $t('ui.actionTitle.create', ['租户套餐订阅']),
+              label: $t('ui.actionTitle.create', [
+                $t('system.tenantPackageSubscribe.tenantPackageSubscribe'),
+              ]),
               type: 'primary',
               icon: ACTION_ICON.ADD,
               auth: ['system:tenantPackageSubscribe:create'],

@@ -21,8 +21,8 @@ const emit = defineEmits(['success']);
 const formData = ref<SystemSmsTemplateApi.SmsTemplate>();
 const getTitle = computed(() => {
   return formData.value?.id
-    ? $t('ui.actionTitle.edit', ['短信模板'])
-    : $t('ui.actionTitle.create', ['短信模板']);
+    ? $t('ui.actionTitle.edit', [$t('system.sms.template.template')])
+    : $t('ui.actionTitle.create', [$t('system.sms.template.template')]);
 });
 
 const [Form, formApi] = useVbenForm({

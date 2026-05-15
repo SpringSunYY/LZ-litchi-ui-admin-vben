@@ -6,6 +6,7 @@ import { DocAlert, Page, useVbenModal } from '@vben/common-ui';
 
 import { ACTION_ICON, TableAction, useVbenVxeGrid } from '#/adapter/vxe-table';
 import { getNotifyMessagePage } from '#/api/system/notify/message';
+import { $t } from '#/locales';
 
 import { useGridColumns, useGridFormSchema } from './data';
 import Detail from './modules/detail.vue';
@@ -58,16 +59,19 @@ const [Grid, gridApi] = useVbenVxeGrid({
 <template>
   <Page auto-content-height>
     <template #doc>
-      <DocAlert title="短信配置" url="https://doc.iocoder.cn/sms/" />
+      <DocAlert
+        :title="$t('system.notify.message.menu')"
+        url="https://doc.iocoder.cn/notify/"
+      />
     </template>
 
     <DetailModal @success="onRefresh" />
-    <Grid table-title="站内信列表">
+    <Grid :table-title="$t('system.notify.message.list')">
       <template #actions="{ row }">
         <TableAction
           :actions="[
             {
-              label: $t('common.detail'),
+              label: $t('common.view'),
               type: 'link',
               icon: ACTION_ICON.VIEW,
               auth: ['system:notify-message:query'],

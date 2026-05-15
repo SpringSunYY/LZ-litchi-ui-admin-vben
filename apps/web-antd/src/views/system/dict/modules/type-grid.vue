@@ -25,8 +25,8 @@ import { useTypeGridColumns, useTypeGridFormSchema } from '../data';
 import TypeForm from './type-form.vue';
 
 const emit = defineEmits<{
-  select: [dictType: string];
   deleted: [];
+  select: [dictType: string];
 }>();
 
 const [TypeFormModal, typeFormModalApi] = useVbenModal({
@@ -42,7 +42,10 @@ function onRefresh() {
 /** 导出表格 */
 async function handleExport() {
   const data = await exportDictType(await gridApi.formApi.getValues());
-  downloadFileFromBlobPart({ fileName: '字典类型.xls', source: data });
+  downloadFileFromBlobPart({
+    fileName: `${$t('system.dict.typeList')}.xls`,
+    source: data,
+  });
 }
 
 /** 创建字典类型 */
@@ -120,12 +123,12 @@ const [Grid, gridApi] = useVbenVxeGrid({
   <div class="h-full">
     <TypeFormModal @success="onRefresh" />
 
-    <Grid table-title="字典类型列表">
+    <Grid :table-title="$t('system.dict.typeList')">
       <template #toolbar-tools>
         <TableAction
           :actions="[
             {
-              label: $t('ui.actionTitle.create', ['字典类型']),
+              label: $t('ui.actionTitle.create', [$t('system.dict.type')]),
               type: 'primary',
               icon: ACTION_ICON.ADD,
               auth: ['system:dict:create'],
@@ -159,7 +162,10 @@ const [Grid, gridApi] = useVbenVxeGrid({
               icon: ACTION_ICON.DELETE,
               auth: ['system:dict:delete'],
               popConfirm: {
-                title: $t('ui.actionMessage.deleteConfirm', [row.name]),
+                title: $t('ui.actionMessage.deleteConfirm', [
+                  row.name,
+                  $t('system.dict.type'),
+                ]),
                 confirm: handleDelete.bind(null, row),
               },
             },

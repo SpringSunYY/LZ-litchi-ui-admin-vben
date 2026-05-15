@@ -2,6 +2,7 @@ import type { VbenFormSchema } from '#/adapter/form';
 import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 
 import { z } from '#/adapter/form';
+import { $t } from '#/locales';
 import { CommonStatusEnum, DICT_TYPE, getDictOptions } from '#/utils';
 
 /** 新增/修改的表单 */
@@ -17,34 +18,40 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'clientId',
-      label: '客户端编号',
+      label: $t('system.oauth2.client.field.clientId'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入客户端编号',
+        placeholder: $t('ui.placeholder.input', [
+          $t('system.oauth2.client.field.clientId'),
+        ]),
       },
       rules: 'required',
     },
     {
       fieldName: 'secret',
-      label: '客户端密钥',
+      label: $t('system.oauth2.client.field.secret'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入客户端密钥',
+        placeholder: $t('ui.placeholder.input', [
+          $t('system.oauth2.client.field.secret'),
+        ]),
       },
       rules: 'required',
     },
     {
       fieldName: 'name',
-      label: '应用名',
+      label: $t('system.oauth2.client.field.name'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入应用名',
+        placeholder: $t('ui.placeholder.input', [
+          $t('system.oauth2.client.field.name'),
+        ]),
       },
       rules: 'required',
     },
     {
       fieldName: 'logo',
-      label: '应用图标',
+      label: $t('system.oauth2.client.field.logo'),
       component: 'ImageUpload',
       componentProps: {
         limit: 1,
@@ -54,15 +61,17 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'description',
-      label: '应用描述',
+      label: $t('system.oauth2.client.field.description'),
       component: 'Textarea',
       componentProps: {
-        placeholder: '请输入应用描述',
+        placeholder: $t('ui.placeholder.input', [
+          $t('system.oauth2.client.field.description'),
+        ]),
       },
     },
     {
       fieldName: 'status',
-      label: '状态',
+      label: $t('system.oauth2.client.field.status'),
       component: 'RadioGroup',
       componentProps: {
         options: getDictOptions(DICT_TYPE.COMMON_STATUS, 'number'),
@@ -73,10 +82,10 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'accessTokenValiditySeconds',
-      label: '访问令牌的有效期',
+      label: $t('system.oauth2.client.field.accessTokenValiditySeconds'),
       component: 'InputNumber',
       componentProps: {
-        placeholder: '请输入访问令牌的有效期，单位：秒',
+        placeholder: $t('system.oauth2.client.help.accessTokenValidity'),
         min: 0,
         controlsPosition: 'right',
       },
@@ -84,10 +93,10 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'refreshTokenValiditySeconds',
-      label: '刷新令牌的有效期',
+      label: $t('system.oauth2.client.field.refreshTokenValiditySeconds'),
       component: 'InputNumber',
       componentProps: {
-        placeholder: '请输入刷新令牌的有效期，单位：秒',
+        placeholder: $t('system.oauth2.client.help.refreshTokenValidity'),
         min: 0,
         controlsPosition: 'right',
       },
@@ -95,68 +104,79 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'authorizedGrantTypes',
-      label: '授权类型',
+      label: $t('system.oauth2.client.field.authorizedGrantTypes'),
       component: 'Select',
       componentProps: {
         options: getDictOptions(DICT_TYPE.SYSTEM_OAUTH2_GRANT_TYPE),
         mode: 'multiple',
-        placeholder: '请输入授权类型',
+        placeholder: $t('ui.placeholder.select', [
+          $t('system.oauth2.client.field.authorizedGrantTypes'),
+        ]),
       },
       rules: 'required',
     },
     {
       fieldName: 'scopes',
-      label: '授权范围',
+      label: $t('system.oauth2.client.field.scopes'),
       component: 'Select',
       componentProps: {
-        placeholder: '请输入授权范围',
+        placeholder: $t('ui.placeholder.select', [
+          $t('system.oauth2.client.field.scopes'),
+        ]),
         mode: 'tags',
       },
     },
     {
       fieldName: 'autoApproveScopes',
-      label: '自动授权范围',
+      label: $t('system.oauth2.client.field.autoApproveScopes'),
       component: 'Select',
       componentProps: {
-        placeholder: '请输入自动授权范围',
+        placeholder: $t('ui.placeholder.select', [
+          $t('system.oauth2.client.field.autoApproveScopes'),
+        ]),
         mode: 'multiple',
-        // TODO @YY：根据权限，自动授权范围
       },
     },
     {
       fieldName: 'redirectUris',
-      label: '可重定向的 URI 地址',
+      label: $t('system.oauth2.client.field.redirectUris'),
       component: 'Select',
       componentProps: {
-        placeholder: '请输入可重定向的 URI 地址',
+        placeholder: $t('ui.placeholder.select', [
+          $t('system.oauth2.client.field.redirectUris'),
+        ]),
         mode: 'tags',
       },
       rules: 'required',
     },
     {
       fieldName: 'authorities',
-      label: '权限',
+      label: $t('system.oauth2.client.field.authorities'),
       component: 'Select',
       componentProps: {
-        placeholder: '请输入权限',
+        placeholder: $t('ui.placeholder.select', [
+          $t('system.oauth2.client.field.authorities'),
+        ]),
         mode: 'tags',
       },
     },
     {
       fieldName: 'resourceIds',
-      label: '资源',
+      label: $t('system.oauth2.client.field.resourceIds'),
       component: 'Select',
       componentProps: {
         mode: 'tags',
-        placeholder: '请输入资源',
+        placeholder: $t('ui.placeholder.select', [
+          $t('system.oauth2.client.field.resourceIds'),
+        ]),
       },
     },
     {
       fieldName: 'additionalInformation',
-      label: '附加信息',
+      label: $t('system.oauth2.client.field.additionalInformation'),
       component: 'Textarea',
       componentProps: {
-        placeholder: '请输入附加信息，JSON 格式数据',
+        placeholder: $t('system.oauth2.client.help.additionalInformation'),
       },
     },
   ];
@@ -167,20 +187,25 @@ export function useGridFormSchema(): VbenFormSchema[] {
   return [
     {
       fieldName: 'name',
-      label: '应用名',
+      label: $t('system.oauth2.client.field.name'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入应用名',
+        allowClear: true,
+        placeholder: $t('ui.placeholder.input', [
+          $t('system.oauth2.client.field.name'),
+        ]),
       },
     },
     {
       fieldName: 'status',
-      label: '状态',
+      label: $t('system.oauth2.client.field.status'),
       component: 'Select',
       componentProps: {
         options: getDictOptions(DICT_TYPE.COMMON_STATUS, 'number'),
         allowClear: true,
-        placeholder: '请输入状态',
+        placeholder: $t('ui.placeholder.select', [
+          $t('system.oauth2.client.field.status'),
+        ]),
       },
     },
   ];
@@ -191,26 +216,26 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
   return [
     {
       field: 'clientId',
-      title: '客户端编号',
+      title: $t('system.oauth2.client.field.clientId'),
     },
     {
       field: 'secret',
-      title: '客户端密钥',
+      title: $t('system.oauth2.client.field.secret'),
     },
     {
       field: 'name',
-      title: '应用名',
+      title: $t('system.oauth2.client.field.name'),
     },
     {
       field: 'logo',
-      title: '应用图标',
+      title: $t('system.oauth2.client.field.logo'),
       cellRender: {
         name: 'CellImage',
       },
     },
     {
       field: 'status',
-      title: '状态',
+      title: $t('system.oauth2.client.field.status'),
       cellRender: {
         name: 'CellDict',
         props: { type: DICT_TYPE.COMMON_STATUS },
@@ -218,25 +243,25 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
     },
     {
       field: 'accessTokenValiditySeconds',
-      title: '访问令牌的有效期',
+      title: $t('system.oauth2.client.field.accessTokenValiditySeconds'),
       formatter: ({ cellValue }) => `${cellValue} 秒`,
     },
     {
       field: 'refreshTokenValiditySeconds',
-      title: '刷新令牌的有效期',
+      title: $t('system.oauth2.client.field.refreshTokenValiditySeconds'),
       formatter: ({ cellValue }) => `${cellValue} 秒`,
     },
     {
       field: 'authorizedGrantTypes',
-      title: '授权类型',
+      title: $t('system.oauth2.client.field.authorizedGrantTypes'),
     },
     {
       field: 'createTime',
-      title: '创建时间',
+      title: $t('system.oauth2.client.field.createTime'),
       formatter: 'formatDateTime',
     },
     {
-      title: '操作',
+      title: $t('common.operation'),
       width: 130,
       fixed: 'right',
       slots: { default: 'actions' },

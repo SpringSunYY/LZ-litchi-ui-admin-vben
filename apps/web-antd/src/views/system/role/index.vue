@@ -40,7 +40,7 @@ function onRefresh() {
 /** 导出表格 */
 async function handleExport() {
   const data = await exportRole(await gridApi.formApi.getValues());
-  downloadFileFromBlobPart({ fileName: '角色.xls', source: data });
+  downloadFileFromBlobPart({ fileName: $t('system.role.role') + '.xls', source: data });
 }
 
 /** 编辑角色 */
@@ -124,12 +124,12 @@ const [Grid, gridApi] = useVbenVxeGrid({
     <FormModal @success="onRefresh" />
     <AssignDataPermissionFormModel @success="onRefresh" />
     <AssignMenuFormModel @success="onRefresh" />
-    <Grid table-title="角色列表">
+    <Grid :table-title="$t('system.role.list')">
       <template #toolbar-tools>
         <TableAction
           :actions="[
             {
-              label: $t('ui.actionTitle.create', ['角色']),
+              label: $t('ui.actionTitle.create', [$t('system.role.role')]),
               type: 'primary',
               icon: ACTION_ICON.ADD,
               auth: ['system:role:create'],
@@ -169,13 +169,13 @@ const [Grid, gridApi] = useVbenVxeGrid({
           ]"
           :drop-down-actions="[
             {
-              label: '数据权限',
+              label: $t('system.role.message.dataPermission'),
               type: 'link',
               auth: ['system:permission:assign-role-data-scope'],
               onClick: handleAssignDataPermission.bind(null, row),
             },
             {
-              label: '菜单权限',
+              label: $t('system.role.message.menuPermission'),
               type: 'link',
               auth: ['system:permission:assign-role-menu'],
               onClick: handleAssignMenu.bind(null, row),

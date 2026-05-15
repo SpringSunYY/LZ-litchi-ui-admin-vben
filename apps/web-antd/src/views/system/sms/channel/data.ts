@@ -8,6 +8,7 @@ import {
   getDictOptions,
   getRangePickerDefaultProps,
 } from '#/utils';
+import { $t } from '#/locales';
 
 /** 新增/修改的表单 */
 export function useFormSchema(): VbenFormSchema[] {
@@ -22,26 +23,30 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'signature',
-      label: '短信签名',
+      label: $t('system.sms.channel.field.signature'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入短信签名',
+        placeholder: $t('ui.placeholder.input', [
+          $t('system.sms.channel.field.signature'),
+        ]),
       },
       rules: 'required',
     },
     {
       fieldName: 'code',
-      label: '渠道编码',
+      label: $t('system.sms.channel.field.code'),
       component: 'Select',
       componentProps: {
         options: getDictOptions(DICT_TYPE.SYSTEM_SMS_CHANNEL_CODE, 'string'),
-        placeholder: '请选择短信渠道',
+        placeholder: $t('ui.placeholder.select', [
+          $t('system.sms.channel.field.code'),
+        ]),
       },
       rules: 'required',
     },
     {
       fieldName: 'status',
-      label: '启用状态',
+      label: $t('system.sms.channel.field.status'),
       component: 'RadioGroup',
       componentProps: {
         options: getDictOptions(DICT_TYPE.COMMON_STATUS, 'number'),
@@ -52,35 +57,43 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'apiKey',
-      label: '短信 API 的账号',
+      label: $t('system.sms.channel.field.apiKey'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入短信 API 的账号',
+        placeholder: $t('ui.placeholder.input', [
+          $t('system.sms.channel.field.apiKey'),
+        ]),
       },
       rules: 'required',
     },
     {
       fieldName: 'apiSecret',
-      label: '短信 API 的密钥',
+      label: $t('system.sms.channel.field.apiSecret'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入短信 API 的密钥',
+        placeholder: $t('ui.placeholder.input', [
+          $t('system.sms.channel.field.apiSecret'),
+        ]),
       },
     },
     {
       fieldName: 'callbackUrl',
-      label: '短信发送回调 URL',
+      label: $t('system.sms.channel.field.callbackUrl'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入短信发送回调 URL',
+        placeholder: $t('ui.placeholder.input', [
+          $t('system.sms.channel.field.callbackUrl'),
+        ]),
       },
     },
     {
       fieldName: 'remark',
-      label: '备注',
+      label: $t('system.sms.channel.field.remark'),
       component: 'Textarea',
       componentProps: {
-        placeholder: '请输入备注',
+        placeholder: $t('ui.placeholder.input', [
+          $t('system.sms.channel.field.remark'),
+        ]),
       },
     },
   ];
@@ -91,26 +104,30 @@ export function useGridFormSchema(): VbenFormSchema[] {
   return [
     {
       fieldName: 'signature',
-      label: '短信签名',
+      label: $t('system.sms.channel.field.signature'),
       component: 'Input',
       componentProps: {
         allowClear: true,
-        placeholder: '请输入短信签名',
+        placeholder: $t('ui.placeholder.input', [
+          $t('system.sms.channel.field.signature'),
+        ]),
       },
     },
     {
       fieldName: 'code',
-      label: '渠道编码',
+      label: $t('system.sms.channel.field.code'),
       component: 'Select',
       componentProps: {
         allowClear: true,
         options: getDictOptions(DICT_TYPE.SYSTEM_SMS_CHANNEL_CODE, 'string'),
-        placeholder: '请选择短信渠道',
+        placeholder: $t('ui.placeholder.select', [
+          $t('system.sms.channel.field.code'),
+        ]),
       },
     },
     {
       fieldName: 'status',
-      label: '状态',
+      label: $t('system.sms.channel.field.status'),
       component: 'Select',
       componentProps: {
         allowClear: true,
@@ -119,7 +136,7 @@ export function useGridFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'createTime',
-      label: '创建时间',
+      label: $t('system.sms.channel.field.createTime'),
       component: 'RangePicker',
       componentProps: {
         ...getRangePickerDefaultProps(),
@@ -134,15 +151,15 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
   return [
     {
       field: 'id',
-      title: '编号',
+      title: $t('system.sms.channel.field.id'),
     },
     {
       field: 'signature',
-      title: '短信签名',
+      title: $t('system.sms.channel.field.signature'),
     },
     {
       field: 'code',
-      title: '渠道编码',
+      title: $t('system.sms.channel.field.code'),
       cellRender: {
         name: 'CellDict',
         props: { type: DICT_TYPE.SYSTEM_SMS_CHANNEL_CODE },
@@ -150,7 +167,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
     },
     {
       field: 'status',
-      title: '启用状态',
+      title: $t('system.sms.channel.field.status'),
       cellRender: {
         name: 'CellDict',
         props: { type: DICT_TYPE.COMMON_STATUS },
@@ -158,27 +175,27 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
     },
     {
       field: 'apiKey',
-      title: '短信 API 的账号',
+      title: $t('system.sms.channel.field.apiKey'),
     },
     {
       field: 'apiSecret',
-      title: '短信 API 的密钥',
+      title: $t('system.sms.channel.field.apiSecret'),
     },
     {
       field: 'callbackUrl',
-      title: '短信发送回调 URL',
+      title: $t('system.sms.channel.field.callbackUrl'),
     },
     {
       field: 'createTime',
-      title: '创建时间',
+      title: $t('system.sms.channel.field.createTime'),
       formatter: 'formatDateTime',
     },
     {
       field: 'remark',
-      title: '备注',
+      title: $t('system.sms.channel.field.remark'),
     },
     {
-      title: '操作',
+      title: $t('common.operation'),
       width: 130,
       fixed: 'right',
       slots: { default: 'actions' },

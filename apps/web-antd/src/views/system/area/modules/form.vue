@@ -17,8 +17,8 @@ const emit = defineEmits(['success']);
 const formData = ref<AreaApi.Area>();
 const getTitle = computed(() => {
   return formData.value?.id
-    ? $t('ui.actionTitle.edit', ['地区信息'])
-    : $t('ui.actionTitle.create', ['地区信息']);
+    ? $t('ui.actionTitle.edit', [$t('system.area.area')])
+    : $t('ui.actionTitle.create', [$t('system.area.area')]);
 });
 
 const [Form, formApi] = useVbenForm({

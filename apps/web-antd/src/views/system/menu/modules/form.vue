@@ -17,8 +17,8 @@ const emit = defineEmits(['success']);
 const formData = ref<SystemMenuApi.Menu>();
 const getTitle = computed(() =>
   formData.value?.id
-    ? $t('ui.actionTitle.edit', ['菜单'])
-    : $t('ui.actionTitle.create', ['菜单']),
+    ? $t('ui.actionTitle.edit', [$t('system.menu.menu')])
+    : $t('ui.actionTitle.create', [$t('system.menu.menu')]),
 );
 
 const [Form, formApi] = useVbenForm({
