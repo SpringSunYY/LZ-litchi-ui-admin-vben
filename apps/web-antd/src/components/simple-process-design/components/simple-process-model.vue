@@ -244,12 +244,13 @@ onMounted(() => {
     </div>
     <div
       class="simple-process-model"
+      :class="{ 'is-readonly': readonly }"
       :style="`transform: translate(${currentX}px, ${currentY}px) scale(${scaleValue / 100});`"
       @mousedown="startDrag"
       @mousemove="onDrag"
       @mouseup="stopDrag"
       @mouseleave="stopDrag"
-      @mouseenter="setGrabCursor"
+      @mouseenter="readonly ? undefined : setGrabCursor()"
     >
       <ProcessNodeTree
         v-if="processNodeTree"
