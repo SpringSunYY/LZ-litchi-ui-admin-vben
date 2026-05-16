@@ -30,7 +30,7 @@ import { $t } from '#/locales';
 import { useVbenForm } from './form';
 
 import '#/adapter/style.css';
-import I18nDictTag from "#/components/i18n/i18n-dict-tag/i18n-dict-tag.vue";
+import I18nDictTag from '#/components/i18n/i18n-dict-tag/i18n-dict-tag.vue';
 
 setupVbenVxeTable({
   configVxeTable: (vxeUI) => {

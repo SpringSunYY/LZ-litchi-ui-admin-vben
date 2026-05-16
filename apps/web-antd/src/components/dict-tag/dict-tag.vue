@@ -153,7 +153,7 @@ const hiddenCount = computed(() => {
   display: flex;
   flex-wrap: wrap;
   gap: 4px;
-  max-width: 300px;
   justify-content: center;
+  max-width: 300px;
 }
 </style>
