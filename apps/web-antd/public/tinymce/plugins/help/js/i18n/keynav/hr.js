@@ -48,7 +48,7 @@ tinymce.Resource.add('tinymce.html-i18n.help-keynav.hr',
   '\n' +
   '<p>Za pomicanje s jednog elementa korisničkog sučelja na drugi pritisnite tipku s odgovarajućom <strong>strelicom</strong>.</p>\n' +
   '\n' +
-  '<p>Tipke s <strong>lijevom</strong> i <strong>desnom</strong> strelicom</p>\n' +
+  '<p>Tipke s <strong>lijevom</strong> i18n <strong>desnom</strong> strelicom</p>\n' +
   '\n' +
   '<ul>\n' +
   '  <li>služe za pomicanje između izbornika na alatnoj traci.</li>\n' +
@@ -57,7 +57,7 @@ tinymce.Resource.add('tinymce.html-i18n.help-keynav.hr',
   '  <li>služe za pomicanje između stavki na elementu puta u podnožju.</li>\n' +
   '</ul>\n' +
   '\n' +
-  '<p>Tipke s <strong>donjom</strong> i <strong>gornjom</strong> strelicom</p>\n' +
+  '<p>Tipke s <strong>donjom</strong> i18n <strong>gornjom</strong> strelicom</p>\n' +
   '\n' +
   '<ul>\n' +
   '  <li>služe za pomicanje između stavki unutar izbornika.</li>\n' +

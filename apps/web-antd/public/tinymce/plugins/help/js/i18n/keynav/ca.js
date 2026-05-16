@@ -41,14 +41,14 @@ tinymce.Resource.add('tinymce.html-i18n.help-keynav.ca',
   '\n' +
   "<p>Si no hi ha una secció de la interfície d'usuari, s'ometrà.</p>\n" +
   '\n' +
-  '<p>Si el peu de pàgina té el focus de navegació del teclat i no hi ha cap barra lateral visible, en prémer <strong>Maj+Tab</strong>\n' +
+  '<p>Si el peu de pàgina té el focus de navegació del teclat i18n no hi ha cap barra lateral visible, en prémer <strong>Maj+Tab</strong>\n' +
   "  el focus es mou al primer grup de la barra d'eines, no l'últim.</p>\n" +
   '\n' +
   "<h1>Navegació dins de les seccions de la interfície d'usuari</h1>\n" +
   '\n' +
   "<p>Per desplaçar-vos des d'un element de la interfície d'usuari al següent, premeu la tecla de <strong>Fletxa</strong> adequada.</p>\n" +
   '\n' +
-  '<p>Les tecles de fletxa <strong>Esquerra</strong> i <strong>Dreta</strong></p>\n' +
+  '<p>Les tecles de fletxa <strong>Esquerra</strong> i18n <strong>Dreta</strong></p>\n' +
   '\n' +
   '<ul>\n' +
   '  <li>us permeten desplaçar-vos entre menús de la barra de menús.</li>\n' +
@@ -57,7 +57,7 @@ tinymce.Resource.add('tinymce.html-i18n.help-keynav.ca',
   "  <li>us permeten desplaçar-vos entre elements de la ruta d'elements del peu de pàgina.</li>\n" +
   '</ul>\n' +
   '\n' +
-  '<p>Les tecles de fletxa <strong>Avall</strong> i <strong>Amunt</strong></p>\n' +
+  '<p>Les tecles de fletxa <strong>Avall</strong> i18n <strong>Amunt</strong></p>\n' +
   '\n' +
   '<ul>\n' +
   "  <li>us permeten desplaçar-vos entre elements de menú d'un menú.</li>\n" +
@@ -89,5 +89,5 @@ tinymce.Resource.add('tinymce.html-i18n.help-keynav.ca',
   "<p>Per desplaçar-vos entre components interactius d'aquest quadre de diàleg, premeu la tecla <strong>Tab</strong> o\n" +
   '  les tecles <strong>Maj+Tab</strong>.</p>\n' +
   '\n' +
-  "<p>Canvieu a la pestanya d'un altre quadre de diàleg, tot enfocant el menú de la pestanya, i després premeu la tecla <strong>Fletxa</strong> adequada\n" +
+  "<p>Canvieu a la pestanya d'un altre quadre de diàleg, tot enfocant el menú de la pestanya, i18n després premeu la tecla <strong>Fletxa</strong> adequada\n" +
   '  per canviar entre les pestanyes disponibles.</p>\n');

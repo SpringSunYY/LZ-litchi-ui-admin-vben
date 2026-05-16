@@ -147,7 +147,9 @@ function openStartUserSelect() {
   selectedUsers.value = selectedStartUsers.value.map(
     (user) => user.id,
   ) as number[];
-  userSelectModalApi.setData({ userIds: selectedUsers.value, title: $t('common.selectUser') }).open();
+  userSelectModalApi
+    .setData({ userIds: selectedUsers.value, title: $t('common.selectUser') })
+    .open();
 }
 
 /** 打开部门选择 */
@@ -168,7 +170,9 @@ function openManagerUserSelect() {
   selectedUsers.value = selectedManagerUsers.value.map(
     (user) => user.id,
   ) as number[];
-  userSelectModalApi.setData({ userIds: selectedUsers.value, title: $t('common.selectUser') }).open();
+  userSelectModalApi
+    .setData({ userIds: selectedUsers.value, title: $t('common.selectUser') })
+    .open();
 }
 
 /** 处理用户选择确认 */

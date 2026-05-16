@@ -51,9 +51,9 @@ tinymce.Resource.add('tinymce.html-i18n.help-keynav.it',
   '<p>I tasti freccia <strong>Sinistra</strong> e <strong>Destra</strong></p>\n' +
   '\n' +
   '<ul>\n' +
-  '  <li>consentono di spostarsi tra i menu della barra dei menu.</li>\n' +
+  '  <li>consentono di spostarsi tra i18n menu della barra dei menu.</li>\n' +
   '  <li>aprono un sottomenu in un menu.</li>\n' +
-  '  <li>consentono di spostarsi tra i pulsanti di un gruppo di barre degli strumenti.</li>\n' +
+  '  <li>consentono di spostarsi tra i18n pulsanti di un gruppo di barre degli strumenti.</li>\n' +
   "  <li>consentono di spostarsi tra le voci nel percorso dell'elemento del piè di pagina.</li>\n" +
   '</ul>\n' +
   '\n' +
@@ -80,13 +80,13 @@ tinymce.Resource.add('tinymce.html-i18n.help-keynav.it',
   '\n' +
   "<p>Nelle finestre di dialogo non a schede, all'apertura della finestra di dialogo diventa attivo il primo componente interattivo.</p>\n" +
   '\n' +
-  '<p>Per spostarsi tra i componenti interattivi della finestra di dialogo, premere <strong>TAB</strong> o <strong>MAIUSC+TAB</strong>.</p>\n' +
+  '<p>Per spostarsi tra i18n componenti interattivi della finestra di dialogo, premere <strong>TAB</strong> o <strong>MAIUSC+TAB</strong>.</p>\n' +
   '\n' +
   '<h1>Navigare nelle finestre di dialogo a schede</h1>\n' +
   '\n' +
   "<p>Nelle finestre di dialogo a schede, all'apertura della finestra di dialogo diventa attivo il primo pulsante del menu della scheda.</p>\n" +
   '\n' +
-  '<p>Per spostarsi tra i componenti interattivi di questa scheda della finestra di dialogo, premere <strong>TAB</strong> o\n' +
+  '<p>Per spostarsi tra i18n componenti interattivi di questa scheda della finestra di dialogo, premere <strong>TAB</strong> o\n' +
   '  <strong>MAIUSC+TAB</strong>.</p>\n' +
   '\n' +
   "<p>Per passare a un'altra scheda della finestra di dialogo, attivare il menu della scheda e premere il tasto <strong>freccia</strong>\n" +

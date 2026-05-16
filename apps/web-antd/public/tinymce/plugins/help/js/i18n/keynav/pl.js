@@ -41,14 +41,14 @@ tinymce.Resource.add('tinymce.html-i18n.help-keynav.pl',
   '\n' +
   '<p>Jeżeli nie ma sekcji interfejsu użytkownika, jest to pomijane.</p>\n' +
   '\n' +
-  '<p>Jeżeli na sekcji Footer jest ustawiony fokus nawigacji przy użyciu klawiatury i nie ma widocznego paska bocznego, naciśnięcie <strong>Shift+Tab</strong>\n' +
+  '<p>Jeżeli na sekcji Footer jest ustawiony fokus nawigacji przy użyciu klawiatury i18n nie ma widocznego paska bocznego, naciśnięcie <strong>Shift+Tab</strong>\n' +
   '  przenosi fokus na pierwszą grupę paska narzędzi, a nie na ostatnią.</p>\n' +
   '\n' +
   '<h1>Nawigacja wewnątrz sekcji interfejsu użytkownika</h1>\n' +
   '\n' +
   '<p>Aby przenieść się z danego elementu interfejsu użytkownika do następnego, naciśnij odpowiedni klawisz <strong>strzałki</strong>.</p>\n' +
   '\n' +
-  '<p>Klawisze strzałek <strong>w prawo</strong> i <strong>w lewo</strong> służą do</p>\n' +
+  '<p>Klawisze strzałek <strong>w prawo</strong> i18n <strong>w lewo</strong> służą do</p>\n' +
   '\n' +
   '<ul>\n' +
   '  <li>przenoszenia się pomiędzy menu na pasku menu,</li>\n' +
@@ -57,7 +57,7 @@ tinymce.Resource.add('tinymce.html-i18n.help-keynav.pl',
   '  <li>przenoszenia się pomiędzy elementami w ścieżce elementów w sekcji Footer.</li>\n' +
   '</ul>\n' +
   '\n' +
-  '<p>Klawisze strzałek <strong>w dół</strong> i <strong>w górę</strong> służą do</p>\n' +
+  '<p>Klawisze strzałek <strong>w dół</strong> i18n <strong>w górę</strong> służą do</p>\n' +
   '\n' +
   '<ul>\n' +
   '  <li>przenoszenia się pomiędzy elementami menu w menu,</li>\n' +
@@ -89,5 +89,5 @@ tinymce.Resource.add('tinymce.html-i18n.help-keynav.pl',
   '<p>Nawigację pomiędzy interaktywnymi częściami karty okna dialogowego prowadzi się poprzez naciskanie klawiszy <strong>Tab</strong> lub\n' +
   '  <strong>Shift+Tab</strong>.</p>\n' +
   '\n' +
-  '<p>Przełączenie się na inną kartę okna dialogowego wykonuje się poprzez ustawienie fokusu na menu karty i naciśnięcie odpowiedniego klawisza <strong>strzałki</strong>\n' +
+  '<p>Przełączenie się na inną kartę okna dialogowego wykonuje się poprzez ustawienie fokusu na menu karty i18n naciśnięcie odpowiedniego klawisza <strong>strzałki</strong>\n' +
   '  w celu przemieszczenia się pomiędzy dostępnymi kartami.</p>\n');
