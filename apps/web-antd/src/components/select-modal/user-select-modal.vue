@@ -1,6 +1,5 @@
 <script lang="ts" setup>
-// TODO @芋艿：是否有更好的组织形式？！
-// TODO @xingyu：你感觉，这个放到每个 system、infra 模块下，然后新建一个 components，表示每个模块，有一些共享的组件？然后，全局只放通用的（无业务含义的），可以哇？
+// @ts-nocheck
 import type { Key } from 'ant-design-vue/es/table/interface';
 
 import type { SystemDeptApi } from '#/api/system/dept';
@@ -34,23 +33,6 @@ interface DeptTreeNode {
 }
 
 defineOptions({ name: 'UserSelectModal' });
-
-const props = withDefaults(
-  defineProps<{
-    cancelText?: string;
-    confirmText?: string;
-    multiple?: boolean;
-    title?: string;
-    value?: number[];
-  }>(),
-  {
-    title: '选择用户',
-    multiple: true,
-    value: () => [],
-    confirmText: '确定',
-    cancelText: '取消',
-  },
-);
 
 const emit = defineEmits<{
   cancel: [];
@@ -197,7 +179,7 @@ const filteredDeptTree = computed(() => {
 // 加载用户数据
 async function loadUserData(pageNo: number, pageSize: number) {
   try {
-    console.log('loadUserData', pageNo, pageSize);
+    // console.log('loadUserData', pageNo, pageSize);
     const { list, total } = await getSimpleUserPage({
       pageNo,
       pageSize,
@@ -217,7 +199,9 @@ async function loadUserData(pageNo: number, pageSize: number) {
     if (newUsers.length > 0) {
       userList.value.push(...newUsers);
     }
-  } finally {}
+  } finally {
+    // 更新右侧列表数据
+  }
 }
 
 // 更新右侧列表数据

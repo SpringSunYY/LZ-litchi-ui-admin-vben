@@ -4,12 +4,13 @@ import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 import { onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
-import {  Page, useVbenModal } from '@vben/common-ui';
+import { Page, useVbenModal } from '@vben/common-ui';
 
 import { Button, Image, Tag, Tooltip } from 'ant-design-vue';
 
 import { TableAction, useVbenVxeGrid } from '#/adapter/vxe-table';
 import { getProcessDefinitionPage } from '#/api/bpm/definition';
+import { $t } from '#/locales';
 import { BpmModelFormType } from '#/utils';
 
 // 导入 FormCreate 表单详情
@@ -89,7 +90,7 @@ onMounted(() => {
 
 <template>
   <Page auto-content-height>
-    <Grid table-title="流程定义列表">
+    <Grid :table-title="$t('bpm.definition.list')">
       <template #icon="{ row }">
         <Image
           v-if="row.icon"
@@ -98,10 +99,12 @@ onMounted(() => {
           :height="24"
           class="rounded"
         />
-        <span v-else> 无图标 </span>
+        <span v-else>{{ $t('bpm.definition.message.noIcon') }}</span>
       </template>
       <template #startUsers="{ row }">
-        <template v-if="!row.startUsers?.length">全部可见</template>
+        <template v-if="!row.startUsers?.length">
+          {{ $t('bpm.model.message.allVisible') }}
+        </template>
         <template v-else-if="row.startUsers.length === 1">
           {{ row.startUsers[0].nickname }}
         </template>
@@ -110,8 +113,7 @@ onMounted(() => {
             placement="top"
             :title="row.startUsers.map((user: any) => user.nickname).join(',')"
           >
-            {{ row.startUsers[0].nickname }}等
-            {{ row.startUsers.length }} 人可见
+            {{ $t('bpm.model.message.userVisible', [row.startUsers.length]) }}
           </Tooltip>
         </template>
       </template>
@@ -130,7 +132,7 @@ onMounted(() => {
         >
           <span>{{ row.formCustomCreatePath }}</span>
         </Button>
-        <span v-else>暂无表单</span>
+        <span v-else>{{ $t('bpm.definition.message.noForm') }}</span>
       </template>
       <template #version="{ row }">
         <Tag>v{{ row.version }}</Tag>
@@ -139,7 +141,7 @@ onMounted(() => {
         <TableAction
           :actions="[
             {
-              label: '恢复',
+              label: $t('bpm.model.message.restore'),
               type: 'link',
               auth: ['bpm:model:update'],
               onClick: openModelForm.bind(null, row.id),

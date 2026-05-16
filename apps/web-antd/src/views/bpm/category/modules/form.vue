@@ -21,8 +21,8 @@ const emit = defineEmits(['success']);
 const formData = ref<BpmCategoryApi.CategoryVO>();
 const getTitle = computed(() => {
   return formData.value?.id
-    ? $t('ui.actionTitle.edit', ['流程分类'])
-    : $t('ui.actionTitle.create', ['流程分类']);
+    ? $t('ui.actionTitle.edit', [$t('bpm.category.category')])
+    : $t('ui.actionTitle.create', [$t('bpm.category.category')]);
 });
 
 const [Form, formApi] = useVbenForm({

@@ -26,6 +26,7 @@ import {
   HttpRequestSetting,
   parseFormFields,
 } from '#/components/simple-process-design';
+import { $t } from '#/locales';
 import {
   BpmAutoApproveType,
   BpmModelFormType,
@@ -34,27 +35,26 @@ import {
 
 const modelData = defineModel<any>();
 
-/** 自定义 ID 流程编码 */
-const timeOptions = ref([
+const timeOptions = computed(() => [
   {
     value: '',
-    label: '无',
+    label: $t('common.none'),
   },
   {
     value: 'DAY',
-    label: '精确到日',
+    label: $t('common.preciseToDay'),
   },
   {
     value: 'HOUR',
-    label: '精确到时',
+    label: $t('common.preciseToHour'),
   },
   {
     value: 'MINUTE',
-    label: '精确到分',
+    label: $t('common.preciseToMinute'),
   },
   {
     value: 'SECOND',
-    label: '精确到秒',
+    label: $t('common.preciseToSecond'),
   },
 ]);
 const numberExample = computed(() => {
@@ -157,15 +157,15 @@ const formFieldOptions4Title = computed(() => {
   });
   // 固定添加发起人 ID 字段
   cloneFormField.unshift({
-    label: '流程名称',
+    label: $t('bpm.model.field.name'),
     value: ProcessVariableEnum.PROCESS_DEFINITION_NAME,
   });
   cloneFormField.unshift({
-    label: '发起时间',
+    label: $t('common.startTime'),
     value: ProcessVariableEnum.START_TIME,
   });
   cloneFormField.unshift({
-    label: '发起人',
+    label: $t('common.initiator'),
     value: ProcessVariableEnum.START_USER_ID,
   });
   return cloneFormField;
@@ -228,6 +228,7 @@ watch(
       const result: Array<{ field: string; title: string }> = [];
       if (data.fields) {
         data.fields.forEach((fieldStr: string) => {
+          // @ts-ignore
           parseFormFields(JSON.parse(fieldStr), result);
         });
       }
@@ -255,19 +256,23 @@ defineExpose({ initData, validate });
     :wrapper-col="{ span: 20 }"
     class="mt-5 px-5"
   >
-    <FormItem class="mb-5" label="提交人权限">
+    <FormItem class="mb-5" :label="$t('bpm.model.extra.submitterPermission')">
       <div class="mt-1 flex flex-col">
         <Checkbox v-model:checked="modelData.allowCancelRunningProcess">
-          允许撤销审批中的申请
+          {{ $t('bpm.model.extra.allowCancel') }}
         </Checkbox>
         <div class="ml-6">
           <TypographyText type="warning">
-            第一个审批节点通过后，提交人仍可撤销申请
+            {{ $t('bpm.model.extra.allowCancelTip') }}
           </TypographyText>
         </div>
       </div>
     </FormItem>
-    <FormItem v-if="modelData.processIdRule" class="mb-5" label="流程编码">
+    <FormItem
+      v-if="modelData.processIdRule"
+      class="mb-5"
+      :label="$t('bpm.model.extra.processCode')"
+    >
       <Row :gutter="8" align="middle">
         <Col :span="1">
           <Checkbox v-model:checked="modelData.processIdRule.enable" />
@@ -275,7 +280,7 @@ defineExpose({ initData, validate });
         <Col :span="5">
           <Input
             v-model:value="modelData.processIdRule.prefix"
-            placeholder="前缀"
+            :placeholder="$t('bpm.model.extra.prefix')"
             :disabled="!modelData.processIdRule.enable"
           />
         </Col>
@@ -283,7 +288,7 @@ defineExpose({ initData, validate });
           <Select
             v-model:value="modelData.processIdRule.infix"
             allow-clear
-            placeholder="中缀"
+            :placeholder="$t('bpm.model.extra.infix')"
             :disabled="!modelData.processIdRule.enable"
             :options="timeOptions"
           />
@@ -291,7 +296,7 @@ defineExpose({ initData, validate });
         <Col :span="4">
           <Input
             v-model:value="modelData.processIdRule.postfix"
-            placeholder="后缀"
+            :placeholder="$t('bpm.model.extra.postfix')"
             :disabled="!modelData.processIdRule.enable"
           />
         </Col>
@@ -305,48 +310,56 @@ defineExpose({ initData, validate });
       </Row>
       <div class="ml-6 mt-2" v-if="modelData.processIdRule.enable">
         <TypographyText type="success">
-          编码示例：{{ numberExample }}
+          {{ $t('bpm.model.extra.codeExample', [numberExample]) }}
         </TypographyText>
       </div>
     </FormItem>
-    <FormItem class="mb-5" label="自动去重">
+    <FormItem class="mb-5" :label="$t('bpm.model.extra.dedup')">
       <div class="mt-1">
         <TypographyText class="mb-2 block">
-          同一审批人在流程中重复出现时：
+          {{ $t('bpm.model.extra.dedupTip') }}
         </TypographyText>
         <RadioGroup v-model:value="modelData.autoApprovalType">
           <Row :gutter="[0, 8]">
             <Col :span="24">
-              <Radio :value="0">不自动通过</Radio>
+              <Radio :value="0">{{ $t('bpm.model.extra.noAutoPass') }}</Radio>
             </Col>
             <Col :span="24">
               <Radio :value="1">
-                仅审批一次，后续重复的审批节点均自动通过
+                {{ $t('bpm.model.extra.passOnce') }}
               </Radio>
             </Col>
             <Col :span="24">
-              <Radio :value="2">仅针对连续审批的节点自动通过</Radio>
+              <Radio :value="2">
+                {{ $t('bpm.model.extra.passConsecutive') }}
+              </Radio>
             </Col>
           </Row>
         </RadioGroup>
       </div>
     </FormItem>
-    <FormItem v-if="modelData.titleSetting" class="mb-5" label="标题设置">
+    <FormItem
+      v-if="modelData.titleSetting"
+      class="mb-5"
+      :label="$t('bpm.model.extra.titleSetting')"
+    >
       <div class="mt-1">
         <RadioGroup v-model:value="modelData.titleSetting.enable">
           <Row :gutter="[0, 8]">
             <Col :span="24">
               <Radio :value="false">
-                系统默认
-                <TypographyText type="success"> 展示流程名称 </TypographyText>
+                {{ $t('bpm.model.extra.systemDefault') }}
+                <TypographyText type="success">
+                  {{ $t('bpm.model.extra.showProcessName') }}
+                </TypographyText>
               </Radio>
             </Col>
             <Col :span="24">
               <Radio :value="true">
                 <div class="inline-flex items-center">
-                  自定义标题
+                  {{ $t('bpm.model.extra.customTitle') }}
                   <Tooltip
-                    title="输入字符 '{' 即可插入表单字段"
+                    :title="$t('bpm.model.extra.insertFieldTip')"
                     placement="top"
                   >
                     <CircleHelp class="ml-1 size-4 text-gray-500" />
@@ -365,7 +378,7 @@ defineExpose({ initData, validate });
             prefix="{"
             split="}"
             :options="formFieldOptions4Title"
-            placeholder="请插入表单字段（输入 '{' 可以选择表单字段）或输入文本"
+            :placeholder="$t('bpm.model.extra.insertFieldPlaceholder')"
           />
         </div>
       </div>
@@ -376,21 +389,23 @@ defineExpose({ initData, validate });
         modelData.formType === BpmModelFormType.NORMAL
       "
       class="mb-5"
-      label="摘要设置"
+      :label="$t('bpm.model.extra.summarySetting')"
     >
       <div class="mt-1">
         <RadioGroup v-model:value="modelData.summarySetting.enable">
           <Row :gutter="[0, 8]">
             <Col :span="24">
               <Radio :value="false">
-                系统默认
+                {{ $t('bpm.model.extra.systemDefault') }}
                 <TypographyText type="secondary">
-                  展示表单前 3 个字段
+                  {{ $t('bpm.model.extra.showFirst3Fields') }}
                 </TypographyText>
               </Radio>
             </Col>
             <Col :span="24">
-              <Radio :value="true"> 自定义摘要 </Radio>
+              <Radio :value="true">
+                {{ $t('bpm.model.extra.customSummary') }}
+              </Radio>
             </Col>
           </Row>
         </RadioGroup>
@@ -399,13 +414,13 @@ defineExpose({ initData, validate });
             v-if="modelData.summarySetting.enable"
             v-model:value="modelData.summarySetting.summary"
             mode="multiple"
-            placeholder="请选择要展示的表单字段"
+            :placeholder="$t('bpm.model.extra.selectFieldsTip')"
             :options="formFieldOptions4Summary"
           />
         </div>
       </div>
     </FormItem>
-    <FormItem class="mb-5" label="流程前置通知">
+    <FormItem class="mb-5" :label="$t('bpm.model.extra.beforeProcessNotice')">
       <Row class="mt-1">
         <Col :span="24">
           <div class="flex items-center">
@@ -413,7 +428,9 @@ defineExpose({ initData, validate });
               v-model:checked="processBeforeTriggerEnable"
               @change="handleProcessBeforeTriggerEnableChange"
             />
-            <span class="ml-4">流程启动后通知</span>
+            <span class="ml-4">{{
+              $t('bpm.model.extra.processStartedNotice')
+            }}</span>
           </div>
         </Col>
       </Row>
@@ -427,7 +444,7 @@ defineExpose({ initData, validate });
         </Col>
       </Row>
     </FormItem>
-    <FormItem class="mb-5" label="流程后置通知">
+    <FormItem class="mb-5" :label="$t('bpm.model.extra.afterProcessNotice')">
       <Row class="mt-1">
         <Col :span="24">
           <div class="flex items-center">
@@ -435,7 +452,9 @@ defineExpose({ initData, validate });
               v-model:checked="processAfterTriggerEnable"
               @change="handleProcessAfterTriggerEnableChange"
             />
-            <span class="ml-4">流程结束后通知</span>
+            <span class="ml-4">{{
+              $t('bpm.model.extra.processEndedNotice')
+            }}</span>
           </div>
         </Col>
       </Row>
@@ -449,7 +468,7 @@ defineExpose({ initData, validate });
         </Col>
       </Row>
     </FormItem>
-    <FormItem class="mb-5" label="任务前置通知">
+    <FormItem class="mb-5" :label="$t('bpm.model.extra.beforeTaskNotice')">
       <Row class="mt-1">
         <Col :span="24">
           <div class="flex items-center">
@@ -457,7 +476,9 @@ defineExpose({ initData, validate });
               v-model:checked="taskBeforeTriggerEnable"
               @change="handleTaskBeforeTriggerEnableChange"
             />
-            <span class="ml-4">任务执行时通知</span>
+            <span class="ml-4">{{
+              $t('bpm.model.extra.taskExecutingNotice')
+            }}</span>
           </div>
         </Col>
       </Row>
@@ -471,7 +492,7 @@ defineExpose({ initData, validate });
         </Col>
       </Row>
     </FormItem>
-    <FormItem class="mb-5" label="任务后置通知">
+    <FormItem class="mb-5" :label="$t('bpm.model.extra.afterTaskNotice')">
       <Row class="mt-1">
         <Col :span="24">
           <div class="flex items-center">
@@ -479,7 +500,9 @@ defineExpose({ initData, validate });
               v-model:checked="taskAfterTriggerEnable"
               @change="handleTaskAfterTriggerEnableChange"
             />
-            <span class="ml-4">任务结束后通知</span>
+            <span class="ml-4">{{
+              $t('bpm.model.extra.taskEndedNotice')
+            }}</span>
           </div>
         </Col>
       </Row>

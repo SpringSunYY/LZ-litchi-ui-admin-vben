@@ -49,27 +49,32 @@ function handleCancel(row: BpmProcessInstanceApi.ProcessInstanceVO) {
         if (scope.value) {
           try {
             await cancelProcessInstanceByAdmin(row.id, scope.value);
-            message.success('取消成功');
+            message.success($t('bpm.processInstance.message.cancelSuccess'));
             onRefresh();
           } catch {
             return false;
           }
         } else {
-          message.error('请输入取消原因');
+          message.error($t('bpm.oa.leave.message.cancelReasonEmpty'));
           return false;
         }
       }
     },
     component: () => {
       return h(Textarea, {
-        placeholder: '请输入取消原因',
+        placeholder: $t('bpm.processInstance.message.cancelReasonPlaceholder'),
         allowClear: true,
         rows: 2,
-        rules: [{ required: true, message: '请输入取消原因' }],
+        rules: [
+          {
+            required: true,
+            message: $t('bpm.oa.leave.message.cancelReasonEmpty'),
+          },
+        ],
       });
     },
-    content: '请输入取消原因',
-    title: '取消流程',
+    content: $t('bpm.oa.leave.message.cancelReasonEmpty'),
+    title: $t('bpm.processInstance.message.cancelProcess'),
     modelPropName: 'value',
   })
     .then(() => {})
@@ -108,7 +113,7 @@ const [Grid, gridApi] = useVbenVxeGrid({
 
 <template>
   <Page auto-content-height>
-    <Grid table-title="流程实例">
+    <Grid :table-title="$t('bpm.processInstance.list')">
       <template #actions="{ row }">
         <TableAction
           :actions="[
@@ -120,7 +125,7 @@ const [Grid, gridApi] = useVbenVxeGrid({
               onClick: handleDetail.bind(null, row),
             },
             {
-              label: $t('ui.actionTitle.cancel'),
+              label: $t('bpm.processInstance.action.cancel'),
               type: 'link',
               danger: true,
               icon: ACTION_ICON.DELETE,

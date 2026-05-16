@@ -16,6 +16,7 @@ import {
   updateCategorySortBatch,
 } from '#/api/bpm/category';
 import { getModelList } from '#/api/bpm/model';
+import { $t } from '#/locales';
 import { router } from '#/router';
 
 // 流程分类对话框
@@ -135,7 +136,7 @@ async function handleCategorySortSubmit() {
   } finally {
     saveSortLoading.value = false;
   }
-  message.success('分类排序成功');
+  message.success($t('bpm.model.message.categorySortSuccess'));
   isCategorySorting.value = false;
   // 刷新列表
   await getList();
@@ -153,19 +154,20 @@ async function handleCategorySortSubmit() {
     <Card
       :body-style="{ padding: '10px' }"
       class="mb-4"
-      title="流程模型"
+      :title="$t('bpm.model.message.list')"
       v-spinning="modelListSpinning"
     >
       <template #extra>
         <Input
           v-model:value="queryParams.name"
-          placeholder="搜索流程"
+          :placeholder="$t('bpm.model.message.searchPlaceholder')"
           allow-clear
           @press-enter="getList"
           class="!w-60"
         />
         <Button class="ml-2" type="primary" @click="createModel">
-          <IconifyIcon icon="lucide:plus" /> 新建模型
+          <IconifyIcon icon="lucide:plus" />
+          {{ $t('bpm.model.message.createModel') }}
         </Button>
         <Dropdown class="ml-2" placement="bottomRight" arrow>
           <Button>
@@ -180,13 +182,13 @@ async function handleCategorySortSubmit() {
               <Menu.Item key="handleCategoryAdd">
                 <div class="flex items-center gap-1">
                   <IconifyIcon icon="lucide:plus" />
-                  新建分类
+                  {{ $t('bpm.model.message.categoryAdd') }}
                 </div>
               </Menu.Item>
               <Menu.Item key="handleCategorySort">
                 <div class="flex items-center gap-1">
                   <IconifyIcon icon="lucide:align-start-vertical" />
-                  分类排序
+                  {{ $t('bpm.model.message.categorySort') }}
                 </div>
               </Menu.Item>
             </Menu>
@@ -196,14 +198,14 @@ async function handleCategorySortSubmit() {
       <div class="flex h-full items-center justify-between pl-5">
         <div class="mb-4 mr-6" v-if="isCategorySorting">
           <Button @click="handleCategorySortCancel" class="mr-3">
-            取 消
+            {{ $t('bpm.model.message.cancelSort') }}
           </Button>
           <Button
             type="primary"
             :loading="saveSortLoading"
             @click="handleCategorySortSubmit"
           >
-            保存排序
+            {{ $t('bpm.model.message.saveSort') }}
           </Button>
         </div>
       </div>

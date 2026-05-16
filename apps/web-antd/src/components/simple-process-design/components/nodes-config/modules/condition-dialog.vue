@@ -8,6 +8,8 @@ import { cloneDeep } from '@vben/utils';
 
 import { message } from 'ant-design-vue';
 
+import { $t } from '#/locales';
+
 import { ConditionType, DEFAULT_CONDITION_GROUP_VALUE } from '../../../consts';
 import Condition from './condition.vue';
 
@@ -30,7 +32,7 @@ const conditionData = ref<{
 const conditionRef = ref();
 
 const [Modal, modalApi] = useVbenModal({
-  title: '条件配置',
+  title: $t('bpm.simpleProcessDesign.condition.rule'),
   destroyOnClose: true,
   draggable: true,
   async onConfirm() {
@@ -38,7 +40,7 @@ const [Modal, modalApi] = useVbenModal({
     if (!conditionRef.value) return;
     const valid = await conditionRef.value.validate().catch(() => false);
     if (!valid) {
-      message.warning('请完善条件规则');
+      message.warning($t('bpm.simpleProcessDesign.condition.ruleComplete'));
       return;
     }
     // 设置完的条件传递给父组件

@@ -8,9 +8,10 @@ import { buildShortUUID as generateUUID } from '@vben/utils';
 
 import { Button, Input } from 'ant-design-vue';
 
+import { NODE_DEFAULT_TEXT } from '#/components/simple-process-design/locales/simple-process-design';
+import { $t } from '#/locales';
 import { BpmNodeTypeEnum } from '#/utils';
 
-import { NODE_DEFAULT_TEXT } from '../../consts';
 import { useTaskStatusClass } from '../../helpers';
 import ProcessNodeTree from '../process-node-tree.vue';
 import NodeHandler from './node-handler.vue';
@@ -72,7 +73,9 @@ function changeNodeName(index: number) {
   const conditionNode = currentNode.value.conditionNodes?.at(
     index,
   ) as SimpleFlowNode;
-  conditionNode.name = conditionNode.name || `并行${index + 1}`;
+  conditionNode.name =
+    conditionNode.name ||
+    $t('bpm.simpleProcessDesign.default.parallelCondition', [index + 1]);
 }
 
 // 点击条件名称
@@ -88,8 +91,10 @@ function addCondition() {
     const lastIndex = len - 1;
     const conditionData: SimpleFlowNode = {
       id: `Flow_${generateUUID()}`,
-      name: `并行${len}`,
-      showText: '无需配置条件同时执行',
+      name: $t('bpm.simpleProcessDesign.default.parallelCondition', [len]),
+      showText: $t(
+        'bpm.simpleProcessDesign.default.noConditionConcurrentExecute',
+      ),
       type: BpmNodeTypeEnum.CONDITION_NODE,
       childNode: undefined,
       conditionNodes: [],
@@ -144,7 +149,7 @@ function recursiveFindParentNode(
         @click="addCondition"
         plain
       >
-        添加分支
+        {{ $t('bpm.simpleProcessDesign.default.addBranch') }}
       </Button>
       <div
         class="branch-node-item"
@@ -183,7 +188,9 @@ function recursiveFindParentNode(
                 <div v-else class="branch-title" @click="clickEvent(index)">
                   {{ item.name }}
                 </div>
-                <div class="branch-priority">无优先级</div>
+                <div class="branch-priority">
+                  {{ $t('bpm.simpleProcessDesign.default.noPriority') }}
+                </div>
               </div>
               <div class="branch-node-content">
                 <div

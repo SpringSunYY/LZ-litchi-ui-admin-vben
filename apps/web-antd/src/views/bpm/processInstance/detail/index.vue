@@ -15,6 +15,7 @@ import {
 } from '#/api/bpm/processInstance';
 import { getSimpleUserList } from '#/api/system/user';
 import DictTag from '#/components/dict-tag/dict-tag.vue';
+import { $t } from '#/locales';
 import {
   BpmModelFormType,
   BpmModelType,
@@ -116,11 +117,11 @@ async function getApprovalDetail() {
     const data = await getApprovalDetailApi(param);
 
     if (!data) {
-      message.error('查询不到审批详情信息！');
+      message.error($t('bpm.oa.leave.message.approvalDetailNotFound'));
     }
 
     if (!data.processDefinition || !data.processInstance) {
-      message.error('查询不到流程信息！');
+      message.error($t('bpm.processInstance.message.processInfoNotFound'));
     }
 
     processInstance.value = data.processInstance;
@@ -168,7 +169,7 @@ async function getApprovalDetail() {
     // 获取待办任务显示操作按钮
     operationButtonRef.value?.loadTodoTask(data.todoTask);
   } catch {
-    message.error('获取审批详情失败！');
+    message.error($t('bpm.processInstance.message.getApprovalDetailFailed'));
   } finally {
     processInstanceLoading.value = false;
   }
@@ -253,7 +254,9 @@ onMounted(async () => {
       }"
     >
       <template #title>
-        <span class="text-[#878c93]">编号：{{ id || '-' }}</span>
+        <span class="text-[#878c93]">{{
+          $t('bpm.processInstance.detail.instanceId', [id || '-'])
+        }}</span>
       </template>
 
       <div class="flex h-[100%] flex-col">
@@ -290,7 +293,14 @@ onMounted(async () => {
               }}</span>
             </div>
             <div class="text-[#878c93]">
-              {{ formatDateTime(processInstance?.startTime) }} 提交
+              {{ formatDateTime(processInstance?.startTime) }}
+              <template v-if="processInstance?.startUser?.nickname">
+                {{
+                  $t('bpm.processInstance.detail.submittedBy', [
+                    processInstance?.startUser?.nickname,
+                  ])
+                }}
+              </template>
             </div>
           </div>
 
@@ -304,7 +314,11 @@ onMounted(async () => {
         <!-- 流程操作 -->
         <div class="process-tabs-container flex flex-1 flex-col">
           <Tabs v-model:active-key="activeTab" class="mt-0 h-full">
-            <TabPane tab="审批详情" key="form" class="tab-pane-content">
+            <TabPane
+              :tab="$t('bpm.processInstance.tab.approvalDetail')"
+              key="form"
+              class="tab-pane-content"
+            >
               <Row :gutter="[48, 24]" class="h-full">
                 <Col
                   :xs="24"
@@ -346,7 +360,11 @@ onMounted(async () => {
               </Row>
             </TabPane>
 
-            <TabPane tab="流程图" key="diagram" class="tab-pane-content">
+            <TabPane
+              :tab="$t('bpm.processInstance.tab.processDiagram')"
+              key="diagram"
+              class="tab-pane-content"
+            >
               <div class="h-full">
                 <ProcessInstanceSimpleViewer
                   v-show="
@@ -367,7 +385,11 @@ onMounted(async () => {
               </div>
             </TabPane>
 
-            <TabPane tab="流转记录" key="record" class="tab-pane-content">
+            <TabPane
+              :tab="$t('bpm.processInstance.tab.flowRecord')"
+              key="record"
+              class="tab-pane-content"
+            >
               <div class="h-full">
                 <BpmProcessInstanceTaskList
                   ref="taskListRef"
@@ -379,12 +401,12 @@ onMounted(async () => {
 
             <!-- TODO 待开发 -->
             <TabPane
-              tab="流转评论"
+              :tab="$t('bpm.processInstance.tab.flowComment')"
               key="comment"
               v-if="false"
               class="tab-pane-content"
             >
-              <div class="h-full">待开发</div>
+              <div class="h-full">{{ $t('common.todo') }}</div>
             </TabPane>
           </Tabs>
         </div>

@@ -9,6 +9,7 @@ import { Button, message } from 'ant-design-vue';
 
 import { getFormDetail } from '#/api/bpm/form';
 import { useFormCreateDesigner } from '#/components/form-create';
+import { $t } from '#/locales';
 import { router } from '#/router';
 import { setConfAndFields } from '#/utils';
 import Form from '#/views/bpm/form/modules/form.vue';
@@ -88,7 +89,7 @@ async function loadFormConfig(id: number | string) {
       setConfAndFields(designerRef, formDetail.conf, formDetail.fields);
     }
   } catch {
-    message.error('加载表单配置失败');
+    message.error($t('bpm.form.message.loadFailed'));
   }
 }
 
@@ -97,7 +98,7 @@ async function initializeDesigner() {
   const id = currentFormId.value;
 
   if (props.type === 'copy' && !id) {
-    message.error('复制ID不能为空');
+    message.error($t('bpm.form.message.copyIdEmpty'));
     return;
   }
 
@@ -141,7 +142,7 @@ onMounted(() => {
       <template #handle>
         <Button size="small" type="primary" @click="handleSave">
           <IconifyIcon icon="mdi:content-save" />
-          保存
+          {{ $t('common.save') }}
         </Button>
       </template>
     </FcDesigner>

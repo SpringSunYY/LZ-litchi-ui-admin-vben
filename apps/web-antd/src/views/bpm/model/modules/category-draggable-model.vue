@@ -77,14 +77,14 @@ const expandKeys = computed(() => (isExpand.value ? ['1'] : []));
 // 表格列配置
 const columns = [
   {
-    title: '流程名',
+    title: $t('bpm.model.field.name'),
     dataIndex: 'name',
     key: 'name',
     align: 'left' as const,
     width: 250,
   },
   {
-    title: '可见范围',
+    title: $t('bpm.model.field.startUserIds'),
     dataIndex: 'startUserIds',
     key: 'startUserIds',
     align: 'center' as const,
@@ -92,7 +92,7 @@ const columns = [
     width: 150,
   },
   {
-    title: '流程类型',
+    title: $t('bpm.model.field.type'),
     dataIndex: 'type',
     key: 'type',
     align: 'center' as const,
@@ -100,7 +100,7 @@ const columns = [
     width: 150,
   },
   {
-    title: '表单信息',
+    title: $t('bpm.model.field.formType'),
     dataIndex: 'formType',
     key: 'formType',
     align: 'center' as const,
@@ -108,14 +108,14 @@ const columns = [
     width: 150,
   },
   {
-    title: '最后发布',
+    title: $t('bpm.model.field.deploymentTime'),
     dataIndex: 'deploymentTime',
     key: 'deploymentTime',
     align: 'center' as const,
     width: 250,
   },
   {
-    title: '操作',
+    title: $t('common.operation'),
     key: 'operation',
     align: 'center' as const,
     fixed: 'right' as const,
@@ -150,7 +150,7 @@ async function handleModelSortSubmit() {
     await updateModelSortBatch(ids);
     // 刷新列表
     isModelSorting.value = false;
-    message.success('排序模型成功');
+    message.success($t('bpm.model.message.sortModelSuccess'));
     emit('success');
   } catch (error) {
     console.error('排序保存失败', error);
@@ -181,12 +181,14 @@ function handleCommand(command: string) {
 /** 删除流程分类 */
 async function handleDeleteCategory() {
   if (props.categoryInfo.modelList.length > 0) {
-    message.warning('该分类下仍有流程定义,不允许删除');
+    message.warning($t('bpm.model.message.deleteCategoryWarn'));
     return;
   }
 
   confirm({
-    content: `确定要删除[${props.categoryInfo.name}]吗？`,
+    content: $t('bpm.model.message.confirmDeleteCategory', [
+      props.categoryInfo.name,
+    ]),
   }).then(async () => {
     // 发起删除
     await deleteCategory(props.categoryInfo.id);
@@ -232,10 +234,10 @@ async function handleDeploy(row: any) {
       await deployModel(row.id);
       return true;
     },
-    content: `确认要发布[${row.name}]流程吗？`,
+    content: $t('bpm.model.message.confirmDeploy', [row.name]),
     icon: 'question',
   }).then(async () => {
-    message.success(`发布[${row.name}]流程成功`);
+    message.success($t('bpm.model.message.deploySuccess', [row.name]));
     // 刷新列表
     emit('success');
   });
@@ -278,7 +280,10 @@ function handleModelCommand(command: string, row: any) {
 function handleChangeState(row: any) {
   const state = row.processDefinition.suspensionState;
   const newState = state === 1 ? 2 : 1;
-  const statusState = state === 1 ? '停用' : '启用';
+  const statusState =
+    state === 1
+      ? $t('bpm.model.message.disable')
+      : $t('bpm.model.message.enable');
   confirm({
     beforeClose: async ({ isConfirm }) => {
       if (!isConfirm) return;
@@ -286,10 +291,12 @@ function handleChangeState(row: any) {
       await updateModelState(row.id, newState);
       return true;
     },
-    content: `确认要${statusState}流程: "${row.name}" 吗？`,
+    content: $t('bpm.model.message.confirmEnable', [statusState, row.name]),
     icon: 'question',
   }).then(async () => {
-    message.success(`${statusState} 流程: "${row.name}" 成功`);
+    message.success(
+      $t('bpm.model.message.enableSuccess', [statusState, row.name]),
+    );
     // 刷新列表
     emit('success');
   });
@@ -304,10 +311,10 @@ function handleClean(row: any) {
       await cleanModel(row.id);
       return true;
     },
-    content: `确认要清理流程: "${row.name}" 吗？`,
+    content: $t('bpm.model.message.confirmClean', [row.name]),
     icon: 'question',
   }).then(async () => {
-    message.success(`清理流程: "${row.name}" 成功`);
+    message.success($t('bpm.model.message.cleanSuccess', [row.name]));
     // 刷新列表
     emit('success');
   });
@@ -322,10 +329,10 @@ function handleDelete(row: any) {
       await deleteModel(row.id);
       return true;
     },
-    content: `确认要删除流程: "${row.name}" 吗？`,
+    content: $t('bpm.model.message.confirmDelete', [row.name]),
     icon: 'question',
   }).then(async () => {
-    message.success(`删除流程: "${row.name}" 成功`);
+    message.success($t('bpm.model.message.deleteSuccess', [row.name]));
     // 刷新列表
     emit('success');
   });
@@ -389,7 +396,10 @@ const handleRenameSuccess = () => {
       <div class="flex h-12 items-center">
         <!-- 头部：分类名 -->
         <div class="flex items-center">
-          <Tooltip v-if="isCategorySorting" title="拖动排序">
+          <Tooltip
+            v-if="isCategorySorting"
+            :title="$t('bpm.model.message.dragSortTip')"
+          >
             <span
               class="icon-[ic--round-drag-indicator] ml-2.5 cursor-move text-2xl text-gray-500"
             ></span>
@@ -430,7 +440,7 @@ const handleRenameSuccess = () => {
                 <template #icon>
                   <IconifyIcon icon="lucide:align-start-vertical" />
                 </template>
-                排序
+                {{ $t('bpm.model.message.sort') }}
               </Button>
               <Dropdown placement="bottom" arrow>
                 <Button
@@ -441,12 +451,16 @@ const handleRenameSuccess = () => {
                   <template #icon>
                     <IconifyIcon icon="lucide:settings" />
                   </template>
-                  分类
+                  {{ $t('bpm.model.message.categoryOp') }}
                 </Button>
                 <template #overlay>
                   <Menu @click="(e) => handleCommand(e.key as string)">
-                    <Menu.Item key="renameCategory"> 重命名 </Menu.Item>
-                    <Menu.Item key="deleteCategory"> 删除分类 </Menu.Item>
+                    <Menu.Item key="renameCategory">
+                      {{ $t('bpm.model.message.rename') }}
+                    </Menu.Item>
+                    <Menu.Item key="deleteCategory">
+                      {{ $t('bpm.model.message.deleteCategory') }}
+                    </Menu.Item>
                   </Menu>
                 </template>
               </Dropdown>
@@ -454,10 +468,10 @@ const handleRenameSuccess = () => {
 
             <template v-else>
               <Button @click.stop="handleModelSortCancel" class="mr-2">
-                取 消
+                {{ $t('common.cancel') }}
               </Button>
               <Button type="primary" @click.stop="handleModelSortSubmit">
-                保存排序
+                {{ $t('bpm.model.message.saveSort') }}
               </Button>
             </template>
           </div>
@@ -491,7 +505,10 @@ const handleRenameSuccess = () => {
               <!-- 流程名 -->
               <template v-if="column.key === 'name'">
                 <div class="flex items-center">
-                  <Tooltip v-if="isModelSorting" title="拖动排序">
+                  <Tooltip
+                    v-if="isModelSorting"
+                    :title="$t('bpm.model.message.dragSortTip')"
+                  >
                     <span
                       class="icon-[ic--round-drag-indicator] mr-2.5 cursor-move text-2xl text-gray-500"
                     ></span>
@@ -508,7 +525,7 @@ const handleRenameSuccess = () => {
                     v-else
                     :src="record.icon"
                     class="mr-2.5 h-9 w-9 rounded"
-                    alt="图标"
+                    :alt="$t('bpm.model.message.noIcon')"
                   />
                   <EllipsisText :max-width="160" :tooltip-when-ellipsis="true">
                     {{ record.name }}
@@ -523,7 +540,7 @@ const handleRenameSuccess = () => {
                     !record.startUsers?.length && !record.startDepts?.length
                   "
                 >
-                  全部可见
+                  {{ $t('bpm.model.message.allVisible') }}
                 </span>
                 <span v-else-if="record.startUsers?.length === 1">
                   {{ record.startUsers[0].nickname }}
@@ -538,8 +555,12 @@ const handleRenameSuccess = () => {
                       record.startDepts.map((dept: any) => dept.name).join('、')
                     "
                   >
-                    {{ record.startDepts[0].name }}等
-                    {{ record.startDepts.length }} 个部门可见
+                    {{ record.startDepts[0].name }}{{ $t('common.etc') }}
+                    {{
+                      $t('bpm.model.message.deptVisible', [
+                        record.startDepts.length,
+                      ])
+                    }}
                   </Tooltip>
                 </span>
                 <span v-else-if="record.startUsers?.length > 1">
@@ -551,8 +572,12 @@ const handleRenameSuccess = () => {
                         .join('、')
                     "
                   >
-                    {{ record.startUsers[0].nickname }}等
-                    {{ record.startUsers.length }} 人可见
+                    {{ record.startUsers[0].nickname }}{{ $t('common.etc') }}
+                    {{
+                      $t('bpm.model.message.userVisible', [
+                        record.startUsers.length,
+                      ])
+                    }}
                   </Tooltip>
                 </span>
               </template>
@@ -583,7 +608,7 @@ const handleRenameSuccess = () => {
                 >
                   {{ record.formCustomCreatePath }}
                 </Button>
-                <span v-else>暂无表单</span>
+                <span v-else>{{ $t('bpm.model.message.noForm') }}</span>
               </template>
               <!-- 最后发布列 -->
               <template v-else-if="column.key === 'deploymentTime'">
@@ -596,13 +621,15 @@ const handleRenameSuccess = () => {
                   <Tag v-if="record.processDefinition">
                     v{{ record.processDefinition.version }}
                   </Tag>
-                  <Tag v-else color="warning">未部署</Tag>
+                  <Tag v-else color="warning">
+                    {{ $t('bpm.model.message.undeployed') }}
+                  </Tag>
                   <Tag
                     v-if="record.processDefinition?.suspensionState === 2"
                     color="warning"
                     class="ml-[10px]"
                   >
-                    已停用
+                    {{ $t('bpm.model.message.suspended') }}
                   </Tag>
                 </div>
               </template>
@@ -617,7 +644,7 @@ const handleRenameSuccess = () => {
                     @click="modelOperation('update', record.id)"
                     :disabled="!isManagerUser(record)"
                   >
-                    修改
+                    {{ $t('bpm.model.message.edit') }}
                   </Button>
                   <Button
                     type="link"
@@ -626,25 +653,31 @@ const handleRenameSuccess = () => {
                     @click="handleDeploy(record)"
                     :disabled="!isManagerUser(record)"
                   >
-                    发布
+                    {{ $t('bpm.model.message.publish') }}
                   </Button>
                   <Dropdown placement="bottomRight" arrow>
-                    <Button type="link" size="small" class="px-1">更多</Button>
+                    <Button type="link" size="small" class="px-1">
+                      {{ $t('bpm.model.message.more') }}
+                    </Button>
                     <template #overlay>
                       <Menu
                         @click="
                           (e) => handleModelCommand(e.key as string, record)
                         "
                       >
-                        <Menu.Item key="handleCopy"> 复制 </Menu.Item>
-                        <Menu.Item key="handleDefinitionList"> 历史 </Menu.Item>
+                        <Menu.Item key="handleCopy">
+                          {{ $t('bpm.model.message.copy') }}
+                        </Menu.Item>
+                        <Menu.Item key="handleDefinitionList">
+                          {{ $t('bpm.model.message.history') }}
+                        </Menu.Item>
 
                         <!-- TODO 待实现报表
                         <Menu.Item
                           key="handleReport"
                           :disabled="!isManagerUser(record)"
                         >
-                          报表
+                          {{ $t('bpm.model.message.report') }}
                         </Menu.Item> -->
                         <Menu.Item
                           key="handleChangeState"
@@ -653,8 +686,8 @@ const handleRenameSuccess = () => {
                         >
                           {{
                             record.processDefinition.suspensionState === 1
-                              ? '停用'
-                              : '启用'
+                              ? $t('bpm.model.message.disable')
+                              : $t('bpm.model.message.enable')
                           }}
                         </Menu.Item>
                         <Menu.Item
@@ -662,14 +695,14 @@ const handleRenameSuccess = () => {
                           key="handleClean"
                           :disabled="!isManagerUser(record)"
                         >
-                          清理
+                          {{ $t('bpm.model.message.clean') }}
                         </Menu.Item>
                         <Menu.Item
                           danger
                           key="handleDelete"
                           :disabled="!isManagerUser(record)"
                         >
-                          删除
+                          {{ $t('common.delete') }}
                         </Menu.Item>
                       </Menu>
                     </template>

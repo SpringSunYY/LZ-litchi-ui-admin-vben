@@ -8,9 +8,10 @@ import { downloadFileFromBlob, isString } from '@vben/utils';
 
 import { Button, ButtonGroup, Modal, Row } from 'ant-design-vue';
 
+import { getSimpleProcessDesignLocale } from '#/components/simple-process-design/locales/simple-process-design';
+import { $t } from '#/locales';
 import { BpmNodeTypeEnum } from '#/utils';
 
-import { NODE_DEFAULT_TEXT } from '../consts';
 import { useWatchNode } from '../helpers';
 import ProcessNodeTree from './process-node-tree.vue';
 
@@ -38,8 +39,10 @@ const processNodeTree = useWatchNode(props);
 
 provide('readonly', props.readonly);
 
-// TODO 可优化：拖拽有点卡顿
-/** 拖拽、放大缩小等操作 */
+// ========== Locale (for templates) ==========
+const locale = getSimpleProcessDesignLocale();
+
+// ========== Drag / zoom ==========
 const scaleValue = ref(100);
 const MAX_SCALE_VALUE = 200;
 const MIN_SCALE_VALUE = 50;
@@ -205,10 +208,13 @@ onMounted(() => {
       <Row type="flex" justify="end">
         <ButtonGroup key="scale-control">
           <Button v-if="!readonly" @click="exportJson">
-            <IconifyIcon icon="ep:download" /> 导出
+            <IconifyIcon icon="ep:download" />
+            {{ $t('bpm.simpleProcessDesign.toolbar.export') }}
           </Button>
           <Button v-if="!readonly" @click="importJson">
-            <IconifyIcon icon="ep:upload" />导入
+            <IconifyIcon icon="ep:upload" />{{
+              $t('bpm.simpleProcessDesign.toolbar.import')
+            }}
           </Button>
           <!-- 用于打开本地文件-->
           <input
@@ -230,7 +236,9 @@ onMounted(() => {
           <Button :plain="true" @click="zoomIn()">
             <IconifyIcon icon="tabler:zoom-in" />
           </Button>
-          <Button @click="resetPosition">重置</Button>
+          <Button @click="resetPosition">
+            {{ $t('bpm.simpleProcessDesign.toolbar.reset') }}
+          </Button>
         </ButtonGroup>
       </Row>
     </div>
@@ -249,23 +257,27 @@ onMounted(() => {
       />
     </div>
   </div>
-  <!-- TODO 这个好像暂时没有用到。保存失败弹窗 -->
+  <!-- 保存失败弹窗 -->
   <Modal
     v-model:open="errorDialogVisible"
-    title="保存失败"
+    :title="$t('bpm.simpleProcessDesign.toolbar.saveFailed')"
     width="400"
     :fullscreen="false"
   >
-    <div class="mb-2">以下节点内容不完善，请修改后保存</div>
+    <div class="mb-2">
+      {{ $t('bpm.simpleProcessDesign.action.nodeConfigIncomplete') }}
+    </div>
     <div
       class="b-rounded-1 line-height-normal mb-3 bg-gray-100 p-2"
       v-for="(item, index) in errorNodes"
       :key="index"
     >
-      {{ item.name }} : {{ NODE_DEFAULT_TEXT.get(item.type) }}
+      {{ item.name }} : {{ locale.NODE_DEFAULT_TEXT.get(item.type) }}
     </div>
     <template #footer>
-      <Button type="primary" @click="errorDialogVisible = false">知道了</Button>
+      <Button type="primary" @click="errorDialogVisible = false">
+        {{ $t('common.confirm') }}
+      </Button>
     </template>
   </Modal>
 </template>

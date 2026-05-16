@@ -20,6 +20,7 @@ import {
 } from 'ant-design-vue';
 
 import { getFormDetail } from '#/api/bpm/form';
+import { $t } from '#/locales';
 import {
   BpmModelFormType,
   DICT_TYPE,
@@ -69,13 +70,33 @@ watch(
 );
 
 const rules: Record<string, Rule[]> = {
-  formType: [{ required: true, message: '表单类型不能为空', trigger: 'blur' }],
-  formId: [{ required: true, message: '流程表单不能为空', trigger: 'blur' }],
+  formType: [
+    {
+      required: true,
+      message: $t('bpm.model.basic.formTypeEmpty'),
+      trigger: 'blur',
+    },
+  ],
+  formId: [
+    {
+      required: true,
+      message: $t('bpm.model.basic.processFormEmpty'),
+      trigger: 'blur',
+    },
+  ],
   formCustomCreatePath: [
-    { required: true, message: '表单提交路由不能为空', trigger: 'blur' },
+    {
+      required: true,
+      message: $t('bpm.model.basic.formSubmitRouteEmpty'),
+      trigger: 'blur',
+    },
   ],
   formCustomViewPath: [
-    { required: true, message: '表单查看地址不能为空', trigger: 'blur' },
+    {
+      required: true,
+      message: $t('bpm.model.basic.formViewRouteEmpty'),
+      trigger: 'blur',
+    },
   ],
 };
 
@@ -95,7 +116,11 @@ defineExpose({ validate });
     :wrapper-col="{ span: 21 }"
     class="mt-5"
   >
-    <FormItem label="表单类型" name="formType" class="mb-5">
+    <FormItem
+      :label="$t('bpm.model.basic.formType')"
+      name="formType"
+      class="mb-5"
+    >
       <RadioGroup v-model:value="modelData.formType">
         <Radio
           v-for="dict in getDictOptions(
@@ -111,7 +136,7 @@ defineExpose({ validate });
     </FormItem>
     <FormItem
       v-if="modelData.formType === BpmModelFormType.NORMAL"
-      label="流程表单"
+      :label="$t('bpm.model.basic.processForm')"
       name="formId"
       class="mb-5"
     >
@@ -128,17 +153,19 @@ defineExpose({ validate });
     </FormItem>
     <FormItem
       v-if="modelData.formType === BpmModelFormType.CUSTOM"
-      label="表单提交路由"
+      :label="$t('bpm.model.basic.formSubmitRoute')"
       name="formCustomCreatePath"
       class="mb-5"
     >
       <div class="flex items-center">
         <Input
           v-model:value="modelData.formCustomCreatePath"
-          placeholder="请输入表单提交路由"
+          :placeholder="
+            $t('ui.placeholder.input', [$t('bpm.model.basic.formSubmitRoute')])
+          "
         />
         <Tooltip
-          title="自定义表单的提交路径，使用 Vue 的路由地址, 例如说: bpm/oa/leave/create.vue"
+          :title="$t('bpm.model.basic.formSubmitRouteTip')"
           placement="top"
         >
           <CircleHelp class="ml-1 size-5 text-gray-900" />
@@ -147,17 +174,19 @@ defineExpose({ validate });
     </FormItem>
     <FormItem
       v-if="modelData.formType === BpmModelFormType.CUSTOM"
-      label="表单查看地址"
+      :label="$t('bpm.model.basic.formViewRoute')"
       name="formCustomViewPath"
       class="mb-5"
     >
       <div class="flex items-center">
         <Input
           v-model:value="modelData.formCustomViewPath"
-          placeholder="请输入表单查看的组件地址"
+          :placeholder="
+            $t('ui.placeholder.input', [$t('bpm.model.basic.formViewRoute')])
+          "
         />
         <Tooltip
-          title="自定义表单的查看组件地址，使用 Vue 的组件地址，例如说：bpm/oa/leave/detail.vue"
+          :title="$t('bpm.model.basic.formViewRouteTip')"
           placement="top"
         >
           <CircleHelp class="ml-1 size-5 text-gray-900" />
@@ -175,7 +204,9 @@ defineExpose({ validate });
     >
       <div class="mb-[15px] flex items-center">
         <div class="mr-[10px] h-[15px] w-[4px] bg-[#1890ff]"></div>
-        <span class="text-[15px] font-bold">表单预览</span>
+        <span class="text-[15px] font-bold">{{
+          $t('bpm.model.basic.formPreview')
+        }}</span>
       </div>
       <FormCreate
         v-model:api="formPreview.formData"

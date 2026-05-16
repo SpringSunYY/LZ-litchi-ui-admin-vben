@@ -8,6 +8,7 @@ const allowedScopes = [
   ...packages.map((pkg) => pkg.packageJson.name),
   'system',
   'infra',
+  'bpm',
   'project',
   'style',
   'lint',

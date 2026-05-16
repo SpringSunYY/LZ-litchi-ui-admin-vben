@@ -8,13 +8,11 @@ import { cloneDeep, buildShortUUID as generateUUID } from '@vben/utils';
 
 import { Button, Input } from 'ant-design-vue';
 
+import { NODE_DEFAULT_TEXT } from '#/components/simple-process-design/locales/simple-process-design';
+import { $t } from '#/locales';
 import { BpmNodeTypeEnum } from '#/utils';
 
-import {
-  ConditionType,
-  DEFAULT_CONDITION_GROUP_VALUE,
-  NODE_DEFAULT_TEXT,
-} from '../../consts';
+import { ConditionType, DEFAULT_CONDITION_GROUP_VALUE } from '../../consts';
 import {
   getDefaultInclusiveConditionNodeName,
   useTaskStatusClass,
@@ -112,7 +110,7 @@ function addCondition() {
     const lastIndex = len - 1;
     const conditionData: SimpleFlowNode = {
       id: `Flow_${generateUUID()}`,
-      name: `包容条件${len}`,
+      name: $t('bpm.simpleProcessDesign.default.inclusiveCondition', [len]),
       showText: '',
       type: BpmNodeTypeEnum.CONDITION_NODE,
       childNode: undefined,
@@ -183,7 +181,7 @@ function recursiveFindParentNode(
         <span class="iconfont icon-inclusive icon-size inclusive"></span>
       </div>
       <Button v-else class="branch-node-add" @click="addCondition">
-        添加条件
+        {{ $t('bpm.simpleProcessDesign.default.addCondition') }}
       </Button>
       <div
         class="branch-node-item"

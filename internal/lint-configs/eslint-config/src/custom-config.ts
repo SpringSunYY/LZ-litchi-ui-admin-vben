@@ -26,6 +26,8 @@ const customConfig: Linter.Config[] = [
     rules: {
       'perfectionist/sort-interfaces': 'off',
       'perfectionist/sort-objects': 'off',
+      'unused-imports/no-unused-vars': 'off',
+      '@typescript-eslint/no-unused-vars': 'off',
     },
   },
   {

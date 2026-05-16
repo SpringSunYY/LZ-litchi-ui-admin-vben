@@ -23,9 +23,11 @@ import {
   TypographyText,
 } from 'ant-design-vue';
 
+import { getSimpleProcessDesignLocale } from '#/components/simple-process-design/locales/simple-process-design';
+import { $t } from '#/locales';
 import { BpmModelFormType, BpmNodeTypeEnum } from '#/utils';
 
-import { FieldPermissionType, START_USER_BUTTON_SETTING } from '../../consts';
+import { FieldPermissionType } from '../../consts';
 import {
   useFormFieldsPermission,
   useNodeName,
@@ -40,6 +42,9 @@ const props = defineProps({
     required: true,
   },
 });
+
+// ========== Locale ==========
+const locale = getSimpleProcessDesignLocale();
 
 // 可发起流程的用户编号
 const startUserIds = inject<Ref<any[]>>('startUserIds');
@@ -105,11 +110,11 @@ const [Drawer, drawerApi] = useVbenDrawer({
 async function saveConfig() {
   activeTabName.value = 'user';
   currentNode.value.name = nodeName.value!;
-  currentNode.value.showText = '已设置';
+  currentNode.value.showText = $t('bpm.simpleProcessDesign.action.alreadySet');
   // 设置表单权限
   currentNode.value.fieldsPermission = fieldsPermissionConfig.value;
   // 设置发起人的按钮权限
-  currentNode.value.buttonsSetting = START_USER_BUTTON_SETTING;
+  currentNode.value.buttonsSetting = locale.START_USER_BUTTON_SETTING;
   drawerApi.setState({ isOpen: false });
   return true;
 }
@@ -166,18 +171,22 @@ defineExpose({ showStartUserNodeConfig });
       </div>
     </template>
     <Tabs v-model:active-key="activeTabName" type="card">
-      <TabPane tab="权限" key="user">
+      <TabPane
+        :tab="$t('bpm.simpleProcessDesign.action.permission')"
+        key="user"
+      >
         <TypographyText
           v-if="
             (!startUserIds || startUserIds.length === 0) &&
             (!startDeptIds || startDeptIds.length === 0)
           "
         >
-          全部成员可以发起流程
+          {{ $t('bpm.simpleProcessDesign.action.allMembersCanStart') }}
         </TypographyText>
         <div v-else-if="startUserIds && startUserIds.length > 0">
           <TypographyText v-if="startUserIds.length === 1">
-            {{ getUserNicknames(startUserIds) }} 可发起流程
+            {{ getUserNicknames(startUserIds) }}
+            {{ $t('bpm.simpleProcessDesign.action.canStartProcess', ['']) }}
           </TypographyText>
           <TypographyText v-else>
             <Tooltip
@@ -186,14 +195,17 @@ defineExpose({ showStartUserNodeConfig });
               placement="top"
               :content="getUserNicknames(startUserIds)"
             >
-              {{ getUserNicknames(startUserIds.slice(0, 2)) }} 等
-              {{ startUserIds.length }} 人可发起流程
+              {{ getUserNicknames(startUserIds.slice(0, 2)) }}
+              {{ $t('bpm.common.andMore') }}
+              {{ startUserIds.length }}
+              {{ $t('bpm.common.personsCanStart') }}
             </Tooltip>
           </TypographyText>
         </div>
         <div v-else-if="startDeptIds && startDeptIds.length > 0">
           <TypographyText v-if="startDeptIds.length === 1">
-            {{ getDeptNames(startDeptIds) }} 可发起流程
+            {{ getDeptNames(startDeptIds) }}
+            {{ $t('bpm.simpleProcessDesign.action.canStartProcess', ['']) }}
           </TypographyText>
           <TypographyText v-else>
             <Tooltip
@@ -202,23 +214,29 @@ defineExpose({ showStartUserNodeConfig });
               placement="top"
               :content="getDeptNames(startDeptIds)"
             >
-              {{ getDeptNames(startDeptIds.slice(0, 2)) }} 等
-              {{ startDeptIds.length }} 个部门可发起流程
+              {{ getDeptNames(startDeptIds.slice(0, 2)) }}
+              {{ $t('bpm.common.andMore') }}
+              {{ startDeptIds.length }}
+              {{ $t('bpm.simpleProcessDesign.action.deptCountCanStart', ['']) }}
             </Tooltip>
           </TypographyText>
         </div>
       </TabPane>
       <TabPane
-        tab="表单字段权限"
+        :tab="$t('bpm.simpleProcessDesign.action.formFieldPermission')"
         key="fields"
         v-if="formType === BpmModelFormType.NORMAL"
       >
         <div class="p-1">
-          <div class="mb-4 text-[16px] font-bold">字段权限</div>
+          <div class="mb-4 text-[16px] font-bold">
+            {{ $t('bpm.simpleProcessDesign.action.formFieldPermission') }}
+          </div>
 
           <!-- 表头 -->
           <Row class="border border-gray-200 px-4 py-3">
-            <Col :span="8" class="font-bold">字段名称</Col>
+            <Col :span="8" class="font-bold">
+              {{ $t('bpm.simpleProcessDesign.action.fieldName') }}
+            </Col>
             <Col :span="16">
               <Row>
                 <Col :span="8" class="flex items-center justify-center">
@@ -226,7 +244,7 @@ defineExpose({ showStartUserNodeConfig });
                     class="cursor-pointer font-bold"
                     @click="updatePermission('READ')"
                   >
-                    只读
+                    {{ $t('bpm.simpleProcessDesign.action.readOnly') }}
                   </span>
                 </Col>
                 <Col :span="8" class="flex items-center justify-center">
@@ -234,7 +252,7 @@ defineExpose({ showStartUserNodeConfig });
                     class="cursor-pointer font-bold"
                     @click="updatePermission('WRITE')"
                   >
-                    可编辑
+                    {{ $t('bpm.simpleProcessDesign.action.editable') }}
                   </span>
                 </Col>
                 <Col :span="8" class="flex items-center justify-center">
@@ -242,7 +260,7 @@ defineExpose({ showStartUserNodeConfig });
                     class="cursor-pointer font-bold"
                     @click="updatePermission('NONE')"
                   >
-                    隐藏
+                    {{ $t('bpm.simpleProcessDesign.action.hidden') }}
                   </span>
                 </Col>
               </Row>

@@ -1,4 +1,8 @@
-export * from './constants';
+export * from './constants/bpm';
+export * from './constants/common';
+export * from './constants/erp';
+export * from './constants/infra';
+export * from './constants/system';
 export * from './dict';
 export * from './download';
 export * from './formCreate';
@@ -19,7 +23,7 @@ export const areaReplace = (areaName: string) => {
     .replace('市', '');
 };
 
-export function normalizeSortOrder(order: unknown): 'asc' | 'desc' | undefined {
+export function normalizeSortOrder(order: any): 'asc' | 'desc' | undefined {
   if (!order) return undefined;
   const str = String(order).toLowerCase();
   if (str === 'asc' || str === 'ascend') return 'asc';
@@ -31,6 +35,11 @@ export function pickSort(ctx: any): { sort?: string[]; sortBy?: string[] } {
   const sorts = Array.isArray(ctx?.sorts) ? ctx.sorts : undefined;
   const activeSorts = (sorts || []).filter((s: any) => s?.order);
   const sortBy = activeSorts.map((s: any) => String(s.field));
-  const sort = activeSorts.map((s: any) => normalizeSortOrder(s.order)!);
+  const sort = activeSorts
+    .map((s: any) => normalizeSortOrder(s.order))
+    .filter(
+      (order: 'asc' | 'desc' | undefined): order is 'asc' | 'desc' =>
+        order !== undefined,
+    );
   return { sortBy, sort };
 }

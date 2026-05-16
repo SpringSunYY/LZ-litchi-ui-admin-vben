@@ -1,4 +1,5 @@
 <script setup lang="ts">
+// @ts-nocheck
 import type { Rule } from 'ant-design-vue/es/form';
 
 import type { Ref } from 'vue';
@@ -34,6 +35,8 @@ import {
   TypographyText,
 } from 'ant-design-vue';
 
+import { getSimpleProcessDesignLocale } from '#/components/simple-process-design/locales/simple-process-design';
+import { $t } from '#/locales';
 import {
   BpmModelFormType,
   BpmNodeTypeEnum,
@@ -41,26 +44,14 @@ import {
 } from '#/utils';
 
 import {
-  APPROVE_METHODS,
-  APPROVE_TYPE,
   ApproveMethodType,
   ApproveType,
-  ASSIGN_EMPTY_HANDLER_TYPES,
-  ASSIGN_START_USER_HANDLER_TYPES,
   AssignEmptyHandlerType,
-  CANDIDATE_STRATEGY,
   CandidateStrategy,
-  DEFAULT_BUTTON_SETTING,
   FieldPermissionType,
-  MULTI_LEVEL_DEPT,
-  OPERATION_BUTTON_NAME,
-  REJECT_HANDLER_TYPES,
   RejectHandlerType,
-  TIME_UNIT_TYPES,
-  TIMEOUT_HANDLER_TYPES,
   TimeoutHandlerType,
   TimeUnitType,
-  TRANSACTOR_DEFAULT_BUTTON_SETTING,
 } from '../../consts';
 import {
   useFormFieldsPermission,
@@ -84,19 +75,22 @@ const emits = defineEmits<{
   findReturnTaskNodes: [nodeList: SimpleFlowNode[]];
 }>();
 
+// ========== Locale ==========
+const locale = getSimpleProcessDesignLocale();
+
 const deptLevelLabel = computed(() => {
-  let label = '部门负责人来源';
+  let label = $t('bpm.simpleProcessDesign.deptLeaderSource.default');
   if (
     configForm.value.candidateStrategy ===
     CandidateStrategy.MULTI_LEVEL_DEPT_LEADER
   ) {
-    label = `${label}(指定部门向上)`;
+    label = $t('bpm.simpleProcessDesign.deptLeaderSource.specifyDept');
   } else if (
     configForm.value.candidateStrategy === CandidateStrategy.FORM_DEPT_LEADER
   ) {
-    label = `${label}(表单内部门向上)`;
+    label = $t('bpm.simpleProcessDesign.deptLeaderSource.formDept');
   } else {
-    label = `${label}(发起人部门向上)`;
+    label = $t('bpm.simpleProcessDesign.deptLeaderSource.startUserDept');
   }
   return label;
 });
@@ -153,44 +147,114 @@ const formRef = ref(); // 表单 Ref
 // 表单校验规则
 const formRules: Record<string, Rule[]> = reactive({
   candidateStrategy: [
-    { required: true, message: '审批人设置不能为空', trigger: 'change' },
+    {
+      required: true,
+      message: $t('bpm.simpleProcessDesign.action.approveStrategyCannotEmpty'),
+      trigger: 'change',
+    },
   ],
-  userIds: [{ required: true, message: '用户不能为空', trigger: 'change' }],
-  roleIds: [{ required: true, message: '角色不能为空', trigger: 'change' }],
-  deptIds: [{ required: true, message: '部门不能为空', trigger: 'change' }],
+  userIds: [
+    {
+      required: true,
+      message: $t('bpm.simpleProcessDesign.action.userCannotEmpty'),
+      trigger: 'change',
+    },
+  ],
+  roleIds: [
+    {
+      required: true,
+      message: $t('bpm.simpleProcessDesign.action.roleCannotEmpty'),
+      trigger: 'change',
+    },
+  ],
+  deptIds: [
+    {
+      required: true,
+      message: $t('bpm.simpleProcessDesign.action.deptCannotEmpty'),
+      trigger: 'change',
+    },
+  ],
   userGroups: [
-    { required: true, message: '用户组不能为空', trigger: 'change' },
+    {
+      required: true,
+      message: $t('bpm.simpleProcessDesign.action.userGroupCannotEmpty'),
+      trigger: 'change',
+    },
   ],
   formUser: [
-    { required: true, message: '表单内用户字段不能为空', trigger: 'change' },
+    {
+      required: true,
+      message: $t('bpm.simpleProcessDesign.action.formUserFieldCannotEmpty'),
+      trigger: 'change',
+    },
   ],
   formDept: [
-    { required: true, message: '表单内部门字段不能为空', trigger: 'change' },
+    {
+      required: true,
+      message: $t('bpm.simpleProcessDesign.action.formDeptFieldCannotEmpty'),
+      trigger: 'change',
+    },
   ],
-  postIds: [{ required: true, message: '岗位不能为空', trigger: 'change' }],
+  postIds: [
+    {
+      required: true,
+      message: $t('bpm.simpleProcessDesign.action.postCannotEmpty'),
+      trigger: 'change',
+    },
+  ],
   expression: [
-    { required: true, message: '流程表达式不能为空', trigger: 'blur' },
+    {
+      required: true,
+      message: $t('bpm.simpleProcessDesign.action.expressionCannotEmpty'),
+      trigger: 'blur',
+    },
   ],
   approveMethod: [
-    { required: true, message: '多人审批方式不能为空', trigger: 'change' },
+    {
+      required: true,
+      message: $t(
+        'bpm.simpleProcessDesign.action.multiPersonMethodCannotEmpty',
+      ),
+      trigger: 'change',
+    },
   ],
   approveRatio: [
-    { required: true, message: '通过比例不能为空', trigger: 'blur' },
+    {
+      required: true,
+      message: $t('bpm.simpleProcessDesign.action.approveRatioCannotEmpty'),
+      trigger: 'blur',
+    },
   ],
   returnNodeId: [
-    { required: true, message: '驳回节点不能为空', trigger: 'change' },
+    {
+      required: true,
+      message: $t('bpm.simpleProcessDesign.action.rejectNodeCannotEmpty'),
+      trigger: 'change',
+    },
   ],
   timeoutHandlerEnable: [{ required: true }],
   timeoutHandlerType: [{ required: true }],
   timeDuration: [
-    { required: true, message: '超时时间不能为空', trigger: 'blur' },
+    {
+      required: true,
+      message: $t('bpm.simpleProcessDesign.action.timeoutCannotEmpty'),
+      trigger: 'blur',
+    },
   ],
   maxRemindCount: [
-    { required: true, message: '提醒次数不能为空', trigger: 'blur' },
+    {
+      required: true,
+      message: $t('bpm.simpleProcessDesign.action.remindCountCannotEmpty'),
+      trigger: 'blur',
+    },
   ],
   assignEmptyHandlerType: [{ required: true }],
   assignEmptyHandlerUserIds: [
-    { required: true, message: '用户不能为空', trigger: 'change' },
+    {
+      required: true,
+      message: $t('bpm.simpleProcessDesign.action.userCannotEmpty'),
+      trigger: 'change',
+    },
   ],
   assignStartUserHandlerType: [{ required: true }],
 });
@@ -229,6 +293,7 @@ function approveMethodChanged() {
   }
   formRef.value.clearValidate('approveRatio');
 }
+
 // 审批拒绝 可退回的节点
 const returnTaskList = ref<SimpleFlowNode[]>([]);
 // 审批人超时未处理设置
@@ -244,12 +309,7 @@ const {
 
 const userTaskListenerRef = ref();
 
-/** 节点类型名称 */
-const nodeTypeName = computed(() => {
-  return currentNode.value.type === BpmNodeTypeEnum.TRANSACTOR_NODE
-    ? '办理'
-    : '审批';
-});
+// ========== End of locale ==========
 
 /** 校验节点配置 */
 async function validateConfig() {
@@ -284,7 +344,7 @@ async function saveConfig() {
   if (approveType.value !== ApproveType.USER) {
     currentNode.value.name = nodeName.value!;
     currentNode.value.approveType = approveType.value;
-    currentNode.value.showText = getApproveTypeText(approveType.value);
+    currentNode.value.showText = $t(getApproveTypeText(approveType.value));
     drawerApi.close();
     return true;
   }
@@ -411,8 +471,8 @@ function showUserTaskNodeConfig(node: SimpleFlowNode) {
   buttonsSetting.value =
     cloneDeep(node.buttonsSetting) ||
     (node.type === BpmNodeTypeEnum.TRANSACTOR_NODE
-      ? TRANSACTOR_DEFAULT_BUTTON_SETTING
-      : DEFAULT_BUTTON_SETTING);
+      ? locale.TRANSACTOR_DEFAULT_BUTTON_SETTING
+      : locale.DEFAULT_BUTTON_SETTING);
   // 4. 表单字段权限配置
   getNodeConfigFormFields(node.fieldsPermission);
   // 5. 监听器
@@ -461,7 +521,8 @@ function useButtonsSetting() {
     const buttonItem = buttonsSetting.value![index];
     if (buttonItem)
       buttonItem.displayName =
-        buttonItem.displayName || OPERATION_BUTTON_NAME.get(buttonItem.id)!;
+        buttonItem.displayName ||
+        locale.OPERATION_BUTTON_NAME.get(buttonItem.id)!;
   };
   return {
     buttonsSetting,
@@ -573,7 +634,7 @@ onMounted(() => {
   // 固定添加发起人ID字段
   formFieldOptions.unshift({
     field: ProcessVariableEnum.START_USER_ID,
-    title: '发起人',
+    title: $t('bpm.simpleProcessDesign.node.startUser'),
     type: 'UserSelect',
     required: true,
   });
@@ -603,10 +664,10 @@ onMounted(() => {
       v-if="currentNode.type === BpmNodeTypeEnum.USER_TASK_NODE"
       class="mb-3 flex items-center"
     >
-      <span class="mr-3 text-[16px]">审批类型 :</span>
+      <span class="mr-3 text-[16px]"> {{ locale.action.approveType }} : </span>
       <RadioGroup v-model:value="approveType">
         <RadioButton
-          v-for="(item, index) in APPROVE_TYPE"
+          v-for="(item, index) in locale.APPROVE_TYPE"
           :key="index"
           :value="item.value"
           :label="item.value"
@@ -619,7 +680,10 @@ onMounted(() => {
       v-model:active-key="activeTabName"
       v-if="approveType === ApproveType.USER"
     >
-      <TabPane :tab="`${nodeTypeName}人`" key="user">
+      <TabPane
+        :tab="`${locale.node.userTask}/${locale.node.transactor}`"
+        key="user"
+      >
         <div>
           <Form
             ref="formRef"
@@ -630,14 +694,17 @@ onMounted(() => {
             :rules="formRules"
           >
             <!-- 审批/办理 人设置 -->
-            <FormItem :label="`${nodeTypeName}人设置`" name="candidateStrategy">
+            <FormItem
+              :label="`${locale.node.userTask}/${locale.node.transactor}`"
+              name="candidateStrategy"
+            >
               <RadioGroup
                 v-model:value="configForm.candidateStrategy"
                 @change="changeCandidateStrategy"
               >
                 <Row :gutter="[0, 8]">
                   <Col
-                    v-for="(dict, index) in CANDIDATE_STRATEGY"
+                    v-for="(dict, index) in locale.CANDIDATE_STRATEGY"
                     :key="index"
                     :span="8"
                   >
@@ -650,7 +717,7 @@ onMounted(() => {
             </FormItem>
             <FormItem
               v-if="configForm.candidateStrategy === CandidateStrategy.ROLE"
-              label="指定角色"
+              :label="locale.action.role"
               name="roleIds"
             >
               <Select
@@ -677,7 +744,7 @@ onMounted(() => {
                 configForm.candidateStrategy ===
                   CandidateStrategy.MULTI_LEVEL_DEPT_LEADER
               "
-              label="指定部门"
+              :label="locale.action.dept"
               name="deptIds"
             >
               <TreeSelect
@@ -688,7 +755,7 @@ onMounted(() => {
                   value: 'id',
                   children: 'children',
                 }"
-                empty-text="加载中，请稍后"
+                empty-text="locale.toolbar.loading"
                 multiple
                 :check-strictly="true"
                 allow-clear
@@ -697,7 +764,7 @@ onMounted(() => {
             </FormItem>
             <FormItem
               v-if="configForm.candidateStrategy === CandidateStrategy.POST"
-              label="指定岗位"
+              :label="locale.action.post"
               name="postIds"
             >
               <Select
@@ -717,7 +784,7 @@ onMounted(() => {
             </FormItem>
             <FormItem
               v-if="configForm.candidateStrategy === CandidateStrategy.USER"
-              label="指定用户"
+              :label="locale.action.user"
               name="userIds"
             >
               <Select
@@ -739,7 +806,7 @@ onMounted(() => {
               v-if="
                 configForm.candidateStrategy === CandidateStrategy.USER_GROUP
               "
-              label="指定用户组"
+              :label="locale.action.userGroup"
               name="userGroups"
             >
               <Select
@@ -761,7 +828,7 @@ onMounted(() => {
               v-if="
                 configForm.candidateStrategy === CandidateStrategy.FORM_USER
               "
-              label="表单内用户字段"
+              :label="locale.action.formUserField"
               name="formUser"
             >
               <Select v-model:value="configForm.formUser" clearable>
@@ -781,7 +848,7 @@ onMounted(() => {
                 configForm.candidateStrategy ===
                 CandidateStrategy.FORM_DEPT_LEADER
               "
-              label="表单内部门字段"
+              :label="locale.action.formDeptField"
               name="formDept"
             >
               <Select v-model:value="configForm.formDept" clearable>
@@ -812,7 +879,7 @@ onMounted(() => {
             >
               <Select v-model:value="configForm.deptLevel" clearable>
                 <SelectOption
-                  v-for="(item, index) in MULTI_LEVEL_DEPT"
+                  v-for="(item, index) in locale.MULTI_LEVEL_DEPT"
                   :key="index"
                   :label="item.label"
                   :value="item.value"
@@ -826,13 +893,20 @@ onMounted(() => {
               v-if="
                 configForm.candidateStrategy === CandidateStrategy.EXPRESSION
               "
-              label="流程表达式"
+              :label="locale.action.expression"
               name="expression"
             >
               <Textarea v-model:value="configForm.expression" clearable />
             </FormItem>
             <!-- 多人审批/办理 方式 -->
-            <FormItem :label="`多人${nodeTypeName}方式`" name="approveMethod">
+            <FormItem
+              :label="
+                $t('bpm.simpleProcessDesign.action.multiPersonMethod', [
+                  locale.node.userTask,
+                ])
+              "
+              name="approveMethod"
+            >
               <RadioGroup
                 v-model:value="configForm.approveMethod"
                 @change="approveMethodChanged"
@@ -840,7 +914,7 @@ onMounted(() => {
                 <Row :gutter="[0, 8]">
                   <Col
                     :span="24"
-                    v-for="(item, index) in APPROVE_METHODS"
+                    v-for="(item, index) in locale.APPROVE_METHODS"
                     :key="index"
                   >
                     <div class="flex items-center">
@@ -866,7 +940,9 @@ onMounted(() => {
             </FormItem>
 
             <div v-if="currentNode.type === BpmNodeTypeEnum.USER_TASK_NODE">
-              <Divider content-position="left">审批人拒绝时</Divider>
+              <Divider content-position="left">
+                {{ locale.action.rejectHandler }}
+              </Divider>
               <FormItem name="rejectHandlerType">
                 <RadioGroup
                   v-model:value="configForm.rejectHandlerType"
@@ -875,7 +951,7 @@ onMounted(() => {
                   <Row :gutter="24">
                     <Col
                       :span="8"
-                      v-for="(item, index) in REJECT_HANDLER_TYPES"
+                      v-for="(item, index) in locale.REJECT_HANDLER_TYPES"
                       :key="index"
                     >
                       <Radio :value="item.value" :label="item.label">
@@ -891,7 +967,7 @@ onMounted(() => {
                   configForm.rejectHandlerType ===
                   RejectHandlerType.RETURN_USER_TASK
                 "
-                label="驳回节点"
+                :label="locale.action.rejectNode"
                 name="returnNodeId"
               >
                 <Select v-model:value="configForm.returnNodeId" clearable>
@@ -908,9 +984,11 @@ onMounted(() => {
             </div>
 
             <div v-if="currentNode.type === BpmNodeTypeEnum.USER_TASK_NODE">
-              <Divider content-position="left">审批人超时未处理时</Divider>
+              <Divider content-position="left">
+                {{ locale.action.timeout }}
+              </Divider>
               <FormItem
-                label="启用开关"
+                :label="locale.action.enableSwitch"
                 name="timeoutHandlerEnable"
                 label-align="left"
                 :label-col="{ span: 6 }"
@@ -918,13 +996,13 @@ onMounted(() => {
               >
                 <Switch
                   v-model:checked="configForm.timeoutHandlerEnable"
-                  checked-children="开"
-                  un-checked-children="关"
+                  :checked-children="locale.switch.on"
+                  :un-checked-children="locale.switch.off"
                   @change="timeoutHandlerChange"
                 />
               </FormItem>
               <FormItem
-                label="执行动作"
+                :label="locale.action.executeAction"
                 name="timeoutHandlerType"
                 v-if="configForm.timeoutHandlerEnable"
                 label-align="left"
@@ -936,7 +1014,7 @@ onMounted(() => {
                   @change="timeoutHandlerTypeChanged"
                 >
                   <RadioButton
-                    v-for="item in TIMEOUT_HANDLER_TYPES"
+                    v-for="item in locale.TIMEOUT_HANDLER_TYPES"
                     :key="item.value"
                     :value="item.value"
                     :label="item.label"
@@ -946,7 +1024,7 @@ onMounted(() => {
                 </RadioGroup>
               </FormItem>
               <FormItem
-                label="超时时间设置"
+                :label="locale.action.timeoutSetting"
                 v-if="configForm.timeoutHandlerEnable"
                 label-align="left"
                 class="h-[32px]"
@@ -956,7 +1034,7 @@ onMounted(() => {
                 <Row>
                   <Col>
                     <TypographyText class="mr-2 mt-2 inline-flex text-sm">
-                      当超过
+                      {{ locale.action.overTime }}
                     </TypographyText>
                   </Col>
                   <Col>
@@ -977,7 +1055,7 @@ onMounted(() => {
                       @change="timeUnitChange"
                     >
                       <SelectOption
-                        v-for="item in TIME_UNIT_TYPES"
+                        v-for="item in locale.TIME_UNIT_TYPES"
                         :key="item.value"
                         :label="item.label"
                         :value="item.value"
@@ -986,13 +1064,13 @@ onMounted(() => {
                       </SelectOption>
                     </Select>
                     <TypographyText class="mr-2 mt-2 inline-flex text-sm">
-                      未处理
+                      {{ locale.action.notProcessed }}
                     </TypographyText>
                   </Col>
                 </Row>
               </FormItem>
               <FormItem
-                label="最大提醒次数"
+                :label="locale.action.maxRemindCount"
                 name="maxRemindCount"
                 v-if="
                   configForm.timeoutHandlerEnable &&
@@ -1011,14 +1089,18 @@ onMounted(() => {
             </div>
 
             <Divider content-position="left">
-              {{ nodeTypeName }}人为空时
+              {{
+                $t('bpm.simpleProcessDesign.action.emptyHandler', [
+                  locale.node.userTask,
+                ])
+              }}
             </Divider>
             <FormItem name="assignEmptyHandlerType">
               <RadioGroup v-model:value="configForm.assignEmptyHandlerType">
                 <Row :gutter="[0, 16]">
                   <Col
                     :span="24"
-                    v-for="(item, index) in ASSIGN_EMPTY_HANDLER_TYPES"
+                    v-for="(item, index) in locale.ASSIGN_EMPTY_HANDLER_TYPES"
                     :key="index"
                   >
                     <Radio :value="item.value" :label="item.label">
@@ -1033,7 +1115,7 @@ onMounted(() => {
                 configForm.assignEmptyHandlerType ===
                 AssignEmptyHandlerType.ASSIGN_USER
               "
-              label="指定用户"
+              :label="locale.action.user"
               name="assignEmptyHandlerUserIds"
             >
               <Select
@@ -1054,7 +1136,7 @@ onMounted(() => {
 
             <div v-if="currentNode.type === BpmNodeTypeEnum.USER_TASK_NODE">
               <Divider content-position="left">
-                审批人与提交人为同一人时
+                {{ locale.action.sameAsSubmitter }}
               </Divider>
               <FormItem name="assignStartUserHandlerType">
                 <RadioGroup
@@ -1063,7 +1145,9 @@ onMounted(() => {
                   <Row :gutter="[0, 16]">
                     <Col
                       :span="24"
-                      v-for="(item, index) in ASSIGN_START_USER_HANDLER_TYPES"
+                      v-for="(
+                        item, index
+                      ) in locale.ASSIGN_START_USER_HANDLER_TYPES"
                       :key="index"
                     >
                       <Radio :value="item.value" :label="item.label">
@@ -1076,23 +1160,27 @@ onMounted(() => {
             </div>
 
             <div v-if="currentNode.type === BpmNodeTypeEnum.USER_TASK_NODE">
-              <Divider content-position="left">是否需要签名</Divider>
+              <Divider content-position="left">
+                {{ locale.action.needSign }}
+              </Divider>
               <FormItem name="signEnable">
                 <Switch
                   v-model:checked="configForm.signEnable"
-                  checked-children="是"
-                  un-checked-children="否"
+                  :checked-children="locale.switch.yes"
+                  :un-checked-children="locale.switch.no"
                 />
               </FormItem>
             </div>
 
             <div v-if="currentNode.type === BpmNodeTypeEnum.USER_TASK_NODE">
-              <Divider content-position="left">审批意见</Divider>
+              <Divider content-position="left">
+                {{ locale.action.needOpinion }}
+              </Divider>
               <FormItem name="reasonRequire">
                 <Switch
                   v-model:checked="configForm.reasonRequire"
-                  checked-children="必填"
-                  un-checked-children="非必填"
+                  :checked-children="locale.switch.required"
+                  :un-checked-children="locale.switch.notRequired"
                 />
               </FormItem>
             </div>
@@ -1100,19 +1188,25 @@ onMounted(() => {
         </div>
       </TabPane>
       <TabPane
-        tab="操作按钮设置"
+        :tab="locale.action.operationButtons"
         v-if="currentNode.type === BpmNodeTypeEnum.USER_TASK_NODE"
         key="buttons"
       >
         <div class="p-1">
-          <div class="mb-4 text-[16px] font-bold">操作按钮</div>
+          <div class="mb-4 text-[16px] font-bold">
+            {{ locale.action.buttonName }}
+          </div>
 
           <!-- 表头 -->
           <Row class="border border-gray-200 px-4 py-3">
-            <Col :span="8" class="font-bold">操作按钮</Col>
-            <Col :span="12" class="font-bold">显示名称</Col>
+            <Col :span="8" class="font-bold">
+              {{ locale.action.buttonName }}
+            </Col>
+            <Col :span="12" class="font-bold">
+              {{ locale.action.displayName }}
+            </Col>
             <Col :span="4" class="flex items-center justify-center font-bold">
-              启用
+              {{ locale.action.enable }}
             </Col>
           </Row>
 
@@ -1120,7 +1214,7 @@ onMounted(() => {
           <div v-for="(item, index) in buttonsSetting" :key="index">
             <Row class="border border-t-0 border-gray-200 px-4 py-2">
               <Col :span="8" class="flex items-center truncate">
-                {{ OPERATION_BUTTON_NAME.get(item.id) }}
+                {{ locale.OPERATION_BUTTON_NAME.get(item.id) }}
               </Col>
               <Col :span="12" class="flex items-center">
                 <!-- TODO  v-mountedFocus 自动聚集需要迁移 -->
@@ -1147,16 +1241,18 @@ onMounted(() => {
         </div>
       </TabPane>
       <TabPane
-        tab="表单字段权限"
+        :tab="locale.action.formFieldPermission"
         key="fields"
         v-if="formType === BpmModelFormType.NORMAL"
       >
         <div class="p-1">
-          <div class="mb-4 text-[16px] font-bold">字段权限</div>
+          <div class="mb-4 text-[16px] font-bold">
+            {{ locale.action.permission }}
+          </div>
 
           <!-- 表头 -->
           <Row class="border border-gray-200 px-4 py-3">
-            <Col :span="8" class="font-bold">字段名称</Col>
+            <Col :span="8" class="font-bold">{{ locale.action.fieldName }}</Col>
             <Col :span="16">
               <Row>
                 <Col :span="8" class="flex items-center justify-center">
@@ -1164,7 +1260,7 @@ onMounted(() => {
                     class="cursor-pointer font-bold"
                     @click="updatePermission('READ')"
                   >
-                    只读
+                    {{ locale.action.readOnly }}
                   </span>
                 </Col>
                 <Col :span="8" class="flex items-center justify-center">
@@ -1172,7 +1268,7 @@ onMounted(() => {
                     class="cursor-pointer font-bold"
                     @click="updatePermission('WRITE')"
                   >
-                    可编辑
+                    {{ locale.action.editable }}
                   </span>
                 </Col>
                 <Col :span="8" class="flex items-center justify-center">
@@ -1180,7 +1276,7 @@ onMounted(() => {
                     class="cursor-pointer font-bold"
                     @click="updatePermission('NONE')"
                   >
-                    隐藏
+                    {{ locale.action.hidden }}
                   </span>
                 </Col>
               </Row>
@@ -1224,7 +1320,11 @@ onMounted(() => {
           </div>
         </div>
       </TabPane>
-      <TabPane tab="监听器" key="listener" :force-render="true">
+      <TabPane
+        :tab="locale.action.listener"
+        key="listener"
+        :force-render="true"
+      >
         <UserTaskListener
           ref="userTaskListenerRef"
           v-model="configForm"

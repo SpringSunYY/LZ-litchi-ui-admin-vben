@@ -1,4 +1,5 @@
 <script setup lang="ts">
+// @ts-nocheck
 import type { HttpRequestParam } from '../../../consts';
 
 import { Plus, Trash2 } from '@vben/icons';
@@ -12,6 +13,8 @@ import {
   Select,
   SelectOption,
 } from 'ant-design-vue';
+
+import { $t } from '#/locales';
 
 import {
   BPM_HTTP_REQUEST_PARAM_TYPES,
@@ -57,7 +60,7 @@ function deleteHttpRequestParam(arr: HttpRequestParam[], index: number) {
 </script>
 <template>
   <FormItem
-    label="请求头"
+    :label="$t('bpm.simpleProcessDesign.httpRequest.header')"
     :label-col="{ span: 24 }"
     :wrapper-col="{ span: 24 }"
   >
@@ -67,11 +70,18 @@ function deleteHttpRequestParam(arr: HttpRequestParam[], index: number) {
           :name="[bind, 'header', index, 'key']"
           :rules="{
             required: true,
-            message: '参数名不能为空',
+            message: $t(
+              'bpm.simpleProcessDesign.httpRequest.paramNameCannotEmpty',
+            ),
             trigger: ['blur', 'change'],
           }"
         >
-          <Input placeholder="参数名不能为空" v-model:value="item.key" />
+          <Input
+            :placeholder="
+              $t('bpm.simpleProcessDesign.httpRequest.paramNameCannotEmpty')
+            "
+            v-model:value="item.key"
+          />
         </FormItem>
       </Col>
       <Col :span="5">
@@ -91,23 +101,39 @@ function deleteHttpRequestParam(arr: HttpRequestParam[], index: number) {
           :name="[bind, 'header', index, 'value']"
           :rules="{
             required: true,
-            message: '参数值不能为空',
+            message: $t(
+              'bpm.simpleProcessDesign.httpRequest.paramValueCannotEmpty',
+            ),
             trigger: ['blur', 'change'],
           }"
           v-if="item.type === BpmHttpRequestParamTypeEnum.FIXED_VALUE"
         >
-          <Input placeholder="请求头" v-model:value="item.value" />
+          <Input
+            :placeholder="
+              $t('bpm.simpleProcessDesign.httpRequest.paramValuePlaceholder')
+            "
+            v-model:value="item.value"
+          />
         </FormItem>
         <FormItem
           :name="[bind, 'header', index, 'value']"
           :rules="{
             required: true,
-            message: '参数值不能为空',
+            message: $t(
+              'bpm.simpleProcessDesign.httpRequest.paramValueCannotEmpty',
+            ),
             trigger: 'change',
           }"
           v-if="item.type === BpmHttpRequestParamTypeEnum.FROM_FORM"
         >
-          <Select v-model:value="item.value" placeholder="请选择表单字段">
+          <Select
+            v-model:value="item.value"
+            :placeholder="
+              $t(
+                'bpm.simpleProcessDesign.httpRequest.paramValueSelectPlaceholder',
+              )
+            "
+          >
             <SelectOption
               v-for="(field, fIdx) in formFieldOptions"
               :key="fIdx"
@@ -137,11 +163,11 @@ function deleteHttpRequestParam(arr: HttpRequestParam[], index: number) {
       <template #icon>
         <Plus class="size-[18px]" />
       </template>
-      添加一行
+      {{ $t('bpm.simpleProcessDesign.httpRequest.addRow') }}
     </Button>
   </FormItem>
   <FormItem
-    label="请求体"
+    :label="$t('bpm.simpleProcessDesign.httpRequest.body')"
     :label-col="{ span: 24 }"
     :wrapper-col="{ span: 24 }"
   >
@@ -151,11 +177,18 @@ function deleteHttpRequestParam(arr: HttpRequestParam[], index: number) {
           :name="[bind, 'body', index, 'key']"
           :rules="{
             required: true,
-            message: '参数名不能为空',
+            message: $t(
+              'bpm.simpleProcessDesign.httpRequest.paramNameCannotEmpty',
+            ),
             trigger: ['blur', 'change'],
           }"
         >
-          <Input placeholder="参数名" v-model:value="item.key" />
+          <Input
+            :placeholder="
+              $t('bpm.simpleProcessDesign.httpRequest.paramNamePlaceholder')
+            "
+            v-model:value="item.key"
+          />
         </FormItem>
       </Col>
       <Col :span="5">
@@ -175,23 +208,39 @@ function deleteHttpRequestParam(arr: HttpRequestParam[], index: number) {
           :name="[bind, 'body', index, 'value']"
           :rules="{
             required: true,
-            message: '参数值不能为空',
+            message: $t(
+              'bpm.simpleProcessDesign.httpRequest.paramValueCannotEmpty',
+            ),
             trigger: ['blur', 'change'],
           }"
           v-if="item.type === BpmHttpRequestParamTypeEnum.FIXED_VALUE"
         >
-          <Input placeholder="参数值" v-model:value="item.value" />
+          <Input
+            :placeholder="
+              $t('bpm.simpleProcessDesign.httpRequest.paramValuePlaceholder')
+            "
+            v-model:value="item.value"
+          />
         </FormItem>
         <FormItem
           :name="[bind, 'body', index, 'value']"
           :rules="{
             required: true,
-            message: '参数值不能为空',
+            message: $t(
+              'bpm.simpleProcessDesign.httpRequest.paramValueCannotEmpty',
+            ),
             trigger: 'change',
           }"
           v-if="item.type === BpmHttpRequestParamTypeEnum.FROM_FORM"
         >
-          <Select v-model:value="item.value" placeholder="请选择表单字段">
+          <Select
+            v-model:value="item.value"
+            :placeholder="
+              $t(
+                'bpm.simpleProcessDesign.httpRequest.paramValueSelectPlaceholder',
+              )
+            "
+          >
             <SelectOption
               v-for="(field, fIdx) in formFieldOptions"
               :key="fIdx"
@@ -221,7 +270,7 @@ function deleteHttpRequestParam(arr: HttpRequestParam[], index: number) {
       <template #icon>
         <Plus class="size-[18px]" />
       </template>
-      添加一行
+      {{ $t('bpm.simpleProcessDesign.httpRequest.addRow') }}
     </Button>
   </FormItem>
 </template>

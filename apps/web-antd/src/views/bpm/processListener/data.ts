@@ -2,6 +2,7 @@ import type { VbenFormSchema } from '#/adapter/form';
 import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 
 import { z } from '#/adapter/form';
+import { $t } from '#/locales';
 import { CommonStatusEnum, DICT_TYPE, getDictOptions } from '#/utils';
 
 export const EVENT_EXECUTION_OPTIONS = [
@@ -37,20 +38,21 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'name',
-      label: '名字',
+      label: $t('bpm.processListener.field.name'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入名字',
+        placeholder: $t('ui.placeholder.input', [
+          $t('bpm.processListener.field.name'),
+        ]),
       },
       rules: 'required',
     },
     {
       fieldName: 'status',
-      label: '状态',
+      label: $t('bpm.processListener.field.status'),
       component: 'RadioGroup',
       componentProps: {
         options: getDictOptions(DICT_TYPE.COMMON_STATUS, 'number'),
-        placeholder: '请选择状态',
         buttonStyle: 'solid',
         optionType: 'button',
       },
@@ -58,7 +60,7 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'type',
-      label: '类型',
+      label: $t('bpm.processListener.field.type'),
       component: 'Select',
       componentProps: {
         options: getDictOptions(DICT_TYPE.BPM_PROCESS_LISTENER_TYPE, 'string'),
@@ -68,7 +70,7 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'event',
-      label: '事件',
+      label: $t('bpm.processListener.field.event'),
       component: 'Select',
       componentProps: {
         options: EVENT_OPTIONS,
@@ -88,7 +90,7 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'valueType',
-      label: '值类型',
+      label: $t('bpm.processListener.field.valueType'),
       component: 'Select',
       componentProps: {
         options: getDictOptions(
@@ -101,7 +103,7 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'value',
-      label: '类路径|表达式',
+      label: $t('bpm.processListener.field.value'),
       component: 'Input',
       rules: 'required',
       dependencies: {
@@ -109,7 +111,13 @@ export function useFormSchema(): VbenFormSchema[] {
         trigger: (values) => (values.value = undefined),
         componentProps: (values) => ({
           placeholder:
-            values.valueType === 'class' ? '请输入类路径' : '请输入表达式',
+            values.valueType === 'class'
+              ? $t('ui.placeholder.input', [
+                  $t('bpm.processListener.placeholder.classPath'),
+                ])
+              : $t('ui.placeholder.input', [
+                  $t('bpm.processListener.placeholder.expression'),
+                ]),
         }),
       },
     },
@@ -121,19 +129,23 @@ export function useGridFormSchema(): VbenFormSchema[] {
   return [
     {
       fieldName: 'name',
-      label: '名字',
+      label: $t('bpm.processListener.field.name'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入名字',
+        placeholder: $t('ui.placeholder.input', [
+          $t('bpm.processListener.field.name'),
+        ]),
         allowClear: true,
       },
     },
     {
       fieldName: 'type',
-      label: '类型',
+      label: $t('bpm.processListener.field.type'),
       component: 'Select',
       componentProps: {
-        placeholder: '请选择类型',
+        placeholder: $t('ui.placeholder.select', [
+          $t('bpm.processListener.field.type'),
+        ]),
         options: getDictOptions(DICT_TYPE.BPM_PROCESS_LISTENER_TYPE, 'string'),
         allowClear: true,
       },
@@ -146,17 +158,17 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
   return [
     {
       field: 'id',
-      title: '编号',
+      title: $t('bpm.processListener.field.id'),
       minWidth: 100,
     },
     {
       field: 'name',
-      title: '名字',
+      title: $t('bpm.processListener.field.name'),
       minWidth: 200,
     },
     {
       field: 'type',
-      title: '类型',
+      title: $t('bpm.processListener.field.type'),
       minWidth: 200,
       cellRender: {
         name: 'CellDict',
@@ -165,12 +177,12 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
     },
     {
       field: 'event',
-      title: '事件',
+      title: $t('bpm.processListener.field.event'),
       minWidth: 200,
     },
     {
       field: 'valueType',
-      title: '值类型',
+      title: $t('bpm.processListener.field.valueType'),
       minWidth: 200,
       cellRender: {
         name: 'CellDict',
@@ -179,18 +191,18 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
     },
     {
       field: 'value',
-      title: '值',
+      title: $t('bpm.processListener.field.value'),
       minWidth: 200,
     },
     {
       field: 'createTime',
-      title: '创建时间',
+      title: $t('bpm.processListener.field.createTime'),
       minWidth: 180,
       formatter: 'formatDateTime',
     },
     {
       field: 'actions',
-      title: '操作',
+      title: $t('common.operation'),
       minWidth: 180,
       fixed: 'right',
       slots: { default: 'actions' },

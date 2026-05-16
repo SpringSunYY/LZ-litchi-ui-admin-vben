@@ -1,6 +1,7 @@
 import type { VbenFormSchema } from '#/adapter/form';
 import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 
+import { $t } from '#/locales';
 import { DICT_TYPE, getRangePickerDefaultProps } from '#/utils';
 
 /** 列表的搜索表单 */
@@ -8,16 +9,16 @@ export function useGridFormSchema(): VbenFormSchema[] {
   return [
     {
       fieldName: 'name',
-      label: '任务名称',
+      label: $t('bpm.task.field.name'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入任务名称',
+        placeholder: $t('ui.placeholder.input', [$t('bpm.task.field.name')]),
         allowClear: true,
       },
     },
     {
       fieldName: 'createTime',
-      label: '创建时间',
+      label: $t('bpm.task.field.taskTime'),
       component: 'RangePicker',
       componentProps: {
         ...getRangePickerDefaultProps(),
@@ -31,46 +32,46 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
   return [
     {
       field: 'processInstance.name',
-      title: '流程',
+      title: $t('bpm.task.manager.field.process'),
       minWidth: 200,
       fixed: 'left',
     },
     {
       field: 'processInstance.startUser.nickname',
-      title: '发起人',
+      title: $t('bpm.task.manager.field.startUser'),
       minWidth: 120,
     },
     {
       field: 'createTime',
-      title: '发起时间',
+      title: $t('bpm.task.manager.field.startTime'),
       minWidth: 180,
       formatter: 'formatDateTime',
     },
     {
       field: 'name',
-      title: '当前任务',
+      title: $t('bpm.task.manager.field.currentTask'),
       minWidth: 180,
     },
     {
       field: 'createTime',
-      title: '任务开始时间',
+      title: $t('bpm.task.manager.field.taskStartTime'),
       minWidth: 180,
       formatter: 'formatDateTime',
     },
     {
       field: 'endTime',
-      title: '任务结束时间',
+      title: $t('bpm.task.manager.field.taskEndTime'),
       minWidth: 180,
       formatter: 'formatDateTime',
     },
     {
       field: 'assigneeUser.nickname',
-      title: '审批人',
+      title: $t('bpm.task.manager.field.approver'),
       minWidth: 180,
     },
     {
       field: 'status',
-      title: '审批状态',
+      title: $t('bpm.task.manager.field.approvalStatus'),
       minWidth: 180,
       cellRender: {
         name: 'CellDict',
@@ -79,27 +80,27 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
     },
     {
       field: 'reason',
-      title: '审批建议',
+      title: $t('bpm.task.manager.field.approvalSuggestion'),
       minWidth: 180,
     },
     {
       field: 'durationInMillis',
-      title: '耗时',
+      title: $t('bpm.task.manager.field.duration'),
       minWidth: 180,
       formatter: 'formatPast2',
     },
     {
       field: 'processInstanceId',
-      title: '流程编号',
+      title: $t('bpm.task.manager.field.processInstanceId'),
       minWidth: 280,
     },
     {
       field: 'id',
-      title: '任务编号',
+      title: $t('bpm.task.manager.field.taskId'),
       minWidth: 280,
     },
     {
-      title: '操作',
+      title: $t('common.operation'),
       width: 120,
       fixed: 'right',
       slots: { default: 'actions' },

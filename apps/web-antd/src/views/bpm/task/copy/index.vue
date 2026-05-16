@@ -2,7 +2,7 @@
 import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 import type { BpmProcessInstanceApi } from '#/api/bpm/processInstance';
 
-import {  Page } from '@vben/common-ui';
+import { Page } from '@vben/common-ui';
 
 import { ACTION_ICON, TableAction, useVbenVxeGrid } from '#/adapter/vxe-table';
 import { getProcessInstanceCopyPage } from '#/api/bpm/processInstance';
@@ -60,8 +60,7 @@ const [Grid] = useVbenVxeGrid({
 
 <template>
   <Page auto-content-height>
-
-    <Grid table-title="抄送任务">
+    <Grid :table-title="$t('bpm.task.copy.list')">
       <template #actions="{ row }">
         <TableAction
           :actions="[

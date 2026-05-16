@@ -36,5 +36,17 @@
   "forceLogout": "Force Logout",
   "expand": "Expand",
   "collapse": "Collapse",
-  "append": "Add Child"
+  "append": "Add Child",
+  "save": "Save",
+  "copySuffix": " (Copy)",
+  "none": "None",
+  "initiator": "Initiator",
+  "startTime": "Start Time",
+  "stepTip": "please complete required info in current step",
+  "selectUser": "Select User",
+  "preciseToDay": "Precise to day",
+  "preciseToHour": "Precise to hour",
+  "preciseToMinute": "Precise to minute",
+  "preciseToSecond": "Precise to second",
+  "etc": "etc."
 }

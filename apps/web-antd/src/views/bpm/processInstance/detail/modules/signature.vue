@@ -5,39 +5,41 @@ import { useVbenModal } from '@vben/common-ui';
 import { IconifyIcon } from '@vben/icons';
 
 import { Button, message, Space, Tooltip } from 'ant-design-vue';
-// TODO @ziye：这个可能，适合放到全局？！因为 element-plus 也用这个；
 import Vue3Signature from 'vue3-signature';
 
 import { uploadFile } from '#/api/infra/file';
+import { $t } from '#/locales';
 import { download } from '#/utils';
 
 defineOptions({
   name: 'BpmProcessInstanceSignature',
 });
 
-const emits = defineEmits(['success']);
+const emit = defineEmits<{
+  success: [url: string];
+}>();
 
 const signature = ref<InstanceType<typeof Vue3Signature>>();
 
 const [Modal, modalApi] = useVbenModal({
-  title: '流程签名',
+  title: $t('bpm.processInstance.operation.signature'),
   onOpenChange(visible) {
     if (!visible) {
       modalApi.close();
     }
   },
   async onConfirm() {
-    message.success({
-      content: '签名上传中请稍等。。。',
+    message.loading({
+      content: $t('bpm.processInstance.operation.uploadingSignature'),
+      key: 'sign_upload',
     });
     const signFileUrl = await uploadFile({
       file: download.base64ToFile(
-        signature?.value?.save('image/jpeg') || '',
-        '签名',
+        signature.value?.save('image/jpeg') || '',
+        'signature',
       ),
     });
-    emits('success', signFileUrl);
-    // TODO @ziye：下面有个告警哈；ps：所有告警，皆是错误，可以关注 ide 给的提示哈；
+    emit('success', signFileUrl);
     modalApi.close();
   },
 });
@@ -47,21 +49,21 @@ const [Modal, modalApi] = useVbenModal({
   <Modal class="h-[40%] w-[60%]">
     <div class="mb-2 flex justify-end">
       <Space>
-        <Tooltip title="撤销上一步操作">
+        <Tooltip :title="$t('bpm.processInstance.operation.undo')">
           <Button @click="signature?.undo()">
             <template #icon>
               <IconifyIcon icon="lucide:undo" class="mb-[4px] size-[16px]" />
             </template>
-            撤销
+            {{ $t('bpm.processInstance.operation.undo') }}
           </Button>
         </Tooltip>
 
-        <Tooltip title="清空画布">
+        <Tooltip :title="$t('bpm.processInstance.operation.clear')">
           <Button @click="signature?.clear()">
             <template #icon>
               <IconifyIcon icon="lucide:trash" class="mb-[4px] size-[16px]" />
             </template>
-            <span>清除</span>
+            {{ $t('bpm.processInstance.operation.clear') }}
           </Button>
         </Tooltip>
       </Space>

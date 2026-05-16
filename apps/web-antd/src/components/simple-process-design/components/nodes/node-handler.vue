@@ -8,6 +8,8 @@ import { cloneDeep, buildShortUUID as generateUUID } from '@vben/utils';
 
 import { message, Popover } from 'ant-design-vue';
 
+import { NODE_DEFAULT_NAME } from '#/components/simple-process-design/locales/simple-process-design';
+import { $t } from '#/locales';
 import { BpmNodeTypeEnum } from '#/utils';
 
 import {
@@ -16,7 +18,6 @@ import {
   AssignStartUserHandlerType,
   ConditionType,
   DEFAULT_CONDITION_GROUP_VALUE,
-  NODE_DEFAULT_NAME,
   RejectHandlerType,
 } from '../../consts';
 
@@ -48,7 +49,9 @@ function addNode(type: number) {
       BpmNodeTypeEnum.INCLUSIVE_BRANCH_NODE,
     ].includes(props.currentNode?.type)
   ) {
-    message.error('条件分支、包容分支后面，不允许直接添加并行分支');
+    message.error(
+      $t('bpm.simpleProcessDesign.default.notAllowAddParallelAfterCondition'),
+    );
     return;
   }
 
@@ -100,14 +103,14 @@ function addNode(type: number) {
   }
   if (type === BpmNodeTypeEnum.CONDITION_BRANCH_NODE) {
     const data: SimpleFlowNode = {
-      name: '条件分支',
+      name: $t('bpm.simpleProcessDesign.default.conditionBranch'),
       type: BpmNodeTypeEnum.CONDITION_BRANCH_NODE,
       id: `GateWay_${generateUUID()}`,
       childNode: props.childNode,
       conditionNodes: [
         {
           id: `Flow_${generateUUID()}`,
-          name: '条件1',
+          name: $t('bpm.simpleProcessDesign.default.condition1'),
           showText: '',
           type: BpmNodeTypeEnum.CONDITION_NODE,
           childNode: undefined,
@@ -119,8 +122,8 @@ function addNode(type: number) {
         },
         {
           id: `Flow_${generateUUID()}`,
-          name: '其它情况',
-          showText: '未满足其它条件时，将进入此分支',
+          name: $t('bpm.simpleProcessDesign.default.otherCondition'),
+          showText: $t('bpm.simpleProcessDesign.default.otherConditionTip'),
           type: BpmNodeTypeEnum.CONDITION_NODE,
           childNode: undefined,
           conditionSetting: {
@@ -133,22 +136,26 @@ function addNode(type: number) {
   }
   if (type === BpmNodeTypeEnum.PARALLEL_BRANCH_NODE) {
     const data: SimpleFlowNode = {
-      name: '并行分支',
+      name: $t('bpm.simpleProcessDesign.default.parallelBranch'),
       type: BpmNodeTypeEnum.PARALLEL_BRANCH_NODE,
       id: `GateWay_${generateUUID()}`,
       childNode: props.childNode,
       conditionNodes: [
         {
           id: `Flow_${generateUUID()}`,
-          name: '并行1',
-          showText: '无需配置条件同时执行',
+          name: $t('bpm.simpleProcessDesign.default.parallel1'),
+          showText: $t(
+            'bpm.simpleProcessDesign.default.noConditionConcurrentExecute',
+          ),
           type: BpmNodeTypeEnum.CONDITION_NODE,
           childNode: undefined,
         },
         {
           id: `Flow_${generateUUID()}`,
-          name: '并行2',
-          showText: '无需配置条件同时执行',
+          name: $t('bpm.simpleProcessDesign.default.parallel2'),
+          showText: $t(
+            'bpm.simpleProcessDesign.default.noConditionConcurrentExecute',
+          ),
           type: BpmNodeTypeEnum.CONDITION_NODE,
           childNode: undefined,
         },
@@ -158,14 +165,14 @@ function addNode(type: number) {
   }
   if (type === BpmNodeTypeEnum.INCLUSIVE_BRANCH_NODE) {
     const data: SimpleFlowNode = {
-      name: '包容分支',
+      name: $t('bpm.simpleProcessDesign.default.inclusiveBranch'),
       type: BpmNodeTypeEnum.INCLUSIVE_BRANCH_NODE,
       id: `GateWay_${generateUUID()}`,
       childNode: props.childNode,
       conditionNodes: [
         {
           id: `Flow_${generateUUID()}`,
-          name: '包容条件1',
+          name: $t('bpm.simpleProcessDesign.default.inclusiveCondition', [1]),
           showText: '',
           type: BpmNodeTypeEnum.CONDITION_NODE,
           childNode: undefined,
@@ -177,8 +184,8 @@ function addNode(type: number) {
         },
         {
           id: `Flow_${generateUUID()}`,
-          name: '其它情况',
-          showText: '未满足其它条件时，将进入此分支',
+          name: $t('bpm.simpleProcessDesign.default.otherCondition'),
+          showText: $t('bpm.simpleProcessDesign.default.otherConditionTip'),
           type: BpmNodeTypeEnum.CONDITION_NODE,
           childNode: undefined,
           conditionSetting: {
@@ -259,7 +266,9 @@ function addNode(type: number) {
               <div class="approve handler-item-icon">
                 <span class="iconfont icon-approve icon-size"></span>
               </div>
-              <div class="handler-item-text">审批人</div>
+              <div class="handler-item-text">
+                {{ $t('bpm.simpleProcessDesign.handlerMenu.userTask') }}
+              </div>
             </div>
             <div
               class="handler-item"
@@ -268,7 +277,9 @@ function addNode(type: number) {
               <div class="transactor handler-item-icon">
                 <span class="iconfont icon-transactor icon-size"></span>
               </div>
-              <div class="handler-item-text">办理人</div>
+              <div class="handler-item-text">
+                {{ $t('bpm.simpleProcessDesign.handlerMenu.transactor') }}
+              </div>
             </div>
             <div
               class="handler-item"
@@ -277,7 +288,9 @@ function addNode(type: number) {
               <div class="handler-item-icon copy">
                 <span class="iconfont icon-size icon-copy"></span>
               </div>
-              <div class="handler-item-text">抄送</div>
+              <div class="handler-item-text">
+                {{ $t('bpm.simpleProcessDesign.handlerMenu.copyTask') }}
+              </div>
             </div>
             <div
               class="handler-item"
@@ -286,7 +299,9 @@ function addNode(type: number) {
               <div class="handler-item-icon condition">
                 <span class="iconfont icon-size icon-exclusive"></span>
               </div>
-              <div class="handler-item-text">条件分支</div>
+              <div class="handler-item-text">
+                {{ $t('bpm.simpleProcessDesign.handlerMenu.conditionBranch') }}
+              </div>
             </div>
             <div
               class="handler-item"
@@ -295,7 +310,9 @@ function addNode(type: number) {
               <div class="handler-item-icon parallel">
                 <span class="iconfont icon-size icon-parallel"></span>
               </div>
-              <div class="handler-item-text">并行分支</div>
+              <div class="handler-item-text">
+                {{ $t('bpm.simpleProcessDesign.handlerMenu.parallelBranch') }}
+              </div>
             </div>
             <div
               class="handler-item"
@@ -304,7 +321,9 @@ function addNode(type: number) {
               <div class="handler-item-icon inclusive">
                 <span class="iconfont icon-size icon-inclusive"></span>
               </div>
-              <div class="handler-item-text">包容分支</div>
+              <div class="handler-item-text">
+                {{ $t('bpm.simpleProcessDesign.handlerMenu.inclusiveBranch') }}
+              </div>
             </div>
             <div
               class="handler-item"
@@ -313,7 +332,9 @@ function addNode(type: number) {
               <div class="handler-item-icon delay">
                 <span class="iconfont icon-size icon-delay"></span>
               </div>
-              <div class="handler-item-text">延迟器</div>
+              <div class="handler-item-text">
+                {{ $t('bpm.simpleProcessDesign.handlerMenu.delayTimer') }}
+              </div>
             </div>
             <div
               class="handler-item"
@@ -322,7 +343,9 @@ function addNode(type: number) {
               <div class="handler-item-icon router">
                 <span class="iconfont icon-size icon-router"></span>
               </div>
-              <div class="handler-item-text">路由分支</div>
+              <div class="handler-item-text">
+                {{ $t('bpm.simpleProcessDesign.handlerMenu.routerBranch') }}
+              </div>
             </div>
             <div
               class="handler-item"
@@ -331,7 +354,9 @@ function addNode(type: number) {
               <div class="handler-item-icon trigger">
                 <span class="iconfont icon-size icon-trigger"></span>
               </div>
-              <div class="handler-item-text">触发器</div>
+              <div class="handler-item-text">
+                {{ $t('bpm.simpleProcessDesign.handlerMenu.trigger') }}
+              </div>
             </div>
             <div
               class="handler-item"
@@ -340,7 +365,9 @@ function addNode(type: number) {
               <div class="handler-item-icon child-process">
                 <span class="iconfont icon-size icon-child-process"></span>
               </div>
-              <div class="handler-item-text">子流程</div>
+              <div class="handler-item-text">
+                {{ $t('bpm.simpleProcessDesign.handlerMenu.childProcess') }}
+              </div>
             </div>
           </div>
         </template>

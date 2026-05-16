@@ -3,6 +3,7 @@ import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 
 import { z } from '#/adapter/form';
 import { getSimpleUserList } from '#/api/system/user';
+import { $t } from '#/locales';
 import { CommonStatusEnum, DICT_TYPE, getDictOptions } from '#/utils';
 
 /** 新增/修改的表单 */
@@ -18,37 +19,44 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'name',
-      label: '组名',
+      label: $t('bpm.group.field.name'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入组名',
+        placeholder: $t('ui.placeholder.input', [$t('bpm.group.field.name')]),
       },
       rules: 'required',
     },
     {
       fieldName: 'description',
-      label: '描述',
+      label: $t('bpm.group.field.description'),
       component: 'Textarea',
       componentProps: {
-        placeholder: '请输入描述',
+        placeholder: $t('ui.placeholder.input', [
+          $t('bpm.group.field.description'),
+        ]),
       },
     },
     {
       fieldName: 'userIds',
-      label: '成员',
+      label: $t('bpm.group.field.userIds'),
       component: 'ApiSelect',
       componentProps: {
-        placeholder: '请选择成员',
+        placeholder: $t('ui.placeholder.select', [
+          $t('bpm.group.field.userIds'),
+        ]),
         api: getSimpleUserList,
         labelField: 'nickname',
         valueField: 'id',
         mode: 'tags',
       },
-      rules: z.array(z.number()).min(1, '请选择成员').default([]),
+      rules: z
+        .array(z.number())
+        .min(1, $t('ui.placeholder.select', [$t('bpm.group.field.userIds')]))
+        .default([]),
     },
     {
       fieldName: 'status',
-      label: '状态',
+      label: $t('bpm.group.field.status'),
       component: 'RadioGroup',
       componentProps: {
         options: getDictOptions(DICT_TYPE.COMMON_STATUS, 'number'),
@@ -65,29 +73,30 @@ export function useGridFormSchema(): VbenFormSchema[] {
   return [
     {
       fieldName: 'name',
-      label: '组名',
+      label: $t('bpm.group.field.name'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入组名',
+        placeholder: $t('ui.placeholder.input', [$t('bpm.group.field.name')]),
         allowClear: true,
       },
     },
     {
       fieldName: 'status',
-      label: '状态',
+      label: $t('bpm.group.field.status'),
       component: 'Select',
       componentProps: {
-        placeholder: '请选择状态',
+        placeholder: $t('ui.placeholder.select', [
+          $t('bpm.group.field.status'),
+        ]),
         options: getDictOptions(DICT_TYPE.COMMON_STATUS, 'number'),
         allowClear: true,
       },
     },
     {
       fieldName: 'createTime',
-      label: '创建时间',
+      label: $t('bpm.group.field.createTime'),
       component: 'RangePicker',
       componentProps: {
-        placeholder: ['开始时间', '结束时间'],
         allowClear: true,
       },
     },
@@ -99,28 +108,28 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
   return [
     {
       field: 'id',
-      title: '编号',
+      title: $t('bpm.group.field.id'),
       minWidth: 100,
     },
     {
       field: 'name',
-      title: '组名',
+      title: $t('bpm.group.field.name'),
       minWidth: 200,
     },
     {
       field: 'description',
-      title: '描述',
+      title: $t('bpm.group.field.description'),
       minWidth: 200,
     },
     {
       field: 'userIds',
-      title: '成员',
+      title: $t('bpm.group.field.userIds'),
       minWidth: 200,
       slots: { default: 'userIds' },
     },
     {
       field: 'status',
-      title: '状态',
+      title: $t('bpm.group.field.status'),
       minWidth: 100,
       cellRender: {
         name: 'CellDict',
@@ -129,12 +138,12 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
     },
     {
       field: 'createTime',
-      title: '创建时间',
+      title: $t('bpm.group.field.createTime'),
       minWidth: 180,
       formatter: 'formatDateTime',
     },
     {
-      title: '操作',
+      title: $t('common.operation'),
       width: 180,
       fixed: 'right',
       slots: { default: 'actions' },

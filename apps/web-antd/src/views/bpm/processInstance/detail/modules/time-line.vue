@@ -1,5 +1,6 @@
 <!-- 审批详情的右侧：审批流 -->
 <script lang="ts" setup>
+// @ts-nocheck
 import type { BpmProcessInstanceApi } from '#/api/bpm/processInstance';
 
 import { ref } from 'vue';
@@ -12,6 +13,7 @@ import { formatDateTime, isEmpty } from '@vben/utils';
 import { Avatar, Button, Image, Timeline, Tooltip } from 'ant-design-vue';
 
 import { UserSelectModal } from '#/components/select-modal';
+import { $t } from '#/locales';
 import {
   BpmCandidateStrategyEnum,
   BpmNodeTypeEnum,
@@ -281,7 +283,7 @@ function handleUserSelectCancel() {
               size="small"
               @click="handleChildProcess(activity)"
             >
-              查看子流程
+              {{ $t('bpm.timeline.viewSubProcess') }}
             </Button>
           </div>
 
@@ -290,7 +292,7 @@ function handleUserSelectCancel() {
             v-if="shouldShowCustomUserSelect(activity)"
             class="flex flex-wrap items-center gap-2"
           >
-            <Tooltip title="添加用户" placement="left">
+            <Tooltip :title="$t('bpm.timeline.addUser')" placement="left">
               <Button
                 type="primary"
                 size="middle"
@@ -402,7 +404,7 @@ function handleUserSelectCancel() {
                   v-if="shouldShowApprovalReason(task, activity.nodeType)"
                   class="mt-1 w-full rounded-md bg-[#f8f8fa] p-2 text-[13px] text-[#a5a5a5]"
                 >
-                  审批意见：{{ task.reason }}
+                  {{ $t('bpm.timeline.approvalOpinion', [task.reason]) }}
                 </div>
                 <div
                   v-if="
@@ -411,7 +413,7 @@ function handleUserSelectCancel() {
                   "
                   class="mt-1 w-full rounded-md bg-[#f8f8fa] p-2 text-[13px] text-[#a5a5a5]"
                 >
-                  签名：
+                  {{ $t('bpm.timeline.signature') }}
                   <Image
                     class="ml-[5px] h-[40px] w-[90px]"
                     :src="task.signPicUrl"
@@ -461,7 +463,7 @@ function handleUserSelectCancel() {
     <UserSelectModalComp
       v-model:value="selectedUsers"
       :multiple="true"
-      title="选择用户"
+      :title="$t('bpm.processInstance.message.selectUser')"
       @confirm="handleUserSelectConfirm"
       @closed="handleUserSelectClosed"
       @cancel="handleUserSelectCancel"

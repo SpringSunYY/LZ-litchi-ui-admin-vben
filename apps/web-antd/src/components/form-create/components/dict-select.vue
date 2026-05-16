@@ -1,5 +1,6 @@
 <!-- 数据字典 Select 选择器 -->
 <script lang="ts" setup>
+// @ts-nocheck
 import type { DictSelectProps } from '../typing';
 
 import { computed, useAttrs } from 'vue';

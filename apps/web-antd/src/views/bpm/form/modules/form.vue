@@ -24,11 +24,11 @@ const editorAction = ref<string>();
 
 const getTitle = computed(() => {
   if (!formData.value?.id) {
-    return $t('ui.actionTitle.create', ['流程表单']);
+    return $t('ui.actionTitle.create', [$t('bpm.form.form')]);
   }
   return editorAction.value === 'copy'
-    ? $t('ui.actionTitle.copy', ['流程表单'])
-    : $t('ui.actionTitle.edit', ['流程表单']);
+    ? $t('ui.actionTitle.copy', [$t('bpm.form.form')])
+    : $t('ui.actionTitle.edit', [$t('bpm.form.form')]);
 });
 
 const [Form, formApi] = useVbenForm({

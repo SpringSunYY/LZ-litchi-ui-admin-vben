@@ -18,10 +18,10 @@ const formData = ref<BpmCategoryApi.CategoryVO>();
 const formSchema = [
   {
     fieldName: 'name',
-    label: '分类名',
+    label: $t('bpm.category.field.name'),
     component: 'Input',
     componentProps: {
-      placeholder: '请输入分类名',
+      placeholder: $t('ui.placeholder.input', [$t('bpm.category.field.name')]),
     },
     rules: 'required',
   },
@@ -96,7 +96,7 @@ const [Modal, modalApi] = useVbenModal({
 </script>
 
 <template>
-  <Modal title="重命名流程分类">
+  <Modal :title="$t('bpm.category.message.rename')">
     <Form class="mx-4" />
   </Modal>
 </template>

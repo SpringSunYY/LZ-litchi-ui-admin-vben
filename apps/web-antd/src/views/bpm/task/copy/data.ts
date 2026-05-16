@@ -1,6 +1,7 @@
 import type { VbenFormSchema } from '#/adapter/form';
 import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 
+import { $t } from '#/locales';
 import { getRangePickerDefaultProps } from '#/utils';
 
 /** 列表的搜索表单 */
@@ -8,16 +9,18 @@ export function useGridFormSchema(): VbenFormSchema[] {
   return [
     {
       fieldName: 'name',
-      label: '流程名称',
+      label: $t('bpm.task.copy.field.processName'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入流程名称',
+        placeholder: $t('ui.placeholder.input', [
+          $t('bpm.task.copy.field.processName'),
+        ]),
         allowClear: true,
       },
     },
     {
       fieldName: 'createTime',
-      label: '抄送时间',
+      label: $t('bpm.task.copy.field.copyTime'),
       component: 'RangePicker',
       componentProps: {
         ...getRangePickerDefaultProps(),
@@ -31,13 +34,13 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
   return [
     {
       field: 'processInstanceName',
-      title: '流程名称',
+      title: $t('bpm.task.copy.field.processName'),
       minWidth: 200,
       fixed: 'left',
     },
     {
       field: 'summary',
-      title: '摘要',
+      title: $t('bpm.task.copy.field.summary'),
       minWidth: 200,
       formatter: ({ cellValue }) => {
         return cellValue && cellValue.length > 0
@@ -49,23 +52,23 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
     },
     {
       field: 'startUser.nickname',
-      title: '流程发起人',
+      title: $t('bpm.task.copy.field.processStarter'),
       minWidth: 120,
     },
     {
       field: 'processInstanceStartTime',
-      title: '流程发起时间',
+      title: $t('bpm.task.copy.field.processStartTime'),
       minWidth: 180,
       formatter: 'formatDateTime',
     },
     {
       field: 'activityName',
-      title: '抄送节点',
+      title: $t('bpm.task.copy.field.copyNode'),
       minWidth: 180,
     },
     {
       field: 'createUser.nickname',
-      title: '抄送人',
+      title: $t('bpm.task.copy.field.copier'),
       minWidth: 180,
       formatter: ({ cellValue }) => {
         return cellValue || '-';
@@ -73,17 +76,17 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
     },
     {
       field: 'reason',
-      title: '抄送意见',
+      title: $t('bpm.task.copy.field.copyReason'),
       minWidth: 180,
     },
     {
       field: 'createTime',
-      title: '抄送时间',
+      title: $t('bpm.task.copy.field.copyTime'),
       minWidth: 180,
       formatter: 'formatDateTime',
     },
     {
-      title: '操作',
+      title: $t('common.operation'),
       width: 120,
       fixed: 'right',
       slots: { default: 'actions' },

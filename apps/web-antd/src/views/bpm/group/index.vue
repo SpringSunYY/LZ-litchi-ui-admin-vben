@@ -5,7 +5,7 @@ import type { SystemUserApi } from '#/api/system/user';
 
 import { onMounted, ref } from 'vue';
 
-import {  Page, useVbenModal } from '@vben/common-ui';
+import { Page, useVbenModal } from '@vben/common-ui';
 
 import { message, Tag } from 'ant-design-vue';
 
@@ -95,12 +95,12 @@ const [Grid, gridApi] = useVbenVxeGrid({
 <template>
   <Page auto-content-height>
     <FormModal @success="onRefresh" />
-    <Grid table-title="用户分组">
+    <Grid :table-title="$t('bpm.group.list')">
       <template #toolbar-tools>
         <TableAction
           :actions="[
             {
-              label: $t('ui.actionTitle.create', ['用户分组']),
+              label: $t('ui.actionTitle.create', [$t('bpm.group.group')]),
               type: 'primary',
               icon: ACTION_ICON.ADD,
               auth: ['bpm:user-group:create'],

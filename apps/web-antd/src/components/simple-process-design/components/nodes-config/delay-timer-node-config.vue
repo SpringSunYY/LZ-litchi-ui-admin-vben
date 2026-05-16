@@ -22,14 +22,11 @@ import {
   SelectOption,
 } from 'ant-design-vue';
 
+import { getSimpleProcessDesignLocale } from '#/components/simple-process-design/locales/simple-process-design';
+import { $t } from '#/locales';
 import { BpmNodeTypeEnum } from '#/utils';
 
-import {
-  DELAY_TYPE,
-  DelayTypeEnum,
-  TIME_UNIT_TYPES,
-  TimeUnitType,
-} from '../../consts';
+import { DelayTypeEnum, TimeUnitType } from '../../consts';
 import { useNodeName, useWatchNode } from '../../helpers';
 import { convertTimeUnit } from './utils';
 
@@ -42,6 +39,9 @@ const props = defineProps({
   },
 });
 
+// ========== Locale ==========
+const locale = getSimpleProcessDesignLocale();
+
 // 当前节点
 const currentNode = useWatchNode(props);
 // 节点名称
@@ -53,13 +53,25 @@ const formRef = ref(); // 表单 Ref
 // 表单校验规则
 const formRules: Record<string, Rule[]> = reactive({
   delayType: [
-    { required: true, message: '延迟时间不能为空', trigger: 'change' },
+    {
+      required: true,
+      message: $t('bpm.simpleProcessDesign.action.delayTimeCannotEmpty'),
+      trigger: 'change',
+    },
   ],
   timeDuration: [
-    { required: true, message: '延迟时间不能为空', trigger: 'change' },
+    {
+      required: true,
+      message: $t('bpm.simpleProcessDesign.action.delayTimeCannotEmpty'),
+      trigger: 'change',
+    },
   ],
   dateTime: [
-    { required: true, message: '延迟时间不能为空', trigger: 'change' },
+    {
+      required: true,
+      message: $t('bpm.simpleProcessDesign.action.delayTimeCannotEmpty'),
+      trigger: 'change',
+    },
   ],
 });
 
@@ -75,10 +87,10 @@ const configForm = ref({
 function getShowText(): string {
   let showText = '';
   if (configForm.value.delayType === DelayTypeEnum.FIXED_TIME_DURATION) {
-    showText = `延迟${configForm.value.timeDuration}${TIME_UNIT_TYPES?.find((item) => item.value === configForm.value.timeUnit)?.label}`;
+    showText = `${$t('bpm.simpleProcessDesign.node.delayTimer')}${configForm.value.timeDuration}${locale.TIME_UNIT_TYPES.find((item) => item.value === configForm.value.timeUnit)?.label}`;
   }
   if (configForm.value.delayType === DelayTypeEnum.FIXED_DATE_TIME) {
-    showText = `延迟至${configForm.value.dateTime.replace('T', ' ')}`;
+    showText = `${$t('bpm.simpleProcessDesign.delayType.delayTime')}${configForm.value.dateTime.replace('T', ' ')}`;
   }
   return showText;
 }
@@ -184,10 +196,13 @@ defineExpose({ openDrawer }); // 暴露方法给父组件
         :label-col="{ span: 24 }"
         :wrapper-col="{ span: 24 }"
       >
-        <FormItem label="延迟时间" name="delayType">
+        <FormItem
+          :label="$t('bpm.simpleProcessDesign.delayType.delayTime')"
+          name="delayType"
+        >
           <RadioGroup v-model:value="configForm.delayType">
             <Radio
-              v-for="item in DELAY_TYPE"
+              v-for="item in locale.DELAY_TYPE"
               :key="item.value"
               :value="item.value"
             >
@@ -211,7 +226,7 @@ defineExpose({ openDrawer }); // 暴露方法给父组件
             <Col>
               <Select v-model:value="configForm.timeUnit" class="w-28">
                 <SelectOption
-                  v-for="item in TIME_UNIT_TYPES"
+                  v-for="item in locale.TIME_UNIT_TYPES"
                   :key="item.value"
                   :value="item.value"
                 >
@@ -220,7 +235,9 @@ defineExpose({ openDrawer }); // 暴露方法给父组件
               </Select>
             </Col>
             <Col>
-              <span class="inline-flex h-8 items-center">后进入下一节点</span>
+              <span class="inline-flex h-8 items-center">{{
+                $t('bpm.simpleProcessDesign.delayType.afterEnterNextNode')
+              }}</span>
             </Col>
           </Row>
         </FormItem>
@@ -234,12 +251,14 @@ defineExpose({ openDrawer }); // 暴露方法给父组件
                 class="mr-2"
                 v-model:value="configForm.dateTime"
                 show-time
-                placeholder="请选择日期和时间"
+                :placeholder="$t('bpm.simpleProcessDesign.toolbar.loading')"
                 value-format="YYYY-MM-DDTHH:mm:ss"
               />
             </Col>
             <Col>
-              <span class="inline-flex h-8 items-center">后进入下一节点</span>
+              <span class="inline-flex h-8 items-center">{{
+                $t('bpm.simpleProcessDesign.delayType.afterEnterNextNode')
+              }}</span>
             </Col>
           </Row>
         </FormItem>

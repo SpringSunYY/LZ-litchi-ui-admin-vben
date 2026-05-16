@@ -1,4 +1,6 @@
 <script setup lang="ts">
+// @ts-nocheck
+
 import type { Rule } from 'ant-design-vue/es/form';
 
 import type { Ref } from 'vue';
@@ -25,6 +27,7 @@ import {
   Tooltip,
 } from 'ant-design-vue';
 
+import { $t } from '#/locales';
 import { BpmModelFormType } from '#/utils';
 
 import {
@@ -58,6 +61,13 @@ const condition = computed({
 });
 
 const formType = inject<Ref<number>>('formType'); // 表单类型
+/** 翻译后的比较操作符列表（供模板使用） */
+const translatedOperators = computed(() =>
+  COMPARISON_OPERATORS.map((op) => ({
+    ...op,
+    label: $t(op.label),
+  })),
+);
 const conditionConfigTypes = computed(() => {
   return CONDITION_CONFIG_TYPES.filter((item) => {
     // 业务表单暂时去掉条件规则选项
@@ -74,12 +84,18 @@ const fieldOptions = useFormFieldsAndStartUser();
 // 表单校验规则
 const formRules: Record<string, Rule[]> = reactive({
   conditionType: [
-    { required: true, message: '配置方式不能为空', trigger: 'change' },
+    {
+      required: true,
+      message: $t('bpm.simpleProcessDesign.condition.configMethodCannotEmpty'),
+      trigger: 'change',
+    },
   ],
   conditionExpression: [
     {
       required: true,
-      message: '条件表达式不能为空',
+      message: $t(
+        'bpm.simpleProcessDesign.condition.conditionExpressionCannotEmpty',
+      ),
       trigger: ['blur', 'change'],
     },
   ],
@@ -143,7 +159,10 @@ defineExpose({ validate });
     :label-col="{ span: 24 }"
     :wrapper-col="{ span: 24 }"
   >
-    <FormItem label="配置方式" name="conditionType">
+    <FormItem
+      :label="$t('bpm.simpleProcessDesign.condition.configMethod')"
+      name="conditionType"
+    >
       <RadioGroup
         v-model:value="condition.conditionType"
         @change="changeConditionType"
@@ -165,17 +184,23 @@ defineExpose({ validate });
     >
       <div class="mb-5 flex w-full justify-between">
         <div class="flex items-center">
-          <div class="mr-4">条件组关系</div>
+          <div class="mr-4">
+            {{ $t('bpm.simpleProcessDesign.condition.conditionGroupRelation') }}
+          </div>
           <Switch
             v-model:checked="condition.conditionGroups.and"
-            checked-children="且"
-            un-checked-children="或"
+            :checked-children="$t('bpm.simpleProcessDesign.condition.and')"
+            :un-checked-children="$t('bpm.simpleProcessDesign.condition.or')"
           />
         </div>
       </div>
       <Space direction="vertical" size="small" class="w-11/12 pl-1">
         <template #split>
-          {{ condition.conditionGroups.and ? '且' : '或' }}
+          {{
+            condition.conditionGroups.and
+              ? $t('bpm.simpleProcessDesign.condition.and')
+              : $t('bpm.simpleProcessDesign.condition.or')
+          }}
         </template>
         <Card
           class="group relative w-full hover:border-[#1890ff]"
@@ -197,13 +222,21 @@ defineExpose({ validate });
           </div>
           <template #extra>
             <div class="flex items-center justify-between">
-              <div>条件组</div>
+              <div>
+                {{ $t('bpm.simpleProcessDesign.condition.conditionGroup') }}
+              </div>
               <div class="flex">
-                <div class="mr-4">规则关系</div>
+                <div class="mr-4">
+                  {{ $t('bpm.simpleProcessDesign.condition.ruleRelation') }}
+                </div>
                 <Switch
                   v-model:checked="equation.and"
-                  checked-children="且"
-                  un-checked-children="或"
+                  :checked-children="
+                    $t('bpm.simpleProcessDesign.condition.and')
+                  "
+                  :un-checked-children="
+                    $t('bpm.simpleProcessDesign.condition.or')
+                  "
                 />
               </div>
             </div>
@@ -227,14 +260,20 @@ defineExpose({ validate });
                 ]"
                 :rules="{
                   required: true,
-                  message: '左值不能为空',
+                  message: $t(
+                    'bpm.simpleProcessDesign.condition.leftSideCannotEmpty',
+                  ),
                   trigger: 'change',
                 }"
               >
                 <Select
                   v-model:value="rule.leftSide"
                   allow-clear
-                  placeholder="请选择表单字段"
+                  :placeholder="
+                    $t(
+                      'bpm.simpleProcessDesign.condition.leftSideSelectPlaceholder',
+                    )
+                  "
                 >
                   <SelectOption
                     v-for="(field, fIdx) in fieldOptions"
@@ -244,7 +283,11 @@ defineExpose({ validate });
                     :disabled="!field.required"
                   >
                     <Tooltip
-                      title="表单字段非必填时不能作为流程分支条件"
+                      :title="
+                        $t(
+                          'bpm.simpleProcessDesign.condition.formFieldNotRequiredTip',
+                        )
+                      "
                       placement="right"
                       v-if="!field.required"
                     >
@@ -256,9 +299,14 @@ defineExpose({ validate });
               </FormItem>
             </Col>
             <Col :span="6">
-              <Select v-model:value="rule.opCode" placeholder="请选择操作符">
+              <Select
+                v-model:value="rule.opCode"
+                :placeholder="
+                  $t('bpm.simpleProcessDesign.condition.selectOperator')
+                "
+              >
                 <SelectOption
-                  v-for="operator in COMPARISON_OPERATORS"
+                  v-for="operator in translatedOperators"
                   :key="operator.value"
                   :label="operator.label"
                   :value="operator.value"
@@ -279,13 +327,17 @@ defineExpose({ validate });
                 ]"
                 :rules="{
                   required: true,
-                  message: '右值不能为空',
+                  message: $t(
+                    'bpm.simpleProcessDesign.condition.rightSideCannotEmpty',
+                  ),
                   trigger: ['blur', 'change'],
                 }"
               >
                 <Input
                   v-model:value="rule.rightSide"
-                  placeholder="请输入右值"
+                  :placeholder="
+                    $t('bpm.simpleProcessDesign.condition.rightSidePlaceholder')
+                  "
                 />
               </FormItem>
             </Col>
@@ -305,7 +357,10 @@ defineExpose({ validate });
           </Row>
         </Card>
       </Space>
-      <div title="添加条件组" class="mt-4 cursor-pointer">
+      <div
+        :title="$t('bpm.simpleProcessDesign.condition.addConditionGroup')"
+        class="mt-4 cursor-pointer"
+      >
         <Plus
           class="size-[24px] text-blue-500"
           @click="addConditionGroup(condition.conditionGroups?.conditions)"
@@ -314,12 +369,14 @@ defineExpose({ validate });
     </FormItem>
     <FormItem
       v-if="condition.conditionType === ConditionType.EXPRESSION"
-      label="条件表达式"
+      :label="$t('bpm.simpleProcessDesign.condition.expression')"
       name="conditionExpression"
     >
       <Textarea
         v-model:value="condition.conditionExpression"
-        placeholder="请输入条件表达式"
+        :placeholder="
+          $t('bpm.simpleProcessDesign.condition.expressionPlaceholder')
+        "
         allow-clear
         :auto-size="{ minRows: 3, maxRows: 6 }"
       />

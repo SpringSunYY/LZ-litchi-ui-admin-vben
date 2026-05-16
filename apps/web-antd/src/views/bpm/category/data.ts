@@ -2,6 +2,7 @@ import type { VbenFormSchema } from '#/adapter/form';
 import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 
 import { z } from '#/adapter/form';
+import { $t } from '#/locales';
 import { CommonStatusEnum, DICT_TYPE, getDictOptions } from '#/utils';
 
 /** 新增/修改的表单 */
@@ -17,33 +18,39 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'name',
-      label: '分类名',
+      label: $t('bpm.category.field.name'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入分类名',
+        placeholder: $t('ui.placeholder.input', [
+          $t('bpm.category.field.name'),
+        ]),
       },
       rules: 'required',
     },
     {
-      label: '分类标志',
+      label: $t('bpm.category.field.code'),
       fieldName: 'code',
       component: 'Input',
       componentProps: {
-        placeholder: '请输入分类标志',
+        placeholder: $t('ui.placeholder.input', [
+          $t('bpm.category.field.code'),
+        ]),
       },
       rules: 'required',
     },
     {
       fieldName: 'description',
-      label: '分类描述',
+      label: $t('bpm.category.field.description'),
       component: 'Textarea',
       componentProps: {
-        placeholder: '请输入分类描述',
+        placeholder: $t('ui.placeholder.input', [
+          $t('bpm.category.field.description'),
+        ]),
       },
     },
     {
       fieldName: 'status',
-      label: '分类状态',
+      label: $t('bpm.category.field.status'),
       component: 'RadioGroup',
       componentProps: {
         options: getDictOptions(DICT_TYPE.COMMON_STATUS, 'number'),
@@ -54,12 +61,14 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'sort',
-      label: '分类排序',
+      label: $t('bpm.category.field.sort'),
       component: 'InputNumber',
       componentProps: {
         min: 0,
         controlsPosition: 'right',
-        placeholder: '请输入分类排序',
+        placeholder: $t('ui.placeholder.input', [
+          $t('bpm.category.field.sort'),
+        ]),
         class: 'w-full',
       },
     },
@@ -71,29 +80,35 @@ export function useGridFormSchema(): VbenFormSchema[] {
   return [
     {
       fieldName: 'name',
-      label: '分类名',
+      label: $t('bpm.category.field.name'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入分类名',
+        placeholder: $t('ui.placeholder.input', [
+          $t('bpm.category.field.name'),
+        ]),
         allowClear: true,
       },
     },
     {
       fieldName: 'code',
-      label: '分类标志',
+      label: $t('bpm.category.field.code'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入分类标志',
+        placeholder: $t('ui.placeholder.input', [
+          $t('bpm.category.field.code'),
+        ]),
         allowClear: true,
       },
     },
     {
       fieldName: 'status',
-      label: '分类状态',
+      label: $t('bpm.category.field.status'),
       component: 'Select',
       componentProps: {
         options: getDictOptions(DICT_TYPE.COMMON_STATUS, 'number'),
-        placeholder: '请选择分类状态',
+        placeholder: $t('ui.placeholder.select', [
+          $t('bpm.category.field.status'),
+        ]),
         allowClear: true,
       },
     },
@@ -106,27 +121,27 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
   return [
     {
       field: 'id',
-      title: '分类编号',
+      title: $t('bpm.category.field.id'),
       minWidth: 100,
     },
     {
       field: 'name',
-      title: '分类名',
+      title: $t('bpm.category.field.name'),
       minWidth: 200,
     },
     {
       field: 'code',
-      title: '分类标志',
+      title: $t('bpm.category.field.code'),
       minWidth: 200,
     },
     {
       field: 'description',
-      title: '分类描述',
+      title: $t('bpm.category.field.description'),
       minWidth: 200,
     },
     {
       field: 'status',
-      title: '分类状态',
+      title: $t('bpm.category.field.status'),
       minWidth: 100,
       cellRender: {
         name: 'CellDict',
@@ -135,12 +150,12 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
     },
     {
       field: 'createTime',
-      title: '创建时间',
+      title: $t('bpm.category.field.createTime'),
       minWidth: 180,
       formatter: 'formatDateTime',
     },
     {
-      title: '操作',
+      title: $t('common.operation'),
       width: 180,
       fixed: 'right',
       slots: { default: 'actions' },

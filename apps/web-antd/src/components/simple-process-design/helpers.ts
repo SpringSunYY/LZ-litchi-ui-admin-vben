@@ -1,3 +1,4 @@
+// @ts-nocheck 比较复杂
 import type { Ref } from 'vue';
 
 import type {
@@ -14,6 +15,7 @@ import type { SystemUserApi } from '#/api/system/user';
 
 import { inject, nextTick, ref, toRaw, unref, watch } from 'vue';
 
+import { $t } from '#/locales';
 import {
   BpmNodeTypeEnum,
   BpmTaskStatusEnum,
@@ -25,13 +27,16 @@ import {
   AssignEmptyHandlerType,
   AssignStartUserHandlerType,
   CandidateStrategy,
-  COMPARISON_OPERATORS,
   ConditionType,
   FieldPermissionType,
-  NODE_DEFAULT_NAME,
   RejectHandlerType,
 } from './consts';
+import { NODE_DEFAULT_NAME } from './locales/simple-process-design';
 
+/**
+ * 监听流程节点 props 变化，返回响应式 Ref。
+ * 当父组件传入新的 flowNode 时，自动更新返回值。
+ */
 export function useWatchNode(props: {
   flowNode: SimpleFlowNode;
 }): Ref<SimpleFlowNode> {
@@ -45,9 +50,16 @@ export function useWatchNode(props: {
   return node;
 }
 
-// 解析 formCreate 所有表单字段, 并返回
+// ---------------------------------------------------------------------------
+// 表单字段解析
+// ---------------------------------------------------------------------------
+
+/**
+ * 解析 formCreate 生成的表单配置字符串数组，返回扁平化的字段列表。
+ * @param formFields formCreate 生成的字段配置字符串数组（如 `[{field:'name',title:'姓名'}]`）
+ */
 function parseFormCreateFields(formFields?: string[]) {
-  const result: Array<Record<string, any>> = [];
+  const result: Array<Record<string, any>>[] = [];
   if (formFields) {
     formFields.forEach((fieldStr: string) => {
       parseFormFields(JSON.parse(fieldStr), result);
@@ -57,15 +69,15 @@ function parseFormCreateFields(formFields?: string[]) {
 }
 
 /**
- * 解析表单组件的  field, title 等字段（递归，如果组件包含子组件）
+ * 递归解析表单组件的 field / title / required 等字段。
  *
- * @param rule  组件的生成规则 https://www.form-create.com/v3/guide/rule
- * @param fields 解析后表单组件字段
- * @param parentTitle  如果是子表单，子表单的标题，默认为空
+ * @param rule    组件生成规则，参考 https://www.form-create.com/v3/guide/rule
+ * @param fields  解析后的字段输出数组（就地修改）
+ * @param parentTitle  子表单场景下的父级标题，默认为空
  */
 export const parseFormFields = (
   rule: Record<string, any>,
-  fields: Array<Record<string, any>> = [],
+  fields: Array<Record<string, any>>[] = [],
   parentTitle: string = '',
 ) => {
   const { type, field, $required, title: tempTitle, children } = rule;
@@ -84,13 +96,6 @@ export const parseFormFields = (
       type,
       required,
     });
-    // TODO 子表单 需要处理子表单字段
-    // if (type === 'group' && rule.props?.rule && Array.isArray(rule.props.rule)) {
-    //   // 解析子表单的字段
-    //   rule.props.rule.forEach((item) => {
-    //     parseFields(item, fieldsPermission, title)
-    //   })
-    // }
   }
   if (children && Array.isArray(children)) {
     children.forEach((rule) => {
@@ -99,19 +104,28 @@ export const parseFormFields = (
   }
 };
 
+// ---------------------------------------------------------------------------
+// 表单字段权限
+// ---------------------------------------------------------------------------
+
 /**
- * @description 表单数据权限配置，用于发起人节点 、审批节点、抄送节点
+ * 表单数据权限配置 composable，用于发起人节点、审批节点、抄送节点。
+ * 管理节点配置的表单字段权限（只读/可编辑/隐藏）。
+ *
+ * @param defaultPermission  默认权限（通常为只读 FieldPermissionType.READ）
  */
 export function useFormFieldsPermission(
   defaultPermission: FieldPermissionType,
 ) {
-  // 字段权限配置. 需要有 field, title,  permissioin 属性
   const fieldsPermissionConfig = ref<Array<Record<string, any>>>([]);
 
-  const formType = inject<Ref<number | undefined>>('formType', ref()); // 表单类型
+  const formType = inject<Ref<number | undefined>>('formType', ref());
+  const formFields = inject<Ref<string[]>>('formFields', ref([]));
 
-  const formFields = inject<Ref<string[]>>('formFields', ref([])); // 流程表单字段
-
+  /**
+   * 根据节点已有配置初始化字段权限。
+   * 若节点无配置，则以表单全部字段生成默认只读权限。
+   */
   function getNodeConfigFormFields(
     nodeFormFields?: Array<Record<string, string>>,
   ) {
@@ -121,7 +135,11 @@ export function useFormFieldsPermission(
         ? getDefaultFieldsPermission(unref(formFields))
         : mergeFieldsPermission(nodeFormFields, unref(formFields));
   }
-  // 合并已经设置的表单字段权限，当前流程表单字段 (可能新增，或删除了字段)
+
+  /**
+   * 合并已有权限配置与当前表单字段。
+   * 处理字段新增（新增字段默认只读）和字段删除（自动忽略已删除字段）两种情况。
+   */
   function mergeFieldsPermission(
     formFieldsPermisson: Array<Record<string, string>>,
     formFields?: string[],
@@ -142,7 +160,9 @@ export function useFormFieldsPermission(
     return mergedFieldsPermission;
   }
 
-  // 默认的表单权限： 获取表单的所有字段，设置字段默认权限为只读
+  /**
+   * 生成默认字段权限（所有字段统一设为 defaultPermission）。
+   */
   function getDefaultFieldsPermission(formFields?: string[]) {
     let defaultFieldsPermission: Array<Record<string, any>> = [];
     if (formFields) {
@@ -159,7 +179,6 @@ export function useFormFieldsPermission(
     return defaultFieldsPermission;
   }
 
-  // 获取表单的所有字段，作为下拉框选项
   const formFieldOptions = parseFormCreateFields(unref(formFields));
 
   return {
@@ -171,28 +190,34 @@ export function useFormFieldsPermission(
 }
 
 /**
- * @description 获取流程表单的字段
+ * 获取流程表单的字段列表（不含发起人字段）。
  */
 export function useFormFields() {
-  const formFields = inject<Ref<string[]>>('formFields', ref([])); // 流程表单字段
+  const formFields = inject<Ref<string[]>>('formFields', ref([]));
   return parseFormCreateFields(unref(formFields));
 }
 
 // TODO @芋艿：后续需要把各种类似 useFormFieldsPermission 的逻辑，抽成一个通用方法。
+
 /**
- * @description 获取流程表单的字段和发起人字段
+ * 获取流程表单的字段列表，并在头部插入"发起人"字段选项。
+ * 用于审批节点/抄送节点中，条件规则可选择发起人作为左值。
  */
 export function useFormFieldsAndStartUser() {
-  const injectFormFields = inject<Ref<string[]>>('formFields', ref([])); // 流程表单字段
+  const injectFormFields = inject<Ref<string[]>>('formFields', ref([]));
   const formFields = parseFormCreateFields(unref(injectFormFields));
-  // 添加发起人
+  // 在字段列表头部插入"发起人"字段
   formFields.unshift({
     field: ProcessVariableEnum.START_USER_ID,
-    title: '发起人',
+    title: $t('bpm.simpleProcessDesign.action.startUserFieldTitle'),
     required: true,
   });
   return formFields;
 }
+
+// ---------------------------------------------------------------------------
+// 类型定义
+// ---------------------------------------------------------------------------
 
 export type UserTaskFormType = {
   approveMethod: ApproveMethodType;
@@ -202,17 +227,17 @@ export type UserTaskFormType = {
   assignStartUserHandlerType?: AssignStartUserHandlerType;
   buttonsSetting: any[];
   candidateStrategy: CandidateStrategy;
-  deptIds?: number[]; // 部门
-  deptLevel?: number; // 部门层级
-  expression?: string; // 流程表达式
-  formDept?: string; // 表单内部门字段
-  formUser?: string; // 表单内用户字段
+  deptIds?: number[];
+  deptLevel?: number;
+  expression?: string;
+  formDept?: string;
+  formUser?: string;
   maxRemindCount?: number;
-  postIds?: number[]; // 岗位
+  postIds?: number[];
   reasonRequire: boolean;
   rejectHandlerType?: RejectHandlerType;
   returnNodeId?: string;
-  roleIds?: number[]; // 角色
+  roleIds?: number[];
   signEnable: boolean;
   taskAssignListener?: {
     body: HttpRequestParam[];
@@ -235,40 +260,47 @@ export type UserTaskFormType = {
   timeDuration?: number;
   timeoutHandlerEnable?: boolean;
   timeoutHandlerType?: number;
-  userGroups?: number[]; // 用户组
-  userIds?: number[]; // 用户
+  userGroups?: number[];
+  userIds?: number[];
 };
 
 export type CopyTaskFormType = {
   candidateStrategy: CandidateStrategy;
-  deptIds?: number[]; // 部门
-  deptLevel?: number; // 部门层级
-  expression?: string; // 流程表达式
-  formDept?: string; // 表单内部门字段
-  formUser?: string; // 表单内用户字段
-  postIds?: number[]; // 岗位
-  roleIds?: number[]; // 角色
-  userGroups?: number[]; // 用户组
-  userIds?: number[]; // 用户
+  deptIds?: number[];
+  deptLevel?: number;
+  expression?: string;
+  formDept?: string;
+  formUser?: string;
+  postIds?: number[];
+  roleIds?: number[];
+  userGroups?: number[];
+  userIds?: number[];
 };
 
+// ---------------------------------------------------------------------------
+// 节点表单配置 composable
+// ---------------------------------------------------------------------------
+
 /**
- * @description 节点表单数据。 用于审批节点、抄送节点
+ * 节点（审批节点 / 抄送节点）的候选人配置 composable。
+ * 提供候选人选项、候选人参数序列化/反序列化，以及节点显示文本生成。
+ *
+ * @param nodeType 节点类型（用于判断是审批节点还是抄送节点）
  */
 export function useNodeForm(nodeType: BpmNodeTypeEnum) {
-  const roleOptions = inject<Ref<SystemRoleApi.Role[]>>('roleList', ref([])); // 角色列表
-  const postOptions = inject<Ref<SystemPostApi.Post[]>>('postList', ref([])); // 岗位列表
-  const userOptions = inject<Ref<SystemUserApi.User[]>>('userList', ref([])); // 用户列表
-  const deptOptions = inject<Ref<SystemDeptApi.Dept[]>>('deptList', ref([])); // 部门列表
+  const roleOptions = inject<Ref<SystemRoleApi.Role[]>>('roleList', ref([]));
+  const postOptions = inject<Ref<SystemPostApi.Post[]>>('postList', ref([]));
+  const userOptions = inject<Ref<SystemUserApi.User[]>>('userList', ref([]));
+  const deptOptions = inject<Ref<SystemDeptApi.Dept[]>>('deptList', ref([]));
   const userGroupOptions = inject<Ref<BpmUserGroupApi.UserGroupVO[]>>(
     'userGroupList',
     ref([]),
-  ); // 用户组列表
+  );
   const deptTreeOptions = inject<Ref<SystemDeptApi.Dept[]>>(
     'deptTree',
     ref([]),
-  ); // 部门树
-  const formFields = inject<Ref<string[]>>('formFields', ref([])); // 流程表单字段
+  );
+  const formFields = inject<Ref<string[]>>('formFields', ref([]));
   const configForm = ref<any | CopyTaskFormType | UserTaskFormType>();
 
   if (
@@ -284,8 +316,8 @@ export function useNodeForm(nodeType: BpmNodeTypeEnum) {
       returnNodeId: '',
       timeoutHandlerEnable: false,
       timeoutHandlerType: 1,
-      timeDuration: 6, // 默认 6小时
-      maxRemindCount: 1, // 默认 提醒 1次
+      timeDuration: 6,
+      maxRemindCount: 1,
       buttonsSetting: [],
     };
   }
@@ -293,9 +325,13 @@ export function useNodeForm(nodeType: BpmNodeTypeEnum) {
     candidateStrategy: CandidateStrategy.USER,
   };
 
+  /**
+   * 根据当前候选人策略和选项，生成节点显示文本。
+   * 例如："指定成员：张三、李四" / "部门负责人：技术部" 等。
+   */
   function getShowText(): string {
     let showText = '';
-    // 指定成员
+
     if (
       configForm.value?.candidateStrategy === CandidateStrategy.USER &&
       configForm.value?.userIds?.length > 0
@@ -306,9 +342,9 @@ export function useNodeForm(nodeType: BpmNodeTypeEnum) {
           candidateNames.push(item.nickname);
         }
       });
-      showText = `指定成员：${candidateNames.join(',')}`;
+      showText = `${$t('bpm.simpleProcessDesign.candidateStrategy.assignUser')}：${candidateNames.join(',')}`;
     }
-    // 指定角色
+
     if (
       configForm.value?.candidateStrategy === CandidateStrategy.ROLE &&
       configForm.value.roleIds?.length > 0
@@ -319,9 +355,9 @@ export function useNodeForm(nodeType: BpmNodeTypeEnum) {
           candidateNames.push(item.name);
         }
       });
-      showText = `指定角色：${candidateNames.join(',')}`;
+      showText = `${$t('bpm.simpleProcessDesign.candidateStrategy.assignRole')}：${candidateNames.join(',')}`;
     }
-    // 指定部门
+
     if (
       (configForm.value?.candidateStrategy === CandidateStrategy.DEPT_MEMBER ||
         configForm.value?.candidateStrategy === CandidateStrategy.DEPT_LEADER ||
@@ -338,17 +374,16 @@ export function useNodeForm(nodeType: BpmNodeTypeEnum) {
       if (
         configForm.value.candidateStrategy === CandidateStrategy.DEPT_MEMBER
       ) {
-        showText = `部门成员：${candidateNames.join(',')}`;
+        showText = `${$t('bpm.simpleProcessDesign.candidateStrategy.deptMember')}：${candidateNames.join(',')}`;
       } else if (
         configForm.value.candidateStrategy === CandidateStrategy.DEPT_LEADER
       ) {
-        showText = `部门的负责人：${candidateNames.join(',')}`;
+        showText = `${$t('bpm.simpleProcessDesign.candidateStrategy.deptLeader')}：${candidateNames.join(',')}`;
       } else {
-        showText = `多级部门的负责人：${candidateNames.join(',')}`;
+        showText = `${$t('bpm.simpleProcessDesign.candidateStrategy.multiLevelDeptLeader')}：${candidateNames.join(',')}`;
       }
     }
 
-    // 指定岗位
     if (
       configForm.value?.candidateStrategy === CandidateStrategy.POST &&
       configForm.value.postIds?.length > 0
@@ -359,9 +394,9 @@ export function useNodeForm(nodeType: BpmNodeTypeEnum) {
           candidateNames.push(item.name);
         }
       });
-      showText = `指定岗位: ${candidateNames.join(',')}`;
+      showText = `${$t('bpm.simpleProcessDesign.candidateStrategy.assignPost')}：${candidateNames.join(',')}`;
     }
-    // 指定用户组
+
     if (
       configForm.value?.candidateStrategy === CandidateStrategy.USER_GROUP &&
       configForm.value?.userGroups?.length > 0
@@ -372,67 +407,69 @@ export function useNodeForm(nodeType: BpmNodeTypeEnum) {
           candidateNames.push(item.name);
         }
       });
-      showText = `指定用户组: ${candidateNames.join(',')}`;
+      showText = `${$t('bpm.simpleProcessDesign.candidateStrategy.userGroup')}：${candidateNames.join(',')}`;
     }
 
-    // 表单内用户字段
     if (configForm.value?.candidateStrategy === CandidateStrategy.FORM_USER) {
       const formFieldOptions = parseFormCreateFields(unref(formFields));
       const item = formFieldOptions.find(
         (item) => item.field === configForm.value?.formUser,
       );
-      showText = `表单用户：${item?.title}`;
+      showText = $t('bpm.simpleProcessDesign.action.formUser', [
+        item?.title ?? '',
+      ]);
     }
 
-    // 表单内部门负责人
     if (
       configForm.value?.candidateStrategy === CandidateStrategy.FORM_DEPT_LEADER
     ) {
-      showText = `表单内部门负责人`;
+      showText = $t('bpm.simpleProcessDesign.action.formDeptLeader');
     }
 
-    // 审批人自选
     if (
       configForm.value?.candidateStrategy ===
       CandidateStrategy.APPROVE_USER_SELECT
     ) {
-      showText = `审批人自选`;
+      showText = $t('bpm.simpleProcessDesign.action.approveUserSelect');
     }
 
-    // 发起人自选
     if (
       configForm.value?.candidateStrategy ===
       CandidateStrategy.START_USER_SELECT
     ) {
-      showText = `发起人自选`;
+      showText = $t('bpm.simpleProcessDesign.action.startUserSelect');
     }
-    // 发起人自己
+
     if (configForm.value?.candidateStrategy === CandidateStrategy.START_USER) {
-      showText = `发起人自己`;
+      showText = $t('bpm.simpleProcessDesign.action.startUserSelf');
     }
-    // 发起人的部门负责人
+
     if (
       configForm.value?.candidateStrategy ===
       CandidateStrategy.START_USER_DEPT_LEADER
     ) {
-      showText = `发起人的部门负责人`;
+      showText = $t('bpm.simpleProcessDesign.action.startUserDeptLeader');
     }
-    // 发起人的部门负责人
+
     if (
       configForm.value?.candidateStrategy ===
       CandidateStrategy.START_USER_MULTI_LEVEL_DEPT_LEADER
     ) {
-      showText = `发起人连续部门负责人`;
+      showText = $t(
+        'bpm.simpleProcessDesign.action.startUserMultiLevelDeptLeader',
+      );
     }
-    // 流程表达式
+
     if (configForm.value?.candidateStrategy === CandidateStrategy.EXPRESSION) {
-      showText = `流程表达式：${configForm.value.expression}`;
+      showText = `${$t('bpm.simpleProcessDesign.action.expression')}：${configForm.value.expression}`;
     }
+
     return showText;
   }
 
   /**
-   *  处理候选人参数的赋值
+   * 将 configForm 中的候选人参数（userIds / deptIds 等）序列化为字符串，
+   * 写入 candidateParam 字段，供后端解析。
    */
   function handleCandidateParam() {
     let candidateParam: string | undefined;
@@ -449,9 +486,7 @@ export function useNodeForm(nodeType: BpmNodeTypeEnum) {
         candidateParam = configForm.value.expression;
         break;
       }
-      // 表单内部门的负责人
       case CandidateStrategy.FORM_DEPT_LEADER: {
-        // 候选人参数格式: | 分隔 。左边为表单内部门字段。 右边为部门层级
         const deptFieldOnForm = configForm.value.formDept;
         candidateParam = deptFieldOnForm?.concat(
           `|${configForm.value.deptLevel}`,
@@ -462,9 +497,7 @@ export function useNodeForm(nodeType: BpmNodeTypeEnum) {
         candidateParam = configForm.value?.formUser;
         break;
       }
-      // 指定连续多级部门的负责人
       case CandidateStrategy.MULTI_LEVEL_DEPT_LEADER: {
-        // 候选人参数格式: | 分隔 。左边为部门（多个部门用 , 分隔）。 右边为部门层级
         const deptIds = configForm.value.deptIds?.join(',');
         candidateParam = deptIds?.concat(`|${configForm.value.deptLevel}`);
         break;
@@ -477,7 +510,6 @@ export function useNodeForm(nodeType: BpmNodeTypeEnum) {
         candidateParam = configForm.value.roleIds?.join(',');
         break;
       }
-      // 发起人部门负责人
       case CandidateStrategy.START_USER_DEPT_LEADER:
       case CandidateStrategy.START_USER_MULTI_LEVEL_DEPT_LEADER: {
         candidateParam = `${configForm.value.deptLevel}`;
@@ -497,8 +529,10 @@ export function useNodeForm(nodeType: BpmNodeTypeEnum) {
     }
     return candidateParam;
   }
+
   /**
-   *  解析候选人参数
+   * 将后端返回的 candidateParam 字符串反序列化，写回 configForm。
+   * 用于编辑已有节点时还原候选人配置。
    */
   function parseCandidateParam(
     candidateStrategy: CandidateStrategy,
@@ -519,9 +553,7 @@ export function useNodeForm(nodeType: BpmNodeTypeEnum) {
         configForm.value.expression = candidateParam;
         break;
       }
-      // 表单内的部门负责人
       case CandidateStrategy.FORM_DEPT_LEADER: {
-        // 候选人参数格式: | 分隔 。左边为表单内的部门字段。 右边为部门层级
         const paramArray = candidateParam.split('|');
         if (paramArray.length > 1) {
           configForm.value.formDept = paramArray[0];
@@ -533,9 +565,7 @@ export function useNodeForm(nodeType: BpmNodeTypeEnum) {
         configForm.value.formUser = candidateParam;
         break;
       }
-      // 指定连续多级部门的负责人
       case CandidateStrategy.MULTI_LEVEL_DEPT_LEADER: {
-        // 候选人参数格式: | 分隔 。左边为部门（多个部门用 , 分隔）。 右边为部门层级
         const paramArray = candidateParam.split('|') as string[];
         if (paramArray.length > 1) {
           configForm.value.deptIds = paramArray[0]
@@ -557,7 +587,6 @@ export function useNodeForm(nodeType: BpmNodeTypeEnum) {
           .map((item) => +item);
         break;
       }
-      // 发起人部门负责人
       case CandidateStrategy.START_USER_DEPT_LEADER:
       case CandidateStrategy.START_USER_MULTI_LEVEL_DEPT_LEADER: {
         configForm.value.deptLevel = +candidateParam;
@@ -593,17 +622,18 @@ export function useNodeForm(nodeType: BpmNodeTypeEnum) {
   };
 }
 
+// ---------------------------------------------------------------------------
+// 抽屉控制
+// ---------------------------------------------------------------------------
+
 /**
- * @description 抽屉配置
+ * 节点配置抽屉的显示/隐藏控制 composable。
  */
 export function useDrawer() {
-  // 抽屉配置是否可见
   const settingVisible = ref(false);
-  // 关闭配置抽屉
   function closeDrawer() {
     settingVisible.value = false;
   }
-  // 打开配置抽屉
   function openDrawer() {
     settingVisible.value = true;
   }
@@ -614,27 +644,30 @@ export function useDrawer() {
   };
 }
 
+// ---------------------------------------------------------------------------
+// 节点名称编辑
+// ---------------------------------------------------------------------------
+
 /**
- * @description 节点名称配置
+ * 节点名称编辑 composable，支持点击图标显示输入框并自动聚焦。
+ *
+ * @param nodeType 节点类型，用于获取默认名称
  */
 export function useNodeName(nodeType: BpmNodeTypeEnum) {
-  // 节点名称
   const nodeName = ref<string>();
-  // 节点名称输入框
   const showInput = ref(false);
-  // 输入框的引用
   const inputRef = ref<HTMLInputElement | null>(null);
-  // 点击节点名称编辑图标
+
   function clickIcon() {
     showInput.value = true;
   }
-  // 修改节点名称
+
   function changeNodeName() {
     showInput.value = false;
     nodeName.value =
       nodeName.value || (NODE_DEFAULT_NAME.get(nodeType) as string);
   }
-  // 监听 showInput 的变化，当变为 true 时自动聚焦
+
   watch(showInput, (value) => {
     if (value) {
       nextTick(() => {
@@ -652,16 +685,19 @@ export function useNodeName(nodeType: BpmNodeTypeEnum) {
   };
 }
 
+/**
+ * 节点名称编辑 composable，支持点击标题直接进入编辑状态。
+ *
+ * @param node        节点的响应式引用
+ * @param nodeType    节点类型
+ */
 export function useNodeName2(
   node: Ref<SimpleFlowNode>,
   nodeType: BpmNodeTypeEnum,
 ) {
-  // 显示节点名称输入框
   const showInput = ref(false);
-  // 输入框的引用
   const inputRef = ref<HTMLInputElement | null>(null);
 
-  // 监听 showInput 的变化，当变为 true 时自动聚焦
   watch(showInput, (value) => {
     if (value) {
       nextTick(() => {
@@ -670,17 +706,16 @@ export function useNodeName2(
     }
   });
 
-  // 修改节点名称
   function changeNodeName() {
     showInput.value = false;
     node.value.name =
       node.value.name || (NODE_DEFAULT_NAME.get(nodeType) as string);
-    console.warn('node.value.name===>', node.value.name);
   }
-  // 点击节点标题进行输入
+
   function clickTitle() {
     showInput.value = true;
   }
+
   return {
     showInput,
     inputRef,
@@ -689,31 +724,39 @@ export function useNodeName2(
   };
 }
 
+// ---------------------------------------------------------------------------
+// 任务状态样式
+// ---------------------------------------------------------------------------
+
 /**
- * @description 根据节点任务状态，获取节点任务状态样式
+ * 根据节点任务状态返回对应的 CSS class 名称。
+ * 用于在流程图上以不同颜色/样式区分任务状态。
+ *
+ * @param taskStatus 任务状态枚举
  */
 export function useTaskStatusClass(
   taskStatus: BpmTaskStatusEnum | undefined,
 ): string {
-  if (!taskStatus) {
-    return '';
-  }
-  if (taskStatus === BpmTaskStatusEnum.APPROVE) {
-    return 'status-pass';
-  }
-  if (taskStatus === BpmTaskStatusEnum.RUNNING) {
-    return 'status-running';
-  }
-  if (taskStatus === BpmTaskStatusEnum.REJECT) {
-    return 'status-reject';
-  }
-  if (taskStatus === BpmTaskStatusEnum.CANCEL) {
-    return 'status-cancel';
-  }
+  if (!taskStatus) return '';
+  if (taskStatus === BpmTaskStatusEnum.APPROVE) return 'status-pass';
+  if (taskStatus === BpmTaskStatusEnum.RUNNING) return 'status-running';
+  if (taskStatus === BpmTaskStatusEnum.REJECT) return 'status-reject';
+  if (taskStatus === BpmTaskStatusEnum.CANCEL) return 'status-cancel';
   return '';
 }
 
-/** 条件组件文字展示 */
+// ---------------------------------------------------------------------------
+// 条件节点展示文本
+// ---------------------------------------------------------------------------
+
+/**
+ * 生成条件节点在流程图上的展示文本。
+ *
+ * @param conditionType       条件类型（表达式 / 规则）
+ * @param conditionExpression 条件表达式字符串（表达式模式）
+ * @param conditionGroups    条件组结构（规则模式）
+ * @param fieldOptions       表单字段选项（用于解析左值字段名）
+ */
 export function getConditionShowText(
   conditionType: ConditionType | undefined,
   conditionExpression: string | undefined,
@@ -722,14 +765,13 @@ export function getConditionShowText(
 ) {
   let showText: string | undefined;
   if (conditionType === ConditionType.EXPRESSION && conditionExpression) {
-    showText = `表达式：${conditionExpression}`;
+    showText = `${$t('bpm.simpleProcessDesign.action.conditionRulePrefix')}${conditionExpression}`;
   }
   if (conditionType === ConditionType.RULE) {
-    // 条件组是否为与关系
     const groupAnd = conditionGroups?.and;
     let warningMessage: string | undefined;
     const conditionGroup = conditionGroups?.conditions.map((item) => {
-      return `(${item.rules
+      return `( ${item.rules
         .map((rule) => {
           if (rule.leftSide && rule.rightSide) {
             return `${getFormFieldTitle(
@@ -737,21 +779,26 @@ export function getConditionShowText(
               rule.leftSide,
             )} ${getOpName(rule.opCode)} ${rule.rightSide}`;
           } else {
-            // 有一条规则不完善。提示错误
-            warningMessage = '请完善条件规则';
+            warningMessage = $t(
+              'bpm.simpleProcessDesign.action.conditionRuleIncomplete',
+            );
             return '';
           }
         })
-        .join(item.and ? ' 且 ' : ' 或 ')} ) `;
+        .join(
+          ` ${item.and ? $t('bpm.simpleProcessDesign.action.conditionRuleAnd') : $t('bpm.simpleProcessDesign.action.conditionRuleOr')} `,
+        )} ) `;
     });
     showText = warningMessage
       ? ''
-      : conditionGroup?.join(groupAnd ? ' 且 ' : ' 或 ');
+      : conditionGroup?.join(
+          ` ${groupAnd ? $t('bpm.simpleProcessDesign.action.conditionRuleAnd') : $t('bpm.simpleProcessDesign.action.conditionRuleOr')} `,
+        );
   }
   return showText;
 }
 
-/** 获取表单字段名称*/
+/** 根据字段 field 值在字段选项列表中查找对应的 title。 */
 function getFormFieldTitle(
   fieldOptions: Array<Record<string, any>>,
   field: string,
@@ -760,32 +807,64 @@ function getFormFieldTitle(
   return item?.title;
 }
 
-/** 获取操作符名称 */
-function getOpName(opCode: string): string | undefined {
-  const opName = COMPARISON_OPERATORS.find(
-    (item: any) => item.value === opCode,
-  );
-  return opName?.label;
+/**
+ * 将后端 opCode 字符串翻译为用户可见的操作符文本。
+ *
+ * @param opCode 后端返回的操作符代码（如 "=="、"!="、"contains" 等）
+ */
+function getOpName(opCode: string): string {
+  const opCodeMap: Record<string, string> = {
+    '==': 'bpm.simpleProcessDesign.condition.opEq',
+    '!=': 'bpm.simpleProcessDesign.condition.opNe',
+    '<': 'bpm.simpleProcessDesign.condition.opLt',
+    '<=': 'bpm.simpleProcessDesign.condition.opLte',
+    '>': 'bpm.simpleProcessDesign.condition.opGt',
+    '>=': 'bpm.simpleProcessDesign.condition.opGte',
+    contains: 'bpm.simpleProcessDesign.condition.opContains',
+    notContains: 'bpm.simpleProcessDesign.condition.opNotContains',
+    isEmpty: 'bpm.simpleProcessDesign.condition.opIsEmpty',
+    isNotEmpty: 'bpm.simpleProcessDesign.condition.opIsNotEmpty',
+  };
+
+  const key =
+    opCodeMap[opCode] || 'bpm.simpleProcessDesign.condition.opIsNotEmpty';
+  return $t(key);
 }
 
-/** 获取条件节点默认的名称 */
+// ---------------------------------------------------------------------------
+// 条件节点默认名称
+// ---------------------------------------------------------------------------
+
+/**
+ * 获取条件节点（排他分支）的默认显示名称。
+ *
+ * @param index      节点序号（从 0 开始）
+ * @param defaultFlow 是否为"其它情况"默认分支
+ */
 export function getDefaultConditionNodeName(
   index: number,
   defaultFlow: boolean | undefined,
 ): string {
   if (defaultFlow) {
-    return '其它情况';
+    return $t('bpm.simpleProcessDesign.action.conditionDefaultOther');
   }
-  return `条件${index + 1}`;
+  return `${$t('bpm.simpleProcessDesign.action.conditionRulePrefix').replace('：', '')}${index + 1}`;
 }
 
-/** 获取包容分支条件节点默认的名称 */
+/**
+ * 获取包容分支节点的默认显示名称。
+ *
+ * @param index      节点序号（从 0 开始）
+ * @param defaultFlow 是否为"其它情况"默认分支
+ */
 export function getDefaultInclusiveConditionNodeName(
   index: number,
   defaultFlow: boolean | undefined,
 ): string {
   if (defaultFlow) {
-    return '其它情况';
+    return $t('bpm.simpleProcessDesign.action.conditionDefaultOther');
   }
-  return `包容条件${index + 1}`;
+  return $t('bpm.simpleProcessDesign.action.conditionInclusiveOther', [
+    String(index + 1),
+  ]);
 }

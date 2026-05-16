@@ -26,6 +26,7 @@ import {
 } from '#/api/bpm/model';
 import { getSimpleDeptList } from '#/api/system/dept';
 import { getSimpleUserList } from '#/api/system/user';
+import { $t } from '#/locales';
 import { BpmAutoApproveType, BpmModelFormType, BpmModelType } from '#/utils';
 
 import BasicInfo from './modules/basic-info.vue';
@@ -82,10 +83,10 @@ async function validateExtra() {
 const currentStep = ref(-1); // 步骤控制。-1 用于，一开始全部不展示等当前页面数据初始化完成
 
 const steps = [
-  { title: '基本信息', validator: validateBasic },
-  { title: '表单设计', validator: validateForm },
-  { title: '流程设计', validator: validateProcess },
-  { title: '更多设置', validator: validateExtra },
+  { title: $t('bpm.model.step.basicInfo'), validator: validateBasic },
+  { title: $t('bpm.model.step.formDesign'), validator: validateForm },
+  { title: $t('bpm.model.step.processDesign'), validator: validateProcess },
+  { title: $t('bpm.model.step.extraSetting'), validator: validateExtra },
 ];
 
 // 表单数据
@@ -178,7 +179,7 @@ async function initData() {
     // 特殊：复制场景
     if (route.params.type === 'copy') {
       delete formData.value.id;
-      formData.value.name += '副本';
+      formData.value.name += $t('common.copySuffix');
       formData.value.key += '_copy';
     }
   } else {
@@ -224,7 +225,10 @@ async function validateAllSteps() {
     await validateBasic();
   } catch {
     currentStep.value = 0;
-    message.warning('请完善基本信息');
+    message.warning(
+      $t('bpm.model.basic.processName') +
+        $t('bpm.model.basic.processNameEmpty'),
+    );
     return false;
   }
 
@@ -233,7 +237,10 @@ async function validateAllSteps() {
     await validateForm();
   } catch {
     currentStep.value = 1;
-    message.warning('请完善自定义表单信息');
+    message.warning(
+      $t('bpm.model.basic.processForm') +
+        $t('bpm.model.basic.processFormEmpty'),
+    );
     return false;
   }
 
@@ -275,7 +282,7 @@ async function handleSave() {
         // 情况三：复制场景
         formData.value.id = await createModel(modelData);
         // 提示成功
-        message.success('复制成功，可点击【发布】按钮，进行发布模型');
+        message.success($t('bpm.model.message.copySuccessForm'));
 
         break;
       }
@@ -283,7 +290,7 @@ async function handleSave() {
         // 情况一：流程定义场景（恢复）
         await updateModel(modelData);
         // 提示成功
-        message.success('恢复成功，可点击【发布】按钮，进行发布模型');
+        message.success($t('bpm.model.message.restoreSuccess'));
 
         break;
       }
@@ -291,7 +298,7 @@ async function handleSave() {
         // 修改场景
         await updateModel(modelData);
         // 提示成功
-        message.success('修改成功，可点击【发布】按钮，进行发布模型');
+        message.success($t('bpm.model.message.updateSuccess'));
 
         break;
       }
@@ -299,7 +306,7 @@ async function handleSave() {
         // 情况四：新增场景
         formData.value.id = await createModel(modelData);
         // 提示成功
-        message.success('新建成功，可点击【发布】按钮，进行发布模型');
+        message.success($t('bpm.model.message.createSuccess'));
       }
     }
 
@@ -318,7 +325,7 @@ async function handleDeploy() {
   try {
     // 修改场景下直接发布，新增场景下需要先确认
     if (!formData.value.id) {
-      await confirm('是否确认发布该流程？');
+      await confirm($t('bpm.model.message.confirmDeployForm'));
     }
     // 校验所有步骤
     await validateAllSteps();
@@ -338,11 +345,11 @@ async function handleDeploy() {
 
     // 发布
     await deployModel(formData.value.id);
-    message.success('发布成功');
+    message.success($t('bpm.model.message.deploySuccessForm'));
     await router.push({ path: '/bpm/manager/model' });
   } catch (error: any) {
     console.error('发布失败:', error);
-    message.warning(error.message || '发布失败');
+    message.warning(error.message || $t('bpm.model.message.deployFailed'));
   }
 }
 
@@ -366,7 +373,7 @@ async function handleStepClick(index: number) {
   } catch (error) {
     console.error('步骤切换失败:', error);
     if (currentStep.value !== 2) {
-      message.warning('请先完善当前步骤必填信息');
+      message.warning($t('common.stepTip'));
     }
   }
 }
@@ -410,9 +417,9 @@ onBeforeUnmount(() => {
           />
           <span
             class="ml-2.5 truncate text-base"
-            :title="formData.name || '创建流程'"
+            :title="formData.name || $t('bpm.model.message.create')"
           >
-            {{ formData.name || '创建流程' }}
+            {{ formData.name || $t('bpm.model.message.create') }}
           </span>
         </div>
 
@@ -454,18 +461,20 @@ onBeforeUnmount(() => {
             type="primary"
             @click="handleDeploy"
           >
-            发 布
+            {{ $t('bpm.model.message.publish') }}
           </Button>
           <Button type="primary" @click="handleSave">
-            <span v-if="actionType === 'definition'">恢 复</span>
-            <span v-else>保 存</span>
+            <span v-if="actionType === 'definition'">{{
+              $t('bpm.model.message.restore')
+            }}</span>
+            <span v-else>{{ $t('common.save') }}</span>
           </Button>
         </div>
       </div>
       <!-- 主体内容 -->
       <Card :body-style="{ padding: '10px' }" class="mb-4">
         <div class="mt-[50px]">
-          <!-- 第一步：基本信息 -->
+          <!-- {{ $t('bpm.model.step.basicInfo') }} -->
           <div v-if="currentStep === 0" class="mx-auto w-4/6">
             <BasicInfo
               v-model="formData"
@@ -475,7 +484,7 @@ onBeforeUnmount(() => {
               ref="basicInfoRef"
             />
           </div>
-          <!-- 第二步：表单设计  -->
+          <!-- {{ $t('bpm.model.step.formDesign') }} -->
           <div v-if="currentStep === 1" class="mx-auto w-4/6">
             <FormDesign
               v-model="formData"
@@ -484,14 +493,14 @@ onBeforeUnmount(() => {
             />
           </div>
 
-          <!-- 第三步：流程设计 -->
+          <!-- {{ $t('bpm.model.step.processDesign') }} -->
           <ProcessDesign
             v-if="currentStep === 2"
             v-model="formData"
             ref="processDesignRef"
           />
 
-          <!-- 第四步：更多设置 -->
+          <!-- {{ $t('bpm.model.step.extraSetting') }} -->
           <div v-if="currentStep === 3" class="mx-auto w-4/6">
             <ExtraSetting v-model="formData" ref="extraSettingRef" />
           </div>

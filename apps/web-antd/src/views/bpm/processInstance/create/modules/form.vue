@@ -15,6 +15,7 @@ import {
   createProcessInstance,
   getApprovalDetail as getApprovalDetailApi,
 } from '#/api/bpm/processInstance';
+import { $t } from '#/locales';
 import { router } from '#/router';
 import {
   BpmCandidateStrategyEnum,
@@ -71,7 +72,7 @@ const emit = defineEmits(['cancel']);
 const { closeCurrentTab } = useTabs();
 
 const getTitle = computed(() => {
-  return `流程表单 - ${props.selectProcessDefinition.name}`;
+  return `${$t('bpm.processInstance.create.processForm', [props.selectProcessDefinition.name])}`;
 });
 
 const detailForm = ref<ProcessFormData>({
@@ -83,7 +84,7 @@ const detailForm = ref<ProcessFormData>({
 /** 监听表单数据变化 */
 watch(
   () => detailForm.value.value,
-  (newVal) => {
+  () => {
     // 打印每个 rule 的 type 和 field
     detailForm.value.rule?.map((r: any) => ({
       type: r.type,
@@ -120,7 +121,9 @@ async function submitForm() {
       for (const userTask of startUserSelectTasks.value) {
         const assignees = startUserSelectAssignees.value[userTask.id];
         if (Array.isArray(assignees) && assignees.length === 0) {
-          message.warning(`请选择${userTask.name}的候选人`);
+          message.warning(
+            $t('bpm.processInstance.create.selectCandidate', [userTask.name]),
+          );
           return;
         }
       }
@@ -134,15 +137,15 @@ async function submitForm() {
       startUserSelectAssignees: startUserSelectAssignees.value,
     });
 
-    message.success('发起流程成功');
+    message.success($t('bpm.processInstance.create.submitSuccess'));
 
     // TODO @ziye：有告警哈；
     closeCurrentTab();
 
     await router.push({ path: '/bpm/task/my' });
   } catch (error) {
-    message.error('发起流程失败');
-    console.error('发起流程失败:', error);
+    message.error($t('bpm.processInstance.create.submitFailed'));
+    console.error($t('bpm.processInstance.create.submitFailed'), error);
   } finally {
     processInstanceStartLoading.value = false;
   }
@@ -228,7 +231,7 @@ async function getApprovalDetail(row: {
     });
 
     if (!data) {
-      message.error('查询不到审批详情信息！');
+      message.error($t('bpm.oa.leave.message.approvalDetailNotFound'));
       return;
     }
 
@@ -259,8 +262,11 @@ async function getApprovalDetail(row: {
       });
     }
   } catch (error) {
-    message.error('获取审批详情失败');
-    console.error('获取审批详情失败:', error);
+    message.error($t('bpm.oa.leave.message.approvalDetailNotFound'));
+    console.error(
+      $t('bpm.processInstance.message.getApprovalDetailFailed'),
+      error,
+    );
   }
 }
 
@@ -309,7 +315,8 @@ defineExpose({ initProcessInfo });
     <template #extra>
       <Space wrap>
         <Button plain type="default" @click="handleCancel">
-          <IconifyIcon icon="lucide:arrow-left" />&nbsp; 返回
+          <IconifyIcon icon="lucide:arrow-left" />&nbsp;
+          {{ $t('bpm.processInstance.create.back') }}
         </Button>
       </Space>
     </template>
@@ -318,7 +325,7 @@ defineExpose({ initProcessInfo });
       v-model:active-key="activeTab"
       class="flex flex-1 flex-col overflow-hidden"
     >
-      <Tabs.TabPane tab="表单填写" key="form">
+      <Tabs.TabPane :tab="$t('bpm.processInstance.tab.formFill')" key="form">
         <Row :gutter="[48, 16]" class="pt-4">
           <Col
             :xs="24"
@@ -347,7 +354,11 @@ defineExpose({ initProcessInfo });
         </Row>
       </Tabs.TabPane>
 
-      <Tabs.TabPane tab="流程图" key="flow" class="flex flex-1 overflow-hidden">
+      <Tabs.TabPane
+        :tab="$t('bpm.processInstance.tab.processDiagram')"
+        key="flow"
+        class="flex flex-1 overflow-hidden"
+      >
         <div class="w-full">
           <ProcessInstanceSimpleViewer
             :simple-json="simpleJson"
@@ -370,11 +381,11 @@ defineExpose({ initProcessInfo });
               v-if="!processInstanceStartLoading"
               icon="lucide:check"
             />
-            发起
+            {{ $t('bpm.processInstance.create.submit') }}
           </Button>
           <Button plain type="default" @click="handleCancel">
             <IconifyIcon icon="lucide:x" />
-            取消
+            {{ $t('common.cancel') }}
           </Button>
         </Space>
       </template>

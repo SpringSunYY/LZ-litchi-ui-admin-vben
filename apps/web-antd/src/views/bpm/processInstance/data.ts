@@ -2,6 +2,7 @@ import type { VbenFormSchema } from '#/adapter/form';
 import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 
 import { getCategorySimpleList } from '#/api/bpm/category';
+import { $t } from '#/locales';
 import { DICT_TYPE, getDictOptions, getRangePickerDefaultProps } from '#/utils';
 
 /** 列表的搜索表单 */
@@ -21,29 +22,35 @@ export function useGridFormSchema(): VbenFormSchema[] {
     // },
     {
       fieldName: 'name',
-      label: '流程名称',
+      label: $t('bpm.processInstance.field.name'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入流程名称',
+        placeholder: $t('ui.placeholder.input', [
+          $t('bpm.processInstance.field.name'),
+        ]),
         allowClear: true,
       },
     },
     {
       fieldName: 'processDefinitionId',
-      label: '所属流程',
+      label: $t('bpm.processInstance.field.processDefinition'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入流程定义的编号',
+        placeholder: $t('ui.placeholder.input', [
+          $t('bpm.processInstance.field.processDefinition'),
+        ]),
         allowClear: true,
       },
     },
     // 流程分类
     {
       fieldName: 'category',
-      label: '流程分类',
+      label: $t('bpm.processInstance.field.category'),
       component: 'ApiSelect',
       componentProps: {
-        placeholder: '请输入流程分类',
+        placeholder: $t('ui.placeholder.select', [
+          $t('bpm.processInstance.field.category'),
+        ]),
         allowClear: true,
         api: getCategorySimpleList,
         labelField: 'name',
@@ -53,21 +60,23 @@ export function useGridFormSchema(): VbenFormSchema[] {
     // 流程状态
     {
       fieldName: 'status',
-      label: '流程状态',
+      label: $t('bpm.processInstance.field.status'),
       component: 'Select',
       componentProps: {
         options: getDictOptions(
           DICT_TYPE.BPM_PROCESS_INSTANCE_STATUS,
           'number',
         ),
-        placeholder: '请选择流程状态',
+        placeholder: $t('ui.placeholder.select', [
+          $t('bpm.processInstance.field.status'),
+        ]),
         allowClear: true,
       },
     },
     // 发起时间
     {
       fieldName: 'createTime',
-      label: '发起时间',
+      label: $t('bpm.processInstance.field.startTime'),
       component: 'RangePicker',
       componentProps: {
         ...getRangePickerDefaultProps(),
@@ -81,13 +90,13 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
   return [
     {
       field: 'name',
-      title: '流程名称',
+      title: $t('bpm.processInstance.field.name'),
       minWidth: 200,
       fixed: 'left',
     },
     {
       field: 'summary',
-      title: '摘要',
+      title: $t('bpm.processInstance.field.summary'),
       minWidth: 200,
       slots: {
         default: 'slot-summary',
@@ -96,7 +105,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
 
     {
       field: 'categoryName',
-      title: '流程分类',
+      title: $t('bpm.processInstance.field.categoryName'),
       minWidth: 120,
       fixed: 'left',
     },
@@ -104,7 +113,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
     // 流程状态
     {
       field: 'status',
-      title: '流程状态',
+      title: $t('bpm.processInstance.field.status'),
       minWidth: 250,
       slots: {
         default: 'slot-status',
@@ -113,18 +122,18 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
 
     {
       field: 'startTime',
-      title: '发起时间',
+      title: $t('bpm.processInstance.field.startTime'),
       minWidth: 180,
       formatter: 'formatDateTime',
     },
     {
       field: 'endTime',
-      title: '结束时间',
+      title: $t('bpm.processInstance.field.endTime'),
       minWidth: 180,
       formatter: 'formatDateTime',
     },
     {
-      title: '操作',
+      title: $t('common.operation'),
       width: 180,
       fixed: 'right',
       slots: { default: 'actions' },

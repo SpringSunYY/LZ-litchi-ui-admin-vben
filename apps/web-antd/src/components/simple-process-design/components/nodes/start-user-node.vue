@@ -10,9 +10,9 @@ import { IconifyIcon } from '@vben/icons';
 
 import { Input } from 'ant-design-vue';
 
+import { NODE_DEFAULT_TEXT } from '#/components/simple-process-design/locales/simple-process-design';
 import { BpmNodeTypeEnum } from '#/utils';
 
-import { NODE_DEFAULT_TEXT } from '../../consts';
 import { useNodeName2, useTaskStatusClass, useWatchNode } from '../../helpers';
 import StartUserNodeConfig from '../nodes-config/start-user-node-config.vue';
 import NodeHandler from './node-handler.vue';

@@ -14,6 +14,7 @@ import { Button } from 'ant-design-vue';
 
 import { useVbenVxeGrid } from '#/adapter/vxe-table';
 import { getTaskListByProcessInstanceId } from '#/api/bpm/task';
+import { $t } from '#/locales';
 import { DICT_TYPE, setConfAndFields2 } from '#/utils';
 
 defineOptions({
@@ -29,12 +30,12 @@ const props = defineProps<{
 const columns = shallowRef([
   {
     field: 'name',
-    title: '审批节点',
+    title: $t('bpm.processInstance.detail.instanceId').replace('编号：', ''),
     minWidth: 150,
   },
   {
     field: 'approver',
-    title: '审批人',
+    title: $t('bpm.task.manager.field.approver'),
     slots: {
       default: ({ row }: { row: BpmTaskApi.TaskManagerVO }) => {
         return row.assigneeUser?.nickname || row.ownerUser?.nickname;
@@ -44,19 +45,19 @@ const columns = shallowRef([
   },
   {
     field: 'createTime',
-    title: '开始时间',
+    title: $t('bpm.processInstance.field.startTime'),
     formatter: 'formatDateTime',
     minWidth: 180,
   },
   {
     field: 'endTime',
-    title: '结束时间',
+    title: $t('bpm.processInstance.field.endTime'),
     formatter: 'formatDateTime',
     minWidth: 180,
   },
   {
     field: 'status',
-    title: '审批状态',
+    title: $t('bpm.task.done.field.approvalStatus'),
     minWidth: 150,
     cellRender: {
       name: 'CellDict',
@@ -65,7 +66,7 @@ const columns = shallowRef([
   },
   {
     field: 'reason',
-    title: '审批建议',
+    title: $t('bpm.task.done.field.approvalSuggestion'),
     slots: {
       default: 'slot-reason',
     },
@@ -73,7 +74,7 @@ const columns = shallowRef([
   },
   {
     field: 'durationInMillis',
-    title: '耗时',
+    title: $t('bpm.task.done.field.duration'),
     minWidth: 180,
     formatter: 'formatPast2',
   },
@@ -170,7 +171,7 @@ async function showFormDetail(row: BpmTaskApi.TaskManagerVO): Promise<void> {
 
 // 表单查看模态框
 const [Modal, modalApi] = useVbenModal({
-  title: '查看表单',
+  title: $t('bpm.operation.formTitle'),
   footer: false,
 });
 
@@ -201,7 +202,7 @@ defineExpose({
             class="ml-1"
           >
             <IconifyIcon icon="ep:document" />
-            <span class="!ml-[2px] text-[12px]">查看表单</span>
+            {{ $t('bpm.operation.viewForm') }}
           </Button>
         </div>
       </template>

@@ -11,6 +11,9 @@ import {
   TypographyText,
 } from 'ant-design-vue';
 
+import { getSimpleProcessDesignLocale } from '#/components/simple-process-design/locales/simple-process-design';
+import { $t } from '#/locales';
+
 import HttpRequestParamSetting from './http-request-param-setting.vue';
 
 const props = defineProps({
@@ -37,17 +40,19 @@ const configForm = computed({
   },
 });
 
+const locale = getSimpleProcessDesignLocale();
+
 const taskListener = ref([
   {
-    name: '创建任务',
+    name: $t('bpm.simpleProcessDesign.action.listenerCreate'),
     type: 'Create',
   },
   {
-    name: '指派任务执行人员',
+    name: $t('bpm.simpleProcessDesign.action.listenerAssign'),
     type: 'Assign',
   },
   {
-    name: '完成任务',
+    name: $t('bpm.simpleProcessDesign.action.listenerComplete'),
     type: 'Complete',
   },
 ]);
@@ -74,25 +79,27 @@ defineExpose({ validate });
       <FormItem>
         <Switch
           v-model:checked="configForm[`task${listener.type}ListenerEnable`]"
-          checked-children="开启"
-          un-checked-children="关闭"
+          :checked-children="locale.switch.on"
+          :un-checked-children="locale.switch.off"
         />
       </FormItem>
       <div v-if="configForm[`task${listener.type}ListenerEnable`]">
         <FormItem>
           <Alert
-            message="仅支持 POST 请求，以请求体方式接收参数"
+            :message="$t('bpm.simpleProcessDesign.trigger.onlySupportPost')"
             type="warning"
             show-icon
             :closable="false"
           />
         </FormItem>
         <FormItem
-          label="请求地址"
+          :label="$t('bpm.simpleProcessDesign.placeholder.requestAddress')"
           :name="`task${listener.type}ListenerPath`"
           :rules="{
             required: true,
-            message: '请求地址不能为空',
+            message: $t(
+              'bpm.simpleProcessDesign.placeholder.requestAddressCannotEmpty',
+            ),
             trigger: ['blur', 'change'],
           }"
         >

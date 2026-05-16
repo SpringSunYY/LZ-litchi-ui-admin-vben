@@ -2,6 +2,7 @@ import type { VbenFormSchema } from '#/adapter/form';
 import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 
 import { z } from '#/adapter/form';
+import { $t } from '#/locales';
 import { CommonStatusEnum, DICT_TYPE, getDictOptions } from '#/utils';
 
 /** 新增/修改的表单 */
@@ -17,16 +18,16 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'name',
-      label: '表单名称',
+      label: $t('bpm.form.field.name'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入表单名称',
+        placeholder: $t('ui.placeholder.input', [$t('bpm.form.field.name')]),
       },
       rules: 'required',
     },
     {
       fieldName: 'status',
-      label: '状态',
+      label: $t('bpm.form.field.status'),
       component: 'RadioGroup',
       componentProps: {
         options: getDictOptions(DICT_TYPE.COMMON_STATUS, 'number'),
@@ -37,10 +38,10 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'remark',
-      label: '备注',
+      label: $t('bpm.form.field.remark'),
       component: 'Textarea',
       componentProps: {
-        placeholder: '请输入备注',
+        placeholder: $t('ui.placeholder.input', [$t('bpm.form.field.remark')]),
       },
     },
   ];
@@ -51,10 +52,10 @@ export function useGridFormSchema(): VbenFormSchema[] {
   return [
     {
       fieldName: 'name',
-      label: '表单名称',
+      label: $t('bpm.form.field.name'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入表单名称',
+        placeholder: $t('ui.placeholder.input', [$t('bpm.form.field.name')]),
         allowClear: true,
       },
     },
@@ -66,17 +67,17 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
   return [
     {
       field: 'id',
-      title: '编号',
+      title: $t('bpm.form.field.id'),
       minWidth: 100,
     },
     {
       field: 'name',
-      title: '表单名称',
+      title: $t('bpm.form.field.name'),
       minWidth: 200,
     },
     {
       field: 'status',
-      title: '状态',
+      title: $t('bpm.form.field.status'),
       minWidth: 200,
       cellRender: {
         name: 'CellDict',
@@ -85,17 +86,17 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
     },
     {
       field: 'remark',
-      title: '备注',
+      title: $t('bpm.form.field.remark'),
       minWidth: 200,
     },
     {
       field: 'createTime',
-      title: '创建时间',
+      title: $t('bpm.form.field.createTime'),
       minWidth: 180,
       formatter: 'formatDateTime',
     },
     {
-      title: '操作',
+      title: $t('common.operation'),
       width: 240,
       fixed: 'right',
       slots: { default: 'actions' },

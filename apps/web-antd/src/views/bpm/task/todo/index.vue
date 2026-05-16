@@ -2,7 +2,7 @@
 import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 import type { BpmTaskApi } from '#/api/bpm/task';
 
-import {  Page } from '@vben/common-ui';
+import { Page } from '@vben/common-ui';
 
 import { ACTION_ICON, TableAction, useVbenVxeGrid } from '#/adapter/vxe-table';
 import { getTaskTodoPage } from '#/api/bpm/task';
@@ -59,12 +59,12 @@ const [Grid] = useVbenVxeGrid({
 
 <template>
   <Page auto-content-height>
-    <Grid table-title="待办任务">
+    <Grid :table-title="$t('bpm.task.todo.list')">
       <template #actions="{ row }">
         <TableAction
           :actions="[
             {
-              label: '办理',
+              label: $t('bpm.task.todo.action.handle'),
               type: 'link',
               icon: ACTION_ICON.VIEW,
               auth: ['bpm:task:query'],

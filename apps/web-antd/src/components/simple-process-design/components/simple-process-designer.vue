@@ -22,9 +22,11 @@ import { getSimpleDeptList } from '#/api/system/dept';
 import { getSimplePostList } from '#/api/system/post';
 import { getSimpleRoleList } from '#/api/system/role';
 import { getSimpleUserList } from '#/api/system/user';
+import { NODE_DEFAULT_TEXT } from '#/components/simple-process-design/locales/simple-process-design';
+import { $t } from '#/locales';
 import { BpmModelFormType, BpmNodeTypeEnum } from '#/utils';
 
-import { NODE_DEFAULT_TEXT, NodeId } from '../consts';
+import { NodeId } from '../consts';
 import SimpleProcessModel from './simple-process-model.vue';
 
 defineOptions({
@@ -111,6 +113,7 @@ provide('startUserIds', props.startUserIds);
 provide('startDeptIds', props.startDeptIds);
 provide('tasks', []);
 provide('processInstance', {});
+
 const processNodeTree = ref<SimpleFlowNode | undefined>();
 provide('processNodeTree', processNodeTree);
 
@@ -123,13 +126,13 @@ const [ErrorModal, errorModalApi] = useVbenModal({
 function updateModel() {
   if (!processNodeTree.value) {
     processNodeTree.value = {
-      name: '发起人',
+      name: $t('bpm.simpleProcessDesign.node.startUser'),
       type: BpmNodeTypeEnum.START_USER_NODE,
       id: NodeId.START_USER_NODE_ID,
-      showText: '默认配置',
+      showText: $t('bpm.simpleProcessDesign.action.defaultConfig'),
       childNode: {
         id: NodeId.END_EVENT_NODE_ID,
-        name: '结束',
+        name: $t('bpm.simpleProcessDesign.node.endEvent'),
         type: BpmNodeTypeEnum.END_EVENT_NODE,
       },
     };
@@ -235,8 +238,13 @@ defineExpose({ validate });
       :readonly="false"
       @save="saveSimpleFlowModel"
     />
-    <ErrorModal title="流程设计校验不通过" class="w-[40%]">
-      <div class="mb-2 text-base">以下节点配置不完善，请修改相关配置</div>
+    <ErrorModal
+      :title="$t('bpm.simpleProcessDesign.action.nodeConfigIncomplete')"
+      class="w-[40%]"
+    >
+      <div class="mb-2 text-base">
+        {{ $t('bpm.simpleProcessDesign.action.nodeConfigIncomplete') }}
+      </div>
       <div
         class="mb-3 rounded-md bg-gray-100 p-2 text-sm"
         v-for="(item, index) in errorModalApi.getData()"
@@ -245,7 +253,9 @@ defineExpose({ validate });
         {{ item.name }} : {{ NODE_DEFAULT_TEXT.get(item.type) }}
       </div>
       <template #footer>
-        <Button type="primary" @click="errorModalApi.close()">知道了</Button>
+        <Button type="primary" @click="errorModalApi.close()">
+          {{ $t('common.confirm') }}
+        </Button>
       </template>
     </ErrorModal>
   </div>

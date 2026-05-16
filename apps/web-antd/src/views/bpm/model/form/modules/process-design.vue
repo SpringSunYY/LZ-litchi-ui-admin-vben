@@ -3,6 +3,7 @@ import type { Ref } from 'vue';
 
 import { computed, inject, nextTick, ref } from 'vue';
 
+import { $t } from '#/locales';
 import { BpmModelType } from '#/utils';
 
 // TODO BPM 流程模型设计器 BpmModelEditor 待整合
@@ -19,13 +20,13 @@ const simpleDesign = ref();
 async function validate() {
   // 获取最新的流程数据
   if (!processData.value) {
-    throw new Error('请设计流程');
+    throw new Error($t('bpm.model.message.designProcess'));
   }
   if (modelData.value.type === BpmModelType.SIMPLE) {
     // 简易设计器校验
     const validateResult = await simpleDesign.value?.validateConfig();
     if (!validateResult) {
-      throw new Error('请完善设计配置');
+      throw new Error($t('bpm.model.message.completeDesignConfig'));
     }
   }
   return true;

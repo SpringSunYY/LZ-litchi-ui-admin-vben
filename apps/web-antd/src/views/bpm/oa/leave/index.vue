@@ -11,6 +11,7 @@ import { message, Textarea } from 'ant-design-vue';
 import { ACTION_ICON, TableAction, useVbenVxeGrid } from '#/adapter/vxe-table';
 import { getLeavePage } from '#/api/bpm/oa/leave';
 import { cancelProcessInstanceByStartUser } from '#/api/bpm/processInstance';
+import { $t } from '#/locales';
 import { router } from '#/router';
 
 import { GridFormSchema, useGridColumns } from './data';
@@ -70,27 +71,32 @@ function handleCancel(row: BpmOALeaveApi.LeaveVO) {
         if (scope.value) {
           try {
             await cancelProcessInstanceByStartUser(row.id, scope.value);
-            message.success('取消成功');
+            message.success($t('bpm.oa.leave.message.cancelSuccess'));
             onRefresh();
           } catch {
             return false;
           }
         } else {
-          message.error('请输入取消原因');
+          message.error($t('bpm.oa.leave.message.cancelReasonEmpty'));
           return false;
         }
       }
     },
     component: () => {
       return h(Textarea, {
-        placeholder: '请输入取消原因',
+        placeholder: $t('bpm.processInstance.message.cancelReasonPlaceholder'),
         allowClear: true,
         rows: 2,
-        rules: [{ required: true, message: '请输入取消原因' }],
+        rules: [
+          {
+            required: true,
+            message: $t('bpm.oa.leave.message.cancelReasonEmpty'),
+          },
+        ],
       });
     },
-    content: '请输入取消原因',
-    title: '取消流程',
+    content: $t('bpm.oa.leave.message.cancelReasonEmpty'),
+    title: $t('bpm.processInstance.message.cancelProcess'),
     modelPropName: 'value',
   });
 }
@@ -111,13 +117,12 @@ function onRefresh() {
 
 <template>
   <Page auto-content-height>
-
-    <Grid table-title="请假列表">
+    <Grid :table-title="$t('bpm.oa.leave.list')">
       <template #toolbar-tools>
         <TableAction
           :actions="[
             {
-              label: '发起请假',
+              label: $t('bpm.oa.leave.action.create'),
               type: 'primary',
               icon: ACTION_ICON.ADD,
               auth: ['bpm:oa-leave:create'],
@@ -130,27 +135,27 @@ function onRefresh() {
         <TableAction
           :actions="[
             {
-              label: $t('common.detail'),
+              label: $t('bpm.oa.leave.action.detail'),
               type: 'link',
               icon: ACTION_ICON.VIEW,
               auth: ['bpm:oa-leave:query'],
               onClick: handleDetail.bind(null, row),
             },
             {
-              label: '审批进度',
+              label: $t('bpm.oa.leave.action.progress'),
               type: 'link',
               icon: ACTION_ICON.VIEW,
               auth: ['bpm:oa-leave:query'],
               onClick: handleProgress.bind(null, row),
             },
             {
-              label: '取消',
+              label: $t('bpm.oa.leave.action.cancel'),
               type: 'link',
               danger: true,
               icon: ACTION_ICON.DELETE,
               auth: ['bpm:user-group:query'],
               popConfirm: {
-                title: '取消流程',
+                title: $t('bpm.processInstance.message.cancelProcess'),
                 confirm: handleCancel.bind(null, row),
               },
             },

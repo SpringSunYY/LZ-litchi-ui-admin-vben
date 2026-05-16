@@ -5,7 +5,7 @@ import type { BpmFormApi } from '#/api/bpm/form';
 import { watch } from 'vue';
 import { useRoute } from 'vue-router';
 
-import {  Page, useVbenModal } from '@vben/common-ui';
+import { Page, useVbenModal } from '@vben/common-ui';
 import { $t } from '@vben/locales';
 
 import { message } from 'ant-design-vue';
@@ -131,14 +131,13 @@ watch(
 
 <template>
   <Page auto-content-height>
-
     <DetailModal />
-    <Grid table-title="流程表单">
+    <Grid :table-title="$t('bpm.form.list')">
       <template #toolbar-tools>
         <TableAction
           :actions="[
             {
-              label: $t('ui.actionTitle.create', ['流程表单']),
+              label: $t('ui.actionTitle.create', [$t('bpm.form.form')]),
               type: 'primary',
               icon: ACTION_ICON.ADD,
               auth: ['bpm:form:create'],

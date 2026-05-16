@@ -21,8 +21,8 @@ const emit = defineEmits(['success']);
 const formData = ref<BpmUserGroupApi.UserGroupVO>();
 const getTitle = computed(() => {
   return formData.value?.id
-    ? $t('ui.actionTitle.edit', ['用户分组'])
-    : $t('ui.actionTitle.create', ['用户分组']);
+    ? $t('ui.actionTitle.edit', [$t('bpm.group.group')])
+    : $t('ui.actionTitle.create', [$t('bpm.group.group')]);
 });
 
 const [Form, formApi] = useVbenForm({

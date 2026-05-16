@@ -5,6 +5,8 @@ import type { SimpleFlowNode } from '../../consts';
 
 import { inject, ref } from 'vue';
 
+import { $t } from '#/locales';
+
 import { useTaskStatusClass, useWatchNode } from '../../helpers';
 
 defineOptions({ name: 'EndEventNode' });
@@ -39,7 +41,11 @@ function nodeClick() {
       :class="`${useTaskStatusClass(currentNode?.activityStatus)}`"
       @click="nodeClick"
     >
-      <span class="node-fixed-name" title="结束">结束</span>
+      <span
+        class="node-fixed-name"
+        :title="$t('bpm.simpleProcessDesign.node.endEvent')"
+        >{{ $t('bpm.simpleProcessDesign.node.endEvent') }}
+      </span>
     </div>
   </div>
   <!-- TODO 审批信息 -->

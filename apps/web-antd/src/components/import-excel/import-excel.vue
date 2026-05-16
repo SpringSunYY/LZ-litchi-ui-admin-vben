@@ -76,7 +76,7 @@ async function handleDownload() {
 </script>
 
 <template>
-  <Modal :title="title" :class="width">
+  <Modal :title="title" :width="width">
     <Form class="mx-4">
       <template #file>
         <div class="w-full">

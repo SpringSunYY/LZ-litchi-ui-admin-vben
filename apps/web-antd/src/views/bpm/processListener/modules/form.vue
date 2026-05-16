@@ -21,8 +21,8 @@ const emit = defineEmits(['success']);
 const formData = ref<BpmProcessListenerApi.ProcessListenerVO>();
 const getTitle = computed(() => {
   return formData.value?.id
-    ? $t('ui.actionTitle.edit', ['流程监听器'])
-    : $t('ui.actionTitle.create', ['流程监听器']);
+    ? $t('ui.actionTitle.edit', [$t('bpm.processListener.processListener')])
+    : $t('ui.actionTitle.create', [$t('bpm.processListener.processListener')]);
 });
 
 const [Form, formApi] = useVbenForm({

@@ -2,7 +2,13 @@ import type { VbenFormSchema } from '#/adapter/form';
 import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 
 import { z } from '#/adapter/form';
-import { CommonStatusEnum, DICT_TYPE, getDictOptions } from '#/utils';
+import { $t } from '#/locales';
+import {
+  CommonStatusEnum,
+  DICT_TYPE,
+  getDictOptions,
+  getRangePickerDefaultProps,
+} from '#/utils';
 
 /** 新增/修改的表单 */
 export function useFormSchema(): VbenFormSchema[] {
@@ -17,16 +23,18 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'name',
-      label: '名字',
+      label: $t('bpm.processExpression.field.name'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入名字',
+        placeholder: $t('ui.placeholder.input', [
+          $t('bpm.processExpression.field.name'),
+        ]),
       },
       rules: 'required',
     },
     {
       fieldName: 'status',
-      label: '状态',
+      label: $t('bpm.processExpression.field.status'),
       component: 'RadioGroup',
       componentProps: {
         options: getDictOptions(DICT_TYPE.COMMON_STATUS, 'number'),
@@ -37,10 +45,12 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'expression',
-      label: '表达式',
+      label: $t('bpm.processExpression.field.expression'),
       component: 'Textarea',
       componentProps: {
-        placeholder: '请输入表达式',
+        placeholder: $t('ui.placeholder.input', [
+          $t('bpm.processExpression.field.expression'),
+        ]),
       },
       rules: 'required',
     },
@@ -52,31 +62,33 @@ export function useGridFormSchema(): VbenFormSchema[] {
   return [
     {
       fieldName: 'name',
-      label: '名字',
+      label: $t('bpm.processExpression.field.name'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入名字',
+        placeholder: $t('ui.placeholder.input', [
+          $t('bpm.processExpression.field.name'),
+        ]),
         allowClear: true,
       },
     },
     {
       fieldName: 'status',
-      label: '状态',
+      label: $t('bpm.processExpression.field.status'),
       component: 'Select',
       componentProps: {
         options: getDictOptions(DICT_TYPE.COMMON_STATUS, 'number'),
-        placeholder: '请选择状态',
+        placeholder: $t('ui.placeholder.select', [
+          $t('bpm.processExpression.field.status'),
+        ]),
         allowClear: true,
       },
     },
     {
       fieldName: 'createTime',
-      label: '创建时间',
+      label: $t('bpm.processExpression.field.createTime'),
       component: 'RangePicker',
       componentProps: {
-        placeholder: ['开始时间', '结束时间'],
-        valueFormat: 'YYYY-MM-DD HH:mm:ss',
-        allowClear: true,
+        ...getRangePickerDefaultProps(),
       },
     },
   ];
@@ -87,18 +99,18 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
   return [
     {
       field: 'id',
-      title: '编号',
+      title: $t('bpm.processExpression.field.id'),
       minWidth: 100,
     },
     {
       field: 'name',
-      title: '名字',
+      title: $t('bpm.processExpression.field.name'),
       minWidth: 200,
     },
 
     {
       field: 'status',
-      title: '状态',
+      title: $t('bpm.processExpression.field.status'),
       minWidth: 100,
       cellRender: {
         name: 'CellDict',
@@ -107,17 +119,17 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
     },
     {
       field: 'expression',
-      title: '表达式',
+      title: $t('bpm.processExpression.field.expression'),
       minWidth: 200,
     },
     {
       field: 'createTime',
-      title: '创建时间',
+      title: $t('bpm.processExpression.field.createTime'),
       minWidth: 180,
       formatter: 'formatDateTime',
     },
     {
-      title: '操作',
+      title: $t('common.operation'),
       width: 180,
       fixed: 'right',
       slots: { default: 'actions' },

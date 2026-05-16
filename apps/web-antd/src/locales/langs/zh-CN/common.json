@@ -36,5 +36,17 @@
   "forceLogout": "强退",
   "expand": "展开",
   "collapse": "收缩",
-  "append": "新增下级"
+  "append": "新增下级",
+  "save": "保存",
+  "copySuffix": "副本",
+  "none": "无",
+  "initiator": "发起人",
+  "startTime": "发起时间",
+  "stepTip": "请先完善当前步骤必填信息",
+  "selectUser": "选择用户",
+  "preciseToDay": "精确到日",
+  "preciseToHour": "精确到时",
+  "preciseToMinute": "精确到分",
+  "preciseToSecond": "精确到秒",
+  "etc": "等"
 }

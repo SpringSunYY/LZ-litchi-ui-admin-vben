@@ -7,6 +7,7 @@ import { h } from 'vue';
 import dayjs from 'dayjs';
 
 import { DictTag } from '#/components/dict-tag';
+import { $t } from '#/locales';
 import { DICT_TYPE, getDictOptions, getRangePickerDefaultProps } from '#/utils';
 
 /** 新增/修改的表单 */
@@ -22,22 +23,25 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'type',
-      label: '请假类型',
+      label: $t('bpm.oa.leave.field.type'),
       component: 'Select',
       componentProps: {
-        placeholder: '请选择请假类型',
+        placeholder: $t('ui.placeholder.select', [
+          $t('bpm.oa.leave.field.type'),
+        ]),
         options: getDictOptions(DICT_TYPE.BPM_OA_LEAVE_TYPE, 'number'),
         allowClear: true,
       },
       rules: 'required',
     },
-
     {
       fieldName: 'startTime',
-      label: '开始时间',
+      label: $t('bpm.oa.leave.field.startTime'),
       component: 'DatePicker',
       componentProps: {
-        placeholder: '请选择开始时间',
+        placeholder: $t('ui.placeholder.date', [
+          $t('bpm.oa.leave.field.startTime'),
+        ]),
         showTime: true,
         valueFormat: 'x',
         format: 'YYYY-MM-DD HH:mm:ss',
@@ -46,10 +50,12 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'endTime',
-      label: '结束时间',
+      label: $t('bpm.oa.leave.field.endTime'),
       component: 'DatePicker',
       componentProps: {
-        placeholder: '请选择结束时间',
+        placeholder: $t('ui.placeholder.date', [
+          $t('bpm.oa.leave.field.endTime'),
+        ]),
         showTime: true,
         valueFormat: 'x',
         format: 'YYYY-MM-DD HH:mm:ss',
@@ -58,10 +64,12 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'reason',
-      label: '原因',
+      label: $t('bpm.oa.leave.field.reason'),
       component: 'Textarea',
       componentProps: {
-        placeholder: '请输入原因',
+        placeholder: $t('ui.placeholder.input', [
+          $t('bpm.oa.leave.field.reason'),
+        ]),
       },
       rules: 'required',
     },
@@ -73,20 +81,24 @@ export function GridFormSchema(): VbenFormSchema[] {
   return [
     {
       fieldName: 'type',
-      label: '请假类型',
+      label: $t('bpm.oa.leave.field.type'),
       component: 'Select',
       componentProps: {
-        placeholder: '请选择请假类型',
+        placeholder: $t('ui.placeholder.select', [
+          $t('bpm.oa.leave.field.type'),
+        ]),
         options: getDictOptions(DICT_TYPE.BPM_OA_LEAVE_TYPE, 'number'),
         allowClear: true,
       },
     },
     {
       fieldName: 'status',
-      label: '审批结果',
+      label: $t('bpm.processInstance.field.status'),
       component: 'Select',
       componentProps: {
-        placeholder: '请选择审批结果',
+        placeholder: $t('ui.placeholder.select', [
+          $t('bpm.processInstance.field.status'),
+        ]),
         options: getDictOptions(
           DICT_TYPE.BPM_PROCESS_INSTANCE_STATUS,
           'number',
@@ -96,15 +108,17 @@ export function GridFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'reason',
-      label: '原因',
+      label: $t('bpm.oa.leave.field.reason'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入原因',
+        placeholder: $t('ui.placeholder.input', [
+          $t('bpm.oa.leave.field.reason'),
+        ]),
       },
     },
     {
       fieldName: 'createTime',
-      label: '创建时间',
+      label: $t('bpm.oa.leave.field.createTime'),
       component: 'RangePicker',
       componentProps: {
         ...getRangePickerDefaultProps(),
@@ -118,12 +132,12 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
   return [
     {
       field: 'id',
-      title: '申请编号',
+      title: $t('bpm.oa.leave.field.id'),
       minWidth: 100,
     },
     {
       field: 'status',
-      title: '状态',
+      title: $t('bpm.oa.leave.field.status'),
       minWidth: 100,
       cellRender: {
         name: 'CellDict',
@@ -132,19 +146,19 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
     },
     {
       field: 'startTime',
-      title: '开始时间',
+      title: $t('bpm.oa.leave.field.startTime'),
       minWidth: 180,
       formatter: 'formatDateTime',
     },
     {
       field: 'endTime',
-      title: '结束时间',
+      title: $t('bpm.oa.leave.field.endTime'),
       minWidth: 180,
       formatter: 'formatDateTime',
     },
     {
       field: 'type',
-      title: '请假类型',
+      title: $t('bpm.oa.leave.field.type'),
       minWidth: 100,
       cellRender: {
         name: 'CellDict',
@@ -153,17 +167,17 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
     },
     {
       field: 'reason',
-      title: '原因',
+      title: $t('bpm.oa.leave.field.reason'),
       minWidth: 150,
     },
     {
       field: 'createTime',
-      title: '申请时间',
+      title: $t('bpm.oa.leave.field.createTime'),
       minWidth: 180,
       formatter: 'formatDateTime',
     },
     {
-      title: '操作',
+      title: $t('common.operation'),
       width: 180,
       fixed: 'right',
       slots: { default: 'actions' },
@@ -175,7 +189,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
 export function useDetailFormSchema(): DescriptionItemSchema[] {
   return [
     {
-      label: '请假类型',
+      label: $t('bpm.oa.leave.field.type'),
       field: 'type',
       content: (data) =>
         h(DictTag, {
@@ -184,17 +198,17 @@ export function useDetailFormSchema(): DescriptionItemSchema[] {
         }),
     },
     {
-      label: '开始时间',
+      label: $t('bpm.oa.leave.field.startTime'),
       field: 'startTime',
       content: (data) => dayjs(data?.startTime).format('YYYY-MM-DD HH:mm:ss'),
     },
     {
-      label: '结束时间',
+      label: $t('bpm.oa.leave.field.endTime'),
       field: 'endTime',
       content: (data) => dayjs(data?.endTime).format('YYYY-MM-DD HH:mm:ss'),
     },
     {
-      label: '原因',
+      label: $t('bpm.oa.leave.field.reason'),
       field: 'reason',
     },
   ];

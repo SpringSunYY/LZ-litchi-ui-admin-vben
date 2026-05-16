@@ -21,8 +21,10 @@ const emit = defineEmits(['success']);
 const formData = ref<BpmProcessExpressionApi.ProcessExpressionVO>();
 const getTitle = computed(() => {
   return formData.value?.id
-    ? $t('ui.actionTitle.edit', ['流程表达式'])
-    : $t('ui.actionTitle.create', ['流程表达式']);
+    ? $t('ui.actionTitle.edit', [$t('bpm.processExpression.processExpression')])
+    : $t('ui.actionTitle.create', [
+        $t('bpm.processExpression.processExpression'),
+      ]);
 });
 
 const [Form, formApi] = useVbenForm({

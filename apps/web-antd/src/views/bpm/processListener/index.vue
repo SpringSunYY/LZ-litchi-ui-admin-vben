@@ -2,7 +2,7 @@
 import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 import type { BpmProcessListenerApi } from '#/api/bpm/processListener';
 
-import {  Page, useVbenModal } from '@vben/common-ui';
+import { Page, useVbenModal } from '@vben/common-ui';
 
 import { message } from 'ant-design-vue';
 
@@ -87,12 +87,14 @@ const [Grid, gridApi] = useVbenVxeGrid({
 <template>
   <Page auto-content-height>
     <FormModal @success="onRefresh" />
-    <Grid table-title="流程监听器">
+    <Grid :table-title="$t('bpm.processListener.list')">
       <template #toolbar-tools>
         <TableAction
           :actions="[
             {
-              label: $t('ui.actionTitle.create', ['流程监听器']),
+              label: $t('ui.actionTitle.create', [
+                $t('bpm.processListener.processListener'),
+              ]),
               type: 'primary',
               icon: ACTION_ICON.ADD,
               auth: ['bpm:process-listener:create'],

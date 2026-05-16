@@ -6,6 +6,7 @@ import { useVbenModal } from '@vben/common-ui';
 import FormCreate from '@form-create/ant-design-vue';
 
 import { getFormDetail } from '#/api/bpm/form';
+import { $t } from '#/locales';
 import { setConfAndFields2 } from '#/utils';
 
 /** 详情 */
@@ -40,7 +41,7 @@ const [Modal, modalApi] = useVbenModal({
 <template>
   <Modal
     class="w-[40%]"
-    title="流程表单详情"
+    :title="$t('bpm.form.message.detail')"
     :body-style="{
       maxHeight: '100px',
     }"

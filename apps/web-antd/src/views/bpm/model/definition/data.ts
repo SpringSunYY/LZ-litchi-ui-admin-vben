@@ -1,6 +1,7 @@
 import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 import type { BpmProcessDefinitionApi } from '#/api/bpm/definition';
 
+import { $t } from '#/locales';
 import { DICT_TYPE } from '#/utils';
 
 /** 列表的字段 */
@@ -8,29 +9,29 @@ export function useGridColumns(): VxeTableGridOptions<BpmProcessDefinitionApi.Pr
   return [
     {
       field: 'id',
-      title: '定义编号',
+      title: $t('bpm.definition.field.id'),
       minWidth: 250,
     },
     {
       field: 'name',
-      title: '流程名称',
+      title: $t('bpm.definition.field.name'),
       minWidth: 150,
     },
     {
       field: 'icon',
-      title: '流程图标',
+      title: $t('bpm.definition.field.icon'),
       minWidth: 100,
       slots: { default: 'icon' },
     },
     {
       field: 'startUsers',
-      title: '可见范围',
+      title: $t('bpm.definition.field.startUsers'),
       minWidth: 100,
       slots: { default: 'startUsers' },
     },
     {
       field: 'modelType',
-      title: '流程类型',
+      title: $t('bpm.definition.field.modelType'),
       minWidth: 120,
       cellRender: {
         name: 'CellDict',
@@ -39,24 +40,24 @@ export function useGridColumns(): VxeTableGridOptions<BpmProcessDefinitionApi.Pr
     },
     {
       field: 'formType',
-      title: '表单信息',
+      title: $t('bpm.definition.field.formType'),
       minWidth: 150,
       slots: { default: 'formInfo' },
     },
     {
       field: 'version',
-      title: '流程版本',
+      title: $t('bpm.definition.field.version'),
       minWidth: 80,
       slots: { default: 'version' },
     },
     {
       field: 'deploymentTime',
-      title: '部署时间',
+      title: $t('bpm.definition.field.deploymentTime'),
       minWidth: 180,
       formatter: 'formatDateTime',
     },
     {
-      title: '操作',
+      title: $t('common.operation'),
       width: 120,
       fixed: 'right',
       slots: { default: 'actions' },

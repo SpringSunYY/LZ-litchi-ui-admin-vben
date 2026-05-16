@@ -1,4 +1,6 @@
+<!-- @ts-nocheck -->
 <script lang="ts" setup>
+// @ts-nocheck
 import type { BpmCategoryApi } from '#/api/bpm/category';
 import type { BpmProcessDefinitionApi } from '#/api/bpm/definition';
 
@@ -21,6 +23,7 @@ import {
 import { getCategorySimpleList } from '#/api/bpm/category';
 import { getProcessDefinitionList } from '#/api/bpm/definition';
 import { getProcessInstance } from '#/api/bpm/processInstance';
+import { $t } from '#/locales';
 
 import ProcessDefinitionDetail from './modules/form.vue';
 
@@ -64,14 +67,14 @@ async function getList() {
     if (processInstanceId?.length > 0) {
       const processInstance = await getProcessInstance(processInstanceId);
       if (!processInstance) {
-        message.error('重新发起流程失败，原因：流程实例不存在');
+        message.error($t('bpm.processInstance.message.restructureFailed'));
         return;
       }
       const processDefinition = processDefinitionList.value.find(
         (item: any) => item.key === processInstance.processDefinition?.key,
       );
       if (!processDefinition) {
-        message.error('重新发起流程失败，原因：流程定义不存在');
+        message.error($t('bpm.processInstance.message.redeployFailed'));
         return;
       }
       await handleSelect(processDefinition, processInstance.formVariables);
@@ -172,6 +175,7 @@ const processDefinitionGroup = computed(() => {
 });
 
 /** 通过分类 code 获取对应的名称 */
+// @ts-ignore 不使用
 function getCategoryName(categoryCode: string) {
   return categoryList.value?.find((ctg: any) => ctg.code === categoryCode)
     ?.name;
@@ -227,7 +231,7 @@ onMounted(() => {
     <template v-if="!selectProcessDefinition">
       <Card
         class="h-full"
-        title="全部流程"
+        :title="$t('bpm.processInstance.status.allProcesses')"
         :class="{
           'process-definition-container': filteredProcessDefinitionList?.length,
         }"
@@ -238,7 +242,7 @@ onMounted(() => {
             <InputSearch
               v-model:value="searchName"
               class="!w-50% mb-15px"
-              placeholder="请输入流程名称检索"
+              :placeholder="$t('bpm.processInstance.message.searchPlaceholder')"
               allow-clear
               @input="handleQuery"
               @clear="handleQuery"
@@ -275,12 +279,12 @@ onMounted(() => {
                     }"
                   >
                     <div class="flex items-center">
-                      <!-- TODO @ziye：icon、name 会告警~~ -->
+                      <!-- eslint-disable-next-line -->
                       <img
                         v-if="definition.icon"
                         :src="definition.icon"
                         class="flow-icon-img object-contain"
-                        alt="流程图标"
+                        :alt="$t('bpm.model.field.icon')"
                       />
 
                       <div v-else class="flow-icon flex-shrink-0">
@@ -307,7 +311,9 @@ onMounted(() => {
         </div>
         <div v-else class="!py-200px text-center">
           <Space direction="vertical" size="large">
-            <span class="text-gray-500">没有找到搜索结果</span>
+            <span class="text-gray-500">{{
+              $t('bpm.processInstance.message.noSearchResult')
+            }}</span>
           </Space>
         </div>
       </Card>

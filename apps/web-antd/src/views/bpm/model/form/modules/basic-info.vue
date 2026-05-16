@@ -25,6 +25,7 @@ import {
 
 import { DeptSelectModal, UserSelectModal } from '#/components/select-modal';
 import { ImageUpload } from '#/components/upload';
+import { $t } from '#/locales';
 import { DICT_TYPE, getBoolDictOptions, getIntDictOptions } from '#/utils';
 
 const props = defineProps({
@@ -68,13 +69,47 @@ const currentSelectType = ref<'manager' | 'start'>('start');
 const selectedUsers = ref<number[]>();
 
 const rules: Record<string, Rule[]> = {
-  name: [{ required: true, message: '流程名称不能为空', trigger: 'blur' }],
-  key: [{ required: true, message: '流程标识不能为空', trigger: 'blur' }],
-  category: [{ required: true, message: '流程分类不能为空', trigger: 'blur' }],
-  type: [{ required: true, message: '流程类型不能为空', trigger: 'blur' }],
-  visible: [{ required: true, message: '是否可见不能为空', trigger: 'blur' }],
+  name: [
+    {
+      required: true,
+      message: $t('bpm.model.basic.processNameEmpty'),
+      trigger: 'blur',
+    },
+  ],
+  key: [
+    {
+      required: true,
+      message: $t('bpm.model.basic.processKeyEmpty'),
+      trigger: 'blur',
+    },
+  ],
+  category: [
+    {
+      required: true,
+      message: $t('bpm.model.basic.processCategoryEmpty'),
+      trigger: 'blur',
+    },
+  ],
+  type: [
+    {
+      required: true,
+      message: $t('bpm.model.basic.processTypeEmpty'),
+      trigger: 'blur',
+    },
+  ],
+  visible: [
+    {
+      required: true,
+      message: $t('bpm.model.basic.visibleEmpty'),
+      trigger: 'blur',
+    },
+  ],
   managerUserIds: [
-    { required: true, message: '流程管理员不能为空', trigger: 'blur' },
+    {
+      required: true,
+      message: $t('bpm.model.basic.processManagerEmpty'),
+      trigger: 'blur',
+    },
   ],
 };
 
@@ -240,17 +275,23 @@ defineExpose({ validate });
       :wrapper-col="{ span: 20 }"
       class="mt-5"
     >
-      <Form.Item label="流程标识" name="key" class="mb-5">
+      <Form.Item
+        :label="$t('bpm.model.basic.processKey')"
+        name="key"
+        class="mb-5"
+      >
         <div class="flex items-center">
           <Input
             class="w-full"
             v-model:value="modelData.key"
             :disabled="!!modelData.id"
-            placeholder="请输入流程标识，以字母或下划线开头"
+            :placeholder="$t('bpm.model.basic.processKeyPlaceholder')"
           />
           <Tooltip
             :title="
-              modelData.id ? '流程标识不可修改！' : '新建后，流程标识不可修改！'
+              modelData.id
+                ? $t('bpm.model.basic.processKeyReadonly')
+                : $t('bpm.model.basic.processKeyUnchangeable')
             "
             placement="top"
           >
@@ -258,20 +299,32 @@ defineExpose({ validate });
           </Tooltip>
         </div>
       </Form.Item>
-      <Form.Item label="流程名称" name="name" class="mb-5">
+      <Form.Item
+        :label="$t('bpm.model.basic.processName')"
+        name="name"
+        class="mb-5"
+      >
         <Input
           v-model:value="modelData.name"
           :disabled="!!modelData.id"
           allow-clear
-          placeholder="请输入流程名称"
+          :placeholder="
+            $t('ui.placeholder.input', [$t('bpm.model.basic.processName')])
+          "
         />
       </Form.Item>
-      <Form.Item label="流程分类" name="category" class="mb-5">
+      <Form.Item
+        :label="$t('bpm.model.basic.processCategory')"
+        name="category"
+        class="mb-5"
+      >
         <Select
           class="w-full"
           v-model:value="modelData.category"
           allow-clear
-          placeholder="请选择流程分类"
+          :placeholder="
+            $t('ui.placeholder.select', [$t('bpm.model.basic.processCategory')])
+          "
         >
           <Select.Option
             v-for="category in categoryList"
@@ -282,13 +335,21 @@ defineExpose({ validate });
           </Select.Option>
         </Select>
       </Form.Item>
-      <Form.Item label="流程图标" class="mb-5">
+      <Form.Item :label="$t('bpm.model.basic.processIcon')" class="mb-5">
         <ImageUpload v-model:value="modelData.icon" module-type="bpm" />
       </Form.Item>
-      <Form.Item label="流程描述" name="description" class="mb-5">
+      <Form.Item
+        :label="$t('bpm.model.basic.processDesc')"
+        name="description"
+        class="mb-5"
+      >
         <Input.TextArea v-model:value="modelData.description" allow-clear />
       </Form.Item>
-      <Form.Item label="流程类型" name="type" class="mb-5">
+      <Form.Item
+        :label="$t('bpm.model.basic.processType')"
+        name="type"
+        class="mb-5"
+      >
         <Radio.Group v-model:value="modelData.type">
           <!-- TODO BPMN 流程类型需要整合，暂时禁用 -->
           <Radio
@@ -301,7 +362,11 @@ defineExpose({ validate });
           </Radio>
         </Radio.Group>
       </Form.Item>
-      <Form.Item label="是否可见" name="visible" class="mb-5">
+      <Form.Item
+        :label="$t('bpm.model.basic.visible')"
+        name="visible"
+        class="mb-5"
+      >
         <Radio.Group v-model:value="modelData.visible">
           <Radio
             v-for="(dict, index) in getBoolDictOptions(
@@ -314,15 +379,27 @@ defineExpose({ validate });
           </Radio>
         </Radio.Group>
       </Form.Item>
-      <Form.Item label="谁可以发起" name="startUserType" class="mb-5">
+      <Form.Item
+        :label="$t('bpm.model.basic.whoCanStart')"
+        name="startUserType"
+        class="mb-5"
+      >
         <Select
           v-model:value="modelData.startUserType"
-          placeholder="请选择谁可以发起"
+          :placeholder="
+            $t('ui.placeholder.select', [$t('bpm.model.basic.whoCanStart')])
+          "
           @change="handleStartUserTypeChange"
         >
-          <Select.Option :value="0">全员</Select.Option>
-          <Select.Option :value="1">指定人员</Select.Option>
-          <Select.Option :value="2">指定部门</Select.Option>
+          <Select.Option :value="0">
+            {{ $t('bpm.model.basic.all') }}
+          </Select.Option>
+          <Select.Option :value="1">
+            {{ $t('bpm.model.basic.designatedPerson') }}
+          </Select.Option>
+          <Select.Option :value="2">
+            {{ $t('bpm.model.basic.designatedDept') }}
+          </Select.Option>
         </Select>
         <div
           v-if="modelData.startUserType === 1"
@@ -359,7 +436,7 @@ defineExpose({ validate });
                 class="size-[18px]"
               />
             </template>
-            选择人员
+            {{ $t('bpm.model.basic.selectPerson') }}
           </Button>
         </div>
         <div
@@ -386,11 +463,15 @@ defineExpose({ validate });
             <template #icon>
               <Plus class="size-[18px]" />
             </template>
-            选择部门
+            {{ $t('bpm.model.basic.selectDept') }}
           </Button>
         </div>
       </Form.Item>
-      <Form.Item label="流程管理员" name="managerUserIds" class="mb-5">
+      <Form.Item
+        :label="$t('bpm.model.basic.processManager')"
+        name="managerUserIds"
+        class="mb-5"
+      >
         <div class="flex flex-wrap gap-1">
           <div
             v-for="user in selectedManagerUsers"
@@ -423,7 +504,7 @@ defineExpose({ validate });
                 class="size-[18px]"
               />
             </template>
-            选择人员
+            {{ $t('bpm.model.basic.selectPerson') }}
           </Button>
         </div>
       </Form.Item>
@@ -433,14 +514,14 @@ defineExpose({ validate });
     <UserSelectModalComp
       v-model:value="selectedUsers"
       :multiple="true"
-      title="选择用户"
+      :title="$t('common.selectUser')"
       @confirm="handleUserSelectConfirm"
       @closed="handleUserSelectClosed"
       @cancel="handleUserSelectCancel"
     />
     <!-- 部门选择对话框 -->
     <DeptSelectModalComp
-      title="发起人部门选择"
+      :title="$t('bpm.model.basic.selectDeptModalTitle')"
       :check-strictly="true"
       @confirm="handleDeptSelectConfirm"
     />
