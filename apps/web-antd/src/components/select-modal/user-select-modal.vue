@@ -34,6 +34,19 @@ interface DeptTreeNode {
 
 defineOptions({ name: 'UserSelectModal' });
 
+const props = withDefaults(
+  defineProps<{
+    cancelText?: string;
+    confirmText?: string;
+    title?: string;
+  }>(),
+  {
+    title: '选择用户',
+    confirmText: '确 定',
+    cancelText: '取 消',
+  },
+);
+
 const emit = defineEmits<{
   cancel: [];
   closed: [];
@@ -68,6 +81,11 @@ const [Modal, modalApi] = useVbenModal({
     }
     modalApi.lock();
     try {
+      // 设置标题
+      if (data.title) {
+        modalApi.setTitle(data.title);
+      }
+
       // 加载部门数据
       const deptData = await getSimpleDeptList();
       deptList.value = deptData;
@@ -391,7 +409,7 @@ function processDeptNode(node: any): DeptTreeNode {
 </script>
 
 <template>
-  <Modal class="w-[55%]" key="user-select-modal" :title="title">
+  <Modal class="w-[55%]" key="user-select-modal">
     <Row :gutter="[16, 16]">
       <Col :span="6">
         <div class="h-[580px] overflow-auto rounded border">
@@ -462,9 +480,9 @@ function processDeptNode(node: any): DeptTreeNode {
         :disabled="selectedUserIds.length === 0"
         @click="handleConfirm"
       >
-        {{ confirmText }}
+        {{ props.confirmText }}
       </Button>
-      <Button @click="handleCancel">{{ cancelText }}</Button>
+      <Button @click="handleCancel">{{ props.cancelText }}</Button>
     </template>
   </Modal>
 </template>

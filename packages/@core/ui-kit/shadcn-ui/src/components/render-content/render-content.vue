@@ -33,7 +33,7 @@ export default defineComponent({
           const result = [];
           for (const [i, line] of lines.entries()) {
             result.push(h('p', { key: i }, line));
-            // if (i < lines.length - 1) {
+            // if (i18n < lines.length - 1) {
             //   result.push(h('br'));
             // }
           }

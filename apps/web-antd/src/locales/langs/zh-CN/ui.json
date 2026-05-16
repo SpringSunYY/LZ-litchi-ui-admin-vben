@@ -54,7 +54,8 @@
   "placeholder": {
     "input": "请输入{0}",
     "select": "请选择{0}",
-    "date": "请选择{0}"
+    "date": "请选择{0}",
+    "placeholder": ""
   },
   "validate": {
     "email": "请输入正确的邮箱地址"
@@ -186,6 +187,9 @@
   },
   "select": {
     "dictPlaceholder": "请选择"
+  },
+  "selectToString": {
+    "placeholder": "请选择"
   },
   "dateRange": {
     "separator": "至",

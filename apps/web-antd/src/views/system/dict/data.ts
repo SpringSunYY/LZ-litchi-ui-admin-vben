@@ -209,6 +209,7 @@ export function useDataFormSchema(): VbenFormSchema[] {
       fieldName: 'label',
       label: $t('system.dict.dataField.label'),
       component: 'Input',
+      help: $t('system.dict.help.label'),
       componentProps: {
         placeholder: $t('ui.placeholder.input', [
           $t('system.dict.dataField.label'),
@@ -328,6 +329,7 @@ export function useDataGridColumns(): VxeTableGridOptions['columns'] {
     {
       field: 'label',
       title: $t('system.dict.dataField.label'),
+      slots: { default: 'label' },
     },
     {
       field: 'value',

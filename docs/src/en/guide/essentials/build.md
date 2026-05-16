@@ -37,7 +37,7 @@ After waiting for the build to succeed, visit `http://localhost:4173` to view th
 You can globally install a `serve` service on your computer, such as `live-server`,
 
 ```bash
-npm i -g live-server
+npm i18n -g live-server
 ```
 
 Then execute the `live-server` command in the `dist` directory to view the effect locally.

@@ -93,7 +93,8 @@
       "delete": "delete dict"
     },
     "help": {
-      "cssClass": "enter hex color code, e.g. #108ee9"
+      "cssClass": "enter hex color code, e.g. #108ee9",
+      "label": "you can fill in an i18n key or content. if the filled content does not use i18n or does not match an i18n key, the content will be displayed directly"
     }
   },
   "post": {

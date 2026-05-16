@@ -74,7 +74,7 @@ watch(
 // Select 模式的 options
 const selectOptions = computed(() =>
   props.options.map((item) => ({
-    label: item.label,
+    label: $t(item.label),
     value: String(item.value),
   })),
 );

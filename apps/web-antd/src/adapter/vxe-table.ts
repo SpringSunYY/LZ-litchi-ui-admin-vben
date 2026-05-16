@@ -20,8 +20,8 @@ import {
 import { Button, Image, Popconfirm, Switch } from 'ant-design-vue';
 
 import { DictTag } from '#/components/dict-tag';
-import { FilePreview } from '#/components/file-preview';
 import CellFileAndImages from '#/components/file-and-images/file-and-images-preview.vue';
+import { FilePreview } from '#/components/file-preview';
 import CellImage from '#/components/image/image-preview.vue';
 import JsonPreview from '#/components/json-preview/json-preview.vue';
 import CellLink from '#/components/link/link-preview.vue';
@@ -30,6 +30,7 @@ import { $t } from '#/locales';
 import { useVbenForm } from './form';
 
 import '#/adapter/style.css';
+import I18nDictTag from "#/components/i18n/i18n-dict-tag/i18n-dict-tag.vue";
 
 setupVbenVxeTable({
   configVxeTable: (vxeUI) => {
@@ -177,6 +178,22 @@ setupVbenVxeTable({
           return '';
         }
         return h(DictTag, {
+          type: props.type,
+          value: row[column.field],
+          separator: props.separator,
+          useOriginal: props.useOriginal,
+        });
+      },
+    }); // 表格配置项可以用 cellRender: { name: 'CellDict', props:{type: ''} },
+    // 支持单个值或多个值（separator 分隔），未匹配时显示原字符
+    vxeUI.renderer.add('CellI18nDict', {
+      renderTableDefault(renderOpts, params) {
+        const { props } = renderOpts;
+        const { column, row } = params;
+        if (!props?.type) {
+          return '';
+        }
+        return h(I18nDictTag, {
           type: props.type,
           value: row[column.field],
           separator: props.separator,

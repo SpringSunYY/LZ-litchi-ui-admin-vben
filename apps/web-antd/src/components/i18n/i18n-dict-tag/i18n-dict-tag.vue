@@ -3,6 +3,7 @@ import { computed, ref } from 'vue';
 
 import { Popover, Tag } from 'ant-design-vue';
 
+import { $t } from '#/locales';
 import { getDictObj } from '#/utils';
 
 interface DictTagProps {
@@ -88,7 +89,6 @@ const dictTags = computed(() => {
   const values = valueStr.includes(props.separator)
     ? valueStr.split(props.separator).map((v) => v.trim())
     : [valueStr];
-
   return values.map(getDictTagItem).filter(Boolean) as Array<{
     colorType: string;
     label: string;
@@ -122,7 +122,7 @@ const hiddenCount = computed(() => {
       :key="index"
       :color="isHexColor(item.colorType) ? item.colorType : item.colorType"
     >
-      {{ item.label }}
+      {{ $t(item.label) }}
     </Tag>
     <Popover
       v-if="showMore"
@@ -139,7 +139,7 @@ const hiddenCount = computed(() => {
               isHexColor(item.colorType) ? item.colorType : item.colorType
             "
           >
-            {{ item.label }}
+            {{ $t(item.label) }}
           </Tag>
         </div>
       </template>

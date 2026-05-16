@@ -54,7 +54,8 @@
   "placeholder": {
     "input": "Please enter {0}",
     "select": "Please select {0}",
-    "date": "Please select {0}"
+    "date": "Please select {0}",
+    "placeholder": ""
   },
   "validate": {
     "email": "Please enter a valid email address"
@@ -186,6 +187,9 @@
   },
   "select": {
     "dictPlaceholder": "Please select"
+  },
+  "selectToString": {
+    "placeholder": "Please select"
   },
   "dateRange": {
     "separator": "to",

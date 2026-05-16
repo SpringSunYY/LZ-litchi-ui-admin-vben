@@ -4,10 +4,10 @@ import type { SystemDictDataApi } from '#/api/system/dict/data';
 
 import { watch } from 'vue';
 
-import { useVbenModal } from '@vben/common-ui';
+import { useVbenModelDrawer } from '@vben/common-ui';
 import { downloadFileFromBlobPart } from '@vben/utils';
 
-import { message } from 'ant-design-vue';
+import { message, Tag } from 'ant-design-vue';
 
 import { ACTION_ICON, TableAction, useVbenVxeGrid } from '#/adapter/vxe-table';
 import {
@@ -27,9 +27,10 @@ const props = defineProps({
   },
 });
 
-const [DataFormModal, dataFormModalApi] = useVbenModal({
+const [DataFormModal, dataFormModalApi] = useVbenModelDrawer({
   connectedComponent: DataForm,
   destroyOnClose: true,
+  placement: 'left',
 });
 
 /** 刷新表格 */
@@ -168,6 +169,11 @@ defineExpose({ onRefresh });
             },
           ]"
         />
+      </template>
+      <template #label="{ row }">
+        <Tag :color="row.colorType ? row.colorType : row.cssClass">
+          {{ $t(row.label) }}
+        </Tag>
       </template>
     </Grid>
   </div>

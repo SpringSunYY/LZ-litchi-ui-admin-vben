@@ -32,11 +32,12 @@ export function useFormSchema(): VbenFormSchema[] {
       fieldName: 'sex',
       label: $t('infra:demo01-contact:field:sex'),
       rules: 'required',
-      component: 'RadioGroup',
+      component: 'I18nSelect',
       componentProps: {
-        options: getDictOptions('infra_i18n_test', ),
-        buttonStyle: 'solid',
-        optionType: 'button',
+        options: getDictOptions('infra_i18n_test'),
+        placeholder: $t('ui.placeholder.select', [
+          $t('infra:demo01-contact:field:sex'),
+        ]),
       },
     },
     {
@@ -151,7 +152,7 @@ export function useGridColumns(): VxeTableGridOptions<Demo01ContactApi.Demo01Con
       title: $t('infra:demo01-contact:field:sex'),
       minWidth: 120,
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: 'infra_i18n_test' },
       },
     },

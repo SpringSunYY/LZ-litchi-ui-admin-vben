@@ -23,6 +23,13 @@ import { notification } from 'ant-design-vue';
 import dayjs from 'dayjs';
 
 import { FilePreview } from '#/components/file-preview';
+import {
+  I18nCheckbox,
+  I18nCheckboxGroup,
+} from '#/components/i18n/i18n-checkbox';
+import { I18nRadio, I18nRadioGroup } from '#/components/i18n/i18n-radio';
+import { I18nSelect } from '#/components/i18n/i18n-select';
+import { I18nSelectToString } from '#/components/i18n/i18n-select-to-string';
 import { NumberRange } from '#/components/number-range';
 import { SelectToString } from '#/components/select-to-string';
 import { Tinymce as RichTextarea } from '#/components/tinymce';
@@ -153,6 +160,12 @@ export type ComponentType =
   | 'Divider'
   | 'FilePreview'
   | 'FileUpload'
+  | 'I18nCheckbox'
+  | 'I18nCheckboxGroup'
+  | 'I18nRadio'
+  | 'I18nRadioGroup'
+  | 'I18nSelect'
+  | 'I18nSelectToString'
   | 'IconPicker'
   | 'ImageUpload'
   | 'Input'
@@ -212,6 +225,8 @@ async function initComponentAdapter() {
     AutoComplete,
     Checkbox,
     CheckboxGroup,
+    I18nCheckbox,
+    I18nCheckboxGroup,
     DatePicker: withDayjsValue(DatePicker),
     // 自定义默认按钮
     DefaultButton: (props, { attrs, slots }) => {
@@ -235,6 +250,10 @@ async function initComponentAdapter() {
     },
     Radio,
     RadioGroup,
+    I18nRadio,
+    I18nRadioGroup,
+    I18nSelect,
+    I18nSelectToString,
     RangePicker: withDayjsValue(RangePicker),
     Rate,
     Select: withDefaultPlaceholder(Select, 'select'),

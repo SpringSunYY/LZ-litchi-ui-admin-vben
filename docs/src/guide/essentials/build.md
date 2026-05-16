@@ -37,7 +37,7 @@ pnpm preview
 可以在电脑全局安装 `serve` 服务，如 `live-server`,
 
 ```bash
-npm i -g live-server
+npm i18n -g live-server
 ```
 
 然后在 `dist` 目录下执行 `live-server` 命令，即可在本地查看效果。

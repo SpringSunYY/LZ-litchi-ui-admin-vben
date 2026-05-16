@@ -58,7 +58,7 @@ Open a terminal in your code directory and execute the following commands:
 cd vue-vben-admin
 
 # Enable the project-specified version of pnpm
-npm i -g corepack
+npm i18n -g corepack
 
 # Install dependencies
 pnpm install
