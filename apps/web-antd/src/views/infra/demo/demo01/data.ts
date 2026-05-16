@@ -34,7 +34,7 @@ export function useFormSchema(): VbenFormSchema[] {
       rules: 'required',
       component: 'RadioGroup',
       componentProps: {
-        options: getDictOptions(DICT_TYPE.SYSTEM_USER_SEX, 'boolean'),
+        options: getDictOptions('infra_i18n_test', ),
         buttonStyle: 'solid',
         optionType: 'button',
       },
@@ -152,7 +152,7 @@ export function useGridColumns(): VxeTableGridOptions<Demo01ContactApi.Demo01Con
       minWidth: 120,
       cellRender: {
         name: 'CellDict',
-        props: { type: DICT_TYPE.SYSTEM_USER_SEX },
+        props: { type: 'infra_i18n_test' },
       },
     },
     {

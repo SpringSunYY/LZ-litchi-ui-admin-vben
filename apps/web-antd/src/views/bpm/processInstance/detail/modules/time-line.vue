@@ -166,6 +166,7 @@ const handleSelectUser = (activityId: string, selectedList: any[]) => {
   selectedActivityNodeId.value = activityId;
   userSelectModalApi.setData({
     userIds: selectedList?.length ? selectedList.map((item) => item.id) : [],
+    title: $t('bpm.processInstance.message.selectUser'),
   });
   userSelectModalApi.open();
 };
@@ -463,7 +464,6 @@ function handleUserSelectCancel() {
     <UserSelectModalComp
       v-model:value="selectedUsers"
       :multiple="true"
-      :title="$t('bpm.processInstance.message.selectUser')"
       @confirm="handleUserSelectConfirm"
       @closed="handleUserSelectClosed"
       @cancel="handleUserSelectCancel"

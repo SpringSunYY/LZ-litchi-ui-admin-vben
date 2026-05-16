@@ -151,8 +151,8 @@
     // 读取模式：隐藏 hover 效果、操作按钮、拖拽手型
     &.is-readonly {
       .node-box {
-        border-color: transparent;
         cursor: default;
+        border-color: transparent;
         box-shadow: none;
 
         &:hover {
