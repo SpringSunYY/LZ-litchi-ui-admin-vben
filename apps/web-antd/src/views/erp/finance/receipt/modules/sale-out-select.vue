@@ -7,6 +7,7 @@ import { ref } from 'vue';
 import { message, Modal } from 'ant-design-vue';
 
 import { useVbenVxeGrid } from '#/adapter/vxe-table';
+import { $t } from '#/locales';
 import { getSaleOutPage } from '#/api/erp/sale/out';
 
 import { useSaleOutGridColumns, useSaleOutGridFormSchema } from '../data';
@@ -79,7 +80,7 @@ function openModal(id: number) {
 /** 确认选择销售出库单 */
 function handleOk() {
   if (selectedRows.value.length === 0) {
-    message.warning('请选择要添加的销售出库单');
+    message.warning($t('erp.receipt.message.pleaseSelectSaleOut'));
     return;
   }
   emit('success', selectedRows.value);
@@ -93,12 +94,12 @@ defineExpose({ open: openModal });
   <Modal
     class="!w-[50vw]"
     v-model:open="open"
-    title="选择销售出库单"
+    :title="$t('erp.receipt.message.selectSaleOut')"
     @ok="handleOk"
   >
     <Grid
       class="max-h-[600px]"
-      table-title="销售出库单列表(仅展示可收款的单据)"
+      :table-title="$t('erp.receipt.message.saleOutListTitle')"
     />
   </Modal>
 </template>

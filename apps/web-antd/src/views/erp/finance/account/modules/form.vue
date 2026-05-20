@@ -21,8 +21,8 @@ const emit = defineEmits(['success']);
 const formData = ref<ErpAccountApi.Account>();
 const getTitle = computed(() => {
   return formData.value?.id
-    ? $t('ui.actionTitle.edit', ['结算账户'])
-    : $t('ui.actionTitle.create', ['结算账户']);
+    ? $t('ui.actionTitle.edit', [$t('erp.account.account')])
+    : $t('ui.actionTitle.create', [$t('erp.account.account')]);
 });
 
 const [Form, formApi] = useVbenForm({

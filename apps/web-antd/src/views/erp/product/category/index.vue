@@ -40,7 +40,10 @@ function handleRefresh() {
 /** 导出表格 */
 async function handleExport() {
   const data = await exportProductCategory(await gridApi.formApi.getValues());
-  downloadFileFromBlobPart({ fileName: '产品分类.xls', source: data });
+  downloadFileFromBlobPart({
+    fileName: `${$t('erp.category.list')}.xls`,
+    source: data,
+  });
 }
 
 /** 创建分类 */
@@ -113,18 +116,18 @@ const [Grid, gridApi] = useVbenVxeGrid({
   <Page auto-content-height>
     <template #doc>
       <DocAlert
-        title="【产品】产品信息、分类、单位"
+        :title="$t('erp.category.docTitle')"
         url="https://doc.iocoder.cn/erp/product/"
       />
     </template>
 
     <FormModal @success="handleRefresh" />
-    <Grid table-title="产品分类列表">
+    <Grid :table-title="$t('erp.category.list')">
       <template #toolbar-tools>
         <TableAction
           :actions="[
             {
-              label: $t('ui.actionTitle.create', ['产品分类']),
+              label: $t('ui.actionTitle.create', [$t('erp.category.category')]),
               type: 'primary',
               icon: ACTION_ICON.ADD,
               auth: ['erp:product-category:create'],
@@ -138,7 +141,7 @@ const [Grid, gridApi] = useVbenVxeGrid({
               onClick: handleExport,
             },
             {
-              label: isExpanded ? '收缩' : '展开',
+              label: isExpanded ? $t('common.collapse') : $t('common.expand'),
               type: 'primary',
               onClick: handleExpand,
             },
@@ -149,7 +152,7 @@ const [Grid, gridApi] = useVbenVxeGrid({
         <TableAction
           :actions="[
             {
-              label: '新增下级',
+              label: $t('common.append'),
               type: 'link',
               icon: ACTION_ICON.ADD,
               auth: ['erp:product-category:create'],

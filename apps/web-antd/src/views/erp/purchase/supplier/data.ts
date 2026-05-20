@@ -2,6 +2,7 @@ import type { VbenFormSchema } from '#/adapter/form';
 import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 
 import { z } from '#/adapter/form';
+import { $t } from '#/locales';
 import { CommonStatusEnum, DICT_TYPE, getDictOptions } from '#/utils';
 
 /** 新增/修改的表单 */
@@ -17,56 +18,66 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'name',
-      label: '供应商名称',
+      label: $t('erp.supplier.field.name'),
       component: 'Input',
       rules: 'required',
       componentProps: {
-        placeholder: '请输入供应商名称',
+        placeholder: $t('ui.placeholder.input', [
+          $t('erp.supplier.field.name'),
+        ]),
       },
     },
     {
       fieldName: 'contact',
-      label: '联系人',
+      label: $t('erp.supplier.field.contact'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入联系人',
+        placeholder: $t('ui.placeholder.input', [
+          $t('erp.supplier.field.contact'),
+        ]),
       },
     },
     {
       fieldName: 'mobile',
-      label: '手机号码',
+      label: $t('erp.supplier.field.mobile'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入手机号码',
+        placeholder: $t('ui.placeholder.input', [
+          $t('erp.supplier.field.mobile'),
+        ]),
       },
     },
     {
       fieldName: 'telephone',
-      label: '联系电话',
+      label: $t('erp.supplier.field.telephone'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入联系电话',
+        placeholder: $t('ui.placeholder.input', [
+          $t('erp.supplier.field.telephone'),
+        ]),
       },
     },
     {
       fieldName: 'email',
-      label: '电子邮箱',
+      label: $t('erp.supplier.field.email'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入电子邮箱',
+        placeholder: $t('ui.placeholder.input', [
+          $t('erp.supplier.field.email'),
+        ]),
       },
     },
     {
       fieldName: 'fax',
-      label: '传真',
+      label: $t('erp.supplier.field.fax'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入传真',
+        placeholder: $t('ui.placeholder.input', [$t('erp.supplier.field.fax')]),
       },
     },
     {
       fieldName: 'status',
-      label: '开启状态',
+      label: $t('erp.supplier.field.status'),
       component: 'RadioGroup',
       componentProps: {
         options: getDictOptions(DICT_TYPE.COMMON_STATUS, 'number'),
@@ -77,61 +88,75 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'sort',
-      label: '排序',
+      label: $t('erp.supplier.field.sort'),
       component: 'InputNumber',
       componentProps: {
-        placeholder: '请输入排序',
+        placeholder: $t('ui.placeholder.input', [
+          $t('erp.supplier.field.sort'),
+        ]),
       },
       rules: 'required',
     },
     {
       fieldName: 'taxNo',
-      label: '纳税人识别号',
+      label: $t('erp.supplier.field.taxNo'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入纳税人识别号',
+        placeholder: $t('ui.placeholder.input', [
+          $t('erp.supplier.field.taxNo'),
+        ]),
       },
     },
     {
       fieldName: 'taxPercent',
-      label: '税率(%)',
+      label: $t('erp.supplier.field.taxPercent'),
       component: 'InputNumber',
       componentProps: {
-        placeholder: '请输入税率',
+        placeholder: $t('ui.placeholder.input', [
+          $t('erp.supplier.field.taxPercent'),
+        ]),
         min: 0,
         precision: 2,
       },
     },
     {
       fieldName: 'bankName',
-      label: '开户行',
+      label: $t('erp.supplier.field.bankName'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入开户行',
+        placeholder: $t('ui.placeholder.input', [
+          $t('erp.supplier.field.bankName'),
+        ]),
       },
     },
     {
       fieldName: 'bankAccount',
-      label: '开户账号',
+      label: $t('erp.supplier.field.bankAccount'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入开户账号',
+        placeholder: $t('ui.placeholder.input', [
+          $t('erp.supplier.field.bankAccount'),
+        ]),
       },
     },
     {
       fieldName: 'bankAddress',
-      label: '开户地址',
+      label: $t('erp.supplier.field.bankAddress'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入开户地址',
+        placeholder: $t('ui.placeholder.input', [
+          $t('erp.supplier.field.bankAddress'),
+        ]),
       },
     },
     {
       fieldName: 'remark',
-      label: '备注',
+      label: $t('erp.supplier.field.remark'),
       component: 'Textarea',
       componentProps: {
-        placeholder: '请输入备注',
+        placeholder: $t('ui.placeholder.input', [
+          $t('erp.supplier.field.remark'),
+        ]),
         rows: 3,
       },
       formItemClass: 'col-span-2',
@@ -144,28 +169,34 @@ export function useGridFormSchema(): VbenFormSchema[] {
   return [
     {
       fieldName: 'name',
-      label: '供应商名称',
+      label: $t('erp.supplier.field.name'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入供应商名称',
+        placeholder: $t('ui.placeholder.input', [
+          $t('erp.supplier.field.name'),
+        ]),
         allowClear: true,
       },
     },
     {
       fieldName: 'mobile',
-      label: '手机号码',
+      label: $t('erp.supplier.field.mobile'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入手机号码',
+        placeholder: $t('ui.placeholder.input', [
+          $t('erp.supplier.field.mobile'),
+        ]),
         allowClear: true,
       },
     },
     {
       fieldName: 'telephone',
-      label: '联系电话',
+      label: $t('erp.supplier.field.telephone'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入联系电话',
+        placeholder: $t('ui.placeholder.input', [
+          $t('erp.supplier.field.telephone'),
+        ]),
         allowClear: true,
       },
     },
@@ -177,32 +208,32 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
   return [
     {
       field: 'name',
-      title: '供应商名称',
+      title: $t('erp.supplier.field.name'),
       minWidth: 150,
     },
     {
       field: 'contact',
-      title: '联系人',
+      title: $t('erp.supplier.field.contact'),
       minWidth: 120,
     },
     {
       field: 'mobile',
-      title: '手机号码',
+      title: $t('erp.supplier.field.mobile'),
       minWidth: 130,
     },
     {
       field: 'telephone',
-      title: '联系电话',
+      title: $t('erp.supplier.field.telephone'),
       minWidth: 130,
     },
     {
       field: 'email',
-      title: '电子邮箱',
+      title: $t('erp.supplier.field.email'),
       minWidth: 180,
     },
     {
       field: 'status',
-      title: '状态',
+      title: $t('erp.supplier.field.status'),
       minWidth: 100,
       cellRender: {
         name: 'CellDict',
@@ -211,17 +242,17 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
     },
     {
       field: 'sort',
-      title: '排序',
+      title: $t('erp.supplier.field.sort'),
       minWidth: 80,
     },
     {
       field: 'remark',
-      title: '备注',
+      title: $t('erp.supplier.field.remark'),
       minWidth: 150,
       showOverflow: 'tooltip',
     },
     {
-      title: '操作',
+      title: $t('common.operation'),
       width: 130,
       fixed: 'right',
       slots: { default: 'actions' },

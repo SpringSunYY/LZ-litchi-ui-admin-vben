@@ -15,6 +15,7 @@ import {
   getPurchaseTimeSummary,
 } from '#/api/erp/statistics/purchase';
 import { getSaleSummary, getSaleTimeSummary } from '#/api/erp/statistics/sale';
+import { $t } from '#/locales';
 
 interface Props {
   title: string;
@@ -62,7 +63,7 @@ const lineChartOptions: echarts.EChartsOption = {
   },
   series: [
     {
-      name: '金额',
+      name: $t('erp.home.field.amount'),
       type: 'line',
       smooth: true,
       areaStyle: {},

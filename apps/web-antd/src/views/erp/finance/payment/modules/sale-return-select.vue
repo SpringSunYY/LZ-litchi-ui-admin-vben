@@ -7,6 +7,7 @@ import { ref } from 'vue';
 import { message, Modal } from 'ant-design-vue';
 
 import { useVbenVxeGrid } from '#/adapter/vxe-table';
+import { $t } from '#/locales';
 import { getPurchaseReturnPage } from '#/api/erp/purchase/return';
 
 import { useSaleReturnGridColumns, useSaleReturnGridFormSchema } from '../data';
@@ -87,7 +88,7 @@ function openModal(id: number) {
 /** 确认选择 */
 function handleOk() {
   if (selectedRows.value.length === 0) {
-    message.warning('请选择要添加的采购退货单');
+    message.warning($t('erp.payment.message.pleaseSelectPurchaseReturn'));
     return;
   }
   emit('success', selectedRows.value);
@@ -101,12 +102,12 @@ defineExpose({ open: openModal });
   <Modal
     class="!w-[50vw]"
     v-model:open="open"
-    title="选择采购退货单"
+    :title="$t('erp.payment.message.selectPurchaseReturn')"
     @ok="handleOk"
   >
     <Grid
       class="max-h-[600px]"
-      table-title="采购退货单列表(仅展示需退款的单据)"
+      :table-title="$t('erp.payment.message.purchaseReturnListTitle')"
     />
   </Modal>
 </template>

@@ -2,10 +2,10 @@ import type { VbenFormSchema } from '#/adapter/form';
 import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 
 import { getProductSimpleList } from '#/api/erp/product/product';
-import { getSupplierSimpleList } from '#/api/erp/purchase/supplier';
 import { getWarehouseSimpleList } from '#/api/erp/stock/warehouse';
 import { getSimpleUserList } from '#/api/system/user';
 import { DICT_TYPE, getDictOptions, getRangePickerDefaultProps } from '#/utils';
+import { $t } from '#/locales';
 
 /** 表单的配置项 */
 export function useFormSchema(formType: string): VbenFormSchema[] {
@@ -20,19 +20,19 @@ export function useFormSchema(formType: string): VbenFormSchema[] {
     },
     {
       fieldName: 'no',
-      label: '入库单号',
+      label: $t('erp.stockIn.field.no'),
       component: 'Input',
       componentProps: {
-        placeholder: '系统自动生成',
+        placeholder: $t('erp.stockIn.message.autoGenerate'),
         disabled: true,
       },
     },
     {
       fieldName: 'inTime',
-      label: '入库时间',
+      label: $t('erp.stockIn.field.inTime'),
       component: 'DatePicker',
       componentProps: {
-        placeholder: '选择入库时间',
+        placeholder: $t('ui.placeholder.select', [$t('erp.stockIn.field.inTime')]),
         showTime: true,
         format: 'YYYY-MM-DD HH:mm:ss',
         valueFormat: 'x',
@@ -40,25 +40,24 @@ export function useFormSchema(formType: string): VbenFormSchema[] {
       rules: 'required',
     },
     {
-      label: '供应商',
       fieldName: 'supplierId',
+      label: $t('erp.stockIn.field.supplierIdName'),
       component: 'ApiSelect',
       componentProps: {
-        placeholder: '请选择供应商',
+        placeholder: $t('ui.placeholder.select', [$t('erp.stockIn.field.supplierIdName')]),
         allowClear: true,
         showSearch: true,
-        api: getSupplierSimpleList,
+        api: () => import('#/api/erp/purchase/supplier').then((m) => m.getSupplierSimpleList()),
         labelField: 'name',
         valueField: 'id',
       },
-      rules: 'required',
     },
     {
       fieldName: 'remark',
-      label: '备注',
+      label: $t('erp.stockIn.field.remark'),
       component: 'Textarea',
       componentProps: {
-        placeholder: '请输入备注',
+        placeholder: $t('ui.placeholder.input', [$t('erp.stockIn.field.remark')]),
         autoSize: { minRows: 1, maxRows: 1 },
         disabled: formType === 'detail',
       },
@@ -66,7 +65,7 @@ export function useFormSchema(formType: string): VbenFormSchema[] {
     },
     {
       fieldName: 'fileUrl',
-      label: '附件',
+      label: $t('erp.stockIn.field.fileUrl'),
       component: 'FileUpload',
       componentProps: {
         maxNumber: 1,
@@ -89,7 +88,7 @@ export function useFormSchema(formType: string): VbenFormSchema[] {
     },
     {
       fieldName: 'items',
-      label: '入库产品清单',
+      label: $t('erp.stockIn.field.items'),
       component: 'Input',
       formItemClass: 'col-span-3',
     },
@@ -101,64 +100,64 @@ export function useFormItemColumns(
   disabled: boolean,
 ): VxeTableGridOptions['columns'] {
   return [
-    { type: 'seq', title: '序号', minWidth: 50, fixed: 'left' },
+    { type: 'seq', title: $t('erp.stockIn.message.seq'), minWidth: 50, fixed: 'left' },
     {
       field: 'warehouseId',
-      title: '仓库名称',
+      title: $t('erp.stockIn.field.warehouseIdName'),
       minWidth: 150,
       slots: { default: 'warehouseId' },
     },
     {
       field: 'productId',
-      title: '产品名称',
+      title: $t('erp.stockIn.field.productIdName'),
       minWidth: 200,
       slots: { default: 'productId' },
     },
     {
       field: 'stockCount',
-      title: '库存',
+      title: $t('erp.stockIn.field.stock'),
       minWidth: 80,
       formatter: 'formatAmount3',
     },
     {
       field: 'productBarCode',
-      title: '条码',
+      title: $t('erp.stockIn.field.barCode'),
       minWidth: 120,
     },
     {
       field: 'productUnitName',
-      title: '单位',
+      title: $t('erp.stockIn.field.unitName'),
       minWidth: 80,
     },
     {
       field: 'remark',
-      title: '备注',
+      title: $t('erp.stockIn.field.remark'),
       minWidth: 150,
       slots: { default: 'remark' },
     },
     {
       field: 'count',
-      title: '数量',
+      title: $t('erp.stockIn.field.count'),
       minWidth: 120,
       fixed: 'right',
       slots: { default: 'count' },
     },
     {
       field: 'productPrice',
-      title: '产品单价',
+      title: $t('erp.stockIn.field.productPrice'),
       minWidth: 120,
       fixed: 'right',
       slots: { default: 'productPrice' },
     },
     {
       field: 'totalPrice',
-      title: '金额',
+      title: $t('erp.stockIn.field.productAmount'),
       minWidth: 120,
       fixed: 'right',
       formatter: 'formatAmount2',
     },
     {
-      title: '操作',
+      title: $t('common.operation'),
       width: 50,
       fixed: 'right',
       slots: { default: 'actions' },
@@ -172,19 +171,19 @@ export function useGridFormSchema(): VbenFormSchema[] {
   return [
     {
       fieldName: 'no',
-      label: '入库单号',
+      label: $t('erp.stockIn.field.no'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入入库单号',
+        placeholder: $t('ui.placeholder.input', [$t('erp.stockIn.field.no')]),
         allowClear: true,
       },
     },
     {
       fieldName: 'productId',
-      label: '产品',
+      label: $t('erp.stockIn.field.productIdName'),
       component: 'ApiSelect',
       componentProps: {
-        placeholder: '请选择产品',
+        placeholder: $t('ui.placeholder.select', [$t('erp.stockIn.field.productIdName')]),
         allowClear: true,
         showSearch: true,
         api: getProductSimpleList,
@@ -194,7 +193,7 @@ export function useGridFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'inTime',
-      label: '入库时间',
+      label: $t('erp.stockIn.field.inTime'),
       component: 'RangePicker',
       componentProps: {
         ...getRangePickerDefaultProps(),
@@ -202,24 +201,11 @@ export function useGridFormSchema(): VbenFormSchema[] {
       },
     },
     {
-      fieldName: 'supplierId',
-      label: '供应商',
-      component: 'ApiSelect',
-      componentProps: {
-        placeholder: '请选择供应商',
-        allowClear: true,
-        showSearch: true,
-        api: getSupplierSimpleList,
-        labelField: 'name',
-        valueField: 'id',
-      },
-    },
-    {
       fieldName: 'warehouseId',
-      label: '仓库',
+      label: $t('erp.stockIn.field.warehouseIdName'),
       component: 'ApiSelect',
       componentProps: {
-        placeholder: '请选择仓库',
+        placeholder: $t('ui.placeholder.select', [$t('erp.stockIn.field.warehouseIdName')]),
         allowClear: true,
         showSearch: true,
         api: getWarehouseSimpleList,
@@ -229,10 +215,10 @@ export function useGridFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'creator',
-      label: '创建人',
+      label: $t('erp.stockIn.field.creatorName'),
       component: 'ApiSelect',
       componentProps: {
-        placeholder: '请选择创建人',
+        placeholder: $t('ui.placeholder.select', [$t('erp.stockIn.field.creatorName')]),
         allowClear: true,
         showSearch: true,
         api: getSimpleUserList,
@@ -242,20 +228,20 @@ export function useGridFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'status',
-      label: '状态',
+      label: $t('erp.stockIn.field.status'),
       component: 'Select',
       componentProps: {
         options: getDictOptions(DICT_TYPE.ERP_AUDIT_STATUS, 'number'),
-        placeholder: '请选择状态',
+        placeholder: $t('ui.placeholder.select', [$t('erp.stockIn.field.status')]),
         allowClear: true,
       },
     },
     {
       fieldName: 'remark',
-      label: '备注',
+      label: $t('erp.stockIn.field.remark'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入备注',
+        placeholder: $t('ui.placeholder.input', [$t('erp.stockIn.field.remark')]),
         allowClear: true,
       },
     },
@@ -272,47 +258,42 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
     },
     {
       field: 'no',
-      title: '入库单号',
+      title: $t('erp.stockIn.field.no'),
       width: 200,
       fixed: 'left',
     },
     {
       field: 'productNames',
-      title: '产品信息',
+      title: $t('erp.stockIn.field.productNames'),
       showOverflow: 'tooltip',
       minWidth: 120,
     },
     {
-      field: 'supplierName',
-      title: '供应商',
-      minWidth: 120,
-    },
-    {
       field: 'inTime',
-      title: '入库时间',
+      title: $t('erp.stockIn.field.inTime'),
       width: 160,
       formatter: 'formatDate',
     },
     {
       field: 'creatorName',
-      title: '创建人',
+      title: $t('erp.stockIn.field.creatorName'),
       minWidth: 120,
     },
     {
       field: 'totalCount',
-      title: '总数量',
+      title: $t('erp.stockIn.field.totalCount'),
       formatter: 'formatAmount3',
       minWidth: 120,
     },
     {
       field: 'totalPrice',
-      title: '总金额',
+      title: $t('erp.stockIn.field.totalAmount'),
       formatter: 'formatAmount2',
       minWidth: 120,
     },
     {
       field: 'status',
-      title: '状态',
+      title: $t('erp.stockIn.field.status'),
       minWidth: 120,
       cellRender: {
         name: 'CellDict',
@@ -320,7 +301,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
       },
     },
     {
-      title: '操作',
+      title: $t('common.operation'),
       width: 220,
       fixed: 'right',
       slots: { default: 'actions' },

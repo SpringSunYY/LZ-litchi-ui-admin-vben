@@ -30,7 +30,10 @@ function handleRefresh() {
 /** 导出仓库 */
 async function handleExport() {
   const data = await exportWarehouse(await gridApi.formApi.getValues());
-  downloadFileFromBlobPart({ fileName: '仓库.xls', source: data });
+  downloadFileFromBlobPart({
+    fileName: `${$t('erp.warehouse.warehouse')}.xls`,
+    source: data,
+  });
 }
 
 /** 创建仓库 */
@@ -64,15 +67,17 @@ async function handleDefaultStatusChange(
   row: ErpWarehouseApi.Warehouse,
 ): Promise<boolean | undefined> {
   return new Promise((resolve, reject) => {
-    const text = newStatus ? '设置' : '取消';
+    const text = newStatus
+      ? $t('erp.warehouse.message.set')
+      : $t('erp.warehouse.message.cancel');
     confirm({
-      content: `确认要${text}"${row.name}"默认吗?`,
+      content: $t('erp.warehouse.message.confirmSetDefault', [text, row.name]),
     })
       .then(async () => {
         // 更新默认状态
         await updateWarehouseDefaultStatus(row.id!, newStatus);
         // 提示并返回成功
-        message.success(`${text}默认成功`);
+        message.success($t('erp.warehouse.message.setDefaultSuccess', [text]));
         handleRefresh();
         resolve(true);
       })
@@ -122,18 +127,20 @@ const [Grid, gridApi] = useVbenVxeGrid({
   <Page auto-content-height>
     <template #doc>
       <DocAlert
-        title="【库存】产品库存、库存明细"
+        :title="$t('erp.warehouse.docTitle')"
         url="https://doc.iocoder.cn/erp/stock/"
       />
     </template>
 
     <FormModal @success="handleRefresh" />
-    <Grid table-title="仓库列表">
+    <Grid :table-title="$t('erp.warehouse.list')">
       <template #toolbar-tools>
         <TableAction
           :actions="[
             {
-              label: $t('ui.actionTitle.create', ['仓库']),
+              label: $t('ui.actionTitle.create', [
+                $t('erp.warehouse.warehouse'),
+              ]),
               type: 'primary',
               icon: ACTION_ICON.ADD,
               auth: ['erp:warehouse:create'],

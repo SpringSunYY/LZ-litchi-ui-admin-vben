@@ -26,6 +26,7 @@ export namespace ErpSaleReturnApi {
   /** 销售退货项 */
   export interface SaleReturnItem {
     count?: number;
+    seq?: number;
     id?: number;
     orderItemId?: number;
     productBarCode?: string;

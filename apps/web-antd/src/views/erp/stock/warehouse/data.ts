@@ -3,6 +3,7 @@ import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 import type { ErpWarehouseApi } from '#/api/erp/stock/warehouse';
 
 import { z } from '#/adapter/form';
+import { $t } from '#/locales';
 import { CommonStatusEnum, DICT_TYPE, getDictOptions } from '#/utils';
 
 /** 新增/修改的表单 */
@@ -18,24 +19,28 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'name',
-      label: '仓库名称',
+      label: $t('erp.warehouse.field.name'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入仓库名称',
+        placeholder: $t('ui.placeholder.input', [
+          $t('erp.warehouse.field.name'),
+        ]),
       },
       rules: 'required',
     },
     {
       fieldName: 'address',
-      label: '仓库地址',
+      label: $t('erp.warehouse.field.address'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入仓库地址',
+        placeholder: $t('ui.placeholder.input', [
+          $t('erp.warehouse.field.address'),
+        ]),
       },
     },
     {
       fieldName: 'status',
-      label: '开启状态',
+      label: $t('erp.warehouse.field.status'),
       component: 'RadioGroup',
       componentProps: {
         options: getDictOptions(DICT_TYPE.COMMON_STATUS, 'number'),
@@ -46,48 +51,54 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'warehousePrice',
-      label: '仓储费(元)',
+      label: $t('erp.warehouse.field.warehousePrice'),
       component: 'InputNumber',
       componentProps: {
-        placeholder: '请输入仓储费，单位：元/天/KG',
+        placeholder: $t('erp.warehouse.field.warehousePricePlaceholder'),
         min: 0,
         precision: 2,
       },
     },
     {
       fieldName: 'truckagePrice',
-      label: '搬运费(元)',
+      label: $t('erp.warehouse.field.truckagePrice'),
       component: 'InputNumber',
       componentProps: {
-        placeholder: '请输入搬运费，单位：元',
+        placeholder: $t('erp.warehouse.field.truckagePricePlaceholder'),
         min: 0,
         precision: 2,
       },
     },
     {
       fieldName: 'principal',
-      label: '负责人',
+      label: $t('erp.warehouse.field.principal'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入负责人',
+        placeholder: $t('ui.placeholder.input', [
+          $t('erp.warehouse.field.principal'),
+        ]),
       },
     },
     {
       fieldName: 'sort',
-      label: '排序',
+      label: $t('erp.warehouse.field.sort'),
       component: 'InputNumber',
       componentProps: {
-        placeholder: '请输入排序',
+        placeholder: $t('ui.placeholder.input', [
+          $t('erp.warehouse.field.sort'),
+        ]),
         precision: 0,
       },
       rules: 'required',
     },
     {
       fieldName: 'remark',
-      label: '备注',
+      label: $t('erp.warehouse.field.remark'),
       component: 'Textarea',
       componentProps: {
-        placeholder: '请输入备注',
+        placeholder: $t('ui.placeholder.input', [
+          $t('erp.warehouse.field.remark'),
+        ]),
       },
     },
   ];
@@ -98,19 +109,23 @@ export function useGridFormSchema(): VbenFormSchema[] {
   return [
     {
       fieldName: 'name',
-      label: '仓库名称',
+      label: $t('erp.warehouse.field.name'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入仓库名称',
+        placeholder: $t('ui.placeholder.input', [
+          $t('erp.warehouse.field.name'),
+        ]),
         allowClear: true,
       },
     },
     {
       fieldName: 'status',
-      label: '仓库状态',
+      label: $t('erp.warehouse.field.status'),
       component: 'Select',
       componentProps: {
-        placeholder: '请选择仓库状态',
+        placeholder: $t('ui.placeholder.select', [
+          $t('erp.warehouse.field.status'),
+        ]),
         allowClear: true,
         options: getDictOptions(DICT_TYPE.COMMON_STATUS, 'number'),
       },
@@ -128,40 +143,40 @@ export function useGridColumns(
   return [
     {
       field: 'name',
-      title: '仓库名称',
+      title: $t('erp.warehouse.field.name'),
       minWidth: 150,
     },
     {
       field: 'address',
-      title: '仓库地址',
+      title: $t('erp.warehouse.field.address'),
       minWidth: 200,
       showOverflow: 'tooltip',
     },
     {
       field: 'warehousePrice',
-      title: '仓储费',
+      title: $t('erp.warehouse.field.warehousePrice'),
       minWidth: 120,
       formatter: 'formatAmount2',
     },
     {
       field: 'truckagePrice',
-      title: '搬运费',
+      title: $t('erp.warehouse.field.truckagePrice'),
       minWidth: 120,
       formatter: 'formatAmount2',
     },
     {
       field: 'principal',
-      title: '负责人',
+      title: $t('erp.warehouse.field.principal'),
       minWidth: 100,
     },
     {
       field: 'sort',
-      title: '排序',
+      title: $t('erp.warehouse.field.sort'),
       minWidth: 80,
     },
     {
       field: 'status',
-      title: '状态',
+      title: $t('erp.warehouse.field.status'),
       minWidth: 100,
       cellRender: {
         name: 'CellDict',
@@ -170,7 +185,7 @@ export function useGridColumns(
     },
     {
       field: 'defaultStatus',
-      title: '是否默认',
+      title: $t('erp.warehouse.field.defaultStatus'),
       minWidth: 100,
       cellRender: {
         attrs: { beforeChange: onDefaultStatusChange },
@@ -183,18 +198,18 @@ export function useGridColumns(
     },
     {
       field: 'remark',
-      title: '备注',
+      title: $t('erp.warehouse.field.remark'),
       minWidth: 150,
       showOverflow: 'tooltip',
     },
     {
       field: 'createTime',
-      title: '创建时间',
+      title: $t('erp.warehouse.field.createTime'),
       minWidth: 180,
       formatter: 'formatDateTime',
     },
     {
-      title: '操作',
+      title: $t('common.operation'),
       width: 130,
       fixed: 'right',
       slots: { default: 'actions' },

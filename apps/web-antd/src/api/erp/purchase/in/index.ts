@@ -28,6 +28,7 @@ export namespace ErpPurchaseInApi {
   export interface PurchaseInItem {
     count?: number;
     id?: number;
+    seq?: number;
     orderItemId?: number;
     productBarCode?: string;
     productId?: number;

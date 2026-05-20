@@ -7,6 +7,7 @@ import { ref } from 'vue';
 import { message, Modal } from 'ant-design-vue';
 
 import { useVbenVxeGrid } from '#/adapter/vxe-table';
+import { $t } from '#/locales';
 import { getSaleReturnPage } from '#/api/erp/sale/return';
 
 import { useSaleReturnGridColumns, useSaleReturnGridFormSchema } from '../data';
@@ -83,7 +84,7 @@ function openModal(id: number) {
 /** 确认选择销售退货单 */
 function handleOk() {
   if (selectedRows.value.length === 0) {
-    message.warning('请选择要添加的销售退货单');
+    message.warning($t('erp.receipt.message.pleaseSelectSaleReturn'));
     return;
   }
   emit('success', selectedRows.value);
@@ -97,12 +98,12 @@ defineExpose({ open: openModal });
   <Modal
     class="!w-[50vw]"
     v-model:open="open"
-    title="选择销售退货单"
+    :title="$t('erp.receipt.message.selectSaleReturn')"
     @ok="handleOk"
   >
     <Grid
       class="max-h-[600px]"
-      table-title="销售退货单列表(仅展示可退款的单据)"
+      :table-title="$t('erp.receipt.message.saleReturnListTitle')"
     />
   </Modal>
 </template>

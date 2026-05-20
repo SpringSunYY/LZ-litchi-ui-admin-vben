@@ -48,10 +48,10 @@ const itemFormRef = ref<InstanceType<typeof ItemForm>>();
 /* eslint-disable unicorn/no-nested-ternary */
 const getTitle = computed(() =>
   formType.value === 'create'
-    ? $t('ui.actionTitle.create', ['销售出库'])
+    ? $t('ui.actionTitle.create', [$t('erp.saleOut.saleOut')])
     : formType.value === 'edit'
-      ? $t('ui.actionTitle.edit', ['销售出库'])
-      : '销售出库详情',
+      ? $t('ui.actionTitle.edit', [$t('erp.saleOut.saleOut')])
+      : $t('ui.actionTitle.detail', [$t('erp.saleOut.saleOut')]),
 );
 
 const [Form, formApi] = useVbenForm({
@@ -145,7 +145,9 @@ const [Modal, modalApi] = useVbenModal({
     try {
       itemFormInstance.validate();
     } catch (error: any) {
-      message.error(error.message || '子表单验证失败');
+      message.error(
+        error.message || $t('erp.saleOut.message.childFormValidateFailed'),
+      );
       return;
     }
 

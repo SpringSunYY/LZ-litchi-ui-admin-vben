@@ -10,6 +10,7 @@ import { Input, message, Modal } from 'ant-design-vue';
 
 import { useVbenVxeGrid } from '#/adapter/vxe-table';
 import { getPurchaseOrderPage } from '#/api/erp/purchase/order';
+import { $t } from '#/locales';
 
 import { useOrderGridColumns, useOrderGridFormSchema } from '../data';
 
@@ -80,7 +81,7 @@ function handleSelectOrder(selectOrder: ErpPurchaseOrderApi.PurchaseOrder) {
 /** 确认选择采购订单 */
 function handleOk() {
   if (!order.value) {
-    message.warning('请选择一个采购订单');
+    message.warning($t('erp.purchaseReturn.message.selectPurchaseOrder'));
     return;
   }
   emit('update:order', order.value);
@@ -110,10 +111,13 @@ function handleOk() {
     <Modal
       class="!w-[50vw]"
       v-model:open="open"
-      title="选择关联订单"
+      :title="$t('erp.purchaseReturn.message.selectPurchaseOrderTitle')"
       @ok="handleOk"
     >
-      <Grid class="max-h-[600px]" table-title="采购订单列表(仅展示可退货)" />
+      <Grid
+        class="max-h-[600px]"
+        :table-title="$t('erp.purchaseReturn.message.returnOrderListTitle')"
+      />
     </Modal>
   </div>
 </template>

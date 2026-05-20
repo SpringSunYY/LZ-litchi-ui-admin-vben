@@ -10,6 +10,7 @@ import { erpPriceInputFormatter } from '@vben/utils';
 import { Input, InputNumber, message } from 'ant-design-vue';
 
 import { TableAction, useVbenVxeGrid } from '#/adapter/vxe-table';
+import { $t } from '#/locales';
 import { ErpBizType } from '#/utils';
 
 import { useFormItemColumns } from '../data';
@@ -120,7 +121,7 @@ watch(
 const saleOutSelectRef = ref();
 function handleOpenSaleOut() {
   if (!props.customerId) {
-    message.error('请选择客户');
+    message.error($t('erp.receipt.message.pleaseSelectCustomer'));
     return;
   }
   saleOutSelectRef.value?.open(props.customerId);
@@ -128,7 +129,7 @@ function handleOpenSaleOut() {
 
 function handleAddSaleOut(rows: ErpSaleOutApi.SaleOut[]) {
   rows.forEach((row) => {
-    // TODO 芋艿
+    // TODO YY
     const newItem: ErpFinanceReceiptApi.FinanceReceiptItem = {
       bizId: row.id,
       bizType: ErpBizType.SALE_OUT,
@@ -147,14 +148,14 @@ function handleAddSaleOut(rows: ErpSaleOutApi.SaleOut[]) {
 const saleReturnSelectRef = ref();
 function handleOpenSaleReturn() {
   if (!props.customerId) {
-    message.error('请选择客户');
+    message.error($t('erp.receipt.message.pleaseSelectCustomer'));
     return;
   }
   saleReturnSelectRef.value?.open(props.customerId);
 }
 
 function handleAddSaleReturn(rows: ErpSaleReturnApi.SaleReturn[]) {
-  // TODO 芋艿
+  // TODO YY
   rows.forEach((row) => {
     const newItem: ErpFinanceReceiptApi.FinanceReceiptItem = {
       bizId: row.id,
@@ -199,13 +200,15 @@ function handleRowChange(row: any) {
 function validate() {
   // 检查是否有明细
   if (tableData.value.length === 0) {
-    throw new Error('请添加收款明细');
+    throw new Error($t('erp.receipt.message.pleaseAddReceiptDetail'));
   }
   // 检查每行的收款金额
   for (let i = 0; i < tableData.value.length; i++) {
     const item = tableData.value[i];
     if (!item.receiptPrice || item.receiptPrice <= 0) {
-      throw new Error(`第 ${i + 1} 行：本次收款必须大于0`);
+      throw new Error(
+        $t('erp.receipt.message.receiptAmountMustPositive', [i + 1]),
+      );
     }
   }
 }
@@ -222,7 +225,11 @@ defineExpose({ validate });
           :precision="2"
           :disabled="disabled"
           :formatter="erpPriceInputFormatter"
-          placeholder="请输入本次收款"
+          :placeholder="
+            $t('ui.placeholder.input', [
+              $t('erp.receipt.message.currentReceipt'),
+            ])
+          "
           @change="handleRowChange(row)"
         />
       </template>
@@ -230,7 +237,9 @@ defineExpose({ validate });
         <Input
           v-model:value="row.remark"
           :disabled="disabled"
-          placeholder="请输入备注"
+          :placeholder="
+            $t('ui.placeholder.input', [$t('erp.receipt.field.remark')])
+          "
           @change="handleRowChange(row)"
         />
       </template>
@@ -238,11 +247,11 @@ defineExpose({ validate });
         <TableAction
           :actions="[
             {
-              label: '删除',
+              label: $t('common.delete'),
               type: 'link',
               danger: true,
               popConfirm: {
-                title: '确认删除该收款明细吗？',
+                title: $t('erp.receipt.message.confirmDeleteReceiptDetail'),
                 confirm: handleDelete.bind(null, row),
               },
             },
@@ -253,16 +262,22 @@ defineExpose({ validate });
       <template #bottom>
         <div class="border-border bg-muted mt-2 rounded border p-2">
           <div class="text-muted-foreground flex justify-between text-sm">
-            <span class="text-foreground font-medium">合计：</span>
+            <span class="text-foreground font-medium">{{
+              $t('erp.receipt.message.total')
+            }}</span>
             <div class="flex space-x-4">
               <span>
-                合计收款：{{ erpPriceInputFormatter(summaries.totalPrice) }}
+                {{ $t('erp.receipt.message.totalReceipt') }}：{{
+                  erpPriceInputFormatter(summaries.totalPrice)
+                }}
               </span>
               <span>
-                已收金额：{{ erpPriceInputFormatter(summaries.receiptedPrice) }}
+                {{ $t('erp.receipt.field.receiptedPrice') }}：{{
+                  erpPriceInputFormatter(summaries.receiptedPrice)
+                }}
               </span>
               <span>
-                本次收款：
+                {{ $t('erp.receipt.message.currentReceipt') }}：
                 {{ erpPriceInputFormatter(summaries.receiptPrice) }}
               </span>
             </div>
@@ -273,12 +288,12 @@ defineExpose({ validate });
           class="mt-2 flex justify-center"
           :actions="[
             {
-              label: '添加销售出库单',
+              label: $t('erp.receipt.message.addSaleOut'),
               type: 'default',
               onClick: handleOpenSaleOut,
             },
             {
-              label: '添加销售退货单',
+              label: $t('erp.receipt.message.addSaleReturn'),
               type: 'default',
               onClick: handleOpenSaleReturn,
             },

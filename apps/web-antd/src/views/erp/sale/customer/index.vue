@@ -31,7 +31,10 @@ function handleRefresh() {
 /** 导出表格 */
 async function handleExport() {
   const data = await exportCustomer(await gridApi.formApi.getValues());
-  downloadFileFromBlobPart({ fileName: '客户信息.xls', source: data });
+  downloadFileFromBlobPart({
+    fileName: `${$t('erp.customer.customer')}.xls`,
+    source: data,
+  });
 }
 
 /** 创建客户 */
@@ -47,7 +50,7 @@ function handleEdit(row: ErpCustomerApi.Customer) {
 /** 删除客户 */
 async function handleDelete(row: ErpCustomerApi.Customer) {
   const hideLoading = message.loading({
-    content: $t('ui.actionMessage.deleting', [row.name]),
+    content: $t('ui.actionMessage.deleting', [$t('erp.customer.customer')]),
     duration: 0,
   });
   try {
@@ -94,17 +97,17 @@ const [Grid, gridApi] = useVbenVxeGrid({
   <Page auto-content-height>
     <template #doc>
       <DocAlert
-        title="【销售】销售订单、出库、退货"
+        :title="$t('erp.customer.docTitle')"
         url="https://doc.iocoder.cn/erp/sale/"
       />
     </template>
     <FormModal @success="handleRefresh" />
-    <Grid table-title="客户列表">
+    <Grid :table-title="$t('erp.customer.list')">
       <template #toolbar-tools>
         <TableAction
           :actions="[
             {
-              label: $t('ui.actionTitle.create', ['客户']),
+              label: $t('ui.actionTitle.create', [$t('erp.customer.customer')]),
               type: 'primary',
               icon: ACTION_ICON.ADD,
               auth: ['erp:customer:create'],

@@ -5,7 +5,6 @@ import type { ErpPurchaseReturnApi } from '#/api/erp/purchase/return';
 import { computed, ref } from 'vue';
 
 import { useVbenModal } from '@vben/common-ui';
-import { $t } from '@vben/locales';
 
 import { message } from 'ant-design-vue';
 
@@ -16,6 +15,7 @@ import {
   getPurchaseReturn,
   updatePurchaseReturn,
 } from '#/api/erp/purchase/return';
+import { $t } from '#/locales';
 
 import { useFormSchema } from '../data';
 import ItemForm from './item-form.vue';
@@ -52,10 +52,10 @@ const itemFormRef = ref<InstanceType<typeof ItemForm>>();
 /* eslint-disable unicorn/no-nested-ternary */
 const getTitle = computed(() =>
   formType.value === 'create'
-    ? $t('ui.actionTitle.create', ['采购退货'])
+    ? $t('ui.actionTitle.create', [$t('erp.purchaseReturn.purchaseReturn')])
     : formType.value === 'edit'
-      ? $t('ui.actionTitle.edit', ['采购退货'])
-      : '采购退货详情',
+      ? $t('ui.actionTitle.edit', [$t('erp.purchaseReturn.purchaseReturn')])
+      : $t('ui.actionTitle.detail', [$t('erp.purchaseReturn.purchaseReturn')]),
 );
 
 const [Form, formApi] = useVbenForm({
@@ -149,7 +149,10 @@ const [Modal, modalApi] = useVbenModal({
     try {
       itemFormInstance.validate();
     } catch (error: any) {
-      message.error(error.message || '子表单验证失败');
+      message.error(
+        error.message ||
+          $t('erp.purchaseReturn.message.childFormValidateFailed'),
+      );
       return;
     }
 

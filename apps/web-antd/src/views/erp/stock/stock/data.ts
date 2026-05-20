@@ -3,16 +3,17 @@ import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 
 import { getProductSimpleList } from '#/api/erp/product/product';
 import { getWarehouseSimpleList } from '#/api/erp/stock/warehouse';
+import { $t } from '#/locales';
 
 /** 搜索表单 */
 export function useGridFormSchema(): VbenFormSchema[] {
   return [
     {
       fieldName: 'productId',
-      label: '产品',
+      label: $t('erp.stock.field.productIdName'),
       component: 'ApiSelect',
       componentProps: {
-        placeholder: '请选择产品',
+        placeholder: $t('ui.placeholder.select', [$t('erp.stock.field.productIdName')]),
         allowClear: true,
         showSearch: true,
         api: getProductSimpleList,
@@ -22,10 +23,10 @@ export function useGridFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'warehouseId',
-      label: '仓库',
+      label: $t('erp.stock.field.warehouseIdName'),
       component: 'ApiSelect',
       componentProps: {
-        placeholder: '请选择仓库',
+        placeholder: $t('ui.placeholder.select', [$t('erp.stock.field.warehouseIdName')]),
         allowClear: true,
         showSearch: true,
         api: getWarehouseSimpleList,
@@ -41,28 +42,28 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
   return [
     {
       field: 'productName',
-      title: '产品名称',
+      title: $t('erp.stock.field.productName'),
       minWidth: 150,
     },
     {
       field: 'unitName',
-      title: '产品单位',
+      title: $t('erp.stock.field.unitName'),
       minWidth: 100,
     },
     {
       field: 'categoryName',
-      title: '产品分类',
+      title: $t('erp.stock.field.categoryName'),
       minWidth: 120,
     },
     {
       field: 'count',
-      title: '库存量',
+      title: $t('erp.stock.field.stockCount'),
       minWidth: 100,
       formatter: 'formatAmount3',
     },
     {
       field: 'warehouseName',
-      title: '仓库',
+      title: $t('erp.stock.field.warehouseName'),
       minWidth: 120,
     },
   ];

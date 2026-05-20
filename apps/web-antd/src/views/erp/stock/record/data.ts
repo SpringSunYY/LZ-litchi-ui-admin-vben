@@ -4,16 +4,17 @@ import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 import { getProductSimpleList } from '#/api/erp/product/product';
 import { getWarehouseSimpleList } from '#/api/erp/stock/warehouse';
 import { DICT_TYPE, getDictOptions, getRangePickerDefaultProps } from '#/utils';
+import { $t } from '#/locales';
 
 /** 搜索表单 */
 export function useGridFormSchema(): VbenFormSchema[] {
   return [
     {
       fieldName: 'productId',
-      label: '产品',
+      label: $t('erp.stockRecord.field.productIdName'),
       component: 'ApiSelect',
       componentProps: {
-        placeholder: '请选择产品',
+        placeholder: $t('ui.placeholder.select', [$t('erp.stockRecord.field.productIdName')]),
         allowClear: true,
         showSearch: true,
         api: getProductSimpleList,
@@ -23,10 +24,10 @@ export function useGridFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'warehouseId',
-      label: '仓库',
+      label: $t('erp.stockRecord.field.warehouseIdName'),
       component: 'ApiSelect',
       componentProps: {
-        placeholder: '请选择仓库',
+        placeholder: $t('ui.placeholder.select', [$t('erp.stockRecord.field.warehouseIdName')]),
         allowClear: true,
         showSearch: true,
         api: getWarehouseSimpleList,
@@ -36,26 +37,26 @@ export function useGridFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'bizType',
-      label: '类型',
+      label: $t('erp.stockRecord.field.bizType'),
       component: 'Select',
       componentProps: {
-        placeholder: '请选择类型',
+        placeholder: $t('ui.placeholder.select', [$t('erp.stockRecord.field.bizType')]),
         allowClear: true,
         options: getDictOptions(DICT_TYPE.ERP_STOCK_RECORD_BIZ_TYPE, 'number'),
       },
     },
     {
       fieldName: 'bizNo',
-      label: '业务单号',
+      label: $t('erp.stockRecord.field.bizNo'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入业务单号',
+        placeholder: $t('ui.placeholder.input', [$t('erp.stockRecord.field.bizNo')]),
         allowClear: true,
       },
     },
     {
       fieldName: 'createTime',
-      label: '创建时间',
+      label: $t('erp.stockRecord.field.createTime'),
       component: 'RangePicker',
       componentProps: {
         ...getRangePickerDefaultProps(),
@@ -70,27 +71,27 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
   return [
     {
       field: 'productName',
-      title: '产品名称',
+      title: $t('erp.stockRecord.field.productName'),
       minWidth: 150,
     },
     {
       field: 'categoryName',
-      title: '产品分类',
+      title: $t('erp.stockRecord.field.categoryName'),
       width: 120,
     },
     {
       field: 'unitName',
-      title: '产品单位',
+      title: $t('erp.stockRecord.field.unitName'),
       width: 100,
     },
     {
       field: 'warehouseName',
-      title: '仓库',
+      title: $t('erp.stockRecord.field.warehouseName'),
       width: 120,
     },
     {
       field: 'bizType',
-      title: '类型',
+      title: $t('erp.stockRecord.field.bizType'),
       width: 100,
       cellRender: {
         name: 'CellDict',
@@ -99,31 +100,31 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
     },
     {
       field: 'bizNo',
-      title: '出入库单号',
+      title: $t('erp.stockRecord.field.bizNo'),
       width: 200,
       showOverflow: 'tooltip',
     },
     {
       field: 'createTime',
-      title: '出入库日期',
+      title: $t('erp.stockRecord.field.bizTime'),
       width: 180,
       formatter: 'formatDateTime',
     },
     {
       field: 'count',
-      title: '出入库数量',
+      title: $t('erp.stockRecord.field.count'),
       width: 120,
       formatter: 'formatAmount3',
     },
     {
       field: 'totalCount',
-      title: '库存量',
+      title: $t('erp.stockRecord.field.stockCount'),
       width: 100,
       formatter: 'formatAmount3',
     },
     {
       field: 'creatorName',
-      title: '操作人',
+      title: $t('erp.stockRecord.field.creatorName'),
       width: 100,
     },
   ];

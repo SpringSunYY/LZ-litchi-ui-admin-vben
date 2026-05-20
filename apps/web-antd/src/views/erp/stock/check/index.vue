@@ -37,7 +37,10 @@ function handleRefresh() {
 /** 导出表格 */
 async function handleExport() {
   const data = await exportStockCheck(await gridApi.formApi.getValues());
-  downloadFileFromBlobPart({ fileName: '库存盘点单.xls', source: data });
+  downloadFileFromBlobPart({
+    fileName: `${$t('erp.stockCheck.stockCheck')}.xls`,
+    source: data,
+  });
 }
 
 /** 新增库存盘点单 */
@@ -70,13 +73,17 @@ async function handleUpdateStatus(
   row: ErpStockCheckApi.StockCheck,
   status: number,
 ) {
+  const statusText =
+    status === 20
+      ? $t('erp.stockCheck.message.audit')
+      : $t('erp.stockCheck.message.antiAudit');
   const hideLoading = message.loading({
-    content: `确定${status === 20 ? '审批' : '反审批'}该盘点单吗？`,
+    content: $t('erp.stockCheck.message.confirmAudit', [statusText]),
     duration: 0,
   });
   try {
     await updateStockCheckStatus(row.id!, status);
-    message.success(`${status === 20 ? '审批' : '反审批'}成功`);
+    message.success($t('erp.stockCheck.message.auditSuccess', [statusText]));
     handleRefresh();
   } finally {
     hideLoading();
@@ -136,18 +143,20 @@ const [Grid, gridApi] = useVbenVxeGrid({
   <Page auto-content-height>
     <template #doc>
       <DocAlert
-        title="【库存】库存调拨、库存盘点"
+        :title="$t('erp.stockCheck.docTitle')"
         url="https://doc.iocoder.cn/erp/stock-move-check/"
       />
     </template>
 
     <FormModal @success="handleRefresh" />
-    <Grid table-title="库存盘点单列表">
+    <Grid :table-title="$t('erp.stockCheck.list')">
       <template #toolbar-tools>
         <TableAction
           :actions="[
             {
-              label: $t('ui.actionTitle.create', ['库存盘点单']),
+              label: $t('ui.actionTitle.create', [
+                $t('erp.stockCheck.stockCheck'),
+              ]),
               type: 'primary',
               icon: ACTION_ICON.ADD,
               auth: ['erp:stock-check:create'],
@@ -161,14 +170,16 @@ const [Grid, gridApi] = useVbenVxeGrid({
               onClick: handleExport,
             },
             {
-              label: '批量删除',
+              label: $t('ui.actionTitle.deleteBatch', [
+                $t('erp.stockCheck.stockCheck'),
+              ]),
               type: 'primary',
               danger: true,
               disabled: isEmpty(checkedIds),
               icon: ACTION_ICON.DELETE,
               auth: ['erp:stock-check:delete'],
               popConfirm: {
-                title: `是否删除所选中数据？`,
+                title: $t('erp.stockCheck.message.deleteSelectedData'),
                 confirm: handleDelete.bind(null, checkedIds),
               },
             },
@@ -194,12 +205,20 @@ const [Grid, gridApi] = useVbenVxeGrid({
               onClick: handleEdit.bind(null, row),
             },
             {
-              label: row.status === 10 ? '审批' : '反审批',
+              label:
+                row.status === 10
+                  ? $t('erp.stockCheck.message.audit')
+                  : $t('erp.stockCheck.message.antiAudit'),
               type: 'link',
               icon: ACTION_ICON.AUDIT,
               auth: ['erp:stock-check:update-status'],
               popConfirm: {
-                title: `确认${row.status === 10 ? '审批' : '反审批'}${row.no}吗？`,
+                title:
+                  $t('erp.stockCheck.message.confirmAudit', [
+                    row.status === 10
+                      ? $t('erp.stockCheck.message.audit')
+                      : $t('erp.stockCheck.message.antiAudit'),
+                  ]) + row.no,
                 confirm: handleUpdateStatus.bind(
                   null,
                   row,

@@ -37,7 +37,10 @@ function handleRefresh() {
 /** 导出表格 */
 async function handleExport() {
   const data = await exportSaleOrder(await gridApi.formApi.getValues());
-  downloadFileFromBlobPart({ fileName: '销售订单.xls', source: data });
+  downloadFileFromBlobPart({
+    fileName: `${$t('erp.saleOrder.saleOrder')}.xls`,
+    source: data,
+  });
 }
 
 /** 新增销售订单 */
@@ -71,12 +74,26 @@ async function handleUpdateStatus(
   status: number,
 ) {
   const hideLoading = message.loading({
-    content: `确定${status === 20 ? '审批' : '反审批'}该订单吗？`,
+    content:
+      row.status === 10
+        ? $t('erp.saleOrder.message.confirmAudit', [
+            $t('erp.saleOrder.message.audit'),
+          ])
+        : $t('erp.saleOrder.message.confirmAntiAudit', [
+            $t('erp.saleOrder.message.antiAudit'),
+            row.no,
+          ]),
     duration: 0,
   });
   try {
     await updateSaleOrderStatus(row.id!, status);
-    message.success(`${status === 20 ? '审批' : '反审批'}成功`);
+    message.success(
+      $t('erp.saleOrder.message.auditSuccess', [
+        row.status === 10
+          ? $t('erp.saleOrder.message.audit')
+          : $t('erp.saleOrder.message.antiAudit'),
+      ]),
+    );
     handleRefresh();
   } finally {
     hideLoading();
@@ -136,18 +153,20 @@ const [Grid, gridApi] = useVbenVxeGrid({
   <Page auto-content-height>
     <template #doc>
       <DocAlert
-        title="【销售】销售订单、出库、退货"
+        :title="$t('erp.saleOrder.docTitle')"
         url="https://doc.iocoder.cn/erp/sale/"
       />
     </template>
 
     <FormModal @success="handleRefresh" />
-    <Grid table-title="销售订单列表">
+    <Grid :table-title="$t('erp.saleOrder.list')">
       <template #toolbar-tools>
         <TableAction
           :actions="[
             {
-              label: $t('ui.actionTitle.create', ['销售订单']),
+              label: $t('ui.actionTitle.create', [
+                $t('erp.saleOrder.saleOrder'),
+              ]),
               type: 'primary',
               icon: ACTION_ICON.ADD,
               auth: ['erp:sale-order:create'],
@@ -161,14 +180,14 @@ const [Grid, gridApi] = useVbenVxeGrid({
               onClick: handleExport,
             },
             {
-              label: '批量删除',
+              label: $t('erp.saleOrder.action.batchDelete'),
               type: 'primary',
               danger: true,
               disabled: isEmpty(checkedIds),
               icon: ACTION_ICON.DELETE,
               auth: ['erp:sale-order:delete'],
               popConfirm: {
-                title: `是否删除所选中数据？`,
+                title: $t('erp.saleOrder.message.deleteSelectedData'),
                 confirm: handleDelete.bind(null, checkedIds),
               },
             },
@@ -194,12 +213,21 @@ const [Grid, gridApi] = useVbenVxeGrid({
               onClick: handleEdit.bind(null, row),
             },
             {
-              label: row.status === 10 ? '审批' : '反审批',
+              label:
+                row.status === 10
+                  ? $t('erp.saleOrder.message.audit')
+                  : $t('erp.saleOrder.message.antiAudit'),
               type: 'link',
               icon: ACTION_ICON.AUDIT,
               auth: ['erp:sale-order:update-status'],
               popConfirm: {
-                title: `确认${row.status === 10 ? '审批' : '反审批'}${row.no}吗？`,
+                title:
+                  row.status === 10
+                    ? $t('erp.saleOrder.message.confirmAudit', [row.no])
+                    : $t('erp.saleOrder.message.confirmAntiAudit', [
+                        $t('erp.saleOrder.message.antiAudit'),
+                        row.no,
+                      ]),
                 confirm: handleUpdateStatus.bind(
                   null,
                   row,

@@ -4,6 +4,7 @@ import type { ErpStockCheckApi } from '#/api/erp/stock/check';
 
 import { computed, nextTick, onMounted, ref, watch } from 'vue';
 
+import { $t } from '@vben/locales';
 import {
   erpCountInputFormatter,
   erpPriceInputFormatter,
@@ -106,7 +107,7 @@ function handleAdd() {
 
 /** 处理删除 */
 function handleDelete(row: ErpStockCheckApi.StockCheckItem) {
-  // TODO 芋艿
+  // TODO YY
   const index = tableData.value.findIndex((item) => item.seq === row.seq);
   if (index !== -1) {
     tableData.value.splice(index, 1);
@@ -187,13 +188,17 @@ function validate() {
     const item = tableData.value[i];
     if (item) {
       if (!item.warehouseId) {
-        throw new Error(`第 ${i + 1} 行：仓库不能为空`);
+        throw new Error(
+          $t('erp.stockCheck.message.warehouseRequired', [i + 1]),
+        );
       }
       if (!item.productId) {
-        throw new Error(`第 ${i + 1} 行：产品不能为空`);
+        throw new Error($t('erp.stockCheck.message.productRequired', [i + 1]));
       }
       if (!item.actualCount || item.actualCount <= 0) {
-        throw new Error(`第 ${i + 1} 行：实际库存不能为空`);
+        throw new Error(
+          $t('erp.stockCheck.message.actualCountRequired', [i + 1]),
+        );
       }
     }
   }
@@ -222,7 +227,11 @@ onMounted(async () => {
         :options="warehouseOptions"
         :field-names="{ label: 'name', value: 'id' }"
         class="w-full"
-        placeholder="请选择仓库"
+        :placeholder="
+          $t('ui.placeholder.select', [
+            $t('erp.stockCheck.field.warehouseName'),
+          ])
+        "
         show-search
         :disabled="disabled"
         @change="handleWarehouseChange($event, row)"
@@ -234,7 +243,9 @@ onMounted(async () => {
         :options="productOptions"
         :field-names="{ label: 'name', value: 'id' }"
         class="w-full"
-        placeholder="请选择产品"
+        :placeholder="
+          $t('ui.placeholder.select', [$t('erp.stockCheck.field.productName')])
+        "
         show-search
         :disabled="disabled"
         @change="handleProductChange($event, row)"
@@ -268,11 +279,11 @@ onMounted(async () => {
       <TableAction
         :actions="[
           {
-            label: '删除',
+            label: $t('common.delete'),
             type: 'link',
             danger: true,
             popConfirm: {
-              title: '确认删除该产品吗？',
+              title: $t('erp.stockCheck.message.confirmDeleteProduct'),
               confirm: handleDelete.bind(null, row),
             },
           },
@@ -281,13 +292,19 @@ onMounted(async () => {
     </template>
 
     <template #bottom>
-      <div class="mt-2 rounded border border-border bg-muted p-2">
-        <div class="flex justify-between text-sm text-muted-foreground">
-          <span class="font-medium text-foreground">合计：</span>
+      <div class="border-border bg-muted mt-2 rounded border p-2">
+        <div class="text-muted-foreground flex justify-between text-sm">
+          <span class="text-foreground font-medium">{{
+            $t('erp.stockCheck.message.totalLabel')
+          }}</span>
           <div class="flex space-x-4">
-            <span>数量：{{ erpCountInputFormatter(summaries.count) }}</span>
+            <span
+              >{{ $t('erp.stockCheck.message.countLabel')
+              }}{{ erpCountInputFormatter(summaries.count) }}</span
+            >
             <span>
-              金额：{{ erpPriceInputFormatter(summaries.totalPrice) }}
+              {{ $t('erp.stockCheck.message.amountLabel')
+              }}{{ erpPriceInputFormatter(summaries.totalPrice) }}
             </span>
           </div>
         </div>
@@ -297,7 +314,7 @@ onMounted(async () => {
         class="mt-2 flex justify-center"
         :actions="[
           {
-            label: '添加盘点产品',
+            label: $t('erp.stockCheck.message.addCheckProduct'),
             type: 'default',
             onClick: handleAdd,
           },

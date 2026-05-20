@@ -26,11 +26,11 @@ const itemFormRef = ref<InstanceType<typeof ItemForm>>();
 
 const getTitle = computed(() => {
   if (formType.value === 'create') {
-    return $t('ui.actionTitle.create', ['销售订单']);
+    return $t('ui.actionTitle.create', [$t('erp.saleOrder.saleOrder')]);
   } else if (formType.value === 'edit') {
-    return $t('ui.actionTitle.edit', ['销售订单']);
+    return $t('ui.actionTitle.edit', [$t('erp.saleOrder.saleOrder')]);
   } else {
-    return '销售订单详情';
+    return $t('ui.actionTitle.detail', [$t('erp.saleOrder.saleOrder')]);
   }
 });
 
@@ -89,7 +89,9 @@ const [Modal, modalApi] = useVbenModal({
     try {
       itemFormInstance.validate();
     } catch (error: any) {
-      message.error(error.message || '子表单验证失败');
+      message.error(
+        error.message || $t('erp.saleOrder.message.childFormValidateFailed'),
+      );
       return;
     }
 

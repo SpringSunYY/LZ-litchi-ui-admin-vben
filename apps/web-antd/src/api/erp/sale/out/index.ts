@@ -27,6 +27,7 @@ export namespace ErpSaleOutApi {
   /** 销售出库项 */
   export interface SaleOutItem {
     count?: number;
+    seq: number;
     id?: number;
     orderItemId?: number;
     productBarCode?: string;

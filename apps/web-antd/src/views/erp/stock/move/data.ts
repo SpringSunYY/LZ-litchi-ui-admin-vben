@@ -5,6 +5,7 @@ import { getProductSimpleList } from '#/api/erp/product/product';
 import { getWarehouseSimpleList } from '#/api/erp/stock/warehouse';
 import { getSimpleUserList } from '#/api/system/user';
 import { DICT_TYPE, getDictOptions, getRangePickerDefaultProps } from '#/utils';
+import { $t } from '#/locales';
 
 /** 表单的配置项 */
 export function useFormSchema(formType: string): VbenFormSchema[] {
@@ -19,19 +20,19 @@ export function useFormSchema(formType: string): VbenFormSchema[] {
     },
     {
       fieldName: 'no',
-      label: '调度单号',
+      label: $t('erp.stockMove.field.no'),
       component: 'Input',
       componentProps: {
-        placeholder: '系统自动生成',
+        placeholder: $t('erp.stockMove.message.autoGenerate'),
         disabled: true,
       },
     },
     {
       fieldName: 'moveTime',
-      label: '调度时间',
+      label: $t('erp.stockMove.field.moveTime'),
       component: 'DatePicker',
       componentProps: {
-        placeholder: '选择调度时间',
+        placeholder: $t('ui.placeholder.select', [$t('erp.stockMove.field.moveTime')]),
         showTime: true,
         format: 'YYYY-MM-DD HH:mm:ss',
         valueFormat: 'x',
@@ -40,10 +41,10 @@ export function useFormSchema(formType: string): VbenFormSchema[] {
     },
     {
       fieldName: 'remark',
-      label: '备注',
+      label: $t('erp.stockMove.field.remark'),
       component: 'Textarea',
       componentProps: {
-        placeholder: '请输入备注',
+        placeholder: $t('ui.placeholder.input', [$t('erp.stockMove.field.remark')]),
         autoSize: { minRows: 1, maxRows: 1 },
         disabled: formType === 'detail',
       },
@@ -51,7 +52,7 @@ export function useFormSchema(formType: string): VbenFormSchema[] {
     },
     {
       fieldName: 'fileUrl',
-      label: '附件',
+      label: $t('erp.stockMove.field.fileUrl'),
       component: 'FileUpload',
       componentProps: {
         maxNumber: 1,
@@ -74,7 +75,7 @@ export function useFormSchema(formType: string): VbenFormSchema[] {
     },
     {
       fieldName: 'items',
-      label: '产品清单',
+      label: $t('erp.stockMove.field.items'),
       component: 'Input',
       formItemClass: 'col-span-3',
     },
@@ -86,70 +87,70 @@ export function useFormItemColumns(
   disabled: boolean,
 ): VxeTableGridOptions['columns'] {
   return [
-    { type: 'seq', title: '序号', minWidth: 50, fixed: 'left' },
+    { type: 'seq', title: $t('erp.stockMove.message.seq'), minWidth: 50, fixed: 'left' },
     {
       field: 'fromWarehouseId',
-      title: '调出仓库',
+      title: $t('erp.stockMove.field.fromWarehouseIdName'),
       minWidth: 150,
       slots: { default: 'fromWarehouseId' },
     },
     {
       field: 'toWarehouseId',
-      title: '调入仓库',
+      title: $t('erp.stockMove.field.toWarehouseIdName'),
       minWidth: 150,
       slots: { default: 'toWarehouseId' },
     },
     {
       field: 'productId',
-      title: '产品名称',
+      title: $t('erp.stockMove.field.productIdName'),
       minWidth: 200,
       slots: { default: 'productId' },
     },
     {
       field: 'stockCount',
-      title: '库存',
+      title: $t('erp.stockMove.field.stock'),
       minWidth: 80,
       formatter: 'formatAmount3',
     },
     {
       field: 'productBarCode',
-      title: '条码',
+      title: $t('erp.stockMove.field.barCode'),
       minWidth: 120,
     },
     {
       field: 'productUnitName',
-      title: '单位',
+      title: $t('erp.stockMove.field.unitName'),
       minWidth: 80,
     },
     {
       field: 'remark',
-      title: '备注',
+      title: $t('erp.stockMove.field.remark'),
       minWidth: 150,
       slots: { default: 'remark' },
     },
     {
       field: 'count',
-      title: '数量',
+      title: $t('erp.stockMove.field.count'),
       minWidth: 120,
       fixed: 'right',
       slots: { default: 'count' },
     },
     {
       field: 'productPrice',
-      title: '产品单价',
+      title: $t('erp.stockMove.field.productPrice'),
       minWidth: 120,
       fixed: 'right',
       slots: { default: 'productPrice' },
     },
     {
       field: 'totalPrice',
-      title: '金额',
+      title: $t('erp.stockMove.field.productAmount'),
       minWidth: 120,
       fixed: 'right',
       formatter: 'formatAmount2',
     },
     {
-      title: '操作',
+      title: $t('common.operation'),
       width: 50,
       fixed: 'right',
       slots: { default: 'actions' },
@@ -163,19 +164,19 @@ export function useGridFormSchema(): VbenFormSchema[] {
   return [
     {
       fieldName: 'no',
-      label: '调度单号',
+      label: $t('erp.stockMove.field.no'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入调度单号',
+        placeholder: $t('ui.placeholder.input', [$t('erp.stockMove.field.no')]),
         allowClear: true,
       },
     },
     {
       fieldName: 'productId',
-      label: '产品',
+      label: $t('erp.stockMove.field.productIdName'),
       component: 'ApiSelect',
       componentProps: {
-        placeholder: '请选择产品',
+        placeholder: $t('ui.placeholder.select', [$t('erp.stockMove.field.productIdName')]),
         allowClear: true,
         showSearch: true,
         api: getProductSimpleList,
@@ -185,7 +186,7 @@ export function useGridFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'moveTime',
-      label: '调度时间',
+      label: $t('erp.stockMove.field.moveTime'),
       component: 'RangePicker',
       componentProps: {
         ...getRangePickerDefaultProps(),
@@ -194,10 +195,10 @@ export function useGridFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'fromWarehouseId',
-      label: '调出仓库',
+      label: $t('erp.stockMove.field.fromWarehouseIdName'),
       component: 'ApiSelect',
       componentProps: {
-        placeholder: '请选择调出仓库',
+        placeholder: $t('ui.placeholder.select', [$t('erp.stockMove.field.fromWarehouseIdName')]),
         allowClear: true,
         showSearch: true,
         api: getWarehouseSimpleList,
@@ -207,10 +208,10 @@ export function useGridFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'toWarehouseId',
-      label: '调入仓库',
+      label: $t('erp.stockMove.field.toWarehouseIdName'),
       component: 'ApiSelect',
       componentProps: {
-        placeholder: '请选择调入仓库',
+        placeholder: $t('ui.placeholder.select', [$t('erp.stockMove.field.toWarehouseIdName')]),
         allowClear: true,
         showSearch: true,
         api: getWarehouseSimpleList,
@@ -220,10 +221,10 @@ export function useGridFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'creator',
-      label: '创建人',
+      label: $t('erp.stockMove.field.creatorName'),
       component: 'ApiSelect',
       componentProps: {
-        placeholder: '请选择创建人',
+        placeholder: $t('ui.placeholder.select', [$t('erp.stockMove.field.creatorName')]),
         allowClear: true,
         showSearch: true,
         api: getSimpleUserList,
@@ -233,20 +234,20 @@ export function useGridFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'status',
-      label: '状态',
+      label: $t('erp.stockMove.field.status'),
       component: 'Select',
       componentProps: {
         options: getDictOptions(DICT_TYPE.ERP_AUDIT_STATUS, 'number'),
-        placeholder: '请选择状态',
+        placeholder: $t('ui.placeholder.select', [$t('erp.stockMove.field.status')]),
         allowClear: true,
       },
     },
     {
       fieldName: 'remark',
-      label: '备注',
+      label: $t('erp.stockMove.field.remark'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入备注',
+        placeholder: $t('ui.placeholder.input', [$t('erp.stockMove.field.remark')]),
         allowClear: true,
       },
     },
@@ -263,42 +264,42 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
     },
     {
       field: 'no',
-      title: '调度单号',
+      title: $t('erp.stockMove.field.no'),
       width: 200,
       fixed: 'left',
     },
     {
       field: 'productNames',
-      title: '产品信息',
+      title: $t('erp.stockMove.field.productNames'),
       showOverflow: 'tooltip',
       minWidth: 120,
     },
     {
       field: 'moveTime',
-      title: '调度时间',
+      title: $t('erp.stockMove.field.moveTime'),
       width: 160,
       formatter: 'formatDate',
     },
     {
       field: 'creatorName',
-      title: '创建人',
+      title: $t('erp.stockMove.field.creatorName'),
       minWidth: 120,
     },
     {
       field: 'totalCount',
-      title: '总数量',
+      title: $t('erp.stockMove.field.totalCount'),
       formatter: 'formatAmount3',
       minWidth: 120,
     },
     {
       field: 'totalPrice',
-      title: '总金额',
+      title: $t('erp.stockMove.field.totalAmount'),
       formatter: 'formatAmount2',
       minWidth: 120,
     },
     {
       field: 'status',
-      title: '状态',
+      title: $t('erp.stockMove.field.status'),
       minWidth: 120,
       cellRender: {
         name: 'CellDict',
@@ -306,7 +307,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
       },
     },
     {
-      title: '操作',
+      title: $t('common.operation'),
       width: 260,
       fixed: 'right',
       slots: { default: 'actions' },

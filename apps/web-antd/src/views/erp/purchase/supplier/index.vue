@@ -54,7 +54,10 @@ async function handleDelete(row: ErpSupplierApi.Supplier) {
 /** 导出供应商 */
 async function handleExport() {
   const data = await exportSupplier(await gridApi.formApi.getValues());
-  downloadFileFromBlobPart({ fileName: '供应商.xls', source: data });
+  downloadFileFromBlobPart({
+    fileName: `${$t('erp.supplier.list')}.xls`,
+    source: data,
+  });
 }
 
 const [FormModal, formModalApi] = useVbenModal({
@@ -97,18 +100,18 @@ const [Grid, gridApi] = useVbenVxeGrid({
   <Page auto-content-height>
     <template #doc>
       <DocAlert
-        title="【采购】采购订单、入库、退货"
+        :title="$t('erp.supplier.docTitle')"
         url="https://doc.iocoder.cn/erp/purchase/"
       />
     </template>
 
     <FormModal @success="handleRefresh" />
-    <Grid table-title="供应商列表">
+    <Grid :table-title="$t('erp.supplier.list')">
       <template #toolbar-tools>
         <TableAction
           :actions="[
             {
-              label: $t('ui.actionTitle.create', ['供应商']),
+              label: $t('ui.actionTitle.create', [$t('erp.supplier.supplier')]),
               type: 'primary',
               icon: ACTION_ICON.ADD,
               auth: ['erp:supplier:create'],

@@ -23,6 +23,7 @@ export namespace ErpStockMoveApi {
 
   /** 库存调拨单子表信息 */
   export interface StockMoveItem {
+    seq: number; // 序号
     count: number; // 数量
     fromWarehouseId?: number; // 来源仓库ID
     id?: number; // ID

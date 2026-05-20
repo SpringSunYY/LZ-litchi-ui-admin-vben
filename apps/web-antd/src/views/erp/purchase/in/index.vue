@@ -37,7 +37,10 @@ function handleRefresh() {
 /** 导出表格 */
 async function handleExport() {
   const data = await exportPurchaseIn(await gridApi.formApi.getValues());
-  downloadFileFromBlobPart({ fileName: '采购入库.xls', source: data });
+  downloadFileFromBlobPart({
+    fileName: `${$t('erp.purchaseIn.list')}.xls`,
+    source: data,
+  });
 }
 
 /** 新增采购入库 */
@@ -71,12 +74,22 @@ async function handleUpdateStatus(
   status: number,
 ) {
   const hideLoading = message.loading({
-    content: `确定${status === 20 ? '审批' : '反审批'}该订单吗？`,
+    content: $t('erp.purchaseIn.message.confirmAudit', [
+      status === 20
+        ? $t('erp.purchaseIn.message.audit')
+        : $t('erp.purchaseIn.message.antiAudit'),
+    ]),
     duration: 0,
   });
   try {
     await updatePurchaseInStatus(row.id!, status);
-    message.success(`${status === 20 ? '审批' : '反审批'}成功`);
+    message.success(
+      $t('erp.purchaseIn.message.auditSuccess', [
+        status === 20
+          ? $t('erp.purchaseIn.message.audit')
+          : $t('erp.purchaseIn.message.antiAudit'),
+      ]),
+    );
     handleRefresh();
   } finally {
     hideLoading();
@@ -136,18 +149,20 @@ const [Grid, gridApi] = useVbenVxeGrid({
   <Page auto-content-height>
     <template #doc>
       <DocAlert
-        title="【采购】采购订单、入库、退货"
+        :title="$t('erp.purchaseIn.docTitle')"
         url="https://doc.iocoder.cn/erp/purchase/"
       />
     </template>
 
     <FormModal @success="handleRefresh" />
-    <Grid table-title="采购入库列表">
+    <Grid :table-title="$t('erp.purchaseIn.list')">
       <template #toolbar-tools>
         <TableAction
           :actions="[
             {
-              label: $t('ui.actionTitle.create', ['采购入库']),
+              label: $t('ui.actionTitle.create', [
+                $t('erp.purchaseIn.purchaseIn'),
+              ]),
               type: 'primary',
               icon: ACTION_ICON.ADD,
               auth: ['erp:purchase-in:create'],
@@ -161,14 +176,14 @@ const [Grid, gridApi] = useVbenVxeGrid({
               onClick: handleExport,
             },
             {
-              label: '批量删除',
+              label: $t('ui.actionTitle.deleteBatch'),
               type: 'primary',
               danger: true,
               disabled: isEmpty(checkedIds),
               icon: ACTION_ICON.DELETE,
               auth: ['erp:purchase-in:delete'],
               popConfirm: {
-                title: `是否删除所选中数据？`,
+                title: $t('erp.purchaseIn.message.deleteSelectedData'),
                 confirm: handleDelete.bind(null, checkedIds),
               },
             },
@@ -194,12 +209,19 @@ const [Grid, gridApi] = useVbenVxeGrid({
               onClick: handleEdit.bind(null, row),
             },
             {
-              label: row.status === 10 ? '审批' : '反审批',
+              label:
+                row.status === 10
+                  ? $t('erp.purchaseIn.message.audit')
+                  : $t('erp.purchaseIn.message.antiAudit'),
               type: 'link',
               icon: ACTION_ICON.AUDIT,
               auth: ['erp:purchase-in:update-status'],
               popConfirm: {
-                title: `确认${row.status === 10 ? '审批' : '反审批'}${row.no}吗？`,
+                title: $t('erp.purchaseIn.message.confirmAudit', [
+                  row.status === 10
+                    ? $t('erp.purchaseIn.message.audit')
+                    : $t('erp.purchaseIn.message.antiAudit'),
+                ]),
                 confirm: handleUpdateStatus.bind(
                   null,
                   row,

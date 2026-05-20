@@ -10,6 +10,7 @@ import { erpPriceInputFormatter } from '@vben/utils';
 import { Input, InputNumber, message } from 'ant-design-vue';
 
 import { TableAction, useVbenVxeGrid } from '#/adapter/vxe-table';
+import { $t } from '#/locales';
 import { ErpBizType } from '#/utils';
 
 import { useFormItemColumns } from '../data';
@@ -120,7 +121,7 @@ watch(
 const purchaseInSelectRef = ref();
 const handleOpenPurchaseIn = () => {
   if (!props.supplierId) {
-    message.error('请选择供应商');
+    message.error($t('erp.payment.message.pleaseSelectSupplier'));
     return;
   }
   purchaseInSelectRef.value?.open(props.supplierId);
@@ -146,7 +147,7 @@ const handleAddPurchaseIn = (rows: ErpPurchaseInApi.PurchaseIn[]) => {
 const saleReturnSelectRef = ref();
 const handleOpenSaleReturn = () => {
   if (!props.supplierId) {
-    message.error('请选择供应商');
+    message.error($t('erp.payment.message.pleaseSelectSupplier'));
     return;
   }
   saleReturnSelectRef.value?.open(props.supplierId);
@@ -159,8 +160,8 @@ const handleAddSaleReturn = (rows: ErpPurchaseReturnApi.PurchaseReturn[]) => {
       bizType: ErpBizType.PURCHASE_RETURN,
       bizNo: row.no,
       totalPrice: -row.totalPrice,
-      paidPrice: -row.refundPrice,
-      paymentPrice: -row.totalPrice + row.refundPrice,
+      paidPrice: -row?.refundPrice,
+      paymentPrice: -row.totalPrice + row?.refundPrice,
       remark: undefined,
     };
     tableData.value.push(newItem);
@@ -197,13 +198,15 @@ const handleRowChange = (row: any) => {
 const validate = () => {
   // 检查是否有明细
   if (tableData.value.length === 0) {
-    throw new Error('请添加付款明细');
+    throw new Error($t('erp.payment.message.pleaseAddPaymentDetail'));
   }
   // 检查每行的付款金额
   for (let i = 0; i < tableData.value.length; i++) {
     const item = tableData.value[i];
     if (!item.paymentPrice || item.paymentPrice <= 0) {
-      throw new Error(`第 ${i + 1} 行：本次付款必须大于0`);
+      throw new Error(
+        $t('erp.payment.message.paymentAmountMustPositive', [i + 1]),
+      );
     }
   }
 };
@@ -220,7 +223,11 @@ defineExpose({ validate });
           :precision="2"
           :disabled="disabled"
           :formatter="erpPriceInputFormatter"
-          placeholder="请输入本次付款"
+          :placeholder="
+            $t('ui.placeholder.input', [
+              $t('erp.payment.message.currentPayment'),
+            ])
+          "
           @change="handleRowChange(row)"
         />
       </template>
@@ -228,7 +235,9 @@ defineExpose({ validate });
         <Input
           v-model:value="row.remark"
           :disabled="disabled"
-          placeholder="请输入备注"
+          :placeholder="
+            $t('ui.placeholder.input', [$t('erp.payment.field.remark')])
+          "
           @change="handleRowChange(row)"
         />
       </template>
@@ -236,11 +245,11 @@ defineExpose({ validate });
         <TableAction
           :actions="[
             {
-              label: '删除',
+              label: $t('common.delete'),
               type: 'link',
               danger: true,
               popConfirm: {
-                title: '确认删除该付款明细吗？',
+                title: $t('erp.payment.message.confirmDeletePaymentDetail'),
                 confirm: handleDelete.bind(null, row),
               },
             },
@@ -251,16 +260,22 @@ defineExpose({ validate });
       <template #bottom>
         <div class="border-border bg-muted mt-2 rounded border p-2">
           <div class="text-muted-foreground flex justify-between text-sm">
-            <span class="text-foreground font-medium">合计：</span>
+            <span class="text-foreground font-medium">{{
+              $t('erp.payment.message.total')
+            }}</span>
             <div class="flex space-x-4">
               <span>
-                合计付款：{{ erpPriceInputFormatter(summaries.totalPrice) }}
+                {{ $t('erp.payment.message.totalPayment') }}：{{
+                  erpPriceInputFormatter(summaries.totalPrice)
+                }}
               </span>
               <span>
-                已付金额：{{ erpPriceInputFormatter(summaries.paidPrice) }}
+                {{ $t('erp.payment.field.paidPrice') }}：{{
+                  erpPriceInputFormatter(summaries.paidPrice)
+                }}
               </span>
               <span>
-                本次付款：
+                {{ $t('erp.payment.message.currentPayment') }}：
                 {{ erpPriceInputFormatter(summaries.paymentPrice) }}
               </span>
             </div>
@@ -271,12 +286,12 @@ defineExpose({ validate });
           class="mt-2 flex justify-center"
           :actions="[
             {
-              label: '添加采购入库单',
+              label: $t('erp.payment.message.addPurchaseIn'),
               type: 'default',
               onClick: handleOpenPurchaseIn,
             },
             {
-              label: '添加采购退货单',
+              label: $t('erp.payment.message.addPurchaseReturn'),
               type: 'default',
               onClick: handleOpenSaleReturn,
             },

@@ -31,7 +31,10 @@ function handleRefresh() {
 /** 导出表格 */
 async function handleExport() {
   const data = await exportProductUnit(await gridApi.formApi.getValues());
-  downloadFileFromBlobPart({ fileName: '产品单位.xls', source: data });
+  downloadFileFromBlobPart({
+    fileName: `${$t('erp.unit.list')}.xls`,
+    source: data,
+  });
 }
 
 /** 创建产品单位 */
@@ -94,17 +97,17 @@ const [Grid, gridApi] = useVbenVxeGrid({
   <Page auto-content-height>
     <template #doc>
       <DocAlert
-        title="【产品】产品信息、分类、单位"
+        :title="$t('erp.unit.docTitle')"
         url="https://doc.iocoder.cn/erp/product/"
       />
     </template>
     <FormModal @success="handleRefresh" />
-    <Grid table-title="产品单位列表">
+    <Grid :table-title="$t('erp.unit.list')">
       <template #toolbar-tools>
         <TableAction
           :actions="[
             {
-              label: $t('ui.actionTitle.create', ['产品单位']),
+              label: $t('ui.actionTitle.create', [$t('erp.unit.unit')]),
               type: 'primary',
               icon: ACTION_ICON.ADD,
               auth: ['erp:product-unit:create'],

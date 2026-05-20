@@ -21,8 +21,8 @@ const emit = defineEmits(['success']);
 const formData = ref<ErpProductCategoryApi.ProductCategory>();
 const getTitle = computed(() => {
   return formData.value?.id
-    ? $t('ui.actionTitle.edit', ['分类'])
-    : $t('ui.actionTitle.create', ['分类']);
+    ? $t('ui.actionTitle.edit', [$t('erp.category.category')])
+    : $t('ui.actionTitle.create', [$t('erp.category.category')]);
 });
 
 const [Form, formApi] = useVbenForm({

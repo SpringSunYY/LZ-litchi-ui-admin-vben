@@ -214,5 +214,14 @@
   "alert": {
     "clearCacheSuccess": "Cleared {count} cache entries. Page will refresh in 1 second"
   },
+  "time": {
+    "day": "day",
+    "hour": "hour",
+    "minute": "minute",
+    "second": "second"
+  },
+  "amount": {
+    "yuan": "yuan"
+  },
   "none": "None"
 }

@@ -11,6 +11,8 @@ import {
   SvgDownloadIcon,
 } from '@vben/icons';
 
+import { $t } from '#/locales';
+
 interface Props {
   saleSummary?: {
     monthPrice?: number;
@@ -35,29 +37,29 @@ const props = withDefaults(defineProps<Props>(), {
 const overviewItems = computed<AnalysisOverviewItem[]>(() => [
   {
     icon: SvgCardIcon,
-    title: '今日销售',
-    totalTitle: '今日采购',
+    title: $t('erp.home.field.saleToday'),
+    totalTitle: $t('erp.home.field.purchaseToday'),
     totalValue: props.purchaseSummary?.todayPrice || 0,
     value: props.saleSummary?.todayPrice || 0,
   },
   {
     icon: SvgCakeIcon,
-    title: '昨日销售',
-    totalTitle: '昨日采购',
+    title: $t('erp.home.field.saleYesterday'),
+    totalTitle: $t('erp.home.field.purchaseYesterday'),
     totalValue: props.purchaseSummary?.yesterdayPrice || 0,
     value: props.saleSummary?.yesterdayPrice || 0,
   },
   {
     icon: SvgDownloadIcon,
-    title: '本月销售',
-    totalTitle: '本月采购',
+    title: $t('erp.home.field.saleThisMonth'),
+    totalTitle: $t('erp.home.field.purchaseThisMonth'),
     totalValue: props.purchaseSummary?.monthPrice || 0,
     value: props.saleSummary?.monthPrice || 0,
   },
   {
     icon: SvgBellIcon,
-    title: '今年销售',
-    totalTitle: '今年采购',
+    title: $t('erp.home.field.saleThisYear'),
+    totalTitle: $t('erp.home.field.purchaseThisYear'),
     totalValue: props.purchaseSummary?.yearPrice || 0,
     value: props.saleSummary?.yearPrice || 0,
   },

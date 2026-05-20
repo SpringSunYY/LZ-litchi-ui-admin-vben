@@ -21,8 +21,8 @@ const emit = defineEmits(['success']);
 const formData = ref<ErpWarehouseApi.Warehouse>();
 const getTitle = computed(() => {
   return formData.value?.id
-    ? $t('ui.actionTitle.edit', ['仓库'])
-    : $t('ui.actionTitle.create', ['仓库']);
+    ? $t('ui.actionTitle.edit', [$t('erp.warehouse.warehouse')])
+    : $t('ui.actionTitle.create', [$t('erp.warehouse.warehouse')]);
 });
 
 const [Form, formApi] = useVbenForm({

@@ -12,6 +12,7 @@ export namespace ErpPurchaseReturnApi {
     totalCount?: number; // 合计数量
     totalPrice: number; // 合计金额，单位：元
     discountPercent?: number; // 折扣百分比
+    refundPrice?: number; // 退款金额
     discountPrice?: number; // 折扣金额
     status?: number; // 状态
     remark?: string; // 备注
@@ -24,6 +25,7 @@ export namespace ErpPurchaseReturnApi {
   export interface PurchaseReturnItem {
     count?: number;
     id?: number;
+    seq?: number;
     orderItemId?: number;
     productBarCode?: string;
     productId?: number;
@@ -38,6 +40,7 @@ export namespace ErpPurchaseReturnApi {
     taxPrice?: number;
     totalPrice?: number;
     warehouseId?: number;
+    req?: any;
   }
 }
 

@@ -6,6 +6,7 @@ import { handleTree } from '@vben/utils';
 
 import { z } from '#/adapter/form';
 import { getProductCategoryList } from '#/api/erp/product/category';
+import { $t } from '#/locales';
 import { CommonStatusEnum, DICT_TYPE, getDictOptions } from '#/utils';
 
 /** 新增/修改的表单 */
@@ -21,7 +22,7 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'parentId',
-      label: '上级分类',
+      label: $t('erp.category.field.parentIdName'),
       component: 'ApiTreeSelect',
       componentProps: {
         allowClear: true,
@@ -29,49 +30,57 @@ export function useFormSchema(): VbenFormSchema[] {
           const data = await getProductCategoryList();
           data.unshift({
             id: 0,
-            name: '顶级分类',
+            name: $t('erp.category.message.topLevelCategory'),
           });
           return handleTree(data);
         },
         labelField: 'name',
         valueField: 'id',
         childrenField: 'children',
-        placeholder: '请选择上级分类',
+        placeholder: $t('ui.placeholder.select', [
+          $t('erp.category.field.parentIdName'),
+        ]),
         treeDefaultExpandAll: true,
       },
       rules: 'selectRequired',
     },
     {
       fieldName: 'name',
-      label: '分类名称',
+      label: $t('erp.category.field.name'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入分类名称',
+        placeholder: $t('ui.placeholder.input', [
+          $t('erp.category.field.name'),
+        ]),
       },
       rules: 'required',
     },
     {
       fieldName: 'code',
-      label: '分类编码',
+      label: $t('erp.category.field.code'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入分类编码',
+        placeholder: $t('ui.placeholder.input', [
+          $t('erp.category.field.code'),
+        ]),
       },
       rules: 'required',
     },
     {
       fieldName: 'sort',
-      label: '显示顺序',
+      label: $t('erp.category.field.sort'),
       component: 'InputNumber',
       componentProps: {
         min: 0,
-        placeholder: '请输入显示顺序',
+        placeholder: $t('ui.placeholder.input', [
+          $t('erp.category.field.sort'),
+        ]),
       },
       rules: 'required',
     },
     {
       fieldName: 'status',
-      label: '状态',
+      label: $t('erp.category.field.status'),
       component: 'RadioGroup',
       componentProps: {
         options: getDictOptions(DICT_TYPE.COMMON_STATUS, 'number'),
@@ -89,19 +98,23 @@ export function useQueryFormSchema(): VbenFormSchema[] {
     {
       component: 'Input',
       fieldName: 'name',
-      label: '分类名称',
+      label: $t('erp.category.field.name'),
       componentProps: {
-        placeholder: '请输入分类名称',
+        placeholder: $t('ui.placeholder.input', [
+          $t('erp.category.field.name'),
+        ]),
         allowClear: true,
       },
     },
     {
       component: 'Select',
       fieldName: 'status',
-      label: '开启状态',
+      label: $t('erp.category.field.status'),
       componentProps: {
         options: getDictOptions(DICT_TYPE.COMMON_STATUS, 'number'),
-        placeholder: '请选择开启状态',
+        placeholder: $t('ui.placeholder.select', [
+          $t('erp.category.field.status'),
+        ]),
         allowClear: true,
       },
     },
@@ -113,21 +126,21 @@ export function useGridColumns(): VxeTableGridOptions<ErpProductCategoryApi.Prod
   return [
     {
       field: 'name',
-      title: '分类名称',
+      title: $t('erp.category.field.name'),
       align: 'left',
       treeNode: true,
     },
     {
       field: 'code',
-      title: '分类编码',
+      title: $t('erp.category.field.code'),
     },
     {
       field: 'sort',
-      title: '显示顺序',
+      title: $t('erp.category.field.sort'),
     },
     {
       field: 'status',
-      title: '分类状态',
+      title: $t('erp.category.field.status'),
       cellRender: {
         name: 'CellDict',
         props: { type: DICT_TYPE.COMMON_STATUS },
@@ -135,11 +148,11 @@ export function useGridColumns(): VxeTableGridOptions<ErpProductCategoryApi.Prod
     },
     {
       field: 'createTime',
-      title: '创建时间',
+      title: $t('erp.category.field.createTime'),
       formatter: 'formatDateTime',
     },
     {
-      title: '操作',
+      title: $t('common.operation'),
       width: 220,
       fixed: 'right',
       slots: { default: 'actions' },

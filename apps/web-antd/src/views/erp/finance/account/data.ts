@@ -3,6 +3,7 @@ import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 import type { ErpAccountApi } from '#/api/erp/finance/account';
 
 import { z } from '#/adapter/form';
+import { $t } from '#/locales';
 import { CommonStatusEnum, DICT_TYPE, getDictOptions } from '#/utils';
 
 /** 新增/修改的表单 */
@@ -19,15 +20,15 @@ export function useFormSchema(): VbenFormSchema[] {
     {
       component: 'Input',
       fieldName: 'name',
-      label: '名称',
+      label: $t('erp.account.field.name'),
       rules: 'required',
       componentProps: {
-        placeholder: '请输入名称',
+        placeholder: $t('ui.placeholder.input', [$t('erp.account.field.name')]),
       },
     },
     {
       fieldName: 'status',
-      label: '状态',
+      label: $t('erp.account.field.status'),
       component: 'RadioGroup',
       componentProps: {
         options: getDictOptions(DICT_TYPE.COMMON_STATUS, 'number'),
@@ -39,10 +40,10 @@ export function useFormSchema(): VbenFormSchema[] {
 
     {
       fieldName: 'sort',
-      label: '排序',
+      label: $t('erp.account.field.sort'),
       component: 'InputNumber',
       componentProps: {
-        placeholder: '请输入排序',
+        placeholder: $t('ui.placeholder.input', [$t('erp.account.field.sort')]),
         precision: 0,
       },
       rules: 'required',
@@ -50,16 +51,16 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'defaultStatus',
-      label: '是否默认',
+      label: $t('erp.account.field.defaultStatus'),
       component: 'RadioGroup',
       componentProps: {
         options: [
           {
-            label: '是',
+            label: $t('common.yes'),
             value: true,
           },
           {
-            label: '否',
+            label: $t('common.no'),
             value: false,
           },
         ],
@@ -70,18 +71,20 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'no',
-      label: '编码',
+      label: $t('erp.account.field.no'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入编码',
+        placeholder: $t('ui.placeholder.input', [$t('erp.account.field.no')]),
       },
     },
     {
       fieldName: 'remark',
-      label: '备注',
+      label: $t('erp.account.field.remark'),
       component: 'Textarea',
       componentProps: {
-        placeholder: '请输入备注',
+        placeholder: $t('ui.placeholder.input', [
+          $t('erp.account.field.remark'),
+        ]),
         rows: 3,
       },
     },
@@ -93,28 +96,30 @@ export function useGridFormSchema(): VbenFormSchema[] {
   return [
     {
       fieldName: 'name',
-      label: '名称',
+      label: $t('erp.account.field.name'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入名称',
+        placeholder: $t('ui.placeholder.input', [$t('erp.account.field.name')]),
         allowClear: true,
       },
     },
     {
       fieldName: 'no',
-      label: '编码',
+      label: $t('erp.account.field.no'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入编码',
+        placeholder: $t('ui.placeholder.input', [$t('erp.account.field.no')]),
         allowClear: true,
       },
     },
     {
       fieldName: 'remark',
-      label: '备注',
+      label: $t('erp.account.field.remark'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入备注',
+        placeholder: $t('ui.placeholder.input', [
+          $t('erp.account.field.remark'),
+        ]),
         allowClear: true,
       },
     },
@@ -131,28 +136,28 @@ export function useGridColumns(
   return [
     {
       field: 'name',
-      title: '名称',
+      title: $t('erp.account.field.name'),
       minWidth: 150,
     },
     {
       field: 'no',
-      title: '编码',
+      title: $t('erp.account.field.no'),
       minWidth: 120,
     },
     {
       field: 'remark',
-      title: '备注',
+      title: $t('erp.account.field.remark'),
       minWidth: 150,
       showOverflow: 'tooltip',
     },
     {
       field: 'sort',
-      title: '排序',
+      title: $t('erp.account.field.sort'),
       minWidth: 80,
     },
     {
       field: 'status',
-      title: '状态',
+      title: $t('erp.account.field.status'),
       minWidth: 100,
       cellRender: {
         name: 'CellDict',
@@ -161,7 +166,7 @@ export function useGridColumns(
     },
     {
       field: 'defaultStatus',
-      title: '是否默认',
+      title: $t('erp.account.field.defaultStatus'),
       minWidth: 100,
       cellRender: {
         attrs: { beforeChange: onDefaultStatusChange },
@@ -174,12 +179,12 @@ export function useGridColumns(
     },
     {
       field: 'createTime',
-      title: '创建时间',
+      title: $t('erp.account.field.createTime'),
       minWidth: 180,
       formatter: 'formatDateTime',
     },
     {
-      title: '操作',
+      title: $t('common.operation'),
       width: 130,
       fixed: 'right',
       slots: { default: 'actions' },

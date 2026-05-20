@@ -8,6 +8,7 @@ import { getAccountSimpleList } from '#/api/erp/finance/account';
 import { getProductSimpleList } from '#/api/erp/product/product';
 import { getCustomerSimpleList } from '#/api/erp/sale/customer';
 import { getSimpleUserList } from '#/api/system/user';
+import { $t } from '#/locales';
 import { DICT_TYPE, getDictOptions, getRangePickerDefaultProps } from '#/utils';
 
 /** 表单的配置项 */
@@ -23,19 +24,23 @@ export function useFormSchema(formType: string): VbenFormSchema[] {
     },
     {
       fieldName: 'no',
-      label: '订单单号',
+      label: $t('erp.saleOrder.field.no'),
       component: 'Input',
       componentProps: {
-        placeholder: '系统自动生成',
+        placeholder: $t('ui.placeholder.select', [
+          $t('erp.saleOrder.field.no'),
+        ]),
         disabled: true,
       },
     },
     {
       fieldName: 'orderTime',
-      label: '订单时间',
+      label: $t('erp.saleOrder.field.orderTime'),
       component: 'DatePicker',
       componentProps: {
-        placeholder: '选择订单时间',
+        placeholder: $t('ui.placeholder.select', [
+          $t('erp.saleOrder.field.orderTime'),
+        ]),
         showTime: true,
         format: 'YYYY-MM-DD HH:mm:ss',
         valueFormat: 'x',
@@ -43,11 +48,13 @@ export function useFormSchema(formType: string): VbenFormSchema[] {
       rules: 'required',
     },
     {
-      label: '客户',
+      label: $t('erp.saleOrder.field.customerIdName'),
       fieldName: 'customerId',
       component: 'ApiSelect',
       componentProps: {
-        placeholder: '请选择客户',
+        placeholder: $t('ui.placeholder.select', [
+          $t('erp.saleOrder.field.customerIdName'),
+        ]),
         allowClear: true,
         showSearch: true,
         api: getCustomerSimpleList,
@@ -58,10 +65,12 @@ export function useFormSchema(formType: string): VbenFormSchema[] {
     },
     {
       fieldName: 'saleUserId',
-      label: '销售人员',
+      label: $t('erp.saleOrder.field.saleUserIdName'),
       component: 'ApiSelect',
       componentProps: {
-        placeholder: '请选择销售人员',
+        placeholder: $t('ui.placeholder.select', [
+          $t('erp.saleOrder.field.saleUserIdName'),
+        ]),
         allowClear: true,
         showSearch: true,
         api: getSimpleUserList,
@@ -71,10 +80,12 @@ export function useFormSchema(formType: string): VbenFormSchema[] {
     },
     {
       fieldName: 'remark',
-      label: '备注',
+      label: $t('erp.saleOrder.field.remark'),
       component: 'Textarea',
       componentProps: {
-        placeholder: '请输入备注',
+        placeholder: $t('ui.placeholder.input', [
+          $t('erp.saleOrder.field.remark'),
+        ]),
         autoSize: { minRows: 1, maxRows: 1 },
         disabled: formType === 'detail',
       },
@@ -82,7 +93,7 @@ export function useFormSchema(formType: string): VbenFormSchema[] {
     },
     {
       fieldName: 'fileUrl',
-      label: '附件',
+      label: $t('erp.saleOrder.field.fileUrl'),
       component: 'FileUpload',
       componentProps: {
         maxNumber: 1,
@@ -105,16 +116,18 @@ export function useFormSchema(formType: string): VbenFormSchema[] {
     },
     {
       fieldName: 'items',
-      label: '销售产品清单',
+      label: $t('erp.saleOrder.field.items'),
       component: 'Input',
       formItemClass: 'col-span-3',
     },
     {
       fieldName: 'discountPercent',
-      label: '优惠率(%)',
+      label: $t('erp.saleOrder.field.discountPercent'),
       component: 'InputNumber',
       componentProps: {
-        placeholder: '请输入优惠率',
+        placeholder: $t('ui.placeholder.input', [
+          $t('erp.saleOrder.field.discountPercent'),
+        ]),
         min: 0,
         max: 100,
         precision: 2,
@@ -123,10 +136,10 @@ export function useFormSchema(formType: string): VbenFormSchema[] {
     },
     {
       fieldName: 'discountPrice',
-      label: '付款优惠',
+      label: $t('erp.saleOrder.field.discountPrice'),
       component: 'InputNumber',
       componentProps: {
-        placeholder: '收款优惠',
+        placeholder: $t('erp.saleOrder.field.discountPrice'),
         precision: 2,
         formatter: erpPriceInputFormatter,
         disabled: true,
@@ -134,10 +147,10 @@ export function useFormSchema(formType: string): VbenFormSchema[] {
     },
     {
       fieldName: 'totalPrice',
-      label: '优惠后金额',
+      label: $t('erp.saleOrder.field.totalPrice'),
       component: 'InputNumber',
       componentProps: {
-        placeholder: '优惠后金额',
+        placeholder: $t('erp.saleOrder.field.totalPrice'),
         precision: 2,
         formatter: erpPriceInputFormatter,
         disabled: true,
@@ -145,10 +158,12 @@ export function useFormSchema(formType: string): VbenFormSchema[] {
     },
     {
       fieldName: 'accountId',
-      label: '结算账户',
+      label: $t('erp.saleOrder.field.accountIdName'),
       component: 'ApiSelect',
       componentProps: {
-        placeholder: '请选择结算账户',
+        placeholder: $t('ui.placeholder.select', [
+          $t('erp.saleOrder.field.accountIdName'),
+        ]),
         allowClear: true,
         showSearch: true,
         api: getAccountSimpleList,
@@ -159,12 +174,14 @@ export function useFormSchema(formType: string): VbenFormSchema[] {
     {
       component: 'InputNumber',
       componentProps: {
-        placeholder: '请输入收取订金',
+        placeholder: $t('ui.placeholder.input', [
+          $t('erp.saleOrder.field.depositPrice'),
+        ]),
         precision: 2,
         min: 0,
       },
       fieldName: 'depositPrice',
-      label: '收取订金',
+      label: $t('erp.saleOrder.field.depositPrice'),
       rules: z.number().min(0).optional(),
     },
   ];
@@ -175,79 +192,84 @@ export function useFormItemColumns(
   disabled: boolean,
 ): VxeTableGridOptions['columns'] {
   return [
-    { type: 'seq', title: '序号', minWidth: 50, fixed: 'left' },
+    {
+      type: 'seq',
+      title: $t('erp.saleOrder.message.seq') || 'seq',
+      minWidth: 50,
+      fixed: 'left',
+    },
     {
       field: 'productId',
-      title: '产品名称',
+      title: $t('erp.saleOrder.field.productIdName'),
       minWidth: 200,
       slots: { default: 'productId' },
     },
     {
       field: 'stockCount',
-      title: '库存',
+      title: $t('erp.saleOrder.field.stock'),
       minWidth: 80,
       formatter: 'formatAmount3',
     },
     {
       field: 'productBarCode',
-      title: '条码',
+      title: $t('erp.saleOrder.field.barCode'),
       minWidth: 120,
     },
     {
       field: 'productUnitName',
-      title: '单位',
+      title: $t('erp.saleOrder.field.unitName'),
       minWidth: 80,
     },
     {
       field: 'remark',
-      title: '备注',
+      title: $t('erp.saleOrder.field.remark'),
       minWidth: 150,
       slots: { default: 'remark' },
     },
     {
       field: 'count',
-      title: '数量',
+      title: $t('erp.saleOrder.field.count'),
       minWidth: 120,
       fixed: 'right',
       slots: { default: 'count' },
     },
     {
       field: 'productPrice',
-      title: '产品单价',
+      title: $t('erp.saleOrder.field.productPrice'),
       minWidth: 120,
       fixed: 'right',
       slots: { default: 'productPrice' },
     },
     {
       field: 'totalProductPrice',
-      title: '金额',
+      title: $t('erp.saleOrder.field.productAmount'),
       minWidth: 120,
       fixed: 'right',
       formatter: 'formatAmount2',
     },
     {
       field: 'taxPercent',
-      title: '税率(%)',
+      title: $t('erp.saleOrder.field.taxPercent'),
       minWidth: 105,
       fixed: 'right',
       slots: { default: 'taxPercent' },
     },
     {
       field: 'taxPrice',
-      title: '税额',
+      title: $t('erp.saleOrder.field.taxPrice'),
       minWidth: 120,
       fixed: 'right',
       formatter: 'formatAmount2',
     },
     {
       field: 'totalPrice',
-      title: '税额合计',
+      title: $t('erp.saleOrder.field.taxAmountTotal'),
       minWidth: 120,
       fixed: 'right',
       formatter: 'formatAmount2',
     },
     {
-      title: '操作',
+      title: $t('common.operation'),
       width: 50,
       fixed: 'right',
       slots: { default: 'actions' },
@@ -261,19 +283,21 @@ export function useGridFormSchema(): VbenFormSchema[] {
   return [
     {
       fieldName: 'no',
-      label: '订单单号',
+      label: $t('erp.saleOrder.field.no'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入订单单号',
+        placeholder: $t('ui.placeholder.input', [$t('erp.saleOrder.field.no')]),
         allowClear: true,
       },
     },
     {
       fieldName: 'productId',
-      label: '产品',
+      label: $t('erp.saleOrder.field.productIdName'),
       component: 'ApiSelect',
       componentProps: {
-        placeholder: '请选择产品',
+        placeholder: $t('ui.placeholder.select', [
+          $t('erp.saleOrder.field.productIdName'),
+        ]),
         allowClear: true,
         showSearch: true,
         api: getProductSimpleList,
@@ -283,7 +307,7 @@ export function useGridFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'orderTime',
-      label: '订单时间',
+      label: $t('erp.saleOrder.field.orderTime'),
       component: 'RangePicker',
       componentProps: {
         ...getRangePickerDefaultProps(),
@@ -292,10 +316,12 @@ export function useGridFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'supplierId',
-      label: '客户',
+      label: $t('erp.saleOrder.field.customerIdName'),
       component: 'ApiSelect',
       componentProps: {
-        placeholder: '请选择客户',
+        placeholder: $t('ui.placeholder.select', [
+          $t('erp.saleOrder.field.customerIdName'),
+        ]),
         allowClear: true,
         showSearch: true,
         api: getCustomerSimpleList,
@@ -305,10 +331,12 @@ export function useGridFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'creator',
-      label: '创建人',
+      label: $t('erp.saleOrder.field.creatorName'),
       component: 'ApiSelect',
       componentProps: {
-        placeholder: '请选择创建人',
+        placeholder: $t('ui.placeholder.select', [
+          $t('erp.saleOrder.field.creatorName'),
+        ]),
         allowClear: true,
         showSearch: true,
         api: getSimpleUserList,
@@ -318,48 +346,56 @@ export function useGridFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'status',
-      label: '状态',
+      label: $t('erp.saleOrder.field.auditStatus'),
       component: 'Select',
       componentProps: {
         options: getDictOptions(DICT_TYPE.ERP_AUDIT_STATUS, 'number'),
-        placeholder: '请选择状态',
+        placeholder: $t('ui.placeholder.select', [
+          $t('erp.saleOrder.field.auditStatus'),
+        ]),
         allowClear: true,
       },
     },
     {
       fieldName: 'remark',
-      label: '备注',
+      label: $t('erp.saleOrder.field.remark'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入备注',
+        placeholder: $t('ui.placeholder.input', [
+          $t('erp.saleOrder.field.remark'),
+        ]),
         allowClear: true,
       },
     },
     {
       fieldName: 'outStatus',
-      label: '出库状态',
+      label: $t('erp.saleOrder.field.outStatus'),
       component: 'Select',
       componentProps: {
         options: [
-          { label: '未出库', value: 0 },
-          { label: '部分出库', value: 1 },
-          { label: '全部出库', value: 2 },
+          { label: $t('erp.saleOrder.message.unOut'), value: 0 },
+          { label: $t('erp.saleOrder.message.partialOut'), value: 1 },
+          { label: $t('erp.saleOrder.message.allOut'), value: 2 },
         ],
-        placeholder: '请选择出库状态',
+        placeholder: $t('ui.placeholder.select', [
+          $t('erp.saleOrder.field.outStatus'),
+        ]),
         allowClear: true,
       },
     },
     {
       fieldName: 'returnStatus',
-      label: '退货状态',
+      label: $t('erp.saleOrder.field.returnStatus'),
       component: 'Select',
       componentProps: {
         options: [
-          { label: '未退货', value: 0 },
-          { label: '部分退货', value: 1 },
-          { label: '全部退货', value: 2 },
+          { label: $t('erp.saleOrder.message.unReturn'), value: 0 },
+          { label: $t('erp.saleOrder.message.partialReturn'), value: 1 },
+          { label: $t('erp.saleOrder.message.allReturn'), value: 2 },
         ],
-        placeholder: '请选择退货状态',
+        placeholder: $t('ui.placeholder.select', [
+          $t('erp.saleOrder.field.returnStatus'),
+        ]),
         allowClear: true,
       },
     },
@@ -376,71 +412,71 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
     },
     {
       field: 'no',
-      title: '订单单号',
+      title: $t('erp.saleOrder.field.no'),
       width: 200,
       fixed: 'left',
     },
     {
       field: 'productNames',
-      title: '产品信息',
+      title: $t('erp.saleOrder.field.productNames'),
       showOverflow: 'tooltip',
       minWidth: 120,
     },
     {
       field: 'customerName',
-      title: '客户',
+      title: $t('erp.saleOrder.field.customerIdName'),
       minWidth: 120,
     },
     {
       field: 'orderTime',
-      title: '订单时间',
+      title: $t('erp.saleOrder.field.orderTime'),
       width: 160,
       formatter: 'formatDate',
     },
     {
       field: 'creatorName',
-      title: '创建人',
+      title: $t('erp.saleOrder.field.creatorName'),
       minWidth: 120,
     },
     {
       field: 'totalCount',
-      title: '总数量',
+      title: $t('erp.saleOrder.field.totalCount'),
       formatter: 'formatAmount3',
       minWidth: 120,
     },
     {
       field: 'outCount',
-      title: '出库数量',
+      title: $t('erp.saleOrder.field.outCount'),
       formatter: 'formatAmount3',
       minWidth: 120,
     },
     {
       field: 'returnCount',
-      title: '退货数量',
+      title: $t('erp.saleOrder.field.returnCount'),
       formatter: 'formatAmount3',
       minWidth: 120,
     },
     {
       field: 'totalProductPrice',
-      title: '金额合计',
+      title: $t('erp.saleOrder.field.amountTotal'),
       formatter: 'formatAmount2',
       minWidth: 120,
     },
     {
       field: 'totalPrice',
-      title: '含税金额',
+      title: $t('erp.saleOrder.field.taxAmountTotal2'),
       formatter: 'formatAmount2',
       minWidth: 120,
     },
     {
       field: 'depositPrice',
-      title: '收取订金',
+      title: $t('erp.saleOrder.field.depositPrice'),
       formatter: 'formatAmount2',
       minWidth: 120,
     },
     {
       field: 'status',
-      title: '状态',
+      title: $t('erp.saleOrder.field.auditStatus'),
       minWidth: 120,
       cellRender: {
         name: 'CellDict',
@@ -448,7 +484,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
       },
     },
     {
-      title: '操作',
+      title: $t('common.operation'),
       width: 260,
       fixed: 'right',
       slots: { default: 'actions' },

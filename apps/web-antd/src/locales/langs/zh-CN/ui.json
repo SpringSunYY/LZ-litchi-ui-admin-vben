@@ -214,5 +214,14 @@
   "alert": {
     "clearCacheSuccess": "已清除 {count} 条缓存数据，页面将在 1 秒后刷新"
   },
+  "time": {
+    "day": "天",
+    "hour": "小时",
+    "minute": "分钟",
+    "second": "秒"
+  },
+  "amount": {
+    "yuan": "元"
+  },
   "none": "无"
 }

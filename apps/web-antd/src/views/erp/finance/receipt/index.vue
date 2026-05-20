@@ -37,7 +37,10 @@ function handleRefresh() {
 /** 导出表格 */
 async function handleExport() {
   const data = await exportFinanceReceipt(await gridApi.formApi.getValues());
-  downloadFileFromBlobPart({ fileName: '收款单.xls', source: data });
+  downloadFileFromBlobPart({
+    fileName: $t('erp.receipt.list') + '.xls',
+    source: data,
+  });
 }
 
 /** 新增收款单 */
@@ -70,13 +73,14 @@ async function handleUpdateStatus(
   row: ErpFinanceReceiptApi.FinanceReceipt,
   status: number,
 ) {
+  const auditLabel = status === 20 ? $t('erp.receipt.message.audit') : $t('erp.receipt.message.antiAudit');
   const hideLoading = message.loading({
-    content: `确定${status === 20 ? '审批' : '反审批'}该收款单吗？`,
+    content: $t('erp.receipt.message.confirmAudit', [auditLabel]),
     duration: 0,
   });
   try {
     await updateFinanceReceiptStatus(row.id!, status);
-    message.success(`${status === 20 ? '审批' : '反审批'}成功`);
+    message.success($t('erp.receipt.message.auditSuccess', [auditLabel]));
     handleRefresh();
   } finally {
     hideLoading();
@@ -136,18 +140,18 @@ const [Grid, gridApi] = useVbenVxeGrid({
   <Page auto-content-height>
     <template #doc>
       <DocAlert
-        title="【财务】采购付款、销售收款"
+        :title="$t('erp.receipt.docTitle')"
         url="https://doc.iocoder.cn/sale/finance-payment-receipt/"
       />
     </template>
 
     <FormModal @success="handleRefresh" />
-    <Grid table-title="收款单列表">
+    <Grid :table-title="$t('erp.receipt.list')">
       <template #toolbar-tools>
         <TableAction
           :actions="[
             {
-              label: $t('ui.actionTitle.create', ['收款单']),
+              label: $t('ui.actionTitle.create', [$t('erp.receipt.receipt')]),
               type: 'primary',
               icon: ACTION_ICON.ADD,
               auth: ['erp:finance-receipt:create'],
@@ -161,14 +165,14 @@ const [Grid, gridApi] = useVbenVxeGrid({
               onClick: handleExport,
             },
             {
-              label: '批量删除',
+              label: $t('erp.receipt.action.batchDelete'),
               type: 'primary',
               danger: true,
               disabled: isEmpty(checkedIds),
               icon: ACTION_ICON.DELETE,
               auth: ['erp:finance-receipt:delete'],
               popConfirm: {
-                title: `是否删除所选中数据？`,
+                title: $t('ui.actionMessage.deleteCascadeConfirm'),
                 confirm: handleDelete.bind(null, checkedIds),
               },
             },
@@ -194,12 +198,15 @@ const [Grid, gridApi] = useVbenVxeGrid({
               onClick: handleEdit.bind(null, row),
             },
             {
-              label: row.status === 10 ? '审批' : '反审批',
+              label: row.status === 10 ? $t('erp.receipt.message.audit') : $t('erp.receipt.message.antiAudit'),
               type: 'link',
               icon: ACTION_ICON.AUDIT,
               auth: ['erp:finance-receipt:update-status'],
               popConfirm: {
-                title: `确认${row.status === 10 ? '审批' : '反审批'}${row.no}吗？`,
+                title: $t('erp.receipt.message.confirmAntiAudit', [
+                  row.status === 10 ? $t('erp.receipt.message.audit') : $t('erp.receipt.message.antiAudit'),
+                  row.no,
+                ]),
                 confirm: handleUpdateStatus.bind(
                   null,
                   row,

@@ -15,6 +15,7 @@ import { TableAction, useVbenVxeGrid } from '#/adapter/vxe-table';
 import { getProductSimpleList } from '#/api/erp/product/product';
 import { getWarehouseStockCount } from '#/api/erp/stock/stock';
 import { getWarehouseSimpleList } from '#/api/erp/stock/warehouse';
+import { $t } from '#/locales';
 
 import { useFormItemColumns } from '../data';
 
@@ -151,7 +152,7 @@ async function handleWarehouseChange(row: ErpPurchaseInApi.PurchaseInItem) {
 
 /** 处理行数据变更 */
 function handleRowChange(row: any) {
-  // TODO 芋艿
+  // TODO YY
   const index = tableData.value.findIndex((item) => item.seq === row.seq);
   if (index === -1) {
     tableData.value.push(row);
@@ -177,10 +178,12 @@ function validate() {
     const item = tableData.value[i];
     if (item) {
       if (!item.warehouseId) {
-        throw new Error(`第 ${i + 1} 行：仓库不能为空`);
+        throw new Error(
+          $t('erp.purchaseIn.message.warehouseRequired', [i + 1]),
+        );
       }
       if (!item.count || item.count <= 0) {
-        throw new Error(`第 ${i + 1} 行：产品数量不能为空`);
+        throw new Error($t('erp.purchaseIn.message.countRequired', [i + 1]));
       }
     }
   }
@@ -204,7 +207,7 @@ onMounted(async () => {
         v-model:value="row.warehouseId"
         :options="warehouseOptions"
         :field-names="{ label: 'name', value: 'id' }"
-        placeholder="请选择仓库"
+        :placeholder="$t('erp.purchaseIn.message.pleaseSelectWarehouse')"
         :disabled="disabled"
         show-search
         class="w-full"
@@ -218,7 +221,7 @@ onMounted(async () => {
         :options="productOptions"
         :field-names="{ label: 'name', value: 'id' }"
         class="w-full"
-        placeholder="请选择产品"
+        :placeholder="$t('erp.purchaseIn.message.pleaseSelectProduct')"
         show-search
       />
     </template>
@@ -261,11 +264,11 @@ onMounted(async () => {
       <TableAction
         :actions="[
           {
-            label: '删除',
+            label: $t('common.delete'),
             type: 'link',
             danger: true,
             popConfirm: {
-              title: '确认删除该产品吗？',
+              title: $t('erp.purchaseIn.message.confirmDeleteProduct'),
               confirm: handleDelete.bind(null, row),
             },
           },
@@ -274,17 +277,27 @@ onMounted(async () => {
     </template>
 
     <template #bottom>
-      <div class="mt-2 rounded border border-border bg-muted p-2">
-        <div class="flex justify-between text-sm text-muted-foreground">
-          <span class="font-medium text-foreground">合计：</span>
+      <div class="border-border bg-muted mt-2 rounded border p-2">
+        <div class="text-muted-foreground flex justify-between text-sm">
+          <span class="text-foreground font-medium">{{
+            $t('erp.purchaseIn.message.totalLabel')
+          }}</span>
           <div class="flex space-x-4">
-            <span>数量：{{ erpCountInputFormatter(summaries.count) }}</span>
             <span>
-              金额：{{ erpPriceInputFormatter(summaries.totalProductPrice) }}
+              {{ $t('erp.purchaseIn.message.countLabel')
+              }}{{ erpCountInputFormatter(summaries.count) }}
             </span>
-            <span>税额：{{ erpPriceInputFormatter(summaries.taxPrice) }}</span>
             <span>
-              税额合计：{{ erpPriceInputFormatter(summaries.totalPrice) }}
+              {{ $t('erp.purchaseIn.message.amountLabel')
+              }}{{ erpPriceInputFormatter(summaries.totalProductPrice) }}
+            </span>
+            <span>
+              {{ $t('erp.purchaseIn.message.taxAmountLabel')
+              }}{{ erpPriceInputFormatter(summaries.taxPrice) }}
+            </span>
+            <span>
+              {{ $t('erp.purchaseIn.message.taxAmountTotalLabel')
+              }}{{ erpPriceInputFormatter(summaries.totalPrice) }}
             </span>
           </div>
         </div>

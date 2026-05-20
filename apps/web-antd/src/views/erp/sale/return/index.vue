@@ -37,7 +37,10 @@ function handleRefresh() {
 /** 导出表格 */
 async function handleExport() {
   const data = await exportSaleReturn(await gridApi.formApi.getValues());
-  downloadFileFromBlobPart({ fileName: '销售退货.xls', source: data });
+  downloadFileFromBlobPart({
+    fileName: `${$t('erp.saleReturn.saleReturn')}.xls`,
+    source: data,
+  });
 }
 
 /** 新增销售退货 */
@@ -71,12 +74,26 @@ async function handleUpdateStatus(
   status: number,
 ) {
   const hideLoading = message.loading({
-    content: `确定${status === 20 ? '审批' : '反审批'}该订单吗？`,
+    content:
+      row.status === 10
+        ? $t('erp.saleReturn.message.confirmAudit', [
+            $t('erp.saleReturn.message.audit'),
+          ])
+        : $t('erp.saleReturn.message.confirmAntiAudit', [
+            $t('erp.saleReturn.message.antiAudit'),
+            row.no,
+          ]),
     duration: 0,
   });
   try {
     await updateSaleReturnStatus(row.id!, status);
-    message.success(`${status === 20 ? '审批' : '反审批'}成功`);
+    message.success(
+      $t('erp.saleReturn.message.auditSuccess', [
+        row.status === 10
+          ? $t('erp.saleReturn.message.audit')
+          : $t('erp.saleReturn.message.antiAudit'),
+      ]),
+    );
     handleRefresh();
   } finally {
     hideLoading();
@@ -136,18 +153,20 @@ const [Grid, gridApi] = useVbenVxeGrid({
   <Page auto-content-height>
     <template #doc>
       <DocAlert
-        title="【销售】销售订单、出库、退货"
+        :title="$t('erp.saleReturn.docTitle')"
         url="https://doc.iocoder.cn/erp/sale/"
       />
     </template>
 
     <FormModal @success="handleRefresh" />
-    <Grid table-title="销售退货列表">
+    <Grid :table-title="$t('erp.saleReturn.list')">
       <template #toolbar-tools>
         <TableAction
           :actions="[
             {
-              label: $t('ui.actionTitle.create', ['销售退货']),
+              label: $t('ui.actionTitle.create', [
+                $t('erp.saleReturn.saleReturn'),
+              ]),
               type: 'primary',
               icon: ACTION_ICON.ADD,
               auth: ['erp:sale-return:create'],
@@ -161,14 +180,14 @@ const [Grid, gridApi] = useVbenVxeGrid({
               onClick: handleExport,
             },
             {
-              label: '批量删除',
+              label: $t('erp.saleReturn.action.batchDelete'),
               type: 'primary',
               danger: true,
               disabled: isEmpty(checkedIds),
               icon: ACTION_ICON.DELETE,
               auth: ['erp:sale-return:delete'],
               popConfirm: {
-                title: `是否删除所选中数据？`,
+                title: $t('erp.saleReturn.message.deleteSelectedData'),
                 confirm: handleDelete.bind(null, checkedIds),
               },
             },
@@ -194,12 +213,21 @@ const [Grid, gridApi] = useVbenVxeGrid({
               onClick: handleEdit.bind(null, row),
             },
             {
-              label: row.status === 10 ? '审批' : '反审批',
+              label:
+                row.status === 10
+                  ? $t('erp.saleReturn.message.audit')
+                  : $t('erp.saleReturn.message.antiAudit'),
               type: 'link',
               icon: ACTION_ICON.AUDIT,
               auth: ['erp:sale-return:update-status'],
               popConfirm: {
-                title: `确认${row.status === 10 ? '审批' : '反审批'}${row.no}吗？`,
+                title:
+                  row.status === 10
+                    ? $t('erp.saleReturn.message.confirmAudit', [row.no])
+                    : $t('erp.saleReturn.message.confirmAntiAudit', [
+                        $t('erp.saleReturn.message.antiAudit'),
+                        row.no,
+                      ]),
                 confirm: handleUpdateStatus.bind(
                   null,
                   row,

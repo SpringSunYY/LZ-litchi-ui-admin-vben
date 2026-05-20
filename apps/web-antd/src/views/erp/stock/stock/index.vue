@@ -17,7 +17,10 @@ defineOptions({ name: 'ErpStock' });
 /** 导出库存 */
 async function handleExport() {
   const data = await exportStock(await gridApi.formApi.getValues());
-  downloadFileFromBlobPart({ fileName: '产品库存.xls', source: data });
+  downloadFileFromBlobPart({
+    fileName: `${$t('erp.stock.stock')}.xls`,
+    source: data,
+  });
 }
 
 const [Grid, gridApi] = useVbenVxeGrid({
@@ -55,12 +58,12 @@ const [Grid, gridApi] = useVbenVxeGrid({
   <Page auto-content-height>
     <template #doc>
       <DocAlert
-        title="【库存】产品库存、库存明细"
+        :title="$t('erp.stock.docTitle')"
         url="https://doc.iocoder.cn/erp/stock/"
       />
     </template>
 
-    <Grid table-title="产品库存列表">
+    <Grid :table-title="$t('erp.stock.list')">
       <template #toolbar-tools>
         <TableAction
           :actions="[

@@ -31,7 +31,10 @@ function handleRefresh() {
 /** 导出表格 */
 async function handleExport() {
   const data = await exportProduct(await gridApi.formApi.getValues());
-  downloadFileFromBlobPart({ fileName: '产品信息.xls', source: data });
+  downloadFileFromBlobPart({
+    fileName: `${$t('erp.product.list')}.xls`,
+    source: data,
+  });
 }
 
 /** 创建产品 */
@@ -94,18 +97,18 @@ const [Grid, gridApi] = useVbenVxeGrid({
   <Page auto-content-height>
     <template #doc>
       <DocAlert
-        title="【产品】产品信息、分类、单位"
+        :title="$t('erp.product.docTitle')"
         url="https://doc.iocoder.cn/erp/product/"
       />
     </template>
 
     <FormModal @success="handleRefresh" />
-    <Grid table-title="产品列表">
+    <Grid :table-title="$t('erp.product.list')">
       <template #toolbar-tools>
         <TableAction
           :actions="[
             {
-              label: $t('ui.actionTitle.create', ['产品']),
+              label: $t('ui.actionTitle.create', [$t('erp.product.product')]),
               type: 'primary',
               icon: ACTION_ICON.ADD,
               auth: ['erp:product:create'],

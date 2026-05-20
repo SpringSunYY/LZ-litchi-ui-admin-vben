@@ -1,12 +1,13 @@
 import type { VbenFormSchema } from '#/adapter/form';
 import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 
-import { CommonStatusEnum, DICT_TYPE, getDictOptions } from '#/utils';
 import { handleTree } from '@vben/utils';
 
 import { z } from '#/adapter/form';
 import { getProductCategorySimpleList } from '#/api/erp/product/category';
 import { getProductUnitSimpleList } from '#/api/erp/product/unit';
+import { $t } from '#/locales';
+import { CommonStatusEnum, DICT_TYPE, getDictOptions } from '#/utils';
 
 /** 新增/修改的表单 */
 export function useFormSchema(): VbenFormSchema[] {
@@ -22,54 +23,59 @@ export function useFormSchema(): VbenFormSchema[] {
     {
       component: 'Input',
       fieldName: 'name',
-      label: '名称',
+      label: $t('erp.product.field.name'),
       rules: 'required',
       componentProps: {
-        placeholder: '请输入名称',
+        placeholder: $t('ui.placeholder.input', [$t('erp.product.field.name')]),
       },
     },
     {
       fieldName: 'barCode',
-      label: '条码',
+      label: $t('erp.product.field.barCode'),
       component: 'Input',
       rules: 'required',
       componentProps: {
-        placeholder: '请输入条码',
+        placeholder: $t('ui.placeholder.input', [
+          $t('erp.product.field.barCode'),
+        ]),
       },
     },
     {
       fieldName: 'categoryId',
-      label: '分类',
+      label: $t('erp.product.field.categoryIdName'),
       component: 'ApiTreeSelect',
       componentProps: {
         api: async () => {
           const data = await getProductCategorySimpleList();
           return handleTree(data);
         },
-
         labelField: 'name',
         valueField: 'id',
         childrenField: 'children',
-        placeholder: '请选择分类',
+        placeholder: $t('ui.placeholder.select', [
+          $t('erp.product.field.categoryIdName'),
+        ]),
         treeDefaultExpandAll: true,
       },
       rules: 'required',
     },
     {
       fieldName: 'unitId',
-      label: '单位',
+      label: $t('erp.product.field.unitIdName'),
       component: 'ApiSelect',
       componentProps: {
         api: getProductUnitSimpleList,
         labelField: 'name',
         valueField: 'id',
-        placeholder: '请选择单位',
+        placeholder: $t('ui.placeholder.select', [
+          $t('erp.product.field.unitIdName'),
+        ]),
       },
       rules: 'required',
     },
     {
       fieldName: 'status',
-      label: '状态',
+      label: $t('erp.product.field.status'),
       component: 'RadioGroup',
       componentProps: {
         options: getDictOptions(DICT_TYPE.COMMON_STATUS, 'number'),
@@ -80,34 +86,42 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'standard',
-      label: '规格',
+      label: $t('erp.product.field.standard'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入规格',
+        placeholder: $t('ui.placeholder.input', [
+          $t('erp.product.field.standard'),
+        ]),
       },
     },
     {
       fieldName: 'expiryDay',
-      label: '保质期天数',
+      label: $t('erp.product.field.expiryDay'),
       component: 'InputNumber',
       componentProps: {
-        placeholder: '请输入保质期天数',
+        placeholder: $t('ui.placeholder.input', [
+          $t('erp.product.field.expiryDay'),
+        ]),
       },
     },
     {
       fieldName: 'weight',
-      label: '重量（kg）',
+      label: $t('erp.product.field.weight'),
       component: 'InputNumber',
       componentProps: {
-        placeholder: '请输入重量（kg）',
+        placeholder: $t('ui.placeholder.input', [
+          $t('erp.product.field.weight'),
+        ]),
       },
     },
     {
       fieldName: 'purchasePrice',
-      label: '采购价格',
+      label: $t('erp.product.field.purchasePrice'),
       component: 'InputNumber',
       componentProps: {
-        placeholder: '请输入采购价格，单位：元',
+        placeholder: $t('ui.placeholder.input', [
+          $t('erp.product.field.purchasePrice'),
+        ]),
         precision: 2,
         min: 0,
         step: 0.01,
@@ -115,10 +129,12 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'salePrice',
-      label: '销售价格',
+      label: $t('erp.product.field.salePrice'),
       component: 'InputNumber',
       componentProps: {
-        placeholder: '请输入销售价格，单位：元',
+        placeholder: $t('ui.placeholder.input', [
+          $t('erp.product.field.salePrice'),
+        ]),
         precision: 2,
         min: 0,
         step: 0.01,
@@ -126,10 +142,12 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'minPrice',
-      label: '最低价格',
+      label: $t('erp.product.field.minPrice'),
       component: 'InputNumber',
       componentProps: {
-        placeholder: '请输入最低价格，单位：元',
+        placeholder: $t('ui.placeholder.input', [
+          $t('erp.product.field.minPrice'),
+        ]),
         precision: 2,
         min: 0,
         step: 0.01,
@@ -137,10 +155,12 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'remark',
-      label: '备注',
+      label: $t('erp.product.field.remark'),
       component: 'Textarea',
       componentProps: {
-        placeholder: '请输入备注',
+        placeholder: $t('ui.placeholder.input', [
+          $t('erp.product.field.remark'),
+        ]),
       },
     },
   ];
@@ -151,27 +171,28 @@ export function useGridFormSchema(): VbenFormSchema[] {
   return [
     {
       fieldName: 'name',
-      label: '名称',
+      label: $t('erp.product.field.name'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入名称',
+        placeholder: $t('ui.placeholder.input', [$t('erp.product.field.name')]),
         allowClear: true,
       },
     },
     {
       fieldName: 'categoryId',
-      label: '分类',
+      label: $t('erp.product.field.categoryIdName'),
       component: 'ApiTreeSelect',
       componentProps: {
         api: async () => {
           const data = await getProductCategorySimpleList();
           return handleTree(data);
         },
-
         labelField: 'name',
         valueField: 'id',
         childrenField: 'children',
-        placeholder: '请选择分类',
+        placeholder: $t('ui.placeholder.select', [
+          $t('erp.product.field.categoryIdName'),
+        ]),
         treeDefaultExpandAll: true,
       },
     },
@@ -183,50 +204,50 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
   return [
     {
       field: 'barCode',
-      title: '条码',
+      title: $t('erp.product.field.barCode'),
       minWidth: 120,
     },
     {
       field: 'name',
-      title: '名称',
+      title: $t('erp.product.field.name'),
       minWidth: 200,
     },
     {
       field: 'standard',
-      title: '规格',
+      title: $t('erp.product.field.standard'),
       minWidth: 100,
     },
     {
       field: 'categoryName',
-      title: '分类',
+      title: $t('erp.product.field.categoryIdName'),
       minWidth: 120,
     },
     {
       field: 'unitName',
-      title: '单位',
+      title: $t('erp.product.field.unitIdName'),
       minWidth: 100,
     },
     {
       field: 'purchasePrice',
-      title: '采购价格',
+      title: $t('erp.product.field.purchasePrice'),
       minWidth: 100,
       formatter: 'formatAmount2',
     },
     {
       field: 'salePrice',
-      title: '销售价格',
+      title: $t('erp.product.field.salePrice'),
       minWidth: 100,
       formatter: 'formatAmount2',
     },
     {
       field: 'minPrice',
-      title: '最低价格',
+      title: $t('erp.product.field.minPrice'),
       minWidth: 100,
       formatter: 'formatAmount2',
     },
     {
       field: 'status',
-      title: '状态',
+      title: $t('erp.product.field.status'),
       minWidth: 100,
       cellRender: {
         name: 'CellDict',
@@ -235,12 +256,12 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
     },
     {
       field: 'createTime',
-      title: '创建时间',
+      title: $t('erp.product.field.createTime'),
       minWidth: 180,
       formatter: 'formatDateTime',
     },
     {
-      title: '操作',
+      title: $t('common.operation'),
       width: 130,
       fixed: 'right',
       slots: { default: 'actions' },

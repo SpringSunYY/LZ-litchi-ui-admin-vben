@@ -32,7 +32,10 @@ function handleRefresh() {
 /** 导出表格 */
 async function handleExport() {
   const data = await exportAccount(await gridApi.formApi.getValues());
-  downloadFileFromBlobPart({ fileName: '结算账户信息.xls', source: data });
+  downloadFileFromBlobPart({
+    fileName: `${$t('erp.account.account')}.xls`,
+    source: data,
+  });
 }
 
 /** 创建结算账户 */
@@ -66,20 +69,27 @@ async function handleDefaultStatusChange(
   row: ErpAccountApi.Account,
 ): Promise<boolean | undefined> {
   return new Promise((resolve, reject) => {
-    const text = newStatus ? '设置' : '取消';
+    const actionText = newStatus
+      ? $t('erp.account.message.set')
+      : $t('erp.account.message.cancelDefault');
     confirm({
-      content: `确认要${text}"${row.name}"默认吗?`,
+      content: $t('erp.account.message.confirmSetDefault', [
+        actionText,
+        row.name,
+      ]),
     })
       .then(async () => {
         // 更新默认状态
         await updateAccountDefaultStatus(row.id!, newStatus);
         // 提示并返回成功
-        message.success(`${text}默认成功`);
+        message.success(
+          $t('erp.account.message.setDefaultSuccess', [actionText]),
+        );
         handleRefresh();
         resolve(true);
       })
       .catch(() => {
-        reject(new Error('取消操作'));
+        reject(new Error($t('common.cancel')));
       });
   });
 }
@@ -119,18 +129,18 @@ const [Grid, gridApi] = useVbenVxeGrid({
   <Page auto-content-height>
     <template #doc>
       <DocAlert
-        title="【财务】采购付款、销售收款"
+        :title="$t('erp.account.docTitle')"
         url="https://doc.iocoder.cn/sale/finance-payment-receipt/"
       />
     </template>
 
     <FormModal @success="handleRefresh" />
-    <Grid table-title="结算账户列表">
+    <Grid :table-title="$t('erp.account.list')">
       <template #toolbar-tools>
         <TableAction
           :actions="[
             {
-              label: $t('ui.actionTitle.create', ['结算账户']),
+              label: $t('ui.actionTitle.create', [$t('erp.account.account')]),
               type: 'primary',
               icon: ACTION_ICON.ADD,
               auth: ['erp:account:create'],

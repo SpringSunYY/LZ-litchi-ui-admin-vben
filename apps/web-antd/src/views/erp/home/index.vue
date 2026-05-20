@@ -5,6 +5,8 @@ import { DocAlert, Page } from '@vben/common-ui';
 
 import { Col, Row, Spin } from 'ant-design-vue';
 
+import { $t } from '#/locales';
+
 import SummaryCard from './modules/summary-card.vue';
 import TimeSummaryChart from './modules/time-summary-chart.vue';
 
@@ -22,7 +24,7 @@ const purchaseChartRef = ref();
   <Page>
     <template #doc>
       <DocAlert
-        title="ERP 手册（功能开启）"
+        :title="$t('erp.home.docTitle')"
         url="https://doc.iocoder.cn/erp/build/"
       />
     </template>
@@ -36,13 +38,17 @@ const purchaseChartRef = ref();
         <Row :gutter="16">
           <!-- 销售统计 -->
           <Col :md="12" :sm="12" :xs="24">
-            <TimeSummaryChart ref="saleChartRef" title="销售统计" type="sale" />
+            <TimeSummaryChart
+              ref="saleChartRef"
+              :title="$t('erp.home.field.saleStatistics')"
+              type="sale"
+            />
           </Col>
           <!-- 采购统计 -->
           <Col :md="12" :sm="12" :xs="24">
             <TimeSummaryChart
               ref="purchaseChartRef"
-              title="采购统计"
+              :title="$t('erp.home.field.purchaseStatistics')"
               type="purchase"
             />
           </Col>

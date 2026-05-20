@@ -37,7 +37,7 @@ function handleRefresh() {
 /** 导出表格 */
 async function handleExport() {
   const data = await exportFinancePayment(await gridApi.formApi.getValues());
-  downloadFileFromBlobPart({ fileName: '付款单.xls', source: data });
+  downloadFileFromBlobPart({ fileName: $t('erp.payment.list') + '.xls', source: data });
 }
 
 /** 新增付款单 */
@@ -70,13 +70,14 @@ async function handleUpdateStatus(
   row: ErpFinancePaymentApi.FinancePayment,
   status: number,
 ) {
+  const auditLabel = status === 20 ? $t('erp.payment.message.audit') : $t('erp.payment.message.antiAudit');
   const hideLoading = message.loading({
-    content: `确定${status === 20 ? '审批' : '反审批'}该付款单吗？`,
+    content: $t('erp.payment.message.confirmAudit', [auditLabel]),
     duration: 0,
   });
   try {
     await updateFinancePaymentStatus(row.id!, status);
-    message.success(`${status === 20 ? '审批' : '反审批'}成功`);
+    message.success($t('erp.payment.message.auditSuccess', [auditLabel]));
     handleRefresh();
   } finally {
     hideLoading();
@@ -136,18 +137,18 @@ const [Grid, gridApi] = useVbenVxeGrid({
   <Page auto-content-height>
     <template #doc>
       <DocAlert
-        title="【财务】采购付款、销售收款"
+        :title="$t('erp.payment.docTitle')"
         url="https://doc.iocoder.cn/sale/finance-payment-receipt/"
       />
     </template>
 
     <FormModal @success="handleRefresh" />
-    <Grid table-title="付款单列表">
+    <Grid :table-title="$t('erp.payment.list')">
       <template #toolbar-tools>
         <TableAction
           :actions="[
             {
-              label: $t('ui.actionTitle.create', ['付款单']),
+              label: $t('ui.actionTitle.create', [$t('erp.payment.payment')]),
               type: 'primary',
               icon: ACTION_ICON.ADD,
               auth: ['erp:finance-payment:create'],
@@ -161,14 +162,14 @@ const [Grid, gridApi] = useVbenVxeGrid({
               onClick: handleExport,
             },
             {
-              label: '批量删除',
+              label: $t('erp.payment.action.batchDelete'),
               type: 'primary',
               danger: true,
               disabled: isEmpty(checkedIds),
               icon: ACTION_ICON.DELETE,
               auth: ['erp:finance-payment:delete'],
               popConfirm: {
-                title: `是否删除所选中数据？`,
+                title: $t('ui.actionMessage.deleteCascadeConfirm'),
                 confirm: handleDelete.bind(null, checkedIds),
               },
             },
@@ -194,12 +195,15 @@ const [Grid, gridApi] = useVbenVxeGrid({
               onClick: handleEdit.bind(null, row),
             },
             {
-              label: row.status === 10 ? '审批' : '反审批',
+              label: row.status === 10 ? $t('erp.payment.message.audit') : $t('erp.payment.message.antiAudit'),
               type: 'link',
               icon: ACTION_ICON.AUDIT,
               auth: ['erp:finance-payment:update-status'],
               popConfirm: {
-                title: `确认${row.status === 10 ? '审批' : '反审批'}${row.no}吗？`,
+                title: $t('erp.payment.message.confirmAntiAudit', [
+                  row.status === 10 ? $t('erp.payment.message.audit') : $t('erp.payment.message.antiAudit'),
+                  row.no,
+                ]),
                 confirm: handleUpdateStatus.bind(
                   null,
                   row,

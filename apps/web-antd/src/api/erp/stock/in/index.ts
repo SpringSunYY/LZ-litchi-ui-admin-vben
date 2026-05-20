@@ -23,6 +23,7 @@ export namespace ErpStockInApi {
   /** 其它入库单产品信息 */
   export interface StockInItem {
     id?: number; // 编号
+    seq?: number;
     warehouseId: number; // 仓库编号
     productId: number; // 产品编号
     productName?: string; // 产品名称
