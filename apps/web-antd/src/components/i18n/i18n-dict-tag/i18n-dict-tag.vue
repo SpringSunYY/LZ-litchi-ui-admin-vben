@@ -69,7 +69,7 @@ function getDictTagItem(v: string) {
   const dict = getDictObj(props.type, v);
   if (dict) {
     return {
-      label: dict.label || '',
+      label: $t(dict.label) || '',
       colorType: formatColorType(dict.colorType),
       matched: true,
     };
@@ -122,7 +122,7 @@ const hiddenCount = computed(() => {
       :key="index"
       :color="isHexColor(item.colorType) ? item.colorType : item.colorType"
     >
-      {{ $t(item.label) }}
+      {{ item.label }}
     </Tag>
     <Popover
       v-if="showMore"
@@ -139,7 +139,7 @@ const hiddenCount = computed(() => {
               isHexColor(item.colorType) ? item.colorType : item.colorType
             "
           >
-            {{ $t(item.label) }}
+            {{ item.label }}
           </Tag>
         </div>
       </template>

@@ -282,8 +282,10 @@ onMounted(async () => {
             $t('erp.stockIn.message.totalLabel')
           }}</span>
           <div class="flex space-x-4">
-            <span>{{ $t('erp.stockIn.message.countLabel')
-              }}{{ erpCountInputFormatter(summaries.count) }}</span>
+            <span
+              >{{ $t('erp.stockIn.message.countLabel')
+              }}{{ erpCountInputFormatter(summaries.count) }}</span
+            >
             <span>
               {{ $t('erp.stockIn.message.amountLabel')
               }}{{ erpPriceInputFormatter(summaries.totalPrice) }}

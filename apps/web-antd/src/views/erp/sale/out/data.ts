@@ -38,7 +38,9 @@ export function useFormSchema(formType: string): VbenFormSchema[] {
       component: 'DatePicker',
       componentProps: {
         disabled: formType === 'detail',
-        placeholder: $t('ui.placeholder.select', [$t('erp.saleOut.field.outTime')]),
+        placeholder: $t('ui.placeholder.select', [
+          $t('erp.saleOut.field.outTime'),
+        ]),
         showTime: true,
         format: 'YYYY-MM-DD HH:mm:ss',
         valueFormat: 'x',
@@ -62,7 +64,9 @@ export function useFormSchema(formType: string): VbenFormSchema[] {
       component: 'ApiSelect',
       componentProps: {
         disabled: true,
-        placeholder: $t('ui.placeholder.select', [$t('erp.saleOut.field.customerIdName')]),
+        placeholder: $t('ui.placeholder.select', [
+          $t('erp.saleOut.field.customerIdName'),
+        ]),
         allowClear: true,
         showSearch: true,
         api: getCustomerSimpleList,
@@ -78,7 +82,9 @@ export function useFormSchema(formType: string): VbenFormSchema[] {
       label: $t('erp.saleOut.field.saleUserIdName'),
       component: 'ApiSelect',
       componentProps: {
-        placeholder: $t('ui.placeholder.select', [$t('erp.saleOut.field.saleUserIdName')]),
+        placeholder: $t('ui.placeholder.select', [
+          $t('erp.saleOut.field.saleUserIdName'),
+        ]),
         allowClear: true,
         showSearch: true,
         api: getSimpleUserList,
@@ -93,7 +99,9 @@ export function useFormSchema(formType: string): VbenFormSchema[] {
       label: $t('erp.saleOut.field.remark'),
       component: 'Textarea',
       componentProps: {
-        placeholder: $t('ui.placeholder.input', [$t('erp.saleOut.field.remark')]),
+        placeholder: $t('ui.placeholder.input', [
+          $t('erp.saleOut.field.remark'),
+        ]),
         autoSize: { minRows: 1, maxRows: 1 },
         disabled: formType === 'detail',
       },
@@ -133,7 +141,9 @@ export function useFormSchema(formType: string): VbenFormSchema[] {
       label: $t('erp.saleOut.field.discountPercent'),
       component: 'InputNumber',
       componentProps: {
-        placeholder: $t('ui.placeholder.input', [$t('erp.saleOut.field.discountPercent')]),
+        placeholder: $t('ui.placeholder.input', [
+          $t('erp.saleOut.field.discountPercent'),
+        ]),
         min: 0,
         max: 100,
         precision: 2,
@@ -177,7 +187,9 @@ export function useFormSchema(formType: string): VbenFormSchema[] {
       component: 'InputNumber',
       componentProps: {
         disabled: formType === 'detail',
-        placeholder: $t('ui.placeholder.input', [$t('erp.saleOut.field.otherPrice')]),
+        placeholder: $t('ui.placeholder.input', [
+          $t('erp.saleOut.field.otherPrice'),
+        ]),
         precision: 2,
         formatter: erpPriceInputFormatter,
       },
@@ -187,7 +199,9 @@ export function useFormSchema(formType: string): VbenFormSchema[] {
       label: $t('erp.saleOut.field.accountIdName'),
       component: 'ApiSelect',
       componentProps: {
-        placeholder: $t('ui.placeholder.select', [$t('erp.saleOut.field.accountIdName')]),
+        placeholder: $t('ui.placeholder.select', [
+          $t('erp.saleOut.field.accountIdName'),
+        ]),
         disabled: true,
         allowClear: true,
         showSearch: true,
@@ -218,7 +232,12 @@ export function useFormItemColumns(
   disabled?: boolean,
 ): VxeTableGridOptions['columns'] {
   return [
-    { type: 'seq', title: $t('erp.saleOut.message.seq') || 'seq', minWidth: 50, fixed: 'left' },
+    {
+      type: 'seq',
+      title: $t('erp.saleOut.message.seq') || 'seq',
+      minWidth: 50,
+      fixed: 'left',
+    },
     {
       field: 'warehouseId',
       title: $t('erp.saleOut.field.warehouseIdName'),
@@ -338,7 +357,9 @@ export function useGridFormSchema(): VbenFormSchema[] {
       label: $t('erp.saleOut.field.productIdName'),
       component: 'ApiSelect',
       componentProps: {
-        placeholder: $t('ui.placeholder.select', [$t('erp.saleOut.field.productIdName')]),
+        placeholder: $t('ui.placeholder.select', [
+          $t('erp.saleOut.field.productIdName'),
+        ]),
         allowClear: true,
         showSearch: true,
         api: getProductSimpleList,
@@ -362,7 +383,9 @@ export function useGridFormSchema(): VbenFormSchema[] {
       label: $t('erp.saleOut.field.customerIdName'),
       component: 'ApiSelect',
       componentProps: {
-        placeholder: $t('ui.placeholder.select', [$t('erp.saleOut.field.customerIdName')]),
+        placeholder: $t('ui.placeholder.select', [
+          $t('erp.saleOut.field.customerIdName'),
+        ]),
         allowClear: true,
         showSearch: true,
         api: getCustomerSimpleList,
@@ -377,7 +400,9 @@ export function useGridFormSchema(): VbenFormSchema[] {
       label: $t('erp.saleOut.field.warehouseIdName'),
       component: 'ApiSelect',
       componentProps: {
-        placeholder: $t('ui.placeholder.select', [$t('erp.saleOut.field.warehouseIdName')]),
+        placeholder: $t('ui.placeholder.select', [
+          $t('erp.saleOut.field.warehouseIdName'),
+        ]),
         allowClear: true,
         showSearch: true,
         api: getWarehouseSimpleList,
@@ -390,7 +415,9 @@ export function useGridFormSchema(): VbenFormSchema[] {
       label: $t('erp.saleOut.field.creatorName'),
       component: 'ApiSelect',
       componentProps: {
-        placeholder: $t('ui.placeholder.select', [$t('erp.saleOut.field.creatorName')]),
+        placeholder: $t('ui.placeholder.select', [
+          $t('erp.saleOut.field.creatorName'),
+        ]),
         allowClear: true,
         showSearch: true,
         api: getSimpleUserList,
@@ -405,7 +432,9 @@ export function useGridFormSchema(): VbenFormSchema[] {
       label: $t('erp.saleOut.field.orderNo'),
       component: 'Input',
       componentProps: {
-        placeholder: $t('ui.placeholder.input', [$t('erp.saleOut.field.orderNo')]),
+        placeholder: $t('ui.placeholder.input', [
+          $t('erp.saleOut.field.orderNo'),
+        ]),
         allowClear: true,
       },
     },
@@ -419,7 +448,9 @@ export function useGridFormSchema(): VbenFormSchema[] {
           { label: $t('erp.saleOut.message.partialReceipt'), value: 1 },
           { label: $t('erp.saleOut.message.receipted'), value: 2 },
         ],
-        placeholder: $t('ui.placeholder.select', [$t('erp.saleOut.field.receiptStatus')]),
+        placeholder: $t('ui.placeholder.select', [
+          $t('erp.saleOut.field.receiptStatus'),
+        ]),
         allowClear: true,
       },
     },
@@ -429,7 +460,9 @@ export function useGridFormSchema(): VbenFormSchema[] {
       component: 'Select',
       componentProps: {
         options: getDictOptions(DICT_TYPE.ERP_AUDIT_STATUS, 'number'),
-        placeholder: $t('ui.placeholder.select', [$t('erp.saleOut.field.auditStatus')]),
+        placeholder: $t('ui.placeholder.select', [
+          $t('erp.saleOut.field.auditStatus'),
+        ]),
         allowClear: true,
       },
     },
@@ -438,7 +471,9 @@ export function useGridFormSchema(): VbenFormSchema[] {
       label: $t('erp.saleOut.field.remark'),
       component: 'Input',
       componentProps: {
-        placeholder: $t('ui.placeholder.input', [$t('erp.saleOut.field.remark')]),
+        placeholder: $t('ui.placeholder.input', [
+          $t('erp.saleOut.field.remark'),
+        ]),
         allowClear: true,
       },
     },
@@ -542,7 +577,9 @@ export function useOrderGridFormSchema(): VbenFormSchema[] {
       label: $t('erp.saleOrder.field.productIdName'),
       component: 'ApiSelect',
       componentProps: {
-        placeholder: $t('ui.placeholder.select', [$t('erp.saleOrder.field.productIdName')]),
+        placeholder: $t('ui.placeholder.select', [
+          $t('erp.saleOrder.field.productIdName'),
+        ]),
         allowClear: true,
         showSearch: true,
         api: getProductSimpleList,

@@ -90,7 +90,7 @@ export function useUploadType({
   return { getAccept, getStringAccept, getHelpText };
 }
 
-// TODO @芋艿：目前保持和 admin-vue3 一致，后续可能重构
+// TODO @YY：目前保持和 admin-vue3 一致，后续可能重构
 export function useUpload(directory?: string, moduleType?: string) {
   // 后端上传地址
   const uploadUrl = getUploadUrl();

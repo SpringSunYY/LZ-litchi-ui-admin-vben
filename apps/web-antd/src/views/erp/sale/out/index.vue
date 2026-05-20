@@ -71,12 +71,15 @@ async function handleDelete(ids: number[]) {
 /** 审批/反审批操作 */
 async function handleUpdateStatus(row: ErpSaleOutApi.SaleOut, status: number) {
   const hideLoading = message.loading({
-    content: row.status === 10
-      ? $t('erp.saleOut.message.confirmAudit', [$t('erp.saleOut.message.audit')])
-      : $t('erp.saleOut.message.confirmAntiAudit', [
-          $t('erp.saleOut.message.antiAudit'),
-          row.no,
-        ]),
+    content:
+      row.status === 10
+        ? $t('erp.saleOut.message.confirmAudit', [
+            $t('erp.saleOut.message.audit'),
+          ])
+        : $t('erp.saleOut.message.confirmAntiAudit', [
+            $t('erp.saleOut.message.antiAudit'),
+            row.no,
+          ]),
     duration: 0,
   });
   try {
@@ -205,19 +208,21 @@ const [Grid, gridApi] = useVbenVxeGrid({
               onClick: handleEdit.bind(null, row),
             },
             {
-              label: row.status === 10
-                ? $t('erp.saleOut.message.audit')
-                : $t('erp.saleOut.message.antiAudit'),
+              label:
+                row.status === 10
+                  ? $t('erp.saleOut.message.audit')
+                  : $t('erp.saleOut.message.antiAudit'),
               type: 'link',
               icon: ACTION_ICON.AUDIT,
               auth: ['erp:sale-out:update-status'],
               popConfirm: {
-                title: row.status === 10
-                  ? $t('erp.saleOut.message.confirmAudit', [row.no])
-                  : $t('erp.saleOut.message.confirmAntiAudit', [
-                      $t('erp.saleOut.message.antiAudit'),
-                      row.no,
-                    ]),
+                title:
+                  row.status === 10
+                    ? $t('erp.saleOut.message.confirmAudit', [row.no])
+                    : $t('erp.saleOut.message.confirmAntiAudit', [
+                        $t('erp.saleOut.message.antiAudit'),
+                        row.no,
+                      ]),
                 confirm: handleUpdateStatus.bind(
                   null,
                   row,

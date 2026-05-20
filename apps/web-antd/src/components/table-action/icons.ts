@@ -11,4 +11,5 @@ export const ACTION_ICON = {
   VIEW: 'lucide:eye',
   COPY: 'lucide:copy',
   GRANT: 'lucide:key',
+  AUDIT: 'lucide:check-circle',
 };

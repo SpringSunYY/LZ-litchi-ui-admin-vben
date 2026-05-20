@@ -13,7 +13,9 @@ export function useGridFormSchema(): VbenFormSchema[] {
       label: $t('erp.stock.field.productIdName'),
       component: 'ApiSelect',
       componentProps: {
-        placeholder: $t('ui.placeholder.select', [$t('erp.stock.field.productIdName')]),
+        placeholder: $t('ui.placeholder.select', [
+          $t('erp.stock.field.productIdName'),
+        ]),
         allowClear: true,
         showSearch: true,
         api: getProductSimpleList,
@@ -26,7 +28,9 @@ export function useGridFormSchema(): VbenFormSchema[] {
       label: $t('erp.stock.field.warehouseIdName'),
       component: 'ApiSelect',
       componentProps: {
-        placeholder: $t('ui.placeholder.select', [$t('erp.stock.field.warehouseIdName')]),
+        placeholder: $t('ui.placeholder.select', [
+          $t('erp.stock.field.warehouseIdName'),
+        ]),
         allowClear: true,
         showSearch: true,
         api: getWarehouseSimpleList,

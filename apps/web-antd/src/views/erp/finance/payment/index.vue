@@ -37,7 +37,10 @@ function handleRefresh() {
 /** 导出表格 */
 async function handleExport() {
   const data = await exportFinancePayment(await gridApi.formApi.getValues());
-  downloadFileFromBlobPart({ fileName: $t('erp.payment.list') + '.xls', source: data });
+  downloadFileFromBlobPart({
+    fileName: $t('erp.payment.list') + '.xls',
+    source: data,
+  });
 }
 
 /** 新增付款单 */
@@ -70,7 +73,10 @@ async function handleUpdateStatus(
   row: ErpFinancePaymentApi.FinancePayment,
   status: number,
 ) {
-  const auditLabel = status === 20 ? $t('erp.payment.message.audit') : $t('erp.payment.message.antiAudit');
+  const auditLabel =
+    status === 20
+      ? $t('erp.payment.message.audit')
+      : $t('erp.payment.message.antiAudit');
   const hideLoading = message.loading({
     content: $t('erp.payment.message.confirmAudit', [auditLabel]),
     duration: 0,
@@ -195,13 +201,18 @@ const [Grid, gridApi] = useVbenVxeGrid({
               onClick: handleEdit.bind(null, row),
             },
             {
-              label: row.status === 10 ? $t('erp.payment.message.audit') : $t('erp.payment.message.antiAudit'),
+              label:
+                row.status === 10
+                  ? $t('erp.payment.message.audit')
+                  : $t('erp.payment.message.antiAudit'),
               type: 'link',
               icon: ACTION_ICON.AUDIT,
               auth: ['erp:finance-payment:update-status'],
               popConfirm: {
                 title: $t('erp.payment.message.confirmAntiAudit', [
-                  row.status === 10 ? $t('erp.payment.message.audit') : $t('erp.payment.message.antiAudit'),
+                  row.status === 10
+                    ? $t('erp.payment.message.audit')
+                    : $t('erp.payment.message.antiAudit'),
                   row.no,
                 ]),
                 confirm: handleUpdateStatus.bind(

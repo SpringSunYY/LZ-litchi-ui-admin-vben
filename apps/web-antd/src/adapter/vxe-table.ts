@@ -22,6 +22,7 @@ import { Button, Image, Popconfirm, Switch } from 'ant-design-vue';
 import { DictTag } from '#/components/dict-tag';
 import CellFileAndImages from '#/components/file-and-images/file-and-images-preview.vue';
 import { FilePreview } from '#/components/file-preview';
+import I18nDictTag from '#/components/i18n/i18n-dict-tag/i18n-dict-tag.vue';
 import CellImage from '#/components/image/image-preview.vue';
 import JsonPreview from '#/components/json-preview/json-preview.vue';
 import CellLink from '#/components/link/link-preview.vue';
@@ -30,7 +31,6 @@ import { $t } from '#/locales';
 import { useVbenForm } from './form';
 
 import '#/adapter/style.css';
-import I18nDictTag from '#/components/i18n/i18n-dict-tag/i18n-dict-tag.vue';
 
 setupVbenVxeTable({
   configVxeTable: (vxeUI) => {
@@ -203,7 +203,7 @@ setupVbenVxeTable({
     });
 
     // 表格配置项可以用 cellRender: { name: 'CellSwitch', props: { beforeChange: () => {} } },
-    // add by 芋艿：from https://github.com/vbenjs/vue-vben-admin/blob/main/playground/src/adapter/vxe-table.ts#L97-L123
+    // add by YY：from https://github.com/vbenjs/vue-vben-admin/blob/main/playground/src/adapter/vxe-table.ts#L97-L123
     vxeUI.renderer.add('CellSwitch', {
       renderTableDefault({ attrs, props }, { column, row }) {
         const loadingKey = `__loading_${column.field}`;
@@ -235,7 +235,7 @@ setupVbenVxeTable({
     });
 
     // 注册表格的操作按钮渲染器 cellRender: { name: 'CellOperation', options: ['edit', 'delete'] }
-    // add by 芋艿：from https://github.com/vbenjs/vue-vben-admin/blob/main/playground/src/adapter/vxe-table.ts#L125-L255
+    // add by YY：from https://github.com/vbenjs/vue-vben-admin/blob/main/playground/src/adapter/vxe-table.ts#L125-L255
     vxeUI.renderer.add('CellOperation', {
       renderTableDefault({ attrs, options, props }, { column, row }) {
         const defaultProps = { size: 'small', type: 'link', ...props };
@@ -387,15 +387,17 @@ setupVbenVxeTable({
 
         // 根据时间长短返回不同格式
         if (day > 0) {
-          return `${day} 天${hour} 小时 ${minute} 分钟`;
+          return `${day}${$t('ui.time.day')}${$t('ui.time.hour')}${$t('ui.time.minute')}`;
         }
         if (hour > 0) {
-          return `${hour} 小时 ${minute} 分钟`;
+          return `${hour}${$t('ui.time.hour')}${$t('ui.time.minute')}`;
         }
         if (minute > 0) {
-          return `${minute} 分钟`;
+          return `${minute}${$t('ui.time.minute')}`;
         }
-        return second > 0 ? `${second} 秒` : `${0} 秒`;
+        return second > 0
+          ? `${second}${$t('ui.time.second')}`
+          : `0${$t('ui.time.second')}`;
       },
     });
 
@@ -408,7 +410,7 @@ setupVbenVxeTable({
 
     vxeUI.formats.add('formatAmount2', {
       tableCellFormatMethod({ cellValue }) {
-        return `${floatToFixed2(cellValue)}元`;
+        return `${floatToFixed2(cellValue)}${$t('ui.amount.yuan')}`;
       },
     });
   },
@@ -420,7 +422,7 @@ export { useVbenVxeGrid };
 const [VxeTable, VxeColumn, VxeToolbar] = AsyncComponents;
 export { VxeColumn, VxeTable, VxeToolbar };
 
-// add by 芋艿：from https://github.com/vbenjs/vue-vben-admin/blob/main/playground/src/adapter/vxe-table.ts#L264-L270
+// add by YY：from https://github.com/vbenjs/vue-vben-admin/blob/main/playground/src/adapter/vxe-table.ts#L264-L270
 export type OnActionClickParams<T = Recordable<any>> = {
   code: string;
   row: T;

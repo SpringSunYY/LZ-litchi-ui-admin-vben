@@ -32,7 +32,9 @@ export function useFormSchema(formType: string): VbenFormSchema[] {
       label: $t('erp.stockMove.field.moveTime'),
       component: 'DatePicker',
       componentProps: {
-        placeholder: $t('ui.placeholder.select', [$t('erp.stockMove.field.moveTime')]),
+        placeholder: $t('ui.placeholder.select', [
+          $t('erp.stockMove.field.moveTime'),
+        ]),
         showTime: true,
         format: 'YYYY-MM-DD HH:mm:ss',
         valueFormat: 'x',
@@ -44,7 +46,9 @@ export function useFormSchema(formType: string): VbenFormSchema[] {
       label: $t('erp.stockMove.field.remark'),
       component: 'Textarea',
       componentProps: {
-        placeholder: $t('ui.placeholder.input', [$t('erp.stockMove.field.remark')]),
+        placeholder: $t('ui.placeholder.input', [
+          $t('erp.stockMove.field.remark'),
+        ]),
         autoSize: { minRows: 1, maxRows: 1 },
         disabled: formType === 'detail',
       },
@@ -87,7 +91,12 @@ export function useFormItemColumns(
   disabled: boolean,
 ): VxeTableGridOptions['columns'] {
   return [
-    { type: 'seq', title: $t('erp.stockMove.message.seq'), minWidth: 50, fixed: 'left' },
+    {
+      type: 'seq',
+      title: $t('erp.stockMove.message.seq'),
+      minWidth: 50,
+      fixed: 'left',
+    },
     {
       field: 'fromWarehouseId',
       title: $t('erp.stockMove.field.fromWarehouseIdName'),
@@ -176,7 +185,9 @@ export function useGridFormSchema(): VbenFormSchema[] {
       label: $t('erp.stockMove.field.productIdName'),
       component: 'ApiSelect',
       componentProps: {
-        placeholder: $t('ui.placeholder.select', [$t('erp.stockMove.field.productIdName')]),
+        placeholder: $t('ui.placeholder.select', [
+          $t('erp.stockMove.field.productIdName'),
+        ]),
         allowClear: true,
         showSearch: true,
         api: getProductSimpleList,
@@ -198,7 +209,9 @@ export function useGridFormSchema(): VbenFormSchema[] {
       label: $t('erp.stockMove.field.fromWarehouseIdName'),
       component: 'ApiSelect',
       componentProps: {
-        placeholder: $t('ui.placeholder.select', [$t('erp.stockMove.field.fromWarehouseIdName')]),
+        placeholder: $t('ui.placeholder.select', [
+          $t('erp.stockMove.field.fromWarehouseIdName'),
+        ]),
         allowClear: true,
         showSearch: true,
         api: getWarehouseSimpleList,
@@ -211,7 +224,9 @@ export function useGridFormSchema(): VbenFormSchema[] {
       label: $t('erp.stockMove.field.toWarehouseIdName'),
       component: 'ApiSelect',
       componentProps: {
-        placeholder: $t('ui.placeholder.select', [$t('erp.stockMove.field.toWarehouseIdName')]),
+        placeholder: $t('ui.placeholder.select', [
+          $t('erp.stockMove.field.toWarehouseIdName'),
+        ]),
         allowClear: true,
         showSearch: true,
         api: getWarehouseSimpleList,
@@ -224,7 +239,9 @@ export function useGridFormSchema(): VbenFormSchema[] {
       label: $t('erp.stockMove.field.creatorName'),
       component: 'ApiSelect',
       componentProps: {
-        placeholder: $t('ui.placeholder.select', [$t('erp.stockMove.field.creatorName')]),
+        placeholder: $t('ui.placeholder.select', [
+          $t('erp.stockMove.field.creatorName'),
+        ]),
         allowClear: true,
         showSearch: true,
         api: getSimpleUserList,
@@ -238,7 +255,9 @@ export function useGridFormSchema(): VbenFormSchema[] {
       component: 'Select',
       componentProps: {
         options: getDictOptions(DICT_TYPE.ERP_AUDIT_STATUS, 'number'),
-        placeholder: $t('ui.placeholder.select', [$t('erp.stockMove.field.status')]),
+        placeholder: $t('ui.placeholder.select', [
+          $t('erp.stockMove.field.status'),
+        ]),
         allowClear: true,
       },
     },
@@ -247,7 +266,9 @@ export function useGridFormSchema(): VbenFormSchema[] {
       label: $t('erp.stockMove.field.remark'),
       component: 'Input',
       componentProps: {
-        placeholder: $t('ui.placeholder.input', [$t('erp.stockMove.field.remark')]),
+        placeholder: $t('ui.placeholder.input', [
+          $t('erp.stockMove.field.remark'),
+        ]),
         allowClear: true,
       },
     },

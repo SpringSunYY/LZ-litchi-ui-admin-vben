@@ -68,7 +68,9 @@ const [Modal, modalApi] = useVbenModal({
     try {
       itemFormInstance.validate();
     } catch (error: any) {
-      message.error(error.message || $t('erp.stockOut.message.childFormValidateFailed'));
+      message.error(
+        error.message || $t('erp.stockOut.message.childFormValidateFailed'),
+      );
       return;
     }
 

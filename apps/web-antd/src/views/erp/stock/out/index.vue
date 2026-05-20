@@ -37,7 +37,10 @@ function handleRefresh() {
 /** 导出表格 */
 async function handleExport() {
   const data = await exportStockOut(await gridApi.formApi.getValues());
-  downloadFileFromBlobPart({ fileName: $t('erp.stockOut.stockOut') + '.xls', source: data });
+  downloadFileFromBlobPart({
+    fileName: $t('erp.stockOut.stockOut') + '.xls',
+    source: data,
+  });
 }
 
 /** 新增其它出库单 */
@@ -70,9 +73,10 @@ async function handleUpdateStatus(
   row: ErpStockOutApi.StockOut,
   status: number,
 ) {
-  const statusText = status === 20
-    ? $t('erp.stockOut.message.audit')
-    : $t('erp.stockOut.message.antiAudit');
+  const statusText =
+    status === 20
+      ? $t('erp.stockOut.message.audit')
+      : $t('erp.stockOut.message.antiAudit');
   const hideLoading = message.loading({
     content: $t('erp.stockOut.message.confirmAudit', [statusText]),
     duration: 0,
@@ -164,7 +168,9 @@ const [Grid, gridApi] = useVbenVxeGrid({
               onClick: handleExport,
             },
             {
-              label: $t('ui.actionTitle.deleteBatch', [$t('erp.stockOut.stockOut')]),
+              label: $t('ui.actionTitle.deleteBatch', [
+                $t('erp.stockOut.stockOut'),
+              ]),
               type: 'primary',
               danger: true,
               disabled: isEmpty(checkedIds),
@@ -197,18 +203,20 @@ const [Grid, gridApi] = useVbenVxeGrid({
               onClick: handleEdit.bind(null, row),
             },
             {
-              label: row.status === 10
-                ? $t('erp.stockOut.message.audit')
-                : $t('erp.stockOut.message.antiAudit'),
+              label:
+                row.status === 10
+                  ? $t('erp.stockOut.message.audit')
+                  : $t('erp.stockOut.message.antiAudit'),
               type: 'link',
               icon: ACTION_ICON.AUDIT,
               auth: ['erp:stock-out:update-status'],
               popConfirm: {
-                title: $t('erp.stockOut.message.confirmAudit', [
-                  row.status === 10
-                    ? $t('erp.stockOut.message.audit')
-                    : $t('erp.stockOut.message.antiAudit'),
-                ]) + row.no,
+                title:
+                  $t('erp.stockOut.message.confirmAudit', [
+                    row.status === 10
+                      ? $t('erp.stockOut.message.audit')
+                      : $t('erp.stockOut.message.antiAudit'),
+                  ]) + row.no,
                 confirm: handleUpdateStatus.bind(
                   null,
                   row,

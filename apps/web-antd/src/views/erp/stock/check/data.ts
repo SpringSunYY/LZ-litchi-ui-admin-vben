@@ -32,7 +32,9 @@ export function useFormSchema(formType: string): VbenFormSchema[] {
       label: $t('erp.stockCheck.field.checkTime'),
       component: 'DatePicker',
       componentProps: {
-        placeholder: $t('ui.placeholder.select', [$t('erp.stockCheck.field.checkTime')]),
+        placeholder: $t('ui.placeholder.select', [
+          $t('erp.stockCheck.field.checkTime'),
+        ]),
         showTime: true,
         format: 'YYYY-MM-DD HH:mm:ss',
         valueFormat: 'x',
@@ -44,7 +46,9 @@ export function useFormSchema(formType: string): VbenFormSchema[] {
       label: $t('erp.stockCheck.field.remark'),
       component: 'Textarea',
       componentProps: {
-        placeholder: $t('ui.placeholder.input', [$t('erp.stockCheck.field.remark')]),
+        placeholder: $t('ui.placeholder.input', [
+          $t('erp.stockCheck.field.remark'),
+        ]),
         autoSize: { minRows: 1, maxRows: 1 },
         disabled: formType === 'detail',
       },
@@ -87,7 +91,12 @@ export function useFormItemColumns(
   disabled: boolean,
 ): VxeTableGridOptions['columns'] {
   return [
-    { type: 'seq', title: $t('erp.stockCheck.message.seq'), minWidth: 50, fixed: 'left' },
+    {
+      type: 'seq',
+      title: $t('erp.stockCheck.message.seq'),
+      minWidth: 50,
+      fixed: 'left',
+    },
     {
       field: 'warehouseId',
       title: $t('erp.stockCheck.field.warehouseIdName'),
@@ -169,7 +178,9 @@ export function useGridFormSchema(): VbenFormSchema[] {
       label: $t('erp.stockCheck.field.no'),
       component: 'Input',
       componentProps: {
-        placeholder: $t('ui.placeholder.input', [$t('erp.stockCheck.field.no')]),
+        placeholder: $t('ui.placeholder.input', [
+          $t('erp.stockCheck.field.no'),
+        ]),
         allowClear: true,
       },
     },
@@ -178,7 +189,9 @@ export function useGridFormSchema(): VbenFormSchema[] {
       label: $t('erp.stockCheck.field.productIdName'),
       component: 'ApiSelect',
       componentProps: {
-        placeholder: $t('ui.placeholder.select', [$t('erp.stockCheck.field.productIdName')]),
+        placeholder: $t('ui.placeholder.select', [
+          $t('erp.stockCheck.field.productIdName'),
+        ]),
         allowClear: true,
         showSearch: true,
         api: getProductSimpleList,
@@ -200,7 +213,9 @@ export function useGridFormSchema(): VbenFormSchema[] {
       label: $t('erp.stockCheck.field.warehouseIdName'),
       component: 'ApiSelect',
       componentProps: {
-        placeholder: $t('ui.placeholder.select', [$t('erp.stockCheck.field.warehouseIdName')]),
+        placeholder: $t('ui.placeholder.select', [
+          $t('erp.stockCheck.field.warehouseIdName'),
+        ]),
         allowClear: true,
         showSearch: true,
         api: getWarehouseSimpleList,
@@ -213,7 +228,9 @@ export function useGridFormSchema(): VbenFormSchema[] {
       label: $t('erp.stockCheck.field.creatorName'),
       component: 'ApiSelect',
       componentProps: {
-        placeholder: $t('ui.placeholder.select', [$t('erp.stockCheck.field.creatorName')]),
+        placeholder: $t('ui.placeholder.select', [
+          $t('erp.stockCheck.field.creatorName'),
+        ]),
         allowClear: true,
         showSearch: true,
         api: getSimpleUserList,
@@ -227,7 +244,9 @@ export function useGridFormSchema(): VbenFormSchema[] {
       component: 'Select',
       componentProps: {
         options: getDictOptions(DICT_TYPE.ERP_AUDIT_STATUS, 'number'),
-        placeholder: $t('ui.placeholder.select', [$t('erp.stockCheck.field.status')]),
+        placeholder: $t('ui.placeholder.select', [
+          $t('erp.stockCheck.field.status'),
+        ]),
         allowClear: true,
       },
     },
@@ -236,7 +255,9 @@ export function useGridFormSchema(): VbenFormSchema[] {
       label: $t('erp.stockCheck.field.remark'),
       component: 'Input',
       componentProps: {
-        placeholder: $t('ui.placeholder.input', [$t('erp.stockCheck.field.remark')]),
+        placeholder: $t('ui.placeholder.input', [
+          $t('erp.stockCheck.field.remark'),
+        ]),
         allowClear: true,
       },
     },

@@ -148,7 +148,7 @@ function convertServerMenuToRouteRecordStringComponent(
         orderNo: menu.sort,
         title: menu.name,
       },
-      name: menu.name + menu.id, // add by 芋艿：防止 name 重复，加上 id
+      name: menu.name + menu.id, // add by YY：防止 name 重复，加上 id
       path: menu.path,
     };
 

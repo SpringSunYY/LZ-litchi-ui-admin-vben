@@ -34,7 +34,7 @@ export function useFormSchema(): VbenFormSchema[] {
       rules: 'required',
       component: 'I18nSelect',
       componentProps: {
-        options: getDictOptions('infra_i18n_test'),
+        options: getDictOptions('infra_i18n_test', 'boolean'),
         placeholder: $t('ui.placeholder.select', [
           $t('infra:demo01-contact:field:sex'),
         ]),
@@ -153,7 +153,7 @@ export function useGridColumns(): VxeTableGridOptions<Demo01ContactApi.Demo01Con
       minWidth: 120,
       cellRender: {
         name: 'CellI18nDict',
-        props: { type: 'infra_i18n_test' },
+        props: { type: 'infra_i18n_test', valueType: 'boolean' },
       },
     },
     {

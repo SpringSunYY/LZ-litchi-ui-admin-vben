@@ -181,7 +181,7 @@ function getValue() {
       }
       return item?.url || item?.response?.url || item?.response;
     });
-  // add by 芋艿：【特殊】单个文件的情况，获取首个元素，保证返回的是 String 类型
+  // add by YY：【特殊】单个文件的情况，获取首个元素，保证返回的是 String 类型
   if (props.maxNumber === 1) {
     return list.length > 0 ? list[0] : '';
   }
@@ -240,6 +240,7 @@ function handlePreview(file: UploadFile) {
   text-overflow: ellipsis !important;
   white-space: nowrap !important;
 }
+
 :deep(.ant-upload-list-item-actions) {
   right: 10% !important;
   display: flex !important;

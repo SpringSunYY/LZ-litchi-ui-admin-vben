@@ -73,7 +73,10 @@ async function handleUpdateStatus(
   row: ErpFinanceReceiptApi.FinanceReceipt,
   status: number,
 ) {
-  const auditLabel = status === 20 ? $t('erp.receipt.message.audit') : $t('erp.receipt.message.antiAudit');
+  const auditLabel =
+    status === 20
+      ? $t('erp.receipt.message.audit')
+      : $t('erp.receipt.message.antiAudit');
   const hideLoading = message.loading({
     content: $t('erp.receipt.message.confirmAudit', [auditLabel]),
     duration: 0,
@@ -198,13 +201,18 @@ const [Grid, gridApi] = useVbenVxeGrid({
               onClick: handleEdit.bind(null, row),
             },
             {
-              label: row.status === 10 ? $t('erp.receipt.message.audit') : $t('erp.receipt.message.antiAudit'),
+              label:
+                row.status === 10
+                  ? $t('erp.receipt.message.audit')
+                  : $t('erp.receipt.message.antiAudit'),
               type: 'link',
               icon: ACTION_ICON.AUDIT,
               auth: ['erp:finance-receipt:update-status'],
               popConfirm: {
                 title: $t('erp.receipt.message.confirmAntiAudit', [
-                  row.status === 10 ? $t('erp.receipt.message.audit') : $t('erp.receipt.message.antiAudit'),
+                  row.status === 10
+                    ? $t('erp.receipt.message.audit')
+                    : $t('erp.receipt.message.antiAudit'),
                   row.no,
                 ]),
                 confirm: handleUpdateStatus.bind(

@@ -14,7 +14,9 @@ export function useGridFormSchema(): VbenFormSchema[] {
       label: $t('erp.stockRecord.field.productIdName'),
       component: 'ApiSelect',
       componentProps: {
-        placeholder: $t('ui.placeholder.select', [$t('erp.stockRecord.field.productIdName')]),
+        placeholder: $t('ui.placeholder.select', [
+          $t('erp.stockRecord.field.productIdName'),
+        ]),
         allowClear: true,
         showSearch: true,
         api: getProductSimpleList,
@@ -27,7 +29,9 @@ export function useGridFormSchema(): VbenFormSchema[] {
       label: $t('erp.stockRecord.field.warehouseIdName'),
       component: 'ApiSelect',
       componentProps: {
-        placeholder: $t('ui.placeholder.select', [$t('erp.stockRecord.field.warehouseIdName')]),
+        placeholder: $t('ui.placeholder.select', [
+          $t('erp.stockRecord.field.warehouseIdName'),
+        ]),
         allowClear: true,
         showSearch: true,
         api: getWarehouseSimpleList,
@@ -40,7 +44,9 @@ export function useGridFormSchema(): VbenFormSchema[] {
       label: $t('erp.stockRecord.field.bizType'),
       component: 'Select',
       componentProps: {
-        placeholder: $t('ui.placeholder.select', [$t('erp.stockRecord.field.bizType')]),
+        placeholder: $t('ui.placeholder.select', [
+          $t('erp.stockRecord.field.bizType'),
+        ]),
         allowClear: true,
         options: getDictOptions(DICT_TYPE.ERP_STOCK_RECORD_BIZ_TYPE, 'number'),
       },
@@ -50,7 +56,9 @@ export function useGridFormSchema(): VbenFormSchema[] {
       label: $t('erp.stockRecord.field.bizNo'),
       component: 'Input',
       componentProps: {
-        placeholder: $t('ui.placeholder.input', [$t('erp.stockRecord.field.bizNo')]),
+        placeholder: $t('ui.placeholder.input', [
+          $t('erp.stockRecord.field.bizNo'),
+        ]),
         allowClear: true,
       },
     },
