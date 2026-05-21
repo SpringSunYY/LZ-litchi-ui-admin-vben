@@ -9,6 +9,7 @@ const allowedScopes = [
   'system',
   'infra',
   'bpm',
+  'crm',
   'project',
   'style',
   'lint',

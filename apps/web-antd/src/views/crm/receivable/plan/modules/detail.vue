@@ -89,7 +89,9 @@ onMounted(() => {
 <template>
   <Page
     auto-content-height
-    :title="$t('crm.receivablePlan.message.periodPhase', [receivablePlan?.period])"
+    :title="
+      $t('crm.receivablePlan.message.periodPhase', [receivablePlan?.period])
+    "
     :loading="loading"
   >
     <FormModal @success="loadReceivablePlanDetail" />
@@ -114,10 +116,18 @@ onMounted(() => {
     </Card>
     <Card class="mt-4 min-h-[60%]">
       <Tabs>
-        <Tabs.TabPane :tab="$t('crm.receivablePlan.tab.detail')" key="1" :force-render="true">
+        <Tabs.TabPane
+          :tab="$t('crm.receivablePlan.tab.detail')"
+          key="1"
+          :force-render="true"
+        >
           <ReceivablePlanDetailsInfo :receivable-plan="receivablePlan" />
         </Tabs.TabPane>
-        <Tabs.TabPane :tab="$t('crm.receivablePlan.tab.teamMember')" key="2" :force-render="true">
+        <Tabs.TabPane
+          :tab="$t('crm.receivablePlan.tab.teamMember')"
+          key="2"
+          :force-render="true"
+        >
           <PermissionList
             ref="permissionListRef"
             :biz-id="receivablePlanId"
@@ -126,7 +136,11 @@ onMounted(() => {
             @quit-team="handleBack"
           />
         </Tabs.TabPane>
-        <Tabs.TabPane :tab="$t('crm.receivablePlan.tab.operateLog')" key="3" :force-render="true">
+        <Tabs.TabPane
+          :tab="$t('crm.receivablePlan.tab.operateLog')"
+          key="3"
+          :force-render="true"
+        >
           <AsyncOperateLog :log-list="receivablePlanLogList" />
         </Tabs.TabPane>
       </Tabs>

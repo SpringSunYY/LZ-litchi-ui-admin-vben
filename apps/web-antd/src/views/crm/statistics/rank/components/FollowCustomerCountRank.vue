@@ -42,7 +42,13 @@ async function renderChart() {
 
   renderEcharts({
     tooltip: { trigger: 'axis' },
-    grid: { left: '3%', right: '4%', bottom: '3%', top: '8%', containLabel: true },
+    grid: {
+      left: '3%',
+      right: '4%',
+      bottom: '3%',
+      top: '8%',
+      containLabel: true,
+    },
     xAxis: {
       type: 'value',
       axisLabel: { color: '#666' },

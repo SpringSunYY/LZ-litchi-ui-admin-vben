@@ -60,7 +60,10 @@ function renderChart() {
   renderEcharts({
     tooltip: { trigger: 'axis' },
     legend: {
-      data: [$t('crm.statistics.customer.putIntoPool'), $t('crm.statistics.customer.takeFromPool')],
+      data: [
+        $t('crm.statistics.customer.putIntoPool'),
+        $t('crm.statistics.customer.takeFromPool'),
+      ],
       bottom: 0,
       textStyle: { color: textColor },
     },

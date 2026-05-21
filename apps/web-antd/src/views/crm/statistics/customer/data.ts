@@ -6,7 +6,11 @@ import { DICT_TYPE } from '#/utils';
 /** 客户总量-表格列 */
 export const customerSummaryColumns: VxeTableGridOptions['columns'] = [
   { type: 'seq', width: 60, title: '#' },
-  { field: 'ownerUserName', title: $t('crm.statistics.common.employee'), minWidth: 120 },
+  {
+    field: 'ownerUserName',
+    title: $t('crm.statistics.common.employee'),
+    minWidth: 120,
+  },
   {
     field: 'customerCreateCount',
     title: $t('crm.statistics.customer.newCustomerCount'),
@@ -52,7 +56,11 @@ export const customerSummaryColumns: VxeTableGridOptions['columns'] = [
 /** 公海汇总-表格列 */
 export const poolSummaryColumns: VxeTableGridOptions['columns'] = [
   { type: 'seq', width: 60, title: '#' },
-  { field: 'ownerUserName', title: $t('crm.statistics.common.employee'), minWidth: 120 },
+  {
+    field: 'ownerUserName',
+    title: $t('crm.statistics.common.employee'),
+    minWidth: 120,
+  },
   {
     field: 'customerPutCount',
     title: $t('crm.statistics.customer.putIntoPoolCount'),
@@ -68,7 +76,11 @@ export const poolSummaryColumns: VxeTableGridOptions['columns'] = [
 /** 跟进汇总-表格列 */
 export const followUpSummaryColumns: VxeTableGridOptions['columns'] = [
   { type: 'seq', width: 60, title: '#' },
-  { field: 'ownerUserName', title: $t('crm.statistics.common.employee'), minWidth: 120 },
+  {
+    field: 'ownerUserName',
+    title: $t('crm.statistics.common.employee'),
+    minWidth: 120,
+  },
   {
     field: 'followUpRecordCount',
     title: $t('crm.statistics.customer.followUpCount'),
@@ -109,7 +121,11 @@ export const followUpTypeColumns: VxeTableGridOptions['columns'] = [
 /** 成交周期(按地区)-表格列 */
 export const dealCycleByAreaColumns: VxeTableGridOptions['columns'] = [
   { type: 'seq', width: 60, title: '#' },
-  { field: 'areaName', title: $t('crm.statistics.portrait.areaName'), minWidth: 120 },
+  {
+    field: 'areaName',
+    title: $t('crm.statistics.portrait.areaName'),
+    minWidth: 120,
+  },
   {
     field: 'customerDealCount',
     title: $t('crm.statistics.customer.dealCustomerCount'),
@@ -125,7 +141,11 @@ export const dealCycleByAreaColumns: VxeTableGridOptions['columns'] = [
 /** 成交周期(按员工)-表格列 */
 export const dealCycleByUserColumns: VxeTableGridOptions['columns'] = [
   { type: 'seq', width: 60, title: '#' },
-  { field: 'ownerUserName', title: $t('crm.statistics.common.employee'), minWidth: 120 },
+  {
+    field: 'ownerUserName',
+    title: $t('crm.statistics.common.employee'),
+    minWidth: 120,
+  },
   {
     field: 'customerDealCount',
     title: $t('crm.statistics.customer.dealCustomerCount'),
@@ -141,7 +161,11 @@ export const dealCycleByUserColumns: VxeTableGridOptions['columns'] = [
 /** 成交周期(按产品)-表格列 */
 export const dealCycleByProductColumns: VxeTableGridOptions['columns'] = [
   { type: 'seq', width: 60, title: '#' },
-  { field: 'productName', title: $t('crm.statistics.common.productName'), minWidth: 120 },
+  {
+    field: 'productName',
+    title: $t('crm.statistics.common.productName'),
+    minWidth: 120,
+  },
   {
     field: 'customerDealCount',
     title: $t('crm.statistics.customer.dealCustomerCount'),
@@ -162,7 +186,11 @@ export const conversionStatColumns: VxeTableGridOptions['columns'] = [
     title: $t('crm.statistics.common.customerName'),
     minWidth: 150,
   },
-  { field: 'contractName', title: $t('crm.contract.field.name'), minWidth: 150 },
+  {
+    field: 'contractName',
+    title: $t('crm.contract.field.name'),
+    minWidth: 150,
+  },
   {
     field: 'totalPrice',
     title: $t('crm.statistics.portrait.totalPrice'),

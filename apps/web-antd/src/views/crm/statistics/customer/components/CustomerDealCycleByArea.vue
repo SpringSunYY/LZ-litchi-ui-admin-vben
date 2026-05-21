@@ -147,7 +147,6 @@ async function loadData() {
   }
 }
 
-
 defineExpose({ loadData });
 </script>
 

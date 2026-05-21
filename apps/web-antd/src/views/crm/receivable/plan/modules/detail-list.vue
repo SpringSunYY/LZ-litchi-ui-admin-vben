@@ -127,7 +127,9 @@ watch(
         <TableAction
           :actions="[
             {
-              label: $t('ui.actionTitle.create', [$t('crm.receivablePlan.receivablePlan')]),
+              label: $t('ui.actionTitle.create', [
+                $t('crm.receivablePlan.receivablePlan'),
+              ]),
               type: 'primary',
               icon: ACTION_ICON.ADD,
               auth: ['crm:receivable-plan:create'],
@@ -140,7 +142,9 @@ watch(
         <TableAction
           :actions="[
             {
-              label: $t('ui.actionTitle.create', [$t('crm.receivable.receivable')]),
+              label: $t('ui.actionTitle.create', [
+                $t('crm.receivable.receivable'),
+              ]),
               type: 'link',
               icon: ACTION_ICON.ADD,
               auth: ['crm:receivable:create'],

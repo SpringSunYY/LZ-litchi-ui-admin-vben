@@ -5,7 +5,11 @@ import { $t } from '#/locales';
 /** 地区分布-表格列 */
 export const areaColumns: VxeTableGridOptions['columns'] = [
   { type: 'seq', width: 60, title: '#' },
-  { field: 'areaName', title: $t('crm.statistics.portrait.areaName'), minWidth: 120 },
+  {
+    field: 'areaName',
+    title: $t('crm.statistics.portrait.areaName'),
+    minWidth: 120,
+  },
   {
     field: 'customerCount',
     title: $t('crm.statistics.portrait.customerCount'),
@@ -31,7 +35,11 @@ export const areaColumns: VxeTableGridOptions['columns'] = [
 /** 级别分布-表格列 */
 export const levelColumns: VxeTableGridOptions['columns'] = [
   { type: 'seq', width: 60, title: '#' },
-  { field: 'levelName', title: $t('crm.statistics.portrait.level'), minWidth: 120 },
+  {
+    field: 'levelName',
+    title: $t('crm.statistics.portrait.level'),
+    minWidth: 120,
+  },
   {
     field: 'customerCount',
     title: $t('crm.statistics.portrait.customerCount'),
@@ -57,7 +65,11 @@ export const levelColumns: VxeTableGridOptions['columns'] = [
 /** 来源分布-表格列 */
 export const sourceColumns: VxeTableGridOptions['columns'] = [
   { type: 'seq', width: 60, title: '#' },
-  { field: 'sourceName', title: $t('crm.statistics.portrait.source'), minWidth: 120 },
+  {
+    field: 'sourceName',
+    title: $t('crm.statistics.portrait.source'),
+    minWidth: 120,
+  },
   {
     field: 'customerCount',
     title: $t('crm.statistics.portrait.customerCount'),
@@ -83,7 +95,11 @@ export const sourceColumns: VxeTableGridOptions['columns'] = [
 /** 行业分布-表格列 */
 export const industryColumns: VxeTableGridOptions['columns'] = [
   { type: 'seq', width: 60, title: '#' },
-  { field: 'industryName', title: $t('crm.statistics.portrait.industry'), minWidth: 120 },
+  {
+    field: 'industryName',
+    title: $t('crm.statistics.portrait.industry'),
+    minWidth: 120,
+  },
   {
     field: 'customerCount',
     title: $t('crm.statistics.portrait.customerCount'),

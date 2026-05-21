@@ -57,7 +57,10 @@ function renderChart() {
   renderEcharts({
     tooltip: { trigger: 'axis' },
     legend: {
-      data: [$t('crm.statistics.customer.newCustomer'), $t('crm.statistics.customer.dealCustomer')],
+      data: [
+        $t('crm.statistics.customer.newCustomer'),
+        $t('crm.statistics.customer.dealCustomer'),
+      ],
       bottom: 0,
     },
     grid: {

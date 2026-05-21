@@ -75,13 +75,34 @@ const refFollowCount = ref();
 const refFollowCustomerCount = ref();
 
 const chartTabs = computed(() => [
-  { label: $t('crm.statistics.rank.contractPriceAnalysis'), value: 'contractPrice' },
-  { label: $t('crm.statistics.rank.receivablePriceAnalysis'), value: 'receivablePrice' },
-  { label: $t('crm.statistics.rank.contractCountAnalysis'), value: 'contractCount' },
-  { label: $t('crm.statistics.rank.productSalesAnalysis'), value: 'productSales' },
-  { label: $t('crm.statistics.rank.customerCountAnalysis'), value: 'customerCount' },
-  { label: $t('crm.statistics.rank.contactCountAnalysis'), value: 'contactCount' },
-  { label: $t('crm.statistics.rank.followCountAnalysis'), value: 'followCount' },
+  {
+    label: $t('crm.statistics.rank.contractPriceAnalysis'),
+    value: 'contractPrice',
+  },
+  {
+    label: $t('crm.statistics.rank.receivablePriceAnalysis'),
+    value: 'receivablePrice',
+  },
+  {
+    label: $t('crm.statistics.rank.contractCountAnalysis'),
+    value: 'contractCount',
+  },
+  {
+    label: $t('crm.statistics.rank.productSalesAnalysis'),
+    value: 'productSales',
+  },
+  {
+    label: $t('crm.statistics.rank.customerCountAnalysis'),
+    value: 'customerCount',
+  },
+  {
+    label: $t('crm.statistics.rank.contactCountAnalysis'),
+    value: 'contactCount',
+  },
+  {
+    label: $t('crm.statistics.rank.followCountAnalysis'),
+    value: 'followCount',
+  },
   {
     label: $t('crm.statistics.rank.followCustomerCountAnalysis'),
     value: 'followCustomerCount',
