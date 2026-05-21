@@ -22,7 +22,8 @@
     "import": "导入{0}",
     "importTemplate": "导入模板{0}",
     "export": "导出",
-    "updateAllMenu": "更新所有菜单"
+    "updateAllMenu": "更新所有菜单",
+    "clearCache": "清除缓存 {0}"
   },
   "actionName": {
     "reset": "重置",

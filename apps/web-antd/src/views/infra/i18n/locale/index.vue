@@ -11,6 +11,7 @@ import { message } from 'ant-design-vue';
 
 import { ACTION_ICON, TableAction, useVbenVxeGrid } from '#/adapter/vxe-table';
 import {
+  clearI18nCache,
   deleteI18nLocale,
   deleteI18nLocaleList,
   exportI18nLocale,
@@ -130,6 +131,20 @@ const [Grid, gridApi] = useVbenVxeGrid({
     checkboxChange: handleRowCheckboxChange,
   },
 });
+
+/**
+ * 清除国际化缓存
+ */
+const clearCacheLoading = ref(false);
+async function handleClearCache() {
+  try {
+    clearCacheLoading.value = true;
+    await clearI18nCache();
+    message.success($t('ui.actionMessage.operationSuccess'));
+  } finally {
+    clearCacheLoading.value = false;
+  }
+}
 </script>
 
 <template>
@@ -164,6 +179,14 @@ const [Grid, gridApi] = useVbenVxeGrid({
               disabled: isEmpty(checkedIds),
               auth: ['infra:locale:delete'],
               onClick: handleDeleteBatch,
+            },
+            {
+              label: $t('ui.actionTitle.clearCache'),
+              type: 'primary',
+              icon: ACTION_ICON.REFRESH,
+              auth: ['infra:locale:create'],
+              onClick: handleClearCache,
+              loading: clearCacheLoading,
             },
           ]"
         />

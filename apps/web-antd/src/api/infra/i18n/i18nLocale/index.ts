@@ -36,6 +36,11 @@ export function createI18nLocale(data: I18nLocaleApi.I18nLocale) {
   return requestClient.post('/infra/i18n/locale/create', data);
 }
 
+/** 清除国际化缓存*/
+export function clearI18nCache() {
+  return requestClient.delete('/infra/i18n/locale/clearn-cache');
+}
+
 /** 修改国际化国家 */
 export function updateI18nLocale(data: I18nLocaleApi.I18nLocale) {
   return requestClient.put('/infra/i18n/locale/update', data);

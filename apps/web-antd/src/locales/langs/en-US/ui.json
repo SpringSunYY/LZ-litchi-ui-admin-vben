@@ -22,7 +22,8 @@
     "import": "Import {0}",
     "importTemplate": "Import Template {0}",
     "export": "Export",
-    "updateAllMenu": "update All Menu"
+    "updateAllMenu": "update All Menu",
+    "clearCache": "Clear Cache {0}"
   },
     "actionName": {
       "reset": "Reset",
