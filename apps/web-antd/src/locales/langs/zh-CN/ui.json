@@ -24,10 +24,10 @@
     "export": "导出",
     "updateAllMenu": "更新所有菜单"
   },
-    "actionName": {
-      "reset": "重置",
-      "search": "搜索",
-      "searchDept": "搜索部门"
+  "actionName": {
+    "reset": "重置",
+    "search": "搜索",
+    "searchDept": "搜索部门"
   },
   "actionMessage": {
     "deleteConfirm": "确认删除{0}？",
@@ -39,6 +39,9 @@
     "submitting": "正在提交 {0} ...",
     "submitSuccess": "{0} 提交成功",
     "operationFailed": "操作失败",
+    "downloading": "正在下载...",
+    "exporting": "正在导出...",
+    "importing": "正在导入 {0} ...",
     "importSuccess": "导入成功",
     "importFail": "导入失败",
     "downloadTemplateFail": "下载模板失败",

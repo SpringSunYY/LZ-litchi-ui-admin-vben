@@ -1,25 +1,24 @@
 <script lang="ts" setup>
-import type { VxeTableGridOptions } from '#/adapter/vxe-table';
-import type { Demo01ContactApi } from '#/api/infra/demo/demo01';
-
-import { ref } from 'vue';
-
-import { Page, useVbenModal, useVbenModelDrawer } from '@vben/common-ui';
-import { downloadFileFromBlobPart, isEmpty } from '@vben/utils';
-
-import { message } from 'ant-design-vue';
-
-import { ACTION_ICON, TableAction, useVbenVxeGrid } from '#/adapter/vxe-table';
+import type {VxeTableGridOptions} from '#/adapter/vxe-table';
+import {ACTION_ICON, TableAction, useVbenVxeGrid} from '#/adapter/vxe-table';
+import type {Demo01ContactApi} from '#/api/infra/demo/demo01';
 import {
   deleteDemo01Contact,
   deleteDemo01ContactList,
   exportDemo01Contact,
   getDemo01ContactPage,
 } from '#/api/infra/demo/demo01';
-import { $t } from '#/locales';
-import { pickSort } from '#/utils';
 
-import { useGridColumns, useGridFormSchema } from './data';
+import {ref} from 'vue';
+
+import {Page, useVbenModal, useVbenModelDrawer} from '@vben/common-ui';
+import {downloadFileFromBlobPart, isEmpty} from '@vben/utils';
+
+import {message} from 'ant-design-vue';
+import {$t} from '#/locales';
+import {pickSort} from '#/utils';
+
+import {useGridColumns, useGridFormSchema} from './data';
 import Form from './modules/form.vue';
 import ImportForm from './modules/import-form.vue';
 
@@ -93,20 +92,31 @@ async function handleDeleteBatch() {
 const checkedIds = ref<number[]>([]);
 
 function handleRowCheckboxChange({
-  records,
-}: {
+                                   records,
+                                 }: {
   records: Demo01ContactApi.Demo01Contact[];
 }) {
   checkedIds.value = records.map((item) => item.id);
 }
 
 /** 导出表格 */
+const exportLoading = ref(false);
+
 async function handleExport() {
-  const data = await exportDemo01Contact(await gridApi.formApi.getValues());
-  downloadFileFromBlobPart({
-    fileName: `${$t('infra:demo01-contact')}.xls`,
-    source: data,
-  });
+  try {
+    exportLoading.value = true;
+    message.loading({
+      content: $t('ui.actionMessage.exporting'),
+      key: 'action_key_msg',
+    });
+    const data = await exportDemo01Contact(await gridApi.formApi.getValues());
+    downloadFileFromBlobPart({
+      fileName: `${$t('infra:demo01-contact')}.xls`,
+      source: data,
+    });
+  } finally {
+    exportLoading.value = false;
+  }
 }
 
 const [Grid, gridApi] = useVbenVxeGrid({
@@ -122,13 +132,13 @@ const [Grid, gridApi] = useVbenVxeGrid({
     proxyConfig: {
       ajax: {
         query: async (ctx, formValues) => {
-          const { page } = ctx || {};
-          const { sortBy, sort } = pickSort(ctx);
+          const {page} = ctx || {};
+          const {sortBy, sort} = pickSort(ctx);
           return await getDemo01ContactPage({
             pageNo: page.currentPage,
             pageSize: page.pageSize,
             ...formValues,
-            ...(sortBy?.length ? { sortBy, sort } : {}),
+            ...(sortBy?.length ? {sortBy, sort} : {}),
           });
         },
       },
@@ -138,7 +148,7 @@ const [Grid, gridApi] = useVbenVxeGrid({
       isHover: true,
     },
     toolbarConfig: {
-      refresh: { code: 'query' },
+      refresh: {code: 'query'},
       search: true,
     },
     sortConfig: {
@@ -156,8 +166,8 @@ const [Grid, gridApi] = useVbenVxeGrid({
 
 <template>
   <Page auto-content-height>
-    <FormModalDrawer @success="onRefresh" />
-    <ImportModal @success="onRefresh" />
+    <FormModalDrawer @success="onRefresh"/>
+    <ImportModal @success="onRefresh"/>
 
     <Grid :table-title="$t('infra:demo01-contact')">
       <template #toolbar-tools>
@@ -176,6 +186,7 @@ const [Grid, gridApi] = useVbenVxeGrid({
               icon: ACTION_ICON.DOWNLOAD,
               auth: ['infra:demo01-contact:export'],
               onClick: handleExport,
+              loading: exportLoading,
             },
             {
               label: $t('ui.actionTitle.deleteBatch', [

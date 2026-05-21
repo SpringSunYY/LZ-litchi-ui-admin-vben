@@ -3,6 +3,8 @@ import type { FileType } from 'ant-design-vue/es/upload/interface';
 
 import type { VbenFormSchema } from '#/adapter/form';
 
+import { ref } from 'vue';
+
 import { useVbenModal } from '@vben/common-ui';
 import { downloadFileFromBlobPart } from '@vben/utils';
 
@@ -47,6 +49,7 @@ const [Modal, modalApi] = useVbenModal({
       return;
     }
     modalApi.lock();
+    message.loading($t('ui.actionMessage.importing', [props.title]));
     const data = await formApi.getValues();
     const { file, ...extraParams } = data;
     try {
@@ -66,12 +69,23 @@ function beforeUpload(file: FileType) {
   return false;
 }
 
+const downloadLoading = ref(false);
+
 async function handleDownload() {
-  const data = await props.templateApi();
-  downloadFileFromBlobPart({
-    fileName: props.templateFileName,
-    source: data,
-  });
+  try {
+    message.loading({
+      content: $t('ui.actionMessage.downloading'),
+      key: 'action_key_msg',
+    });
+    downloadLoading.value = true;
+    const data = await props.templateApi();
+    downloadFileFromBlobPart({
+      fileName: props.templateFileName,
+      source: data,
+    });
+  } finally {
+    downloadLoading.value = false;
+  }
 }
 </script>
 
@@ -92,7 +106,7 @@ async function handleDownload() {
     </Form>
     <template #prepend-footer>
       <div class="flex flex-auto items-center">
-        <Button @click="handleDownload">
+        <Button @click="handleDownload" :loading="downloadLoading">
           {{ $t('ui.common.downloadTemplate') }}
         </Button>
       </div>
