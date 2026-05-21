@@ -58,8 +58,8 @@ function renderChart() {
     tooltip: { trigger: 'axis' },
     legend: {
       data: [
-        $t('crm.customer.dealRate'),
-        $t('crm.customer.dealCustomerCount'),
+        $t('crm.statistics.customer.dealRate'),
+        $t('crm.statistics.customer.dealCustomerCount'),
       ],
       bottom: 0,
       textStyle: { color: textColor },
@@ -80,20 +80,20 @@ function renderChart() {
     yAxis: [
       {
         type: 'value',
-        name: $t('crm.customer.dealRate'),
+        name: $t('crm.statistics.customer.dealRate'),
         axisLabel: { color: textColor, formatter: '{value}%' },
         splitLine: { lineStyle: { color: splitLineColor, type: 'dashed' } },
       },
       {
         type: 'value',
-        name: $t('crm.customer.dealCustomerCount'),
+        name: $t('crm.statistics.customer.dealCustomerCount'),
         axisLabel: { color: textColor },
         splitLine: { show: false },
       },
     ],
     series: [
       {
-        name: $t('crm.customer.dealRate'),
+        name: $t('crm.statistics.customer.dealRate'),
         type: 'line',
         smooth: true,
         yAxisIndex: 0,
@@ -101,7 +101,7 @@ function renderChart() {
         data: rates,
       },
       {
-        name: $t('crm.customer.dealCustomerCount'),
+        name: $t('crm.statistics.customer.dealCustomerCount'),
         type: 'bar',
         yAxisIndex: 1,
         barMaxWidth: 40,

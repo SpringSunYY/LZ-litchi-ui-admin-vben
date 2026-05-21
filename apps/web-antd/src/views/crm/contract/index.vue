@@ -25,6 +25,8 @@ import Form from './modules/form.vue';
 const { push } = useRouter();
 const sceneType = ref('1');
 
+const exportFileName = $t('crm.contract.contract');
+
 const [FormModal, formModalApi] = useVbenModal({
   connectedComponent: Form,
   destroyOnClose: true,
@@ -38,7 +40,7 @@ function onRefresh() {
 /** 导出表格 */
 async function handleExport() {
   const data = await exportContract(await gridApi.formApi.getValues());
-  downloadFileFromBlobPart({ fileName: '合同.xls', source: data });
+  downloadFileFromBlobPart({ fileName: `${exportFileName}.xls`, source: data });
 }
 
 /** 创建合同 */
@@ -155,7 +157,7 @@ function onChangeSceneType(key: number | string) {
   <Page auto-content-height>
     <template #doc>
       <DocAlert
-        title="【合同】合同管理、合同提醒"
+        :title="$t('crm.contract.contract')"
         url="https://doc.iocoder.cn/crm/contract/"
       />
       <DocAlert
@@ -168,16 +170,25 @@ function onChangeSceneType(key: number | string) {
     <Grid>
       <template #top>
         <Tabs class="border-none" @change="onChangeSceneType">
-          <Tabs.TabPane tab="我负责的" key="1" />
-          <Tabs.TabPane tab="我参与的" key="2" />
-          <Tabs.TabPane tab="下属负责的" key="3" />
+          <Tabs.TabPane
+            :tab="$t('crm.contract.option.myResponsible')"
+            key="1"
+          />
+          <Tabs.TabPane
+            :tab="$t('crm.contract.option.myParticipant')"
+            key="2"
+          />
+          <Tabs.TabPane
+            :tab="$t('crm.contract.option.subordinateResponsible')"
+            key="3"
+          />
         </Tabs>
       </template>
       <template #toolbar-tools>
         <TableAction
           :actions="[
             {
-              label: $t('ui.actionTitle.create', ['合同']),
+              label: $t('ui.actionTitle.create', [$t('crm.contract.contract')]),
               type: 'primary',
               icon: ACTION_ICON.ADD,
               auth: ['crm:contract:create'],
@@ -227,14 +238,14 @@ function onChangeSceneType(key: number | string) {
           ]"
           :drop-down-actions="[
             {
-              label: '提交审核',
+              label: $t('crm.contract.action.submit'),
               type: 'link',
               auth: ['crm:contract:update'],
               onClick: handleSubmit.bind(null, row),
               ifShow: row.auditStatus === 0,
             },
             {
-              label: '查看审批',
+              label: $t('crm.backlog.action.viewApproval'),
               type: 'link',
               auth: ['crm:contract:update'],
               onClick: handleProcessDetail.bind(null, row),

@@ -24,6 +24,8 @@ import Form from './modules/form.vue';
 const { push } = useRouter();
 const sceneType = ref('1');
 
+const exportFileName = $t('crm.contact.contact');
+
 const [FormModal, formModalApi] = useVbenModal({
   connectedComponent: Form,
   destroyOnClose: true,
@@ -37,7 +39,7 @@ function onRefresh() {
 /** 导出表格 */
 async function handleExport() {
   const data = await exportContact(await gridApi.formApi.getValues());
-  downloadFileFromBlobPart({ fileName: '联系人.xls', source: data });
+  downloadFileFromBlobPart({ fileName: `${exportFileName}.xls`, source: data });
 }
 
 /** 创建联系人 */
@@ -118,7 +120,7 @@ function onChangeSceneType(key: number | string) {
   <Page auto-content-height>
     <template #doc>
       <DocAlert
-        title="【客户】客户管理、公海客户"
+        :title="$t('crm.contact.contact')"
         url="https://doc.iocoder.cn/crm/customer/"
       />
       <DocAlert
@@ -131,16 +133,19 @@ function onChangeSceneType(key: number | string) {
     <Grid>
       <template #top>
         <Tabs class="border-none" @change="onChangeSceneType">
-          <Tabs.TabPane tab="我负责的" key="1" />
-          <Tabs.TabPane tab="我参与的" key="2" />
-          <Tabs.TabPane tab="下属负责的" key="3" />
+          <Tabs.TabPane :tab="$t('crm.contact.option.myResponsible')" key="1" />
+          <Tabs.TabPane :tab="$t('crm.contact.option.myParticipant')" key="2" />
+          <Tabs.TabPane
+            :tab="$t('crm.contact.option.subordinateResponsible')"
+            key="3"
+          />
         </Tabs>
       </template>
       <template #toolbar-tools>
         <TableAction
           :actions="[
             {
-              label: $t('ui.actionTitle.create', ['联系人']),
+              label: $t('ui.actionTitle.create', [$t('crm.contact.contact')]),
               type: 'primary',
               icon: ACTION_ICON.ADD,
               auth: ['crm:contact:create'],

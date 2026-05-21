@@ -65,12 +65,14 @@ function handleCreateContact() {
 
 async function handleDeleteContactBusinessList() {
   if (checkedRows.value.length === 0) {
-    message.error('请先选择联系人后操作！');
+    message.error($t('crm.contact.message.selectFirst'));
     return;
   }
   return new Promise((resolve, reject) => {
     confirm({
-      content: `确定要将${checkedRows.value.map((item) => item.name).join(',')}解除关联吗？`,
+      content: $t('crm.contact.message.disassociateConfirm', [
+        checkedRows.value.map((item) => item.name).join(','),
+      ]),
     })
       .then(async () => {
         const res = await deleteBusinessContactList({
@@ -78,7 +80,6 @@ async function handleDeleteContactBusinessList() {
           contactIds: checkedRows.value.map((item) => item.id),
         });
         if (res) {
-          // 提示并返回成功
           message.success($t('ui.actionMessage.operationSuccess'));
           onRefresh();
           resolve(true);
@@ -87,7 +88,7 @@ async function handleDeleteContactBusinessList() {
         }
       })
       .catch(() => {
-        reject(new Error('取消操作'));
+        reject(new Error('cancel'));
       });
   });
 }
@@ -166,13 +167,13 @@ const [Grid, gridApi] = useVbenVxeGrid({
         <TableAction
           :actions="[
             {
-              label: $t('ui.actionTitle.create', ['联系人']),
+              label: $t('ui.actionTitle.create', [$t('crm.contact.contact')]),
               type: 'primary',
               icon: ACTION_ICON.ADD,
               onClick: handleCreate,
             },
             {
-              label: '关联',
+              label: $t('crm.business.message.disassociate'),
               icon: ACTION_ICON.ADD,
               type: 'default',
               auth: ['crm:contact:create-business'],
@@ -180,7 +181,7 @@ const [Grid, gridApi] = useVbenVxeGrid({
               onClick: handleCreateContact,
             },
             {
-              label: '解除关联',
+              label: $t('crm.business.message.disassociate'),
               icon: ACTION_ICON.ADD,
               type: 'default',
               auth: ['crm:contact:create-business'],

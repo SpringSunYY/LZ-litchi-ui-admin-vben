@@ -21,8 +21,8 @@ const emit = defineEmits(['success']);
 const formData = ref<CrmProductCategoryApi.ProductCategory>();
 const getTitle = computed(() => {
   return formData.value?.id
-    ? $t('ui.actionTitle.edit', ['产品分类'])
-    : $t('ui.actionTitle.create', ['产品分类']);
+    ? $t('ui.actionTitle.edit', [$t('crm.productCategory.productCategory')])
+    : $t('ui.actionTitle.create', [$t('crm.productCategory.productCategory')]);
 });
 
 const [Form, formApi] = useVbenForm({

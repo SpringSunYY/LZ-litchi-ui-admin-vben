@@ -5,19 +5,19 @@ import { $t } from '#/locales';
 /** 通用排行-表格列 (签约合同数、产品销量、新增客户数、新增联系人数、跟进次数、跟进客户数) */
 export const rankColumns: VxeTableGridOptions['columns'] = [
   { type: 'seq', width: 60, title: '#' },
-  { field: 'nickname', title: $t('crm.common.employee'), minWidth: 120 },
-  { field: 'deptName', title: $t('crm.common.department'), minWidth: 150 },
-  { field: 'count', title: $t('crm.rank.count'), minWidth: 120 },
+  { field: 'nickname', title: $t('crm.statistics.common.employee'), minWidth: 120 },
+  { field: 'deptName', title: $t('crm.statistics.common.department'), minWidth: 150 },
+  { field: 'count', title: $t('crm.statistics.rank.count'), minWidth: 120 },
 ];
 
 /** 合同金额排行-表格列 */
 export const contractPriceRankColumns: VxeTableGridOptions['columns'] = [
   { type: 'seq', width: 60, title: '#' },
-  { field: 'nickname', title: $t('crm.common.employee'), minWidth: 120 },
-  { field: 'deptName', title: $t('crm.common.department'), minWidth: 150 },
+  { field: 'nickname', title: $t('crm.statistics.common.employee'), minWidth: 120 },
+  { field: 'deptName', title: $t('crm.statistics.common.department'), minWidth: 150 },
   {
     field: 'count',
-    title: $t('crm.rank.contractPrice'),
+    title: $t('crm.statistics.rank.contractPrice'),
     minWidth: 150,
     formatter: 'formatAmount2',
   },
@@ -26,11 +26,11 @@ export const contractPriceRankColumns: VxeTableGridOptions['columns'] = [
 /** 回款金额排行-表格列 */
 export const receivablePriceRankColumns: VxeTableGridOptions['columns'] = [
   { type: 'seq', width: 60, title: '#' },
-  { field: 'nickname', title: $t('crm.common.employee'), minWidth: 120 },
-  { field: 'deptName', title: $t('crm.common.department'), minWidth: 150 },
+  { field: 'nickname', title: $t('crm.statistics.common.employee'), minWidth: 120 },
+  { field: 'deptName', title: $t('crm.statistics.common.department'), minWidth: 150 },
   {
     field: 'count',
-    title: $t('crm.rank.receivablePrice'),
+    title: $t('crm.statistics.rank.receivablePrice'),
     minWidth: 150,
     formatter: 'formatAmount2',
   },

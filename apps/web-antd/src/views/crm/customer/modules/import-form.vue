@@ -22,7 +22,7 @@ const [Form, formApi] = useVbenForm({
   schema: [
     {
       fieldName: 'ownerUserId',
-      label: '负责人',
+      label: $t('crm.customer.field.ownerUserId'),
       component: 'ApiSelect',
       componentProps: {
         api: () => getSimpleUserList(),
@@ -36,21 +36,21 @@ const [Form, formApi] = useVbenForm({
     },
     {
       fieldName: 'file',
-      label: '用户数据',
+      label: $t('crm.customer.action.import'),
       component: 'Upload',
       rules: 'required',
-      help: '仅允许导入 xls、xlsx 格式文件',
+      help: $t('crm.customer.message.importHelp'),
     },
     {
       fieldName: 'updateSupport',
-      label: '是否覆盖',
+      label: $t('crm.customer.message.updateSupport'),
       component: 'Switch',
       componentProps: {
-        checkedChildren: '是',
-        unCheckedChildren: '否',
+        checkedChildren: $t('common.yes'),
+        unCheckedChildren: $t('common.no'),
       },
       rules: z.boolean().default(false),
-      help: '是否更新已经存在的用户数据',
+      help: $t('crm.customer.message.updateSupportHelp'),
     },
   ],
   showDefaultActions: false,
@@ -63,7 +63,6 @@ const [Modal, modalApi] = useVbenModal({
       return;
     }
     modalApi.lock();
-    // 提交表单
     const data = await formApi.getValues();
     try {
       await importCustomer({
@@ -71,7 +70,6 @@ const [Modal, modalApi] = useVbenModal({
         file: data.file,
         updateSupport: data.updateSupport,
       });
-      // 关闭并提示
       await modalApi.close();
       emit('success');
       message.success($t('ui.actionMessage.operationSuccess'));
@@ -90,12 +88,15 @@ function beforeUpload(file: FileType) {
 /** 下载模版 */
 async function handleDownload() {
   const data = await importCustomerTemplate();
-  downloadFileFromBlobPart({ fileName: '客户导入模板.xls', source: data });
+  downloadFileFromBlobPart({
+    fileName: $t('crm.customer.message.importTemplate'),
+    source: data,
+  });
 }
 </script>
 
 <template>
-  <Modal title="客户导入" class="w-[30%]">
+  <Modal :title="$t('crm.customer.action.import')" class="w-[30%]">
     <Form class="mx-4">
       <template #file>
         <div class="w-full">
@@ -104,14 +105,18 @@ async function handleDownload() {
             accept=".xls,.xlsx"
             :before-upload="beforeUpload"
           >
-            <Button type="primary"> 选择 Excel 文件 </Button>
+            <Button type="primary">
+              {{ $t('crm.customer.message.selectExcel') }}
+            </Button>
           </Upload>
         </div>
       </template>
     </Form>
     <template #prepend-footer>
       <div class="flex flex-auto items-center">
-        <Button @click="handleDownload"> 下载导入模板 </Button>
+        <Button @click="handleDownload">
+          {{ $t('crm.customer.message.downloadTemplate') }}
+        </Button>
       </div>
     </template>
   </Modal>

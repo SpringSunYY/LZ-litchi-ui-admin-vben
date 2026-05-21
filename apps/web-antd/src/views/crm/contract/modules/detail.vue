@@ -16,6 +16,7 @@ import { getOperateLogPage } from '#/api/crm/operateLog';
 import { BizTypeEnum } from '#/api/crm/permission';
 import { useDescription } from '#/components/description';
 import { AsyncOperateLog } from '#/components/operate-log';
+import { $t } from '#/locales';
 import { ContractDetailsInfo, ContractForm } from '#/views/crm/contract';
 import { FollowUp } from '#/views/crm/followup';
 import { PermissionList, TransferForm } from '#/views/crm/permission';
@@ -37,7 +38,7 @@ const contractId = ref(0);
 
 const contract = ref<CrmContractApi.Contract>({} as CrmContractApi.Contract);
 const contractLogList = ref<SystemOperateLogApi.OperateLog[]>([]);
-const permissionListRef = ref<InstanceType<typeof PermissionList>>(); // 团队成员列表 Ref
+const permissionListRef = ref<InstanceType<typeof PermissionList>>();
 
 // 校验负责人权限和编辑权限
 const validateOwnerUser = computed(
@@ -64,14 +65,13 @@ const [TransferModal, transferModalApi] = useVbenModal({
   destroyOnClose: true,
 });
 
-/** 加载线索详情 */
+/** 加载合同详情 */
 async function loadContractDetail() {
   loading.value = true;
-  const data = await getContract(contractId.value);
-  contract.value = data;
+  contract.value = await getContract(contractId.value);
   // 操作日志
   const logList = await getOperateLogPage({
-    bizType: BizTypeEnum.CRM_CLUE,
+    bizType: BizTypeEnum.CRM_CONTRACT,
     bizId: contractId.value,
   });
   contractLogList.value = logList.list;
@@ -109,7 +109,7 @@ onMounted(() => {
       <div class="flex items-center gap-2">
         <Button @click="handleBack">
           <ArrowLeft class="size-5" />
-          返回
+          {{ $t('common.back') }}
         </Button>
         <Button
           v-if="validateWrite"
@@ -120,7 +120,7 @@ onMounted(() => {
           {{ $t('ui.actionTitle.edit') }}
         </Button>
         <Button v-if="validateOwnerUser" type="primary" @click="handleTransfer">
-          转移
+          {{ $t('crm.contract.action.transfer') }}
         </Button>
       </div>
     </template>
@@ -129,19 +129,35 @@ onMounted(() => {
     </Card>
     <Card class="mt-4 min-h-[60%]">
       <Tabs>
-        <Tabs.TabPane tab="详细资料" key="1" :force-render="true">
+        <Tabs.TabPane
+          :tab="$t('crm.contract.tab.detail')"
+          key="1"
+          :force-render="true"
+        >
           <ContractDetailsInfo :contract="contract" />
         </Tabs.TabPane>
-        <Tabs.TabPane tab="合同跟进" key="2" :force-render="true">
+        <Tabs.TabPane
+          :tab="$t('crm.contract.tab.followUp')"
+          key="2"
+          :force-render="true"
+        >
           <FollowUp :biz-id="contractId" :biz-type="BizTypeEnum.CRM_CONTRACT" />
         </Tabs.TabPane>
-        <Tabs.TabPane tab="产品" key="3" :force-render="true">
+        <Tabs.TabPane
+          :tab="$t('crm.contract.tab.product')"
+          key="3"
+          :force-render="true"
+        >
           <ProductDetailsList
             :biz-id="contractId"
             :biz-type="BizTypeEnum.CRM_CONTRACT"
           />
         </Tabs.TabPane>
-        <Tabs.TabPane tab="回款" key="4" :force-render="true">
+        <Tabs.TabPane
+          :tab="$t('crm.contract.tab.receivable')"
+          key="4"
+          :force-render="true"
+        >
           <ReceivablePlanDetailsList
             :contract-id="contractId"
             :customer-id="contract.customerId"
@@ -151,7 +167,11 @@ onMounted(() => {
             :customer-id="contract.customerId"
           />
         </Tabs.TabPane>
-        <Tabs.TabPane tab="团队成员" key="5" :force-render="true">
+        <Tabs.TabPane
+          :tab="$t('crm.contract.tab.teamMember')"
+          key="5"
+          :force-render="true"
+        >
           <PermissionList
             ref="permissionListRef"
             :biz-id="contractId"
@@ -160,7 +180,11 @@ onMounted(() => {
             @quit-team="handleBack"
           />
         </Tabs.TabPane>
-        <Tabs.TabPane tab="操作日志" key="6" :force-render="true">
+        <Tabs.TabPane
+          :tab="$t('crm.contract.tab.operateLog')"
+          key="6"
+          :force-render="true"
+        >
           <AsyncOperateLog :log-list="contractLogList" />
         </Tabs.TabPane>
       </Tabs>

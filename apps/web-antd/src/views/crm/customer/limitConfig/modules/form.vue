@@ -22,8 +22,12 @@ const emit = defineEmits(['success']);
 const formData = ref<CrmCustomerLimitConfigApi.CustomerLimitConfig>();
 const getTitle = computed(() => {
   return formData.value?.id
-    ? $t('ui.actionTitle.edit', ['规则'])
-    : $t('ui.actionTitle.create', ['规则']);
+    ? $t('ui.actionTitle.edit', [
+        $t('crm.customerLimitConfig.customerLimitConfig'),
+      ])
+    : $t('ui.actionTitle.create', [
+        $t('crm.customerLimitConfig.customerLimitConfig'),
+      ]);
 });
 
 const confType = ref<LimitConfType>(LimitConfType.CUSTOMER_LOCK_LIMIT);
@@ -48,14 +52,12 @@ const [Modal, modalApi] = useVbenModal({
       return;
     }
     modalApi.lock();
-    // 提交表单
     const data =
       (await formApi.getValues()) as CrmCustomerLimitConfigApi.CustomerLimitConfig;
     try {
       await (formData.value?.id
         ? updateCustomerLimitConfig(data)
         : createCustomerLimitConfig(data));
-      // 关闭并提示
       await modalApi.close();
       emit('success');
       message.success($t('ui.actionMessage.operationSuccess'));
@@ -68,7 +70,6 @@ const [Modal, modalApi] = useVbenModal({
       formData.value = undefined;
       return;
     }
-    // 加载数据
     let data =
       modalApi.getData<CrmCustomerLimitConfigApi.CustomerLimitConfig>();
     if (!data) {
@@ -84,7 +85,6 @@ const [Modal, modalApi] = useVbenModal({
         data = await getCustomerLimitConfig(data.id as number);
       }
       formData.value = data;
-      // 设置到 values
       await formApi.setValues(data);
     } finally {
       modalApi.unlock();

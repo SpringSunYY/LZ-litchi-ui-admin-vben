@@ -38,7 +38,10 @@ function onRefresh() {
 /** 导出表格 */
 async function handleExport() {
   const data = await exportReceivable(await gridApi.formApi.getValues());
-  downloadFileFromBlobPart({ fileName: '回款.xls', source: data });
+  downloadFileFromBlobPart({
+    fileName: `${$t('crm.receivable.receivable')}.xls`,
+    source: data,
+  });
 }
 
 /** 创建回款 */
@@ -150,7 +153,7 @@ function onChangeSceneType(key: number | string) {
   <Page auto-content-height>
     <template #doc>
       <DocAlert
-        title="【回款】回款管理、回款计划"
+        :title="$t('crm.receivable.menu')"
         url="https://doc.iocoder.cn/crm/receivable/"
       />
       <DocAlert
@@ -163,16 +166,24 @@ function onChangeSceneType(key: number | string) {
     <Grid>
       <template #top>
         <Tabs class="border-none" @change="onChangeSceneType">
-          <Tabs.TabPane tab="我负责的" key="1" />
-          <Tabs.TabPane tab="我参与的" key="2" />
-          <Tabs.TabPane tab="下属负责的" key="3" />
+          <Tabs.TabPane
+            :tab="$t('crm.receivable.tab.myResponsibility')"
+            key="1"
+          />
+          <Tabs.TabPane
+            :tab="$t('crm.receivable.tab.myParticipation')"
+            key="2"
+          />
+          <Tabs.TabPane :tab="$t('crm.receivable.tab.subordinate')" key="3" />
         </Tabs>
       </template>
       <template #toolbar-tools>
         <TableAction
           :actions="[
             {
-              label: $t('ui.actionTitle.create', ['回款']),
+              label: $t('ui.actionTitle.create', [
+                $t('crm.receivable.receivable'),
+              ]),
               type: 'primary',
               icon: ACTION_ICON.ADD,
               auth: ['crm:receivable:create'],
@@ -222,14 +233,14 @@ function onChangeSceneType(key: number | string) {
           ]"
           :drop-down-actions="[
             {
-              label: '提交审核',
+              label: $t('crm.receivable.message.submitAudit'),
               type: 'link',
               auth: ['crm:receivable:update'],
               onClick: handleSubmit.bind(null, row),
               ifShow: row.auditStatus === 0,
             },
             {
-              label: '查看审批',
+              label: $t('crm.receivable.message.viewAudit'),
               type: 'link',
               auth: ['crm:receivable:update'],
               onClick: handleProcessDetail.bind(null, row),

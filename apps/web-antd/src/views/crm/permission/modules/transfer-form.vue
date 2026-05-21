@@ -23,26 +23,7 @@ const emit = defineEmits(['success']);
 const bizType = defineModel<number>('bizType');
 
 const getTitle = computed(() => {
-  switch (bizType.value) {
-    case BizTypeEnum.CRM_BUSINESS: {
-      return '商机转移';
-    }
-    case BizTypeEnum.CRM_CLUE: {
-      return '线索转移';
-    }
-    case BizTypeEnum.CRM_CONTACT: {
-      return '联系人转移';
-    }
-    case BizTypeEnum.CRM_CONTRACT: {
-      return '合同转移';
-    }
-    case BizTypeEnum.CRM_CUSTOMER: {
-      return '客户转移';
-    }
-    default: {
-      return '转移';
-    }
-  }
+  return $t('crm.permission.action.transfer');
 });
 
 const [Form, formApi] = useVbenForm({
@@ -65,7 +46,6 @@ const [Modal, modalApi] = useVbenModal({
       return;
     }
     modalApi.lock();
-    // 提交表单
     const data = (await formApi.getValues()) as CrmPermissionApi.TransferReq;
     try {
       switch (bizType.value) {
@@ -85,12 +65,11 @@ const [Modal, modalApi] = useVbenModal({
           return await transferCustomer(data);
         }
         default: {
-          message.error('【转移失败】没有转移接口');
-          throw new Error('【转移失败】没有转移接口');
+          message.error($t('crm.permission.message.noTransferApi'));
+          throw new Error($t('crm.permission.message.noTransferApi'));
         }
       }
     } finally {
-      // 关闭并提示
       await modalApi.close();
       emit('success');
       message.success($t('ui.actionMessage.operationSuccess'));
@@ -102,7 +81,6 @@ const [Modal, modalApi] = useVbenModal({
       formApi.resetForm();
       return;
     }
-    // 加载数据
     const data = modalApi.getData<{ bizType: number }>();
     if (!data || !data.bizType) {
       return;

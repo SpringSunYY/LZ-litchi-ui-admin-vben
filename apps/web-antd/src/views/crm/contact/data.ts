@@ -5,6 +5,7 @@ import { getSimpleContactList } from '#/api/crm/contact';
 import { getCustomerSimpleList } from '#/api/crm/customer';
 import { getAreaTree } from '#/api/system/area';
 import { getSimpleUserList } from '#/api/system/user';
+import { $t } from '#/locales';
 import { DICT_TYPE, getDictOptions } from '#/utils';
 
 /** 新增/修改的表单 */
@@ -20,13 +21,16 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'name',
-      label: '联系人姓名',
+      label: $t('crm.contact.field.name'),
       component: 'Input',
+      componentProps: {
+        placeholder: $t('ui.placeholder.input', [$t('crm.contact.field.name')]),
+      },
       rules: 'required',
     },
     {
       fieldName: 'ownerUserId',
-      label: '负责人',
+      label: $t('crm.contact.field.ownerUserId'),
       component: 'ApiSelect',
       componentProps: {
         api: () => getSimpleUserList(),
@@ -34,69 +38,105 @@ export function useFormSchema(): VbenFormSchema[] {
           label: 'nickname',
           value: 'id',
         },
+        placeholder: $t('ui.placeholder.select', [
+          $t('crm.contact.field.ownerUserId'),
+        ]),
       },
     },
     {
       fieldName: 'customerId',
-      label: '客户名称',
+      label: $t('crm.contact.field.customerName'),
       component: 'ApiSelect',
       componentProps: {
         api: () => getCustomerSimpleList(),
         fieldNames: {
-          label: 'nickname',
+          label: 'name',
           value: 'id',
         },
+        placeholder: $t('ui.placeholder.select', [
+          $t('crm.contact.field.customerName'),
+        ]),
       },
     },
     {
       fieldName: 'mobile',
-      label: '手机',
+      label: $t('crm.contact.field.mobile'),
       component: 'Input',
+      componentProps: {
+        placeholder: $t('ui.placeholder.input', [
+          $t('crm.contact.field.mobile'),
+        ]),
+      },
     },
     {
       fieldName: 'telephone',
-      label: '电话',
+      label: $t('crm.contact.field.telephone'),
       component: 'Input',
+      componentProps: {
+        placeholder: $t('ui.placeholder.input', [
+          $t('crm.contact.field.telephone'),
+        ]),
+      },
     },
     {
       fieldName: 'email',
-      label: '邮箱',
+      label: $t('crm.contact.field.email'),
       component: 'Input',
+      componentProps: {
+        placeholder: $t('ui.placeholder.input', [
+          $t('crm.contact.field.email'),
+        ]),
+      },
     },
     {
       fieldName: 'wechat',
-      label: '微信',
+      label: $t('crm.contact.field.wechat'),
       component: 'Input',
+      componentProps: {
+        placeholder: $t('ui.placeholder.input', [
+          $t('crm.contact.field.wechat'),
+        ]),
+      },
     },
     {
       fieldName: 'qq',
-      label: 'QQ',
+      label: $t('crm.contact.field.qq'),
       component: 'Input',
+      componentProps: {
+        placeholder: $t('ui.placeholder.input', [$t('crm.contact.field.qq')]),
+      },
     },
     {
       fieldName: 'post',
-      label: '职位',
+      label: $t('crm.contact.field.post'),
       component: 'Input',
+      componentProps: {
+        placeholder: $t('ui.placeholder.input', [$t('crm.contact.field.post')]),
+      },
     },
     {
       fieldName: 'master',
-      label: '关键决策人',
+      label: $t('crm.contact.field.master'),
       component: 'Select',
       componentProps: {
+        placeholder: $t('ui.placeholder.select', [
+          $t('crm.contact.field.master'),
+        ]),
         options: getDictOptions(DICT_TYPE.INFRA_BOOLEAN_STRING, 'boolean'),
       },
     },
     {
       fieldName: 'sex',
-      label: '性别',
+      label: $t('crm.contact.field.sex'),
       component: 'Select',
       componentProps: {
+        placeholder: $t('ui.placeholder.select', [$t('crm.contact.field.sex')]),
         options: getDictOptions(DICT_TYPE.SYSTEM_USER_SEX, 'number'),
       },
     },
     {
       fieldName: 'parentId',
-      label: '直属上级',
+      label: $t('crm.contact.field.parentId'),
       component: 'ApiSelect',
       componentProps: {
         api: () => getSimpleContactList(),
@@ -104,36 +144,55 @@ export function useFormSchema(): VbenFormSchema[] {
           label: 'name',
           value: 'id',
         },
+        placeholder: $t('ui.placeholder.select', [
+          $t('crm.contact.field.parentId'),
+        ]),
       },
     },
     {
       fieldName: 'areaId',
-      label: '地址',
+      label: $t('crm.contact.field.areaId'),
       component: 'ApiTreeSelect',
       componentProps: {
         api: () => getAreaTree(),
         fieldNames: { label: 'name', value: 'id', children: 'children' },
+        placeholder: $t('ui.placeholder.select', [
+          $t('crm.contact.field.areaId'),
+        ]),
       },
     },
     {
       fieldName: 'detailAddress',
-      label: '详细地址',
+      label: $t('crm.contact.field.detailAddress'),
       component: 'Input',
+      componentProps: {
+        placeholder: $t('ui.placeholder.input', [
+          $t('crm.contact.field.detailAddress'),
+        ]),
+      },
     },
     {
       fieldName: 'contactNextTime',
-      label: '下次联系时间',
+      label: $t('crm.contact.field.contactNextTime'),
       component: 'DatePicker',
       componentProps: {
         showTime: true,
         format: 'YYYY-MM-DD HH:mm:ss',
         valueFormat: 'x',
+        placeholder: $t('ui.placeholder.date', [
+          $t('crm.contact.field.contactNextTime'),
+        ]),
       },
     },
     {
       fieldName: 'remark',
-      label: '备注',
+      label: $t('crm.contact.field.remark'),
       component: 'Textarea',
+      componentProps: {
+        placeholder: $t('ui.placeholder.input', [
+          $t('crm.contact.field.remark'),
+        ]),
+      },
     },
   ];
 }
@@ -142,8 +201,8 @@ export function useFormSchema(): VbenFormSchema[] {
 export function useGridFormSchema(): VbenFormSchema[] {
   return [
     {
-      fieldName: 'name',
-      label: '客户',
+      fieldName: 'customerId',
+      label: $t('crm.contact.field.customerName'),
       component: 'ApiSelect',
       componentProps: {
         api: () => getCustomerSimpleList(),
@@ -155,28 +214,51 @@ export function useGridFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'name',
-      label: '姓名',
+      label: $t('crm.contact.field.name'),
       component: 'Input',
+      componentProps: {
+        placeholder: $t('ui.placeholder.input', [$t('crm.contact.field.name')]),
+      },
     },
     {
       fieldName: 'mobile',
-      label: '手机号',
+      label: $t('crm.contact.field.mobile'),
       component: 'Input',
+      componentProps: {
+        placeholder: $t('ui.placeholder.input', [
+          $t('crm.contact.field.mobile'),
+        ]),
+      },
     },
     {
       fieldName: 'telephone',
-      label: '电话',
+      label: $t('crm.contact.field.telephone'),
       component: 'Input',
+      componentProps: {
+        placeholder: $t('ui.placeholder.input', [
+          $t('crm.contact.field.telephone'),
+        ]),
+      },
     },
     {
       fieldName: 'wechat',
-      label: '微信',
+      label: $t('crm.contact.field.wechat'),
       component: 'Input',
+      componentProps: {
+        placeholder: $t('ui.placeholder.input', [
+          $t('crm.contact.field.wechat'),
+        ]),
+      },
     },
     {
       fieldName: 'email',
-      label: '电子邮箱',
+      label: $t('crm.contact.field.email'),
       component: 'Input',
+      componentProps: {
+        placeholder: $t('ui.placeholder.input', [
+          $t('crm.contact.field.email'),
+        ]),
+      },
     },
   ];
 }
@@ -186,19 +268,19 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
   return [
     {
       field: 'name',
-      title: '联系人姓名',
+      title: $t('crm.contact.field.name'),
       fixed: 'left',
       slots: { default: 'name' },
     },
     {
       field: 'customerName',
-      title: '客户名称',
+      title: $t('crm.contact.field.customerName'),
       fixed: 'left',
       slots: { default: 'customerName' },
     },
     {
       field: 'sex',
-      title: '性别',
+      title: $t('crm.contact.field.sex'),
       cellRender: {
         name: 'CellDict',
         props: { type: DICT_TYPE.SYSTEM_USER_SEX },
@@ -206,27 +288,27 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
     },
     {
       field: 'mobile',
-      title: '手机',
+      title: $t('crm.contact.field.mobile'),
     },
     {
       field: 'telephone',
-      title: '电话',
+      title: $t('crm.contact.field.telephone'),
     },
     {
       field: 'email',
-      title: '邮箱',
+      title: $t('crm.contact.field.email'),
     },
     {
       field: 'post',
-      title: '职位',
+      title: $t('crm.contact.field.post'),
     },
     {
       field: 'detailAddress',
-      title: '地址',
+      title: $t('crm.contact.field.areaName'),
     },
     {
       field: 'master',
-      title: '关键决策人',
+      title: $t('crm.contact.field.master'),
       cellRender: {
         name: 'CellDict',
         props: { type: DICT_TYPE.INFRA_BOOLEAN_STRING },
@@ -234,38 +316,38 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
     },
     {
       field: 'parentId',
-      title: '直属上级',
+      title: $t('crm.contact.field.parentId'),
       slots: { default: 'parentId' },
     },
     {
       field: 'ownerUserName',
-      title: '负责人',
+      title: $t('crm.contact.field.ownerUserName'),
     },
     {
       field: 'ownerUserDeptName',
-      title: '所属部门',
+      title: $t('crm.contact.field.ownerUserDeptName'),
     },
     {
       field: 'contactNextTime',
-      title: '下次联系时间',
+      title: $t('crm.contact.field.contactNextTime'),
       formatter: 'formatDateTime',
     },
     {
       field: 'remark',
-      title: '备注',
+      title: $t('crm.contact.field.remark'),
     },
     {
       field: 'createTime',
-      title: '创建时间',
+      title: $t('crm.contact.field.createTime'),
       formatter: 'formatDateTime',
     },
     {
       field: 'updateTime',
-      title: '更新时间',
+      title: $t('crm.contact.field.updateTime'),
       formatter: 'formatDateTime',
     },
     {
-      title: '操作',
+      title: $t('common.operation'),
       width: 180,
       fixed: 'right',
       slots: { default: 'actions' },

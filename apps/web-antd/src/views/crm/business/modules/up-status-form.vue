@@ -39,7 +39,7 @@ const [Form, formApi] = useVbenForm({
     },
     {
       fieldName: 'statusId',
-      label: '商机状态',
+      label: $t('crm.business.field.status'),
       component: 'Input',
       dependencies: {
         triggerFields: [''],
@@ -48,7 +48,7 @@ const [Form, formApi] = useVbenForm({
     },
     {
       fieldName: 'endStatus',
-      label: '商机状态',
+      label: $t('crm.business.field.status'),
       component: 'Input',
       dependencies: {
         triggerFields: [''],
@@ -57,7 +57,7 @@ const [Form, formApi] = useVbenForm({
     },
     {
       fieldName: 'status',
-      label: '商机阶段',
+      label: $t('crm.business.field.stage'),
       component: 'Select',
       dependencies: {
         triggerFields: [''],
@@ -66,11 +66,11 @@ const [Form, formApi] = useVbenForm({
             formData.value?.statusTypeId ?? 0,
           );
           const statusOptions = statusList.map((item) => ({
-            label: `${item.name}(赢单率：${item.percent}%)`,
+            label: `${item.name}${$t('crm.business.field.winRate', [item.percent])}`,
             value: item.id,
           }));
           const options = DEFAULT_STATUSES.map((item) => ({
-            label: `${`${item.name}(赢单率：${item.percent}`}%)`,
+            label: `${item.name}${$t('crm.business.field.winRate', [item.percent])}`,
             value: item.endStatus,
           }));
           statusOptions.push(...options);
@@ -92,7 +92,6 @@ const [Modal, modalApi] = useVbenModal({
       return;
     }
     modalApi.lock();
-    // 提交表单
     const data = (await formApi.getValues()) as CrmBusinessApi.Business;
     try {
       if (!data.status) {
@@ -103,7 +102,6 @@ const [Modal, modalApi] = useVbenModal({
         statusId: data.status > 0 ? data.status : undefined,
         endStatus: data.status < 0 ? -data.status : undefined,
       });
-      // 关闭并提示
       await modalApi.close();
       emit('success');
       message.success($t('ui.actionMessage.operationSuccess'));
@@ -115,7 +113,6 @@ const [Modal, modalApi] = useVbenModal({
     if (!isOpen) {
       return;
     }
-    // 加载数据
     const data = modalApi.getData<CrmBusinessApi.Business>();
     if (!data || !data.id) {
       return;
@@ -124,7 +121,6 @@ const [Modal, modalApi] = useVbenModal({
     formData.value = data;
     modalApi.lock();
     try {
-      // 设置到 values
       await formApi.setValues(formData.value);
     } finally {
       modalApi.unlock();
@@ -134,7 +130,7 @@ const [Modal, modalApi] = useVbenModal({
 </script>
 
 <template>
-  <Modal title="变更商机状态" class="w-[40%]">
+  <Modal :title="$t('crm.business.message.changeStatusTitle')" class="w-[40%]">
     <Form class="mx-4" />
   </Modal>
 </template>

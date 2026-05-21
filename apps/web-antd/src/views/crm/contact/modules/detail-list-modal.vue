@@ -39,12 +39,12 @@ function onRefresh() {
   gridApi.query();
 }
 
-/** 创建商机 */
+/** 创建联系人 */
 function handleCreate() {
   formModalApi.setData({ customerId: props.customerId }).open();
 }
 
-/** 查看商机详情 */
+/** 查看联系人详情 */
 function handleDetail(row: CrmContactApi.Contact) {
   push({ name: 'CrmContactDetail', params: { id: row.id } });
 }
@@ -57,33 +57,14 @@ function handleCustomerDetail(row: CrmContactApi.Contact) {
 const [Modal, modalApi] = useVbenModal({
   async onConfirm() {
     if (checkedRows.value.length === 0) {
-      message.error('请先选择联系人后操作！');
+      message.error($t('crm.contact.message.selectFirst'));
       return;
     }
     modalApi.lock();
-    // 提交表单
     try {
       const contactIds = checkedRows.value.map((item) => item.id);
-      // 关闭并提示
       await modalApi.close();
       emit('success', contactIds, checkedRows.value);
-    } finally {
-      modalApi.unlock();
-    }
-  },
-  async onOpenChange(isOpen: boolean) {
-    if (!isOpen) {
-      return;
-    }
-    // 加载数据
-    const data = modalApi.getData<any>();
-    if (!data) {
-      return;
-    }
-    modalApi.lock();
-    try {
-      // 设置到 values
-      // await formApi.setValues(formData.value);
     } finally {
       modalApi.unlock();
     }
@@ -95,8 +76,13 @@ const [Grid, gridApi] = useVbenVxeGrid({
     schema: [
       {
         fieldName: 'name',
-        label: '联系人名称',
+        label: $t('crm.contact.field.name'),
         component: 'Input',
+        componentProps: {
+          placeholder: $t('ui.placeholder.input', [
+            $t('crm.contact.field.name'),
+          ]),
+        },
       },
     ],
   },
@@ -132,14 +118,14 @@ const [Grid, gridApi] = useVbenVxeGrid({
 </script>
 
 <template>
-  <Modal title="关联联系人" class="w-[40%]">
+  <Modal :title="$t('crm.contact.message.associateTitle')" class="w-[40%]">
     <FormModal @success="onRefresh" />
     <Grid>
       <template #toolbar-tools>
         <TableAction
           :actions="[
             {
-              label: $t('ui.actionTitle.create', ['联系人']),
+              label: $t('ui.actionTitle.create', [$t('crm.contact.contact')]),
               type: 'primary',
               icon: ACTION_ICON.ADD,
               auth: ['crm:contact:create'],

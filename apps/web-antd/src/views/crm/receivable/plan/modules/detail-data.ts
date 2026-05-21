@@ -6,6 +6,7 @@ import { h } from 'vue';
 import { erpPriceInputFormatter, formatDateTime } from '@vben/utils';
 
 import { DictTag } from '#/components/dict-tag';
+import { $t } from '#/locales';
 import { DICT_TYPE } from '#/utils';
 
 /** 详情页的字段 */
@@ -13,26 +14,26 @@ export function useDetailSchema(): DescriptionItemSchema[] {
   return [
     {
       field: 'customerName',
-      label: '客户名称',
+      label: $t('crm.receivablePlan.field.customerName'),
     },
     {
       field: 'totalPrice',
-      label: '合同金额',
+      label: $t('crm.receivablePlan.field.totalPrice'),
       content: (data) => erpPriceInputFormatter(data.totalPrice),
     },
     {
       field: 'returnTime',
-      label: '回款日期',
+      label: $t('crm.receivablePlan.field.returnTime'),
       content: (data) => formatDateTime(data?.returnTime) as string,
     },
     {
       field: 'price',
-      label: '回款金额',
+      label: $t('crm.receivablePlan.field.price'),
       content: (data) => erpPriceInputFormatter(data.price),
     },
     {
       field: 'ownerUserName',
-      label: '负责人',
+      label: $t('crm.receivablePlan.field.ownerUserName'),
     },
   ];
 }
@@ -42,30 +43,30 @@ export function useDetailBaseSchema(): DescriptionItemSchema[] {
   return [
     {
       field: 'no',
-      label: '回款编号',
+      label: $t('crm.receivablePlan.field.period'),
     },
     {
       field: 'customerName',
-      label: '客户名称',
+      label: $t('crm.receivablePlan.field.customerName'),
     },
     {
       field: 'contract',
-      label: '合同编号',
+      label: $t('crm.receivablePlan.field.contractNo'),
       content: (data) => data?.contract?.no,
     },
     {
       field: 'returnTime',
-      label: '回款日期',
+      label: $t('crm.receivablePlan.field.returnTime'),
       content: (data) => formatDateTime(data?.returnTime) as string,
     },
     {
       field: 'price',
-      label: '回款金额',
+      label: $t('crm.receivablePlan.field.price'),
       content: (data) => erpPriceInputFormatter(data.price),
     },
     {
       field: 'returnType',
-      label: '回款方式',
+      label: $t('crm.receivablePlan.field.returnType'),
       content: (data) =>
         h(DictTag, {
           type: DICT_TYPE.CRM_RECEIVABLE_RETURN_TYPE,
@@ -74,7 +75,7 @@ export function useDetailBaseSchema(): DescriptionItemSchema[] {
     },
     {
       field: 'remark',
-      label: '备注',
+      label: $t('crm.receivablePlan.field.remark'),
     },
   ];
 }
@@ -83,55 +84,55 @@ export function useDetailBaseSchema(): DescriptionItemSchema[] {
 export function useDetailListColumns(): VxeTableGridOptions['columns'] {
   return [
     {
-      title: '客户名称',
+      title: $t('crm.receivablePlan.field.customerName'),
       field: 'customerName',
       minWidth: 150,
     },
     {
-      title: '合同编号',
+      title: $t('crm.receivablePlan.field.contractNo'),
       field: 'contractNo',
       minWidth: 150,
     },
     {
-      title: '期数',
+      title: $t('crm.receivablePlan.field.period'),
       field: 'period',
       minWidth: 150,
     },
     {
-      title: '计划回款(元)',
+      title: $t('crm.receivablePlan.field.priceUnit'),
       field: 'price',
       minWidth: 150,
       formatter: 'formatAmount2',
     },
     {
-      title: '计划回款日期',
+      title: $t('crm.receivablePlan.field.returnTime'),
       field: 'returnTime',
       minWidth: 150,
       formatter: 'formatDateTime',
     },
     {
-      title: '提前几天提醒',
+      title: $t('crm.receivablePlan.field.remindDays'),
       field: 'remindDays',
       minWidth: 150,
     },
     {
-      title: '提醒日期',
+      title: $t('crm.receivablePlan.field.remindTime'),
       field: 'remindTime',
       minWidth: 150,
       formatter: 'formatDateTime',
     },
     {
-      title: '负责人',
+      title: $t('crm.receivablePlan.field.ownerUserName'),
       field: 'ownerUserName',
       minWidth: 150,
     },
     {
-      title: '备注',
+      title: $t('crm.receivablePlan.field.remark'),
       field: 'remark',
       minWidth: 150,
     },
     {
-      title: '操作',
+      title: $t('common.operation'),
       field: 'actions',
       width: 240,
       fixed: 'right',

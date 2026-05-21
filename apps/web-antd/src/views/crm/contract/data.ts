@@ -8,6 +8,7 @@ import { getSimpleBusinessList } from '#/api/crm/business';
 import { getSimpleContactList } from '#/api/crm/contact';
 import { getCustomerSimpleList } from '#/api/crm/customer';
 import { getSimpleUserList } from '#/api/system/user';
+import { $t } from '#/locales';
 import { DICT_TYPE } from '#/utils';
 
 /** 新增/修改的表单 */
@@ -23,25 +24,29 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'no',
-      label: '合同编号',
+      label: $t('crm.contract.field.no'),
       component: 'Input',
       componentProps: {
-        placeholder: '保存时自动生成',
+        placeholder: `${$t('crm.contract.field.no')} - ${$t(
+          'ui.placeholder.autoGenerate',
+        )}`,
         disabled: () => true,
       },
     },
     {
       fieldName: 'name',
-      label: '合同名称',
+      label: $t('crm.contract.field.name'),
       component: 'Input',
       rules: 'required',
       componentProps: {
-        placeholder: '请输入合同名称',
+        placeholder: $t('ui.placeholder.input', [
+          $t('crm.contract.field.name'),
+        ]),
       },
     },
     {
       fieldName: 'ownerUserId',
-      label: '负责人',
+      label: $t('crm.contract.field.ownerUserId'),
       component: 'ApiSelect',
       componentProps: {
         api: () => getSimpleUserList(),
@@ -49,66 +54,82 @@ export function useFormSchema(): VbenFormSchema[] {
           label: 'nickname',
           value: 'id',
         },
+        placeholder: $t('ui.placeholder.select', [
+          $t('crm.contract.field.ownerUserId'),
+        ]),
       },
       rules: 'required',
     },
     {
       fieldName: 'customerId',
-      label: '客户名称',
+      label: $t('crm.contract.field.customerId'),
       component: 'ApiSelect',
       rules: 'required',
       componentProps: {
         api: getCustomerSimpleList,
         labelField: 'name',
         valueField: 'id',
-        placeholder: '请选择客户',
+        placeholder: $t('ui.placeholder.select', [
+          $t('crm.contract.field.customerId'),
+        ]),
       },
     },
     {
       fieldName: 'businessId',
-      label: '商机名称',
+      label: $t('crm.contract.field.businessId'),
       component: 'ApiSelect',
       componentProps: {
         api: getSimpleBusinessList,
         labelField: 'name',
         valueField: 'id',
-        placeholder: '请选择商机',
+        placeholder: $t('ui.placeholder.select', [
+          $t('crm.contract.field.businessId'),
+        ]),
       },
     },
     {
       fieldName: 'orderDate',
-      label: '下单日期',
+      label: $t('crm.contract.field.orderDate'),
       component: 'DatePicker',
       rules: 'required',
       componentProps: {
         showTime: false,
         format: 'YYYY-MM-DD',
         valueFormat: 'x',
+        placeholder: $t('ui.placeholder.date', [
+          $t('crm.contract.field.orderDate'),
+        ]),
       },
     },
     {
       fieldName: 'startTime',
-      label: '合同开始时间',
+      label: $t('crm.contract.field.startTime'),
       component: 'DatePicker',
       componentProps: {
         showTime: false,
         format: 'YYYY-MM-DD',
         valueFormat: 'x',
+        placeholder: $t('ui.placeholder.date', [
+          $t('crm.contract.field.startTime'),
+        ]),
       },
     },
     {
       fieldName: 'endTime',
-      label: '合同结束时间',
+      label: $t('crm.contract.field.endTime'),
       component: 'DatePicker',
       componentProps: {
         showTime: false,
         format: 'YYYY-MM-DD',
         valueFormat: 'x',
+        placeholder: $t('ui.placeholder.date', [
+          $t('crm.contract.field.endTime'),
+        ]),
       },
     },
     {
       fieldName: 'signUserId',
-      label: '公司签约人',
+      label: $t('crm.contract.field.signUserId'),
       component: 'ApiSelect',
       componentProps: {
         api: () => getSimpleUserList(),
@@ -116,37 +137,44 @@ export function useFormSchema(): VbenFormSchema[] {
           label: 'nickname',
           value: 'id',
         },
+        placeholder: $t('ui.placeholder.select', [
+          $t('crm.contract.field.signUserId'),
+        ]),
       },
     },
     {
       fieldName: 'signContactId',
-      label: '客户签约人',
+      label: $t('crm.contract.field.signContactId'),
       component: 'ApiSelect',
       componentProps: {
         api: getSimpleContactList,
         labelField: 'name',
         valueField: 'id',
-        placeholder: '请选择客户签约人',
+        placeholder: $t('ui.placeholder.select', [
+          $t('crm.contract.field.signContactId'),
+        ]),
       },
     },
     {
       fieldName: 'remark',
-      label: '备注',
+      label: $t('crm.contract.field.remark'),
       component: 'Textarea',
       componentProps: {
-        placeholder: '请输入备注',
+        placeholder: $t('ui.placeholder.input', [
+          $t('crm.contract.field.remark'),
+        ]),
         rows: 4,
       },
     },
     {
       fieldName: 'product',
-      label: '产品清单',
+      label: $t('crm.contract.field.product'),
       component: 'Input',
       formItemClass: 'col-span-3',
     },
     {
       fieldName: 'totalProductPrice',
-      label: '产品总金额',
+      label: $t('crm.contract.field.totalProductPrice'),
       component: 'InputNumber',
       componentProps: {
         min: 0,
@@ -154,7 +182,7 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'discountPercent',
-      label: '整单折扣（%）',
+      label: $t('crm.contract.field.discountPercent'),
       component: 'InputNumber',
       rules: z.number().min(0).max(100).default(0),
       componentProps: {
@@ -164,7 +192,7 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'totalPrice',
-      label: '折扣后金额',
+      label: $t('crm.contract.field.totalPrice'),
       component: 'InputNumber',
       dependencies: {
         triggerFields: ['totalProductPrice', 'discountPercent'],
@@ -190,23 +218,33 @@ export function useGridFormSchema(): VbenFormSchema[] {
   return [
     {
       fieldName: 'no',
-      label: '合同编号',
+      label: $t('crm.contract.field.no'),
       component: 'Input',
+      componentProps: {
+        placeholder: $t('ui.placeholder.input', [$t('crm.contract.field.no')]),
+      },
     },
     {
       fieldName: 'name',
-      label: '合同名称',
+      label: $t('crm.contract.field.name'),
       component: 'Input',
+      componentProps: {
+        placeholder: $t('ui.placeholder.input', [
+          $t('crm.contract.field.name'),
+        ]),
+      },
     },
     {
       fieldName: 'customerId',
-      label: '客户',
+      label: $t('crm.contract.field.customerName'),
       component: 'ApiSelect',
       componentProps: {
         api: getCustomerSimpleList,
         labelField: 'name',
         valueField: 'id',
-        placeholder: '请选择客户',
+        placeholder: $t('ui.placeholder.select', [
+          $t('crm.contract.field.customerName'),
+        ]),
       },
     },
   ];
@@ -215,73 +253,73 @@ export function useGridFormSchema(): VbenFormSchema[] {
 export function useGridColumns(): VxeTableGridOptions['columns'] {
   return [
     {
-      title: '合同编号',
+      title: $t('crm.contract.field.no'),
       field: 'no',
       minWidth: 150,
       fixed: 'left',
     },
     {
-      title: '合同名称',
+      title: $t('crm.contract.field.name'),
       field: 'name',
       minWidth: 150,
       fixed: 'left',
       slots: { default: 'name' },
     },
     {
-      title: '客户名称',
+      title: $t('crm.contract.field.customerName'),
       field: 'customerName',
       minWidth: 150,
       slots: { default: 'customerName' },
     },
     {
-      title: '商机名称',
+      title: $t('crm.contract.field.businessName'),
       field: 'businessName',
       minWidth: 150,
       slots: { default: 'businessName' },
     },
     {
-      title: '合同金额（元）',
+      title: $t('crm.contract.field.totalPrice'),
       field: 'totalPrice',
       minWidth: 150,
       formatter: 'formatAmount2',
     },
     {
-      title: '下单时间',
+      title: $t('crm.contract.field.orderDate'),
       field: 'orderDate',
       minWidth: 150,
       formatter: 'formatDateTime',
     },
     {
-      title: '合同开始时间',
+      title: $t('crm.contract.field.startTime'),
       field: 'startTime',
       minWidth: 150,
       formatter: 'formatDateTime',
     },
     {
-      title: '合同结束时间',
+      title: $t('crm.contract.field.endTime'),
       field: 'endTime',
       minWidth: 150,
       formatter: 'formatDateTime',
     },
     {
-      title: '客户签约人',
+      title: $t('crm.contract.field.signContactName'),
       field: 'signContactName',
       minWidth: 150,
       slots: { default: 'signContactName' },
     },
     {
-      title: '公司签约人',
+      title: $t('crm.contract.field.signUserName'),
       field: 'signUserName',
       minWidth: 150,
     },
     {
-      title: '已回款金额（元）',
+      title: $t('crm.contract.field.totalReceivablePrice'),
       field: 'totalReceivablePrice',
       minWidth: 150,
       formatter: 'formatAmount2',
     },
     {
-      title: '未回款金额（元）',
+      title: $t('crm.contract.field.unpaidPrice'),
       field: 'unpaidPrice',
       minWidth: 150,
       formatter: ({ row }) => {
@@ -289,45 +327,45 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
       },
     },
     {
-      title: '最后跟进时间',
+      title: $t('crm.contract.field.contactLastTime'),
       field: 'contactLastTime',
       minWidth: 150,
       formatter: 'formatDateTime',
     },
     {
-      title: '负责人',
+      title: $t('crm.contract.field.ownerUserName'),
       field: 'ownerUserName',
       minWidth: 150,
     },
     {
-      title: '所属部门',
+      title: $t('crm.contract.field.ownerUserDeptName'),
       field: 'ownerUserDeptName',
       minWidth: 150,
     },
     {
-      title: '更新时间',
+      title: $t('crm.contract.field.updateTime'),
       field: 'updateTime',
       minWidth: 150,
       formatter: 'formatDateTime',
     },
     {
-      title: '创建时间',
+      title: $t('crm.contract.field.createTime'),
       field: 'createTime',
       minWidth: 150,
       formatter: 'formatDateTime',
     },
     {
-      title: '创建人',
+      title: $t('crm.contract.field.creatorName'),
       field: 'creatorName',
       minWidth: 150,
     },
     {
-      title: '备注',
+      title: $t('crm.contract.field.remark'),
       field: 'remark',
       minWidth: 150,
     },
     {
-      title: '合同状态',
+      title: $t('crm.contract.field.auditStatus'),
       field: 'auditStatus',
       fixed: 'right',
       minWidth: 100,
@@ -337,7 +375,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
       },
     },
     {
-      title: '操作',
+      title: $t('common.operation'),
       field: 'actions',
       fixed: 'right',
       width: 130,

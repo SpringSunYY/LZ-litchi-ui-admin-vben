@@ -57,7 +57,7 @@ function renderChart() {
   renderEcharts({
     tooltip: { trigger: 'axis' },
     legend: {
-      data: [$t('crm.customer.newCustomer'), $t('crm.customer.dealCustomer')],
+      data: [$t('crm.statistics.customer.newCustomer'), $t('crm.statistics.customer.dealCustomer')],
       bottom: 0,
     },
     grid: {
@@ -76,14 +76,14 @@ function renderChart() {
     },
     series: [
       {
-        name: $t('crm.customer.newCustomer'),
+        name: $t('crm.statistics.customer.newCustomer'),
         type: 'bar',
         barMaxWidth: 40,
         itemStyle: { color: '#5ab1ef', borderRadius: [4, 4, 0, 0] },
         data: createCounts,
       },
       {
-        name: $t('crm.customer.dealCustomer'),
+        name: $t('crm.statistics.customer.dealCustomer'),
         type: 'bar',
         barMaxWidth: 40,
         itemStyle: { color: '#2fc25b', borderRadius: [4, 4, 0, 0] },
@@ -160,7 +160,7 @@ defineExpose({ loadData });
       <Col :span="6">
         <Card :bordered="false">
           <Statistic
-            :title="$t('crm.customer.newCustomerCount')"
+            :title="$t('crm.statistics.customer.newCustomerCount')"
             :value="totalStats.customerCreateCount"
           />
         </Card>
@@ -168,7 +168,7 @@ defineExpose({ loadData });
       <Col :span="6">
         <Card :bordered="false">
           <Statistic
-            :title="$t('crm.customer.dealCustomerCount')"
+            :title="$t('crm.statistics.customer.dealCustomerCount')"
             :value="totalStats.customerDealCount"
           />
         </Card>
@@ -176,7 +176,7 @@ defineExpose({ loadData });
       <Col :span="12">
         <Card :bordered="false">
           <Statistic
-            :title="$t('crm.customer.dealRate')"
+            :title="$t('crm.statistics.customer.dealRate')"
             :value="totalStats.dealRate"
             suffix="%"
           />
@@ -185,7 +185,7 @@ defineExpose({ loadData });
     </Row>
 
     <Card
-      :title="$t('crm.customer.customerTotalTrend')"
+      :title="$t('crm.statistics.customer.customerTotalTrend')"
       :bordered="false"
       class="mb-4"
     >
@@ -193,7 +193,7 @@ defineExpose({ loadData });
     </Card>
 
     <Card
-      :title="$t('crm.customer.customerTotalRankByEmployee')"
+      :title="$t('crm.statistics.customer.customerTotalRankByEmployee')"
       :bordered="false"
     >
       <Grid />

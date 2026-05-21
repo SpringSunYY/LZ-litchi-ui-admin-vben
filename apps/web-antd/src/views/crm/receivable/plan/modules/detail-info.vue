@@ -4,17 +4,18 @@ import type { CrmReceivablePlanApi } from '#/api/crm/receivable/plan';
 import { Divider } from 'ant-design-vue';
 
 import { useDescription } from '#/components/description';
+import { $t } from '#/locales';
 import { useFollowUpDetailSchema } from '#/views/crm/followup/data';
 
 import { useDetailBaseSchema } from './detail-data';
 
 defineProps<{
-  receivablePlan: CrmReceivablePlanApi.Plan; // 收款计划信息
+  receivablePlan: CrmReceivablePlanApi.Plan;
 }>();
 
 const [BaseDescription] = useDescription({
   componentProps: {
-    title: '基本信息',
+    title: $t('crm.receivablePlan.field.baseInfo'),
     bordered: false,
     column: 4,
     class: 'mx-4',
@@ -24,7 +25,7 @@ const [BaseDescription] = useDescription({
 
 const [SystemDescription] = useDescription({
   componentProps: {
-    title: '系统信息',
+    title: $t('crm.receivablePlan.field.systemInfo'),
     bordered: false,
     column: 3,
     class: 'mx-4',

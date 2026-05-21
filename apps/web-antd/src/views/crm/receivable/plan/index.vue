@@ -43,7 +43,10 @@ function onRefresh() {
 /** 导出表格 */
 async function handleExport() {
   const data = await exportReceivablePlan(await gridApi.formApi.getValues());
-  downloadFileFromBlobPart({ fileName: '回款计划.xls', source: data });
+  downloadFileFromBlobPart({
+    fileName: `${$t('crm.receivablePlan.receivablePlan')}.xls`,
+    source: data,
+  });
 }
 
 /** 创建回款计划 */
@@ -129,7 +132,7 @@ function onChangeSceneType(key: number | string) {
   <Page auto-content-height>
     <template #doc>
       <DocAlert
-        title="【回款】回款管理、回款计划"
+        :title="$t('crm.receivablePlan.menu')"
         url="https://doc.iocoder.cn/crm/receivable/"
       />
       <DocAlert
@@ -143,15 +146,23 @@ function onChangeSceneType(key: number | string) {
     <Grid>
       <template #top>
         <Tabs class="border-none" @change="onChangeSceneType">
-          <Tabs.TabPane tab="我负责的" key="1" />
-          <Tabs.TabPane tab="下属负责的" key="3" />
+          <Tabs.TabPane
+            :tab="$t('crm.receivablePlan.tab.myResponsibility')"
+            key="1"
+          />
+          <Tabs.TabPane
+            :tab="$t('crm.receivablePlan.tab.subordinate')"
+            key="3"
+          />
         </Tabs>
       </template>
       <template #toolbar-tools>
         <TableAction
           :actions="[
             {
-              label: $t('ui.actionTitle.create', ['回款计划']),
+              label: $t('ui.actionTitle.create', [
+                $t('crm.receivablePlan.receivablePlan'),
+              ]),
               type: 'primary',
               icon: ACTION_ICON.ADD,
               auth: ['crm:receivable-plan:create'],
@@ -181,7 +192,9 @@ function onChangeSceneType(key: number | string) {
         <TableAction
           :actions="[
             {
-              label: $t('ui.actionTitle.create', ['回款']),
+              label: $t('ui.actionTitle.create', [
+                $t('crm.receivable.receivable'),
+              ]),
               type: 'link',
               icon: ACTION_ICON.ADD,
               auth: ['crm:receivable:create'],

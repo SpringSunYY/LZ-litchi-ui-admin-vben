@@ -1,13 +1,14 @@
 <script lang="ts" setup>
 import type { CrmBusinessStatusApi } from '#/api/crm/business/status';
 
-import { computed, ref } from 'vue';
+import { computed, nextTick, ref } from 'vue';
 
 import { useVbenModal } from '@vben/common-ui';
 
-import { message } from 'ant-design-vue';
+import { Input, InputNumber, message } from 'ant-design-vue';
 
 import { useVbenForm } from '#/adapter/form';
+import { TableAction, useVbenVxeGrid } from '#/adapter/vxe-table';
 import {
   createBusinessStatus,
   getBusinessStatus,
@@ -15,14 +16,15 @@ import {
 } from '#/api/crm/business/status';
 import { $t } from '#/locales';
 
-import { useFormSchema } from '../data';
+import { useFormColumns, useFormSchema } from '../data';
+import { DEFAULT_STATUSES } from '#/utils/constants/crm';
 
 const emit = defineEmits(['success']);
 const formData = ref<CrmBusinessStatusApi.BusinessStatus>();
 const getTitle = computed(() => {
   return formData.value?.id
-    ? $t('ui.actionTitle.edit', ['商机状态'])
-    : $t('ui.actionTitle.create', ['商机状态']);
+    ? $t('ui.actionTitle.edit', [$t('crm.business.business')])
+    : $t('ui.actionTitle.create', [$t('crm.business.business')]);
 });
 
 const [Form, formApi] = useVbenForm({
@@ -49,6 +51,10 @@ const [Modal, modalApi] = useVbenModal({
     const data =
       (await formApi.getValues()) as CrmBusinessStatusApi.BusinessStatus;
     try {
+      if (formData.value?.statuses && formData.value.statuses.length > 0) {
+        data.statuses = formData.value.statuses;
+        data.statuses.splice(-3, 3);
+      }
       await (formData.value?.id
         ? updateBusinessStatus(data)
         : createBusinessStatus(data));
@@ -62,30 +68,147 @@ const [Modal, modalApi] = useVbenModal({
   },
   async onOpenChange(isOpen: boolean) {
     if (!isOpen) {
-      formData.value = undefined;
       return;
     }
     // 加载数据
     const data = modalApi.getData<CrmBusinessStatusApi.BusinessStatus>();
-    if (!data || !data.id) {
-      return;
-    }
     modalApi.lock();
     try {
-      formData.value = await getBusinessStatus(data.id as number);
-      // 设置到 values
-      if (formData.value) {
-        await formApi.setValues(formData.value);
+      if (!data || !data.id) {
+        formData.value = {
+          id: 0,
+          name: '',
+          deptIds: [],
+          deptNames: [],
+          creator: '',
+          createTime: new Date(),
+          statuses: [],
+        } as CrmBusinessStatusApi.BusinessStatus;
+        await handleAddStatus();
+      } else {
+        formData.value = await getBusinessStatus(data.id);
+        if (
+          !formData.value?.statuses?.length ||
+          formData.value?.statuses?.length === 0
+        ) {
+          await handleAddStatus();
+        }
       }
+      // 设置到 values
+      await formApi.setValues(formData.value as any);
+      await gridApi.grid.reloadData(
+        (formData.value!.statuses =
+          //@ts-ignore 忽略类型检查
+          formData.value?.statuses?.concat(DEFAULT_STATUSES)) as any,
+      );
     } finally {
       modalApi.unlock();
     }
+  },
+});
+
+/** 添加状态 */
+async function handleAddStatus() {
+  formData.value!.statuses!.splice(-3, 0, {
+    name: '',
+    percent: undefined,
+  } as any);
+  await nextTick();
+  await gridApi.grid.reloadData(formData.value!.statuses as any);
+}
+
+/** 删除状态 */
+async function deleteStatusArea(row: any, rowIndex: number) {
+  await gridApi.grid.remove(row);
+  formData.value!.statuses!.splice(rowIndex, 1);
+  await gridApi.grid.reloadData(formData.value!.statuses as any);
+}
+
+/** 表格配置 */
+const [Grid, gridApi] = useVbenVxeGrid({
+  gridOptions: {
+    editConfig: {
+      trigger: 'click',
+      mode: 'cell',
+    },
+    columns: useFormColumns(),
+    //@ts-ignore 忽略类型检查
+    data: formData.value?.statuses?.concat(DEFAULT_STATUSES),
+    border: true,
+    showOverflow: true,
+    autoResize: true,
+    keepSource: true,
+    rowConfig: {
+      keyField: 'row_id',
+      isHover: true,
+    },
+    pagerConfig: {
+      enabled: false,
+    },
+    toolbarConfig: {
+      enabled: false,
+    },
   },
 });
 </script>
 
 <template>
   <Modal :title="getTitle" class="w-1/2">
-    <Form class="mx-4" />
+    <Form class="mx-4">
+      <template #statuses>
+        <Grid class="w-full">
+          <template #defaultStatus="{ row, rowIndex }">
+            <span>
+              {{
+                row.defaultStatus
+                  ? $t('crm.businessStatus.field.end')
+                  : $t('crm.businessStatus.field.stagePhase', [rowIndex + 1])
+              }}
+            </span>
+          </template>
+          <template #name="{ row }">
+            <Input
+              v-if="!row.endStatus"
+              v-model:value="row.name"
+              :placeholder="$t('crm.businessStatus.field.placeholderName')"
+            />
+            <span v-else>{{ row.name }}</span>
+          </template>
+          <template #percent="{ row }">
+            <InputNumber
+              v-if="!row.endStatus"
+              v-model:value="row.percent"
+              :min="0"
+              :max="100"
+              :precision="2"
+              :placeholder="$t('crm.businessStatus.field.placeholderWinRate')"
+            />
+            <span v-else>{{ row.percent }}</span>
+          </template>
+          <template #actions="{ row, rowIndex }">
+            <TableAction
+              :actions="[
+                {
+                  label: $t('ui.actionTitle.create'),
+                  type: 'link',
+                  ifShow: () => !row.endStatus,
+                  onClick: handleAddStatus,
+                },
+                {
+                  label: $t('common.delete'),
+                  type: 'link',
+                  danger: true,
+                  ifShow: () => !row.endStatus,
+                  popConfirm: {
+                    title: $t('ui.actionMessage.deleteConfirm', [row.name]),
+                    confirm: deleteStatusArea.bind(null, row, rowIndex),
+                  },
+                },
+              ]"
+            />
+          </template>
+        </Grid>
+      </template>
+    </Form>
   </Modal>
 </template>

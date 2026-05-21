@@ -2,16 +2,17 @@
 import type { CrmProductApi } from '#/api/crm/product';
 
 import { useDescription } from '#/components/description';
+import { $t } from '#/locales';
 
 import { useDetailBaseSchema } from './detail-data';
 
 defineProps<{
-  product: CrmProductApi.Product; // 产品信息
+  product: CrmProductApi.Product;
 }>();
 
 const [ProductDescription] = useDescription({
   componentProps: {
-    title: '基本信息',
+    title: $t('crm.product.field.baseInfo'),
     bordered: false,
     column: 4,
     class: 'mx-4',

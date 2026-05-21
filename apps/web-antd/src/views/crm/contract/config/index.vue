@@ -18,7 +18,6 @@ const emit = defineEmits(['success']);
 
 const [Form, formApi] = useVbenForm({
   commonConfig: {
-    // 所有表单项
     labelClass: 'w-2/6',
   },
   layout: 'horizontal',
@@ -28,11 +27,11 @@ const [Form, formApi] = useVbenForm({
     {
       component: 'RadioGroup',
       fieldName: 'notifyEnabled',
-      label: '提前提醒设置',
+      label: $t('crm.contract.config.notifyEnabled'),
       componentProps: {
         options: [
-          { label: '提醒', value: true },
-          { label: '不提醒', value: false },
+          { label: $t('crm.contract.config.remind'), value: true },
+          { label: $t('crm.contract.config.notRemind'), value: false },
         ],
       },
     },
@@ -44,8 +43,8 @@ const [Form, formApi] = useVbenForm({
         precision: 0,
       },
       renderComponentContent: () => ({
-        addonBefore: () => '提前',
-        addonAfter: () => '天提醒',
+        addonBefore: () => $t('crm.contract.config.notifyDays'),
+        addonAfter: () => $t('crm.contract.config.daysTip'),
       }),
       dependencies: {
         triggerFields: ['notifyEnabled'],
@@ -56,7 +55,6 @@ const [Form, formApi] = useVbenForm({
       },
     },
   ],
-  // 提交函数
   handleSubmit: onSubmit,
 });
 
@@ -65,7 +63,6 @@ async function onSubmit() {
   if (!valid) {
     return;
   }
-  // 提交表单
   const data = (await formApi.getValues()) as CrmContractConfigApi.Config;
   if (!data.notifyEnabled) {
     data.notifyDays = undefined;
@@ -73,7 +70,6 @@ async function onSubmit() {
   formApi.setValues(data);
   try {
     await saveContractConfig(data);
-    // 关闭并提示
     emit('success');
     message.success($t('ui.actionMessage.operationSuccess'));
   } finally {
@@ -97,7 +93,7 @@ onMounted(() => {
 
 <template>
   <Page auto-content-height>
-    <Card title="合同配置设置">
+    <Card :title="$t('crm.contract.config.title')">
       <Form class="w-1/4" />
     </Card>
   </Page>

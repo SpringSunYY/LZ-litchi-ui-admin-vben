@@ -20,7 +20,10 @@ const { push } = useRouter();
 /** 导出表格 */
 async function handleExport() {
   const data = await exportCustomer(await gridApi.formApi.getValues());
-  downloadFileFromBlobPart({ fileName: '客户公海.xls', source: data });
+  downloadFileFromBlobPart({
+    fileName: `${$t('crm.customerPool.customerPool')}.xls`,
+    source: data,
+  });
 }
 
 /** 查看客户详情 */
@@ -63,7 +66,7 @@ const [Grid, gridApi] = useVbenVxeGrid({
   <Page auto-content-height>
     <template #doc>
       <DocAlert
-        title="【客户】客户管理、公海客户"
+        :title="$t('crm.customerPool.list')"
         url="https://doc.iocoder.cn/crm/customer/"
       />
       <DocAlert

@@ -18,7 +18,6 @@ const emit = defineEmits(['success']);
 
 const [Form, formApi] = useVbenForm({
   commonConfig: {
-    // 所有表单项
     labelClass: 'w-2/6',
   },
   layout: 'horizontal',
@@ -28,11 +27,11 @@ const [Form, formApi] = useVbenForm({
     {
       component: 'RadioGroup',
       fieldName: 'enabled',
-      label: '客户公海规则设置',
+      label: $t('crm.customerLimitConfig.field.poolConfig'),
       componentProps: {
         options: [
-          { label: '开启', value: true },
-          { label: '关闭', value: false },
+          { label: $t('crm.customerLimitConfig.field.enable'), value: true },
+          { label: $t('crm.customerLimitConfig.field.disable'), value: false },
         ],
       },
     },
@@ -44,7 +43,7 @@ const [Form, formApi] = useVbenForm({
         precision: 0,
       },
       renderComponentContent: () => ({
-        addonAfter: () => '天不跟进或',
+        addonAfter: () => $t('crm.customerLimitConfig.field.contactExpireDays'),
       }),
       dependencies: {
         triggerFields: ['enabled'],
@@ -55,8 +54,8 @@ const [Form, formApi] = useVbenForm({
       component: 'InputNumber',
       fieldName: 'dealExpireDays',
       renderComponentContent: () => ({
-        addonBefore: () => '或',
-        addonAfter: () => '天未成交',
+        addonBefore: () => $t('crm.customerLimitConfig.field.or'),
+        addonAfter: () => $t('crm.customerLimitConfig.field.dealExpireDays'),
       }),
       componentProps: {
         min: 0,
@@ -70,11 +69,11 @@ const [Form, formApi] = useVbenForm({
     {
       component: 'RadioGroup',
       fieldName: 'notifyEnabled',
-      label: '提前提醒设置',
+      label: $t('crm.customerLimitConfig.field.notifyEnabled'),
       componentProps: {
         options: [
-          { label: '开启', value: true },
-          { label: '关闭', value: false },
+          { label: $t('crm.customerLimitConfig.field.enable'), value: true },
+          { label: $t('crm.customerLimitConfig.field.disable'), value: false },
         ],
       },
       dependencies: {
@@ -91,8 +90,8 @@ const [Form, formApi] = useVbenForm({
         precision: 0,
       },
       renderComponentContent: () => ({
-        addonBefore: () => '提前',
-        addonAfter: () => '天提醒',
+        addonBefore: () => $t('crm.customerLimitConfig.field.notifyDays'),
+        addonAfter: () => $t('crm.customerLimitConfig.field.daysTip'),
       }),
       dependencies: {
         triggerFields: ['notifyEnabled'],
@@ -100,7 +99,6 @@ const [Form, formApi] = useVbenForm({
       },
     },
   ],
-  // 提交函数
   handleSubmit: onSubmit,
 });
 
@@ -109,7 +107,6 @@ async function onSubmit() {
   if (!valid) {
     return;
   }
-  // 提交表单
   const data =
     (await formApi.getValues()) as CrmCustomerPoolConfigApi.CustomerPoolConfig;
   if (!data.enabled) {
@@ -123,7 +120,6 @@ async function onSubmit() {
   formApi.setValues(data);
   try {
     await saveCustomerPoolConfig(data);
-    // 关闭并提示
     emit('success');
     message.success($t('ui.actionMessage.operationSuccess'));
   } finally {
@@ -147,7 +143,7 @@ onMounted(() => {
 
 <template>
   <Page auto-content-height>
-    <Card title="客户公海规则设置">
+    <Card :title="$t('crm.customerLimitConfig.field.poolConfigTitle')">
       <Form class="w-1/4" />
     </Card>
   </Page>

@@ -48,7 +48,10 @@ function handleImport() {
 /** 导出表格 */
 async function handleExport() {
   const data = await exportCustomer(await gridApi.formApi.getValues());
-  downloadFileFromBlobPart({ fileName: '客户.xls', source: data });
+  downloadFileFromBlobPart({
+    fileName: `${$t('crm.customer.customer')}.xls`,
+    source: data,
+  });
 }
 
 /** 创建客户 */
@@ -124,7 +127,7 @@ function onChangeSceneType(key: number | string) {
   <Page auto-content-height>
     <template #doc>
       <DocAlert
-        title="【客户】客户管理"
+        :title="$t('crm.customer.list')"
         url="https://doc.iocoder.cn/crm/customer/"
       />
       <DocAlert
@@ -138,16 +141,25 @@ function onChangeSceneType(key: number | string) {
     <Grid>
       <template #top>
         <Tabs class="border-none" @change="onChangeSceneType">
-          <Tabs.TabPane tab="我负责的" key="1" />
-          <Tabs.TabPane tab="我参与的" key="2" />
-          <Tabs.TabPane tab="下属负责的" key="3" />
+          <Tabs.TabPane
+            :tab="$t('crm.customer.tabPane.myResponsible')"
+            key="1"
+          />
+          <Tabs.TabPane
+            :tab="$t('crm.customer.tabPane.myParticipant')"
+            key="2"
+          />
+          <Tabs.TabPane
+            :tab="$t('crm.customer.tabPane.subordinateResponsible')"
+            key="3"
+          />
         </Tabs>
       </template>
       <template #toolbar-tools>
         <TableAction
           :actions="[
             {
-              label: $t('ui.actionTitle.create', ['客户']),
+              label: $t('ui.actionTitle.create', [$t('crm.customer.customer')]),
               type: 'primary',
               icon: ACTION_ICON.ADD,
               auth: ['crm:customer:create'],

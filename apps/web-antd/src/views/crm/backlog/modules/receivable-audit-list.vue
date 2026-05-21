@@ -1,4 +1,3 @@
-<!-- 待审核回款 -->
 <script lang="ts" setup>
 import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 import type { CrmReceivableApi } from '#/api/crm/receivable';
@@ -9,13 +8,13 @@ import { Button } from 'ant-design-vue';
 
 import { useVbenVxeGrid } from '#/adapter/vxe-table';
 import { getReceivablePage } from '#/api/crm/receivable';
+import { $t } from '#/locales';
 import { useGridColumns } from '#/views/crm/receivable/data';
 
-import { AUDIT_STATUS } from '../data';
+import { useAuditStatusOptions } from '../data';
 
 const { push } = useRouter();
 
-/** 查看审批 */
 function handleProcessDetail(row: CrmReceivableApi.Receivable) {
   push({
     name: 'BpmProcessInstanceDetail',
@@ -23,17 +22,14 @@ function handleProcessDetail(row: CrmReceivableApi.Receivable) {
   });
 }
 
-/** 打开回款详情 */
 function handleDetail(row: CrmReceivableApi.Receivable) {
   push({ name: 'CrmReceivableDetail', params: { id: row.id } });
 }
 
-/** 打开客户详情 */
 function handleCustomerDetail(row: CrmReceivableApi.Receivable) {
   push({ name: 'CrmCustomerDetail', params: { id: row.customerId } });
 }
 
-/** 打开合同详情 */
 function handleContractDetail(row: CrmReceivableApi.Receivable) {
   push({ name: 'CrmContractDetail', params: { id: row.contractId } });
 }
@@ -43,11 +39,11 @@ const [Grid] = useVbenVxeGrid({
     schema: [
       {
         fieldName: 'auditStatus',
-        label: '合同状态',
+        label: $t('crm.backlog.field.contractStatus'),
         component: 'Select',
         componentProps: {
           allowClear: true,
-          options: AUDIT_STATUS,
+          options: useAuditStatusOptions(),
         },
         defaultValue: 10,
       },
@@ -97,7 +93,9 @@ const [Grid] = useVbenVxeGrid({
       </Button>
     </template>
     <template #actions="{ row }">
-      <Button type="link" @click="handleProcessDetail(row)">查看审批</Button>
+      <Button type="link" @click="handleProcessDetail(row)">
+        {{ $t('crm.backlog.action.viewApproval') }}
+      </Button>
     </template>
   </Grid>
 </template>

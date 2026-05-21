@@ -52,12 +52,12 @@ function renderLeftPie() {
   }));
 
   renderLeftChart({
-    title: { text: $t('crm.portrait.allCustomer'), left: 'center' },
+    title: { text: $t('crm.statistics.portrait.allCustomer'), left: 'center' },
     tooltip: { trigger: 'item', formatter: '{b}: {c} ({d}%)' },
     legend: { orient: 'vertical', right: 10, top: 'center' },
     series: [
       {
-        name: $t('crm.portrait.allCustomer'),
+        name: $t('crm.statistics.portrait.allCustomer'),
         type: 'pie',
         radius: ['40%', '70%'],
         center: ['35%', '50%'],
@@ -81,12 +81,12 @@ function renderRightPie() {
   }));
 
   renderRightChart({
-    title: { text: $t('crm.portrait.dealCustomer'), left: 'center' },
+    title: { text: $t('crm.statistics.portrait.dealCustomer'), left: 'center' },
     tooltip: { trigger: 'item', formatter: '{b}: {c} ({d}%)' },
     legend: { orient: 'vertical', right: 10, top: 'center' },
     series: [
       {
-        name: $t('crm.portrait.dealCustomer'),
+        name: $t('crm.statistics.portrait.dealCustomer'),
         type: 'pie',
         radius: ['40%', '70%'],
         center: ['35%', '50%'],

@@ -3,9 +3,8 @@ import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 
 import { handleTree } from '@vben/utils';
 
-import { z } from '#/adapter/form';
 import { getDeptList } from '#/api/system/dept';
-import { CommonStatusEnum, DICT_TYPE, getDictOptions } from '#/utils';
+import { $t } from '#/locales';
 
 /** 新增/修改的表单 */
 export function useFormSchema(): VbenFormSchema[] {
@@ -20,13 +19,13 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'name',
-      label: '状态组名',
+      label: $t('crm.businessStatus.field.name'),
       component: 'Input',
       rules: 'required',
     },
     {
       fieldName: 'deptIds',
-      label: '应用部门',
+      label: $t('crm.businessStatus.field.dept'),
       component: 'ApiTreeSelect',
       componentProps: {
         api: async () => {
@@ -35,20 +34,45 @@ export function useFormSchema(): VbenFormSchema[] {
         },
         multiple: true,
         fieldNames: { label: 'name', value: 'id', children: 'children' },
-        placeholder: '请选择应用部门',
+        placeholder: $t('crm.businessStatus.field.selectDept'),
         treeDefaultExpandAll: true,
       },
     },
     {
-      fieldName: 'status',
-      label: '状态',
-      component: 'RadioGroup',
-      componentProps: {
-        options: getDictOptions(DICT_TYPE.COMMON_STATUS, 'number'),
-        buttonStyle: 'solid',
-        optionType: 'button',
-      },
-      rules: z.number().default(CommonStatusEnum.ENABLE),
+      fieldName: 'statuses',
+      label: '阶段设置',
+      component: 'Input',
+      rules: 'required',
+    },
+  ];
+}
+
+/** 商机状态阶段列表列配置 */
+export function useFormColumns(): VxeTableGridOptions['columns'] {
+  return [
+    {
+      field: 'defaultStatus',
+      title: $t('crm.businessStatus.field.stage'),
+      minWidth: 100,
+      slots: { default: 'defaultStatus' },
+    },
+    {
+      field: 'name',
+      title: $t('crm.businessStatus.field.stageName'),
+      minWidth: 100,
+      slots: { default: 'name' },
+    },
+    {
+      field: 'percent',
+      title: $t('crm.businessStatus.field.winRate'),
+      minWidth: 100,
+      slots: { default: 'percent' },
+    },
+    {
+      title: $t('crm.businessStatus.field.operation'),
+      width: 130,
+      fixed: 'right',
+      slots: { default: 'actions' },
     },
   ];
 }
@@ -58,25 +82,27 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
   return [
     {
       field: 'name',
-      title: '状态组名',
+      title: $t('crm.businessStatus.field.name'),
     },
     {
       field: 'deptNames',
-      title: '应用部门',
+      title: $t('crm.businessStatus.field.dept'),
       formatter: ({ cellValue }) =>
-        cellValue?.length > 0 ? cellValue.join(' ') : '全公司',
+        cellValue?.length > 0
+          ? cellValue.join(' ')
+          : $t('crm.businessStatus.field.allCompany'),
     },
     {
       field: 'creator',
-      title: '创建人',
+      title: $t('crm.businessStatus.field.creator'),
     },
     {
       field: 'createTime',
-      title: '创建时间',
+      title: $t('crm.businessStatus.field.createTime'),
       formatter: 'formatDateTime',
     },
     {
-      title: '操作',
+      title: $t('common.operation'),
       width: 160,
       fixed: 'right',
       slots: { default: 'actions' },

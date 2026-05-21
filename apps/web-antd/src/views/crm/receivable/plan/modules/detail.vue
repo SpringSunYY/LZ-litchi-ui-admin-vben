@@ -16,6 +16,7 @@ import { BizTypeEnum } from '#/api/crm/permission';
 import { getReceivablePlan } from '#/api/crm/receivable/plan';
 import { useDescription } from '#/components/description';
 import { AsyncOperateLog } from '#/components/operate-log';
+import { $t } from '#/locales';
 import { PermissionList } from '#/views/crm/permission';
 import { ReceivablePlanDetailsInfo } from '#/views/crm/receivable';
 
@@ -34,7 +35,7 @@ const receivablePlan = ref<CrmReceivablePlanApi.Plan>(
   {} as CrmReceivablePlanApi.Plan,
 );
 const receivablePlanLogList = ref<SystemOperateLogApi.OperateLog[]>([]);
-const permissionListRef = ref<InstanceType<typeof PermissionList>>(); // 团队成员列表 Ref
+const permissionListRef = ref<InstanceType<typeof PermissionList>>();
 
 // 校验编辑权限
 const validateWrite = computed(() => permissionListRef.value?.validateWrite);
@@ -53,8 +54,8 @@ const [FormModal, formModalApi] = useVbenModal({
   destroyOnClose: true,
 });
 
-/** 加载线索详情 */
-async function loadreceivablePlanDetail() {
+/** 加载回款计划详情 */
+async function loadReceivablePlanDetail() {
   loading.value = true;
   const data = await getReceivablePlan(receivablePlanId.value);
   receivablePlan.value = data;
@@ -73,7 +74,7 @@ function handleBack() {
   router.push('/crm/receivablePlan');
 }
 
-/** 编辑收款 */
+/** 编辑回款计划 */
 function handleEdit() {
   formModalApi.setData({ id: receivablePlanId.value }).open();
 }
@@ -81,22 +82,22 @@ function handleEdit() {
 // 加载数据
 onMounted(() => {
   receivablePlanId.value = Number(route.params.id);
-  loadreceivablePlanDetail();
+  loadReceivablePlanDetail();
 });
 </script>
 
 <template>
   <Page
     auto-content-height
-    :title="`第${receivablePlan?.period}期`"
+    :title="$t('crm.receivablePlan.message.periodPhase', [receivablePlan?.period])"
     :loading="loading"
   >
-    <FormModal @success="loadreceivablePlanDetail" />
+    <FormModal @success="loadReceivablePlanDetail" />
     <template #extra>
       <div class="flex items-center gap-2">
         <Button @click="handleBack">
           <ArrowLeft class="size-5" />
-          返回
+          {{ $t('common.back') }}
         </Button>
         <Button
           v-if="validateWrite"
@@ -113,10 +114,10 @@ onMounted(() => {
     </Card>
     <Card class="mt-4 min-h-[60%]">
       <Tabs>
-        <Tabs.TabPane tab="详细资料" key="1" :force-render="true">
+        <Tabs.TabPane :tab="$t('crm.receivablePlan.tab.detail')" key="1" :force-render="true">
           <ReceivablePlanDetailsInfo :receivable-plan="receivablePlan" />
         </Tabs.TabPane>
-        <Tabs.TabPane tab="团队成员" key="2" :force-render="true">
+        <Tabs.TabPane :tab="$t('crm.receivablePlan.tab.teamMember')" key="2" :force-render="true">
           <PermissionList
             ref="permissionListRef"
             :biz-id="receivablePlanId"
@@ -125,7 +126,7 @@ onMounted(() => {
             @quit-team="handleBack"
           />
         </Tabs.TabPane>
-        <Tabs.TabPane tab="操作日志" key="3" :force-render="true">
+        <Tabs.TabPane :tab="$t('crm.receivablePlan.tab.operateLog')" key="3" :force-render="true">
           <AsyncOperateLog :log-list="receivablePlanLogList" />
         </Tabs.TabPane>
       </Tabs>

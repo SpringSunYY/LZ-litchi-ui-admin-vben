@@ -1,4 +1,3 @@
-<!-- 待审核合同 -->
 <script lang="ts" setup>
 import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 import type { CrmContractApi } from '#/api/crm/contract';
@@ -9,13 +8,13 @@ import { Button } from 'ant-design-vue';
 
 import { ACTION_ICON, TableAction, useVbenVxeGrid } from '#/adapter/vxe-table';
 import { getContractPage } from '#/api/crm/contract';
+import { $t } from '#/locales';
 import { useGridColumns } from '#/views/crm/contract/data';
 
-import { AUDIT_STATUS } from '../data';
+import { useAuditStatusOptions } from '../data';
 
 const { push } = useRouter();
 
-/** 查看审批 */
 function handleProcessDetail(row: CrmContractApi.Contract) {
   push({
     name: 'BpmProcessInstanceDetail',
@@ -23,21 +22,17 @@ function handleProcessDetail(row: CrmContractApi.Contract) {
   });
 }
 
-/** 打开合同详情 */
 function handleContractDetail(row: CrmContractApi.Contract) {
   push({ name: 'CrmContractDetail', params: { id: row.id } });
 }
-/** 打开客户详情 */
 function handleCustomerDetail(row: CrmContractApi.Contract) {
   push({ name: 'CrmCustomerDetail', params: { id: row.id } });
 }
 
-/** 打开联系人详情 */
 function handleContactDetail(row: CrmContractApi.Contract) {
   push({ name: 'CrmContactDetail', params: { id: row.id } });
 }
 
-/** 打开商机详情 */
 function handleBusinessDetail(row: CrmContractApi.Contract) {
   push({ name: 'CrmBusinessDetail', params: { id: row.id } });
 }
@@ -47,11 +42,11 @@ const [Grid] = useVbenVxeGrid({
     schema: [
       {
         fieldName: 'auditStatus',
-        label: '合同状态',
+        label: $t('crm.backlog.field.contractStatus'),
         component: 'Select',
         componentProps: {
           allowClear: true,
-          options: AUDIT_STATUS,
+          options: useAuditStatusOptions(),
         },
         defaultValue: 10,
       },
@@ -67,7 +62,7 @@ const [Grid] = useVbenVxeGrid({
           return await getContractPage({
             pageNo: page.currentPage,
             pageSize: page.pageSize,
-            sceneType: 1, // 我负责的
+            sceneType: 1,
             ...formValues,
           });
         },
@@ -110,7 +105,7 @@ const [Grid] = useVbenVxeGrid({
       <TableAction
         :actions="[
           {
-            label: '查看审批',
+            label: $t('crm.backlog.action.viewApproval'),
             type: 'link',
             icon: ACTION_ICON.VIEW,
             onClick: handleProcessDetail.bind(null, row),

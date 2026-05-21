@@ -35,7 +35,10 @@ function onRefresh() {
 /** 导出表格 */
 async function handleExport() {
   const data = await exportProduct(await gridApi.formApi.getValues());
-  downloadFileFromBlobPart({ fileName: '产品.xls', source: data });
+  downloadFileFromBlobPart({
+    fileName: `${$t('crm.product.product')}.xls`,
+    source: data,
+  });
 }
 
 /** 打开详情 */
@@ -104,12 +107,12 @@ const [Grid, gridApi] = useVbenVxeGrid({
 <template>
   <Page auto-content-height>
     <FormModal @success="onRefresh" />
-    <Grid table-title="产品列表">
+    <Grid :table-title="$t('crm.product.list')">
       <template #toolbar-tools>
         <TableAction
           :actions="[
             {
-              label: $t('ui.actionTitle.create', ['产品']),
+              label: $t('ui.actionTitle.create', [$t('crm.product.product')]),
               type: 'primary',
               icon: ACTION_ICON.ADD,
               auth: ['crm:product:create'],

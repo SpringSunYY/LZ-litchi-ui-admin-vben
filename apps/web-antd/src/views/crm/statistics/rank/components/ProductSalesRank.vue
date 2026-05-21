@@ -55,7 +55,7 @@ async function renderChart() {
     },
     series: [
       {
-        name: $t('crm.rank.productSales'),
+        name: $t('crm.statistics.rank.productSales'),
         type: 'bar',
         itemStyle: { color: '#b6f2ff' },
         data: top10.map((item) => item.count).reverse(),

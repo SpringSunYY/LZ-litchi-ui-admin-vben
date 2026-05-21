@@ -15,6 +15,7 @@ import { getOperateLogPage } from '#/api/crm/operateLog';
 import { BizTypeEnum } from '#/api/crm/permission';
 import { useDescription } from '#/components/description';
 import { AsyncOperateLog } from '#/components/operate-log';
+import { $t } from '#/locales';
 import { BusinessDetailsList } from '#/views/crm/business';
 import { ContactDetailsList } from '#/views/crm/contact';
 import { ContractDetailsList } from '#/views/crm/contract';
@@ -42,7 +43,7 @@ const customerId = ref(0);
 
 const customer = ref<CrmCustomerApi.Customer>({} as CrmCustomerApi.Customer);
 const customerLogList = ref<SystemOperateLogApi.OperateLog[]>([]);
-const permissionListRef = ref<InstanceType<typeof PermissionList>>(); // 团队成员列表 Ref
+const permissionListRef = ref<InstanceType<typeof PermissionList>>();
 
 const [Description] = useDescription({
   componentProps: {
@@ -93,7 +94,7 @@ function handleEdit() {
   formModalApi.setData({ id: customerId.value }).open();
 }
 
-/** 转移线索 */
+/** 转移客户 */
 function handleTransfer() {
   transferModalApi.setData({ id: customerId.value }).open();
 }
@@ -127,8 +128,13 @@ function handlePutPool() {
 async function handleUpdateDealStatus(): Promise<boolean | undefined> {
   return new Promise((resolve, reject) => {
     const dealStatus = !customer.value.dealStatus;
+    const dealStatusText = dealStatus
+      ? $t('crm.customer.message.dealYes')
+      : $t('crm.customer.message.dealNo');
     confirm({
-      content: `确定更新成交状态为【${dealStatus ? '已成交' : '未成交'}】吗？`,
+      content: $t('crm.customer.message.updateDealStatusConfirm', [
+        dealStatusText,
+      ]),
     })
       .then(async () => {
         const res = await updateCustomerDealStatus(
@@ -136,14 +142,14 @@ async function handleUpdateDealStatus(): Promise<boolean | undefined> {
           dealStatus,
         );
         if (res) {
-          message.success('更新成交状态成功');
+          message.success($t('crm.customer.message.updateDealStatusSuccess'));
           resolve(true);
         } else {
-          reject(new Error('更新成交状态失败'));
+          reject(new Error($t('crm.customer.message.updateDealStatusFailed')));
         }
       })
       .catch(() => {
-        reject(new Error('取消操作'));
+        reject(new Error($t('common.cancel')));
       });
   });
 }
@@ -168,52 +174,52 @@ onMounted(() => {
           @click="handleEdit"
           v-access:code="['crm:customer:update']"
         >
-          {{ $t('ui.actionTitle.edit') }}
+          {{ $t('common.edit') }}
         </Button>
         <Button
           v-if="permissionListRef?.validateOwnerUser"
           type="primary"
           @click="handleTransfer"
         >
-          转移
+          {{ $t('crm.customer.action.transfer') }}
         </Button>
         <Button
           v-if="permissionListRef?.validateWrite"
           @click="handleUpdateDealStatus"
         >
-          更改成交状态
+          {{ $t('crm.customer.action.updateDealStatus') }}
         </Button>
         <Button
           v-if="customer.lockStatus && permissionListRef?.validateOwnerUser"
           @click="handleUnlock"
         >
-          解锁
+          {{ $t('crm.customer.action.unlock') }}
         </Button>
         <Button
           v-if="!customer.lockStatus && permissionListRef?.validateOwnerUser"
           @click="handleLock"
         >
-          锁定
+          {{ $t('crm.customer.action.lock') }}
         </Button>
         <Button
           v-if="!customer.ownerUserId"
           type="primary"
           @click="handleReceive"
         >
-          领取
+          {{ $t('crm.customer.action.receive') }}
         </Button>
         <Button
           v-if="!customer.ownerUserId"
           type="primary"
           @click="handleDistributeForm"
         >
-          分配
+          {{ $t('crm.customer.action.distribute') }}
         </Button>
         <Button
           v-if="customer.ownerUserId && permissionListRef?.validateOwnerUser"
           @click="handlePutPool"
         >
-          放入公海
+          {{ $t('crm.customer.action.putPool') }}
         </Button>
       </div>
     </template>
@@ -222,20 +228,36 @@ onMounted(() => {
     </Card>
     <Card class="mt-4 min-h-[60%]">
       <Tabs>
-        <Tabs.TabPane tab="详细资料" key="1" :force-render="true">
+        <Tabs.TabPane
+          :tab="$t('crm.customer.tab.detail')"
+          key="1"
+          :force-render="true"
+        >
           <CustomerDetailsInfo :customer="customer" />
         </Tabs.TabPane>
-        <Tabs.TabPane tab="跟进记录" key="2" :force-render="true">
+        <Tabs.TabPane
+          :tab="$t('crm.customer.tab.followUp')"
+          key="2"
+          :force-render="true"
+        >
           <FollowUp :biz-id="customerId" :biz-type="BizTypeEnum.CRM_CUSTOMER" />
         </Tabs.TabPane>
-        <Tabs.TabPane tab="联系人" key="3" :force-render="true">
+        <Tabs.TabPane
+          :tab="$t('crm.customer.tab.contact')"
+          key="3"
+          :force-render="true"
+        >
           <ContactDetailsList
             :biz-id="customerId"
             :biz-type="BizTypeEnum.CRM_CUSTOMER"
             :customer-id="customerId"
           />
         </Tabs.TabPane>
-        <Tabs.TabPane tab="团队成员" key="4" :force-render="true">
+        <Tabs.TabPane
+          :tab="$t('crm.customer.tab.teamMember')"
+          key="4"
+          :force-render="true"
+        >
           <PermissionList
             ref="permissionListRef"
             :biz-id="customerId"
@@ -244,24 +266,40 @@ onMounted(() => {
             @quit-team="handleBack"
           />
         </Tabs.TabPane>
-        <Tabs.TabPane tab="商机" key="5" :force-render="true">
+        <Tabs.TabPane
+          :tab="$t('crm.customer.tab.business')"
+          key="5"
+          :force-render="true"
+        >
           <BusinessDetailsList
             :biz-id="customerId"
             :biz-type="BizTypeEnum.CRM_CUSTOMER"
             :customer-id="customerId"
           />
         </Tabs.TabPane>
-        <Tabs.TabPane tab="合同" key="6" :force-render="true">
+        <Tabs.TabPane
+          :tab="$t('crm.customer.tab.contract')"
+          key="6"
+          :force-render="true"
+        >
           <ContractDetailsList
             :biz-id="customerId"
             :biz-type="BizTypeEnum.CRM_CUSTOMER"
           />
         </Tabs.TabPane>
-        <Tabs.TabPane tab="回款" key="7" :force-render="true">
+        <Tabs.TabPane
+          :tab="$t('crm.customer.tab.receivable')"
+          key="7"
+          :force-render="true"
+        >
           <ReceivablePlanDetailsList :customer-id="customerId" />
           <ReceivableDetailsList :customer-id="customerId" />
         </Tabs.TabPane>
-        <Tabs.TabPane tab="操作日志" key="8" :force-render="true">
+        <Tabs.TabPane
+          :tab="$t('crm.customer.tab.operateLog')"
+          key="8"
+          :force-render="true"
+        >
           <AsyncOperateLog :log-list="customerLogList" />
         </Tabs.TabPane>
       </Tabs>

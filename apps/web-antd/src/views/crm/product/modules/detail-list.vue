@@ -10,6 +10,7 @@ import { useVbenVxeGrid } from '#/adapter/vxe-table';
 import { getBusiness } from '#/api/crm/business';
 import { getContract } from '#/api/crm/contract';
 import { BizTypeEnum } from '#/api/crm/permission';
+import { $t } from '#/locales';
 
 import { useDetailListColumns } from './detail-data';
 
@@ -58,14 +59,18 @@ const [Grid] = useVbenVxeGrid({
     <Grid />
     <div class="flex flex-col items-end justify-end">
       <span class="ml-4 font-bold text-red-500">
-        {{ `产品总金额：${erpPriceInputFormatter(totalProductPrice)}元` }}
-      </span>
-      <span class="font-bold text-red-500">
-        {{ `整单折扣：${erpPriceInputFormatter(discountPercent)}%` }}
+        {{
+          `${$t('crm.product.productTable.totalProductPrice')}：${erpPriceInputFormatter(totalProductPrice)}${$t('common.yuan')}`
+        }}
       </span>
       <span class="font-bold text-red-500">
         {{
-          `实际金额：${erpPriceInputFormatter(totalProductPrice * (1 - discountPercent / 100))}元`
+          `${$t('crm.product.productTable.discountPercent')}：${erpPriceInputFormatter(discountPercent)}%`
+        }}
+      </span>
+      <span class="font-bold text-red-500">
+        {{
+          `${$t('crm.product.productTable.actualAmount')}：${erpPriceInputFormatter(totalProductPrice * (1 - discountPercent / 100))}${$t('common.yuan')}`
         }}
       </span>
     </div>

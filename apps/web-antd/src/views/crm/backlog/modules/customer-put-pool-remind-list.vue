@@ -1,4 +1,3 @@
-<!-- 待进入公海的客户 -->
 <script lang="ts" setup>
 import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 import type { CrmCustomerApi } from '#/api/crm/customer';
@@ -9,13 +8,13 @@ import { Button } from 'ant-design-vue';
 
 import { useVbenVxeGrid } from '#/adapter/vxe-table';
 import { getCustomerPage } from '#/api/crm/customer';
+import { $t } from '#/locales';
 import { useGridColumns } from '#/views/crm/customer/data';
 
-import { SCENE_TYPES } from '../data';
+import { useSceneTypeOptions } from '../data';
 
 const { push } = useRouter();
 
-/** 打开客户详情 */
 function handleDetail(row: CrmCustomerApi.Customer) {
   push({ name: 'CrmCustomerDetail', params: { id: row.id } });
 }
@@ -25,11 +24,11 @@ const [Grid] = useVbenVxeGrid({
     schema: [
       {
         fieldName: 'sceneType',
-        label: '归属',
+        label: $t('crm.backlog.field.attribution'),
         component: 'Select',
         componentProps: {
           allowClear: true,
-          options: SCENE_TYPES,
+          options: useSceneTypeOptions(),
         },
         defaultValue: 1,
       },
@@ -45,7 +44,7 @@ const [Grid] = useVbenVxeGrid({
           return await getCustomerPage({
             pageNo: page.currentPage,
             pageSize: page.pageSize,
-            pool: true, // 固定 公海参数为 true
+            pool: true,
             ...formValues,
           });
         },
@@ -68,7 +67,9 @@ const [Grid] = useVbenVxeGrid({
       <Button type="link" @click="handleDetail(row)">{{ row.name }}</Button>
     </template>
     <template #actions="{ row }">
-      <Button type="link" @click="handleDetail(row)">查看详情</Button>
+      <Button type="link" @click="handleDetail(row)">
+        {{ $t('crm.backlog.action.viewDetail') }}
+      </Button>
     </template>
   </Grid>
 </template>

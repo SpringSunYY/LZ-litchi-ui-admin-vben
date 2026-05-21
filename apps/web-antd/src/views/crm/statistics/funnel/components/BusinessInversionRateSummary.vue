@@ -60,9 +60,9 @@ function renderMixedChart() {
     },
     legend: {
       data: [
-        $t('crm.funnel.winRate'),
-        $t('crm.funnel.totalBusinessCount'),
-        $t('crm.funnel.winBusinessCount'),
+        $t('crm.statistics.funnel.winRate'),
+        $t('crm.statistics.funnel.totalBusinessCount'),
+        $t('crm.statistics.funnel.winBusinessCount'),
       ],
       bottom: '0px',
       itemWidth: 14,
@@ -88,7 +88,7 @@ function renderMixedChart() {
     yAxis: [
       {
         type: 'value',
-        name: $t('crm.funnel.winRate'),
+        name: $t('crm.statistics.funnel.winRate'),
         nameTextStyle: { color: '#666' },
         axisLabel: { color: '#666', formatter: '{value}%' },
         axisLine: { lineStyle: { color: '#666' } },
@@ -96,7 +96,7 @@ function renderMixedChart() {
       },
       {
         type: 'value',
-        name: $t('crm.common.businessCount'),
+        name: $t('crm.statistics.funnel.totalBusinessCount'),
         nameTextStyle: { color: '#666' },
         axisLabel: { color: '#666' },
         axisLine: { lineStyle: { color: '#666' } },
@@ -105,20 +105,20 @@ function renderMixedChart() {
     ],
     series: [
       {
-        name: $t('crm.funnel.winRate'),
+        name: $t('crm.statistics.funnel.winRate'),
         type: 'line',
         yAxisIndex: 0,
         data: winRates,
       },
       {
-        name: $t('crm.funnel.totalBusinessCount'),
+        name: $t('crm.statistics.funnel.totalBusinessCount'),
         type: 'bar',
         yAxisIndex: 1,
         barWidth: 15,
         data: businessCounts,
       },
       {
-        name: $t('crm.funnel.winBusinessCount'),
+        name: $t('crm.statistics.funnel.winBusinessCount'),
         type: 'bar',
         yAxisIndex: 1,
         barWidth: 15,
@@ -168,7 +168,7 @@ defineExpose({ loadData });
 <template>
   <div v-loading="loading">
     <Card
-      :title="$t('crm.funnel.businessInversionRateAnalysis')"
+      :title="$t('crm.statistics.funnel.businessInversionRateAnalysis')"
       :bordered="false"
       class="mb-4"
     >

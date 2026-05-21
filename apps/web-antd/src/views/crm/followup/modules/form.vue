@@ -47,7 +47,7 @@ const [Form, formApi] = useVbenForm({
     },
     {
       fieldName: 'type',
-      label: '跟进类型',
+      label: $t('crm.followup.field.type'),
       component: 'Select',
       componentProps: {
         options: getDictOptions(DICT_TYPE.CRM_FOLLOW_UP_TYPE, 'number'),
@@ -56,7 +56,7 @@ const [Form, formApi] = useVbenForm({
     },
     {
       fieldName: 'nextTime',
-      label: '下次联系时间',
+      label: $t('crm.followup.field.nextTime'),
       component: 'DatePicker',
       componentProps: {
         showTime: false,
@@ -67,13 +67,13 @@ const [Form, formApi] = useVbenForm({
     },
     {
       fieldName: 'content',
-      label: '跟进内容',
+      label: $t('crm.followup.field.content'),
       component: 'Textarea',
       rules: 'required',
     },
     {
       fieldName: 'picUrls',
-      label: '图片',
+      label: $t('crm.followup.field.picUrls'),
       component: 'ImageUpload',
       componentProps: {
         moduleType: 'crm',
@@ -81,12 +81,12 @@ const [Form, formApi] = useVbenForm({
     },
     {
       fieldName: 'fileUrls',
-      label: '附件',
+      label: $t('crm.followup.field.fileUrls'),
       component: 'FileUpload',
     },
     {
       fieldName: 'contactIds',
-      label: '关联联系人',
+      label: $t('crm.followup.field.contactIds'),
       component: 'ApiSelect',
       componentProps: {
         api: async () => {
@@ -103,7 +103,7 @@ const [Form, formApi] = useVbenForm({
     },
     {
       fieldName: 'businessIds',
-      label: '关联商机',
+      label: $t('crm.followup.field.businessIds'),
       component: 'ApiSelect',
       componentProps: {
         api: async () => {
@@ -129,11 +129,9 @@ const [Modal, modalApi] = useVbenModal({
       return;
     }
     modalApi.lock();
-    // 提交表单
     const data = (await formApi.getValues()) as CrmFollowUpApi.FollowUpRecord;
     try {
       await createFollowUpRecord(data);
-      // 关闭并提示
       await modalApi.close();
       emit('success');
       message.success($t('ui.actionMessage.operationSuccess'));
@@ -145,7 +143,6 @@ const [Modal, modalApi] = useVbenModal({
     if (!isOpen) {
       return;
     }
-    // 加载数据
     const data = modalApi.getData<CrmFollowUpApi.FollowUpRecord>();
     if (!data) {
       return;
@@ -165,7 +162,7 @@ const [Modal, modalApi] = useVbenModal({
 </script>
 
 <template>
-  <Modal title="添加跟进记录" class="w-[40%]">
+  <Modal :title="$t('crm.followup.action.create')" class="w-[40%]">
     <Form class="mx-4" />
   </Modal>
 </template>

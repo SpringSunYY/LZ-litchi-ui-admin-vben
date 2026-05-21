@@ -22,9 +22,9 @@ import { useGridColumns } from './data';
 import Form from './permission-form.vue';
 
 const props = defineProps<{
-  bizId: number; // 模块数据编号
-  bizType: number; // 模块类型
-  showAction: boolean; // 是否展示操作按钮
+  bizId: number;
+  bizType: number;
+  showAction: boolean;
 }>();
 
 const emits = defineEmits<{
@@ -38,7 +38,6 @@ const [FormModal, formModalApi] = useVbenModal({
   destroyOnClose: true,
 });
 
-// 校验负责人权限和编辑权限
 const validateOwnerUser = ref(false);
 const validateWrite = ref(false);
 const isPool = ref(false);
@@ -55,7 +54,7 @@ function setCheckedRows({
   records: CrmPermissionApi.Permission[];
 }) {
   if (records.some((item) => item.level === PermissionLevelEnum.OWNER)) {
-    message.warning('不能选择负责人！');
+    message.warning($t('crm.permission.message.cannotSelectOwner'));
     gridApi.grid.setAllCheckboxRow(false);
     return;
   }
@@ -73,11 +72,11 @@ function handleCreate() {
 
 function handleEdit() {
   if (checkedRows.value.length === 0) {
-    message.error('请先选择团队成员后操作！');
+    message.error($t('crm.permission.message.selectMemberFirst'));
     return;
   }
   if (checkedRows.value.length > 1) {
-    message.error('只能选择一个团队成员进行编辑！');
+    message.error($t('crm.permission.message.onlySelectOne'));
     return;
   }
   formModalApi
@@ -92,28 +91,29 @@ function handleEdit() {
 
 function handleDelete() {
   if (checkedRows.value.length === 0) {
-    message.error('请先选择团队成员后操作！');
+    message.error($t('crm.permission.message.selectMemberFirst'));
     return;
   }
   return new Promise((resolve, reject) => {
     confirm({
-      content: `你要将${checkedRows.value.map((item) => item.nickname).join(',')}移出团队吗？`,
+      content: $t('crm.permission.message.quitConfirm', [
+        checkedRows.value.map((item) => item.nickname).join(','),
+      ]),
     })
       .then(async () => {
         const res = await deletePermissionBatch(
           checkedRows.value.map((item) => item.id as number),
         );
         if (res) {
-          // 提示并返回成功
           message.success($t('ui.actionMessage.operationSuccess'));
           onRefresh();
           resolve(true);
         } else {
-          reject(new Error('移出失败'));
+          reject(new Error($t('crm.permission.message.quitSuccess')));
         }
       })
       .catch(() => {
-        reject(new Error('取消操作'));
+        reject(new Error($t('common.cancel')));
       });
   });
 }
@@ -129,7 +129,7 @@ async function handleQuit() {
         item.level === PermissionLevelEnum.OWNER,
     );
   if (permission) {
-    message.warning('负责人不能退出团队！');
+    message.warning($t('crm.permission.message.ownerCannotQuit'));
     return;
   }
 
@@ -137,11 +137,11 @@ async function handleQuit() {
     .getData()
     .find((item) => item.id === userStore.userInfo?.id);
   if (!userPermission) {
-    message.warning('你不是团队成员！');
+    message.warning($t('crm.permission.message.notTeamMember'));
     return;
   }
   await deleteSelfPermission(userPermission.id as number);
-  message.success('退出团队成员成功！');
+  message.success($t('crm.permission.message.quitTeamSuccess'));
   emits('quitTeam');
 }
 
@@ -247,7 +247,7 @@ watch(
               onClick: handleDelete,
             },
             {
-              label: '退出团队',
+              label: $t('crm.permission.action.quit'),
               type: 'primary',
               danger: true,
               ifShow: !validateOwnerUser,

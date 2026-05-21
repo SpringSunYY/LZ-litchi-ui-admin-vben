@@ -17,8 +17,8 @@ const emit = defineEmits(['success']);
 const formData = ref<CrmPermissionApi.Permission>();
 const getTitle = computed(() => {
   return formData.value?.ids
-    ? $t('ui.actionTitle.edit', ['团队成员'])
-    : $t('ui.actionTitle.create', ['团队成员']);
+    ? $t('ui.actionTitle.edit', [$t('crm.permission.teamMember')])
+    : $t('ui.actionTitle.create', [$t('crm.permission.teamMember')]);
 });
 
 const [Form, formApi] = useVbenForm({
@@ -41,13 +41,11 @@ const [Modal, modalApi] = useVbenModal({
       return;
     }
     modalApi.lock();
-    // 提交表单
     const data = (await formApi.getValues()) as CrmPermissionApi.Permission;
     try {
       await (formData.value?.ids
         ? updatePermission(data)
         : createPermission(data));
-      // 关闭并提示
       await modalApi.close();
       emit('success');
       message.success($t('ui.actionMessage.operationSuccess'));
@@ -60,7 +58,6 @@ const [Modal, modalApi] = useVbenModal({
       formData.value = undefined;
       return;
     }
-    // 加载数据
     const data = modalApi.getData();
     if (!data || !data.bizType || !data.bizId) {
       return;
@@ -74,7 +71,6 @@ const [Modal, modalApi] = useVbenModal({
         bizId: data.bizId,
         level: data.level,
       };
-      // 设置到 values
       await formApi.setValues(formData.value);
     } finally {
       modalApi.unlock();

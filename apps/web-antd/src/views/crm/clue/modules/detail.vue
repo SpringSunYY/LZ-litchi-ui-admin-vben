@@ -16,6 +16,7 @@ import { getOperateLogPage } from '#/api/crm/operateLog';
 import { BizTypeEnum } from '#/api/crm/permission';
 import { useDescription } from '#/components/description';
 import { AsyncOperateLog } from '#/components/operate-log';
+import { $t } from '#/locales';
 import { FollowUp } from '#/views/crm/followup';
 import { PermissionList, TransferForm } from '#/views/crm/permission';
 
@@ -34,7 +35,7 @@ const clueId = ref(0);
 
 const clue = ref<CrmClueApi.Clue>({} as CrmClueApi.Clue);
 const clueLogList = ref<SystemOperateLogApi.OperateLog[]>([]);
-const permissionListRef = ref<InstanceType<typeof PermissionList>>(); // 团队成员列表 Ref
+const permissionListRef = ref<InstanceType<typeof PermissionList>>();
 
 // 校验负责人权限和编辑权限
 const validateOwnerUser = computed(
@@ -95,20 +96,19 @@ function handleTransfer() {
 async function handleTransform(): Promise<boolean | undefined> {
   return new Promise((resolve, reject) => {
     confirm({
-      content: '确定将该线索转化为客户吗？',
+      content: $t('crm.clue.message.transformConfirm'),
     })
       .then(async () => {
         const res = await transformClue(clueId.value);
         if (res) {
-          // 提示并返回成功
-          message.success('转化客户成功');
+          message.success($t('crm.clue.message.transformSuccess'));
           resolve(true);
         } else {
-          reject(new Error('转化失败'));
+          reject(new Error($t('crm.clue.message.transformFailed')));
         }
       })
       .catch(() => {
-        reject(new Error('取消操作'));
+        reject(new Error('cancel'));
       });
   });
 }
@@ -128,7 +128,7 @@ onMounted(() => {
       <div class="flex items-center gap-2">
         <Button @click="handleBack">
           <ArrowLeft class="size-5" />
-          返回
+          {{ $t('common.back') }}
         </Button>
         <Button
           v-if="validateWrite"
@@ -139,14 +139,14 @@ onMounted(() => {
           {{ $t('ui.actionTitle.edit') }}
         </Button>
         <Button v-if="validateOwnerUser" type="primary" @click="handleTransfer">
-          转移
+          {{ $t('crm.clue.action.transfer') }}
         </Button>
         <Button
           v-if="validateOwnerUser && !clue?.transformStatus"
           type="primary"
           @click="handleTransform"
         >
-          转化为客户
+          {{ $t('crm.clue.action.transform') }}
         </Button>
       </div>
     </template>
@@ -155,13 +155,25 @@ onMounted(() => {
     </Card>
     <Card class="mt-4 min-h-[60%]">
       <Tabs>
-        <Tabs.TabPane tab="详细资料" key="1" :force-render="true">
+        <Tabs.TabPane
+          :tab="$t('crm.clue.tab.detail')"
+          key="1"
+          :force-render="true"
+        >
           <ClueDetailsInfo :clue="clue" />
         </Tabs.TabPane>
-        <Tabs.TabPane tab="线索跟进" key="2" :force-render="true">
+        <Tabs.TabPane
+          :tab="$t('crm.clue.tab.followUp')"
+          key="2"
+          :force-render="true"
+        >
           <FollowUp :biz-id="clueId" :biz-type="BizTypeEnum.CRM_CLUE" />
         </Tabs.TabPane>
-        <Tabs.TabPane tab="团队成员" key="3" :force-render="true">
+        <Tabs.TabPane
+          :tab="$t('crm.clue.tab.teamMember')"
+          key="3"
+          :force-render="true"
+        >
           <PermissionList
             ref="permissionListRef"
             :biz-id="clueId"
@@ -170,7 +182,11 @@ onMounted(() => {
             @quit-team="handleBack"
           />
         </Tabs.TabPane>
-        <Tabs.TabPane tab="操作日志" key="4" :force-render="true">
+        <Tabs.TabPane
+          :tab="$t('crm.clue.tab.operateLog')"
+          key="4"
+          :force-render="true"
+        >
           <AsyncOperateLog :log-list="clueLogList" />
         </Tabs.TabPane>
       </Tabs>

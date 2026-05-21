@@ -78,39 +78,39 @@ const [Grid, gridApi] = useVbenVxeGrid({
     columns: [
       {
         field: 'createTime',
-        title: '创建时间',
+        title: $t('crm.followup.field.createTime'),
         formatter: 'formatDateTime',
       },
-      { field: 'creatorName', title: '跟进人' },
+      { field: 'creatorName', title: $t('crm.followup.field.creatorName') },
       {
         field: 'type',
-        title: '跟进类型',
+        title: $t('crm.followup.field.type'),
         cellRender: {
           name: 'CellDict',
           props: { type: DICT_TYPE.CRM_FOLLOW_UP_TYPE },
         },
       },
-      { field: 'content', title: '跟进内容' },
+      { field: 'content', title: $t('crm.followup.field.content') },
       {
         field: 'nextTime',
-        title: '下次联系时间',
+        title: $t('crm.followup.field.nextTime'),
         formatter: 'formatDateTime',
       },
       {
         field: 'contacts',
-        title: '关联联系人',
+        title: $t('crm.followup.field.contacts'),
         visible: props.bizType === BizTypeEnum.CRM_CUSTOMER,
         slots: { default: 'contacts' },
       },
       {
         field: 'businesses',
-        title: '关联商机',
+        title: $t('crm.followup.field.businesses'),
         visible: props.bizType === BizTypeEnum.CRM_CUSTOMER,
         slots: { default: 'businesses' },
       },
       {
         field: 'actions',
-        title: '操作',
+        title: $t('common.operation'),
         slots: { default: 'actions' },
       },
     ],
@@ -153,7 +153,7 @@ watch(
         <TableAction
           :actions="[
             {
-              label: '写跟进',
+              label: $t('crm.followup.action.write'),
               type: 'primary',
               icon: ACTION_ICON.EDIT,
               onClick: handleCreate,

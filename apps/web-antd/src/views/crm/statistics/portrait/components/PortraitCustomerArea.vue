@@ -46,7 +46,7 @@ async function renderLeftMap(mapJson: any) {
   const max = Math.max(...chartData.value.map((i) => i.customerCount || 0), 1);
 
   renderLeftChart({
-    title: { text: $t('crm.portrait.allCustomer'), left: 'center' },
+    title: { text: $t('crm.statistics.portrait.allCustomer'), left: 'center' },
     tooltip: {
       trigger: 'item',
       showDelay: 0,
@@ -54,7 +54,7 @@ async function renderLeftMap(mapJson: any) {
       formatter: '{b}: {c}',
     },
     visualMap: {
-      text: ['高', '低'],
+      text: [$t('common.high'), $t('common.low')],
       realtime: false,
       calculable: true,
       top: 'middle',
@@ -64,7 +64,7 @@ async function renderLeftMap(mapJson: any) {
     },
     series: [
       {
-        name: '客户地域分布',
+        name: $t('crm.statistics.portrait.customerArea'),
         type: 'map',
         map: MAP_NAME,
         roam: false,
@@ -89,7 +89,7 @@ async function renderRightMap(mapJson: any) {
   const max = Math.max(...chartData.value.map((i) => i.dealCount || 0), 1);
 
   renderRightChart({
-    title: { text: $t('crm.portrait.dealCustomer'), left: 'center' },
+    title: { text: $t('crm.statistics.portrait.dealCustomer'), left: 'center' },
     tooltip: {
       trigger: 'item',
       showDelay: 0,
@@ -97,7 +97,7 @@ async function renderRightMap(mapJson: any) {
       formatter: '{b}: {c}',
     },
     visualMap: {
-      text: ['高', '低'],
+      text: [$t('common.high'), $t('common.low')],
       realtime: false,
       calculable: true,
       top: 'middle',
@@ -107,7 +107,7 @@ async function renderRightMap(mapJson: any) {
     },
     series: [
       {
-        name: '客户地域分布',
+        name: $t('crm.statistics.portrait.customerArea'),
         type: 'map',
         map: MAP_NAME,
         roam: false,

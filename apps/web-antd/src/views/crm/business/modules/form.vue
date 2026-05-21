@@ -24,8 +24,8 @@ const emit = defineEmits(['success']);
 const formData = ref<CrmBusinessApi.Business>();
 const getTitle = computed(() => {
   return formData.value?.id
-    ? $t('ui.actionTitle.edit', ['商机'])
-    : $t('ui.actionTitle.create', ['商机']);
+    ? $t('ui.actionTitle.edit', [$t('crm.business.business')])
+    : $t('ui.actionTitle.create', [$t('crm.business.business')]);
 });
 
 function handleUpdateProducts(products: any) {

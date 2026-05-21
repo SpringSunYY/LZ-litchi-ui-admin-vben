@@ -104,7 +104,7 @@ function onChangeConfigType(key: number | string) {
   <Page auto-content-height>
     <template #doc>
       <DocAlert
-        title="【客户】客户管理、公海客户"
+        :title="$t('crm.customerLimitConfig.menu')"
         url="https://doc.iocoder.cn/crm/customer/"
       />
       <DocAlert
@@ -118,11 +118,11 @@ function onChangeConfigType(key: number | string) {
       <template #top>
         <Tabs class="border-none" @change="onChangeConfigType">
           <Tabs.TabPane
-            tab="拥有客户数限制"
+            :tab="$t('crm.customerLimitConfig.field.ownerCustomerTab')"
             :key="LimitConfType.CUSTOMER_QUANTITY_LIMIT"
           />
           <Tabs.TabPane
-            tab="锁定客户数限制"
+            :tab="$t('crm.customerLimitConfig.field.lockCustomerTab')"
             :key="LimitConfType.CUSTOMER_LOCK_LIMIT"
           />
         </Tabs>
@@ -131,7 +131,9 @@ function onChangeConfigType(key: number | string) {
         <TableAction
           :actions="[
             {
-              label: $t('ui.actionTitle.create', ['规则']),
+              label: $t('ui.actionTitle.create', [
+                $t('crm.customerLimitConfig.customerLimitConfig'),
+              ]),
               type: 'primary',
               icon: ACTION_ICON.ADD,
               auth: ['crm:customer-limit-config:create'],
@@ -157,7 +159,7 @@ function onChangeConfigType(key: number | string) {
               icon: ACTION_ICON.DELETE,
               auth: ['crm:customer-limit-config:delete'],
               popConfirm: {
-                title: $t('ui.actionMessage.deleteConfirm', [row.name]),
+                title: $t('ui.actionMessage.deleteConfirm', [row.id]),
                 confirm: handleDelete.bind(null, row),
               },
             },

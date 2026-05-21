@@ -54,7 +54,7 @@ function renderBarChart() {
     },
     xAxis: {
       type: 'category',
-      name: '日期',
+      name: $t('crm.common.date'),
       data: times,
       axisLabel: { color: '#666' },
       axisLine: { lineStyle: { color: '#666' } },
@@ -62,7 +62,7 @@ function renderBarChart() {
     yAxis: [
       {
         type: 'value',
-        name: $t('crm.funnel.newBusinessCount'),
+        name: $t('crm.statistics.funnel.newBusinessCount'),
         nameTextStyle: { color: '#666' },
         min: 0,
         minInterval: 1,
@@ -72,7 +72,7 @@ function renderBarChart() {
       },
       {
         type: 'value',
-        name: $t('crm.funnel.newBusinessAmount'),
+        name: $t('crm.statistics.funnel.newBusinessAmount'),
         nameTextStyle: { color: '#666' },
         min: 0,
         axisLabel: { color: '#666' },
@@ -82,13 +82,13 @@ function renderBarChart() {
     ],
     series: [
       {
-        name: $t('crm.funnel.newBusinessCount'),
+        name: $t('crm.statistics.funnel.newBusinessCount'),
         type: 'bar',
         yAxisIndex: 0,
         data: businessCounts,
       },
       {
-        name: $t('crm.funnel.newBusinessAmount'),
+        name: $t('crm.statistics.funnel.newBusinessAmount'),
         type: 'bar',
         yAxisIndex: 1,
         data: totalPrices,
@@ -137,7 +137,7 @@ defineExpose({ loadData });
 <template>
   <div v-loading="loading">
     <Card
-      :title="$t('crm.funnel.businessAnalysis')"
+      :title="$t('crm.statistics.funnel.businessAnalysis')"
       :bordered="false"
       class="mb-4"
     >

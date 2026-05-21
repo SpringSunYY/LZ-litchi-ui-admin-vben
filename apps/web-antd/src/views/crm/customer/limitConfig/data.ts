@@ -7,6 +7,7 @@ import { handleTree } from '@vben/utils';
 import { LimitConfType } from '#/api/crm/customer/limitConfig';
 import { getSimpleDeptList } from '#/api/system/dept';
 import { getSimpleUserList } from '#/api/system/user';
+import { $t } from '#/locales';
 import { DICT_TYPE } from '#/utils';
 
 /** 新增/修改的表单 */
@@ -22,7 +23,7 @@ export function useFormSchema(confType: LimitConfType): VbenFormSchema[] {
     },
     {
       fieldName: 'userIds',
-      label: '规则适用人群',
+      label: $t('crm.customerLimitConfig.field.userIds'),
       component: 'ApiSelect',
       componentProps: {
         api: getSimpleUserList,
@@ -37,7 +38,7 @@ export function useFormSchema(confType: LimitConfType): VbenFormSchema[] {
     },
     {
       fieldName: 'deptIds',
-      label: '规则适用部门',
+      label: $t('crm.customerLimitConfig.field.deptIds'),
       component: 'ApiTreeSelect',
       componentProps: {
         api: async () => {
@@ -46,7 +47,9 @@ export function useFormSchema(confType: LimitConfType): VbenFormSchema[] {
         },
         multiple: true,
         fieldNames: { label: 'name', value: 'id', children: 'children' },
-        placeholder: '请选择规则适用部门',
+        placeholder: $t('ui.placeholder.select', [
+          $t('crm.customerLimitConfig.field.deptIds'),
+        ]),
         treeDefaultExpandAll: true,
       },
       rules: 'required',
@@ -55,18 +58,18 @@ export function useFormSchema(confType: LimitConfType): VbenFormSchema[] {
       fieldName: 'maxCount',
       label:
         confType === LimitConfType.CUSTOMER_QUANTITY_LIMIT
-          ? '拥有客户数上限'
-          : '锁定客户数上限',
+          ? $t('crm.customerLimitConfig.field.ownerCustomerCountLimit')
+          : $t('crm.customerLimitConfig.field.lockCustomerCountLimit'),
       component: 'InputNumber',
     },
     {
       fieldName: 'dealCountEnabled',
-      label: '成交客户是否占用拥有客户数',
+      label: $t('crm.customerLimitConfig.field.dealCountOccupied'),
       component: 'RadioGroup',
       componentProps: {
         options: [
-          { label: '是', value: true },
-          { label: '否', value: false },
+          { label: $t('crm.customerLimitConfig.field.yes'), value: true },
+          { label: $t('crm.customerLimitConfig.field.no'), value: false },
         ],
       },
       dependencies: {
@@ -84,12 +87,12 @@ export function useGridColumns(
   return [
     {
       field: 'id',
-      title: '编号',
+      title: $t('crm.customerLimitConfig.field.id'),
       fixed: 'left',
     },
     {
       field: 'users',
-      title: '规则适用人群',
+      title: $t('crm.customerLimitConfig.field.userIds'),
       formatter: ({ cellValue }) => {
         return cellValue
           .map((user: any) => {
@@ -100,7 +103,7 @@ export function useGridColumns(
     },
     {
       field: 'depts',
-      title: '规则适用部门',
+      title: $t('crm.customerLimitConfig.field.deptIds'),
       formatter: ({ cellValue }) => {
         return cellValue
           .map((dept: any) => {
@@ -113,12 +116,12 @@ export function useGridColumns(
       field: 'maxCount',
       title:
         confType === LimitConfType.CUSTOMER_QUANTITY_LIMIT
-          ? '拥有客户数上限'
-          : '锁定客户数上限',
+          ? $t('crm.customerLimitConfig.field.ownerCustomerCountLimit')
+          : $t('crm.customerLimitConfig.field.lockCustomerCountLimit'),
     },
     {
       field: 'dealCountEnabled',
-      title: '成交客户是否占用拥有客户数',
+      title: $t('crm.customerLimitConfig.field.dealCountOccupied'),
       visible: confType === LimitConfType.CUSTOMER_QUANTITY_LIMIT,
       cellRender: {
         name: 'CellDict',
@@ -127,11 +130,11 @@ export function useGridColumns(
     },
     {
       field: 'createTime',
-      title: '创建时间',
+      title: $t('crm.customer.field.createTime'),
       formatter: 'formatDateTime',
     },
     {
-      title: '操作',
+      title: $t('common.operation'),
       width: 180,
       fixed: 'right',
       slots: { default: 'actions' },

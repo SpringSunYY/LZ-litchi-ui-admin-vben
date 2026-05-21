@@ -83,7 +83,7 @@ const [Grid, gridApi] = useVbenVxeGrid({
   <Page auto-content-height>
     <template #doc>
       <DocAlert
-        title="【商机】商机管理、商机状态"
+        :title="$t('crm.businessStatus.businessStatus')"
         url="https://doc.iocoder.cn/crm/business/"
       />
       <DocAlert
@@ -93,12 +93,14 @@ const [Grid, gridApi] = useVbenVxeGrid({
     </template>
 
     <FormModal @success="onRefresh" />
-    <Grid table-title="商机状态列表">
+    <Grid :table-title="$t('crm.businessStatus.list')">
       <template #toolbar-tools>
         <TableAction
           :actions="[
             {
-              label: $t('ui.actionTitle.create', ['商机状态']),
+              label: $t('ui.actionTitle.create', [
+                $t('crm.businessStatus.businessStatus'),
+              ]),
               type: 'primary',
               icon: ACTION_ICON.ADD,
               auth: ['system:post:create'],

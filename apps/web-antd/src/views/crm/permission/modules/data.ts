@@ -3,9 +3,10 @@ import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 
 import { BizTypeEnum, PermissionLevelEnum } from '#/api/crm/permission';
 import { getSimpleUserList } from '#/api/system/user';
+import { $t } from '#/locales';
 import { DICT_TYPE, getDictOptions } from '#/utils';
 
-/** 新增/修改的表单 */
+/** 转移表单 */
 export function useTransferFormSchema(): VbenFormSchema[] {
   return [
     {
@@ -18,7 +19,7 @@ export function useTransferFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'newOwnerUserId',
-      label: '选择新负责人',
+      label: $t('crm.permission.field.newOwnerUserId'),
       component: 'ApiSelect',
       componentProps: {
         api: getSimpleUserList,
@@ -29,16 +30,16 @@ export function useTransferFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'oldOwnerHandler',
-      label: '老负责人',
+      label: $t('crm.permission.field.oldOwnerHandler'),
       component: 'RadioGroup',
       componentProps: {
         options: [
           {
-            label: '加入团队',
+            label: $t('crm.permission.field.add'),
             value: true,
           },
           {
-            label: '移除',
+            label: $t('crm.permission.field.remove'),
             value: false,
           },
         ],
@@ -47,7 +48,7 @@ export function useTransferFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'oldOwnerPermissionLevel',
-      label: '老负责人权限级别',
+      label: $t('crm.permission.field.oldOwnerPermissionLevel'),
       component: 'RadioGroup',
       componentProps: {
         options: getDictOptions(
@@ -68,20 +69,20 @@ export function useTransferFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'toBizTypes',
-      label: '同时转移',
+      label: $t('crm.permission.field.toBizTypes'),
       component: 'CheckboxGroup',
       componentProps: {
         options: [
           {
-            label: '联系人',
+            label: $t('crm.permission.field.contact'),
             value: BizTypeEnum.CRM_CONTACT,
           },
           {
-            label: '商机',
+            label: $t('crm.permission.field.business'),
             value: BizTypeEnum.CRM_BUSINESS,
           },
           {
-            label: '合同',
+            label: $t('crm.permission.field.contract'),
             value: BizTypeEnum.CRM_CONTRACT,
           },
         ],
@@ -90,7 +91,7 @@ export function useTransferFormSchema(): VbenFormSchema[] {
   ];
 }
 
-/** 新增/修改的表单 */
+/** 新增/修改团队成员的表单 */
 export function useFormSchema(): VbenFormSchema[] {
   return [
     {
@@ -111,7 +112,7 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'userId',
-      label: '选择人员',
+      label: $t('crm.permission.field.userId'),
       component: 'ApiSelect',
       componentProps: {
         api: getSimpleUserList,
@@ -127,7 +128,7 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'level',
-      label: '权限级别',
+      label: $t('crm.permission.field.level'),
       component: 'RadioGroup',
       componentProps: {
         options: getDictOptions(
@@ -139,20 +140,20 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'bizType',
-      label: 'Crm 类型',
+      label: $t('crm.permission.field.bizType'),
       component: 'RadioGroup',
       componentProps: {
         options: [
           {
-            label: '联系人',
+            label: $t('crm.permission.field.contact'),
             value: BizTypeEnum.CRM_CONTACT,
           },
           {
-            label: '商机',
+            label: $t('crm.permission.field.business'),
             value: BizTypeEnum.CRM_BUSINESS,
           },
           {
-            label: '合同',
+            label: $t('crm.permission.field.contract'),
             value: BizTypeEnum.CRM_CONTRACT,
           },
         ],
@@ -164,20 +165,20 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'toBizTypes',
-      label: '同时添加至',
+      label: $t('crm.permission.field.addTo'),
       component: 'CheckboxGroup',
       componentProps: {
         options: [
           {
-            label: '联系人',
+            label: $t('crm.permission.field.contact'),
             value: BizTypeEnum.CRM_CONTACT,
           },
           {
-            label: '商机',
+            label: $t('crm.permission.field.business'),
             value: BizTypeEnum.CRM_BUSINESS,
           },
           {
-            label: '合同',
+            label: $t('crm.permission.field.contract'),
             value: BizTypeEnum.CRM_CONTRACT,
           },
         ],
@@ -204,19 +205,19 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
     },
     {
       field: 'nickname',
-      title: '姓名',
+      title: $t('crm.permission.field.nickname'),
     },
     {
       field: 'deptName',
-      title: '部门',
+      title: $t('crm.permission.field.deptName'),
     },
     {
       field: 'postNames',
-      title: '岗位',
+      title: $t('crm.permission.field.postNames'),
     },
     {
       field: 'level',
-      title: '权限级别',
+      title: $t('crm.permission.field.level'),
       cellRender: {
         name: 'CellDict',
         props: { type: DICT_TYPE.CRM_PERMISSION_LEVEL },
@@ -224,7 +225,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
     },
     {
       field: 'createTime',
-      title: '加入时间',
+      title: $t('crm.permission.field.createTime'),
       formatter: 'formatDateTime',
     },
   ];

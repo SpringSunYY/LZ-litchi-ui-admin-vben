@@ -104,7 +104,7 @@ const [Grid, gridApi] = useVbenVxeGrid({
         <TableAction
           :actions="[
             {
-              label: $t('ui.actionTitle.create', ['合同']),
+              label: $t('ui.actionTitle.create', [$t('crm.contract.contract')]),
               type: 'primary',
               icon: ACTION_ICON.ADD,
               auth: ['crm:contract:create'],

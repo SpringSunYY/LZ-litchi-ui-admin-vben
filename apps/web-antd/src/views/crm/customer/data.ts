@@ -3,6 +3,7 @@ import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 
 import { getAreaTree } from '#/api/system/area';
 import { getSimpleUserList } from '#/api/system/user';
+import { $t } from '#/locales';
 import { DICT_TYPE, getDictOptions, getRangePickerDefaultProps } from '#/utils';
 
 /** 新增/修改的表单 */
@@ -18,13 +19,13 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'name',
-      label: '客户名称',
+      label: $t('crm.customer.field.name'),
       component: 'Input',
       rules: 'required',
     },
     {
       fieldName: 'source',
-      label: '客户来源',
+      label: $t('crm.customer.field.source'),
       component: 'Select',
       componentProps: {
         options: getDictOptions(DICT_TYPE.CRM_CUSTOMER_SOURCE),
@@ -33,12 +34,12 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'mobile',
-      label: '手机',
+      label: $t('crm.customer.field.mobile'),
       component: 'Input',
     },
     {
       fieldName: 'ownerUserId',
-      label: '负责人',
+      label: $t('crm.customer.field.ownerUserId'),
       component: 'ApiSelect',
       componentProps: {
         api: () => getSimpleUserList(),
@@ -51,27 +52,27 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'telephone',
-      label: '电话',
+      label: $t('crm.customer.field.telephone'),
       component: 'Input',
     },
     {
       fieldName: 'email',
-      label: '邮箱',
+      label: $t('crm.customer.field.email'),
       component: 'Input',
     },
     {
       fieldName: 'wechat',
-      label: '微信',
+      label: $t('crm.customer.field.wechat'),
       component: 'Input',
     },
     {
       fieldName: 'qq',
-      label: 'QQ',
+      label: $t('crm.customer.field.qq'),
       component: 'Input',
     },
     {
       fieldName: 'industryId',
-      label: '客户行业',
+      label: $t('crm.customer.field.industryId'),
       component: 'Select',
       componentProps: {
         options: getDictOptions(DICT_TYPE.CRM_CUSTOMER_INDUSTRY),
@@ -79,7 +80,7 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'level',
-      label: '客户级别',
+      label: $t('crm.customer.field.level'),
       component: 'Select',
       componentProps: {
         options: getDictOptions(DICT_TYPE.CRM_CUSTOMER_LEVEL),
@@ -87,7 +88,7 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'areaId',
-      label: '地址',
+      label: $t('crm.customer.field.areaId'),
       component: 'ApiTreeSelect',
       componentProps: {
         api: () => getAreaTree(),
@@ -96,12 +97,12 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'detailAddress',
-      label: '详细地址',
+      label: $t('crm.customer.field.detailAddress'),
       component: 'Input',
     },
     {
       fieldName: 'contactNextTime',
-      label: '下次联系时间',
+      label: $t('crm.customer.field.contactNextTime'),
       component: 'DatePicker',
       componentProps: {
         showTime: true,
@@ -111,7 +112,7 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'remark',
-      label: '备注',
+      label: $t('crm.customer.field.remark'),
       component: 'Textarea',
     },
   ];
@@ -122,22 +123,22 @@ export function useGridFormSchema(): VbenFormSchema[] {
   return [
     {
       fieldName: 'name',
-      label: '客户名称',
+      label: $t('crm.customer.field.name'),
       component: 'Input',
     },
     {
       fieldName: 'mobile',
-      label: '手机号',
+      label: $t('crm.customer.field.mobile'),
       component: 'Input',
     },
     {
       fieldName: 'telephone',
-      label: '电话',
+      label: $t('crm.customer.field.telephone'),
       component: 'Input',
     },
     {
       fieldName: 'createTime',
-      label: '创建时间',
+      label: $t('crm.customer.field.createTime'),
       component: 'RangePicker',
       componentProps: {
         ...getRangePickerDefaultProps(),
@@ -152,7 +153,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
   return [
     {
       field: 'name',
-      title: '客户名称',
+      title: $t('crm.customer.field.name'),
       fixed: 'left',
       slots: {
         default: 'name',
@@ -160,7 +161,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
     },
     {
       field: 'source',
-      title: '客户来源',
+      title: $t('crm.customer.field.source'),
       cellRender: {
         name: 'CellDict',
         props: { type: DICT_TYPE.CRM_CUSTOMER_SOURCE },
@@ -168,23 +169,23 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
     },
     {
       field: 'mobile',
-      title: '手机',
+      title: $t('crm.customer.field.mobile'),
     },
     {
       field: 'telephone',
-      title: '电话',
+      title: $t('crm.customer.field.telephone'),
     },
     {
       field: 'email',
-      title: '邮箱',
+      title: $t('crm.customer.field.email'),
     },
     {
       field: 'detailAddress',
-      title: '地址',
+      title: $t('crm.customer.field.detailAddress'),
     },
     {
       field: 'industryId',
-      title: '客户行业',
+      title: $t('crm.customer.field.industryId'),
       cellRender: {
         name: 'CellDict',
         props: { type: DICT_TYPE.CRM_CUSTOMER_INDUSTRY },
@@ -192,7 +193,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
     },
     {
       field: 'level',
-      title: '客户级别',
+      title: $t('crm.customer.field.level'),
       cellRender: {
         name: 'CellDict',
         props: { type: DICT_TYPE.CRM_CUSTOMER_LEVEL },
@@ -200,34 +201,34 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
     },
     {
       field: 'ownerUserName',
-      title: '负责人',
+      title: $t('crm.customer.field.ownerUserName'),
     },
     {
       field: 'ownerUserDeptName',
-      title: '所属部门',
+      title: $t('crm.customer.field.ownerUserDeptName'),
     },
     {
       field: 'contactNextTime',
-      title: '下次联系时间',
+      title: $t('crm.customer.field.contactNextTime'),
       formatter: 'formatDateTime',
     },
     {
       field: 'contactLastTime',
-      title: '最后跟进时间',
+      title: $t('crm.customer.field.contactLastTime'),
       formatter: 'formatDateTime',
     },
     {
       field: 'updateTime',
-      title: '更新时间',
+      title: $t('crm.customer.field.updateTime'),
       formatter: 'formatDateTime',
     },
     {
       field: 'createTime',
-      title: '创建时间',
+      title: $t('crm.customer.field.createTime'),
       formatter: 'formatDateTime',
     },
     {
-      title: '操作',
+      title: $t('common.operation'),
       width: 180,
       fixed: 'right',
       slots: { default: 'actions' },

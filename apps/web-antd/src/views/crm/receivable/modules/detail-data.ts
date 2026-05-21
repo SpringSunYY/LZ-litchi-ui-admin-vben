@@ -6,6 +6,7 @@ import { h } from 'vue';
 import { erpPriceInputFormatter, formatDateTime } from '@vben/utils';
 
 import { DictTag } from '#/components/dict-tag';
+import { $t } from '#/locales';
 import { DICT_TYPE } from '#/utils';
 
 /** 详情页的字段 */
@@ -13,26 +14,26 @@ export function useDetailSchema(): DescriptionItemSchema[] {
   return [
     {
       field: 'customerName',
-      label: '客户名称',
+      label: $t('crm.receivable.field.customerName'),
     },
     {
       field: 'totalPrice',
-      label: '合同金额',
+      label: $t('crm.receivable.field.totalPrice'),
       content: (data) => erpPriceInputFormatter(data.totalPrice),
     },
     {
       field: 'returnTime',
-      label: '回款日期',
+      label: $t('crm.receivable.field.returnTime'),
       content: (data) => formatDateTime(data?.returnTime) as string,
     },
     {
       field: 'price',
-      label: '回款金额',
+      label: $t('crm.receivable.field.price'),
       content: (data) => erpPriceInputFormatter(data.price),
     },
     {
       field: 'ownerUserName',
-      label: '负责人',
+      label: $t('crm.receivable.field.ownerUserName'),
     },
   ];
 }
@@ -42,30 +43,30 @@ export function useDetailBaseSchema(): DescriptionItemSchema[] {
   return [
     {
       field: 'no',
-      label: '回款编号',
+      label: $t('crm.receivable.field.no'),
     },
     {
       field: 'customerName',
-      label: '客户名称',
+      label: $t('crm.receivable.field.customerName'),
     },
     {
       field: 'contract',
-      label: '合同编号',
+      label: $t('crm.receivable.field.contract'),
       content: (data) => data?.contract?.no,
     },
     {
       field: 'returnTime',
-      label: '回款日期',
+      label: $t('crm.receivable.field.returnTime'),
       content: (data) => formatDateTime(data?.returnTime) as string,
     },
     {
       field: 'price',
-      label: '回款金额',
+      label: $t('crm.receivable.field.price'),
       content: (data) => erpPriceInputFormatter(data.price),
     },
     {
       field: 'returnType',
-      label: '回款方式',
+      label: $t('crm.receivable.field.returnType'),
       content: (data) =>
         h(DictTag, {
           type: DICT_TYPE.CRM_RECEIVABLE_RETURN_TYPE,
@@ -74,7 +75,7 @@ export function useDetailBaseSchema(): DescriptionItemSchema[] {
     },
     {
       field: 'remark',
-      label: '备注',
+      label: $t('crm.receivable.field.remark'),
     },
   ];
 }
@@ -83,35 +84,35 @@ export function useDetailBaseSchema(): DescriptionItemSchema[] {
 export function useDetailListColumns(): VxeTableGridOptions['columns'] {
   return [
     {
-      title: '回款编号',
+      title: $t('crm.receivable.field.no'),
       field: 'no',
       minWidth: 150,
       fixed: 'left',
     },
     {
-      title: '客户名称',
+      title: $t('crm.receivable.field.customerName'),
       field: 'customerName',
       minWidth: 150,
     },
     {
-      title: '合同编号',
+      title: $t('crm.receivable.field.contract'),
       field: 'contract.no',
       minWidth: 150,
     },
     {
-      title: '回款日期',
+      title: $t('crm.receivable.field.returnTime'),
       field: 'returnTime',
       minWidth: 150,
       formatter: 'formatDateTime',
     },
     {
-      title: '回款金额（元）',
+      title: $t('crm.receivable.field.priceUnit'),
       field: 'price',
       minWidth: 150,
       formatter: 'formatAmount2',
     },
     {
-      title: '回款方式',
+      title: $t('crm.receivable.field.returnType'),
       field: 'returnType',
       minWidth: 150,
       cellRender: {
@@ -120,17 +121,17 @@ export function useDetailListColumns(): VxeTableGridOptions['columns'] {
       },
     },
     {
-      title: '负责人',
+      title: $t('crm.receivable.field.ownerUserName'),
       field: 'ownerUserName',
       minWidth: 150,
     },
     {
-      title: '备注',
+      title: $t('crm.receivable.field.remark'),
       field: 'remark',
       minWidth: 150,
     },
     {
-      title: '回款状态',
+      title: $t('crm.receivable.field.auditStatus'),
       field: 'auditStatus',
       minWidth: 100,
       fixed: 'right',
@@ -140,7 +141,7 @@ export function useDetailListColumns(): VxeTableGridOptions['columns'] {
       },
     },
     {
-      title: '操作',
+      title: $t('common.operation'),
       field: 'actions',
       width: 130,
       fixed: 'right',

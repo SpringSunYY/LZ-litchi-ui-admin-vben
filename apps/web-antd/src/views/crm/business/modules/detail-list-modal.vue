@@ -17,7 +17,7 @@ import { useDetailListColumns } from './detail-data';
 import Form from './form.vue';
 
 const props = defineProps<{
-  customerId?: number; // 关联联系人与商机时，需要传入 customerId 进行筛选
+  customerId?: number;
 }>();
 
 const emit = defineEmits(['success']);
@@ -57,14 +57,12 @@ function handleCustomerDetail(row: CrmBusinessApi.Business) {
 const [Modal, modalApi] = useVbenModal({
   async onConfirm() {
     if (checkedRows.value.length === 0) {
-      message.error('请先选择商机后操作！');
+      message.error($t('crm.business.message.selectFirst'));
       return;
     }
     modalApi.lock();
-    // 提交表单
     try {
       const businessIds = checkedRows.value.map((item) => item.id);
-      // 关闭并提示
       await modalApi.close();
       emit('success', businessIds, checkedRows.value);
     } finally {
@@ -75,14 +73,12 @@ const [Modal, modalApi] = useVbenModal({
     if (!isOpen) {
       return;
     }
-    // 加载数据
     const data = modalApi.getData<any>();
     if (!data) {
       return;
     }
     modalApi.lock();
     try {
-      // 设置到 values
       // await formApi.setValues(formData.value);
     } finally {
       modalApi.unlock();
@@ -95,7 +91,7 @@ const [Grid, gridApi] = useVbenVxeGrid({
     schema: [
       {
         fieldName: 'name',
-        label: '商机名称',
+        label: $t('crm.business.field.name'),
         component: 'Input',
       },
     ],
@@ -132,14 +128,14 @@ const [Grid, gridApi] = useVbenVxeGrid({
 </script>
 
 <template>
-  <Modal title="关联商机" class="w-[40%]">
+  <Modal :title="$t('crm.business.message.associateTitle')" class="w-[40%]">
     <FormModal @success="onRefresh" />
     <Grid>
       <template #toolbar-tools>
         <TableAction
           :actions="[
             {
-              label: $t('ui.actionTitle.create', ['商机']),
+              label: $t('ui.actionTitle.create', [$t('crm.business.business')]),
               type: 'primary',
               icon: ACTION_ICON.ADD,
               auth: ['crm:business:create'],

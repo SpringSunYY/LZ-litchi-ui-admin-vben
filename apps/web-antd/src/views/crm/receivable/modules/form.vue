@@ -20,8 +20,8 @@ const emit = defineEmits(['success']);
 const formData = ref<CrmReceivableApi.Receivable>();
 const getTitle = computed(() => {
   return formData.value?.id
-    ? $t('ui.actionTitle.edit', ['回款'])
-    : $t('ui.actionTitle.create', ['回款']);
+    ? $t('ui.actionTitle.edit', [$t('crm.receivable.receivable')])
+    : $t('ui.actionTitle.create', [$t('crm.receivable.receivable')]);
 });
 
 const [Form, formApi] = useVbenForm({
@@ -73,8 +73,9 @@ const [Modal, modalApi] = useVbenModal({
     try {
       if (receivable) {
         formData.value = await getReceivable(receivable.id as number);
+        await formApi.setValues(formData.value);
       } else if (plan) {
-        formData.value = plan.id
+        const initialValues: Partial<CrmReceivableApi.Receivable> = plan.id
           ? {
               planId: plan.id,
               price: plan.price,
@@ -86,9 +87,8 @@ const [Modal, modalApi] = useVbenModal({
               customerId: plan.customerId,
               contractId: plan.contractId,
             };
+        await formApi.setValues(initialValues);
       }
-      // 设置到 values
-      await formApi.setValues(formData.value);
     } finally {
       modalApi.unlock();
     }

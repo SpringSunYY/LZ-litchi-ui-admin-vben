@@ -3,29 +3,31 @@ import type { DescriptionItemSchema } from '#/components/description';
 
 import { erpPriceInputFormatter, formatDateTime } from '@vben/utils';
 
+import { $t } from '#/locales';
+
 /** 详情页的字段 */
 export function useDetailSchema(): DescriptionItemSchema[] {
   return [
     {
       field: 'customerName',
-      label: '客户名称',
+      label: $t('crm.business.field.customerName'),
     },
     {
       field: 'totalPrice',
-      label: '商机金额（元）',
+      label: $t('crm.business.field.totalPrice'),
       content: (data) => erpPriceInputFormatter(data.totalPrice),
     },
     {
       field: 'statusTypeName',
-      label: '商机组',
+      label: $t('crm.business.field.statusTypeName'),
     },
     {
       field: 'ownerUserName',
-      label: '负责人',
+      label: $t('crm.business.field.ownerUser'),
     },
     {
       field: 'createTime',
-      label: '创建时间',
+      label: $t('crm.business.field.createTime'),
       content: (data) => formatDateTime(data?.createTime) as string,
     },
   ];
@@ -36,38 +38,38 @@ export function useDetailBaseSchema(): DescriptionItemSchema[] {
   return [
     {
       field: 'name',
-      label: '商机名称',
+      label: $t('crm.business.field.name'),
     },
     {
       field: 'customerName',
-      label: '客户名称',
+      label: $t('crm.business.field.customerName'),
     },
     {
       field: 'totalPrice',
-      label: '商机金额（元）',
+      label: $t('crm.business.field.totalPrice'),
       content: (data) => erpPriceInputFormatter(data.totalPrice),
     },
     {
       field: 'dealTime',
-      label: '预计成交日期',
+      label: $t('crm.business.field.dealTime'),
       content: (data) => formatDateTime(data?.dealTime) as string,
     },
     {
       field: 'contactNextTime',
-      label: '下次联系时间',
+      label: $t('crm.business.field.contactNextTime'),
       content: (data) => formatDateTime(data?.contactNextTime) as string,
     },
     {
       field: 'statusTypeName',
-      label: '商机状态组',
+      label: $t('crm.business.field.statusTypeName'),
     },
     {
       field: 'statusName',
-      label: '商机阶段',
+      label: $t('crm.business.field.statusName'),
     },
     {
       field: 'remark',
-      label: '备注',
+      label: $t('crm.business.field.remark'),
     },
   ];
 }
@@ -82,42 +84,42 @@ export function useDetailListColumns(): VxeTableGridOptions['columns'] {
     },
     {
       field: 'name',
-      title: '商机名称',
+      title: $t('crm.business.field.name'),
       fixed: 'left',
       slots: { default: 'name' },
     },
     {
       field: 'customerName',
-      title: '客户名称',
+      title: $t('crm.business.field.customerName'),
       fixed: 'left',
       slots: { default: 'customerName' },
     },
     {
       field: 'totalPrice',
-      title: '商机金额（元）',
+      title: $t('crm.business.field.totalPrice'),
       formatter: 'formatAmount2',
     },
     {
       field: 'dealTime',
-      title: '预计成交日期',
+      title: $t('crm.business.field.dealTime'),
       formatter: 'formatDate',
     },
     {
       field: 'ownerUserName',
-      title: '负责人',
+      title: $t('crm.business.field.ownerUser'),
     },
     {
       field: 'ownerUserDeptName',
-      title: '所属部门',
+      title: $t('crm.business.field.ownerUserDeptName'),
     },
     {
       field: 'statusTypeName',
-      title: '商机状态组',
+      title: $t('crm.business.field.statusTypeName'),
       fixed: 'right',
     },
     {
       field: 'statusName',
-      title: '商机阶段',
+      title: $t('crm.business.field.statusName'),
       fixed: 'right',
     },
   ];

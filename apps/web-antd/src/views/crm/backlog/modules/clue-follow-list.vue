@@ -1,4 +1,3 @@
-<!-- 分配给我的线索 -->
 <script lang="ts" setup>
 import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 import type { CrmClueApi } from '#/api/crm/clue';
@@ -9,13 +8,13 @@ import { Button } from 'ant-design-vue';
 
 import { useVbenVxeGrid } from '#/adapter/vxe-table';
 import { getCluePage } from '#/api/crm/clue';
+import { $t } from '#/locales';
 import { useGridColumns } from '#/views/crm/clue/data';
 
-import { FOLLOWUP_STATUS } from '../data';
+import { useFollowUpStatusOptions } from '../data';
 
 const { push } = useRouter();
 
-/** 打开线索详情 */
 function handleDetail(row: CrmClueApi.Clue) {
   push({ name: 'CrmClueDetail', params: { id: row.id } });
 }
@@ -25,11 +24,11 @@ const [Grid] = useVbenVxeGrid({
     schema: [
       {
         fieldName: 'followUpStatus',
-        label: '状态',
+        label: $t('crm.backlog.field.status'),
         component: 'Select',
         componentProps: {
           allowClear: true,
-          options: FOLLOWUP_STATUS,
+          options: useFollowUpStatusOptions(),
         },
         defaultValue: false,
       },
@@ -68,7 +67,9 @@ const [Grid] = useVbenVxeGrid({
       <Button type="link" @click="handleDetail(row)">{{ row.name }}</Button>
     </template>
     <template #actions="{ row }">
-      <Button type="link" @click="handleDetail(row)">查看详情</Button>
+      <Button type="link" @click="handleDetail(row)">
+        {{ $t('crm.backlog.action.viewDetail') }}
+      </Button>
     </template>
   </Grid>
 </template>

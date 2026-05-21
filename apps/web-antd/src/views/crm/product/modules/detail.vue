@@ -15,6 +15,7 @@ import { BizTypeEnum } from '#/api/crm/permission';
 import { getProduct } from '#/api/crm/product';
 import { useDescription } from '#/components/description';
 import { AsyncOperateLog } from '#/components/operate-log';
+import { $t } from '#/locales';
 import { ProductDetailsInfo } from '#/views/crm/product';
 
 import { useDetailSchema } from './detail-data';
@@ -69,7 +70,7 @@ onMounted(() => {
   <Page auto-content-height :title="product?.name" :loading="loading">
     <template #extra>
       <div class="flex items-center gap-2">
-        <Button @click="handleBack"> 返回 </Button>
+        <Button @click="handleBack"> {{ $t('common.back') }} </Button>
       </div>
     </template>
     <Card class="min-h-[10%]">
@@ -77,10 +78,18 @@ onMounted(() => {
     </Card>
     <Card class="mt-4 min-h-[60%]">
       <Tabs>
-        <Tabs.TabPane tab="详细资料" key="1" :force-render="true">
+        <Tabs.TabPane
+          :tab="$t('crm.product.tab.detail')"
+          key="1"
+          :force-render="true"
+        >
           <ProductDetailsInfo :product="product" />
         </Tabs.TabPane>
-        <Tabs.TabPane tab="操作日志" key="2" :force-render="true">
+        <Tabs.TabPane
+          :tab="$t('crm.product.tab.operateLog')"
+          key="2"
+          :force-render="true"
+        >
           <AsyncOperateLog :log-list="productLogList" />
         </Tabs.TabPane>
       </Tabs>

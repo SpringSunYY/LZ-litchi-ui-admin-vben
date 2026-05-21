@@ -36,6 +36,8 @@
     "deleteSuccess": "{0} 删除成功",
     "deleteFailed": "{0} 删除失败",
     "operationSuccess": "操作成功",
+    "submitting": "正在提交 {0} ...",
+    "submitSuccess": "{0} 提交成功",
     "operationFailed": "操作失败",
     "importSuccess": "导入成功",
     "importFail": "导入失败",
@@ -55,7 +57,8 @@
     "input": "请输入{0}",
     "select": "请选择{0}",
     "date": "请选择{0}",
-    "placeholder": ""
+    "placeholder": "",
+    "autoGenerate": "保存时自动生成"
   },
   "validate": {
     "email": "请输入正确的邮箱地址"

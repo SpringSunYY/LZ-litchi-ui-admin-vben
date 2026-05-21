@@ -3,6 +3,7 @@ import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 
 import { getAreaTree } from '#/api/system/area';
 import { getSimpleUserList } from '#/api/system/user';
+import { $t } from '#/locales';
 import { DICT_TYPE, getDictOptions, getRangePickerDefaultProps } from '#/utils';
 
 /** 新增/修改的表单 */
@@ -18,100 +19,142 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'name',
-      label: '线索名称',
+      label: $t('crm.clue.field.name'),
       component: 'Input',
+      componentProps: {
+        placeholder: $t('ui.placeholder.input', [$t('crm.clue.field.name')]),
+      },
       rules: 'required',
     },
     {
       fieldName: 'source',
-      label: '客户来源',
+      label: $t('crm.clue.field.customerSource'),
       component: 'Select',
       componentProps: {
+        placeholder: $t('ui.placeholder.select', [
+          $t('crm.clue.field.customerSource'),
+        ]),
         options: getDictOptions(DICT_TYPE.CRM_CUSTOMER_SOURCE, 'number'),
       },
       rules: 'required',
     },
     {
       fieldName: 'mobile',
-      label: '手机',
+      label: $t('crm.clue.field.mobile'),
       component: 'Input',
+      componentProps: {
+        placeholder: $t('ui.placeholder.input', [$t('crm.clue.field.mobile')]),
+      },
     },
     {
       fieldName: 'ownerUserId',
-      label: '负责人',
+      label: $t('crm.clue.field.ownerUserId'),
       component: 'ApiSelect',
       componentProps: {
         api: getSimpleUserList,
         labelField: 'nickname',
         valueField: 'id',
         allowClear: true,
+        placeholder: $t('ui.placeholder.select', [
+          $t('crm.clue.field.ownerUserId'),
+        ]),
       },
       rules: 'required',
     },
     {
       fieldName: 'telephone',
-      label: '电话',
+      label: $t('crm.clue.field.telephone'),
       component: 'Input',
+      componentProps: {
+        placeholder: $t('ui.placeholder.input', [
+          $t('crm.clue.field.telephone'),
+        ]),
+      },
     },
     {
       fieldName: 'email',
-      label: '邮箱',
+      label: $t('crm.clue.field.email'),
       component: 'Input',
+      componentProps: {
+        placeholder: $t('ui.placeholder.input', [$t('crm.clue.field.email')]),
+      },
     },
     {
       fieldName: 'wechat',
-      label: '微信',
+      label: $t('crm.clue.field.wechat'),
       component: 'Input',
+      componentProps: {
+        placeholder: $t('ui.placeholder.input', [$t('crm.clue.field.wechat')]),
+      },
     },
     {
       fieldName: 'qq',
-      label: 'QQ',
+      label: $t('crm.clue.field.qq'),
       component: 'Input',
+      componentProps: {
+        placeholder: $t('ui.placeholder.input', [$t('crm.clue.field.qq')]),
+      },
     },
     {
       fieldName: 'industryId',
-      label: '客户行业',
+      label: $t('crm.clue.field.industryId'),
       component: 'Select',
       componentProps: {
+        placeholder: $t('ui.placeholder.select', [
+          $t('crm.clue.field.industryId'),
+        ]),
         options: getDictOptions(DICT_TYPE.CRM_CUSTOMER_INDUSTRY, 'number'),
       },
     },
     {
       fieldName: 'level',
-      label: '客户级别',
+      label: $t('crm.clue.field.level'),
       component: 'Select',
       componentProps: {
+        placeholder: $t('ui.placeholder.select', [$t('crm.clue.field.level')]),
         options: getDictOptions(DICT_TYPE.CRM_CUSTOMER_LEVEL, 'number'),
       },
     },
     {
       fieldName: 'areaId',
-      label: '地址',
+      label: $t('crm.clue.field.areaId'),
       component: 'ApiTreeSelect',
       componentProps: {
         api: () => getAreaTree(),
         fieldNames: { label: 'name', value: 'id', children: 'children' },
+        placeholder: $t('ui.placeholder.select', [$t('crm.clue.field.areaId')]),
       },
     },
     {
       fieldName: 'detailAddress',
-      label: '详细地址',
+      label: $t('crm.clue.field.detailAddress'),
       component: 'Input',
+      componentProps: {
+        placeholder: $t('ui.placeholder.input', [
+          $t('crm.clue.field.detailAddress'),
+        ]),
+      },
     },
     {
       fieldName: 'contactNextTime',
-      label: '下次联系时间',
+      label: $t('crm.clue.field.contactNextTime'),
       component: 'DatePicker',
       componentProps: {
         showTime: true,
         format: 'YYYY-MM-DD HH:mm:ss',
         valueFormat: 'x',
+        placeholder: $t('ui.placeholder.date', [
+          $t('crm.clue.field.contactNextTime'),
+        ]),
       },
     },
     {
       fieldName: 'remark',
-      label: '备注',
+      label: $t('crm.clue.field.remark'),
       component: 'Textarea',
+      componentProps: {
+        placeholder: $t('ui.placeholder.input', [$t('crm.clue.field.remark')]),
+      },
     },
   ];
 }
@@ -121,33 +164,47 @@ export function useGridFormSchema(): VbenFormSchema[] {
   return [
     {
       fieldName: 'name',
-      label: '线索名称',
+      label: $t('crm.clue.field.name'),
       component: 'Input',
+      componentProps: {
+        placeholder: $t('ui.placeholder.input', [$t('crm.clue.field.name')]),
+      },
     },
     {
       fieldName: 'transformStatus',
-      label: '转化状态',
+      label: $t('crm.clue.field.transformStatus'),
       component: 'Select',
       componentProps: {
+        placeholder: $t('ui.placeholder.select', [
+          $t('crm.clue.field.transformStatus'),
+        ]),
         options: [
-          { label: '未转化', value: false },
-          { label: '已转化', value: true },
+          { label: $t('crm.clue.option.transformNo'), value: false },
+          { label: $t('crm.clue.option.transformYes'), value: true },
         ],
       },
     },
     {
       fieldName: 'mobile',
-      label: '手机号',
+      label: $t('crm.clue.field.mobile'),
       component: 'Input',
+      componentProps: {
+        placeholder: $t('ui.placeholder.input', [$t('crm.clue.field.mobile')]),
+      },
     },
     {
       fieldName: 'telephone',
-      label: '电话',
+      label: $t('crm.clue.field.telephone'),
       component: 'Input',
+      componentProps: {
+        placeholder: $t('ui.placeholder.input', [
+          $t('crm.clue.field.telephone'),
+        ]),
+      },
     },
     {
       fieldName: 'createTime',
-      label: '创建时间',
+      label: $t('crm.clue.field.createTime'),
       component: 'RangePicker',
       componentProps: {
         ...getRangePickerDefaultProps(),
@@ -162,7 +219,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
   return [
     {
       field: 'name',
-      title: '线索名称',
+      title: $t('crm.clue.field.name'),
       fixed: 'left',
       slots: {
         default: 'name',
@@ -170,7 +227,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
     },
     {
       field: 'source',
-      title: '线索来源',
+      title: $t('crm.clue.field.source'),
       cellRender: {
         name: 'CellDict',
         props: { type: DICT_TYPE.CRM_CUSTOMER_SOURCE },
@@ -178,23 +235,23 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
     },
     {
       field: 'mobile',
-      title: '手机',
+      title: $t('crm.clue.field.mobile'),
     },
     {
       field: 'telephone',
-      title: '电话',
+      title: $t('crm.clue.field.telephone'),
     },
     {
       field: 'email',
-      title: '邮箱',
+      title: $t('crm.clue.field.email'),
     },
     {
       field: 'detailAddress',
-      title: '地址',
+      title: $t('crm.clue.field.areaName'),
     },
     {
       field: 'industryId',
-      title: '客户行业',
+      title: $t('crm.clue.field.industryId'),
       cellRender: {
         name: 'CellDict',
         props: { type: DICT_TYPE.CRM_CUSTOMER_INDUSTRY },
@@ -202,7 +259,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
     },
     {
       field: 'level',
-      title: '客户级别',
+      title: $t('crm.clue.field.level'),
       cellRender: {
         name: 'CellDict',
         props: { type: DICT_TYPE.CRM_CUSTOMER_LEVEL },
@@ -210,38 +267,38 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
     },
     {
       field: 'ownerUserName',
-      title: '负责人',
+      title: $t('crm.clue.field.ownerUserName'),
     },
     {
       field: 'ownerUserDeptName',
-      title: '所属部门',
+      title: $t('crm.clue.field.ownerUserDeptName'),
     },
     {
       field: 'contactNextTime',
-      title: '下次联系时间',
+      title: $t('crm.clue.field.contactNextTime'),
       formatter: 'formatDateTime',
     },
     {
       field: 'contactLastTime',
-      title: '最后跟进时间',
+      title: $t('crm.clue.field.contactLastTime'),
       formatter: 'formatDateTime',
     },
     {
       field: 'updateTime',
-      title: '更新时间',
+      title: $t('crm.clue.field.updateTime'),
       formatter: 'formatDateTime',
     },
     {
       field: 'createTime',
-      title: '创建时间',
+      title: $t('crm.clue.field.createTime'),
       formatter: 'formatDateTime',
     },
     {
       field: 'creatorName',
-      title: '创建人',
+      title: $t('crm.clue.field.creatorName'),
     },
     {
-      title: '操作',
+      title: $t('common.operation'),
       width: 140,
       fixed: 'right',
       slots: { default: 'actions' },

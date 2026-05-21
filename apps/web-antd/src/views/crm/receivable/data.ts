@@ -5,6 +5,7 @@ import { getContractSimpleList } from '#/api/crm/contract';
 import { getCustomerSimpleList } from '#/api/crm/customer';
 import { getReceivablePlanSimpleList } from '#/api/crm/receivable/plan';
 import { getSimpleUserList } from '#/api/system/user';
+import { $t } from '#/locales';
 import { DICT_TYPE, getDictOptions } from '#/utils';
 
 /** 新增/修改的表单 */
@@ -20,41 +21,45 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'no',
-      label: '回款编号',
+      label: $t('crm.receivable.field.no'),
       component: 'Input',
-      rules: 'required',
+      // rules: 'required',
       componentProps: {
-        placeholder: '保存时自动生成',
+        placeholder: $t('crm.receivable.message.autoGenerateNo'),
         disabled: true,
       },
     },
     {
       fieldName: 'ownerUserId',
-      label: '负责人',
+      label: $t('crm.receivable.field.ownerUserId'),
       component: 'ApiSelect',
       rules: 'required',
       componentProps: {
         api: getSimpleUserList,
         labelField: 'nickname',
         valueField: 'id',
-        placeholder: '请选择客户',
+        placeholder: $t('ui.placeholder.select', [
+          $t('crm.receivable.field.ownerUserId'),
+        ]),
       },
     },
     {
       fieldName: 'customerId',
-      label: '客户名称',
+      label: $t('crm.receivable.field.customerId'),
       component: 'ApiSelect',
       rules: 'required',
       componentProps: {
         api: getCustomerSimpleList,
         labelField: 'name',
         valueField: 'id',
-        placeholder: '请选择客户',
+        placeholder: $t('ui.placeholder.select', [
+          $t('crm.receivable.field.customerId'),
+        ]),
       },
     },
     {
       fieldName: 'contractId',
-      label: '合同名称',
+      label: $t('crm.receivable.field.contractId'),
       component: 'Select',
       rules: 'required',
       dependencies: {
@@ -70,7 +75,9 @@ export function useFormSchema(): VbenFormSchema[] {
                 value: item.id,
                 disabled: item.auditStatus === 20,
               })),
-              placeholder: '请选择合同',
+              placeholder: $t('ui.placeholder.select', [
+                $t('crm.receivable.field.contractId'),
+              ]),
             } as any;
           }
         },
@@ -78,7 +85,7 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'planId',
-      label: '回款期数',
+      label: $t('crm.receivable.field.planId'),
       component: 'Select',
       rules: 'required',
       dependencies: {
@@ -96,7 +103,9 @@ export function useFormSchema(): VbenFormSchema[] {
                 label: item.period,
                 value: item.id,
               })),
-              placeholder: '请选择回款期数',
+              placeholder: $t('ui.placeholder.select', [
+                $t('crm.receivable.field.planId'),
+              ]),
             } as any;
           }
         },
@@ -104,10 +113,12 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'returnTime',
-      label: '回款日期',
+      label: $t('crm.receivable.field.returnTime'),
       component: 'DatePicker',
       componentProps: {
-        placeholder: '请选择回款日期',
+        placeholder: $t('ui.placeholder.select', [
+          $t('crm.receivable.field.returnTime'),
+        ]),
         showTime: false,
         valueFormat: 'x',
         format: 'YYYY-MM-DD',
@@ -115,31 +126,37 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'price',
-      label: '回款金额',
+      label: $t('crm.receivable.field.price'),
       component: 'InputNumber',
       rules: 'required',
       componentProps: {
-        placeholder: '请输入回款金额',
+        placeholder: $t('ui.placeholder.input', [
+          $t('crm.receivable.field.price'),
+        ]),
         min: 0,
         precision: 2,
       },
     },
     {
       fieldName: 'returnType',
-      label: '回款方式',
+      label: $t('crm.receivable.field.returnType'),
       component: 'Select',
       rules: 'required',
       componentProps: {
         options: getDictOptions(DICT_TYPE.CRM_RECEIVABLE_RETURN_TYPE, 'number'),
-        placeholder: '请选择回款方式',
+        placeholder: $t('ui.placeholder.select', [
+          $t('crm.receivable.field.returnType'),
+        ]),
       },
     },
     {
       fieldName: 'remark',
-      label: '备注',
+      label: $t('crm.receivable.field.remark'),
       component: 'Textarea',
       componentProps: {
-        placeholder: '请输入备注',
+        placeholder: $t('ui.placeholder.input', [
+          $t('crm.receivable.field.remark'),
+        ]),
         rows: 4,
       },
     },
@@ -151,18 +168,20 @@ export function useGridFormSchema(): VbenFormSchema[] {
   return [
     {
       fieldName: 'no',
-      label: '回款编号',
+      label: $t('crm.receivable.field.no'),
       component: 'Input',
     },
     {
       fieldName: 'customerId',
-      label: '客户',
+      label: $t('crm.receivable.field.customerId'),
       component: 'ApiSelect',
       componentProps: {
         api: getCustomerSimpleList,
         labelField: 'name',
         valueField: 'id',
-        placeholder: '请选择客户',
+        placeholder: $t('ui.placeholder.select', [
+          $t('crm.receivable.field.customerId'),
+        ]),
       },
     },
   ];
@@ -171,38 +190,38 @@ export function useGridFormSchema(): VbenFormSchema[] {
 export function useGridColumns(): VxeTableGridOptions['columns'] {
   return [
     {
-      title: '回款编号',
+      title: $t('crm.receivable.field.no'),
       field: 'no',
       minWidth: 150,
       fixed: 'left',
       slots: { default: 'no' },
     },
     {
-      title: '客户名称',
+      title: $t('crm.receivable.field.customerName'),
       field: 'customerName',
       minWidth: 150,
       slots: { default: 'customerName' },
     },
     {
-      title: '合同编号',
+      title: $t('crm.receivable.field.contract'),
       field: 'contract',
       minWidth: 150,
       slots: { default: 'contractNo' },
     },
     {
-      title: '回款日期',
+      title: $t('crm.receivable.field.returnTime'),
       field: 'returnTime',
       minWidth: 150,
       formatter: 'formatDateTime',
     },
     {
-      title: '回款金额（元）',
+      title: $t('crm.receivable.field.priceUnit'),
       field: 'price',
       minWidth: 150,
       formatter: 'formatAmount2',
     },
     {
-      title: '回款方式',
+      title: $t('crm.receivable.field.returnType'),
       field: 'returnType',
       minWidth: 150,
       cellRender: {
@@ -211,45 +230,45 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
       },
     },
     {
-      title: '备注',
+      title: $t('crm.receivable.field.remark'),
       field: 'remark',
       minWidth: 150,
     },
     {
-      title: '合同金额（元）',
+      title: $t('crm.receivable.field.totalPrice'),
       field: 'contract.totalPrice',
       minWidth: 150,
       formatter: 'formatAmount2',
     },
     {
-      title: '负责人',
+      title: $t('crm.receivable.field.ownerUserName'),
       field: 'ownerUserName',
       minWidth: 150,
     },
     {
-      title: '所属部门',
+      title: $t('crm.receivable.field.ownerUserDeptName'),
       field: 'ownerUserDeptName',
       minWidth: 150,
     },
     {
-      title: '更新时间',
+      title: $t('crm.receivable.field.updateTime'),
       field: 'updateTime',
       minWidth: 150,
       formatter: 'formatDateTime',
     },
     {
-      title: '创建时间',
+      title: $t('crm.receivable.field.createTime'),
       field: 'createTime',
       minWidth: 150,
       formatter: 'formatDateTime',
     },
     {
-      title: '创建人',
+      title: $t('crm.receivable.field.creatorName'),
       field: 'creatorName',
       minWidth: 150,
     },
     {
-      title: '回款状态',
+      title: $t('crm.receivable.field.auditStatus'),
       field: 'auditStatus',
       minWidth: 100,
       fixed: 'right',
@@ -259,7 +278,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
       },
     },
     {
-      title: '操作',
+      title: $t('common.operation'),
       field: 'actions',
       width: 130,
       fixed: 'right',

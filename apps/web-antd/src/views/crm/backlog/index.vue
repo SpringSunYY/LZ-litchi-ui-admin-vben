@@ -57,12 +57,10 @@ const currentComponent = computed(() => {
   return components[leftMenu.value as keyof typeof components];
 });
 
-/** 侧边点击 */
 function sideClick(item: { menu: string }) {
   leftMenu.value = item.menu;
 }
 
-/** 获取数量 */
 async function getCount() {
   customerTodayContactCount.value =
     await CustomerApi.getTodayContactCustomerCount();
@@ -77,12 +75,10 @@ async function getCount() {
     await ReceivablePlanApi.getReceivablePlanRemindCount();
 }
 
-/** 激活时 */
 onActivated(async () => {
   getCount();
 });
 
-/** 初始化 */
 onMounted(async () => {
   getCount();
 });

@@ -1,22 +1,26 @@
 <script lang="ts" setup>
-import type {VxeTableGridOptions} from '#/adapter/vxe-table';
-import {ACTION_ICON, TableAction, useVbenVxeGrid} from '#/adapter/vxe-table';
-import type {CrmReceivableApi} from '#/api/crm/receivable';
-import {deleteReceivable, getReceivablePageByCustomer,} from '#/api/crm/receivable';
+import type { VxeTableGridOptions } from '#/adapter/vxe-table';
+import type { CrmReceivableApi } from '#/api/crm/receivable';
 
-import {watch} from 'vue';
+import { watch } from 'vue';
 
-import {useVbenModal} from '@vben/common-ui';
+import { useVbenModal } from '@vben/common-ui';
 
-import {message} from 'ant-design-vue';
-import {$t} from '#/locales';
+import { message } from 'ant-design-vue';
 
-import {useDetailListColumns} from './detail-data';
+import { ACTION_ICON, TableAction, useVbenVxeGrid } from '#/adapter/vxe-table';
+import {
+  deleteReceivable,
+  getReceivablePageByCustomer,
+} from '#/api/crm/receivable';
+import { $t } from '#/locales';
+
+import { useDetailListColumns } from './detail-data';
 import Form from './form.vue';
 
 const props = defineProps<{
-  contractId?: number; // 合同编号
-  customerId?: number; // 客户编号
+  contractId?: number;
+  customerId?: number;
 }>();
 
 const [FormModal, formModalApi] = useVbenModal({
@@ -36,7 +40,7 @@ function handleCreate() {
 
 /** 编辑回款 */
 function handleEdit(row: CrmReceivableApi.Receivable) {
-  formModalApi.setData({receivable: row}).open();
+  formModalApi.setData({ receivable: row }).open();
 }
 
 /** 删除回款 */
@@ -64,17 +68,16 @@ const [Grid, gridApi] = useVbenVxeGrid({
     keepSource: true,
     proxyConfig: {
       ajax: {
-        query: async ({page}) => {
+        query: async ({ page }) => {
           const queryParams: CrmReceivableApi.ReceivablePageParam = {
             pageNo: page.currentPage,
             pageSize: page.pageSize,
           };
           if (!props.customerId) {
-            return {total: 0, list: []};
+            return { total: 0, list: [] };
           }
           queryParams.customerId = props.customerId;
           if (props.contractId) {
-            // 如果是合同的话客户编号也需要带上因为权限基于客户
             queryParams.contractId = props.contractId;
           }
           return await getReceivablePageByCustomer(queryParams);
@@ -85,7 +88,7 @@ const [Grid, gridApi] = useVbenVxeGrid({
       keyField: 'id',
     },
     toolbarConfig: {
-      refresh: {code: 'query'},
+      refresh: { code: 'query' },
       search: true,
     },
   } as VxeTableGridOptions<CrmReceivableApi.Receivable>,
@@ -104,13 +107,15 @@ watch(
 
 <template>
   <div>
-    <FormModal @success="onRefresh"/>
+    <FormModal @success="onRefresh" />
     <Grid>
       <template #toolbar-tools>
         <TableAction
           :actions="[
             {
-              label: $t('ui.actionTitle.create', ['回款']),
+              label: $t('ui.actionTitle.create', [
+                $t('crm.receivable.receivable'),
+              ]),
               type: 'primary',
               icon: ACTION_ICON.ADD,
               auth: ['crm:receivable:create'],

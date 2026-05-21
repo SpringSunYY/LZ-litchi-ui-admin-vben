@@ -5,6 +5,7 @@ import { h } from 'vue';
 import { formatDateTime } from '@vben/utils';
 
 import { DictTag } from '#/components/dict-tag';
+import { $t } from '#/locales';
 import { DICT_TYPE } from '#/utils';
 
 /** 详情头部的配置 */
@@ -12,7 +13,7 @@ export function useDetailSchema(): DescriptionItemSchema[] {
   return [
     {
       field: 'source',
-      label: '线索来源',
+      label: $t('crm.clue.field.source'),
       content: (data) =>
         h(DictTag, {
           type: DICT_TYPE.CRM_CUSTOMER_SOURCE,
@@ -21,15 +22,15 @@ export function useDetailSchema(): DescriptionItemSchema[] {
     },
     {
       field: 'mobile',
-      label: '手机',
+      label: $t('crm.clue.field.mobile'),
     },
     {
       field: 'ownerUserName',
-      label: '负责人',
+      label: $t('crm.clue.field.ownerUserName'),
     },
     {
       field: 'createTime',
-      label: '创建时间',
+      label: $t('crm.clue.field.createTime'),
       content: (data) => formatDateTime(data?.createTime) as string,
     },
   ];
@@ -40,11 +41,11 @@ export function useDetailBaseSchema(): DescriptionItemSchema[] {
   return [
     {
       field: 'name',
-      label: '线索名称',
+      label: $t('crm.clue.field.name'),
     },
     {
       field: 'source',
-      label: '客户来源',
+      label: $t('crm.clue.field.customerSource'),
       content: (data) =>
         h(DictTag, {
           type: DICT_TYPE.CRM_CUSTOMER_SOURCE,
@@ -53,32 +54,32 @@ export function useDetailBaseSchema(): DescriptionItemSchema[] {
     },
     {
       field: 'mobile',
-      label: '手机',
+      label: $t('crm.clue.field.mobile'),
     },
     {
       field: 'telephone',
-      label: '电话',
+      label: $t('crm.clue.field.telephone'),
     },
     {
       field: 'email',
-      label: '邮箱',
+      label: $t('crm.clue.field.email'),
     },
     {
       field: 'areaName',
-      label: '地址',
+      label: $t('crm.clue.field.areaName'),
       content: (data) => data?.areaName + data?.detailAddress,
     },
     {
       field: 'qq',
-      label: 'QQ',
+      label: $t('crm.clue.field.qq'),
     },
     {
       field: 'wechat',
-      label: '微信',
+      label: $t('crm.clue.field.wechat'),
     },
     {
       field: 'industryId',
-      label: '客户行业',
+      label: $t('crm.clue.field.industryId'),
       content: (data) =>
         h(DictTag, {
           type: DICT_TYPE.CRM_CUSTOMER_INDUSTRY,
@@ -87,7 +88,7 @@ export function useDetailBaseSchema(): DescriptionItemSchema[] {
     },
     {
       field: 'level',
-      label: '客户级别',
+      label: $t('crm.clue.field.level'),
       content: (data) =>
         h(DictTag, {
           type: DICT_TYPE.CRM_CUSTOMER_LEVEL,
@@ -96,12 +97,12 @@ export function useDetailBaseSchema(): DescriptionItemSchema[] {
     },
     {
       field: 'contactNextTime',
-      label: '下次联系时间',
+      label: $t('crm.clue.field.contactNextTime'),
       content: (data) => formatDateTime(data?.contactNextTime) as string,
     },
     {
       field: 'remark',
-      label: '备注',
+      label: $t('crm.clue.field.remark'),
     },
   ];
 }

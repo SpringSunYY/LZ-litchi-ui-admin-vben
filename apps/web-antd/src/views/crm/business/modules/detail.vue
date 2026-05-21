@@ -15,6 +15,7 @@ import { getOperateLogPage } from '#/api/crm/operateLog';
 import { BizTypeEnum } from '#/api/crm/permission';
 import { useDescription } from '#/components/description';
 import { AsyncOperateLog } from '#/components/operate-log';
+import { $t } from '#/locales';
 import {
   BusinessDetailsInfo,
   BusinessForm,
@@ -38,7 +39,7 @@ const businessId = ref(0);
 
 const business = ref<CrmBusinessApi.Business>({} as CrmBusinessApi.Business);
 const businessLogList = ref<SystemOperateLogApi.OperateLog[]>([]);
-const permissionListRef = ref<InstanceType<typeof PermissionList>>(); // 团队成员列表 Ref
+const permissionListRef = ref<InstanceType<typeof PermissionList>>();
 
 const [Description] = useDescription({
   componentProps: {
@@ -123,13 +124,13 @@ onMounted(() => {
           v-if="permissionListRef?.validateWrite"
           @click="handleUpdateStatus"
         >
-          变更商机状态
+          {{ $t('crm.business.action.changeStatus') }}
         </Button>
         <Button
           v-if="permissionListRef?.validateOwnerUser"
           @click="handleTransfer"
         >
-          转移
+          {{ $t('crm.business.action.transfer') }}
         </Button>
       </div>
     </template>
@@ -138,13 +139,25 @@ onMounted(() => {
     </Card>
     <Card class="mt-4 min-h-[60%]">
       <Tabs>
-        <Tabs.TabPane tab="详细资料" key="1" :force-render="true">
+        <Tabs.TabPane
+          :tab="$t('crm.business.tab.detail')"
+          key="1"
+          :force-render="true"
+        >
           <BusinessDetailsInfo :business="business" />
         </Tabs.TabPane>
-        <Tabs.TabPane tab="跟进记录" key="2" :force-render="true">
+        <Tabs.TabPane
+          :tab="$t('crm.business.tab.followUp')"
+          key="2"
+          :force-render="true"
+        >
           <FollowUp :biz-id="businessId" :biz-type="BizTypeEnum.CRM_BUSINESS" />
         </Tabs.TabPane>
-        <Tabs.TabPane tab="联系人" key="3" :force-render="true">
+        <Tabs.TabPane
+          :tab="$t('crm.business.tab.contact')"
+          key="3"
+          :force-render="true"
+        >
           <ContactDetailsList
             :biz-id="businessId"
             :biz-type="BizTypeEnum.CRM_BUSINESS"
@@ -152,20 +165,32 @@ onMounted(() => {
             :customer-id="business.customerId"
           />
         </Tabs.TabPane>
-        <Tabs.TabPane tab="产品" key="4" :force-render="true">
+        <Tabs.TabPane
+          :tab="$t('crm.business.tab.product')"
+          key="4"
+          :force-render="true"
+        >
           <ProductDetailsList
             :biz-id="businessId"
             :biz-type="BizTypeEnum.CRM_BUSINESS"
             :business="business"
           />
         </Tabs.TabPane>
-        <Tabs.TabPane tab="合同" key="5" :force-render="true">
+        <Tabs.TabPane
+          :tab="$t('crm.business.tab.contract')"
+          key="5"
+          :force-render="true"
+        >
           <ContractDetailsList
             :biz-id="businessId"
             :biz-type="BizTypeEnum.CRM_BUSINESS"
           />
         </Tabs.TabPane>
-        <Tabs.TabPane tab="团队成员" key="6" :force-render="true">
+        <Tabs.TabPane
+          :tab="$t('crm.business.tab.teamMember')"
+          key="6"
+          :force-render="true"
+        >
           <PermissionList
             ref="permissionListRef"
             :biz-id="businessId"
@@ -174,7 +199,11 @@ onMounted(() => {
             @quit-team="handleBack"
           />
         </Tabs.TabPane>
-        <Tabs.TabPane tab="操作日志" key="7" :force-render="true">
+        <Tabs.TabPane
+          :tab="$t('crm.business.tab.operateLog')"
+          key="7"
+          :force-render="true"
+        >
           <AsyncOperateLog :log-list="businessLogList" />
         </Tabs.TabPane>
       </Tabs>

@@ -16,6 +16,7 @@ import { BizTypeEnum } from '#/api/crm/permission';
 import { getReceivable } from '#/api/crm/receivable';
 import { useDescription } from '#/components/description';
 import { AsyncOperateLog } from '#/components/operate-log';
+import { $t } from '#/locales';
 import { PermissionList } from '#/views/crm/permission';
 import { ReceivableDetailsInfo } from '#/views/crm/receivable';
 
@@ -34,7 +35,7 @@ const receivable = ref<CrmReceivableApi.Receivable>(
   {} as CrmReceivableApi.Receivable,
 );
 const receivableLogList = ref<SystemOperateLogApi.OperateLog[]>([]);
-const permissionListRef = ref<InstanceType<typeof PermissionList>>(); // 团队成员列表 Ref
+const permissionListRef = ref<InstanceType<typeof PermissionList>>();
 
 // 校验编辑权限
 const validateWrite = computed(() => permissionListRef.value?.validateWrite);
@@ -53,7 +54,7 @@ const [FormModal, formModalApi] = useVbenModal({
   destroyOnClose: true,
 });
 
-/** 加载线索详情 */
+/** 加载回款详情 */
 async function loadReceivableDetail() {
   loading.value = true;
   const data = await getReceivable(receivableId.value);
@@ -92,7 +93,7 @@ onMounted(() => {
       <div class="flex items-center gap-2">
         <Button @click="handleBack">
           <ArrowLeft class="size-5" />
-          返回
+          {{ $t('common.back') }}
         </Button>
         <Button
           v-if="validateWrite"
@@ -109,10 +110,18 @@ onMounted(() => {
     </Card>
     <Card class="mt-4 min-h-[60%]">
       <Tabs>
-        <Tabs.TabPane tab="详细资料" key="1" :force-render="true">
+        <Tabs.TabPane
+          :tab="$t('crm.receivable.tab.detail')"
+          key="1"
+          :force-render="true"
+        >
           <ReceivableDetailsInfo :receivable="receivable" />
         </Tabs.TabPane>
-        <Tabs.TabPane tab="团队成员" key="2" :force-render="true">
+        <Tabs.TabPane
+          :tab="$t('crm.receivable.tab.teamMember')"
+          key="2"
+          :force-render="true"
+        >
           <PermissionList
             ref="permissionListRef"
             :biz-id="receivableId"
@@ -121,7 +130,11 @@ onMounted(() => {
             @quit-team="handleBack"
           />
         </Tabs.TabPane>
-        <Tabs.TabPane tab="操作日志" key="3" :force-render="true">
+        <Tabs.TabPane
+          :tab="$t('crm.receivable.tab.operateLog')"
+          key="3"
+          :force-render="true"
+        >
           <AsyncOperateLog :log-list="receivableLogList" />
         </Tabs.TabPane>
       </Tabs>

@@ -6,6 +6,7 @@ import { h } from 'vue';
 import { erpPriceInputFormatter } from '@vben/utils';
 
 import { DictTag } from '#/components/dict-tag';
+import { $t } from '#/locales';
 import { DICT_TYPE } from '#/utils';
 
 /** 详情页的字段 */
@@ -13,22 +14,22 @@ export function useDetailSchema(): DescriptionItemSchema[] {
   return [
     {
       field: 'categoryName',
-      label: '产品类别',
+      label: $t('crm.product.field.categoryName'),
     },
     {
       field: 'unit',
-      label: '产品单位',
+      label: $t('crm.product.field.unit'),
       content: (data) =>
         h(DictTag, { type: DICT_TYPE.CRM_PRODUCT_UNIT, value: data?.unit }),
     },
     {
       field: 'price',
-      label: '产品价格',
+      label: $t('crm.product.field.price'),
       content: (data) => erpPriceInputFormatter(data.price),
     },
     {
       field: 'no',
-      label: '产品编码',
+      label: $t('crm.product.field.no'),
     },
   ];
 }
@@ -38,34 +39,34 @@ export function useDetailBaseSchema(): DescriptionItemSchema[] {
   return [
     {
       field: 'name',
-      label: '产品名称',
+      label: $t('crm.product.field.name'),
     },
     {
       field: 'no',
-      label: '产品编码',
+      label: $t('crm.product.field.no'),
     },
     {
       field: 'price',
-      label: '价格（元）',
+      label: $t('crm.product.field.priceUnit'),
       content: (data) => erpPriceInputFormatter(data.price),
     },
     {
       field: 'description',
-      label: '产品描述',
+      label: $t('crm.product.field.description'),
     },
     {
       field: 'categoryName',
-      label: '产品类型',
+      label: $t('crm.product.field.categoryName'),
     },
     {
       field: 'status',
-      label: '是否上下架',
+      label: $t('crm.product.field.status'),
       content: (data) =>
         h(DictTag, { type: DICT_TYPE.CRM_PRODUCT_STATUS, value: data?.status }),
     },
     {
       field: 'unit',
-      label: '产品单位',
+      label: $t('crm.product.field.unit'),
       content: (data) =>
         h(DictTag, { type: DICT_TYPE.CRM_PRODUCT_UNIT, value: data?.unit }),
     },
@@ -79,15 +80,15 @@ export function useDetailListColumns(
   return [
     {
       field: 'productName',
-      title: '产品名称',
+      title: $t('crm.product.field.name'),
     },
     {
       field: 'productNo',
-      title: '产品条码',
+      title: $t('crm.product.productTable.productNo'),
     },
     {
       field: 'productUnit',
-      title: '产品单位',
+      title: $t('crm.product.productTable.productUnit'),
       cellRender: {
         name: 'CellDict',
         props: { type: DICT_TYPE.CRM_PRODUCT_UNIT },
@@ -95,23 +96,23 @@ export function useDetailListColumns(
     },
     {
       field: 'productPrice',
-      title: '产品价格（元）',
+      title: $t('crm.product.productTable.productPrice'),
       formatter: 'formatAmount2',
     },
     {
       field: 'businessPrice',
-      title: '商机价格（元）',
+      title: $t('crm.business.field.totalPrice'),
       formatter: 'formatAmount2',
       visible: showBussinePrice,
     },
     {
       field: 'count',
-      title: '数量',
+      title: $t('crm.product.productTable.count'),
       formatter: 'formatNumber',
     },
     {
       field: 'totalPrice',
-      title: '合计金额（元）',
+      title: $t('crm.product.productTable.totalPrice'),
       formatter: 'formatAmount2',
     },
   ];

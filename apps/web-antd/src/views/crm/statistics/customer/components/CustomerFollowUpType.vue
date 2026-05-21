@@ -143,7 +143,7 @@ defineExpose({ loadData });
 <template>
   <div v-loading="loading">
     <Card
-      :title="$t('crm.customer.followUpTypeDistribution')"
+      :title="$t('crm.statistics.customer.followUpTypeDistribution')"
       :bordered="false"
       class="mb-4"
     >

@@ -106,7 +106,7 @@ const [Grid, gridApi] = useVbenVxeGrid({
   <Page auto-content-height>
     <template #doc>
       <DocAlert
-        title="【产品】产品管理、产品分类"
+        :title="$t('crm.productCategory.menu')"
         url="https://doc.iocoder.cn/crm/product/"
       />
     </template>
@@ -117,14 +117,16 @@ const [Grid, gridApi] = useVbenVxeGrid({
         <TableAction
           :actions="[
             {
-              label: $t('ui.actionTitle.create', ['分类']),
+              label: $t('ui.actionTitle.create', [
+                $t('crm.productCategory.productCategory'),
+              ]),
               type: 'primary',
               icon: ACTION_ICON.ADD,
               auth: ['crm:product-category:create'],
               onClick: handleCreate,
             },
             {
-              label: isExpanded ? '收缩' : '展开',
+              label: isExpanded ? $t('common.collapse') : $t('common.expand'),
               type: 'primary',
               onClick: toggleExpand,
             },
@@ -140,7 +142,7 @@ const [Grid, gridApi] = useVbenVxeGrid({
         <TableAction
           :actions="[
             {
-              label: '新增下级',
+              label: $t('common.append'),
               type: 'link',
               icon: ACTION_ICON.ADD,
               auth: ['crm:product-category:create'],

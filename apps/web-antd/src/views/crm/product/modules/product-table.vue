@@ -12,6 +12,7 @@ import { InputNumber, Select } from 'ant-design-vue';
 import { TableAction, useVbenVxeGrid } from '#/adapter/vxe-table';
 import { BizTypeEnum } from '#/api/crm/permission';
 import { getProductSimpleList } from '#/api/crm/product';
+import { $t } from '#/locales';
 
 import { useProductEditTableColumns } from '../data';
 
@@ -158,7 +159,7 @@ onMounted(async () => {
         class="mt-4 flex justify-center"
         :actions="[
           {
-            label: '添加产品',
+            label: $t('crm.product.action.addProduct'),
             type: 'default',
             onClick: handleAdd,
           },
@@ -173,7 +174,7 @@ onMounted(async () => {
             type: 'link',
             danger: true,
             popConfirm: {
-              title: $t('ui.actionMessage.deleteConfirm', [row.name]),
+              title: $t('ui.actionMessage.deleteConfirm', [row.productName]),
               confirm: handleDelete.bind(null, row),
             },
           },

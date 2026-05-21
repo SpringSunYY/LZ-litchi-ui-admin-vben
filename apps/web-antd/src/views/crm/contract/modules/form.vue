@@ -23,8 +23,8 @@ const emit = defineEmits(['success']);
 const formData = ref<CrmContractApi.Contract>();
 const getTitle = computed(() => {
   return formData.value?.id
-    ? $t('ui.actionTitle.edit', ['合同'])
-    : $t('ui.actionTitle.create', ['合同']);
+    ? $t('ui.actionTitle.edit', [$t('crm.contract.contract')])
+    : $t('ui.actionTitle.create', [$t('crm.contract.contract')]);
 });
 
 function handleUpdateProducts(products: any) {

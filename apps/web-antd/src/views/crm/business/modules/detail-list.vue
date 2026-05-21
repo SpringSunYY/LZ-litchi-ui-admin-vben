@@ -24,10 +24,10 @@ import ListModal from './detail-list-modal.vue';
 import Form from './form.vue';
 
 const props = defineProps<{
-  bizId: number; // 业务编号
-  bizType: number; // 业务类型
-  contactId?: number; // 特殊：联系人编号；在【联系人】详情中，可以传递联系人编号，默认新建的商机关联到该联系人
-  customerId?: number; // 关联联系人与商机时，需要传入 customerId 进行筛选
+  bizId: number;
+  bizType: number;
+  contactId?: number;
+  customerId?: number;
 }>();
 
 const { push } = useRouter();
@@ -65,12 +65,14 @@ function handleCreateBusiness() {
 
 async function handleDeleteContactBusinessList() {
   if (checkedRows.value.length === 0) {
-    message.error('请先选择商机后操作！');
+    message.error($t('crm.business.message.selectFirst'));
     return;
   }
   return new Promise((resolve, reject) => {
     confirm({
-      content: `确定要将${checkedRows.value.map((item) => item.name).join(',')}解除关联吗？`,
+      content: $t('crm.business.message.disassociateConfirm', [
+        checkedRows.value.map((item) => item.name).join(','),
+      ]),
     })
       .then(async () => {
         const res = await createContactBusinessList({
@@ -78,7 +80,6 @@ async function handleDeleteContactBusinessList() {
           businessIds: checkedRows.value.map((item) => item.id),
         });
         if (res) {
-          // 提示并返回成功
           message.success($t('ui.actionMessage.operationSuccess'));
           onRefresh();
           resolve(true);
@@ -87,7 +88,7 @@ async function handleDeleteContactBusinessList() {
         }
       })
       .catch(() => {
-        reject(new Error('取消操作'));
+        reject(new Error($t('common.cancel')));
       });
   });
 }
@@ -166,14 +167,14 @@ const [Grid, gridApi] = useVbenVxeGrid({
         <TableAction
           :actions="[
             {
-              label: $t('ui.actionTitle.create', ['商机']),
+              label: $t('ui.actionTitle.create', [$t('crm.business.business')]),
               type: 'primary',
               icon: ACTION_ICON.ADD,
               auth: ['crm:business:create'],
               onClick: handleCreate,
             },
             {
-              label: '关联',
+              label: $t('crm.business.message.associate'),
               icon: ACTION_ICON.ADD,
               type: 'default',
               auth: ['crm:contact:create-business'],
@@ -181,7 +182,7 @@ const [Grid, gridApi] = useVbenVxeGrid({
               onClick: handleCreateBusiness,
             },
             {
-              label: '解除关联',
+              label: $t('crm.business.message.disassociate'),
               icon: ACTION_ICON.ADD,
               type: 'default',
               auth: ['crm:contact:create-business'],

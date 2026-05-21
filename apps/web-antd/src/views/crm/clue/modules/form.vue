@@ -17,8 +17,8 @@ const emit = defineEmits(['success']);
 const formData = ref<CrmClueApi.Clue>();
 const getTitle = computed(() => {
   return formData.value?.id
-    ? $t('ui.actionTitle.edit', ['线索'])
-    : $t('ui.actionTitle.create', ['线索']);
+    ? $t('ui.actionTitle.edit', [$t('crm.clue.clue')])
+    : $t('ui.actionTitle.create', [$t('crm.clue.clue')]);
 });
 
 const [Form, formApi] = useVbenForm({

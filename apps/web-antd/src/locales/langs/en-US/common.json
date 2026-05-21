@@ -48,5 +48,7 @@
   "preciseToHour": "Precise to hour",
   "preciseToMinute": "Precise to minute",
   "preciseToSecond": "Precise to second",
-  "etc": "etc."
+  "etc": "etc.",
+  "high": "High",
+  "low": "Low"
 }

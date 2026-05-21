@@ -66,15 +66,15 @@ const refReceivablePrice = ref();
 
 const chartTabs = computed(() => [
   {
-    label: $t('crm.performance.contractCountAnalysis'),
+    label: $t('crm.statistics.performance.contractCountAnalysis'),
     value: 'contractCount',
   },
   {
-    label: $t('crm.performance.contractPriceAnalysis'),
+    label: $t('crm.statistics.performance.contractPriceAnalysis'),
     value: 'contractPrice',
   },
   {
-    label: $t('crm.performance.receivablePriceAnalysis'),
+    label: $t('crm.statistics.performance.receivablePriceAnalysis'),
     value: 'receivablePrice',
   },
 ]);
@@ -86,7 +86,7 @@ async function loadActiveTab() {
   await nextTick();
   if (!queryParams.value.deptId || !queryParams.value.times) {
     message.warn({
-      content: $t('crm.common.noDeptAndTime'),
+      content: $t('crm.statistics.common.noDeptAndTime'),
       key: 'action_key_msg',
     });
     return;
@@ -146,7 +146,7 @@ onMounted(async () => {
           />
         </Form.Item>
 
-        <Form.Item :label="$t('crm.common.department')">
+        <Form.Item :label="$t('crm.statistics.common.department')">
           <TreeSelect
             v-model:value="formState.deptId"
             :dropdown-style="{ maxHeight: '400px', overflow: 'auto' }"
@@ -158,7 +158,7 @@ onMounted(async () => {
           />
         </Form.Item>
 
-        <Form.Item :label="$t('crm.common.employee')">
+        <Form.Item :label="$t('crm.statistics.common.employee')">
           <Select
             v-model:value="formState.userId"
             :disabled="!formState.deptId"

@@ -71,10 +71,10 @@ const refIndustry = ref();
 
 // Tab 配置
 const chartTabs = computed(() => [
-  { label: $t('crm.portrait.areaAnalysis'), value: 'area' },
-  { label: $t('crm.portrait.levelAnalysis'), value: 'level' },
-  { label: $t('crm.portrait.sourceAnalysis'), value: 'source' },
-  { label: $t('crm.portrait.industryAnalysis'), value: 'industry' },
+  { label: $t('crm.statistics.portrait.areaAnalysis'), value: 'area' },
+  { label: $t('crm.statistics.portrait.levelAnalysis'), value: 'level' },
+  { label: $t('crm.statistics.portrait.sourceAnalysis'), value: 'source' },
+  { label: $t('crm.statistics.portrait.industryAnalysis'), value: 'industry' },
 ]);
 
 const activeTab = ref('area');
@@ -84,7 +84,7 @@ async function loadActiveTab() {
   await nextTick();
   if (!queryParams.value.deptId || !queryParams.value.times) {
     message.warn({
-      content: $t('crm.common.noDeptAndTime'),
+      content: $t('crm.statistics.common.noDeptAndTime'),
       key: 'action_key_msg',
     });
     return;
@@ -156,7 +156,7 @@ onMounted(async () => {
           />
         </Form.Item>
 
-        <Form.Item :label="$t('crm.common.department')">
+        <Form.Item :label="$t('crm.statistics.common.department')">
           <TreeSelect
             v-model:value="formState.deptId"
             :dropdown-style="{ maxHeight: '400px', overflow: 'auto' }"
@@ -168,7 +168,7 @@ onMounted(async () => {
           />
         </Form.Item>
 
-        <Form.Item :label="$t('crm.common.employee')">
+        <Form.Item :label="$t('crm.statistics.common.employee')">
           <Select
             v-model:value="formState.userId"
             :disabled="!formState.deptId"

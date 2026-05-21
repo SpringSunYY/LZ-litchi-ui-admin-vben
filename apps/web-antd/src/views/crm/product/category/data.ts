@@ -5,6 +5,7 @@ import type { CrmProductCategoryApi } from '#/api/crm/product/category';
 import { handleTree } from '@vben/utils';
 
 import { getProductCategoryList } from '#/api/crm/product/category';
+import { $t } from '#/locales';
 
 /** 新增/修改的表单 */
 export function useFormSchema(): VbenFormSchema[] {
@@ -19,7 +20,7 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'parentId',
-      label: '上级分类',
+      label: $t('crm.productCategory.field.parentIdName'),
       component: 'ApiTreeSelect',
       componentProps: {
         allowClear: true,
@@ -27,12 +28,14 @@ export function useFormSchema(): VbenFormSchema[] {
           const data = await getProductCategoryList();
           data.unshift({
             id: 0,
-            name: '顶级分类',
+            name: $t('crm.productCategory.message.topLevelCategory'),
           } as CrmProductCategoryApi.ProductCategory);
           return handleTree(data);
         },
         fieldNames: { label: 'name', value: 'id', children: 'children' },
-        placeholder: '请选择上级分类',
+        placeholder: $t('ui.placeholder.select', [
+          $t('crm.productCategory.field.parentIdName'),
+        ]),
         showSearch: true,
         treeDefaultExpandAll: true,
       },
@@ -40,10 +43,12 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'name',
-      label: '分类名称',
+      label: $t('crm.productCategory.field.name'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入分类名称',
+        placeholder: $t('ui.placeholder.input', [
+          $t('crm.productCategory.field.name'),
+        ]),
       },
       rules: 'required',
     },
@@ -55,7 +60,7 @@ export function useGridFormSchema(): VbenFormSchema[] {
   return [
     {
       fieldName: 'name',
-      label: '分类名称',
+      label: $t('crm.productCategory.field.name'),
       component: 'Input',
     },
   ];
@@ -66,21 +71,21 @@ export function useGridColumns(): VxeTableGridOptions<CrmProductCategoryApi.Prod
   return [
     {
       field: 'name',
-      title: '分类名称',
+      title: $t('crm.productCategory.field.name'),
       treeNode: true,
     },
     {
       field: 'id',
-      title: '分类编号',
+      title: $t('crm.productCategory.field.id'),
     },
     {
       field: 'createTime',
-      title: '创建时间',
+      title: $t('crm.productCategory.field.createTime'),
       formatter: 'formatDateTime',
     },
     {
       field: 'actions',
-      title: '操作',
+      title: $t('common.operation'),
       width: 200,
       fixed: 'right',
       slots: {

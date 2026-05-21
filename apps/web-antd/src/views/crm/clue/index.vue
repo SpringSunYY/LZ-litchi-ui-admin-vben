@@ -18,6 +18,9 @@ import Form from './modules/form.vue';
 
 const { push } = useRouter();
 
+const tableTitle = $t('crm.clue.list');
+const exportFileName = $t('crm.clue.clue');
+
 const [FormModal, formModalApi] = useVbenModal({
   connectedComponent: Form,
   destroyOnClose: true,
@@ -59,7 +62,7 @@ async function handleDelete(row: CrmClueApi.Clue) {
 /** 导出表格 */
 async function handleExport() {
   const data = await exportClue(await gridApi.formApi.getValues());
-  downloadFileFromBlobPart({ fileName: '线索.xls', source: data });
+  downloadFileFromBlobPart({ fileName: `${exportFileName}.xls`, source: data });
 }
 
 /** 查看线索详情 */
@@ -101,7 +104,7 @@ const [Grid, gridApi] = useVbenVxeGrid({
   <Page auto-content-height>
     <template #doc>
       <DocAlert
-        title="【线索】线索管理"
+        :title="$t('crm.clue.clue')"
         url="https://doc.iocoder.cn/crm/clue/"
       />
       <DocAlert
@@ -111,12 +114,12 @@ const [Grid, gridApi] = useVbenVxeGrid({
     </template>
 
     <FormModal @success="onRefresh" />
-    <Grid table-title="线索列表">
+    <Grid :table-title="tableTitle">
       <template #toolbar-tools>
         <TableAction
           :actions="[
             {
-              label: $t('ui.actionTitle.create', ['线索']),
+              label: $t('ui.actionTitle.create', [$t('crm.clue.clue')]),
               type: 'primary',
               icon: ACTION_ICON.ADD,
               auth: ['crm:clue:create'],

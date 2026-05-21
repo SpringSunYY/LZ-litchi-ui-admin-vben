@@ -30,7 +30,7 @@ const [Form, formApi] = useVbenForm({
     },
     {
       fieldName: 'ownerUserId',
-      label: '负责人',
+      label: $t('crm.customer.field.ownerUserId'),
       component: 'ApiSelect',
       componentProps: {
         api: () => getSimpleUserList(),
@@ -52,11 +52,9 @@ const [Modal, modalApi] = useVbenModal({
       return;
     }
     modalApi.lock();
-    // 提交表单
     const data = await formApi.getValues();
     try {
       await distributeCustomer([data.id], data.ownerUserId);
-      // 关闭并提示
       await modalApi.close();
       emit('success');
       message.success($t('ui.actionMessage.operationSuccess'));
@@ -68,7 +66,6 @@ const [Modal, modalApi] = useVbenModal({
     if (!isOpen) {
       return;
     }
-    // 加载数据
     const data = modalApi.getData();
     if (!data || !data.id) {
       return;
@@ -84,7 +81,7 @@ const [Modal, modalApi] = useVbenModal({
 </script>
 
 <template>
-  <Modal title="分配客户" class="w-[40%]">
+  <Modal :title="$t('crm.customer.action.distribute')" class="w-[40%]">
     <Form class="mx-4" />
   </Modal>
 </template>

@@ -6,6 +6,7 @@ import { erpPriceMultiply } from '@vben/utils';
 import { getBusinessStatusTypeSimpleList } from '#/api/crm/business/status';
 import { getCustomerSimpleList } from '#/api/crm/customer';
 import { getSimpleUserList } from '#/api/system/user';
+import { $t } from '#/locales';
 
 /** 新增/修改的表单 */
 export function useFormSchema(): VbenFormSchema[] {
@@ -20,13 +21,13 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'name',
-      label: '商机名称',
+      label: $t('crm.business.field.name'),
       component: 'Input',
       rules: 'required',
     },
     {
       fieldName: 'ownerUserId',
-      label: '负责人',
+      label: $t('crm.business.field.ownerUser'),
       component: 'ApiSelect',
       componentProps: {
         api: () => getSimpleUserList(),
@@ -39,7 +40,7 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'customerId',
-      label: '客户名称',
+      label: $t('crm.business.field.customerName'),
       component: 'ApiSelect',
       componentProps: {
         api: () => getCustomerSimpleList(),
@@ -50,13 +51,13 @@ export function useFormSchema(): VbenFormSchema[] {
       },
       dependencies: {
         triggerFields: ['id'],
-        disabled: (values) => !values.customerId,
+        // disabled: (values) => !values.customerId,
       },
       rules: 'required',
     },
     {
       fieldName: 'contactId',
-      label: '合同名称',
+      label: $t('crm.business.field.contact'),
       component: 'Input',
       dependencies: {
         triggerFields: [''],
@@ -65,7 +66,7 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'statusTypeId',
-      label: '商机状态组',
+      label: $t('crm.business.field.statusType'),
       component: 'ApiSelect',
       componentProps: {
         api: () => getBusinessStatusTypeSimpleList(),
@@ -82,7 +83,7 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'dealTime',
-      label: '预计成交日期',
+      label: $t('crm.business.field.dealTime'),
       component: 'DatePicker',
       rules: 'required',
       componentProps: {
@@ -93,13 +94,13 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'product',
-      label: '产品清单',
+      label: $t('crm.business.field.product'),
       component: 'Input',
       formItemClass: 'col-span-3',
     },
     {
       fieldName: 'totalProductPrice',
-      label: '产品总金额',
+      label: $t('crm.business.field.totalProductPrice'),
       component: 'InputNumber',
       componentProps: {
         min: 0,
@@ -108,7 +109,7 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'discountPercent',
-      label: '整单折扣（%）',
+      label: $t('crm.business.field.discountPercent'),
       component: 'InputNumber',
       componentProps: {
         min: 0,
@@ -118,7 +119,7 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'totalPrice',
-      label: '折扣后金额',
+      label: $t('crm.business.field.totalPrice'),
       component: 'InputNumber',
       dependencies: {
         triggerFields: ['totalProductPrice', 'discountPercent'],
@@ -144,7 +145,7 @@ export function useGridFormSchema(): VbenFormSchema[] {
   return [
     {
       fieldName: 'name',
-      label: '商机名称',
+      label: $t('crm.business.field.name'),
       component: 'Input',
     },
   ];
@@ -155,74 +156,74 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
   return [
     {
       field: 'name',
-      title: '商机名称',
+      title: $t('crm.business.field.name'),
       fixed: 'left',
       slots: { default: 'name' },
     },
     {
       field: 'customerName',
-      title: '客户名称',
+      title: $t('crm.business.field.customerName'),
       fixed: 'left',
       slots: { default: 'customerName' },
     },
     {
       field: 'totalPrice',
-      title: '商机金额（元）',
+      title: $t('crm.business.field.totalPrice'),
       formatter: 'formatAmount2',
     },
     {
       field: 'dealTime',
-      title: '预计成交日期',
+      title: $t('crm.business.field.dealTime'),
       formatter: 'formatDate',
     },
     {
       field: 'remark',
-      title: '备注',
+      title: $t('crm.business.field.remark'),
     },
     {
       field: 'contactNextTime',
-      title: '下次联系时间',
+      title: $t('crm.business.field.contactNextTime'),
       formatter: 'formatDate',
     },
     {
       field: 'ownerUserName',
-      title: '负责人',
+      title: $t('crm.business.field.ownerUser'),
     },
     {
       field: 'ownerUserDeptName',
-      title: '所属部门',
+      title: $t('crm.business.field.ownerUserDeptName'),
     },
     {
       field: 'contactLastTime',
-      title: '最后跟进时间',
+      title: $t('crm.business.field.contactLastTime'),
       formatter: 'formatDateTime',
     },
     {
       field: 'updateTime',
-      title: '更新时间',
+      title: $t('crm.business.field.updateTime'),
       formatter: 'formatDateTime',
     },
     {
       field: 'createTime',
-      title: '创建时间',
+      title: $t('crm.business.field.createTime'),
       formatter: 'formatDateTime',
     },
     {
       field: 'creatorName',
-      title: '创建人',
+      title: $t('crm.business.field.creatorName'),
     },
     {
       field: 'statusTypeName',
-      title: '商机状态组',
+      title: $t('crm.business.field.statusTypeName'),
       fixed: 'right',
     },
     {
       field: 'statusName',
-      title: '商机阶段',
+      title: $t('crm.business.field.statusName'),
       fixed: 'right',
     },
     {
-      title: '操作',
+      title: $t('common.operation'),
       width: 130,
       fixed: 'right',
       slots: { default: 'actions' },

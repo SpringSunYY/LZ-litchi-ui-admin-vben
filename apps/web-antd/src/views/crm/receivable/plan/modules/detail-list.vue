@@ -21,8 +21,8 @@ import { useDetailListColumns } from './detail-data';
 import Form from './form.vue';
 
 const props = defineProps<{
-  contractId?: number; // 合同编号
-  customerId?: number; // 客户编号
+  contractId?: number;
+  customerId?: number;
 }>();
 
 const [FormModal, formModalApi] = useVbenModal({
@@ -127,7 +127,7 @@ watch(
         <TableAction
           :actions="[
             {
-              label: $t('ui.actionTitle.create', ['回款计划']),
+              label: $t('ui.actionTitle.create', [$t('crm.receivablePlan.receivablePlan')]),
               type: 'primary',
               icon: ACTION_ICON.ADD,
               auth: ['crm:receivable-plan:create'],
@@ -140,10 +140,10 @@ watch(
         <TableAction
           :actions="[
             {
-              label: $t('ui.actionTitle.create', ['回款']),
+              label: $t('ui.actionTitle.create', [$t('crm.receivable.receivable')]),
               type: 'link',
               icon: ACTION_ICON.ADD,
-              auth: ['crm:receivable-plan:create'],
+              auth: ['crm:receivable:create'],
               disabled: !!row.receivableId,
               onClick: handleCreateReceivable.bind(null, row),
             },

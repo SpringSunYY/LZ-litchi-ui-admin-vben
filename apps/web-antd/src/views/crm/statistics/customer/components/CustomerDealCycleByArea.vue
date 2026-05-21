@@ -55,8 +55,8 @@ function renderChart() {
     tooltip: { trigger: 'axis' },
     legend: {
       data: [
-        $t('crm.customer.dealCycleDays'),
-        $t('crm.customer.dealCustomerCount'),
+        $t('crm.statistics.customer.dealCycleDays'),
+        $t('crm.statistics.customer.dealCustomerCount'),
       ],
       bottom: 0,
       textStyle: { color: textColor },
@@ -70,7 +70,7 @@ function renderChart() {
     },
     xAxis: {
       type: 'category',
-      name: $t('crm.portrait.areaName'),
+      name: $t('crm.statistics.portrait.areaName'),
       data: areas,
       axisLabel: { color: textColor },
       axisLine: { lineStyle: { color: textColor } },
@@ -78,20 +78,20 @@ function renderChart() {
     yAxis: [
       {
         type: 'value',
-        name: $t('crm.customer.dealCycleDays'),
+        name: $t('crm.statistics.customer.dealCycleDays'),
         axisLabel: { color: textColor },
         splitLine: { lineStyle: { color: splitLineColor, type: 'dashed' } },
       },
       {
         type: 'value',
-        name: $t('crm.customer.dealCustomerCount'),
+        name: $t('crm.statistics.customer.dealCustomerCount'),
         axisLabel: { color: textColor },
         splitLine: { show: false },
       },
     ],
     series: [
       {
-        name: $t('crm.customer.dealCycleDays'),
+        name: $t('crm.statistics.customer.dealCycleDays'),
         type: 'bar',
         barMaxWidth: 40,
         yAxisIndex: 0,
@@ -99,7 +99,7 @@ function renderChart() {
         data: cycles,
       },
       {
-        name: $t('crm.customer.dealCustomerCount'),
+        name: $t('crm.statistics.customer.dealCustomerCount'),
         type: 'bar',
         barMaxWidth: 40,
         yAxisIndex: 1,
@@ -157,16 +157,16 @@ defineExpose({ loadData });
       <Col :span="12">
         <Card :bordered="false">
           <Statistic
-            :title="$t('crm.customer.avgDealCycle')"
+            :title="$t('crm.statistics.customer.avgDealCycle')"
             :value="totalStats.avgDealCycle"
-            :suffix="$t('crm.customer.days')"
+            :suffix="$t('crm.statistics.customer.days')"
           />
         </Card>
       </Col>
       <Col :span="12">
         <Card :bordered="false">
           <Statistic
-            :title="$t('crm.customer.dealCustomerCount')"
+            :title="$t('crm.statistics.customer.dealCustomerCount')"
             :value="totalStats.totalDealCount"
           />
         </Card>
@@ -174,7 +174,7 @@ defineExpose({ loadData });
     </Row>
 
     <Card
-      :title="$t('crm.customer.dealCycleRankByArea')"
+      :title="$t('crm.statistics.customer.dealCycleRankByArea')"
       :bordered="false"
       class="mb-4"
     >

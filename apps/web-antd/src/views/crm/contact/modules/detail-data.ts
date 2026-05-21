@@ -6,81 +6,82 @@ import { h } from 'vue';
 import { formatDateTime } from '@vben/utils';
 
 import { DictTag } from '#/components/dict-tag';
+import { $t } from '#/locales';
 import { DICT_TYPE } from '#/utils';
 
-/** 详情页的基础字段 */
+/** 详情页的头部字段 */
 export function useDetailSchema(): DescriptionItemSchema[] {
   return [
     {
-      field: 'name',
-      label: '客户名称',
+      field: 'customerName',
+      label: $t('crm.contact.field.customerName'),
     },
     {
       field: 'post',
-      label: '职务',
+      label: $t('crm.contact.field.post'),
     },
     {
       field: 'mobile',
-      label: '手机',
+      label: $t('crm.contact.field.mobile'),
     },
     {
-      field: 'createTime',
-      label: '下次联系时间',
-      content: (data) => formatDateTime(data?.createTime) as string,
+      field: 'contactNextTime',
+      label: $t('crm.contact.field.contactNextTime'),
+      content: (data) => formatDateTime(data?.contactNextTime) as string,
     },
   ];
 }
 
-/** 详情页的基础字段 */
+/** 详情页的基本信息字段 */
 export function useDetailBaseSchema(): DescriptionItemSchema[] {
   return [
     {
       field: 'name',
-      label: '姓名',
+      label: $t('crm.contact.field.name'),
     },
     {
       field: 'customerName',
-      label: '客户名称',
+      label: $t('crm.contact.field.customerName'),
     },
     {
       field: 'mobile',
-      label: '手机',
+      label: $t('crm.contact.field.mobile'),
     },
     {
       field: 'telephone',
-      label: '电话',
+      label: $t('crm.contact.field.telephone'),
     },
     {
       field: 'email',
-      label: '邮箱',
+      label: $t('crm.contact.field.email'),
     },
     {
       field: 'qq',
-      label: 'QQ',
+      label: $t('crm.contact.field.qq'),
     },
     {
       field: 'wechat',
-      label: '微信',
+      label: $t('crm.contact.field.wechat'),
     },
     {
       field: 'areaName',
-      label: '地址',
+      label: $t('crm.contact.field.areaName'),
     },
     {
       field: 'detailAddress',
-      label: '详细地址',
+      label: $t('crm.contact.field.detailAddress'),
     },
     {
       field: 'post',
-      label: '职务',
+      label: $t('crm.contact.field.post'),
     },
     {
       field: 'parentName',
-      label: '直属上级',
+      label: $t('crm.contact.field.parentName'),
     },
     {
       field: 'master',
-      label: '关键决策人',
+      label: $t('crm.contact.field.master'),
       content: (data) =>
         h(DictTag, {
           type: DICT_TYPE.INFRA_BOOLEAN_STRING,
@@ -89,18 +90,18 @@ export function useDetailBaseSchema(): DescriptionItemSchema[] {
     },
     {
       field: 'sex',
-      label: '性别',
+      label: $t('crm.contact.field.sex'),
       content: (data) =>
         h(DictTag, { type: DICT_TYPE.SYSTEM_USER_SEX, value: data?.sex }),
     },
     {
       field: 'contactNextTime',
-      label: '下次联系时间',
+      label: $t('crm.contact.field.contactNextTime'),
       content: (data) => formatDateTime(data?.contactNextTime) as string,
     },
     {
       field: 'remark',
-      label: '备注',
+      label: $t('crm.contact.field.remark'),
     },
   ];
 }
@@ -115,19 +116,19 @@ export function useDetailListColumns(): VxeTableGridOptions['columns'] {
     },
     {
       field: 'name',
-      title: '姓名',
+      title: $t('crm.contact.field.name'),
       fixed: 'left',
       slots: { default: 'name' },
     },
     {
       field: 'customerName',
-      title: '客户名称',
+      title: $t('crm.contact.field.customerName'),
       fixed: 'left',
       slots: { default: 'customerName' },
     },
     {
       field: 'sex',
-      title: '性别',
+      title: $t('crm.contact.field.sex'),
       cellRender: {
         name: 'CellDict',
         props: { type: DICT_TYPE.SYSTEM_USER_SEX },
@@ -135,27 +136,27 @@ export function useDetailListColumns(): VxeTableGridOptions['columns'] {
     },
     {
       field: 'mobile',
-      title: '手机',
+      title: $t('crm.contact.field.mobile'),
     },
     {
       field: 'telephone',
-      title: '电话',
+      title: $t('crm.contact.field.telephone'),
     },
     {
       field: 'email',
-      title: '邮箱',
+      title: $t('crm.contact.field.email'),
     },
     {
       field: 'post',
-      title: '职位',
+      title: $t('crm.contact.field.post'),
     },
     {
       field: 'detailAddress',
-      title: '地址',
+      title: $t('crm.contact.field.areaName'),
     },
     {
       field: 'master',
-      title: '关键决策人',
+      title: $t('crm.contact.field.master'),
       cellRender: {
         name: 'CellDict',
         props: { type: DICT_TYPE.INFRA_BOOLEAN_STRING },

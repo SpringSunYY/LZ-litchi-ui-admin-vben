@@ -1,6 +1,7 @@
 import type { VbenFormSchema } from '#/adapter/form';
 import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 
+import { $t } from '#/locales';
 import { DICT_TYPE, getDictOptions } from '#/utils';
 
 /** 列表的搜索表单 */
@@ -8,45 +9,55 @@ export function useGridFormSchema(): VbenFormSchema[] {
   return [
     {
       fieldName: 'name',
-      label: '客户名称',
+      label: $t('crm.customerPool.field.name'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入客户名称',
+        placeholder: $t('ui.placeholder.input', [
+          $t('crm.customerPool.field.name'),
+        ]),
       },
     },
     {
       fieldName: 'mobile',
-      label: '手机',
+      label: $t('crm.customerPool.field.mobile'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入手机',
+        placeholder: $t('ui.placeholder.input', [
+          $t('crm.customerPool.field.mobile'),
+        ]),
       },
     },
     {
       fieldName: 'industryId',
-      label: '所属行业',
+      label: $t('crm.customerPool.field.industryId'),
       component: 'Select',
       componentProps: {
         options: getDictOptions(DICT_TYPE.CRM_CUSTOMER_INDUSTRY, 'number'),
-        placeholder: '请选择所属行业',
+        placeholder: $t('ui.placeholder.select', [
+          $t('crm.customerPool.field.industryId'),
+        ]),
       },
     },
     {
       fieldName: 'level',
-      label: '客户级别',
+      label: $t('crm.customerPool.field.level'),
       component: 'Select',
       componentProps: {
         options: getDictOptions(DICT_TYPE.CRM_CUSTOMER_LEVEL, 'number'),
-        placeholder: '请选择客户级别',
+        placeholder: $t('ui.placeholder.select', [
+          $t('crm.customerPool.field.level'),
+        ]),
       },
     },
     {
       fieldName: 'source',
-      label: '客户来源',
+      label: $t('crm.customerPool.field.source'),
       component: 'Select',
       componentProps: {
         options: getDictOptions(DICT_TYPE.CRM_CUSTOMER_SOURCE, 'number'),
-        placeholder: '请选择客户来源',
+        placeholder: $t('ui.placeholder.select', [
+          $t('crm.customerPool.field.source'),
+        ]),
       },
     },
   ];
@@ -55,14 +66,14 @@ export function useGridFormSchema(): VbenFormSchema[] {
 export function useGridColumns(): VxeTableGridOptions['columns'] {
   return [
     {
-      title: '客户名称',
+      title: $t('crm.customerPool.field.name'),
       field: 'name',
       minWidth: 160,
       fixed: 'left',
       slots: { default: 'name' },
     },
     {
-      title: '客户来源',
+      title: $t('crm.customerPool.field.source'),
       field: 'source',
       minWidth: 100,
       cellRender: {
@@ -71,22 +82,22 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
       },
     },
     {
-      title: '手机',
+      title: $t('crm.customerPool.field.mobile'),
       field: 'mobile',
       minWidth: 120,
     },
     {
-      title: '电话',
+      title: $t('crm.customerPool.field.telephone'),
       field: 'telephone',
       minWidth: 120,
     },
     {
-      title: '邮箱',
+      title: $t('crm.customerPool.field.email'),
       field: 'email',
       minWidth: 140,
     },
     {
-      title: '客户级别',
+      title: $t('crm.customerPool.field.level'),
       field: 'level',
       minWidth: 135,
       cellRender: {
@@ -95,7 +106,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
       },
     },
     {
-      title: '客户行业',
+      title: $t('crm.customerPool.field.industryId'),
       field: 'industryId',
       minWidth: 100,
       cellRender: {
@@ -104,18 +115,18 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
       },
     },
     {
-      title: '下次联系时间',
+      title: $t('crm.customerPool.field.contactNextTime'),
       field: 'contactNextTime',
       minWidth: 180,
       formatter: 'formatDateTime',
     },
     {
-      title: '备注',
+      title: $t('crm.customerPool.field.remark'),
       field: 'remark',
       minWidth: 200,
     },
     {
-      title: '成交状态',
+      title: $t('crm.customerPool.field.dealStatus'),
       field: 'dealStatus',
       minWidth: 80,
       cellRender: {
@@ -124,30 +135,30 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
       },
     },
     {
-      title: '最后跟进时间',
+      title: $t('crm.customerPool.field.contactLastTime'),
       field: 'contactLastTime',
       minWidth: 180,
       formatter: 'formatDateTime',
     },
     {
-      title: '最后跟进记录',
+      title: $t('crm.customerPool.field.contactLastContent'),
       field: 'contactLastContent',
       minWidth: 200,
     },
     {
-      title: '更新时间',
+      title: $t('crm.customerPool.field.updateTime'),
       field: 'updateTime',
       minWidth: 180,
       formatter: 'formatDateTime',
     },
     {
-      title: '创建时间',
+      title: $t('crm.customerPool.field.createTime'),
       field: 'createTime',
       minWidth: 180,
       formatter: 'formatDateTime',
     },
     {
-      title: '创建人',
+      title: $t('crm.customerPool.field.creatorName'),
       field: 'creatorName',
       minWidth: 100,
     },

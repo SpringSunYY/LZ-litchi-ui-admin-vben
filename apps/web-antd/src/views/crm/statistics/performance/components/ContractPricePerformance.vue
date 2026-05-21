@@ -54,9 +54,9 @@ function renderLineChart() {
     tooltip: { trigger: 'axis' },
     legend: {
       data: [
-        $t('crm.performance.currentMonthAmount'),
-        $t('crm.performance.lastMonthAmount'),
-        $t('crm.performance.lastYearAmount'),
+        $t('crm.statistics.performance.currentMonthAmount'),
+        $t('crm.statistics.performance.lastMonthAmount'),
+        $t('crm.statistics.performance.lastYearAmount'),
       ],
       bottom: 0,
       textStyle: { color: '#666' },
@@ -81,21 +81,21 @@ function renderLineChart() {
     },
     series: [
       {
-        name: $t('crm.performance.currentMonthAmount'),
+        name: $t('crm.statistics.performance.currentMonthAmount'),
         type: 'line',
         smooth: true,
         itemStyle: { color: '#5ab1ef' },
         data: currentMonthAmounts,
       },
       {
-        name: $t('crm.performance.lastMonthAmount'),
+        name: $t('crm.statistics.performance.lastMonthAmount'),
         type: 'line',
         smooth: true,
         itemStyle: { color: '#2fc25b' },
         data: lastMonthAmounts,
       },
       {
-        name: $t('crm.performance.lastYearAmount'),
+        name: $t('crm.statistics.performance.lastYearAmount'),
         type: 'line',
         smooth: true,
         itemStyle: { color: '#ffa32b' },
@@ -179,7 +179,7 @@ defineExpose({ loadData });
       <Col :span="6">
         <Card :bordered="false">
           <Statistic
-            :title="$t('crm.performance.currentMonthAmount')"
+            :title="$t('crm.statistics.performance.currentMonthAmount')"
             :value="totalStats.currentMonthAmount"
           />
         </Card>
@@ -187,7 +187,7 @@ defineExpose({ loadData });
       <Col :span="6">
         <Card :bordered="false">
           <Statistic
-            :title="$t('crm.performance.lastMonthAmount')"
+            :title="$t('crm.statistics.performance.lastMonthAmount')"
             :value="totalStats.lastMonthAmount"
           />
         </Card>
@@ -195,7 +195,7 @@ defineExpose({ loadData });
       <Col :span="6">
         <Card :bordered="false">
           <Statistic
-            :title="$t('crm.performance.lastYearAmount')"
+            :title="$t('crm.statistics.performance.lastYearAmount')"
             :value="totalStats.lastYearAmount"
           />
         </Card>
@@ -203,7 +203,7 @@ defineExpose({ loadData });
       <Col :span="6">
         <Card :bordered="false">
           <Statistic
-            :title="$t('crm.performance.contractAmount')"
+            :title="$t('crm.statistics.performance.contractAmount')"
             :value="totalStats.totalContractAmount"
           />
         </Card>

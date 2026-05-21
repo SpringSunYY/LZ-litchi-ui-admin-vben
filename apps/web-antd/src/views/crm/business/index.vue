@@ -35,7 +35,10 @@ function onRefresh() {
 /** 导出表格 */
 async function handleExport() {
   const data = await exportBusiness(await gridApi.formApi.getValues());
-  downloadFileFromBlobPart({ fileName: '商机.xls', source: data });
+  downloadFileFromBlobPart({
+    fileName: `${$t('crm.business.business')}.xls`,
+    source: data,
+  });
 }
 
 /** 创建商机 */
@@ -108,7 +111,7 @@ const [Grid, gridApi] = useVbenVxeGrid({
   <Page auto-content-height>
     <template #doc>
       <DocAlert
-        title="【商机】商机管理、商机状态"
+        :title="$t('crm.business.business')"
         url="https://doc.iocoder.cn/crm/business/"
       />
       <DocAlert
@@ -118,12 +121,12 @@ const [Grid, gridApi] = useVbenVxeGrid({
     </template>
 
     <FormModal @success="onRefresh" />
-    <Grid table-title="商机列表">
+    <Grid :table-title="$t('crm.business.list')">
       <template #toolbar-tools>
         <TableAction
           :actions="[
             {
-              label: $t('ui.actionTitle.create', ['商机']),
+              label: $t('ui.actionTitle.create', [$t('crm.business.business')]),
               type: 'primary',
               icon: ACTION_ICON.ADD,
               auth: ['crm:business:create'],

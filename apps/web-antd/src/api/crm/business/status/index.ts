@@ -23,28 +23,6 @@ export namespace CrmBusinessStatusApi {
   }
 }
 
-/** 默认商机状态 */
-export const DEFAULT_STATUSES = [
-  {
-    endStatus: 1,
-    key: '结束',
-    name: '赢单',
-    percent: 100,
-  },
-  {
-    endStatus: 2,
-    key: '结束',
-    name: '输单',
-    percent: 0,
-  },
-  {
-    endStatus: 3,
-    key: '结束',
-    name: '无效',
-    percent: 0,
-  },
-];
-
 /** 查询商机状态组列表 */
 export function getBusinessStatusPage(params: PageParam) {
   return requestClient.get<PageResult<CrmBusinessStatusApi.BusinessStatus>>(

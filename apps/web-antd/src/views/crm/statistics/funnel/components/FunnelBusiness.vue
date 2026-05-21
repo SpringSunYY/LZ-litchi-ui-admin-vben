@@ -58,14 +58,14 @@ function buildOptions() {
 
   return {
     title: {
-      text: $t('crm.funnel.title'),
+      text: $t('crm.statistics.funnel.title'),
       left: 'center',
       textStyle: { color: '#666' },
     },
     tooltip: { trigger: 'item', formatter: '{a} <br/>{b}: {c}' },
     series: [
       {
-        name: $t('crm.funnel.title'),
+        name: $t('crm.statistics.funnel.title'),
         type: 'funnel',
         left: '10%',
         top: 60,
@@ -90,29 +90,29 @@ function buildOptions() {
           ? [
               {
                 value: 60,
-                name: `${$t('crm.common.customerCount')}：${customerCount}`,
+                name: `${$t('crm.statistics.common.customerCount')}：${customerCount}`,
               },
               {
                 value: 40,
-                name: `${$t('crm.common.businessCount')}：${businessCount}`,
+                name: `${$t('crm.statistics.common.businessCount')}：${businessCount}`,
               },
               {
                 value: 20,
-                name: `${$t('crm.common.businessWinCount')}：${winCount}`,
+                name: `${$t('crm.statistics.common.businessWinCount')}：${winCount}`,
               },
             ]
           : [
               {
                 value: customerCount,
-                name: `${$t('crm.common.customerCount')}：${customerCount}`,
+                name: `${$t('crm.statistics.common.customerCount')}：${customerCount}`,
               },
               {
                 value: businessCount,
-                name: `${$t('crm.common.businessCount')}：${businessCount}`,
+                name: `${$t('crm.statistics.common.businessCount')}：${businessCount}`,
               },
               {
                 value: winCount,
-                name: `${$t('crm.common.businessWinCount')}：${winCount}`,
+                name: `${$t('crm.statistics.common.businessWinCount')}：${winCount}`,
               },
             ],
       },
@@ -160,19 +160,19 @@ defineExpose({ loadData: fetchData });
       <div class="flex gap-4">
         <div class="flex-1">
           <span class="text-gray-400">{{
-            $t('crm.common.customerCount')
+            $t('crm.statistics.common.customerCount')
           }}</span>
           <div class="text-2xl font-bold">{{ totalStats.customerCount }}</div>
         </div>
         <div class="flex-1">
           <span class="text-gray-400">{{
-            $t('crm.common.businessCount')
+            $t('crm.statistics.common.businessCount')
           }}</span>
           <div class="text-2xl font-bold">{{ totalStats.businessCount }}</div>
         </div>
         <div class="flex-1">
           <span class="text-gray-400">{{
-            $t('crm.common.businessWinCount')
+            $t('crm.statistics.common.businessWinCount')
           }}</span>
           <div class="text-2xl font-bold">
             {{ totalStats.businessWinCount }}
@@ -183,14 +183,14 @@ defineExpose({ loadData: fetchData });
 
     <Card :bordered="false" class="mb-4">
       <Button :type="active ? 'primary' : 'default'" @click="active = true">
-        {{ $t('crm.funnel.customerView') }}
+        {{ $t('crm.statistics.funnel.customerView') }}
       </Button>
       <Button
         :type="!active ? 'primary' : 'default'"
         class="ml-2"
         @click="active = false"
       >
-        {{ $t('crm.funnel.dynamicView') }}
+        {{ $t('crm.statistics.funnel.dynamicView') }}
       </Button>
     </Card>
 

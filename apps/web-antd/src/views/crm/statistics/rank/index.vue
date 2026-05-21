@@ -75,15 +75,15 @@ const refFollowCount = ref();
 const refFollowCustomerCount = ref();
 
 const chartTabs = computed(() => [
-  { label: $t('crm.rank.contractPriceAnalysis'), value: 'contractPrice' },
-  { label: $t('crm.rank.receivablePriceAnalysis'), value: 'receivablePrice' },
-  { label: $t('crm.rank.contractCountAnalysis'), value: 'contractCount' },
-  { label: $t('crm.rank.productSalesAnalysis'), value: 'productSales' },
-  { label: $t('crm.rank.customerCountAnalysis'), value: 'customerCount' },
-  { label: $t('crm.rank.contactCountAnalysis'), value: 'contactCount' },
-  { label: $t('crm.rank.followCountAnalysis'), value: 'followCount' },
+  { label: $t('crm.statistics.rank.contractPriceAnalysis'), value: 'contractPrice' },
+  { label: $t('crm.statistics.rank.receivablePriceAnalysis'), value: 'receivablePrice' },
+  { label: $t('crm.statistics.rank.contractCountAnalysis'), value: 'contractCount' },
+  { label: $t('crm.statistics.rank.productSalesAnalysis'), value: 'productSales' },
+  { label: $t('crm.statistics.rank.customerCountAnalysis'), value: 'customerCount' },
+  { label: $t('crm.statistics.rank.contactCountAnalysis'), value: 'contactCount' },
+  { label: $t('crm.statistics.rank.followCountAnalysis'), value: 'followCount' },
   {
-    label: $t('crm.rank.followCustomerCountAnalysis'),
+    label: $t('crm.statistics.rank.followCustomerCountAnalysis'),
     value: 'followCustomerCount',
   },
 ]);
@@ -95,7 +95,7 @@ async function loadActiveTab() {
   await nextTick();
   if (!queryParams.value.deptId || !queryParams.value.times) {
     message.warn({
-      content: $t('crm.common.noDeptAndTime'),
+      content: $t('crm.statistics.common.noDeptAndTime'),
       key: 'action_key_msg',
     });
     return;
@@ -179,7 +179,7 @@ onMounted(async () => {
           />
         </Form.Item>
 
-        <Form.Item :label="$t('crm.common.department')">
+        <Form.Item :label="$t('crm.statistics.common.department')">
           <TreeSelect
             v-model:value="formState.deptId"
             :dropdown-style="{ maxHeight: '400px', overflow: 'auto' }"
@@ -191,7 +191,7 @@ onMounted(async () => {
           />
         </Form.Item>
 
-        <Form.Item :label="$t('crm.common.employee')">
+        <Form.Item :label="$t('crm.statistics.common.employee')">
           <Select
             v-model:value="formState.userId"
             :disabled="!formState.deptId"

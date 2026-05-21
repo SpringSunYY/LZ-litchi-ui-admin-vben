@@ -37,6 +37,8 @@
     "deleteFailed": "{0} deleted failed",
     "operationSuccess": "Operation succeeded",
     "operationFailed": "Operation failed",
+    "submitting": "Submitting {0} ...",
+    "submitSuccess": "{0} submitted successfully",
     "importSuccess": "Import succeeded",
     "importFail": "Import failed",
     "downloadTemplateFail": "Download template failed",
@@ -55,7 +57,8 @@
     "input": "Please enter {0}",
     "select": "Please select {0}",
     "date": "Please select {0}",
-    "placeholder": ""
+    "placeholder": "",
+    "autoGenerate": "Auto generated on save"
   },
   "validate": {
     "email": "Please enter a valid email address"

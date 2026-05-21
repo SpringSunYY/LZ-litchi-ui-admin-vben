@@ -20,8 +20,8 @@ const emit = defineEmits(['success']);
 const formData = ref<CrmReceivablePlanApi.Plan>();
 const getTitle = computed(() => {
   return formData.value?.id
-    ? $t('ui.actionTitle.edit', ['回款计划'])
-    : $t('ui.actionTitle.create', ['回款计划']);
+    ? $t('ui.actionTitle.edit', [$t('crm.receivablePlan.receivablePlan')])
+    : $t('ui.actionTitle.create', [$t('crm.receivablePlan.receivablePlan')]);
 });
 
 const [Form, formApi] = useVbenForm({
@@ -30,7 +30,6 @@ const [Form, formApi] = useVbenForm({
       class: 'w-full',
     },
   },
-  // 一共2列
   wrapperClass: 'grid-cols-2',
   layout: 'horizontal',
   schema: useFormSchema(),
@@ -44,13 +43,11 @@ const [Modal, modalApi] = useVbenModal({
       return;
     }
     modalApi.lock();
-    // 提交表单
     const data = (await formApi.getValues()) as CrmReceivablePlanApi.Plan;
     try {
       await (formData.value?.id
         ? updateReceivablePlan(data)
         : createReceivablePlan(data));
-      // 关闭并提示
       await modalApi.close();
       emit('success');
       message.success($t('ui.actionMessage.operationSuccess'));
@@ -63,7 +60,6 @@ const [Modal, modalApi] = useVbenModal({
       formData.value = undefined;
       return;
     }
-    // 加载数据
     const data = modalApi.getData<CrmReceivablePlanApi.Plan>();
     if (!data || !data.id) {
       return;
@@ -71,7 +67,6 @@ const [Modal, modalApi] = useVbenModal({
     modalApi.lock();
     try {
       formData.value = await getReceivablePlan(data.id as number);
-      // 设置到 values
       await formApi.setValues(formData.value);
     } finally {
       modalApi.unlock();

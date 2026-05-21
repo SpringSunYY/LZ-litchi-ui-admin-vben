@@ -57,7 +57,7 @@ function renderChart() {
   renderEcharts({
     tooltip: { trigger: 'axis' },
     legend: {
-      data: [$t('crm.customer.dealCycleDays')],
+      data: [$t('crm.statistics.customer.dealCycleDays')],
       bottom: 0,
       textStyle: { color: textColor },
     },
@@ -81,7 +81,7 @@ function renderChart() {
     },
     series: [
       {
-        name: $t('crm.customer.dealCycleDays'),
+        name: $t('crm.statistics.customer.dealCycleDays'),
         type: 'bar',
         barMaxWidth: 40,
         itemStyle: { color: '#5ab1ef', borderRadius: [4, 4, 0, 0] },
@@ -137,16 +137,16 @@ defineExpose({ loadData });
       <Col :span="12">
         <Card :bordered="false">
           <Statistic
-            :title="$t('crm.customer.avgDealCycle')"
+            :title="$t('crm.statistics.customer.avgDealCycle')"
             :value="totalStats.avgDealCycle"
-            :suffix="$t('crm.customer.days')"
+            :suffix="$t('crm.statistics.customer.days')"
           />
         </Card>
       </Col>
       <Col :span="12">
         <Card :bordered="false">
           <Statistic
-            :title="$t('crm.customer.dealCustomerCount')"
+            :title="$t('crm.statistics.customer.dealCustomerCount')"
             :value="totalStats.totalDealCount"
           />
         </Card>
@@ -154,7 +154,7 @@ defineExpose({ loadData });
     </Row>
 
     <Card
-      :title="$t('crm.customer.dealCycleRankByProduct')"
+      :title="$t('crm.statistics.customer.dealCycleRankByProduct')"
       :bordered="false"
       class="mb-4"
     >

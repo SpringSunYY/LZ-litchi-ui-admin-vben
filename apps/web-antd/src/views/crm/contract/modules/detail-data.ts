@@ -10,33 +10,35 @@ import {
 } from '@vben/utils';
 
 import { DictTag } from '#/components/dict-tag';
+import { $t } from '#/locales';
 import { DICT_TYPE } from '#/utils';
+
 /** 详情头部的配置 */
 export function useDetailSchema(): DescriptionItemSchema[] {
   return [
     {
       field: 'customerName',
-      label: '客户名称',
+      label: $t('crm.contract.field.customerName'),
     },
     {
       field: 'totalPrice',
-      label: '合同金额（元）',
+      label: $t('crm.contract.field.totalPrice'),
       content: (data) => erpPriceInputFormatter(data?.totalPrice) as string,
     },
     {
       field: 'orderDate',
-      label: '下单时间',
+      label: $t('crm.contract.field.orderDate'),
       content: (data) => formatDateTime(data?.orderDate) as string,
     },
     {
       field: 'totalReceivablePrice',
-      label: '回款金额（元）',
+      label: $t('crm.contract.field.totalReceivablePrice'),
       content: (data) =>
         erpPriceInputFormatter(data?.totalReceivablePrice) as string,
     },
     {
       field: 'ownerUserName',
-      label: '负责人',
+      label: $t('crm.contract.field.ownerUserName'),
     },
   ];
 }
@@ -46,55 +48,55 @@ export function useDetailBaseSchema(): DescriptionItemSchema[] {
   return [
     {
       field: 'no',
-      label: '合同编号',
+      label: $t('crm.contract.field.no'),
     },
     {
       field: 'name',
-      label: '合同名称',
+      label: $t('crm.contract.field.name'),
     },
     {
       field: 'customerName',
-      label: '客户名称',
+      label: $t('crm.contract.field.customerName'),
     },
     {
       field: 'businessName',
-      label: '商机名称',
+      label: $t('crm.contract.field.businessName'),
     },
     {
       field: 'totalPrice',
-      label: '合同金额（元）',
+      label: $t('crm.contract.field.totalPrice'),
       content: (data) => erpPriceInputFormatter(data?.totalPrice) as string,
     },
     {
       field: 'orderDate',
-      label: '下单时间',
+      label: $t('crm.contract.field.orderDate'),
       content: (data) => formatDateTime(data?.orderDate) as string,
     },
     {
       field: 'startTime',
-      label: '合同开始时间',
+      label: $t('crm.contract.field.startTime'),
       content: (data) => formatDateTime(data?.startTime) as string,
     },
     {
       field: 'endTime',
-      label: '合同结束时间',
+      label: $t('crm.contract.field.endTime'),
       content: (data) => formatDateTime(data?.endTime) as string,
     },
     {
       field: 'signContactName',
-      label: '客户签约人',
+      label: $t('crm.contract.field.signContactName'),
     },
     {
       field: 'signUserName',
-      label: '公司签约人',
+      label: $t('crm.contract.field.signUserName'),
     },
     {
       field: 'remark',
-      label: '备注',
+      label: $t('crm.contract.field.remark'),
     },
     {
       field: 'auditStatus',
-      label: '合同状态',
+      label: $t('crm.contract.field.auditStatus'),
       content: (data) =>
         h(DictTag, {
           type: DICT_TYPE.CRM_AUDIT_STATUS,
@@ -107,44 +109,44 @@ export function useDetailBaseSchema(): DescriptionItemSchema[] {
 export function useDetailListColumns(): VxeTableGridOptions['columns'] {
   return [
     {
-      title: '合同编号',
+      title: $t('crm.contract.field.no'),
       field: 'no',
       minWidth: 150,
       fixed: 'left',
     },
     {
-      title: '合同名称',
+      title: $t('crm.contract.field.name'),
       field: 'name',
       minWidth: 150,
       fixed: 'left',
       slots: { default: 'name' },
     },
     {
-      title: '合同金额（元）',
+      title: $t('crm.contract.field.totalPrice'),
       field: 'totalPrice',
       minWidth: 150,
       formatter: 'formatAmount2',
     },
     {
-      title: '合同开始时间',
+      title: $t('crm.contract.field.startTime'),
       field: 'startTime',
       minWidth: 150,
       formatter: 'formatDateTime',
     },
     {
-      title: '合同结束时间',
+      title: $t('crm.contract.field.endTime'),
       field: 'endTime',
       minWidth: 150,
       formatter: 'formatDateTime',
     },
     {
-      title: '已回款金额（元）',
+      title: $t('crm.contract.field.totalReceivablePrice'),
       field: 'totalReceivablePrice',
       minWidth: 150,
       formatter: 'formatAmount2',
     },
     {
-      title: '未回款金额（元）',
+      title: $t('crm.contract.field.unpaidPrice'),
       field: 'unpaidPrice',
       minWidth: 150,
       formatter: ({ row }) => {
@@ -152,33 +154,33 @@ export function useDetailListColumns(): VxeTableGridOptions['columns'] {
       },
     },
     {
-      title: '负责人',
+      title: $t('crm.contract.field.ownerUserName'),
       field: 'ownerUserName',
       minWidth: 150,
     },
     {
-      title: '所属部门',
+      title: $t('crm.contract.field.ownerUserDeptName'),
       field: 'ownerUserDeptName',
       minWidth: 150,
     },
     {
-      title: '创建时间',
+      title: $t('crm.contract.field.createTime'),
       field: 'createTime',
       minWidth: 150,
       formatter: 'formatDateTime',
     },
     {
-      title: '创建人',
+      title: $t('crm.contract.field.creatorName'),
       field: 'creatorName',
       minWidth: 150,
     },
     {
-      title: '备注',
+      title: $t('crm.contract.field.remark'),
       field: 'remark',
       minWidth: 150,
     },
     {
-      title: '合同状态',
+      title: $t('crm.contract.field.auditStatus'),
       field: 'auditStatus',
       fixed: 'right',
       minWidth: 100,

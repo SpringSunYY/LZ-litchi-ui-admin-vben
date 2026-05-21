@@ -1,14 +1,19 @@
 import type { VbenFormSchema } from '#/adapter/form';
 import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 
+import { useUserStore } from '@vben/stores';
 import { handleTree } from '@vben/utils';
 
 import { z } from '#/adapter/form';
 import { getProductCategoryList } from '#/api/crm/product/category';
+import { getSimpleUserList } from '#/api/system/user';
+import { $t } from '#/locales';
 import { CommonStatusEnum, DICT_TYPE, getDictOptions } from '#/utils';
 
 /** 新增/修改的表单 */
 export function useFormSchema(): VbenFormSchema[] {
+  const userStore = useUserStore();
+
   return [
     {
       component: 'Input',
@@ -21,19 +26,39 @@ export function useFormSchema(): VbenFormSchema[] {
     {
       component: 'Input',
       fieldName: 'name',
-      label: '产品名称',
+      label: $t('crm.product.field.name'),
       rules: 'required',
     },
     {
       component: 'Input',
       fieldName: 'no',
-      label: '产品编码',
+      label: $t('crm.product.field.no'),
       rules: 'required',
     },
     {
+      component: 'ApiSelect',
+      fieldName: 'ownerUserId',
+      label: $t('crm.product.field.ownerUserId'),
+      rules: 'required',
+      dependencies: {
+        triggerFields: ['id'],
+        disabled: (values) => values.id,
+      },
+      componentProps: {
+        api: getSimpleUserList,
+        labelField: 'nickname',
+        valueField: 'id',
+        placeholder: $t('ui.placeholder.select', [
+          $t('crm.product.field.ownerUserId'),
+        ]),
+        allowClear: true,
+      },
+      defaultValue: userStore.userInfo?.id,
+    },
+    {
       component: 'ApiTreeSelect',
-      fieldName: 'categoryName',
-      label: '产品类型',
+      fieldName: 'categoryId',
+      label: $t('crm.product.field.categoryId'),
       rules: 'required',
       componentProps: {
         api: async () => {
@@ -41,11 +66,14 @@ export function useFormSchema(): VbenFormSchema[] {
           return handleTree(data);
         },
         fieldNames: { label: 'name', value: 'id', children: 'children' },
+        placeholder: $t('ui.placeholder.select', [
+          $t('crm.product.field.categoryId'),
+        ]),
       },
     },
     {
       fieldName: 'unit',
-      label: '产品单位',
+      label: $t('crm.product.field.unit'),
       component: 'Select',
       componentProps: {
         options: getDictOptions(DICT_TYPE.CRM_PRODUCT_UNIT, 'number'),
@@ -55,7 +83,7 @@ export function useFormSchema(): VbenFormSchema[] {
     {
       component: 'InputNumber',
       fieldName: 'price',
-      label: '价格（元）',
+      label: $t('crm.product.field.priceUnit'),
       rules: 'required',
       componentProps: {
         min: 0,
@@ -66,11 +94,11 @@ export function useFormSchema(): VbenFormSchema[] {
     {
       component: 'Textarea',
       fieldName: 'description',
-      label: '产品描述',
+      label: $t('crm.product.field.description'),
     },
     {
       fieldName: 'status',
-      label: '上架状态',
+      label: $t('crm.product.field.status'),
       component: 'RadioGroup',
       componentProps: {
         options: getDictOptions(DICT_TYPE.CRM_PRODUCT_STATUS, 'number'),
@@ -87,12 +115,12 @@ export function useGridFormSchema(): VbenFormSchema[] {
   return [
     {
       fieldName: 'name',
-      label: '产品名称',
+      label: $t('crm.product.field.name'),
       component: 'Input',
     },
     {
       fieldName: 'status',
-      label: '上架状态',
+      label: $t('crm.product.field.status'),
       component: 'Select',
       componentProps: {
         allowClear: true,
@@ -107,21 +135,21 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
   return [
     {
       field: 'id',
-      title: '产品编号',
+      title: $t('crm.product.field.id'),
       visible: false,
     },
     {
       field: 'name',
-      title: '产品名称',
+      title: $t('crm.product.field.name'),
       slots: { default: 'name' },
     },
     {
       field: 'categoryName',
-      title: '产品类型',
+      title: $t('crm.product.field.categoryName'),
     },
     {
       field: 'unit',
-      title: '产品单位',
+      title: $t('crm.product.field.unit'),
       cellRender: {
         name: 'CellDict',
         props: { type: DICT_TYPE.CRM_PRODUCT_UNIT },
@@ -129,20 +157,20 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
     },
     {
       field: 'no',
-      title: '产品编码',
+      title: $t('crm.product.field.no'),
     },
     {
       field: 'price',
-      title: '价格（元）',
+      title: $t('crm.product.field.priceUnit'),
       formatter: 'formatAmount2',
     },
     {
       field: 'description',
-      title: '产品描述',
+      title: $t('crm.product.field.description'),
     },
     {
       field: 'status',
-      title: '上架状态',
+      title: $t('crm.product.field.status'),
       cellRender: {
         name: 'CellDict',
         props: { type: DICT_TYPE.CRM_PRODUCT_STATUS },
@@ -150,24 +178,24 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
     },
     {
       field: 'ownerUserName',
-      title: '负责人',
+      title: $t('crm.product.field.ownerUserName'),
     },
     {
       field: 'updateTime',
-      title: '更新时间',
+      title: $t('crm.product.field.updateTime'),
       formatter: 'formatDateTime',
     },
     {
       field: 'creatorName',
-      title: '创建人',
+      title: $t('crm.product.field.creatorName'),
     },
     {
       field: 'createTime',
-      title: '创建时间',
+      title: $t('crm.product.field.createTime'),
       formatter: 'formatDateTime',
     },
     {
-      title: '操作',
+      title: $t('common.operation'),
       width: 160,
       fixed: 'right',
       slots: { default: 'actions' },
@@ -178,21 +206,21 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
 /** 代码生成表格列定义 */
 export function useProductEditTableColumns(): VxeTableGridOptions['columns'] {
   return [
-    { type: 'seq', title: '序号', minWidth: 50 },
+    { type: 'seq', title: $t('crm.product.productTable.seq'), minWidth: 50 },
     {
       field: 'productId',
-      title: '产品名称',
+      title: $t('crm.product.productTable.productId'),
       minWidth: 100,
       slots: { default: 'productId' },
     },
     {
       field: 'productNo',
-      title: '条码',
+      title: $t('crm.product.productTable.productNo'),
       minWidth: 150,
     },
     {
       field: 'productUnit',
-      title: '单位',
+      title: $t('crm.product.productTable.productUnit'),
       minWidth: 100,
       cellRender: {
         name: 'CellDict',
@@ -201,30 +229,30 @@ export function useProductEditTableColumns(): VxeTableGridOptions['columns'] {
     },
     {
       field: 'productPrice',
-      title: '价格（元）',
+      title: $t('crm.product.productTable.productPrice'),
       minWidth: 100,
       formatter: 'formatAmount2',
     },
     {
       field: 'sellingPrice',
-      title: '售价（元）',
+      title: $t('crm.product.productTable.sellingPrice'),
       minWidth: 100,
       slots: { default: 'sellingPrice' },
     },
     {
       field: 'count',
-      title: '数量',
+      title: $t('crm.product.productTable.count'),
       minWidth: 100,
       slots: { default: 'count' },
     },
     {
       field: 'totalPrice',
-      title: '合计',
+      title: $t('crm.product.productTable.totalPrice'),
       minWidth: 100,
       formatter: 'formatAmount2',
     },
     {
-      title: '操作',
+      title: $t('common.operation'),
       width: 80,
       fixed: 'right',
       slots: { default: 'actions' },
