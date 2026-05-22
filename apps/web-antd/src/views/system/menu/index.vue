@@ -4,7 +4,7 @@ import type { SystemMenuApi } from '#/api/system/menu';
 
 import { ref } from 'vue';
 
-import { DocAlert, Page, useVbenModal } from '@vben/common-ui';
+import { DocAlert, Page, useVbenModelDrawer } from '@vben/common-ui';
 import { IconifyIcon } from '@vben/icons';
 
 import { message } from 'ant-design-vue';
@@ -18,9 +18,10 @@ import { SystemMenuTypeEnum } from '#/utils';
 import { useGridColumns } from './data';
 import Form from './modules/form.vue';
 
-const [FormModal, formModalApi] = useVbenModal({
+const [FormModal, formModalApi] = useVbenModelDrawer({
   connectedComponent: Form,
   destroyOnClose: true,
+  type: 'drawer',
 });
 
 /** 刷新表格 */

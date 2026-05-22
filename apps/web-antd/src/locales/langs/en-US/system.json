@@ -206,6 +206,7 @@
       "id": "menu id",
       "parentId": "parent menu",
       "name": "menu name",
+      "i18n": "i18n",
       "type": "menu type",
       "icon": "menu icon",
       "path": "route path",
@@ -215,6 +216,8 @@
       "sort": "sort order",
       "status": "menu status",
       "alwaysShow": "always show",
+      "sidebar": "sidebar",
+      "newWindows": "new windows",
       "keepAlive": "cache status",
       "remark": "remark",
       "createTime": "create time"
@@ -237,7 +240,10 @@
       "pathNoStart": "path cannot start with /",
       "pathEmpty": "route path cannot be empty",
       "keepAliveTip": "when enabled, the component will be cached by `keep-alive`. component name must be filled",
-      "alwaysShowTip": "when disabled, this menu and all child menus will not be displayed"
+      "alwaysShowTip": "when disabled, this menu and all child menus will not be displayed",
+      "newWindowsTip": "when enabled, the link will open in a new window",
+      "sidebarTip": "when disabled, this menu will not be displayed in the sidebar",
+      "i18nTip": "after entering the i18n key, the menu will be displayed in localized language."
     },
     "alwaysShow": {
       "yes": "always",
@@ -246,6 +252,14 @@
     "keepAlive": {
       "yes": "cached",
       "no": "not cached"
+    },
+    "sidebar": {
+      "yes": "open",
+      "no": "close"
+    },
+    "newWindows": {
+      "yes": "yes",
+      "no": "no"
     }
   },
   "tenant": {

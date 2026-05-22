@@ -87,6 +87,15 @@ export function useFormSchema(): VbenFormSchema[] {
       rules: 'required',
     },
     {
+      fieldName: 'i18n',
+      label: $t('system.menu.field.i18n'),
+      component: 'Input',
+      help: $t('system.menu.help.i18nTip'),
+      componentProps: {
+        placeholder: $t('ui.placeholder.input', [$t('system.menu.field.i18n')]),
+      },
+    },
+    {
       fieldName: 'type',
       label: $t('system.menu.field.type'),
       component: 'RadioGroup',
@@ -265,6 +274,50 @@ export function useFormSchema(): VbenFormSchema[] {
       rules: 'required',
       defaultValue: true,
       help: $t('system.menu.help.keepAliveTip'),
+      dependencies: {
+        triggerFields: ['type'],
+        show: (values) => {
+          return [SystemMenuTypeEnum.MENU].includes(values.type);
+        },
+      },
+    },
+    {
+      fieldName: 'sidebar',
+      label: $t('system.menu.field.sidebar'),
+      component: 'RadioGroup',
+      componentProps: {
+        options: [
+          { label: $t('system.menu.sidebar.yes'), value: true },
+          { label: $t('system.menu.sidebar.no'), value: false },
+        ],
+        buttonStyle: 'solid',
+        optionType: 'button',
+      },
+      rules: 'required',
+      defaultValue: true,
+      help: $t('system.menu.help.sidebarTip'),
+      dependencies: {
+        triggerFields: ['type'],
+        show: (values) => {
+          return [SystemMenuTypeEnum.MENU].includes(values.type);
+        },
+      },
+    },
+    {
+      fieldName: 'newWindows',
+      label: $t('system.menu.field.newWindows'),
+      component: 'RadioGroup',
+      componentProps: {
+        options: [
+          { label: $t('system.menu.newWindows.yes'), value: true },
+          { label: $t('system.menu.newWindows.no'), value: false },
+        ],
+        buttonStyle: 'solid',
+        optionType: 'button',
+      },
+      rules: 'required',
+      defaultValue: false,
+      help: $t('system.menu.help.newWindowsTip'),
       dependencies: {
         triggerFields: ['type'],
         show: (values) => {

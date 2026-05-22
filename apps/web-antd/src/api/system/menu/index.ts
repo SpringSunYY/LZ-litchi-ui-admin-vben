@@ -5,6 +5,7 @@ export namespace SystemMenuApi {
   export interface Menu {
     id: number;
     name: string;
+    i18n?: string;
     permission: string;
     type: number;
     sort: number;
@@ -17,6 +18,8 @@ export namespace SystemMenuApi {
     visible: boolean;
     keepAlive: boolean;
     alwaysShow?: boolean;
+    sidebar?: boolean;
+    newWindows?: boolean;
     remark?: string;
     createTime: Date;
   }

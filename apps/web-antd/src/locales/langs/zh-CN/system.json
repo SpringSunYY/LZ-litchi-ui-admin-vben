@@ -206,6 +206,7 @@
       "id": "菜单编号",
       "parentId": "上级菜单",
       "name": "菜单名称",
+      "i18n": "国际化",
       "type": "菜单类型",
       "icon": "菜单图标",
       "path": "路由地址",
@@ -217,7 +218,9 @@
       "alwaysShow": "总是显示",
       "keepAlive": "缓存状态",
       "remark": "菜单备注",
-      "createTime": "创建时间"
+      "createTime": "创建时间",
+      "sidebar": "侧边栏",
+      "newWindows": "新窗口"
     },
     "action": {
       "query": "菜单查询",
@@ -237,7 +240,10 @@
       "pathNoStart": "路径不能以 / 开头",
       "pathEmpty": "路由地址不能为空",
       "keepAliveTip": "选择缓存时，则会被 `keep-alive` 缓存，必须填写「组件名称」字段",
-      "alwaysShowTip": "选择不是时，不显示自己以及所有子菜单"
+      "alwaysShowTip": "选择不是时，不显示自己以及所有子菜单",
+      "sidebarTip": "选择开启时，会显示在侧边栏",
+      "newWindowsTip": "选择开启时，会使用新窗口打开",
+      "i18nTip": "当填入键之后，菜单将以国际化信息显示"
     },
     "alwaysShow": {
       "yes": "总是",
@@ -246,6 +252,14 @@
     "keepAlive": {
       "yes": "缓存",
       "no": "不缓存"
+    },
+    "sidebar": {
+      "yes": "开启",
+      "no": "关闭"
+    },
+    "newWindows": {
+      "yes": "打开",
+      "no": "不打开"
     }
   },
   "tenant": {
