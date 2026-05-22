@@ -50,5 +50,7 @@
   "preciseToSecond": "Precise to second",
   "etc": "etc.",
   "high": "High",
-  "low": "Low"
+  "low": "Low",
+  "min": "Min",
+  "max": "Max"
 }

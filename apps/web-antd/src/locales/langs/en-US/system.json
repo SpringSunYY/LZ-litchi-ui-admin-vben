@@ -76,6 +76,7 @@
       "id": "dict code",
       "dictType": "dict type",
       "label": "dict label",
+      "i18n": "i18n",
       "labelName": "dict label",
       "value": "dict value",
       "sort": "sort order",
@@ -90,7 +91,8 @@
       "create": "create dict",
       "export": "export dict",
       "update": "update dict",
-      "delete": "delete dict"
+      "delete": "delete dict",
+      "createI18n": "create i18n"
     },
     "help": {
       "cssClass": "enter hex color code, e.g. #108ee9",

@@ -11,15 +11,12 @@ import { useDemo01ContactImportSchema } from '../data';
 
 const emit = defineEmits(['success']);
 </script>
-
 <template>
   <ImportExcel
-    :title="`${$t('ui.actionTitle.import', [$t('infra:demo01-contact')])}`"
+    :title="$t('ui.actionTitle.import', [$t('infra.demo01Contact')])"
     :import-api="importDemo01Contact"
     :template-api="importDemo01ContactTemplate"
-    :template-file-name="`${$t('ui.actionTitle.importTemplate', [
-      $t('infra:demo01-contact'),
-    ])}.xlsx`"
+    :template-file-name="`${$t('ui.actionTitle.importTemplate', [$t('infra.demo01Contact')])}.xlsx`"
     :form-schema="useDemo01ContactImportSchema"
     @success="emit('success')"
   />

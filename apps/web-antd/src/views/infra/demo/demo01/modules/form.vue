@@ -21,8 +21,8 @@ const emit = defineEmits(['success']);
 const formData = ref<Demo01ContactApi.Demo01Contact>();
 const getTitle = computed(() => {
   return formData.value?.id
-    ? $t('ui.actionTitle.edit', [$t('infra:demo01-contact')])
-    : $t('ui.actionTitle.create', [$t('infra:demo01-contact')]);
+    ? $t('ui.actionTitle.edit', [$t('infra.demo01Contact')])
+    : $t('ui.actionTitle.create', [$t('infra.demo01Contact')]);
 });
 
 const [Form, formApi] = useVbenForm({

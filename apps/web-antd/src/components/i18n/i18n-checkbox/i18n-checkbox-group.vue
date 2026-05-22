@@ -34,7 +34,7 @@ const emit = defineEmits<{
 const i18nOptions = computed(() =>
   props.options.map((item) => ({
     ...item,
-    label: $t(item.label),
+    label: item.i18n ? $t(item.i18n) : item.label,
   })),
 );
 

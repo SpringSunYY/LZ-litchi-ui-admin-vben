@@ -218,6 +218,16 @@ export function useDataFormSchema(): VbenFormSchema[] {
       rules: 'required',
     },
     {
+      fieldName: 'i18n',
+      label: $t('system.dict.dataField.i18n'),
+      component: 'Input',
+      componentProps: {
+        placeholder: $t('ui.placeholder.input', [
+          $t('system.dict.dataField.i18n'),
+        ]),
+      },
+    },
+    {
       fieldName: 'value',
       label: $t('system.dict.dataField.value'),
       component: 'Input',
@@ -332,6 +342,11 @@ export function useDataGridColumns(): VxeTableGridOptions['columns'] {
       slots: { default: 'label' },
     },
     {
+      field: 'i18n',
+      title: $t('system.dict.dataField.i18n'),
+      slots: { default: 'i18n' },
+    },
+    {
       field: 'value',
       title: $t('system.dict.dataField.value'),
     },
@@ -350,10 +365,12 @@ export function useDataGridColumns(): VxeTableGridOptions['columns'] {
     {
       field: 'colorType',
       title: $t('system.dict.dataField.colorType'),
+      visible: false,
     },
     {
       field: 'cssClass',
       title: $t('system.dict.dataField.cssClass'),
+      visible: false,
     },
     {
       title: $t('system.dict.dataField.createTime'),

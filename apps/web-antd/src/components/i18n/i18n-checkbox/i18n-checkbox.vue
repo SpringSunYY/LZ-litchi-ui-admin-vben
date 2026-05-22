@@ -61,6 +61,6 @@ function handleChange(e: CheckboxChangeEvent) {
     :disabled="props.disabled"
     @change="handleChange"
   >
-    {{ $t(props.option.label) }}
+    {{ props.option?.i18n ? $t(props.option.i18n) : props.option.label }}
   </Checkbox>
 </template>

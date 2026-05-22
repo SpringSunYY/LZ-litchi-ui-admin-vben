@@ -5,6 +5,7 @@ export interface DictItem {
   cssClass?: string;
   label: string;
   value: string;
+  i18n?: string;
 }
 
 export type Dict = Record<string, DictItem[]>;
@@ -41,6 +42,7 @@ export const useDictStore = defineStore('dict', {
       params: Record<string, any> = {},
       labelField: string = 'label',
       valueField: string = 'value',
+      i18nField: string = 'i18n',
     ) {
       api(params).then((dicts) => {
         const dictCacheData: Dict = {};
@@ -52,6 +54,7 @@ export const useDictStore = defineStore('dict', {
               cssClass: d.cssClass,
               label: d[labelField],
               value: d[valueField],
+              i18n: d[i18nField],
             }));
         });
         this.setDictCache(dictCacheData);

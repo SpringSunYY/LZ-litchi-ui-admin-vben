@@ -2,7 +2,7 @@
 import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 import type { SystemDictDataApi } from '#/api/system/dict/data';
 
-import { watch } from 'vue';
+import { ref, watch } from 'vue';
 
 import { useVbenModelDrawer } from '@vben/common-ui';
 import { downloadFileFromBlobPart } from '@vben/utils';
@@ -13,6 +13,7 @@ import { ACTION_ICON, TableAction, useVbenVxeGrid } from '#/adapter/vxe-table';
 import {
   deleteDictData,
   exportDictData,
+  generateDictDataI18n,
   getDictDataPage,
 } from '#/api/system/dict/data';
 import { $t } from '#/locales';
@@ -105,6 +106,44 @@ const [Grid, gridApi] = useVbenVxeGrid({
   } as VxeTableGridOptions<SystemDictDataApi.DictData>,
 });
 
+/** 生成国际化*/
+const generateI18nLoading = ref(false);
+const handleGenerateI18n = function () {
+  generateI18nLoading.value = true;
+  generateDictDataI18n().then(() => {
+    message.success($t('ui.actionMessage.operationSuccess'));
+    generateI18nLoading.value = false;
+  });
+};
+
+function isHexColor(color: string) {
+  const reg = /^#(?:[0-9a-f]{3}|[0-9a-f]{6})$/i;
+  return reg.test(color);
+}
+
+function formatColorType(colorType?: string) {
+  if (!colorType) return 'default';
+  switch (colorType) {
+    case 'danger': {
+      return 'error';
+    }
+    case 'info': {
+      return 'default';
+    }
+    case 'primary': {
+      return 'processing';
+    }
+    default: {
+      return colorType;
+    }
+  }
+}
+
+function getTagColor(colorType?: string) {
+  const color = formatColorType(colorType);
+  return isHexColor(color) ? color : colorType;
+}
+
 /** 监听 dictType 变化，重新查询 */
 watch(
   () => props.dictType,
@@ -132,6 +171,14 @@ defineExpose({ onRefresh });
               icon: ACTION_ICON.ADD,
               auth: ['system:dict:create'],
               onClick: handleCreate,
+            },
+            {
+              label: $t('system.dict.action.createI18n'),
+              type: 'primary',
+              icon: ACTION_ICON.ADD,
+              auth: ['infra:message:create'],
+              onClick: handleGenerateI18n,
+              loading: generateI18nLoading,
             },
             {
               label: $t('ui.actionTitle.export'),
@@ -171,8 +218,13 @@ defineExpose({ onRefresh });
         />
       </template>
       <template #label="{ row }">
-        <Tag :color="row.colorType ? row.colorType : row.cssClass">
-          {{ $t(row.label) }}
+        <Tag :color="getTagColor(row.colorType)">
+          {{ row.label }}
+        </Tag>
+      </template>
+      <template #i18n="{ row }">
+        <Tag v-if="row.i18n" :color="getTagColor(row.colorType)">
+          {{ $t(row.i18n) }}
         </Tag>
       </template>
     </Grid>

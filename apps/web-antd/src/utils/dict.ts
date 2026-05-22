@@ -15,6 +15,7 @@ type ColorType = 'error' | 'info' | 'success' | 'warning';
 export interface DictDataType {
   dictType?: string;
   label: string;
+  i18n?: string;
   value: boolean | number | string;
   colorType?: ColorType;
   cssClass?: string;
@@ -89,6 +90,7 @@ function getDictOptions(
       dictOptions.push({
         value: dictValue,
         label: d.label,
+        i18n: d.i18n,
       });
     });
   }

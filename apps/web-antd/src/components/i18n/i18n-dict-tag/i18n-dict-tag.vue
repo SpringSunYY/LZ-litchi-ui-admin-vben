@@ -69,7 +69,7 @@ function getDictTagItem(v: string) {
   const dict = getDictObj(props.type, v);
   if (dict) {
     return {
-      label: $t(dict.label) || '',
+      label: dict.i18n ? $t(dict.i18n) : dict.label,
       colorType: formatColorType(dict.colorType),
       matched: true,
     };

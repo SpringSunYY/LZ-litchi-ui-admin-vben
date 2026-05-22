@@ -9,6 +9,7 @@ export namespace SystemDictDataApi {
     createTime: Date;
     cssClass: string;
     dictType: string;
+    i18n?: string;
     id?: number;
     label: string;
     remark: string;
@@ -36,6 +37,11 @@ export function getDictData(id: number) {
 // 新增字典数据
 export function createDictData(data: SystemDictDataApi.DictData) {
   return requestClient.post('/system/dict-data/create', data);
+}
+
+// 新增字典国际化
+export function generateDictDataI18n() {
+  return requestClient.post('/system/dict-data/generate-i18n');
 }
 
 // 修改字典数据

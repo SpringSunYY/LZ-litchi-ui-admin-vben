@@ -38,7 +38,7 @@ const emit = defineEmits<{
 // 带国际化的 options
 const i18nOptions = computed(() =>
   props.options.map((item) => ({
-    label: $t(item.label),
+    label: item.i18n ? $t(item.i18n) : item.label,
     value: String(item.value),
   })),
 );

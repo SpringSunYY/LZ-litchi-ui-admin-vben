@@ -76,6 +76,7 @@
       "id": "字典编号",
       "dictType": "字典类型",
       "label": "字典标签",
+      "i18n": "国际化",
       "labelName": "字典标签",
       "value": "字典键值",
       "sort": "排序",
@@ -90,7 +91,8 @@
       "create": "新增字典",
       "export": "导出字典",
       "update": "修改字典",
-      "delete": "删除字典"
+      "delete": "删除字典",
+      "createI18n": "创建国际化"
     },
     "help": {
       "cssClass": "请输入十六进制颜色代码，如 #108ee9",

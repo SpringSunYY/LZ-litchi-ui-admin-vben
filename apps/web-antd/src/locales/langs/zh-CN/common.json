@@ -50,5 +50,7 @@
   "preciseToSecond": "精确到秒",
   "etc": "等",
   "high": "高",
-  "low": "低"
+  "low": "低",
+  "min": "最小值",
+  "max": "最大值",
 }

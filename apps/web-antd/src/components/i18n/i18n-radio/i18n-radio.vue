@@ -45,6 +45,6 @@ function handleChange(e: any) {
     :checked="modelValue === option.value"
     @change="handleChange"
   >
-    {{ $t(option.label) }}
+    {{ option.i18n ? $t(option.i18n) : option.label }}
   </Radio>
 </template>

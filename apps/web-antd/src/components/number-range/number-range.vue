@@ -2,45 +2,23 @@
 /**
  * 数字区间组件，用于选择最小值和最大值的范围
  */
-import type { PropType } from 'vue';
-
 import { computed, ref, watch } from 'vue';
 
+import { $t } from '@vben/locales';
 import { isNumber } from '@vben/utils';
 
 import { InputNumber } from 'ant-design-vue';
 
 defineOptions({ name: 'NumberRange', inheritAttrs: false });
 
-const props = defineProps({
-  modelValue: {
-    type: Array as PropType<[null | number, null | number]>,
-    default: () => [null, null] as [null | number, null | number],
-  },
-  min: {
-    type: Number,
-    default: undefined,
-  },
-  max: {
-    type: Number,
-    default: undefined,
-  },
-  precision: {
-    type: Number,
-    default: 2,
-  },
-  step: {
-    type: Number,
-    default: 1,
-  },
-  disabled: {
-    type: Boolean,
-    default: false,
-  },
-  placeholder: {
-    type: Array as () => [string, string],
-    default: () => ['最小值', '最大值'],
-  },
+const props = withDefaults(defineProps<Props>(), {
+  modelValue: () => [null, null] as [null | number, null | number],
+  min: undefined,
+  max: undefined,
+  precision: 2,
+  step: 1,
+  disabled: false,
+  placeholder: () => [$t('common.min'), $t('common.max')] as [string, string],
 });
 
 const emit = defineEmits<{
@@ -48,8 +26,18 @@ const emit = defineEmits<{
   'update:modelValue': [value: [null | number, null | number]];
 }>();
 
-const minValue = ref<null | number>(null);
-const maxValue = ref<null | number>(null);
+interface Props {
+  modelValue?: [null | number, null | number];
+  min?: number;
+  max?: number;
+  precision?: number;
+  step?: number;
+  disabled?: boolean;
+  placeholder?: [string, string];
+}
+
+const minValue = ref<any>(null);
+const maxValue = ref<any>(null);
 
 const minPlaceholder = computed(() => props.placeholder[0] || '最小值');
 const maxPlaceholder = computed(() => props.placeholder[1] || '最大值');
@@ -77,11 +65,11 @@ function emitChange() {
   emit('change', value);
 }
 
-function handleMinChange(value: null | number) {
+function handleMinChange(value: any) {
   minValue.value = value;
 }
 
-function handleMaxChange(value: null | number) {
+function handleMaxChange(value: any) {
   maxValue.value = value;
 }
 
