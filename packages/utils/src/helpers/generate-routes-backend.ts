@@ -57,7 +57,11 @@ function convertRoutes(
       // StandaloneLayout: 打标记，供 accessible.ts 识别并拎出为顶层路由
       if (component === 'StandaloneLayout') {
         (route as any)._isStandaloneLayout = true;
-        console.log('[DEBUG] StandaloneLayout detected:', route.path, route.name);
+        console.log(
+          '[DEBUG] StandaloneLayout detected:',
+          route.path,
+          route.name,
+        );
       }
     } else {
       // 页面组件转换
@@ -71,11 +75,15 @@ function convertRoutes(
         console.error(`route component is invalid: ${pageKey}`, route);
         route.component = pageMap['/_core/fallback/not-found.vue'];
       }
-      
+
       // 如果是叶子节点且 _noBasicLayout，打标记让它不被 BasicLayout 包裹
       if ((node as any)._noBasicLayout) {
         route.meta = { ...route.meta, noBasicLayout: true };
-        console.log('[DEBUG] Leaf page with noBasicLayout:', route.path, route.name);
+        console.log(
+          '[DEBUG] Leaf page with noBasicLayout:',
+          route.path,
+          route.name,
+        );
       }
     }
 

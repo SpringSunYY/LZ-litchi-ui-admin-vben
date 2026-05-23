@@ -38,7 +38,11 @@ async function generateAccessible(
     while (i < routes.length) {
       const route = routes[i]!;
       // 处理 StandaloneLayout（有子菜单的布局容器）
-      if ((route as any)._isStandaloneLayout && route.children && route.children.length > 0) {
+      if (
+        (route as any)._isStandaloneLayout &&
+        route.children &&
+        route.children.length > 0
+      ) {
         route.meta = { ...route.meta, noBasicLayout: true };
         standaloneRoutes.push(route);
         routes.splice(i, 1);
@@ -58,7 +62,7 @@ async function generateAccessible(
     }
   }
   extractNoBasicLayout(routesForRouter);
-  
+
   // 打印提取出来的独立路由
   standaloneRoutes.forEach((route) => {
     console.log('[EXTRACTED] Standalone route:', route.path, route.name, {
@@ -191,9 +195,9 @@ async function generateRoutes(
 
     // StandaloneLayout 不设 redirect，让它的 <RouterView /> 直接渲染 children
     const compName = route.component
-      ? (isFunction(route.component)
+      ? isFunction(route.component)
         ? String((route.component as any).name)
-        : 'unknown')
+        : 'unknown'
       : 'unknown';
     if (compName === 'StandaloneLayout') {
       return route;

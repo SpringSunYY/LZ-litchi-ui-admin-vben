@@ -164,7 +164,7 @@ function convertServerMenuToRouteRecordStringComponent(
       name: menu.name + menu.id, // add by YY：防止 name 重复，加上 id
       path: menu.path,
     };
-    
+
     // 传递 _noBasicLayout 标记
     if ((menu as any)._noBasicLayout) {
       (buildMenu as any)._noBasicLayout = true;
