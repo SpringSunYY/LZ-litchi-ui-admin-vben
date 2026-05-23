@@ -63,10 +63,19 @@ interface RouteMeta {
    */
   hideInMenu?: boolean;
   /**
+   * 当前路由隐藏侧边栏
+   * @default false
+   */
+  hideSidebar?: boolean;
+  /**
    * 当前路由在标签页不展现
    * @default false
    */
   hideInTab?: boolean;
+  /**
+   * 国际化key。如果设置，则使用该key进行菜单名称翻译，否则使用title本身
+   */
+  i18n?: string;
   /**
    * 图标（菜单/tab）
    */
@@ -102,6 +111,11 @@ interface RouteMeta {
    */
   menuVisibleWithForbidden?: boolean;
   /**
+   * 是否在新窗口打开页面
+   * @default false
+   */
+  newWindows?: boolean;
+  /**
    * 不使用基础布局（仅在顶级生效）
    */
   noBasicLayout?: boolean;
@@ -117,6 +131,11 @@ interface RouteMeta {
    * 菜单所携带的参数
    */
   query?: Recordable;
+  /**
+   * 是否显示侧边栏和顶部栏。设置为 false 时，该路由不使用基础布局（仅在顶级生效）
+   * @default true
+   */
+  sidebar?: boolean;
   /**
    * 标题名称
    */

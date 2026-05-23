@@ -37,6 +37,7 @@
     "@vben/types": "workspace:*",
     "@vben/utils": "workspace:*",
     "@vueuse/core": "catalog:",
+    "lucide-vue-next": "catalog:",
     "vue": "catalog:",
     "vue-router": "catalog:"
   }

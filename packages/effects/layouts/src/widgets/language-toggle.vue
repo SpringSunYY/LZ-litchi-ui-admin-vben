@@ -98,6 +98,7 @@ function clearI18nCache() {
   });
 
   // 显示提示消息（使用国际化）
+  // eslint-disable-next-line no-alert
   alert($t('ui.alert.clearCacheSuccess', { count: keysToRemove.length }));
 
   // 延迟刷新页面以重新加载翻译

@@ -29,6 +29,11 @@ function useMixedMenu() {
 
   const sidebarVisible = computed(() => {
     const enableSidebar = preferences.sidebar.enable;
+    // 从 matched 链的最后一级取 meta，因为 BasicLayout 看到的 route.meta 是父路由的
+    const lastMatchedMeta = route.matched[route.matched.length - 1]?.meta;
+    if (lastMatchedMeta?.hideSidebar) {
+      return false;
+    }
     if (needSplit.value) {
       return enableSidebar && splitSideMenus.value.length > 0;
     }

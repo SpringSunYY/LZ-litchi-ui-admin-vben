@@ -41,7 +41,7 @@ const notifications = ref<NotificationItem[]>([]);
 const unreadCount = ref(0);
 const showDot = computed(() => unreadCount.value > 0);
 
-const [HelpModal, helpModalApi] = useVbenModal({
+const [HelpModal] = useVbenModal({
   connectedComponent: Help,
 });
 

@@ -28,22 +28,57 @@ async function generateAccessible(
   // 生成路由
   const accessibleRoutes = await generateRoutes(mode, options);
 
+  // cloneDeep 一份用于路由注册处理，不影响 generateMenus 用的 accessibleRoutes
+  const routesForRouter = cloneDeep(accessibleRoutes);
+
+  // 把 noBasicLayout 路由从树里拎出来，收集到 standaloneRoutes
+  const standaloneRoutes: RouteRecordRaw[] = [];
+  function extractNoBasicLayout(routes: RouteRecordRaw[]) {
+    let i = 0;
+    while (i < routes.length) {
+      const route = routes[i]!;
+      // 处理 StandaloneLayout（有子菜单的布局容器）
+      if ((route as any)._isStandaloneLayout && route.children && route.children.length > 0) {
+        route.meta = { ...route.meta, noBasicLayout: true };
+        standaloneRoutes.push(route);
+        routes.splice(i, 1);
+        continue;
+      }
+      // 处理叶子节点（noBasicLayout）
+      if (route.meta?.noBasicLayout) {
+        standaloneRoutes.push(route);
+        routes.splice(i, 1);
+        continue;
+      }
+      // 递归处理 children
+      if (route.children && route.children.length > 0) {
+        extractNoBasicLayout(route.children);
+      }
+      i++;
+    }
+  }
+  extractNoBasicLayout(routesForRouter);
+  
+  // 打印提取出来的独立路由
+  standaloneRoutes.forEach((route) => {
+    console.log('[EXTRACTED] Standalone route:', route.path, route.name, {
+      isStandaloneLayout: (route as any)._isStandaloneLayout,
+      noBasicLayout: route.meta?.noBasicLayout,
+    });
+  });
+
   const root = router.getRoutes().find((item) => item.path === '/');
 
   // 获取已有的路由名称列表
   const names = root?.children?.map((item) => item.name) ?? [];
 
-  // 动态添加到router实例内
-  accessibleRoutes.forEach((route) => {
+  // 把普通路由加到 BasicLayout children
+  routesForRouter.forEach((route) => {
     if (root && !route.meta?.noBasicLayout) {
-      // 为了兼容之前的版本用法，如果包含子路由，则将component移除，以免出现多层BasicLayout
-      // 如果你的项目已经跟进了本次修改，移除了所有自定义菜单首级的BasicLayout，可以将这段if代码删除
       if (route.children && route.children.length > 0) {
         delete route.component;
       }
-      // 根据router name判断，如果路由已经存在，则不再添加
       if (names?.includes(route.name)) {
-        // 找到已存在的路由索引并更新，不更新会造成切换用户时，一级目录未更新，homePath 在二级目录导致的404问题
         const index = root.children?.findIndex(
           (item) => item.name === route.name,
         );
@@ -58,6 +93,19 @@ async function generateAccessible(
     }
   });
 
+  // StandaloneLayout 路由作为顶层路由注册，完全独立于 BasicLayout
+  standaloneRoutes.forEach((route) => {
+    console.log('[standalone route]', route.path, route.name, {
+      component: route.component,
+      children: route.children?.map((c) => ({
+        path: c.path,
+        name: c.name,
+        component: (c as any).component,
+      })),
+    });
+    router.addRoute(route);
+  });
+
   if (root) {
     if (root.name) {
       router.removeRoute(root.name);
@@ -65,7 +113,7 @@ async function generateAccessible(
     router.addRoute(root);
   }
 
-  // 生成菜单
+  // 生成菜单用原始 accessibleRoutes，不受路由处理影响
   const accessibleMenus = generateMenus(accessibleRoutes, options.router);
 
   return { accessibleMenus, accessibleRoutes };
@@ -140,6 +188,16 @@ async function generateRoutes(
       return route;
     }
     const firstChild = route.children[0];
+
+    // StandaloneLayout 不设 redirect，让它的 <RouterView /> 直接渲染 children
+    const compName = route.component
+      ? (isFunction(route.component)
+        ? String((route.component as any).name)
+        : 'unknown')
+      : 'unknown';
+    if (compName === 'StandaloneLayout') {
+      return route;
+    }
 
     // 如果子路由不是以/开头，则直接返回,这种情况需要计算全部父级的path才能得出正确的path，这里不做处理
     if (!firstChild?.path || !firstChild.path.startsWith('/')) {

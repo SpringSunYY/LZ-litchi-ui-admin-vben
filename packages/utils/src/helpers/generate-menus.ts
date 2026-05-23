@@ -72,6 +72,7 @@ function generateMenus(
       badgeType,
       badgeVariants,
       icon,
+      i18n: meta.i18n,
       name,
       order,
       parent: route.parent,
@@ -117,19 +118,29 @@ function convertServerMenuToRouteRecordStringComponent(
       };
       menus.push(urlMenu);
       return;
+    }
+    // sidebar === false → 无侧边栏布局（优先级最高，先处理）
+    // 有子菜单 → StandaloneLayout；叶子节点 → 打标记让它不被 BasicLayout 包裹
+    if (!menu.sidebar) {
+      console.log('[MENU] sidebar=false:', menu.name, {
+        hasChildren: !!(menu.children && menu.children.length > 0),
+        childrenCount: menu.children?.length ?? 0,
+      });
+      if (menu.children && menu.children.length > 0) {
+        menu.component = 'StandaloneLayout';
+      }
+      // 叶子节点也打标记，让 accessible.ts 把路由拎出来作为顶层路由
+      (menu as any)._noBasicLayout = true;
     } else if (menu.children && menu.parentId === 0) {
+      // 顶级菜单有 children → BasicLayout
       menu.component = 'BasicLayout';
-    } else if (!menu.children) {
-      menu.component = menu.component as string;
-    }
-    if (menu.component === 'Layout') {
+    } else if (menu.component === 'Layout') {
       menu.component = 'BasicLayout';
+    } else if (menu.children && menu.parentId !== 0) {
+      // 非顶级菜单有 children → 空（作为布局壳）
+      menu.component =
+        menu.children.length > 0 ? '' : (menu.component as string);
     }
-
-    if (menu.children && menu.parentId !== 0) {
-      menu.component = '';
-    }
-
     // path
     if (parent) {
       menu.path = `${parent}/${menu.path}`;
@@ -144,13 +155,20 @@ function convertServerMenuToRouteRecordStringComponent(
       meta: {
         hideInMenu: !menu.visible || !menu.alwaysShow,
         icon: menu.icon,
+        i18n: menu.i18n,
         keepAlive: menu.keepAlive,
+        openInNewWindow: menu.newWindows,
         orderNo: menu.sort,
         title: menu.name,
       },
       name: menu.name + menu.id, // add by YY：防止 name 重复，加上 id
       path: menu.path,
     };
+    
+    // 传递 _noBasicLayout 标记
+    if ((menu as any)._noBasicLayout) {
+      (buildMenu as any)._noBasicLayout = true;
+    }
 
     if (menu.children && menu.children.length > 0) {
       buildMenu.children = convertServerMenuToRouteRecordStringComponent(
@@ -158,7 +176,6 @@ function convertServerMenuToRouteRecordStringComponent(
         menu.path,
       );
     }
-
     menus.push(buildMenu);
   });
   return menus;

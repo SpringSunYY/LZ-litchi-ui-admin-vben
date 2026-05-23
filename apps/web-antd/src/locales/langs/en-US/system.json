@@ -242,7 +242,7 @@
       "keepAliveTip": "when enabled, the component will be cached by `keep-alive`. component name must be filled",
       "alwaysShowTip": "when disabled, this menu and all child menus will not be displayed",
       "newWindowsTip": "when enabled, the link will open in a new window",
-      "sidebarTip": "when disabled, this menu will not be displayed in the sidebar",
+      "sidebarTip": "When disabled, the page will not display sidebar and header, showing only the page content (e.g. login page)",
       "i18nTip": "after entering the i18n key, the menu will be displayed in localized language."
     },
     "alwaysShow": {
