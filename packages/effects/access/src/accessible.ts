@@ -194,9 +194,9 @@ async function generateRoutes(
 
     // 根据布局配置决定是否设 redirect
     const compName = route.component
-      ? (isFunction(route.component)
+      ? isFunction(route.component)
         ? String((route.component as any).name)
-        : 'unknown')
+        : 'unknown'
       : 'unknown';
     // O(1) 查找该组件名对应的布局配置
     const layoutConfigForRedirect = redirectLayoutMap.get(compName);
