@@ -1422,6 +1422,9 @@ importers:
 
   packages/effects/access:
     dependencies:
+      '@vben/constants':
+        specifier: workspace:*
+        version: link:../../constants
       '@vben/preferences':
         specifier: workspace:*
         version: link:../../preferences

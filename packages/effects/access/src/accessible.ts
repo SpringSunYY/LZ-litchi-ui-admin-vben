@@ -1,5 +1,6 @@
 import type { Component, DefineComponent } from 'vue';
 
+import type { LayoutConfig } from '@vben/constants';
 import type {
   AccessModeType,
   GenerateMenuAndRoutesOptions,
@@ -8,6 +9,7 @@ import type {
 
 import { defineComponent, h } from 'vue';
 
+import { DEFAULT_LAYOUT_CONFIG } from '@vben/constants';
 import {
   cloneDeep,
   generateMenus,
@@ -31,13 +33,19 @@ async function generateAccessible(
   // cloneDeep 一份用于路由注册处理，不影响 generateMenus 用的 accessibleRoutes
   const routesForRouter = cloneDeep(accessibleRoutes);
 
-  // 获取根路由
-  const root = router.getRoutes().find((item) => item.name === 'Root');
+  // 构建布局查找 Map
+  const layoutMap = new Map<string, LayoutConfig>(
+    DEFAULT_LAYOUT_CONFIG.map((c) => [c.layout, c]),
+  );
 
-  // 获取 StandaloneRoot 路由
-  const standaloneRoot = router
-    .getRoutes()
-    .find((item) => item.name === 'StandaloneRoot');
+  // 获取所有根路由
+  const layoutRoots: Record<string, RouteRecordRaw> = {};
+  for (const config of DEFAULT_LAYOUT_CONFIG) {
+    const found = router.getRoutes().find((item) => item.name === config.name);
+    if (found) {
+      layoutRoots[config.name] = found;
+    }
+  }
 
   // 递归处理路由，根据 meta.layout 注册到不同的 layout 下
   function processRoutes(
@@ -47,16 +55,19 @@ async function generateAccessible(
     const result: RouteRecordRaw[] = [];
     for (const route of routes) {
       const layout = route.meta?.layout || parentLayout;
-      const isStandalone =
-        (route as any)._isStandalone || layout === 'StandaloneLayout';
 
-      if (isStandalone) {
-        // 注册到 StandaloneLayout
-        if (standaloneRoot) {
-          if (!standaloneRoot.children) {
-            standaloneRoot.children = [];
+      // 查找匹配的布局配置
+      const layoutConfig = layoutMap.get(<string>layout || '');
+      // 不匹配默认
+      const isNoDefaultLayout = layoutConfig && !layoutConfig.isDefault;
+      if (isNoDefaultLayout) {
+        // 注册到对应布局
+        const layoutRoot = layoutRoots[layoutConfig.name];
+        if (layoutRoot) {
+          if (!layoutRoot.children) {
+            layoutRoot.children = [];
           }
-          standaloneRoot.children.push(route);
+          layoutRoot.children.push(route);
         }
         // 不加入 result，即从父级剥离
       } else {
@@ -74,27 +85,36 @@ async function generateAccessible(
 
   const processedRoutes = processRoutes(routesForRouter);
 
-  // 将处理后的路由添加到 root.children
+  // 获取默认布局配置
+  const defaultLayout = DEFAULT_LAYOUT_CONFIG.find(
+    (c: LayoutConfig) => c.isDefault,
+  );
+  const defaultRoot = defaultLayout
+    ? layoutRoots[defaultLayout.name]
+    : undefined;
+
+  // 将处理后的路由添加到默认布局的 children
   for (const route of processedRoutes) {
-    const index = root?.children?.findIndex((item) => item.name === route.name);
-    if (index !== undefined && index !== -1 && root?.children) {
-      root.children[index] = route;
+    if (!defaultRoot?.children) continue;
+    const index = defaultRoot.children.findIndex(
+      (item: RouteRecordRaw) => item.name === route.name,
+    );
+    if (index !== undefined && index !== -1) {
+      defaultRoot.children[index] = route;
     } else {
-      root?.children?.push(route);
+      defaultRoot.children.push(route);
     }
   }
 
-  if (root) {
-    if (root.name) {
-      router.removeRoute(root.name);
+  // 重新注册所有布局根路由
+  for (const config of DEFAULT_LAYOUT_CONFIG) {
+    const root = layoutRoots[config.name];
+    if (root) {
+      if (root.name) {
+        router.removeRoute(root.name);
+      }
+      router.addRoute(root);
     }
-    router.addRoute(root);
-  }
-  if (standaloneRoot) {
-    if (standaloneRoot.name) {
-      router.removeRoute(standaloneRoot.name);
-    }
-    router.addRoute(standaloneRoot);
   }
 
   // 生成菜单用原始 accessibleRoutes，不受路由处理影响
@@ -144,6 +164,11 @@ async function generateRoutes(
    * 1. 对未添加redirect的路由添加redirect
    * 2. 将懒加载的组件名称修改为当前路由的名称（如果启用了keep-alive的话）
    */
+  // 构建布局查找 Map（只调用一次，开销可忽略）
+  const redirectLayoutMap = new Map<string, LayoutConfig>(
+    DEFAULT_LAYOUT_CONFIG.map((c) => [c.layout, c]),
+  );
+
   resultRoutes = mapTree(resultRoutes, (route) => {
     // 重新包装component，使用与路由名称相同的name以支持keep-alive的条件缓存。
     if (
@@ -167,19 +192,22 @@ async function generateRoutes(
       };
     }
 
-    // 如果有redirect或者没有子路由，则直接返回
+    // 根据布局配置决定是否设 redirect
+    const compName = route.component
+      ? (isFunction(route.component)
+        ? String((route.component as any).name)
+        : 'unknown')
+      : 'unknown';
+    // O(1) 查找该组件名对应的布局配置
+    const layoutConfigForRedirect = redirectLayoutMap.get(compName);
+    // 如果有 redirect 或者没有子路由，则直接返回
     if (route.redirect || !route.children || route.children.length === 0) {
       return route;
     }
     const firstChild = route.children[0];
 
-    // StandaloneLayout 不设 redirect，让它的 <RouterView /> 直接渲染 children
-    const compName = route.component
-      ? isFunction(route.component)
-        ? String((route.component as any).name)
-        : 'unknown'
-      : 'unknown';
-    if (compName === 'StandaloneLayout') {
+    // 如果是布局路由，不设 redirect，让它的 <RouterView /> 直接渲染 children
+    if (layoutConfigForRedirect) {
       return route;
     }
 

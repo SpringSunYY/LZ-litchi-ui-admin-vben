@@ -21,3 +21,25 @@ export const SUPPORT_LANGUAGES: LanguageOption[] = [
     value: 'en-US',
   },
 ];
+
+export interface LayoutConfig {
+  isDefault?: boolean; // 是否是默认布局，推荐root，如果root不是默认布局，他还是会走默认布局
+  layout: string; // 布局名称
+  name: string; // 名称
+  path: string; // 路由地址
+}
+
+export const DEFAULT_LAYOUT_CONFIG: LayoutConfig[] = [
+  {
+    name: 'Root',
+    path: '/',
+    layout: 'BasicLayout',
+    isDefault: true,
+  },
+  {
+    name: 'StandaloneRoot',
+    path: '/standalone',
+    layout: 'StandaloneLayout',
+    isDefault: false,
+  },
+];
