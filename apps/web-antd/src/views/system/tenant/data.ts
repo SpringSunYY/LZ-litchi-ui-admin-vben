@@ -229,7 +229,7 @@ export function useGridFormSchema(): VbenFormSchema[] {
       component: 'Select',
       componentProps: {
         allowClear: true,
-        options: getDictOptions(DICT_TYPE.SYSTEM_TENANT_STATUS, 'number'),
+        options: getDictOptions(DICT_TYPE.COMMON_STATUS, 'number'),
         placeholder: $t('ui.placeholder.select', [
           $t('system.tenant.field.status'),
         ]),
@@ -336,7 +336,7 @@ export function useGridColumns(): VxeTableGridOptions<SystemTenantApi.Tenant>['c
       minWidth: 120,
       cellRender: {
         name: 'CellDict',
-        props: { type: DICT_TYPE.SYSTEM_TENANT_STATUS },
+        props: { type: DICT_TYPE.COMMON_STATUS },
       },
     },
     {

@@ -14,7 +14,7 @@ import { mapTree } from '@vben-core/shared/utils';
 async function generateRoutesByBackend(
   options: GenerateMenuAndRoutesOptions,
 ): Promise<RouteRecordRaw[]> {
-  const { fetchMenuListAsync, layoutMap = {}, pageMap = {} } = options;
+  const { fetchMenuListAsync, pageMap = {} } = options;
 
   try {
     const menuRoutes = await fetchMenuListAsync?.();
@@ -28,7 +28,7 @@ async function generateRoutesByBackend(
       normalizePageMap[normalizeViewPath(key)] = value;
     }
 
-    const routes = convertRoutes(menuRoutes, layoutMap, normalizePageMap);
+    const routes = convertRoutes(menuRoutes, normalizePageMap);
 
     // add by YY：合并静态路由和动态路由
     return [...options.routes, ...routes];
@@ -40,7 +40,6 @@ async function generateRoutesByBackend(
 
 function convertRoutes(
   routes: RouteRecordStringComponent[],
-  layoutMap: ComponentRecordType,
   pageMap: ComponentRecordType,
 ): RouteRecordRaw[] {
   return mapTree(routes, (node) => {
@@ -51,28 +50,13 @@ function convertRoutes(
       console.error('route name is required', route);
     }
 
-    // layout转换
-    if (component && layoutMap[component]) {
-      console.log('layout convert', route);
-      route.component = layoutMap[component];
-      // 如果 layout 不是 BasicLayout，则标记为独立布局
-      if (component !== 'BasicLayout') {
-        (route as any)._isStandalone = true;
-        // 为路由路径添加 /standalone 前缀，使其成为独立路由
-        route.path = `/standalone${route.path}`;
-      }
-      // 页面组件转换
-    } else if (component) {
+    if (component) {
       const normalizePath = normalizeViewPath(component);
       const pageKey = normalizePath.endsWith('.vue')
         ? normalizePath
         : `${normalizePath}.vue`;
-      if (pageMap[pageKey]) {
-        route.component = pageMap[pageKey];
-      } else {
-        console.error(`route component is invalid: ${pageKey}`, route);
-        route.component = pageMap['/_core/fallback/not-found.vue'];
-      }
+      route.component =
+        pageMap[pageKey] || pageMap['/_core/fallback/not-found.vue'];
     }
 
     return route;
