@@ -13,13 +13,12 @@ interface AppRouteRecordRaw extends Omit<RouteRecordRaw, 'meta'> {
   icon?: string;
   id?: any;
   keepAlive?: boolean;
+  layout?: string;
   meta: RouteMeta;
   name: string;
   newWindows?: boolean;
   parentId?: number;
   props?: any;
-  sidebar?: boolean;
-  hideSidebar?: boolean;
   sort?: number;
   visible?: boolean;
 }
@@ -74,6 +73,10 @@ interface MenuRecordRaw extends MenuRecordBadgeRaw {
    */
   icon?: Component | string;
   /**
+   * 布局
+   */
+  layout?: string;
+  /**
    * 菜单名
    */
   name: string;
@@ -98,11 +101,6 @@ interface MenuRecordRaw extends MenuRecordBadgeRaw {
    * @default true
    */
   show?: boolean;
-  /**
-   * 是否隐藏侧边栏
-   * @default false
-   */
-  hideSidebar?: boolean;
 }
 
 export type {

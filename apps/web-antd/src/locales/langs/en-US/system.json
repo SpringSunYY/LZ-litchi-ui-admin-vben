@@ -216,7 +216,7 @@
       "sort": "sort order",
       "status": "menu status",
       "alwaysShow": "always show",
-      "sidebar": "sidebar",
+      "layout": "layout",
       "newWindows": "new windows",
       "keepAlive": "cache status",
       "remark": "remark",
@@ -242,7 +242,7 @@
       "keepAliveTip": "when enabled, the component will be cached by `keep-alive`. component name must be filled",
       "alwaysShowTip": "when disabled, this menu and all child menus will not be displayed",
       "newWindowsTip": "when enabled, the link will open in a new window",
-      "sidebarTip": "When disabled, the page will not display sidebar and header, showing only the page content (e.g. login page)",
+      "layoutTip": "Choose from different layout options. For example, the BasicLayout includes a sidebar and a top bar at the back end, while the StandaloneLayout lacks both a sidebar and a top bar",
       "i18nTip": "after entering the i18n key, the menu will be displayed in localized language."
     },
     "alwaysShow": {

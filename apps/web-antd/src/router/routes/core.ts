@@ -7,6 +7,7 @@ import { $t } from '#/locales';
 
 const BasicLayout = () => import('#/layouts/basic.vue');
 const AuthPageLayout = () => import('#/layouts/auth.vue');
+const StandaloneLayout = () => import('#/layouts/standalone.vue');
 /** 全局404页面 */
 const fallbackNotFoundRoute: RouteRecordRaw = {
   component: () => import('#/views/_core/fallback/not-found.vue'),
@@ -37,6 +38,30 @@ const coreRoutes: RouteRecordRaw[] = [
     path: '/',
     redirect: preferences.app.defaultHomePath,
     children: [],
+  },
+  /**
+   * StandaloneLayout 顶层路由
+   * 用于独立页面（如无侧边栏的页面），不被 BasicLayout 包裹
+   * 后端返回的 standalone 路由会添加以 /standalone 为前缀
+   */
+  {
+    component: StandaloneLayout,
+    meta: {
+      hideInBreadcrumb: true,
+      title: 'Standalone',
+    },
+    name: 'StandaloneRoot',
+    path: '/standalone',
+    children: [
+      {
+        name: 'test',
+        path: 'test',
+        component: () => import('#/views/_core/authentication/login.vue'),
+        meta: {
+          title: 'aaa',
+        },
+      },
+    ],
   },
   {
     component: AuthPageLayout,

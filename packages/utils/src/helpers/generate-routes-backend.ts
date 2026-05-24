@@ -53,37 +53,25 @@ function convertRoutes(
 
     // layout转换
     if (component && layoutMap[component]) {
+      console.log('layout convert', route);
       route.component = layoutMap[component];
-      // StandaloneLayout: 打标记，供 accessible.ts 识别并拎出为顶层路由
-      if (component === 'StandaloneLayout') {
-        (route as any)._isStandaloneLayout = true;
-        console.log(
-          '[DEBUG] StandaloneLayout detected:',
-          route.path,
-          route.name,
-        );
+      // 如果 layout 不是 BasicLayout，则标记为独立布局
+      if (component !== 'BasicLayout') {
+        (route as any)._isStandalone = true;
+        // 为路由路径添加 /standalone 前缀，使其成为独立路由
+        route.path = `/standalone${route.path}`;
       }
-    } else {
       // 页面组件转换
-      const normalizePath = normalizeViewPath(component || '');
+    } else if (component) {
+      const normalizePath = normalizeViewPath(component);
       const pageKey = normalizePath.endsWith('.vue')
         ? normalizePath
         : `${normalizePath}.vue`;
-      if (pageKey && pageKey !== '.vue' && pageMap[pageKey]) {
+      if (pageMap[pageKey]) {
         route.component = pageMap[pageKey];
-      } else if (component) {
+      } else {
         console.error(`route component is invalid: ${pageKey}`, route);
         route.component = pageMap['/_core/fallback/not-found.vue'];
-      }
-
-      // 如果是叶子节点且 _noBasicLayout，打标记让它不被 BasicLayout 包裹
-      if ((node as any)._noBasicLayout) {
-        route.meta = { ...route.meta, noBasicLayout: true };
-        console.log(
-          '[DEBUG] Leaf page with noBasicLayout:',
-          route.path,
-          route.name,
-        );
       }
     }
 

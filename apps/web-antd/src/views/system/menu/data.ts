@@ -282,20 +282,15 @@ export function useFormSchema(): VbenFormSchema[] {
       },
     },
     {
-      fieldName: 'sidebar',
-      label: $t('system.menu.field.sidebar'),
-      component: 'RadioGroup',
+      fieldName: 'layout',
+      label: $t('system.menu.field.layout'),
+      component: 'I18nSelect',
       componentProps: {
-        options: [
-          { label: $t('system.menu.sidebar.yes'), value: true },
-          { label: $t('system.menu.sidebar.no'), value: false },
-        ],
-        buttonStyle: 'solid',
-        optionType: 'button',
+        options: getDictOptions(DICT_TYPE.SYSTEM_MENU_LAYOUT, 'string'),
       },
       rules: 'required',
-      defaultValue: true,
-      help: $t('system.menu.help.sidebarTip'),
+      defaultValue: 'BasicLayout',
+      help: $t('system.menu.help.layoutTip'),
       dependencies: {
         triggerFields: ['type'],
         show: (values) => {

@@ -219,7 +219,7 @@
       "keepAlive": "缓存状态",
       "remark": "菜单备注",
       "createTime": "创建时间",
-      "sidebar": "侧边栏",
+      "layout": "布局",
       "newWindows": "新窗口"
     },
     "action": {
@@ -241,7 +241,7 @@
       "pathEmpty": "路由地址不能为空",
       "keepAliveTip": "选择缓存时，则会被 `keep-alive` 缓存，必须填写「组件名称」字段",
       "alwaysShowTip": "选择不是时，不显示自己以及所有子菜单",
-      "sidebarTip": "选择关闭时，页面不显示侧边栏和顶部栏，仅展示页面内容（如登录页）",
+      "layoutTip": "选择不同的布局排版，例如BasicLayout布局为后台有侧边栏、顶部栏布局，StandaloneLayout布局为无侧边栏顶、部栏布局",
       "newWindowsTip": "选择开启时，会使用新窗口打开",
       "i18nTip": "当填入键之后，菜单将以国际化信息显示"
     },

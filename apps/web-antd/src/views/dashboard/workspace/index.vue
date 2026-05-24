@@ -227,6 +227,12 @@ function navTo(nav: WorkbenchProjectItem | WorkbenchQuickNavItem) {
     console.warn(`Unknown URL for navigation item: ${nav.title} -> ${nav.url}`);
   }
 }
+
+const toTenant = () => {
+  router.push({
+    name: 'SystemDictType',
+  });
+};
 </script>
 
 <template>
@@ -239,7 +245,7 @@ function navTo(nav: WorkbenchProjectItem | WorkbenchQuickNavItem) {
       </template>
       <template #description> 今日晴，20℃ - 32℃！{{ $t('test') }} </template>
     </WorkbenchHeader>
-
+    <AButton @click="toTenant()">租户列表</AButton>
     <div class="mt-5 flex flex-col lg:flex-row">
       <div class="mr-4 w-full lg:w-3/5">
         <WorkbenchProject :items="projectItems" title="项目" @click="navTo" />

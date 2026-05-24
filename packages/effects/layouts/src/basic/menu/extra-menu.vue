@@ -32,7 +32,7 @@ async function handleSelect(key: string) {
     :accordion="accordion"
     :collapse="collapse"
     :default-active="route.meta?.activePath || route.path"
-    :menus="menus"
+    :menus="menus || []"
     :rounded="rounded"
     :theme="theme"
     mode="vertical"

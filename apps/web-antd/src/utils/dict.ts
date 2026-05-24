@@ -251,6 +251,7 @@ enum DICT_TYPE {
   SYSTEM_LOGIN_TYPE = 'system_login_type',
   SYSTEM_MAIL_SEND_STATUS = 'system_mail_send_status',
 
+  SYSTEM_MENU_LAYOUT = 'system_menu_layout', // 菜单的布局
   SYSTEM_MENU_TYPE = 'system_menu_type',
   SYSTEM_MODULE_TYPE = 'system_module_type', // 文件模块类型
   SYSTEM_NOTICE_TYPE = 'system_notice_type',

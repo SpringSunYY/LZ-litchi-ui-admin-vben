@@ -18,7 +18,7 @@ export namespace SystemMenuApi {
     visible: boolean;
     keepAlive: boolean;
     alwaysShow?: boolean;
-    sidebar?: boolean;
+    layout?: string;
     newWindows?: boolean;
     remark?: string;
     createTime: Date;

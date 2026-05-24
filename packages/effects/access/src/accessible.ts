@@ -31,90 +31,70 @@ async function generateAccessible(
   // cloneDeep 一份用于路由注册处理，不影响 generateMenus 用的 accessibleRoutes
   const routesForRouter = cloneDeep(accessibleRoutes);
 
-  // 把 noBasicLayout 路由从树里拎出来，收集到 standaloneRoutes
-  const standaloneRoutes: RouteRecordRaw[] = [];
-  function extractNoBasicLayout(routes: RouteRecordRaw[]) {
-    let i = 0;
-    while (i < routes.length) {
-      const route = routes[i]!;
-      // 处理 StandaloneLayout（有子菜单的布局容器）
-      if (
-        (route as any)._isStandaloneLayout &&
-        route.children &&
-        route.children.length > 0
-      ) {
-        route.meta = { ...route.meta, noBasicLayout: true };
-        standaloneRoutes.push(route);
-        routes.splice(i, 1);
-        continue;
+  // 获取根路由
+  const root = router.getRoutes().find((item) => item.name === 'Root');
+
+  // 获取 StandaloneRoot 路由
+  const standaloneRoot = router
+    .getRoutes()
+    .find((item) => item.name === 'StandaloneRoot');
+
+  // 递归处理路由，根据 meta.layout 注册到不同的 layout 下
+  function processRoutes(
+    routes: RouteRecordRaw[],
+    parentLayout?: string,
+  ): RouteRecordRaw[] {
+    const result: RouteRecordRaw[] = [];
+    for (const route of routes) {
+      const layout = route.meta?.layout || parentLayout;
+      const isStandalone =
+        (route as any)._isStandalone || layout === 'StandaloneLayout';
+
+      if (isStandalone) {
+        // 注册到 StandaloneLayout
+        if (standaloneRoot) {
+          if (!standaloneRoot.children) {
+            standaloneRoot.children = [];
+          }
+          standaloneRoot.children.push(route);
+        }
+        // 不加入 result，即从父级剥离
+      } else {
+        // 递归处理子路由
+        if (route.children && route.children.length > 0) {
+          // @ts-ignore 递归处理子路由
+          route.children = processRoutes(route.children, layout);
+          delete route.component;
+        }
+        result.push(route);
       }
-      // 处理叶子节点（noBasicLayout）
-      if (route.meta?.noBasicLayout) {
-        standaloneRoutes.push(route);
-        routes.splice(i, 1);
-        continue;
-      }
-      // 递归处理 children
-      if (route.children && route.children.length > 0) {
-        extractNoBasicLayout(route.children);
-      }
-      i++;
+    }
+    return result;
+  }
+
+  const processedRoutes = processRoutes(routesForRouter);
+
+  // 将处理后的路由添加到 root.children
+  for (const route of processedRoutes) {
+    const index = root?.children?.findIndex((item) => item.name === route.name);
+    if (index !== undefined && index !== -1 && root?.children) {
+      root.children[index] = route;
+    } else {
+      root?.children?.push(route);
     }
   }
-  extractNoBasicLayout(routesForRouter);
-
-  // 打印提取出来的独立路由
-  standaloneRoutes.forEach((route) => {
-    console.log('[EXTRACTED] Standalone route:', route.path, route.name, {
-      isStandaloneLayout: (route as any)._isStandaloneLayout,
-      noBasicLayout: route.meta?.noBasicLayout,
-    });
-  });
-
-  const root = router.getRoutes().find((item) => item.path === '/');
-
-  // 获取已有的路由名称列表
-  const names = root?.children?.map((item) => item.name) ?? [];
-
-  // 把普通路由加到 BasicLayout children
-  routesForRouter.forEach((route) => {
-    if (root && !route.meta?.noBasicLayout) {
-      if (route.children && route.children.length > 0) {
-        delete route.component;
-      }
-      if (names?.includes(route.name)) {
-        const index = root.children?.findIndex(
-          (item) => item.name === route.name,
-        );
-        if (index !== undefined && index !== -1 && root.children) {
-          root.children[index] = route;
-        }
-      } else {
-        root.children?.push(route);
-      }
-    } else {
-      router.addRoute(route);
-    }
-  });
-
-  // StandaloneLayout 路由作为顶层路由注册，完全独立于 BasicLayout
-  standaloneRoutes.forEach((route) => {
-    console.log('[standalone route]', route.path, route.name, {
-      component: route.component,
-      children: route.children?.map((c) => ({
-        path: c.path,
-        name: c.name,
-        component: (c as any).component,
-      })),
-    });
-    router.addRoute(route);
-  });
 
   if (root) {
     if (root.name) {
       router.removeRoute(root.name);
     }
     router.addRoute(root);
+  }
+  if (standaloneRoot) {
+    if (standaloneRoot.name) {
+      router.removeRoute(standaloneRoot.name);
+    }
+    router.addRoute(standaloneRoot);
   }
 
   // 生成菜单用原始 accessibleRoutes，不受路由处理影响

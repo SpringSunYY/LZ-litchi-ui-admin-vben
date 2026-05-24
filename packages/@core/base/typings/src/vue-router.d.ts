@@ -63,11 +63,6 @@ interface RouteMeta {
    */
   hideInMenu?: boolean;
   /**
-   * 当前路由隐藏侧边栏
-   * @default false
-   */
-  hideSidebar?: boolean;
-  /**
    * 当前路由在标签页不展现
    * @default false
    */
@@ -93,6 +88,11 @@ interface RouteMeta {
    * 开启KeepAlive缓存
    */
   keepAlive?: boolean;
+  /**
+   * 布局
+   * @default 'BasicLayout'
+   */
+  layout?: string;
   /**
    * 外链-跳转路径
    */
@@ -131,11 +131,6 @@ interface RouteMeta {
    * 菜单所携带的参数
    */
   query?: Recordable;
-  /**
-   * 是否显示侧边栏和顶部栏。设置为 false 时，该路由不使用基础布局（仅在顶级生效）
-   * @default true
-   */
-  sidebar?: boolean;
   /**
    * 标题名称
    */
