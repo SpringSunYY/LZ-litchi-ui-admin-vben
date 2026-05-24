@@ -56,6 +56,7 @@
   "customer": {
     "customer": "客户",
     "menu": "客户管理",
+    "detail": "客户详情",
     "list": "客户列表",
     "field": {
       "name": "客户名称",
@@ -281,6 +282,7 @@
   "clue": {
     "clue": "线索",
     "menu": "线索管理",
+    "detail": "线索详情",
     "list": "线索列表",
     "field": {
       "name": "线索名称",
@@ -341,6 +343,7 @@
   "contact": {
     "contact": "联系人",
     "menu": "联系人管理",
+    "detail": "联系人详情",
     "list": "联系人列表",
     "field": {
       "name": "联系人姓名",
@@ -399,6 +402,7 @@
   },
   "business": {
     "business": "商机",
+    "detail": "商机详情",
     "list": "商机列表",
     "menu":"商机管理",
     "field": {
@@ -482,6 +486,7 @@
   "contract": {
     "contract": "合同",
     "menu": "合同管理",
+    "detail": "合同详情",
     "list": "合同列表",
     "field": {
       "no": "合同编号",
@@ -726,6 +731,7 @@
   "receivable": {
     "receivable": "回款",
     "menu": "回款管理",
+    "detail": "回款详情",
     "list": "回款列表",
     "field": {
       "id": "ID",
@@ -776,6 +782,7 @@
   "receivablePlan": {
     "receivablePlan": "回款计划",
     "menu": "回款计划",
+    "detail": "回款计划详情",
     "list": "回款计划列表",
     "field": {
       "id": "ID",
@@ -863,7 +870,6 @@
       "poolCustomerTrend": "公海客户趋势",
       "poolCustomerRankByEmployee": "公海客户排行榜(按员工)",
       "receivableRate": "回款率",
-      "dealCycleByArea": "成交周期(按地区)",
       "businessWinCount": "赢单数量"
     },
     "funnel": {
@@ -963,8 +969,7 @@
       "businessWinCount": "赢单数量",
       "customerName": "客户名称",
       "productName": "产品名称",
-      "date": "日期",
-      "businessWinCount": "赢单数量"
+      "date": "日期"
     }
   }
 }

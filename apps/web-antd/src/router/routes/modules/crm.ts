@@ -6,6 +6,7 @@ const routes: RouteRecordRaw[] = [
     name: 'CrmCenter',
     meta: {
       title: '客户管理',
+      i18n: 'crm.customer.menu',
       icon: 'simple-icons:civicrm',
       keepAlive: true,
       hideInMenu: true,
@@ -16,6 +17,7 @@ const routes: RouteRecordRaw[] = [
         name: 'CrmClueDetail',
         meta: {
           title: '线索详情',
+          i18n: 'crm.clue.detail',
           activeMenu: '/crm/clue',
         },
         component: () => import('#/views/crm/clue/modules/detail.vue'),
@@ -25,6 +27,7 @@ const routes: RouteRecordRaw[] = [
         name: 'CrmCustomerDetail',
         meta: {
           title: '客户详情',
+          i18n: 'crm.customer.detail',
           activeMenu: '/crm/customer',
         },
         component: () => import('#/views/crm/customer/modules/detail.vue'),
@@ -34,6 +37,7 @@ const routes: RouteRecordRaw[] = [
         name: 'CrmBusinessDetail',
         meta: {
           title: '商机详情',
+          i18n: 'crm.business.detail',
           activeMenu: '/crm/business',
         },
         component: () => import('#/views/crm/business/modules/detail.vue'),
@@ -43,6 +47,7 @@ const routes: RouteRecordRaw[] = [
         name: 'CrmContractDetail',
         meta: {
           title: '合同详情',
+          i18n: 'crm.contract.detail',
           activeMenu: '/crm/contract',
         },
         component: () => import('#/views/crm/contract/modules/detail.vue'),
@@ -52,6 +57,7 @@ const routes: RouteRecordRaw[] = [
         name: 'CrmReceivablePlanDetail',
         meta: {
           title: '回款计划详情',
+          i18n: 'crm.receivablePlan.detail',
           activeMenu: '/crm/receivable-plan',
         },
         component: () =>
@@ -62,6 +68,7 @@ const routes: RouteRecordRaw[] = [
         name: 'CrmReceivableDetail',
         meta: {
           title: '回款详情',
+          i18n: 'crm.receivable.detail',
           activeMenu: '/crm/receivable',
         },
         component: () => import('#/views/crm/receivable/modules/detail.vue'),
@@ -71,6 +78,7 @@ const routes: RouteRecordRaw[] = [
         name: 'CrmContactDetail',
         meta: {
           title: '联系人详情',
+          i18n: 'crm.contact.detail',
           activeMenu: '/crm/contact',
         },
         component: () => import('#/views/crm/contact/modules/detail.vue'),
@@ -80,6 +88,7 @@ const routes: RouteRecordRaw[] = [
         name: 'CrmProductDetail',
         meta: {
           title: '产品详情',
+          i18n: 'crm.product.detail',
           activeMenu: '/crm/product',
         },
         component: () => import('#/views/crm/product/modules/detail.vue'),

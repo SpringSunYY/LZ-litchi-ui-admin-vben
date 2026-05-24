@@ -56,6 +56,7 @@
   "customer": {
     "customer": "customer",
     "menu": "customer",
+    "detail": "customer detail",
     "list": "customer list",
     "field": {
       "name": "customer name",
@@ -281,6 +282,7 @@
   "clue": {
     "clue": "clue",
     "menu": "clue",
+    "detail": "clue detail",
     "list": "clue list",
     "field": {
       "name": "clue name",
@@ -341,6 +343,7 @@
   "contact": {
     "contact": "contact",
     "menu": "contact",
+    "detail": "contact detail",
     "list": "contact list",
     "field": {
       "name": "contact name",
@@ -399,6 +402,8 @@
   },
   "business": {
     "business": "business",
+    "menu": "business",
+    "detail": "business detail",
     "list": "business list",
     "field": {
       "name": "business name",
@@ -481,6 +486,7 @@
   "contract": {
     "contract": "contract",
     "menu": "contract",
+    "detail": "contract detail",
     "list": "contract list",
     "field": {
       "no": "contract no",
@@ -656,6 +662,7 @@
   "product": {
     "product": "product",
     "menu": "product",
+    "detail": "product detail",
     "list": "product list",
     "field": {
       "id": "product id",
@@ -725,6 +732,7 @@
   "receivable": {
     "receivable": "receivable",
     "menu": "receivable",
+    "detail": "receivable detail",
     "list": "receivable list",
     "field": {
       "id": "id",
@@ -775,6 +783,7 @@
   "receivablePlan": {
     "receivablePlan": "receivable plan",
     "menu": "receivable plan",
+    "detail": "receivable plan detail",
     "list": "receivable plan list",
     "field": {
       "id": "id",
@@ -830,7 +839,6 @@
       "followUpType": "follow up type",
       "poolAnalysis": "pool analysis",
       "dealCycleByEmployee": "deal cycle (by employee)",
-      "dealCycleByArea": "deal cycle (by area)",
       "dealCycleByProduct": "deal cycle (by product)",
       "customerConversion": "customer conversion",
       "dealCycleDays": "deal cycle (days)",

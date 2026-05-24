@@ -1,4 +1,7 @@
 {
+  "bpm": {
+    "menu": "workflow"
+  },
   "category": {
     "category": "process category",
     "menu": "process category management",
@@ -24,6 +27,7 @@
   },
   "form": {
     "form": "process form",
+    "menu": "process form management",
     "menu": "process form management",
     "list": "process form list",
     "field": {
@@ -141,68 +145,20 @@
       "copySuccess": "copy process success",
       "report": "report",
       "designProcess": "please design the process",
-      "completeDesignConfig": "please complete design config"
+      "completeDesignConfig": "please complete design config",
+      "createSuccess": "create success, click deploy to publish",
+      "updateSuccess": "update success, click deploy to publish",
+      "copySuccessForm": "copy success, click deploy to publish",
+      "restoreSuccess": "restore success, click deploy to publish",
+      "confirmDeployForm": "confirm to deploy this process?",
+      "deploySuccessForm": "deploy success",
+      "deployFailed": "deploy failed"
     },
     "step": {
       "basicInfo": "basic info",
       "formDesign": "form design",
       "processDesign": "process design",
       "extraSetting": "extra settings"
-    },
-    "message": {
-      "list": "process model",
-      "create": "create process",
-      "createModel": "create model",
-      "categoryAdd": "create category",
-      "categorySort": "sort categories",
-      "categorySortSuccess": "category sort saved",
-      "cancelSort": "cancel",
-      "saveSort": "save sort",
-      "searchPlaceholder": "search process",
-      "sort": "sort",
-      "categoryOp": "category",
-      "rename": "rename",
-      "deleteCategory": "delete category",
-      "deleteCategoryWarn": "cannot delete category with existing process definitions",
-      "deploy": "deploy",
-      "copy": "copy",
-      "history": "history",
-      "enable": "enable",
-      "disable": "disable",
-      "enableSuccess": "{0} process \"{1}\" success",
-      "disableSuccess": "{0} process \"{1}\" success",
-      "confirmEnable": "confirm to {0} process \"{1}\"?",
-      "confirmDeploy": "confirm to deploy [{0}]?",
-      "deploySuccess": "deploy [{0}] success",
-      "clean": "clean",
-      "confirmClean": "confirm to clean process \"{0}\"?",
-      "cleanSuccess": "clean process \"{0}\" success",
-      "confirmDelete": "confirm to delete process \"{0}\"?",
-      "deleteSuccess": "delete process \"{0}\" success",
-      "sortModelSuccess": "model sort saved",
-      "noIcon": "no icon",
-      "allVisible": "all visible",
-      "deptVisible": "{0} depts visible",
-      "userVisible": "{0} users visible",
-      "noForm": "no form",
-      "undeployed": "undeployed",
-      "suspended": "suspended",
-      "edit": "edit",
-      "publish": "publish",
-      "more": "more",
-      "dragSortTip": "drag to sort",
-      "copySuccess": "copy process success",
-      "report": "report",
-      "designProcess": "please design the process",
-      "completeDesignConfig": "please complete design config",
-      "createSuccess": "create success, click deploy to publish",
-      "updateSuccess": "update success, click deploy to publish",
-      "copySuccessForm": "copy success, click deploy to publish",
-      "restoreSuccess": "restore success, click deploy to publish",
-      "restore": "restore",
-      "confirmDeployForm": "confirm to deploy this process?",
-      "deploySuccessForm": "deploy success",
-      "deployFailed": "deploy failed"
     },
     "basic": {
       "basicInfo": "basic info",
@@ -315,6 +271,8 @@
     }
   },
   "oa": {
+    "oa": "OA leave",
+    "menu": "OA leave",
     "leave": {
       "leave": "leave",
       "menu": "leave request",
@@ -478,12 +436,14 @@
       "instanceId": "ID: {0}",
       "submittedBy": "submitted by {0}",
       "underReview": "under review",
-      "completed": "completed"
+      "completed": "completed",
+      "title": "process detail"
     }
   },
   "task": {
     "task": "task",
     "menu": "task management",
+    "approvalCenter": "approval center",
     "todo": {
       "todo": "todo tasks",
       "menu": "todo tasks",

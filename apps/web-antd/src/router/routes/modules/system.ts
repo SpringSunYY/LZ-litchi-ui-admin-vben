@@ -7,6 +7,7 @@ const routes: RouteRecordRaw[] = [
     name: 'MyNotifyMessage',
     meta: {
       title: '我的站内信',
+      i18n: 'system.notify.my.menu',
       icon: 'ant-design:message-filled',
       hideInMenu: true,
     },

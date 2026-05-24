@@ -1,6 +1,10 @@
 {
   "codegen": {
+    "menu": "code generation",
     "listTitle": "code generation list",
+    "action": {
+      "update": "edit generation config"
+    },
     "dataSource": "data source",
     "tableName": "table name",
     "tableComment": "table comment",

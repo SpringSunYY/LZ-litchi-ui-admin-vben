@@ -1,4 +1,7 @@
 {
+  "bpm": {
+    "menu": "工作流"
+  },
   "category": {
     "category": "流程分类",
     "menu": "流程分类管理",
@@ -141,59 +144,6 @@
       "copySuccess": "复制流程成功",
       "report": "报表",
       "designProcess": "请设计流程",
-      "completeDesignConfig": "请完善设计配置"
-    },
-    "step": {
-      "basicInfo": "基本信息",
-      "formDesign": "表单设计",
-      "processDesign": "流程设计",
-      "extraSetting": "更多设置"
-    },
-    "message": {
-      "list": "流程模型",
-      "create": "创建流程",
-      "createModel": "新建模型",
-      "categoryAdd": "新建分类",
-      "categorySort": "分类排序",
-      "categorySortSuccess": "分类排序成功",
-      "cancelSort": "取消",
-      "saveSort": "保存排序",
-      "searchPlaceholder": "搜索流程",
-      "sort": "排序",
-      "categoryOp": "分类",
-      "rename": "重命名",
-      "deleteCategory": "删除分类",
-      "deleteCategoryWarn": "该分类下仍有流程定义,不允许删除",
-      "deploy": "发布",
-      "copy": "复制",
-      "history": "历史",
-      "enable": "启用",
-      "disable": "停用",
-      "enableSuccess": "{0} 流程: \"{1}\" 成功",
-      "disableSuccess": "{0} 流程: \"{1}\" 成功",
-      "confirmEnable": "确认要{0}流程: \"{1}\" 吗？",
-      "confirmDeploy": "确认要发布[{0}]流程吗？",
-      "deploySuccess": "发布[{0}]流程成功",
-      "clean": "清理",
-      "confirmClean": "确认要清理流程: \"{0}\" 吗？",
-      "cleanSuccess": "清理流程: \"{0}\" 成功",
-      "confirmDelete": "确认要删除流程: \"{0}\" 吗？",
-      "deleteSuccess": "删除流程: \"{0}\" 成功",
-      "sortModelSuccess": "排序模型成功",
-      "noIcon": "无图标",
-      "allVisible": "全部可见",
-      "deptVisible": "{0}个部门可见",
-      "userVisible": "{0} 人可见",
-      "noForm": "暂无表单",
-      "undeployed": "未部署",
-      "suspended": "已停用",
-      "edit": "修改",
-      "publish": "发布",
-      "more": "更多",
-      "dragSortTip": "拖动排序",
-      "copySuccess": "复制流程成功",
-      "report": "报表",
-      "designProcess": "请设计流程",
       "completeDesignConfig": "请完善设计配置",
       "createSuccess": "新建成功，可点击【发布】按钮，进行发布模型",
       "updateSuccess": "修改成功，可点击【发布】按钮，进行发布模型",
@@ -201,6 +151,12 @@
       "confirmDeployForm": "是否确认发布该流程？",
       "deploySuccessForm": "发布成功",
       "deployFailed": "发布失败"
+    },
+    "step": {
+      "basicInfo": "基本信息",
+      "formDesign": "表单设计",
+      "processDesign": "流程设计",
+      "extraSetting": "更多设置"
     },
     "basic": {
       "basicInfo": "基本信息",
@@ -313,6 +269,8 @@
     }
   },
   "oa": {
+    "oa": "OA请假",
+    "menu": "OA请假",
     "leave": {
       "leave": "请假",
       "menu": "请假申请",
@@ -482,7 +440,9 @@
   "task": {
     "task": "任务",
     "menu": "任务管理",
+    "approvalCenter": "审批中心",
     "todo": {
+      "title": "流程详情",
       "todo": "待办任务",
       "menu": "待办任务",
       "list": "待办任务列表",
