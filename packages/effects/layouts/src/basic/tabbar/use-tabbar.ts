@@ -86,11 +86,12 @@ export function useTabbar() {
   };
 
   function wrapperTabLocale(tab: RouteLocationNormalizedGeneric) {
+    const { i18n, title } = tab?.meta || {};
     return {
       ...tab,
       meta: {
         ...tab?.meta,
-        title: $t(tab?.meta?.title as string),
+        title: $t(i18n || (title as string)),
       },
     };
   }

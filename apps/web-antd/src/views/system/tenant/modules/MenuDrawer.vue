@@ -102,7 +102,10 @@ function getAllNodeIds(nodes: any[], ids: number[] = []): number[] {
         label-field="name"
       >
         <template #node="{ value }">
-          <span>{{ value.name }}</span>
+          <span v-if="value.i18n">
+            {{ $t(value.i18n) }}
+          </span>
+          <span v-else>{{ value.name }}</span>
           <Tooltip v-if="value.remark" :title="value.remark">
             <span class="ml-20 max-w-[600px] truncate text-gray-400">{{
               value.remark

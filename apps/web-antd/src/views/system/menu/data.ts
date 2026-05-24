@@ -229,6 +229,7 @@ export function useFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'status',
       label: $t('system.menu.field.status'),
+      formItemClass: 'col-span-1',
       component: 'RadioGroup',
       componentProps: {
         options: getDictOptions(DICT_TYPE.COMMON_STATUS, 'number'),
@@ -240,6 +241,7 @@ export function useFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'alwaysShow',
       label: $t('system.menu.field.alwaysShow'),
+      formItemClass: 'col-span-1',
       component: 'RadioGroup',
       componentProps: {
         options: [
@@ -262,6 +264,7 @@ export function useFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'keepAlive',
       label: $t('system.menu.field.keepAlive'),
+      formItemClass: 'col-span-1',
       component: 'RadioGroup',
       componentProps: {
         options: [
@@ -282,25 +285,9 @@ export function useFormSchema(): VbenFormSchema[] {
       },
     },
     {
-      fieldName: 'layout',
-      label: $t('system.menu.field.layout'),
-      component: 'I18nSelect',
-      componentProps: {
-        options: getDictOptions(DICT_TYPE.SYSTEM_MENU_LAYOUT, 'string'),
-      },
-      rules: 'required',
-      defaultValue: 'BasicLayout',
-      help: $t('system.menu.help.layoutTip'),
-      dependencies: {
-        triggerFields: ['type'],
-        show: (values) => {
-          return [SystemMenuTypeEnum.MENU].includes(values.type);
-        },
-      },
-    },
-    {
       fieldName: 'newWindows',
       label: $t('system.menu.field.newWindows'),
+      formItemClass: 'col-span-1',
       component: 'RadioGroup',
       componentProps: {
         options: [
@@ -313,6 +300,23 @@ export function useFormSchema(): VbenFormSchema[] {
       rules: 'required',
       defaultValue: false,
       help: $t('system.menu.help.newWindowsTip'),
+      dependencies: {
+        triggerFields: ['type'],
+        show: (values) => {
+          return [SystemMenuTypeEnum.MENU].includes(values.type);
+        },
+      },
+    },
+    {
+      fieldName: 'layout',
+      label: $t('system.menu.field.layout'),
+      component: 'I18nSelect',
+      componentProps: {
+        options: getDictOptions(DICT_TYPE.SYSTEM_MENU_LAYOUT, 'string'),
+      },
+      rules: 'required',
+      defaultValue: 'BasicLayout',
+      help: $t('system.menu.help.layoutTip'),
       dependencies: {
         triggerFields: ['type'],
         show: (values) => {

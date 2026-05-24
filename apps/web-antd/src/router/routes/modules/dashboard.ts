@@ -1,13 +1,12 @@
 import type { RouteRecordRaw } from 'vue-router';
 
-import { $t } from '#/locales';
-
 const routes: RouteRecordRaw[] = [
   {
     meta: {
       icon: 'lucide:layout-dashboard',
       order: -1,
-      title: $t('page.dashboard.title'),
+      i18n: 'page.dashboard.title',
+      title: '概况',
     },
     name: 'Dashboard',
     path: '/dashboard',
@@ -18,7 +17,8 @@ const routes: RouteRecordRaw[] = [
         component: () => import('#/views/dashboard/workspace/index.vue'),
         meta: {
           icon: 'carbon:workspace',
-          title: $t('page.dashboard.workspace'),
+          i18n: 'page.dashboard.workspace',
+          title: '工作台',
         },
       },
       {
@@ -28,7 +28,8 @@ const routes: RouteRecordRaw[] = [
         meta: {
           affixTab: true,
           icon: 'lucide:area-chart',
-          title: $t('page.dashboard.analytics'),
+          i18n: 'page.dashboard.analytics',
+          title: '分析页',
         },
       },
     ],
@@ -39,7 +40,8 @@ const routes: RouteRecordRaw[] = [
     component: () => import('#/views/_core/profile/index.vue'),
     meta: {
       icon: 'ant-design:profile-outlined',
-      title: $t('ui.widgets.profile'),
+      i18n: 'ui.widgets.profile',
+      title: '个人中心',
       hideInMenu: true,
     },
   },

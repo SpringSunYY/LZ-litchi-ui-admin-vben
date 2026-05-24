@@ -111,9 +111,9 @@ function convertServerMenuToRouteRecordStringComponent(
           icon: menu.icon,
           link: menu.path,
           orderNo: menu.sort,
-          title: menu.name,
+          title: menu.i18n || menu.name,
         },
-        name: menu.name,
+        name: menu.componentName || menu.name,
         path: `/${menu.path}/index`,
       };
       menus.push(urlMenu);
@@ -137,7 +137,8 @@ function convertServerMenuToRouteRecordStringComponent(
         keepAlive: menu.keepAlive,
         openInNewWindow: menu.newWindows,
         orderNo: menu.sort,
-        title: menu.name,
+        // 优先使用i18n
+        title: menu.i18n || menu.name,
         layout: menu.layout,
       },
       // 一定要有一个name，优先使用componentName
