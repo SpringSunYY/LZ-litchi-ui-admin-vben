@@ -13,6 +13,11 @@ export interface LocaleSetupOptions {
    */
   defaultLocale?: SupportedLanguagesType;
   /**
+   * Fallback language when key not found in current locale
+   * @default en-US
+   */
+  fallbackLocale?: SupportedLanguagesType;
+  /**
    * Load message function
    * @param lang
    * @returns

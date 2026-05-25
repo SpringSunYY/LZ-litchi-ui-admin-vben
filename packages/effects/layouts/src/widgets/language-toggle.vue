@@ -3,7 +3,7 @@ import type { SupportedLanguagesType } from '@vben/locales';
 
 import { computed, onMounted, ref, watch } from 'vue';
 
-import { SUPPORT_LANGUAGES } from '@vben/constants';
+import { I18N_CACHE_PREFIX, SUPPORT_LANGUAGES } from '@vben/constants';
 import { Languages } from '@vben/icons';
 import { $t, loadLocaleMessages } from '@vben/locales';
 import { preferences, updatePreferences } from '@vben/preferences';
@@ -30,7 +30,7 @@ const localeMap = ref<Record<string, SupportedLanguagesType>>({});
 /** 反向映射：框架格式 -> 后端格式 */
 const reverseLocaleMap = ref<Record<string, string>>({});
 
-/** 默认语言的后端格式（后端 isDefault === 1，例如 zh_CN） */
+/** 默认语言的后端格式（后端 isDefault === 0，例如 zh_CN） */
 const defaultBackendLocale = ref<string>('');
 
 /** 将后端格式转为框架格式，例如 zh_CN -> zh-CN */
@@ -68,7 +68,7 @@ async function loadMenu() {
       const framework = toFrameworkLocale(backend);
       map[backend] = framework;
       reverse[framework] = backend;
-      if (item.isDefault === 1) {
+      if (item.isDefault === 0) {
         defaultLang = backend;
       }
     }
@@ -83,7 +83,7 @@ async function loadMenu() {
 
 /** 清除所有 i18n 缓存 */
 function clearI18nCache() {
-  const prefix = 'i18n_messages_';
+  const prefix = I18N_CACHE_PREFIX;
   const keysToRemove: string[] = [];
 
   for (let i = 0; i < localStorage.length; i++) {
@@ -97,10 +97,14 @@ function clearI18nCache() {
     localStorage.removeItem(key);
   });
 
+  // 清除后回退到后端默认语言
+  const defaultLang = toFrameworkLocale(defaultBackendLocale.value);
+  updatePreferences({ app: { locale: defaultLang } });
+  syncCurrentValue();
+
   // 显示提示消息（使用国际化）
   // eslint-disable-next-line no-alert
   alert($t('ui.alert.clearCacheSuccess', { count: keysToRemove.length }));
-
   // 延迟刷新页面以重新加载翻译
   setTimeout(() => {
     window.location.reload();

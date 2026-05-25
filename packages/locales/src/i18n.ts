@@ -44,7 +44,7 @@ let remoteMessageLoader:
  * 设置远程消息加载器
  * @param loader - 异步函数，接收语言代码，返回翻译数据或null
  */
-function setRemoteMessageLoader(
+async function setRemoteMessageLoader(
   loader: (
     lang: SupportedLanguagesType,
   ) => Promise<null | Record<string, string>>,
@@ -139,15 +139,26 @@ function setI18nLanguage(locale: Locale) {
 }
 
 async function setupI18n(app: App, options: LocaleSetupOptions = {}) {
-  const { defaultLocale = 'zh-CN' } = options;
+  const { defaultLocale = 'zh-CN', fallbackLocale } = options;
   // app可以自行扩展一些第三方库和组件库的国际化
   loadMessages = options.loadMessages || (async () => ({}));
+
+  // 先设置 fallbackLocale（必须在 loadLocaleMessages 之前，供 fetchRemoteMessages 使用）
+  if (fallbackLocale && fallbackLocale !== defaultLocale) {
+    i18n.global.fallbackRoot = true;
+    // @ts-ignore
+    i18n.global.fallbackLocale.value = fallbackLocale;
+  }
+
+  // 设置 vue-i18n fallback
+  if (fallbackLocale) {
+    i18n.global.fallbackRoot = true;
+    // @ts-ignore
+    i18n.global.fallbackLocale.value = fallbackLocale;
+  }
+
   app.use(i18n);
   await loadLocaleMessages(defaultLocale);
-
-  // 禁用控制台警告，避免大量缺失翻译的日志输出
-  // i18n.global.missingWarn = false;
-  // i18n.global.mustUseParams = false;
 }
 
 /**

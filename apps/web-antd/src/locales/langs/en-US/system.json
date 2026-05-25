@@ -105,7 +105,7 @@
     "list": "post list",
     "field": {
       "id": "post id",
-      "Name": "post name",
+      "name": "post name",
       "code": "post code",
       "sort": "sort order",
       "status": "post status",

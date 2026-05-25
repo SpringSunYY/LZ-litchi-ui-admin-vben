@@ -10,7 +10,7 @@ import '@vben/styles/antd';
 
 import { useTitle } from '@vueuse/core';
 
-import { $t, setupI18n } from '#/locales';
+import { $t, getDefaultLocaleFromBackend, setupI18n } from '#/locales';
 import { setupFormCreate } from '#/plugins/form-create';
 
 import { initComponentAdapter } from './adapter/component';
@@ -46,7 +46,11 @@ async function bootstrap(namespace: string) {
   await initStores(app, { namespace });
 
   // 国际化 i18n 配置
-  await setupI18n(app);
+  const backendDefault = await getDefaultLocaleFromBackend();
+  const savedLocale = preferences.app.locale;
+  const currentLocale = savedLocale || backendDefault;
+  // fallback 永远用后端默认语言，LOCALE_FALLBACK 只是后端不可用时的最后兜底
+  await setupI18n(app, {}, currentLocale, backendDefault);
 
   // 安装权限指令
   registerAccessDirective(app);

@@ -8,6 +8,9 @@ export interface LanguageOption {
   value: string;
 }
 
+/** i18n 远程消息缓存 key 前缀 */
+export const I18N_CACHE_PREFIX = 'i18n_messages_';
+
 /**
  * Supported languages
  */
