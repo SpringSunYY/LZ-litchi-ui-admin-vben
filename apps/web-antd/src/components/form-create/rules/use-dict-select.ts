@@ -12,10 +12,8 @@ import { selectRule } from '#/components/form-create/rules/data';
 /**
  * 字典选择器规则，如果规则使用到动态数据则需要单独配置不能使用 useSelectRule
  */
-export const useDictSelectRule = () => {
-  const label = '字典选择器';
+export const useDictSelectRule = (label?: string) => {
   const name = 'DictSelect';
-  const rules = cloneDeep(selectRule);
   const dictOptions = ref<{ label: string; value: string }[]>([]); // 字典类型下拉数据
   onMounted(async () => {
     const data = await DictDataApi.getSimpleDictTypeList();
@@ -30,36 +28,37 @@ export const useDictSelectRule = () => {
   });
   return {
     icon: 'icon-descriptions',
-    label,
+    label: label || '字典选择器',
     name,
     rule() {
       return {
         type: name,
         field: buildUUID(),
-        title: label,
+        title: label || '字典选择器',
         info: '',
         $required: false,
       };
     },
     props(_: any, { t }: any) {
+      const rules = cloneDeep(selectRule);
       return localeProps(t, `${name}.props`, [
         makeRequiredRule(),
         {
           type: 'select',
           field: 'dictType',
-          title: '字典类型',
+          title: t('ui.formCreate.props.dictType'),
           value: '',
           options: dictOptions.value,
         },
         {
           type: 'select',
           field: 'valueType',
-          title: '字典值类型',
+          title: t('ui.formCreate.props.valueType'),
           value: 'str',
           options: [
-            { label: '数字', value: 'int' },
-            { label: '字符串', value: 'str' },
-            { label: '布尔值', value: 'bool' },
+            { label: 'valueTypeInt', value: 'int' },
+            { label: 'valueTypeStr', value: 'str' },
+            { label: 'valueTypeBool', value: 'bool' },
           ],
         },
         ...rules,

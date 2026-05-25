@@ -14,6 +14,7 @@ import xml from 'highlight.js/lib/languages/java';
 import json from 'highlight.js/lib/languages/json';
 
 import { useFormCreateDesigner } from '#/components/form-create';
+import { $t } from '#/locales';
 
 import 'highlight.js/styles/github.css';
 
@@ -68,21 +69,21 @@ function openModel(title: string) {
 
 /** 生成 JSON */
 function showJson() {
-  openModel('生成 JSON');
+  openModel($t('infra.build.action.showJson'));
   formType.value = 0;
   formData.value = designer.value.getRule();
 }
 
 /** 生成 Options */
 function showOption() {
-  openModel('生成 Options');
+  openModel($t('infra.build.action.showOption'));
   formType.value = 1;
   formData.value = designer.value.getOption();
 }
 
 /** 生成组件 */
 function showTemplate() {
-  openModel('生成组件');
+  openModel($t('infra.build.action.showTemplate'));
   formType.value = 2;
   formData.value = makeTemplate();
 }
@@ -121,10 +122,10 @@ async function copy(text: string) {
   if (isSupported) {
     await copy();
     if (unref(copied)) {
-      message.success('复制成功');
+      message.success($t('infra.build.message.copySuccess'));
     }
   } else {
-    message.error('复制失败');
+    message.error($t('infra.build.message.copyFailed'));
   }
 }
 
@@ -157,13 +158,13 @@ onMounted(async () => {
     <FcDesigner ref="designer" height="90vh" :config="designerConfig">
       <template #handle>
         <Button size="small" type="primary" ghost @click="showJson">
-          生成JSON
+          {{ $t('infra.build.action.showJson') }}
         </Button>
         <Button size="small" type="primary" ghost @click="showOption">
-          生成Options
+          {{ $t('infra.build.action.showOption') }}
         </Button>
         <Button size="small" type="primary" ghost @click="showTemplate">
-          生成组件
+          {{ $t('infra.build.action.showTemplate') }}
         </Button>
       </template>
     </FcDesigner>
@@ -171,7 +172,9 @@ onMounted(async () => {
     <!-- 弹窗：表单预览 -->
     <Modal :title="dialogTitle" :footer="false" :fullscreen-button="false">
       <div>
-        <Button style="float: right" @click="copy(formData)"> 复制 </Button>
+        <Button style="float: right" @click="copy(formData)">
+          {{ $t('infra.build.action.copy') }}
+        </Button>
         <div>
           <pre><code v-dompurify-html="highlightedCode(formData)" class="hljs"></code></pre>
         </div>

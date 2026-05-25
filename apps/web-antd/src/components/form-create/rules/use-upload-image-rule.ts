@@ -5,18 +5,17 @@ import {
   makeRequiredRule,
 } from '#/components/form-create/helpers';
 
-export const useUploadImageRule = () => {
-  const label = '单图上传';
+export const useUploadImageRule = (label?: string) => {
   const name = 'ImageUpload';
   return {
     icon: 'icon-image',
-    label,
+    label: label || '单图上传',
     name,
     rule() {
       return {
         type: name,
         field: buildUUID(),
-        title: label,
+        title: label || '单图上传',
         info: '',
         $required: false,
       };
@@ -27,13 +26,13 @@ export const useUploadImageRule = () => {
         {
           type: 'switch',
           field: 'drag',
-          title: '拖拽上传',
+          title: t('ui.formCreate.props.drag'),
           value: false,
         },
         {
           type: 'select',
-          field: 'fileType',
-          title: '图片类型限制',
+          field: 'imageType',
+          title: t('ui.formCreate.props.imageType'),
           value: ['image/jpeg', 'image/png', 'image/gif', 'image/webp'],
           options: [
             { label: 'image/apng', value: 'image/apng' },
@@ -55,38 +54,38 @@ export const useUploadImageRule = () => {
         {
           type: 'inputNumber',
           field: 'fileSize',
-          title: '大小限制(MB)',
+          title: t('ui.formCreate.props.fileSize'),
           value: 5,
           props: { min: 0 },
         },
         {
           type: 'input',
-          field: 'height',
-          title: '组件高度',
+          field: 'componentHeight',
+          title: t('ui.formCreate.props.componentHeight'),
           value: '150px',
         },
         {
           type: 'input',
-          field: 'width',
-          title: '组件宽度',
+          field: 'componentWidth',
+          title: t('ui.formCreate.props.componentWidth'),
           value: '150px',
         },
         {
           type: 'input',
           field: 'borderradius',
-          title: '组件边框圆角',
+          title: t('ui.formCreate.props.borderradius'),
           value: '8px',
         },
         {
           type: 'switch',
-          field: 'disabled',
-          title: '是否显示删除按钮',
+          field: 'showDeleteButton',
+          title: t('ui.formCreate.props.showDeleteButton'),
           value: true,
         },
         {
           type: 'switch',
           field: 'showBtnText',
-          title: '是否显示按钮文字',
+          title: t('ui.formCreate.props.showBtnText'),
           value: true,
         },
       ]);

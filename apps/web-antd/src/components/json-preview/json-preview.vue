@@ -52,7 +52,7 @@ const copyJson = async () => {
 </script>
 
 <template>
-  <span v-if="!value || !items.length">-</span>
+  <span v-if="!value || items.length === 0">-</span>
   <a-popover v-else v-model:open="visible" placement="top" trigger="hover">
     <template #content>
       <div class="json-preview-content">
@@ -84,29 +84,35 @@ const copyJson = async () => {
   min-width: 200px;
   max-width: 400px;
 }
+
 .json-preview-items {
   display: flex;
   flex-direction: column;
   gap: 2px;
-  font-size: 16px;
   padding-bottom: 4px;
+  font-size: 16px;
   border-bottom: 1px solid #f0f0f0;
 }
+
 .json-preview-item {
   display: flex;
   gap: 4px;
 }
+
 .json-preview-key {
-  color: #666;
   flex-shrink: 0;
+  color: #666;
 }
+
 .json-preview-sep {
   color: #999;
 }
+
 .json-preview-value {
   color: #333;
   word-break: break-all;
 }
+
 .json-preview-actions {
   display: flex;
   justify-content: center;

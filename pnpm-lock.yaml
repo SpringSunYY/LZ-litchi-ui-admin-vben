@@ -679,7 +679,7 @@ importers:
         version: 3.2.11(vue@3.5.13(typescript@5.8.3))
       '@tinymce/tinymce-vue':
         specifier: 'catalog:'
-        version: 6.1.0(vue@3.5.13(typescript@5.8.3))
+        version: 6.1.0(tinymce@8.5.1)(vue@3.5.13(typescript@5.8.3))
       '@vben/access':
         specifier: workspace:*
         version: link:../../packages/effects/access
@@ -746,6 +746,9 @@ importers:
       pinia:
         specifier: ^3.0.2
         version: 3.0.2(typescript@5.8.3)(vue@3.5.13(typescript@5.8.3))
+      tinymce:
+        specifier: ^8.5.1
+        version: 8.5.1
       vue:
         specifier: ^3.5.13
         version: 3.5.13(typescript@5.8.3)
@@ -10261,6 +10264,9 @@ packages:
     resolution: {integrity: sha512-mEwzpUgrLySlveBwEVDMKk5B57bhLPYovRfPAXD5gA/98Opn0rCDj3GtLwFvCvH5RK9uPCExUROW5NjDwvqkxw==}
     engines: {node: '>=12.0.0'}
 
+  tinymce@8.5.1:
+    resolution: {integrity: sha512-Wd4OrokDEwlXppSR+ijXngLa2+s3v8NZax9WCvAHeQhqvFsj9tGt19PmrnAdGLiQFkBBYzdOLW23tsBTPMiJYw==}
+
   tinypool@1.0.2:
     resolution: {integrity: sha512-al6n+QEANGFOMf/dmUMsuS5/r9B06uwlyNjZZql/zv8J7ybHCgoihBNORZCY2mzUuAnomQa2JdhyHKzZxPCrFA==}
     engines: {node: ^18.0.0 || >=20.0.0}
@@ -14038,9 +14044,11 @@ snapshots:
       '@tanstack/virtual-core': 3.13.8
       vue: 3.5.13(typescript@5.8.3)
 
-  '@tinymce/tinymce-vue@6.1.0(vue@3.5.13(typescript@5.8.3))':
+  '@tinymce/tinymce-vue@6.1.0(tinymce@8.5.1)(vue@3.5.13(typescript@5.8.3))':
     dependencies:
       vue: 3.5.13(typescript@5.8.3)
+    optionalDependencies:
+      tinymce: 8.5.1
 
   '@tootallnate/once@1.1.2': {}
 
@@ -20650,6 +20658,8 @@ snapshots:
     dependencies:
       fdir: 6.4.4(picomatch@4.0.2)
       picomatch: 4.0.2
+
+  tinymce@8.5.1: {}
 
   tinypool@1.0.2: {}
 

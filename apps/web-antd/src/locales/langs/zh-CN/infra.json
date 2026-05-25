@@ -513,5 +513,20 @@
     "menu": "服务监控",
     "list": "服务监控列表",
     "docTitle": "服务监控"
+  },
+  "build": {
+    "build": "表单设计",
+    "menu": "表单设计",
+    "list": "表单设计",
+    "action": {
+      "showJson": "生成JSON",
+      "showOption": "生成Options",
+      "showTemplate": "生成组件",
+      "copy": "复制"
+    },
+    "message": {
+      "copySuccess": "复制成功",
+      "copyFailed": "复制失败"
+    }
   }
 }

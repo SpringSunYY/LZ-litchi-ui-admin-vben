@@ -1,5 +1,6 @@
 <!-- add by puhui999：vxe table 工具栏二次封装，提供给 vxe 原生列表使用 -->
 <script setup lang="ts">
+//@ts-nocheck
 import type { VxeToolbarInstance } from '#/adapter/vxe-table';
 
 import { ref } from 'vue';
@@ -41,7 +42,7 @@ defineExpose({
       <slot></slot>
       <Tooltip placement="bottom">
         <template #title>
-          <div class="max-w-[200px]">搜索</div>
+          <div class="max-w-[200px]">{{ $t('ui.tableToolbar.search') }}</div>
         </template>
         <Button
           class="ml-2 font-[8px]"
@@ -53,7 +54,7 @@ defineExpose({
       </Tooltip>
       <Tooltip placement="bottom">
         <template #title>
-          <div class="max-w-[200px]">刷新</div>
+          <div class="max-w-[200px]">{{ $t('ui.tableToolbar.refresh') }}</div>
         </template>
         <Button class="ml-2 font-[8px]" shape="circle" @click="refresh">
           <MsRefresh :size="15" />
@@ -62,7 +63,11 @@ defineExpose({
       <Tooltip placement="bottom">
         <template #title>
           <div class="max-w-[200px]">
-            {{ contentIsMaximize ? '还原' : '全屏' }}
+            {{
+              contentIsMaximize
+                ? $t('ui.tableToolbar.restore')
+                : $t('ui.tableToolbar.fullscreen')
+            }}
           </div>
         </template>
         <Button

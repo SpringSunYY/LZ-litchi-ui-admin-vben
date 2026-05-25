@@ -2,7 +2,11 @@ import type { Ref } from 'vue';
 
 import type { Menu } from '#/components/form-create/typing';
 
-import { nextTick, onMounted } from 'vue';
+import FcDesigner from '@form-create/antd-designer';
+
+import { i18n } from '@vben/locales';
+
+import { computed, nextTick, onMounted, watch } from 'vue';
 
 import { apiSelectRule } from '#/components/form-create/rules/data';
 
@@ -15,11 +19,37 @@ import {
   useUploadImagesRule,
 } from './rules';
 
+/** 表单设计器组件的 i18n labels，随语言响应式更新 */
+export const useFormCreateLabels = () => {
+  const t = (key: string) => i18n.global.t(key);
+
+  return {
+    /** 富文本 */
+    tinymce: computed(() => t('ui.formCreate.labels.tinymce')),
+    /** 文件上传 */
+    fileUpload: computed(() => t('ui.formCreate.labels.fileUpload')),
+    /** 单图上传 */
+    imageUpload: computed(() => t('ui.formCreate.labels.imageUpload')),
+    /** 多图上传 */
+    imagesUpload: computed(() => t('ui.formCreate.labels.imagesUpload')),
+    /** 用户选择器 */
+    userSelect: computed(() => t('ui.formCreate.labels.userSelect')),
+    /** 部门选择器 */
+    deptSelect: computed(() => t('ui.formCreate.labels.deptSelect')),
+    /** 字典选择器 */
+    dictSelect: computed(() => t('ui.formCreate.labels.dictSelect')),
+    /** 接口选择器 */
+    apiSelect: computed(() => t('ui.formCreate.labels.apiSelect')),
+    /** 系统字段 */
+    systemMenuTitle: computed(() => t('ui.formCreate.labels.systemMenuTitle')),
+  };
+};
+
 export function makeRequiredRule() {
   return {
     type: 'Required',
     field: 'formCreate$required',
-    title: '是否必填',
+    title: i18n.global.t('ui.formCreate.props.required'),
   };
 }
 
@@ -28,11 +58,24 @@ export const localeProps = (
   prefix: string,
   rules: any[],
 ) => {
-  return rules.map((rule: { field: string; title: any }) => {
+  return rules.map((rule: { field: string; title: any; options?: any[] }) => {
     if (rule.field === 'formCreate$required') {
-      rule.title = t('props.required') || rule.title;
+      rule.title = t('ui.formCreate.props.required') || rule.title;
     } else if (rule.field && rule.field !== '_optionType') {
-      rule.title = t(`components.${prefix}.${rule.field}`) || rule.title;
+      rule.title = t(`ui.formCreate.props.${rule.field}`) || rule.title;
+    }
+    if (rule.options && Array.isArray(rule.options)) {
+      rule.options = rule.options.map(
+        (opt: { label: string | number; value: any }) => {
+          if (typeof opt.label === 'string') {
+            const translated = t(`ui.formCreate.props.${opt.label}`);
+            if (translated && translated !== opt.label) {
+              opt.label = translated;
+            }
+          }
+          return opt;
+        },
+      );
     }
     return rule;
   });
@@ -91,12 +134,46 @@ export const parseFormFields = (
  * - 用户选择器
  * - 部门选择器
  * - 富文本
+ * - 国际化支持
  */
 export const useFormCreateDesigner = async (designer: Ref) => {
-  const editorRule = useEditorRule();
-  const uploadFileRule = useUploadFileRule();
-  const uploadImageRule = useUploadImageRule();
-  const uploadImagesRule = useUploadImagesRule();
+  const labels = useFormCreateLabels();
+  const editorRule = useEditorRule(labels.tinymce.value);
+  const uploadFileRule = useUploadFileRule(labels.fileUpload.value);
+  const uploadImageRule = useUploadImageRule(labels.imageUpload.value);
+  const uploadImagesRule = useUploadImagesRule(labels.imagesUpload.value);
+
+  type FcDesignerLocale = { default: Record<string, any> };
+
+  const localeMap: Record<string, () => Promise<FcDesignerLocale>> = {
+    'zh-CN': () =>
+      import(
+        '@form-create/antd-designer/locale/zh-cn.es.js' /* @vite-ignore */
+      ),
+    'en-US': () =>
+      import('@form-create/antd-designer/locale/en.es.js' /* @vite-ignore */),
+  };
+
+  /**
+   * 设置设计器的多语言
+   */
+  const setupDesignerLocale = async () => {
+    if (!designer.value) return;
+    const currentLocale = i18n.global.locale.value as string;
+    const loader = localeMap[currentLocale] ?? localeMap['zh-CN']!;
+    const { default: designerLocale } = await loader();
+    // FcDesigner.useLocale 是静态方法，会自动更新全局响应式语言状态
+    FcDesigner.useLocale(designerLocale);
+    // 监听应用语言切换，同步更新设计器
+    watch(
+      () => i18n.global.locale.value,
+      async (newLocale) => {
+        const targetLoader = localeMap[newLocale] ?? localeMap['zh-CN']!;
+        const { default: targetLocale } = await targetLoader();
+        FcDesigner.useLocale(targetLocale);
+      },
+    );
+  };
 
   /**
    * 构建表单组件
@@ -126,18 +203,18 @@ export const useFormCreateDesigner = async (designer: Ref) => {
 
   const userSelectRule = useSelectRule({
     name: 'UserSelect',
-    label: '用户选择器',
+    label: labels.userSelect.value,
     icon: 'icon-eye',
   });
   const deptSelectRule = useSelectRule({
     name: 'DeptSelect',
-    label: '部门选择器',
+    label: labels.deptSelect.value,
     icon: 'icon-tree',
   });
-  const dictSelectRule = useDictSelectRule();
+  const dictSelectRule = useDictSelectRule(labels.dictSelect.value);
   const apiSelectRule0 = useSelectRule({
     name: 'ApiSelect',
-    label: '接口选择器',
+    label: labels.apiSelect.value,
     icon: 'icon-json',
     props: [...apiSelectRule],
     event: ['click', 'change', 'visibleChange', 'clear', 'blur', 'focus'],
@@ -147,10 +224,6 @@ export const useFormCreateDesigner = async (designer: Ref) => {
    * 构建系统字段菜单
    */
   const buildSystemMenu = () => {
-    // 移除自带的下拉选择器组件，使用 currencySelectRule 替代
-    // designer.value?.removeMenuItem('select')
-    // designer.value?.removeMenuItem('radio')
-    // designer.value?.removeMenuItem('checkbox')
     const components = [
       userSelectRule,
       deptSelectRule,
@@ -159,11 +232,9 @@ export const useFormCreateDesigner = async (designer: Ref) => {
     ];
     const menu: Menu = {
       name: 'system',
-      title: '系统字段',
+      title: labels.systemMenuTitle.value,
       list: components.map((component) => {
-        // 插入组件规则
         designer.value?.addComponent(component);
-        // 插入拖拽按钮到 `system` 分类下
         return {
           icon: component.icon,
           name: component.name,
@@ -178,5 +249,6 @@ export const useFormCreateDesigner = async (designer: Ref) => {
     await nextTick();
     buildFormComponents();
     buildSystemMenu();
+    setupDesignerLocale();
   });
 };

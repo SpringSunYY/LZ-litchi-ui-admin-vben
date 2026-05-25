@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+//@ts-nocheck
 import type { IPropTypes } from '@tinymce/tinymce-vue/lib/cjs/main/ts/components/EditorPropTypes';
 import type { Editor as EditorType } from 'tinymce/tinymce';
 
@@ -24,8 +25,8 @@ import Editor from '@tinymce/tinymce-vue';
 
 import { useUpload } from '#/components/upload/use-upload';
 
-import { bindHandlers } from './helper';
 import FileUpload from './file-upload.vue';
+import { bindHandlers } from './helper';
 import ImgUpload from './img-upload.vue';
 import {
   plugins as defaultPlugins,

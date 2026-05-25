@@ -5,18 +5,17 @@ import {
   makeRequiredRule,
 } from '#/components/form-create/helpers';
 
-export const useEditorRule = () => {
-  const label = '富文本';
+export const useEditorRule = (label?: string) => {
   const name = 'Tinymce';
   return {
     icon: 'icon-editor',
-    label,
+    label: label || '富文本',
     name,
     rule() {
       return {
         type: name,
         field: buildUUID(),
-        title: label,
+        title: label || '富文本',
         info: '',
         $required: false,
       };
@@ -27,9 +26,13 @@ export const useEditorRule = () => {
         {
           type: 'input',
           field: 'height',
-          title: '高度',
+          title: t('ui.formCreate.props.height'),
         },
-        { type: 'switch', field: 'readonly', title: '是否只读' },
+        {
+          type: 'switch',
+          field: 'readonly',
+          title: t('ui.formCreate.props.readonly'),
+        },
       ]);
     },
   };

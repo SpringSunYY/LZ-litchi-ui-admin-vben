@@ -4,6 +4,9 @@ import type { App } from 'vue';
 import FcDesigner from '@form-create/antd-designer';
 import Antd from 'ant-design-vue';
 
+// ======================= 样式 =======================
+import '#/components/form-create/styles/designer-dark.scss';
+
 // ======================= 自定义组件 =======================
 import { useApiSelect } from '#/components/form-create';
 import DictSelect from '#/components/form-create/components/dict-select.vue';

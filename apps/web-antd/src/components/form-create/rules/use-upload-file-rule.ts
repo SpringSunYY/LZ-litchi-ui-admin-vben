@@ -5,18 +5,17 @@ import {
   makeRequiredRule,
 } from '#/components/form-create/helpers';
 
-export const useUploadFileRule = () => {
-  const label = '文件上传';
+export const useUploadFileRule = (label?: string) => {
   const name = 'FileUpload';
   return {
     icon: 'icon-upload',
-    label,
+    label: label || '文件上传',
     name,
     rule() {
       return {
         type: name,
         field: buildUUID(),
-        title: label,
+        title: label || '文件上传',
         info: '',
         $required: false,
       };
@@ -27,7 +26,7 @@ export const useUploadFileRule = () => {
         {
           type: 'select',
           field: 'fileType',
-          title: '文件类型',
+          title: t('ui.formCreate.props.fileType'),
           value: ['doc', 'xls', 'ppt', 'txt', 'pdf'],
           options: [
             { label: 'doc', value: 'doc' },
@@ -58,39 +57,39 @@ export const useUploadFileRule = () => {
         {
           type: 'switch',
           field: 'autoUpload',
-          title: '是否在选取文件后立即进行上传',
+          title: t('ui.formCreate.props.autoUpload'),
           value: true,
         },
         {
           type: 'switch',
           field: 'drag',
-          title: '拖拽上传',
+          title: t('ui.formCreate.props.drag'),
           value: false,
         },
         {
           type: 'switch',
           field: 'isShowTip',
-          title: '是否显示提示',
+          title: t('ui.formCreate.props.isShowTip'),
           value: true,
         },
         {
           type: 'inputNumber',
           field: 'fileSize',
-          title: '大小限制(MB)',
+          title: t('ui.formCreate.props.fileSize'),
           value: 5,
           props: { min: 0 },
         },
         {
           type: 'inputNumber',
           field: 'limit',
-          title: '数量限制',
+          title: t('ui.formCreate.props.limit'),
           value: 5,
           props: { min: 0 },
         },
         {
           type: 'switch',
           field: 'disabled',
-          title: '是否禁用',
+          title: t('ui.formCreate.props.disabled'),
           value: false,
         },
       ]);

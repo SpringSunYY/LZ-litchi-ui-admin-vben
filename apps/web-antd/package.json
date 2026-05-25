@@ -51,6 +51,7 @@
     "dayjs": "catalog:",
     "highlight.js": "catalog:",
     "pinia": "catalog:",
+    "tinymce": "^8.5.1",
     "vue": "catalog:",
     "vue-dompurify-html": "catalog:",
     "vue-router": "catalog:",

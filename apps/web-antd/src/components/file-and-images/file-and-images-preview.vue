@@ -79,14 +79,6 @@ const allAreImages = computed(() => {
   );
 });
 
-/** 是否全部是文件 */
-const allAreFiles = computed(() => {
-  return (
-    filesWithType.value.length > 0 &&
-    filesWithType.value.every((f) => !f.isImage)
-  );
-});
-
 /** 全部转为图片 URL */
 const imageUrls = computed(() => {
   return fileList.value;

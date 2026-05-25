@@ -513,5 +513,20 @@
     "menu": "service monitor",
     "list": "service monitor list",
     "docTitle": "service monitor"
+  },
+  "build": {
+    "build": "form design",
+    "menu": "form design",
+    "list": "form design",
+    "action": {
+      "showJson": "generate json",
+      "showOption": "generate options",
+      "showTemplate": "generate component",
+      "copy": "copy"
+    },
+    "message": {
+      "copySuccess": "copied to clipboard",
+      "copyFailed": "copy failed"
+    }
   }
 }

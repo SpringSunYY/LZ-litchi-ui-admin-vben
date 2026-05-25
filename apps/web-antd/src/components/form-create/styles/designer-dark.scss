@@ -1,0 +1,519 @@
+/**
+ * @form-create/antd-designer 深色模式样式覆盖
+ *
+ * 该库使用硬编码的浅色模式颜色（如 #FFFFFF、#F5F5F5、#262626 等），
+ * Ant Design Vue 的 darkAlgorithm 无法覆盖这些颜色，
+ * 因此需要在 html.dark 下手动覆盖所有相关样式。
+ */
+// stylelint-disable selector-class-pattern
+// ============================ 全局布局 ============================
+html.dark {
+  ._fc-designer {
+    --fc-drag-empty: '拖拽左侧列表中的组件到此处';
+    --fc-child-empty: '点击右下角 \e789  按钮添加一列';
+    --fc-tool-border-color: var(--primary);
+
+    background-color: var(--card);
+
+    .CodeMirror-gutters {
+      background-color: #1a1a1a;
+      border-right-color: #333;
+    }
+
+    .CodeMirror-scroll {
+      color: #e0e0e0;
+      caret-color: #e0e0e0;
+      background-color: #141414;
+    }
+
+    .ant-layout-sider,
+    .ant-layout-header,
+    .ant-layout-content {
+      background: var(--card);
+    }
+
+    .ant-layout-content {
+      overflow: auto;
+    }
+
+    .ant-layout {
+      height: 100%;
+    }
+  }
+
+  // ============================ 左侧菜单 ============================
+  ._fc-designer ._fc-l-menu {
+    border-top-color: var(--border);
+    border-right-color: var(--border);
+  }
+
+  ._fc-designer ._fc-l-tabs,
+  ._fc-designer ._fc-r-tabs {
+    border-bottom-color: var(--border);
+  }
+
+  ._fc-l-tab,
+  ._fc-r-tab {
+    color: var(--foreground);
+  }
+
+  ._fc-l ._fc-l-tab.active {
+    color: var(--primary);
+    border-bottom-color: var(--primary);
+  }
+
+  ._fc-designer ._fc-r ._fc-r-tab.active {
+    color: var(--primary);
+    border-bottom-color: var(--primary);
+  }
+
+  ._fc-designer ._fc-l-menu-item {
+    color: var(--muted-foreground);
+  }
+
+  ._fc-designer ._fc-l-menu-item.active,
+  ._fc-designer ._fc-l-menu-item i:hover {
+    color: var(--primary);
+  }
+
+  ._fc-designer ._fc-l-menu-form {
+    border-bottom-color: var(--border);
+  }
+
+  ._fc-l-label {
+    color: var(--foreground);
+  }
+
+  ._fc-l-info {
+    color: #888;
+  }
+
+  // ============================ 组件列表 ============================
+  ._fc-l-group {
+    border-color: var(--border);
+  }
+
+  ._fc-l-title {
+    color: var(--foreground);
+  }
+
+  ._fc-l-item {
+    color: var(--foreground);
+    background: var(--card);
+  }
+
+  ._fc-l-item:hover {
+    color: #fff;
+    background: var(--primary);
+  }
+
+  // ============================ 中间预览区 ============================
+  ._fc-l,
+  ._fc-m,
+  ._fc-r {
+    border-top-color: var(--border);
+  }
+
+  ._fc-m ._fc-m-con {
+    background: var(--muted);
+  }
+
+  ._fc-m-tools {
+    background: var(--card);
+    border-color: var(--border);
+  }
+
+  ._fc-m-tools .line {
+    background: var(--border);
+  }
+
+  ._fc-m-tools ._fd-m-extend {
+    color: var(--muted-foreground);
+    background-color: var(--muted);
+    border-color: var(--border);
+  }
+
+  ._fc-m-tools ._fd-input-btn {
+    color: var(--foreground);
+  }
+
+  ._fc-m-tools ._fd-input-btn .icon-check {
+    color: var(--success);
+  }
+
+  ._fc-m-tools .fc-icon {
+    color: var(--muted-foreground);
+  }
+
+  ._fc-m-tools .fc-icon.active {
+    color: var(--primary);
+  }
+
+  ._fc-m-tools .fc-icon.disabled {
+    color: #555;
+  }
+
+  ._fc-m-input-handle {
+    background: var(--card);
+    box-shadow: 0 2px 10px 0 rgb(0 0 0 / 30%);
+  }
+
+  ._fc-m-drag,
+  .draggable-drag {
+    background: var(--card);
+  }
+
+  ._fd-drag-box ._fd-drag-box {
+    outline-color: var(--border);
+  }
+
+  ._fc-designer ._fc-m-drag ._fd-draggable-drag {
+    overflow: auto;
+  }
+
+  // ============================ 拖拽区域表单组件占位 ============================
+  ._fc-m .form-create ._fc-l-item,
+  ._fc-m .form-create ._fc-field-node {
+    color: var(--foreground);
+    background: var(--muted);
+    border-color: var(--border);
+  }
+
+  // ============================ 拖拽占位符 ============================
+  ._fc-child-empty,
+  ._fd-aTooltip-drag.drag-holder,
+  ._fd-fcInlineForm-drag.drag-holder,
+  ._fd-fcDialog-drag.drag-holder,
+  ._fd-fcDrawer-drag.drag-holder,
+  ._fd-draggable-drag.drag-holder,
+  ._fd-tableFormColumn-drag.drag-holder,
+  ._fd-aTabPane-drag.drag-holder,
+  ._fd-group-drag.drag-holder,
+  ._fd-subForm-drag.drag-holder,
+  ._fd-stepFormItem-drag.drag-holder,
+  ._fd-aCard-drag.drag-holder,
+  ._fd-collapsePanel-drag.drag-holder {
+    background: var(--muted);
+  }
+
+  ._fc-child-empty::after,
+  ._fd-aTooltip-drag.drag-holder::after,
+  ._fd-fcInlineForm-drag.drag-holder::after,
+  ._fd-fcDialog-drag.drag-holder::after,
+  ._fd-fcDrawer-drag.drag-holder::after,
+  ._fd-draggable-drag.drag-holder::after,
+  ._fd-tableFormColumn-drag.drag-holder::after,
+  ._fd-aTabPane-drag.drag-holder::after,
+  ._fd-group-drag.drag-holder::after,
+  ._fd-subForm-drag.drag-holder::after,
+  ._fd-stepFormItem-drag.drag-holder::after,
+  ._fd-aCard-drag.drag-holder::after,
+  ._fd-collapsePanel-drag.drag-holder::after {
+    color: #888;
+  }
+
+  ._fd-draggable-drag.drag-holder {
+    background-color: var(--card);
+  }
+
+  // ============================ 右侧配置面板 ============================
+  ._fc-designer ._fc-r {
+    background: var(--card);
+  }
+
+  ._fc-r-title {
+    color: var(--foreground);
+  }
+
+  ._fc-r-tools-close {
+    color: var(--muted-foreground);
+  }
+
+  ._fc-r-name-input .ant-input-group-addon {
+    color: #888;
+  }
+
+  ._fc-r-name-input .icon-group:hover {
+    color: var(--primary);
+  }
+
+  ._fc-designer ._fc-r .ant-form-item-label > label {
+    color: var(--muted-foreground);
+  }
+
+  ._fc-designer ._fc-r .ant-btn {
+    color: var(--foreground);
+  }
+
+  ._fc-designer ._fc-r .ant-form label {
+    color: var(--foreground);
+  }
+
+  ._fc-designer ._fc-r .ant-input {
+    color: var(--foreground);
+    background-color: var(--background-deep);
+    border-color: var(--border);
+  }
+
+  ._fc-designer ._fc-r .ant-input-group-addon {
+    color: var(--muted-foreground);
+    background-color: var(--muted);
+    border-color: var(--border);
+  }
+
+  ._fc-designer ._fc-r .ant-select-selector {
+    color: var(--foreground) !important;
+    background-color: var(--background-deep) !important;
+    border-color: var(--border) !important;
+  }
+
+  ._fc-designer ._fc-r .ant-radio-wrapper {
+    color: var(--foreground);
+  }
+
+  ._fc-designer ._fc-r .ant-radio-button-wrapper {
+    color: var(--foreground);
+    background-color: var(--background-deep);
+    border-color: var(--border);
+  }
+
+  ._fc-designer ._fc-r .ant-radio-button-wrapper:first-child {
+    border-left-color: var(--border);
+  }
+
+  ._fc-designer
+    ._fc-r
+    .ant-radio-button-wrapper:not(.ant-radio-button-wrapper-checked) {
+    color: var(--muted-foreground);
+    background-color: var(--background-deep);
+  }
+
+  ._fc-designer ._fc-r .ant-tag {
+    color: var(--foreground);
+    background-color: var(--muted);
+    border-color: var(--border);
+  }
+
+  ._fc-designer ._fc-r .ant-table-wrapper .ant-table-thead > tr > th {
+    color: var(--foreground);
+    background-color: var(--muted);
+    border-color: var(--border);
+  }
+
+  ._fc-designer ._fc-r .ant-table-wrapper .ant-table {
+    color: var(--foreground);
+    background-color: var(--card);
+  }
+
+  ._fc-designer ._fc-r .ant-table-wrapper .ant-table-tbody > tr > td {
+    color: var(--foreground);
+    background-color: var(--card);
+    border-color: var(--border);
+  }
+
+  ._fc-designer ._fc-r .ant-table-wrapper .ant-table-tbody > tr:hover > td {
+    background-color: var(--muted);
+  }
+
+  // ============================ 结构树 ============================
+  ._fc-struct-tree {
+    color: var(--foreground);
+  }
+
+  ._fc-tree-node {
+    color: var(--foreground);
+  }
+
+  ._fc-tree-node.active {
+    color: var(--primary);
+  }
+
+  ._fc-tree-node .icon-more {
+    color: var(--muted-foreground);
+  }
+
+  ._fc-tree-node.active .icon-more {
+    color: var(--primary);
+  }
+
+  // ============================ 配置对话框 ============================
+  ._fd-config-dialog {
+    .CodeMirror-gutters {
+      background-color: #1a1a1a;
+      border-right-color: #333;
+    }
+
+    .CodeMirror-scroll {
+      color: #e0e0e0;
+      background-color: #141414;
+    }
+
+    .ant-radio-button-wrapper,
+    .ant-tag,
+    .ant-input-group-addon,
+    .ant-select-selector,
+    .ant-radio-wrapper,
+    .ant-form-item-label label,
+    .ant-btn,
+    .ant-form label,
+    .ant-form input,
+    .ant-col {
+      color: var(--foreground);
+    }
+
+    .ant-input {
+      color: var(--foreground);
+      background-color: var(--background-deep);
+      border-color: var(--border);
+    }
+
+    .ant-input-group-addon {
+      color: var(--muted-foreground);
+      background-color: var(--muted);
+      border-color: var(--border);
+    }
+
+    .ant-select-selector {
+      color: var(--foreground) !important;
+      background-color: var(--background-deep) !important;
+      border-color: var(--border) !important;
+    }
+
+    .ant-modal-content {
+      background-color: var(--popover);
+    }
+
+    .ant-modal-header {
+      background-color: var(--popover);
+      border-color: var(--border);
+    }
+
+    .ant-modal-title {
+      color: var(--foreground);
+    }
+
+    .ant-modal-close-x {
+      color: var(--muted-foreground);
+    }
+  }
+
+  // ============================ 配置项 ============================
+  ._fc-r-sub > ._fd-config-item > ._fd-ci-head::before {
+    background-color: var(--foreground);
+  }
+
+  ._fd-config-item {
+    color: var(--foreground);
+  }
+
+  // ============================ 菜单拖拽项 ============================
+  ._fd-menu {
+    background: var(--card);
+  }
+
+  ._fd-menu-item {
+    color: var(--foreground);
+    border-color: var(--border);
+  }
+
+  ._fd-menu-item.is-active {
+    color: var(--primary);
+    border-color: var(--primary);
+  }
+
+  ._fc-manage-text {
+    color: var(--primary);
+  }
+
+  // ============================ 预览 ============================
+  ._fd-preview-copy {
+    color: var(--primary);
+    background: rgb(46 115 255 / 10%);
+  }
+
+  ._fd-preview-code {
+    color: #e0e0e0;
+    background: #141414;
+  }
+
+  // ============================ 分隔线 ============================
+  ._fd-row-line {
+    background: var(--border);
+  }
+
+  // ============================ 分组容器 ============================
+  ._fc-designer ._fc-group-container {
+    background: var(--muted);
+    border-color: var(--border);
+  }
+
+  // ============================ 组件内部拖拽按钮颜色 ============================
+  ._fc-designer ._fd-drag-btn i {
+    color: var(--muted-foreground);
+  }
+
+  ._fc-designer ._fd-drag-btn:hover i {
+    color: var(--primary);
+  }
+
+  // ============================ 配置徽章 ============================
+  .fc-configured {
+    color: #888;
+  }
+
+  // ============================ 预览弹窗背景 ============================
+  ._fd-preview-dialog .ant-modal-content {
+    background-color: var(--popover);
+  }
+
+  // ============================ CodeMirror 自动补全 ============================
+  .CodeMirror-hints {
+    background-color: var(--popover) !important;
+    border-color: var(--border) !important;
+  }
+
+  .CodeMirror-hint {
+    color: var(--foreground) !important;
+  }
+
+  .CodeMirror-hint:hover {
+    background-color: var(--muted) !important;
+  }
+
+  // ============================ 辅助：确保 form-create 表单渲染时继承深色模式 ============================
+  ._fc-designer .form-create {
+    background-color: transparent;
+  }
+
+  ._fc-designer .form-create .ant-form {
+    background-color: transparent;
+  }
+
+  ._fc-designer .form-create .ant-form-item {
+    background-color: transparent;
+  }
+
+  ._fc-designer .form-create .ant-input,
+  ._fc-designer .form-create .ant-input-number,
+  ._fc-designer .form-create .ant-textarea {
+    color: var(--foreground) !important;
+    background-color: var(--background-deep) !important;
+    border-color: var(--border) !important;
+  }
+
+  ._fc-designer .form-create .ant-select-selector,
+  ._fc-designer .form-create .ant-picker {
+    color: var(--foreground) !important;
+    background-color: var(--background-deep) !important;
+    border-color: var(--border) !important;
+  }
+
+  ._fc-designer .form-create .ant-checkbox-wrapper,
+  ._fc-designer .form-create .ant-radio-wrapper {
+    color: var(--foreground);
+  }
+
+  ._fc-designer .form-create .ant-switch {
+    background-color: var(--muted);
+  }
+}
