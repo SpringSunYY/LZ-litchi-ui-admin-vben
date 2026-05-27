@@ -25,6 +25,8 @@ const SvgWxNativeIcon = createIconifyIcon('svg:wx-native');
 const SvgWxBarIcon = createIconifyIcon('svg:wx-bar');
 const SvgWalletIcon = createIconifyIcon('svg:wallet');
 const SvgMockIcon = createIconifyIcon('svg:mock');
+/** AI */
+const SvgGptIcon = createIconifyIcon('svg:gpt');
 
 export {
   SvgAlipayAppIcon,
@@ -48,4 +50,5 @@ export {
   SvgWxLiteIcon,
   SvgWxNativeIcon,
   SvgWxPubIcon,
+  SvgGptIcon,
 };

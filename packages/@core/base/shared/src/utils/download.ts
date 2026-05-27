@@ -174,3 +174,42 @@ export function triggerDownload(
 function resolveFileName(url: string, fileName?: string): string {
   return fileName || url.slice(url.lastIndexOf('/') + 1) || DEFAULT_FILENAME;
 }
+
+/**
+ * 下载图片（允许跨域）
+ * @param url - 图片 URL
+ * @param canvasWidth - 画布宽度
+ * @param canvasHeight - 画布高度
+ * @param drawWithImageSize - 将图片绘制在画布上时带上图片的宽高值, 默认是要带上的
+ * @returns
+ */
+export function downloadImageByCanvas({
+  url,
+  canvasWidth,
+  canvasHeight,
+  drawWithImageSize = true,
+}: {
+  canvasHeight?: number;
+  canvasWidth?: number;
+  drawWithImageSize?: boolean;
+  url: string;
+}) {
+  const image = new Image();
+  // image.setAttribute('crossOrigin', 'anonymous')
+  image.src = url;
+  image.addEventListener('load', () => {
+    const canvas = document.createElement('canvas');
+    canvas.width = canvasWidth || image.width;
+    canvas.height = canvasHeight || image.height;
+    const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
+    ctx?.clearRect(0, 0, canvas.width, canvas.height);
+    if (drawWithImageSize) {
+      ctx.drawImage(image, 0, 0, image.width, image.height);
+    } else {
+      ctx.drawImage(image, 0, 0);
+    }
+    const url = canvas.toDataURL('image/png');
+    // oxlint-disable-next-line typescript/no-floating-promises
+    downloadFileFromImageUrl({ source: url, fileName: 'image.png' });
+  });
+}
