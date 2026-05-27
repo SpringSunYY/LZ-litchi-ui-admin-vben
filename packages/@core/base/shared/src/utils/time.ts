@@ -33,8 +33,8 @@ export function formatTime(time: Date | number | string, fmt: string) {
           match[0].length === 1
             ? (o[k as keyof typeof o] as any)
             : `00${o[k as keyof typeof o]}`.slice(
-              `${o[k as keyof typeof o]}`.length,
-            ),
+                `${o[k as keyof typeof o]}`.length,
+              ),
         );
       }
     }

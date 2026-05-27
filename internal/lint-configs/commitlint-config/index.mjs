@@ -6,6 +6,7 @@ const { packages } = getPackagesSync();
 
 const allowedScopes = [
   ...packages.map((pkg) => pkg.packageJson.name),
+  'ai',
   'system',
   'infra',
   'bpm',
