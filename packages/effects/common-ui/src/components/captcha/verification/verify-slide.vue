@@ -285,7 +285,9 @@ defineExpose({
   <div style="position: relative">
     <div
       v-if="type === '2'"
-      :style="{ height: `${Number.parseInt(setSize.imgHeight) + space}px` }"
+      :style="{
+        height: `${Number.parseInt(setSize.imgHeight) + (space ?? 0)}px`,
+      }"
       class="verify-img-out"
     >
       <div
@@ -315,16 +317,17 @@ defineExpose({
     <div
       :style="{
         width: setSize.imgWidth,
-        height: barSize.height,
-        'line-height': barSize.height,
+        height: barSize?.height || 0,
+        'line-height': barSize?.height || 0,
       }"
       class="verify-bar-area"
     >
       <span class="verify-msg" v-text="text"></span>
       <div
         :style="{
-          width: leftBarWidth !== undefined ? leftBarWidth : barSize.height,
-          height: barSize.height,
+          width:
+            leftBarWidth !== undefined ? leftBarWidth : barSize?.height || 0,
+          height: barSize?.height || 0,
           'border-color': leftBarBorderColor,
           transition: transitionWidth,
         }"
@@ -333,8 +336,8 @@ defineExpose({
         <span class="verify-msg" v-text="finishText"></span>
         <div
           :style="{
-            width: barSize.height,
-            height: barSize.height,
+            width: barSize?.height || 0,
+            height: barSize?.height || 0,
             'background-color': moveBlockBackgroundColor,
             left: moveBlockLeft,
             transition: transitionLeft,
@@ -353,7 +356,7 @@ defineExpose({
             :style="{
               width: `${Math.floor((Number.parseInt(setSize.imgWidth) * 47) / 310)}px`,
               height: setSize.imgHeight,
-              top: `-${Number.parseInt(setSize.imgHeight) + space}px`,
+              top: `-${Number.parseInt(setSize.imgHeight) + (space || 0)}px`,
               'background-size': `${setSize.imgWidth} ${setSize.imgHeight}`,
             }"
             class="verify-sub-block"

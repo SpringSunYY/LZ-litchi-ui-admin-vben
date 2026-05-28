@@ -14,7 +14,7 @@
   "usernameTip": "请输入用户名",
   "passwordTip": "请输入密码",
   "nicknameTip": "请输入昵称",
-  "tenantCodeTip": "请输入租户编码",
+  "tenantCodeTip": "请输入租户编码，4~32位编码",
   "tenantNameTip": "请输入租户名称",
   "tenantContactMobile": "租户联系手机号码",
   "tenantContactMobileTip": "请输入租户联系手机号码",

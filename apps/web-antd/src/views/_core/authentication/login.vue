@@ -81,6 +81,7 @@ async function fetchTenantByCode(code: string) {
   }
   // 如果是4-32位长度
   if (code.length < 4 || code.length > 32) {
+    message.warn($t('authentication.tenantErrorTip'));
     return false;
   }
   // 根据租户编码查询租户信息
@@ -136,6 +137,11 @@ async function handleThirdLogin(type: number) {
     return;
   }
   try {
+    const isValid = await fetchTenantByCode(tenantCode.value);
+    if (!isValid) {
+      message.warn($t('authentication.tenantCodeTip'));
+      return;
+    }
     // 计算 redirectUri
     // tricky: type、redirect 需要先 encode 一次，否则钉钉回调会丢失。配合 social-login.vue#getUrlValue() 使用
     const redirectUri = `${
@@ -176,7 +182,8 @@ const formSchema = computed((): VbenFormSchema[] => {
       label: $t('authentication.tenant'),
       rules: z
         .string()
-        .min(1, { message: $t('authentication.tenantCodeTip') })
+        .min(4, { message: $t('authentication.tenantCodeTip') })
+        .max(32, { message: $t('authentication.tenantCodeTip') })
         .default(
           tenantCode.value !== '' ||
             import.meta.env.VITE_APP_DEFAULT_TENANT_CODE,

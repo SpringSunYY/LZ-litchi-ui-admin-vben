@@ -107,7 +107,7 @@ defineExpose({
   <div v-show="showBox">
     <div
       :class="mode === 'pop' ? 'verifybox' : ''"
-      :style="{ 'max-width': `${parseInt(imgSize.width) + 20}px` }"
+      :style="{ 'max-width': `${parseInt(imgSize?.width ?? '0') + 20}px` }"
     >
       <div v-if="mode === 'pop'" class="verifybox-top">
         {{ $t('ui.captcha.title') }}

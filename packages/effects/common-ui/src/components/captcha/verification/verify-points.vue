@@ -258,7 +258,7 @@ defineExpose({
         width: setSize.imgWidth,
         color: barAreaColor,
         'border-color': barAreaBorderColor,
-        'line-height': barSize.height,
+        'line-height': barSize?.height || 0,
       }"
       class="verify-bar-area"
     >

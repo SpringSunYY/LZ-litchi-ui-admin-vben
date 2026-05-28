@@ -148,6 +148,7 @@ const formSchema = computed((): VbenFormSchema[] => {
           loading.value = true;
           try {
             const formApi = loginRef.value?.getFormApi();
+            console.log('formApi', formApi);
             if (!formApi) {
               throw new Error('表单未准备好');
             }
@@ -157,9 +158,13 @@ const formSchema = computed((): VbenFormSchema[] => {
             if (!isMobileValid) {
               throw new Error('请输入有效的手机号码');
             }
-
+            const { mobile, tenantCode } = await formApi.getValues();
+            const isValid = await fetchTenantByCode(tenantCode);
+            if (!isValid) {
+              message.warn($t('authentication.tenantErrorTip'));
+              return;
+            }
             // 发送验证码
-            const { mobile } = await formApi.getValues();
             const scene = 21; // 场景：短信验证码登录
             await sendSmsCode({ mobile, scene });
             message.success('验证码发送成功');

@@ -15,7 +15,7 @@
   "passwordErrorTip": "Password is incorrect",
   "passwordTip": "Please enter password",
   "nicknameTip": "Please enter nickname",
-  "tenantCodeTip": "Please enter tenant code",
+  "tenantCodeTip": "Please enter tenant code, 4~32 length code",
   "tenantNameTip": "Please enter tenant name",
   "tenantContactMobile": "Tenant contact mobile",
   "tenantContactMobileTip": "Please enter tenant contact mobile",

@@ -78,7 +78,11 @@ async function handleSubmit() {
   }
 }
 
-function handleGo(path: string) {
+function handleGo(path?: string) {
+  // TODO 租户校验
+  if (!path) {
+    return;
+  }
   router.push(path);
 }
 
