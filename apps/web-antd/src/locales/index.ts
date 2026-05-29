@@ -125,26 +125,31 @@ async function fetchRemoteMessages(
           messagesByLang[langCode][item.messageKey] = item.message;
         }
       }
-      // 清除所有旧的缓存数据
-      clearOldI18nCache();
 
-      // 每种语言单独存储缓存
-      for (const [langCode, messages] of Object.entries(messagesByLang)) {
-        localStorage.setItem(
-          getCacheKey(langCode as SupportedLanguagesType),
-          JSON.stringify(messages),
-        );
-      }
+      // 只有 API 返回了数据才处理缓存和 fallback
+      const hasData = Object.keys(messagesByLang).length > 0;
+      if (hasData) {
+        // 清除所有旧的缓存数据
+        clearOldI18nCache();
 
-      // 返回当前语言对应的消息，并合并 fallback 语言消息到 i18n
-      if (
-        lang !== currentFallbackLocale &&
-        messagesByLang[currentFallbackLocale]
-      ) {
-        i18n.global.mergeLocaleMessage(
-          currentFallbackLocale,
-          messagesByLang[currentFallbackLocale]!,
-        );
+        // 每种语言单独存储缓存
+        for (const [langCode, messages] of Object.entries(messagesByLang)) {
+          localStorage.setItem(
+            getCacheKey(langCode as SupportedLanguagesType),
+            JSON.stringify(messages),
+          );
+        }
+
+        // 合并 fallback 语言消息到 i18n
+        if (
+          lang !== currentFallbackLocale &&
+          messagesByLang[currentFallbackLocale]
+        ) {
+          i18n.global.mergeLocaleMessage(
+            currentFallbackLocale,
+            messagesByLang[currentFallbackLocale]!,
+          );
+        }
       }
       return messagesByLang[lang] ?? null;
     }
@@ -308,8 +313,12 @@ async function setupI18n(
   });
 
   // 默认语言加载完成后，确保 fallback 语言也被加载并缓存
+  // fallback 需要完整加载（本地 + 远程），但不切换当前语言
   if (currentFallbackLocale && currentFallbackLocale !== defaultLocale) {
+    const savedLocale = i18n.global.locale.value;
     await loadLocaleMessages(currentFallbackLocale);
+    // loadLocaleMessages 会切换语言，加载完后切回当前语言
+    i18n.global.locale.value = savedLocale;
   }
 }
 
