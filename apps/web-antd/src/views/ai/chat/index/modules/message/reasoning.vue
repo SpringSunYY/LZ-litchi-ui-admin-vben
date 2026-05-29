@@ -4,6 +4,7 @@ import { computed, ref } from 'vue';
 import { IconifyIcon } from '@vben/icons';
 
 import { MarkdownView } from '#/components/markdown-view';
+import { $t } from '#/locales';
 
 const props = defineProps<{
   content?: string;
@@ -23,9 +24,9 @@ const titleText = computed(() => {
     props.reasoningContent && props.reasoningContent.trim() !== '';
   const hasContent = props.content && props.content.trim() !== '';
   if (hasReasoningContent && !hasContent) {
-    return '深度思考中';
+    return $t('ai.chat.message.deepThinking');
   }
-  return '已深度思考';
+  return $t('ai.chat.message.deepThoughtDone');
 });
 
 /** 切换展开/收起 */

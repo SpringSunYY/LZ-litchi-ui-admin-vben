@@ -29,6 +29,10 @@
     "./markmap": {
       "types": "./src/markmap/index.ts",
       "default": "./src/markmap/index.ts"
+    },
+    "./tinyflow": {
+      "types": "./src/tinyflow/index.ts",
+      "default": "./src/tinyflow/index.ts"
     }
   },
   "dependencies": {
@@ -50,7 +54,8 @@
     "markmap-view": "catalog:",
     "vue": "catalog:",
     "vxe-pc-ui": "catalog:",
-    "vxe-table": "catalog:"
+    "vxe-table": "catalog:",
+    "@tinyflow-ai/vue": "catalog:"
   },
   "devDependencies": {
     "@types/markdown-it": "catalog:"

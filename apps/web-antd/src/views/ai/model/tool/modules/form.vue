@@ -17,8 +17,8 @@ const emit = defineEmits(['success']);
 const formData = ref<AiModelToolApi.Tool>();
 const getTitle = computed(() => {
   return formData.value?.id
-    ? $t('ui.actionTitle.edit', ['工具'])
-    : $t('ui.actionTitle.create', ['工具']);
+    ? $t('ui.actionTitle.edit', [$t('ai.model.tool.tool')])
+    : $t('ui.actionTitle.create', [$t('ai.model.tool.tool')]);
 });
 
 const [Form, formApi] = useVbenForm({

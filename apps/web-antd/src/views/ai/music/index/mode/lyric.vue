@@ -3,11 +3,21 @@ import { reactive, ref } from 'vue';
 
 import { Button, Input, Select, Space, Tag, Textarea } from 'ant-design-vue';
 
+import { $t } from '#/locales';
+
 import Title from '../title/index.vue';
 
 defineOptions({ name: 'AiMusicModeLyric' });
 
-const tags = ['rock', 'punk', 'jazz', 'soul', 'country', 'kidsmusic', 'pop'];
+const tags = [
+  { key: 'rock', label: $t('ai.music.message.tagRock') },
+  { key: 'punk', label: $t('ai.music.message.tagPunk') },
+  { key: 'jazz', label: $t('ai.music.message.tagJazz') },
+  { key: 'soul', label: $t('ai.music.message.tagSoul') },
+  { key: 'country', label: $t('ai.music.message.tagCountry') },
+  { key: 'kidsmusic', label: $t('ai.music.message.tagKidsmusic') },
+  { key: 'pop', label: $t('ai.music.message.tagPop') },
+];
 
 const showCustom = ref(false);
 
@@ -25,20 +35,23 @@ defineExpose({
 
 <template>
   <div class="">
-    <Title title="歌词" desc="自己编写歌词或使用Ai生成歌词，两节/8行效果最佳">
+    <Title
+      :title="$t('ai.music.message.lyric')"
+      :desc="$t('ai.music.message.lyricHint')"
+    >
       <Textarea
         v-model:value="formData.lyric"
         :auto-size="{ minRows: 6, maxRows: 6 }"
         :maxlength="1200"
         :show-count="true"
-        placeholder="请输入您自己的歌词"
+        :placeholder="$t('ai.music.message.lyricPlaceholder')"
       />
     </Title>
 
-    <Title title="音乐风格">
+    <Title :title="$t('ai.music.message.musicStyle')">
       <Space class="flex-wrap">
-        <Tag v-for="tag in tags" :key="tag" class="mb-2">
-          {{ tag }}
+        <Tag v-for="tag in tags" :key="tag.key" class="mb-2">
+          {{ tag.label }}
         </Tag>
       </Space>
 
@@ -49,13 +62,13 @@ defineExpose({
         class="mb-2"
         @click="showCustom = !showCustom"
       >
-        自定义风格
+        {{ $t('ai.music.message.customStyle') }}
       </Button>
     </Title>
 
     <Title
       v-show="showCustom"
-      desc="描述您想要的音乐风格，Suno无法识别艺术家的名字，但可以理解流派和氛围"
+      :desc="$t('ai.music.message.styleHint')"
       class="mt-3"
     >
       <Textarea
@@ -63,39 +76,29 @@ defineExpose({
         :auto-size="{ minRows: 4, maxRows: 4 }"
         :maxlength="256"
         show-count
-        placeholder="输入音乐风格(英文)"
+        :placeholder="$t('ai.music.message.stylePlaceholder')"
       />
     </Title>
 
-    <Title title="音乐/歌曲名称">
+    <Title :title="$t('ai.music.message.musicName')">
       <Input
         class="w-full"
         v-model="formData.name"
-        placeholder="请输入音乐/歌曲名称"
+        :placeholder="$t('ai.music.message.musicNamePlaceholder')"
       />
     </Title>
 
-    <Title title="版本">
+    <Title :title="$t('ai.music.message.version')">
       <Select
         v-model:value="formData.version"
         class="w-full"
-        placeholder="请选择"
+        :placeholder="$t('ui.placeholder.select')"
       >
-        <Select.Option
-          v-for="item in [
-            {
-              value: '3',
-              label: 'V3',
-            },
-            {
-              value: '2',
-              label: 'V2',
-            },
-          ]"
-          :key="item.value"
-          :value="item.value"
-        >
-          {{ item.label }}
+        <Select.Option value="3">
+          {{ $t('ai.music.message.v3') }}
+        </Select.Option>
+        <Select.Option value="2">
+          {{ $t('ai.music.message.v2') }}
         </Select.Option>
       </Select>
     </Title>

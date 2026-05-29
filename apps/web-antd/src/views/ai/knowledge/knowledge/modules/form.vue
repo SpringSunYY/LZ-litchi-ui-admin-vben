@@ -21,8 +21,8 @@ const emit = defineEmits(['success']);
 const formData = ref<AiKnowledgeKnowledgeApi.Knowledge>();
 const getTitle = computed(() => {
   return formData.value?.id
-    ? $t('ui.actionTitle.edit', ['AI 知识库'])
-    : $t('ui.actionTitle.create', ['AI 知识库']);
+    ? $t('ui.actionTitle.edit', [$t('ai.knowledge.knowledge')])
+    : $t('ui.actionTitle.create', [$t('ai.knowledge.knowledge')]);
 });
 
 const [Form, formApi] = useVbenForm({

@@ -3,6 +3,7 @@ import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 import type { SystemUserApi } from '#/api/system/user';
 
 import { getSimpleUserList } from '#/api/system/user';
+import { $t } from '#/locales';
 import { getRangePickerDefaultProps } from '#/utils';
 
 /** 关联数据 */
@@ -14,28 +15,30 @@ export function useGridFormSchema(): VbenFormSchema[] {
   return [
     {
       fieldName: 'userId',
-      label: '用户编号',
+      label: $t('ai.mindmap.field.user'),
       component: 'ApiSelect',
       componentProps: {
         api: getSimpleUserList,
         labelField: 'nickname',
         valueField: 'id',
-        placeholder: '请选择用户',
+        placeholder: $t('ui.placeholder.select', [$t('ai.mindmap.field.user')]),
         allowClear: true,
       },
     },
     {
       fieldName: 'prompt',
-      label: '提示词',
+      label: $t('ai.mindmap.field.prompt'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入提示词',
+        placeholder: $t('ui.placeholder.input', [
+          $t('ai.mindmap.field.prompt'),
+        ]),
         clearable: true,
       },
     },
     {
       fieldName: 'createTime',
-      label: '创建时间',
+      label: $t('ai.mindmap.field.createTime'),
       component: 'RangePicker',
       componentProps: {
         ...getRangePickerDefaultProps(),
@@ -50,45 +53,45 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
   return [
     {
       field: 'id',
-      title: '编号',
+      title: $t('ai.mindmap.field.id'),
       minWidth: 180,
       fixed: 'left',
     },
     {
       field: 'userId',
-      title: '用户',
+      title: $t('ai.mindmap.field.user'),
       minWidth: 180,
       formatter: ({ cellValue }) =>
         userList.find((user) => user.id === cellValue)?.nickname || '-',
     },
     {
       field: 'prompt',
-      title: '提示词',
+      title: $t('ai.mindmap.field.prompt'),
       minWidth: 180,
     },
     {
       field: 'generatedContent',
-      title: '思维导图',
+      title: $t('ai.mindmap.field.generatedContent'),
       minWidth: 300,
     },
     {
       field: 'model',
-      title: '模型',
+      title: $t('ai.mindmap.field.model'),
       minWidth: 180,
     },
     {
       field: 'createTime',
-      title: '创建时间',
+      title: $t('ai.mindmap.field.createTime'),
       minWidth: 180,
       formatter: 'formatDateTime',
     },
     {
       field: 'errorMessage',
-      title: '错误信息',
+      title: $t('ai.mindmap.field.errorMessage'),
       minWidth: 180,
     },
     {
-      title: '操作',
+      title: $t('common.operation'),
       width: 130,
       fixed: 'right',
       slots: { default: 'actions' },

@@ -5,14 +5,33 @@ import { ref } from 'vue';
 
 import { Form, Input, Select } from 'ant-design-vue';
 
+import { $t } from '#/locales';
 import { DICT_TYPE, getDictOptions } from '#/utils';
 
 const modelData = defineModel<any>(); // 创建本地数据副本
 const formRef = ref(); // 表单引用
 const rules: Record<string, Rule[]> = {
-  code: [{ required: true, message: '流程标识不能为空', trigger: 'blur' }],
-  name: [{ required: true, message: '流程名称不能为空', trigger: 'blur' }],
-  status: [{ required: true, message: '状态不能为空', trigger: 'change' }],
+  code: [
+    {
+      required: true,
+      message: $t('ai.workflow.message.codeRequired'),
+      trigger: 'blur',
+    },
+  ],
+  name: [
+    {
+      required: true,
+      message: $t('ai.workflow.message.nameRequired'),
+      trigger: 'blur',
+    },
+  ],
+  status: [
+    {
+      required: true,
+      message: $t('ai.workflow.message.statusRequired'),
+      trigger: 'change',
+    },
+  ],
 };
 
 /** 表单校验 */
@@ -32,27 +51,37 @@ defineExpose({ validate });
     :wrapper-col="{ span: 20 }"
     class="mt-5"
   >
-    <Form.Item label="流程标识" name="code" class="mb-5">
+    <Form.Item :label="$t('ai.workflow.field.code')" name="code" class="mb-5">
       <Input
         class="w-full"
         v-model:value="modelData.code"
         allow-clear
-        placeholder="请输入流程标识"
+        :placeholder="
+          $t('ui.placeholder.input', [$t('ai.workflow.field.code')])
+        "
       />
     </Form.Item>
-    <Form.Item label="流程名称" name="name" class="mb-5">
+    <Form.Item :label="$t('ai.workflow.field.name')" name="name" class="mb-5">
       <Input
         v-model:value="modelData.name"
         allow-clear
-        placeholder="请输入流程名称"
+        :placeholder="
+          $t('ui.placeholder.input', [$t('ai.workflow.field.name')])
+        "
       />
     </Form.Item>
-    <Form.Item label="状态" name="status" class="mb-5">
+    <Form.Item
+      :label="$t('ai.workflow.field.status')"
+      name="status"
+      class="mb-5"
+    >
       <Select
         class="w-full"
         v-model:value="modelData.status"
         allow-clear
-        placeholder="请选择状态"
+        :placeholder="
+          $t('ui.placeholder.select', [$t('ai.workflow.field.status')])
+        "
       >
         <Select.Option
           v-for="dict in getDictOptions(DICT_TYPE.COMMON_STATUS, 'number')"
@@ -63,7 +92,11 @@ defineExpose({ validate });
         </Select.Option>
       </Select>
     </Form.Item>
-    <Form.Item label="流程描述" name="description" class="mb-5">
+    <Form.Item
+      :label="$t('ai.workflow.field.description')"
+      name="description"
+      class="mb-5"
+    >
       <Input.TextArea v-model:value="modelData.description" allow-clear />
     </Form.Item>
   </Form>

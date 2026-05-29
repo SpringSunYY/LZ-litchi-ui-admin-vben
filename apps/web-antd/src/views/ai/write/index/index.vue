@@ -8,6 +8,7 @@ import { Page } from '@vben/common-ui';
 import { message } from 'ant-design-vue';
 
 import { writeStream } from '#/api/ai/write';
+import { $t } from '#/locales';
 import { WriteExample } from '#/utils';
 
 import Left from './modules/left.vue';
@@ -29,7 +30,7 @@ function handleSubmit(data: Partial<AiWriteApi.Write>) {
     onMessage: async (res: any) => {
       const { code, data, msg } = JSON.parse(res.data);
       if (code !== 0) {
-        message.error(`写作异常! ${msg}`);
+        message.error($t('ai.write.message.errorWriting', [msg]));
         handleStopStream();
         return;
       }
@@ -41,7 +42,7 @@ function handleSubmit(data: Partial<AiWriteApi.Write>) {
     ctrl: abortController.value,
     onClose: handleStopStream,
     onError: (error: any) => {
-      console.error('写作异常', error);
+      console.error($t('ai.write.message.errorWriting', ['']), error);
       handleStopStream();
       // 需要抛出异常，禁止重试
       throw error;

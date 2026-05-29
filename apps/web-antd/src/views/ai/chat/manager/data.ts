@@ -3,6 +3,7 @@ import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 import type { SystemUserApi } from '#/api/system/user';
 
 import { getSimpleUserList } from '#/api/system/user';
+import { $t } from '#/locales';
 import { DICT_TYPE, getRangePickerDefaultProps } from '#/utils';
 
 /** 关联数据 */
@@ -14,25 +15,29 @@ export function useGridFormSchemaConversation(): VbenFormSchema[] {
   return [
     {
       fieldName: 'userId',
-      label: '用户编号',
+      label: $t('ai.chat.conversation.field.userId'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入用户编号',
+        placeholder: $t('ui.placeholder.input', [
+          $t('ai.chat.conversation.field.userId'),
+        ]),
         allowClear: true,
       },
     },
     {
       fieldName: 'title',
-      label: '聊天标题',
+      label: $t('ai.chat.conversation.field.title'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入聊天标题',
+        placeholder: $t('ui.placeholder.input', [
+          $t('ai.chat.conversation.field.title'),
+        ]),
         allowClear: true,
       },
     },
     {
       fieldName: 'createTime',
-      label: '创建时间',
+      label: $t('ai.chat.conversation.field.createTime'),
       component: 'RangePicker',
       componentProps: {
         ...getRangePickerDefaultProps(),
@@ -47,65 +52,65 @@ export function useGridColumnsConversation(): VxeTableGridOptions['columns'] {
   return [
     {
       field: 'id',
-      title: '对话编号',
+      title: $t('ai.chat.conversation.field.id'),
       fixed: 'left',
       minWidth: 180,
     },
     {
       field: 'title',
-      title: '对话标题',
+      title: $t('ai.chat.conversation.field.title'),
       minWidth: 180,
       fixed: 'left',
     },
     {
-      title: '用户',
+      title: $t('ai.chat.conversation.field.user'),
       minWidth: 180,
       field: 'userId',
       formatter: ({ cellValue }) => {
         if (cellValue === 0) {
-          return '系统';
+          return $t('ai.chat.conversation.field.system');
         }
         return userList.find((user) => user.id === cellValue)?.nickname || '-';
       },
     },
     {
       field: 'roleName',
-      title: '角色',
+      title: $t('ai.chat.conversation.field.roleName'),
       minWidth: 180,
     },
     {
       field: 'model',
-      title: '模型标识',
+      title: $t('ai.chat.conversation.field.model'),
       minWidth: 180,
     },
     {
       field: 'messageCount',
-      title: '消息数',
+      title: $t('ai.chat.conversation.field.messageCount'),
       minWidth: 180,
     },
     {
       field: 'createTime',
-      title: '创建时间',
+      title: $t('ai.chat.conversation.field.createTime'),
       minWidth: 180,
       formatter: 'formatDateTime',
     },
     {
       field: 'temperature',
-      title: '温度参数',
+      title: $t('ai.chat.conversation.field.temperature'),
       minWidth: 80,
     },
     {
-      title: '回复数 Token 数',
+      title: $t('ai.chat.conversation.field.maxTokens'),
       field: 'maxTokens',
       minWidth: 120,
     },
     {
-      title: '上下文数量',
+      title: $t('ai.chat.conversation.field.maxContexts'),
       field: 'maxContexts',
       minWidth: 120,
     },
     {
-      title: '操作',
+      title: $t('common.operation'),
       width: 130,
       fixed: 'right',
       slots: { default: 'actions' },
@@ -118,28 +123,32 @@ export function useGridFormSchemaMessage(): VbenFormSchema[] {
   return [
     {
       fieldName: 'conversationId',
-      label: '对话编号',
+      label: $t('ai.chat.message.field.conversationId'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入对话编号',
+        placeholder: $t('ui.placeholder.input', [
+          $t('ai.chat.message.field.conversationId'),
+        ]),
         allowClear: true,
       },
     },
     {
       fieldName: 'userId',
-      label: '用户编号',
+      label: $t('ai.chat.message.field.userId'),
       component: 'ApiSelect',
       componentProps: {
         api: getSimpleUserList,
         labelField: 'nickname',
         valueField: 'id',
-        placeholder: '请选择用户编号',
+        placeholder: $t('ui.placeholder.select', [
+          $t('ai.chat.message.field.userId'),
+        ]),
         allowClear: true,
       },
     },
     {
       fieldName: 'createTime',
-      label: '创建时间',
+      label: $t('ai.chat.message.field.createTime'),
       component: 'RangePicker',
       componentProps: {
         ...getRangePickerDefaultProps(),
@@ -154,18 +163,18 @@ export function useGridColumnsMessage(): VxeTableGridOptions['columns'] {
   return [
     {
       field: 'id',
-      title: '消息编号',
+      title: $t('ai.chat.message.field.id'),
       fixed: 'left',
       minWidth: 180,
     },
     {
       field: 'conversationId',
-      title: '对话编号',
+      title: $t('ai.chat.message.field.conversationId'),
       minWidth: 180,
       fixed: 'left',
     },
     {
-      title: '用户',
+      title: $t('ai.chat.message.field.user'),
       minWidth: 180,
       field: 'userId',
       formatter: ({ cellValue }) =>
@@ -173,37 +182,37 @@ export function useGridColumnsMessage(): VxeTableGridOptions['columns'] {
     },
     {
       field: 'roleName',
-      title: '角色',
+      title: $t('ai.chat.message.field.roleName'),
       minWidth: 180,
     },
     {
       field: 'type',
-      title: '消息类型',
+      title: $t('ai.chat.message.field.type'),
       minWidth: 100,
     },
     {
       field: 'model',
-      title: '模型标识',
+      title: $t('ai.chat.message.field.model'),
       minWidth: 180,
     },
     {
       field: 'content',
-      title: '消息内容',
+      title: $t('ai.chat.message.field.content'),
       minWidth: 300,
     },
     {
       field: 'createTime',
-      title: '创建时间',
+      title: $t('ai.chat.message.field.createTime'),
       minWidth: 180,
       formatter: 'formatDateTime',
     },
     {
       field: 'replyId',
-      title: '回复消息编号',
+      title: $t('ai.chat.message.field.replyId'),
       minWidth: 180,
     },
     {
-      title: '携带上下文',
+      title: $t('ai.chat.message.field.useContext'),
       field: 'useContext',
       cellRender: {
         name: 'CellDict',
@@ -212,7 +221,7 @@ export function useGridColumnsMessage(): VxeTableGridOptions['columns'] {
       minWidth: 100,
     },
     {
-      title: '操作',
+      title: $t('common.operation'),
       width: 130,
       fixed: 'right',
       slots: { default: 'actions' },

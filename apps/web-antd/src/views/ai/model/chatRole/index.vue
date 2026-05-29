@@ -85,12 +85,14 @@ const [Grid, gridApi] = useVbenVxeGrid({
       <DocAlert title="AI 对话聊天" url="https://doc.iocoder.cn/ai/chat/" />
     </template>
     <FormModal @success="handleRefresh" />
-    <Grid table-title="聊天角色列表">
+    <Grid :table-title="$t('ai.model.chatRole.list')">
       <template #toolbar-tools>
         <TableAction
           :actions="[
             {
-              label: $t('ui.actionTitle.create', ['聊天角色']),
+              label: $t('ui.actionTitle.create', [
+                $t('ai.model.chatRole.chatRole'),
+              ]),
               type: 'primary',
               icon: ACTION_ICON.ADD,
               auth: ['ai:chat-role:create'],

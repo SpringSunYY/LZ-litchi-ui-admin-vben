@@ -8,6 +8,7 @@ import { Page } from '@vben/common-ui';
 import { message } from 'ant-design-vue';
 
 import { generateMindMap } from '#/api/ai/mindmap';
+import { $t } from '#/locales';
 import { MindMapContentExample } from '#/utils';
 
 import Left from './modules/left.vue';
@@ -41,7 +42,7 @@ function handleSubmit(data: AiMindmapApi.AiMindMapGenerateReqVO) {
     onMessage: async (res: any) => {
       const { code, data, msg } = JSON.parse(res.data);
       if (code !== 0) {
-        message.error(`生成思维导图异常! ${msg}`);
+        message.error($t('ai.mindmap.message.generatingFailed', [msg]));
         handleStopStream();
         return;
       }
@@ -55,7 +56,7 @@ function handleSubmit(data: AiMindmapApi.AiMindMapGenerateReqVO) {
       handleStopStream();
     },
     onError(err) {
-      console.error('生成思维导图失败', err);
+      console.error($t('ai.mindmap.message.generatingFailed', ['']), err);
       handleStopStream();
       // 需要抛出异常，禁止重试
       throw err;

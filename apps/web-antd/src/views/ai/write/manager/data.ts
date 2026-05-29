@@ -3,6 +3,7 @@ import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 import type { SystemUserApi } from '#/api/system/user';
 
 import { getSimpleUserList } from '#/api/system/user';
+import { $t } from '#/locales';
 import { DICT_TYPE, getDictOptions, getRangePickerDefaultProps } from '#/utils';
 
 /** 关联数据 */
@@ -14,39 +15,41 @@ export function useGridFormSchema(): VbenFormSchema[] {
   return [
     {
       fieldName: 'userId',
-      label: '用户编号',
+      label: $t('ai.write.field.user'),
       component: 'ApiSelect',
       componentProps: {
         api: getSimpleUserList,
         labelField: 'nickname',
         valueField: 'id',
-        placeholder: '请选择用户',
+        placeholder: $t('ui.placeholder.select', [$t('ai.write.field.user')]),
         allowClear: true,
       },
     },
     {
       fieldName: 'type',
-      label: '写作类型',
+      label: $t('ai.write.field.type'),
       component: 'Select',
       componentProps: {
         allowClear: true,
-        placeholder: '请选择写作类型',
+        placeholder: $t('ui.placeholder.select', [$t('ai.write.field.type')]),
         options: getDictOptions(DICT_TYPE.AI_WRITE_TYPE, 'number'),
       },
     },
     {
       fieldName: 'platform',
-      label: '平台',
+      label: $t('ai.write.field.platform'),
       component: 'Select',
       componentProps: {
         allowClear: true,
-        placeholder: '请选择平台',
+        placeholder: $t('ui.placeholder.select', [
+          $t('ai.write.field.platform'),
+        ]),
         options: getDictOptions(DICT_TYPE.AI_PLATFORM, 'string'),
       },
     },
     {
       fieldName: 'createTime',
-      label: '创建时间',
+      label: $t('ai.write.field.createTime'),
       component: 'RangePicker',
       componentProps: {
         ...getRangePickerDefaultProps(),
@@ -61,13 +64,13 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
   return [
     {
       field: 'id',
-      title: '编号',
+      title: $t('ai.write.field.id'),
       minWidth: 180,
       fixed: 'left',
     },
     {
       minWidth: 180,
-      title: '用户',
+      title: $t('ai.write.field.user'),
       field: 'userId',
       formatter: ({ cellValue }) => {
         return userList.find((user) => user.id === cellValue)?.nickname || '-';
@@ -75,7 +78,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
     },
     {
       field: 'type',
-      title: '写作类型',
+      title: $t('ai.write.field.type'),
       minWidth: 120,
       cellRender: {
         name: 'CellDict',
@@ -84,7 +87,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
     },
     {
       field: 'platform',
-      title: '平台',
+      title: $t('ai.write.field.platform'),
       minWidth: 120,
       cellRender: {
         name: 'CellDict',
@@ -93,27 +96,27 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
     },
     {
       field: 'model',
-      title: '模型',
+      title: $t('ai.write.field.model'),
       minWidth: 180,
     },
     {
       field: 'prompt',
-      title: '生成内容提示',
+      title: $t('ai.write.field.prompt'),
       minWidth: 180,
     },
     {
       field: 'generatedContent',
-      title: '生成的内容',
+      title: $t('ai.write.field.generatedContent'),
       minWidth: 180,
     },
     {
       field: 'originalContent',
-      title: '原文',
+      title: $t('ai.write.field.originalContent'),
       minWidth: 180,
     },
     {
       field: 'length',
-      title: '长度',
+      title: $t('ai.write.field.length'),
       minWidth: 120,
       cellRender: {
         name: 'CellDict',
@@ -122,7 +125,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
     },
     {
       field: 'format',
-      title: '格式',
+      title: $t('ai.write.field.format'),
       minWidth: 120,
       cellRender: {
         name: 'CellDict',
@@ -131,7 +134,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
     },
     {
       field: 'tone',
-      title: '语气',
+      title: $t('ai.write.field.tone'),
       minWidth: 120,
       cellRender: {
         name: 'CellDict',
@@ -140,7 +143,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
     },
     {
       field: 'language',
-      title: '语言',
+      title: $t('ai.write.field.language'),
       minWidth: 120,
       cellRender: {
         name: 'CellDict',
@@ -149,17 +152,17 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
     },
     {
       field: 'createTime',
-      title: '创建时间',
+      title: $t('ai.write.field.createTime'),
       minWidth: 180,
       formatter: 'formatDateTime',
     },
     {
       field: 'errorMessage',
-      title: '错误信息',
+      title: $t('ai.write.field.errorMessage'),
       minWidth: 180,
     },
     {
-      title: '操作',
+      title: $t('common.operation'),
       width: 130,
       fixed: 'right',
       slots: { default: 'actions' },

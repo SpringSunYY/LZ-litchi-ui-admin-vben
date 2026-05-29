@@ -10,6 +10,7 @@ import { IconifyIcon } from '@vben/icons';
 
 import { Button, Card, Image, message } from 'ant-design-vue';
 
+import { $t } from '#/locales';
 import { AiImageStatusEnum } from '#/utils';
 
 const props = defineProps({
@@ -31,7 +32,9 @@ async function handleButtonClick(type: string, detail: AiImageApi.Image) {
 async function handleMidjourneyBtnClick(
   button: AiImageApi.ImageMidjourneyButtons,
 ) {
-  await confirm(`确认操作 "${button.label} ${button.emoji}" ?`);
+  await confirm(
+    $t('ai.image.message.confirmAction', [button.label, button.emoji || '']),
+  );
   emits('onMjBtnClick', button, props.detail);
 }
 
@@ -47,7 +50,7 @@ async function handleLoading(status: number) {
   // 情况一：如果是生成中，则设置加载中的 loading
   if (status === AiImageStatusEnum.IN_PROGRESS) {
     loading.value = message.loading({
-      content: `生成中...`,
+      content: $t('ai.image.message.generating'),
     });
   } else {
     // 情况二：如果已经生成结束，则移除 loading
@@ -68,13 +71,13 @@ onMounted(async () => {
     <div class="flex flex-row justify-between">
       <div>
         <Button v-if="detail?.status === AiImageStatusEnum.IN_PROGRESS">
-          生成中
+          {{ $t('ai.image.message.generatingTip') }}
         </Button>
         <Button v-else-if="detail?.status === AiImageStatusEnum.SUCCESS">
-          已完成
+          {{ $t('ai.image.message.generatingContent') }}
         </Button>
         <Button danger v-else-if="detail?.status === AiImageStatusEnum.FAIL">
-          异常
+          {{ $t('ai.image.message.loadFailed') }}
         </Button>
       </div>
       <div class="flex">

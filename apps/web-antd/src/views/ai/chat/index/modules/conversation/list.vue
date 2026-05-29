@@ -121,12 +121,12 @@ async function getConversationGroupByCreateTime(
   // 排序、指定、时间分组(今天、一天前、三天前、七天前、30天前)
   // noinspection NonAsciiCharacters
   const groupMap: any = {
-    置顶: [],
-    今天: [],
-    一天前: [],
-    三天前: [],
-    七天前: [],
-    三十天前: [],
+    [$t('ai.chat.group.pinned')]: [],
+    [$t('ai.chat.group.today')]: [],
+    [$t('ai.chat.group.yesterday')]: [],
+    [$t('ai.chat.group.threeDaysAgo')]: [],
+    [$t('ai.chat.group.sevenDaysAgo')]: [],
+    [$t('ai.chat.group.thirtyDaysAgo')]: [],
   };
   // 当前时间的时间戳
   const now = Date.now();
@@ -138,22 +138,22 @@ async function getConversationGroupByCreateTime(
   for (const conversation of list) {
     // 置顶
     if (conversation.pinned) {
-      groupMap['置顶'].push(conversation);
+      groupMap[$t('ai.chat.group.pinned')].push(conversation);
       continue;
     }
     // 计算时间差（单位：毫秒）
     const diff = now - Number(conversation.createTime);
     // 根据时间间隔判断
     if (diff < oneDay) {
-      groupMap['今天'].push(conversation);
+      groupMap[$t('ai.chat.group.today')].push(conversation);
     } else if (diff < threeDays) {
-      groupMap['一天前'].push(conversation);
+      groupMap[$t('ai.chat.group.yesterday')].push(conversation);
     } else if (diff < sevenDays) {
-      groupMap['三天前'].push(conversation);
+      groupMap[$t('ai.chat.group.threeDaysAgo')].push(conversation);
     } else if (diff < thirtyDays) {
-      groupMap['七天前'].push(conversation);
+      groupMap[$t('ai.chat.group.sevenDaysAgo')].push(conversation);
     } else {
-      groupMap['三十天前'].push(conversation);
+      groupMap[$t('ai.chat.group.thirtyDaysAgo')].push(conversation);
     }
   }
   return groupMap;
@@ -187,7 +187,7 @@ async function updateConversationTitle(
               id: conversation.id,
               title: scope.value,
             } as AiChatConversationApi.ChatConversation);
-            message.success('重命名成功');
+            message.success($t('ai.chat.message.renameSuccess'));
             // 3. 刷新列表
             await getChatConversationList();
             // 4. 过滤当前切换的
@@ -207,21 +207,21 @@ async function updateConversationTitle(
             return false;
           }
         } else {
-          message.error('请输入标题');
+          message.error($t('ai.chat.message.titleEmpty'));
           return false;
         }
       }
     },
     component: () => {
       return h(Input, {
-        placeholder: '请输入标题',
+        placeholder: $t('ai.chat.message.enterTitle'),
         allowClear: true,
         defaultValue: conversation.title,
-        rules: [{ required: true, message: '请输入标题' }],
+        rules: [{ required: true, message: $t('ai.chat.message.titleEmpty') }],
       });
     },
-    content: '请输入标题',
-    title: '修改标题',
+    content: $t('ai.chat.message.enterTitle'),
+    title: $t('ai.chat.message.modifyTitle'),
     modelPropName: 'value',
   });
 }
@@ -231,10 +231,10 @@ async function deleteChatConversation(
   conversation: AiChatConversationApi.ChatConversation,
 ) {
   // 删除的二次确认
-  await confirm(`是否确认删除对话 - ${conversation.title}?`);
+  await confirm($t('ai.chat.message.deleteConfirm', [conversation.title]));
   // 发起删除
   await deleteChatConversationMy(conversation.id);
-  message.success('对话已删除');
+  message.success($t('ai.chat.message.deleted'));
   // 刷新列表
   await getChatConversationList();
   // 回调
@@ -243,7 +243,7 @@ async function deleteChatConversation(
 
 /** 清空未置顶的对话 */
 async function handleClearConversation() {
-  await confirm('确认后对话会全部清空，置顶的对话除外。');
+  await confirm($t('ai.chat.message.clearConfirm'));
   await deleteChatConversationMyByUnpinned();
   message.success($t('ui.actionMessage.operationSuccess'));
   // 清空对话、对话内容
@@ -306,14 +306,14 @@ onMounted(async () => {
     <div class="flex h-full flex-col">
       <Button class="h-9 w-full" type="primary" @click="createConversation">
         <IconifyIcon icon="lucide:plus" class="mr-1" />
-        新建对话
+        {{ $t('ai.chat.action.create') }}
       </Button>
 
       <Input
         v-model:value="searchName"
         size="large"
         class="search-input mt-4"
-        placeholder="搜索历史记录"
+        :placeholder="$t('ai.chat.message.searchHistory')"
         @keyup="searchConversation"
       >
         <template #prefix>
@@ -421,14 +421,14 @@ onMounted(async () => {
         @click="handleRoleRepository"
       >
         <IconifyIcon icon="lucide:user" />
-        <span class="ml-1">角色仓库</span>
+        <span class="ml-1">{{ $t('ai.chat.message.roleRepository') }}</span>
       </div>
       <div
         class="flex cursor-pointer items-center text-gray-400"
         @click="handleClearConversation"
       >
         <IconifyIcon icon="lucide:trash" />
-        <span class="ml-1">清空未置顶对话</span>
+        <span class="ml-1">{{ $t('ai.chat.message.clearUnpinned') }}</span>
       </div>
     </div>
   </Layout.Sider>

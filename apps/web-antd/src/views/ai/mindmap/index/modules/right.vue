@@ -12,6 +12,8 @@ import { downloadImageByCanvas } from '@vben/utils';
 
 import { Button, Card, message } from 'ant-design-vue';
 
+import { $t } from '#/locales';
+
 const props = defineProps<{
   generatedContent: string; // 生成结果
   isEnd: boolean; // 是否结束
@@ -47,7 +49,7 @@ onMounted(() => {
         }
         nextTick(update);
       } catch {
-        message.error('思维导图初始化失败');
+        message.error($t('ai.mindmap.message.initFailed'));
       }
     }
   });
@@ -133,14 +135,14 @@ defineExpose({
   <Card class="my-card flex h-full flex-grow flex-col">
     <template #title>
       <div class="m-0 flex shrink-0 items-center justify-between px-7">
-        <h3>思维导图预览</h3>
+        <h3>{{ $t('ai.mindmap.message.preview') }}</h3>
         <Button type="primary" size="small" class="flex" @click="downloadImage">
           <template #icon>
             <div class="flex items-center justify-center">
               <IconifyIcon icon="lucide:copy" />
             </div>
           </template>
-          下载图片
+          {{ $t('ai.mindmap.message.downloadImage') }}
         </Button>
       </div>
     </template>

@@ -3,6 +3,7 @@ import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 import type { SystemUserApi } from '#/api/system/user';
 
 import { getSimpleUserList } from '#/api/system/user';
+import { $t } from '#/locales';
 import { DICT_TYPE, getDictOptions, getRangePickerDefaultProps } from '#/utils';
 
 let userList: SystemUserApi.User[] = [];
@@ -17,49 +18,53 @@ export function useGridFormSchema(): VbenFormSchema[] {
   return [
     {
       fieldName: 'userId',
-      label: '用户编号',
+      label: $t('ai.image.field.userId'),
       component: 'ApiSelect',
       componentProps: {
         api: getSimpleUserList,
         labelField: 'nickname',
         valueField: 'id',
-        placeholder: '请选择用户编号',
+        placeholder: $t('ui.placeholder.select', [$t('ai.image.field.userId')]),
         allowClear: true,
       },
     },
     {
       fieldName: 'platform',
-      label: '平台',
+      label: $t('ai.image.field.platform'),
       component: 'Select',
       componentProps: {
-        placeholder: '请选择平台',
+        placeholder: $t('ui.placeholder.select', [
+          $t('ai.image.field.platform'),
+        ]),
         allowClear: true,
         options: getDictOptions(DICT_TYPE.AI_PLATFORM, 'string'),
       },
     },
     {
       fieldName: 'status',
-      label: '绘画状态',
+      label: $t('ai.image.field.status'),
       component: 'Select',
       componentProps: {
-        placeholder: '请选择绘画状态',
+        placeholder: $t('ui.placeholder.select', [$t('ai.image.field.status')]),
         allowClear: true,
         options: getDictOptions(DICT_TYPE.AI_IMAGE_STATUS, 'number'),
       },
     },
     {
       fieldName: 'publicStatus',
-      label: '是否发布',
+      label: $t('ai.image.field.publicStatus'),
       component: 'Select',
       componentProps: {
-        placeholder: '请选择是否发布',
+        placeholder: $t('ui.placeholder.select', [
+          $t('ai.image.field.publicStatus'),
+        ]),
         allowClear: true,
         options: getDictOptions(DICT_TYPE.INFRA_BOOLEAN_STRING, 'boolean'),
       },
     },
     {
       fieldName: 'createTime',
-      label: '创建时间',
+      label: $t('ai.image.field.createTime'),
       component: 'RangePicker',
       componentProps: {
         ...getRangePickerDefaultProps(),
@@ -79,13 +84,13 @@ export function useGridColumns(
   return [
     {
       field: 'id',
-      title: '编号',
+      title: $t('ai.image.field.id'),
       minWidth: 180,
       fixed: 'left',
     },
     {
       field: 'picUrl',
-      title: '图片',
+      title: $t('ai.image.field.picUrl'),
       minWidth: 110,
       fixed: 'left',
       cellRender: {
@@ -94,14 +99,14 @@ export function useGridColumns(
     },
     {
       field: 'userId',
-      title: '用户',
+      title: $t('ai.image.field.user'),
       minWidth: 180,
       formatter: ({ cellValue }) =>
         userList.find((user) => user.id === cellValue)?.nickname || '-',
     },
     {
       field: 'platform',
-      title: '平台',
+      title: $t('ai.image.field.platform'),
       minWidth: 120,
       cellRender: {
         name: 'CellDict',
@@ -110,12 +115,12 @@ export function useGridColumns(
     },
     {
       field: 'model',
-      title: '模型',
+      title: $t('ai.image.field.model'),
       minWidth: 180,
     },
     {
       field: 'status',
-      title: '绘画状态',
+      title: $t('ai.image.field.status'),
       minWidth: 100,
       cellRender: {
         name: 'CellDict',
@@ -124,7 +129,7 @@ export function useGridColumns(
     },
     {
       minWidth: 100,
-      title: '是否发布',
+      title: $t('ai.image.field.publicStatus'),
       field: 'publicStatus',
       align: 'center',
       cellRender: {
@@ -138,37 +143,37 @@ export function useGridColumns(
     },
     {
       field: 'prompt',
-      title: '提示词',
+      title: $t('ai.image.field.prompt'),
       minWidth: 180,
     },
     {
       field: 'createTime',
-      title: '创建时间',
+      title: $t('ai.image.field.createTime'),
       minWidth: 180,
       formatter: 'formatDateTime',
     },
     {
       field: 'width',
-      title: '宽度',
+      title: $t('ai.image.field.width'),
       minWidth: 180,
     },
     {
       field: 'height',
-      title: '高度',
+      title: $t('ai.image.field.height'),
       minWidth: 180,
     },
     {
       field: 'errorMessage',
-      title: '错误信息',
+      title: $t('ai.image.field.errorMessage'),
       minWidth: 180,
     },
     {
       field: 'taskId',
-      title: '任务编号',
+      title: $t('ai.image.field.taskId'),
       minWidth: 180,
     },
     {
-      title: '操作',
+      title: $t('common.operation'),
       width: 130,
       fixed: 'right',
       slots: { default: 'actions' },

@@ -14,6 +14,7 @@ import {
   getDictOptions,
   WriteExample,
 } from '#/utils';
+import { $t } from '#/locales';
 
 import Tag from './tag.vue';
 
@@ -59,8 +60,8 @@ const tabs: {
   text: string;
   value: TabType;
 }[] = [
-  { text: '撰写', value: AiWriteTypeEnum.WRITING },
-  { text: '回复', value: AiWriteTypeEnum.REPLY },
+  { text: $t('ai.write.message.tabWriting'), value: AiWriteTypeEnum.WRITING },
+  { text: $t('ai.write.message.tabReply'), value: AiWriteTypeEnum.REPLY },
 ];
 const [DefineTab, ReuseTab] = createReusableTemplate<{
   active?: boolean;
@@ -104,11 +105,15 @@ function handleSubmit() {
     selectedTab.value === AiWriteTypeEnum.REPLY &&
     !formData.value.originalContent
   ) {
-    message.warning('请输入原文');
+    message.warning($t('ai.write.message.placeholderOriginalContent'));
     return;
   }
   if (!formData.value.prompt) {
-    message.warning(`请输入${selectedTab.value === 1 ? '写作' : '回复'}内容`);
+    const hint =
+      selectedTab.value === AiWriteTypeEnum.WRITING
+        ? $t('ai.write.message.tabWriting')
+        : $t('ai.write.message.tabReply');
+    message.warning($t('ui.placeholder.input', [hint]));
     return;
   }
 
@@ -177,56 +182,56 @@ function handleSubmit() {
         <template v-if="selectedTab === AiWriteTypeEnum.WRITING">
           <ReuseLabel
             :hint-click="() => example('write')"
-            hint="示例"
-            label="写作内容"
+            :hint="$t('ai.write.message.hintExample')"
+            :label="$t('ai.write.message.labelWriteContent')"
           />
           <Textarea
             v-model:value="formData.prompt"
             :maxlength="500"
             :rows="5"
-            placeholder="请输入写作内容"
+            :placeholder="$t('ai.write.message.placeholderWriteContent')"
             show-count
           />
         </template>
         <template v-else>
           <ReuseLabel
             :hint-click="() => example('reply')"
-            hint="示例"
-            label="原文"
+            :hint="$t('ai.write.message.hintExample')"
+            :label="$t('ai.write.message.labelOriginalContent')"
           />
           <Textarea
             v-model:value="formData.originalContent"
             :maxlength="500"
             :rows="5"
-            placeholder="请输入原文"
+            :placeholder="$t('ai.write.message.placeholderOriginalContent')"
             show-count
           />
-          <ReuseLabel label="回复内容" />
+          <ReuseLabel :label="$t('ai.write.message.labelReplyContent')" />
           <Textarea
             v-model:value="formData.prompt"
             :maxlength="500"
             :rows="5"
-            placeholder="请输入回复内容"
+            :placeholder="$t('ai.write.message.placeholderReplyContent')"
             show-count
           />
         </template>
 
-        <ReuseLabel label="长度" />
+        <ReuseLabel :label="$t('ai.write.message.labelLength')" />
         <Tag
           v-model="formData.length"
           :tags="getDictOptions(DICT_TYPE.AI_WRITE_LENGTH, 'number')"
         />
-        <ReuseLabel label="格式" />
+        <ReuseLabel :label="$t('ai.write.message.labelFormat')" />
         <Tag
           v-model="formData.format"
           :tags="getDictOptions(DICT_TYPE.AI_WRITE_FORMAT, 'number')"
         />
-        <ReuseLabel label="语气" />
+        <ReuseLabel :label="$t('ai.write.message.labelTone')" />
         <Tag
           v-model="formData.tone"
           :tags="getDictOptions(DICT_TYPE.AI_WRITE_TONE, 'number')"
         />
-        <ReuseLabel label="语言" />
+        <ReuseLabel :label="$t('ai.write.message.labelLanguage')" />
         <Tag
           v-model="formData.language"
           :tags="getDictOptions(DICT_TYPE.AI_WRITE_LANGUAGE, 'number')"
@@ -234,10 +239,10 @@ function handleSubmit() {
 
         <div class="mt-3 flex items-center justify-center">
           <Button :disabled="isWriting" class="mr-2" @click="reset">
-            重置
+            {{ $t('ai.write.message.buttonReset') }}
           </Button>
           <Button type="primary" :loading="isWriting" @click="handleSubmit">
-            生成
+            {{ $t('ai.write.message.buttonGenerate') }}
           </Button>
         </div>
       </div>

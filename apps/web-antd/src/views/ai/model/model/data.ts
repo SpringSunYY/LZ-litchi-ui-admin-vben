@@ -10,6 +10,7 @@ import {
   DICT_TYPE,
   getDictOptions,
 } from '#/utils';
+import { $t } from '#/locales';
 
 /** 关联数据 */
 let apiKeyList: AiModelApiKeyApi.ApiKey[] = [];
@@ -28,10 +29,12 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'platform',
-      label: '所属平台',
+      label: $t('ai.model.field.platform'),
       component: 'Select',
       componentProps: {
-        placeholder: '请选择所属平台',
+        placeholder: $t('ui.placeholder.select', [
+          $t('ai.model.field.platform'),
+        ]),
         options: getDictOptions(DICT_TYPE.AI_PLATFORM, 'string'),
         allowClear: true,
       },
@@ -39,11 +42,13 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'type',
-      label: '模型类型',
+      label: $t('ai.model.field.type'),
       component: 'Select',
       componentProps: (values) => {
         return {
-          placeholder: '请输入模型类型',
+          placeholder: $t('ui.placeholder.input', [
+            $t('ai.model.field.type'),
+          ]),
           disabled: !!values.id,
           options: getDictOptions(DICT_TYPE.AI_MODEL_TYPE, 'number'),
           allowClear: true,
@@ -53,10 +58,12 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'keyId',
-      label: 'API 秘钥',
+      label: $t('ai.model.field.keyIdName'),
       component: 'ApiSelect',
       componentProps: {
-        placeholder: '请选择 API 秘钥',
+        placeholder: $t('ui.placeholder.select', [
+          $t('ai.model.field.keyIdName'),
+        ]),
         api: getApiKeySimpleList,
         labelField: 'name',
         valueField: 'id',
@@ -67,33 +74,39 @@ export function useFormSchema(): VbenFormSchema[] {
     {
       component: 'Input',
       fieldName: 'name',
-      label: '模型名字',
+      label: $t('ai.model.field.name'),
       rules: 'required',
       componentProps: {
-        placeholder: '请输入模型名字',
+        placeholder: $t('ui.placeholder.input', [
+          $t('ai.model.field.name'),
+        ]),
       },
     },
     {
       component: 'Input',
       fieldName: 'model',
-      label: '模型标识',
+      label: $t('ai.model.field.model'),
       rules: 'required',
       componentProps: {
-        placeholder: '请输入模型标识',
+        placeholder: $t('ui.placeholder.input', [
+          $t('ai.model.field.model'),
+        ]),
       },
     },
     {
       fieldName: 'sort',
-      label: '模型排序',
+      label: $t('ai.model.field.sort'),
       component: 'InputNumber',
       componentProps: {
-        placeholder: '请输入模型排序',
+        placeholder: $t('ui.placeholder.input', [
+          $t('ai.model.field.sort'),
+        ]),
       },
       rules: 'required',
     },
     {
       fieldName: 'status',
-      label: '开启状态',
+      label: $t('ai.model.field.status'),
       component: 'RadioGroup',
       componentProps: {
         options: getDictOptions(DICT_TYPE.COMMON_STATUS, 'number'),
@@ -104,10 +117,12 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'temperature',
-      label: '温度参数',
+      label: $t('ai.model.field.temperature'),
       component: 'InputNumber',
       componentProps: {
-        placeholder: '请输入温度参数',
+        placeholder: $t('ui.placeholder.input', [
+          $t('ai.model.field.temperature'),
+        ]),
         min: 0,
         max: 2,
       },
@@ -121,12 +136,14 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'maxTokens',
-      label: '回复数 Token 数',
+      label: $t('ai.model.field.maxTokens'),
       component: 'InputNumber',
       componentProps: {
         min: 0,
         max: 8192,
-        placeholder: '请输入回复数 Token 数',
+        placeholder: $t('ui.placeholder.input', [
+          $t('ai.model.field.maxTokens'),
+        ]),
       },
       dependencies: {
         triggerFields: ['type'],
@@ -138,12 +155,14 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'maxContexts',
-      label: '上下文数量',
+      label: $t('ai.model.field.maxContexts'),
       component: 'InputNumber',
       componentProps: {
         min: 0,
         max: 20,
-        placeholder: '请输入上下文数量',
+        placeholder: $t('ui.placeholder.input', [
+          $t('ai.model.field.maxContexts'),
+        ]),
       },
       dependencies: {
         triggerFields: ['type'],
@@ -161,28 +180,34 @@ export function useGridFormSchema(): VbenFormSchema[] {
   return [
     {
       fieldName: 'name',
-      label: '模型名字',
+      label: $t('ai.model.field.name'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入模型名字',
+        placeholder: $t('ui.placeholder.input', [
+          $t('ai.model.field.name'),
+        ]),
         allowClear: true,
       },
     },
     {
       fieldName: 'model',
-      label: '模型标识',
+      label: $t('ai.model.field.model'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入模型标识',
+        placeholder: $t('ui.placeholder.input', [
+          $t('ai.model.field.model'),
+        ]),
         allowClear: true,
       },
     },
     {
       fieldName: 'platform',
-      label: '模型平台',
+      label: $t('ai.model.field.platform'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入模型平台',
+        placeholder: $t('ui.placeholder.input', [
+          $t('ai.model.field.platform'),
+        ]),
         allowClear: true,
       },
     },
@@ -194,7 +219,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
   return [
     {
       field: 'platform',
-      title: '所属平台',
+      title: $t('ai.model.field.platform'),
       cellRender: {
         name: 'CellDict',
         props: { type: DICT_TYPE.AI_PLATFORM },
@@ -203,7 +228,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
     },
     {
       field: 'type',
-      title: '模型类型',
+      title: $t('ai.model.field.type'),
       cellRender: {
         name: 'CellDict',
         props: { type: DICT_TYPE.AI_MODEL_TYPE },
@@ -212,16 +237,16 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
     },
     {
       field: 'name',
-      title: '模型名字',
+      title: $t('ai.model.field.name'),
       minWidth: 180,
     },
     {
-      title: '模型标识',
+      title: $t('ai.model.field.model'),
       field: 'model',
       minWidth: 180,
     },
     {
-      title: 'API 秘钥',
+      title: $t('ai.model.field.keyIdName'),
       field: 'keyId',
       formatter: ({ cellValue }) => {
         return (
@@ -231,13 +256,13 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
       minWidth: 140,
     },
     {
-      title: '排序',
+      title: $t('ai.model.field.sort'),
       field: 'sort',
       minWidth: 80,
     },
     {
       field: 'status',
-      title: '状态',
+      title: $t('ai.model.field.status'),
       cellRender: {
         name: 'CellDict',
         props: { type: DICT_TYPE.COMMON_STATUS },
@@ -246,21 +271,21 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
     },
     {
       field: 'temperature',
-      title: '温度参数',
+      title: $t('ai.model.field.temperature'),
       minWidth: 100,
     },
     {
-      title: '回复数 Token 数',
+      title: $t('ai.model.field.maxTokens'),
       field: 'maxTokens',
       minWidth: 140,
     },
     {
-      title: '上下文数量',
+      title: $t('ai.model.field.maxContexts'),
       field: 'maxContexts',
       minWidth: 120,
     },
     {
-      title: '操作',
+      title: $t('common.operation'),
       width: 130,
       fixed: 'right',
       slots: { default: 'actions' },

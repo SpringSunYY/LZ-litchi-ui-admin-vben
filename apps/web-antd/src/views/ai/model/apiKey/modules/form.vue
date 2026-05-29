@@ -17,8 +17,8 @@ const emit = defineEmits(['success']);
 const formData = ref<AiModelApiKeyApi.ApiKey>();
 const getTitle = computed(() => {
   return formData.value?.id
-    ? $t('ui.actionTitle.edit', ['API  密钥'])
-    : $t('ui.actionTitle.create', ['API  密钥']);
+    ? $t('ui.actionTitle.edit', [$t('ai.model.apiKey.apiKey')])
+    : $t('ui.actionTitle.create', [$t('ai.model.apiKey.apiKey')]);
 });
 
 const [Form, formApi] = useVbenForm({

@@ -16,6 +16,7 @@ import {
   getChatMessageListByConversationId,
   sendChatMessageStream,
 } from '#/api/ai/chat/message';
+import { $t } from '#/locales';
 
 import ConversationList from './modules/conversation/list.vue';
 import ConversationUpdateForm from './modules/conversation/update-form.vue';
@@ -90,7 +91,7 @@ async function handleConversationClick(
 ) {
   // 对话进行中，不允许切换
   if (conversationInProgress.value) {
-    await alert('对话中，不允许切换!');
+    await alert($t('ai.chat.message.switching'));
     return false;
   }
 
@@ -123,7 +124,7 @@ async function handlerConversationDelete(
 async function handleConversationClear() {
   // 对话进行中，不允许切换
   if (conversationInProgress.value) {
-    await alert('对话中，不允许切换!');
+    await alert($t('ai.chat.message.switching'));
     return false;
   }
   activeConversationId.value = null;
@@ -213,7 +214,7 @@ const messageList = computed(() => {
 /** 处理删除 message 消息 */
 function handleMessageDelete() {
   if (conversationInProgress.value) {
-    alert('回答中，不能删除!');
+    alert($t('ai.chat.message.cannotDeleteWhileGenerating'));
     return;
   }
   // 刷新 message 列表
@@ -227,7 +228,7 @@ async function handlerMessageClear() {
   }
   try {
     // 确认提示
-    await confirm('确认清空对话消息？');
+    await confirm($t('ai.chat.message.clearing'));
     // 清空对话
     await deleteByConversationId(activeConversationId.value);
     // 刷新 message 列表
@@ -305,11 +306,11 @@ function onCompositionend() {
 async function doSendMessage(content: string) {
   // 校验
   if (content.length === 0) {
-    message.error('发送失败，原因：内容为空！');
+    message.error($t('ai.chat.message.sendFailedEmpty'));
     return;
   }
   if (activeConversationId.value === null) {
-    message.error('还没创建对话，不能发送!');
+    message.error($t('ai.chat.message.sendFailedNoConversation'));
     return;
   }
 
@@ -352,7 +353,7 @@ async function doSendMessageStream(userMessage: AiChatMessageApi.ChatMessage) {
         id: -2,
         conversationId: activeConversationId.value,
         type: 'assistant',
-        content: '思考中...',
+        content: $t('ai.chat.message.thinking'),
         reasoningContent: '',
         createTime: new Date(),
       } as AiChatMessageApi.ChatMessage,
@@ -374,7 +375,7 @@ async function doSendMessageStream(userMessage: AiChatMessageApi.ChatMessage) {
       async (res: any) => {
         const { code, data, msg } = JSON.parse(res.data);
         if (code !== 0) {
-          await alert(`对话异常! ${msg}`);
+          await alert(`${$t('ai.chat.message.conversationError')} ${msg}`);
           // 如果未接收到消息，则进行删除
           if (receiveMessageFullText.value === '') {
             activeMessageList.value.pop();
@@ -419,7 +420,7 @@ async function doSendMessageStream(userMessage: AiChatMessageApi.ChatMessage) {
       },
       (error: any) => {
         // 异常提示，并停止流
-        alert(`对话异常!`);
+        alert($t('ai.chat.message.conversationError'));
         stopStream();
         // 需要抛出异常，禁止重试
         throw error;
@@ -557,7 +558,11 @@ onMounted(async () => {
           class="border-border !bg-card flex !h-12 items-center justify-between border-b !px-4"
         >
           <div class="text-lg font-bold">
-            {{ activeConversation?.title ? activeConversation?.title : '对话' }}
+            {{
+              activeConversation?.title
+                ? activeConversation?.title
+                : $t('ai.chat.message.sendingTip')
+            }}
             <span v-if="activeMessageList.length > 0">
               ({{ activeMessageList.length }})
             </span>
@@ -625,7 +630,7 @@ onMounted(async () => {
               @input="handlePromptInput"
               @compositionstart="onCompositionstart"
               @compositionend="onCompositionend"
-              placeholder="问我任何问题...（Shift+Enter 换行，按下 Enter 发送）"
+              :placeholder="$t('ai.chat.message.inputPlaceholder')"
             ></textarea>
             <div class="flex justify-between pb-0 pt-1">
               <div class="flex items-center gap-3">
@@ -635,11 +640,15 @@ onMounted(async () => {
                 />
                 <div class="flex items-center">
                   <Switch v-model:checked="enableContext" size="small" />
-                  <span class="ml-1 text-sm text-gray-400">上下文</span>
+                  <span class="ml-1 text-sm text-gray-400">{{
+                    $t('ai.chat.message.contextSwitch')
+                  }}</span>
                 </div>
                 <div class="flex items-center">
                   <Switch v-model:checked="enableWebSearch" size="small" />
-                  <span class="ml-1 text-sm text-gray-400">联网搜索</span>
+                  <span class="ml-1 text-sm text-gray-400">{{
+                    $t('ai.chat.message.webSearch')
+                  }}</span>
                 </div>
               </div>
               <Button
@@ -655,7 +664,11 @@ onMounted(async () => {
                       : 'lucide:send-horizontal'
                   "
                 />
-                {{ conversationInProgress ? '进行中' : '发送' }}
+                {{
+                  conversationInProgress
+                    ? $t('ai.chat.message.sending')
+                    : $t('ai.chat.message.sendingTip')
+                }}
               </Button>
               <Button
                 type="primary"
@@ -664,7 +677,7 @@ onMounted(async () => {
                 v-if="conversationInProgress === true"
               >
                 <IconifyIcon icon="lucide:circle-stop" />
-                停止
+                {{ $t('ai.chat.message.stop') }}
               </Button>
             </div>
           </form>

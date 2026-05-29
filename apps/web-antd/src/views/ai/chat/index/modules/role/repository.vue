@@ -12,6 +12,7 @@ import { Button, Input, Layout, Tabs } from 'ant-design-vue';
 
 import { createChatConversationMy } from '#/api/ai/chat/conversation';
 import { deleteMy, getCategoryList, getMyPage } from '#/api/ai/model/chatRole';
+import { $t } from '#/locales';
 
 import Form from '../../../../model/chatRole/modules/form.vue';
 import RoleCategoryList from './category-list.vue';
@@ -20,7 +21,7 @@ import RoleList from './list.vue';
 const router = useRouter();
 
 const [Drawer] = useVbenDrawer({
-  title: '角色管理',
+  title: $t('ai.chat.message.roleManagement'),
   footer: false,
   class: 'w-2/5',
 });
@@ -43,7 +44,7 @@ const publicRoleParams = reactive({
   pageSize: 50,
 });
 const publicRoleList = ref<AiModelChatRoleApi.ChatRole[]>([]); // public 分页大小
-const activeCategory = ref<string>('全部'); // 选择中的分类
+const activeCategory = ref<string>($t('ai.chat.message.all')); // 选择中的分类
 const categoryList = ref<string[]>([]); // 角色分类类别
 
 /** tabs 点击 */
@@ -73,7 +74,10 @@ async function getMyRole(append?: boolean) {
 async function getPublicRole(append?: boolean) {
   const params: AiModelChatRoleApi.ChatRolePageReqVO = {
     ...publicRoleParams,
-    category: activeCategory.value === '全部' ? '' : activeCategory.value,
+    category:
+      activeCategory.value === $t('ai.chat.message.all')
+        ? ''
+        : activeCategory.value,
     name: search.value,
     publicStatus: true,
   };
@@ -98,7 +102,10 @@ async function getActiveTabsRole() {
 
 /** 获取角色分类列表 */
 async function getRoleCategoryList() {
-  categoryList.value = ['全部', ...(await getCategoryList())];
+  categoryList.value = [
+    $t('ai.chat.message.all'),
+    ...(await getCategoryList()),
+  ];
 }
 
 /** 处理分类点击 */
@@ -187,7 +194,7 @@ onMounted(async () => {
             :loading="loading"
             v-model:value="search"
             class="w-60"
-            placeholder="请输入搜索的内容"
+            :placeholder="$t('ai.chat.message.searchPlaceholder')"
             @search="getActiveTabsRole"
           />
           <Button
@@ -197,7 +204,7 @@ onMounted(async () => {
             class="ml-5"
           >
             <IconifyIcon icon="lucide:user" class="mr-1.5" />
-            添加角色
+            {{ $t('ai.chat.message.addRole') }}
           </Button>
         </div>
         <!-- 标签页内容 -->
@@ -209,7 +216,7 @@ onMounted(async () => {
           <Tabs.TabPane
             key="my-role"
             class="flex h-full flex-col overflow-y-auto"
-            tab="我的角色"
+            :tab="$t('ai.chat.message.myRole')"
           >
             <RoleList
               :loading="loading"
@@ -224,7 +231,7 @@ onMounted(async () => {
           <Tabs.TabPane
             key="public-role"
             class="flex h-full flex-col overflow-y-auto"
-            tab="公共角色"
+            :tab="$t('ai.chat.message.publicRole')"
           >
             <RoleCategoryList
               :category-list="categoryList"

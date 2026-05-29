@@ -7,6 +7,7 @@ import {
   getDictOptions,
   getRangePickerDefaultProps,
 } from '#/utils';
+import { $t } from '#/locales';
 
 /** 新增/修改的表单 */
 export function useFormSchema(): VbenFormSchema[] {
@@ -19,27 +20,30 @@ export function useFormSchema(): VbenFormSchema[] {
         show: () => false,
       },
     },
-
     {
       component: 'Input',
       fieldName: 'name',
-      label: '工具名称',
+      label: $t('ai.model.tool.field.name'),
       rules: 'required',
       componentProps: {
-        placeholder: '请输入工具名称',
+        placeholder: $t('ui.placeholder.input', [
+          $t('ai.model.tool.field.name'),
+        ]),
       },
     },
     {
       component: 'Textarea',
       fieldName: 'description',
-      label: '工具描述',
+      label: $t('ai.model.tool.field.description'),
       componentProps: {
-        placeholder: '请输入工具描述',
+        placeholder: $t('ui.placeholder.input', [
+          $t('ai.model.tool.field.description'),
+        ]),
       },
     },
     {
       fieldName: 'status',
-      label: '状态',
+      label: $t('ai.model.tool.field.status'),
       component: 'RadioGroup',
       componentProps: {
         options: getDictOptions(DICT_TYPE.COMMON_STATUS, 'number'),
@@ -56,26 +60,30 @@ export function useGridFormSchema(): VbenFormSchema[] {
   return [
     {
       fieldName: 'name',
-      label: '工具名称',
+      label: $t('ai.model.tool.field.name'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入工具名称',
+        placeholder: $t('ui.placeholder.input', [
+          $t('ai.model.tool.field.name'),
+        ]),
         allowClear: true,
       },
     },
     {
       fieldName: 'status',
-      label: '状态',
+      label: $t('ai.model.tool.field.status'),
       component: 'Select',
       componentProps: {
         allowClear: true,
         options: getDictOptions(DICT_TYPE.COMMON_STATUS, 'number'),
-        placeholder: '请选择状态',
+        placeholder: $t('ui.placeholder.select', [
+          $t('ai.model.tool.field.status'),
+        ]),
       },
     },
     {
       fieldName: 'createTime',
-      label: '创建时间',
+      label: $t('ai.model.tool.field.createTime'),
       component: 'RangePicker',
       componentProps: {
         ...getRangePickerDefaultProps(),
@@ -90,22 +98,22 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
   return [
     {
       field: 'id',
-      title: '工具编号',
+      title: $t('ai.model.tool.field.id'),
       minWidth: 100,
     },
     {
       field: 'name',
-      title: '工具名称',
+      title: $t('ai.model.tool.field.name'),
       minWidth: 120,
     },
     {
       field: 'description',
-      title: '工具描述',
+      title: $t('ai.model.tool.field.description'),
       minWidth: 140,
     },
     {
       field: 'status',
-      title: '状态',
+      title: $t('ai.model.tool.field.status'),
       cellRender: {
         name: 'CellDict',
         props: { type: DICT_TYPE.COMMON_STATUS },
@@ -114,12 +122,12 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
     },
     {
       field: 'createTime',
-      title: '创建时间',
+      title: $t('ai.model.tool.field.createTime'),
       minWidth: 180,
       formatter: 'formatDateTime',
     },
     {
-      title: '操作',
+      title: $t('common.operation'),
       width: 130,
       fixed: 'right',
       slots: { default: 'actions' },

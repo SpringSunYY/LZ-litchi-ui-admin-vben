@@ -3,6 +3,8 @@ import { reactive } from 'vue';
 
 import { Select, Switch, Textarea } from 'ant-design-vue';
 
+import { $t } from '#/locales';
+
 import Title from '../title/index.vue';
 
 defineOptions({ name: 'AiMusicModeDesc' });
@@ -21,32 +23,36 @@ defineExpose({
 <template>
   <div>
     <Title
-      title="音乐/歌词说明"
-      desc="描述您想要的音乐风格和主题，使用流派和氛围而不是特定的艺术家和歌曲"
+      :title="$t('ai.music.message.musicLyricDesc')"
+      :desc="$t('ai.music.message.musicLyricHint')"
     >
       <Textarea
         v-model:value="formData.desc"
         :auto-size="{ minRows: 6, maxRows: 6 }"
         :maxlength="1200"
         :show-count="true"
-        placeholder="一首关于糟糕分手的欢快歌曲"
+        :placeholder="$t('ai.music.message.musicLyricHint')"
       />
     </Title>
 
-    <Title title="纯音乐" class="mt-5" desc="创建一首没有歌词的歌曲">
+    <Title
+      :title="$t('ai.music.message.pureMusic')"
+      class="mt-5"
+      :desc="$t('ai.music.message.pureMusicHint')"
+    >
       <template #extra>
         <Switch v-model:checked="formData.pure" size="small" />
       </template>
     </Title>
 
     <Title
-      title="版本"
-      desc="描述您想要的音乐风格和主题，使用流派和氛围而不是特定的艺术家和歌曲"
+      :title="$t('ai.music.message.version')"
+      :desc="$t('ai.music.message.musicLyricHint')"
     >
       <Select
         v-model:value="formData.version"
         class="w-full"
-        placeholder="请选择"
+        :placeholder="$t('ui.placeholder.select')"
       >
         <Select.Option
           v-for="item in [

@@ -16,6 +16,7 @@ import { Avatar, Button, message } from 'ant-design-vue';
 
 import { deleteChatMessage } from '#/api/ai/chat/message';
 import { MarkdownView } from '#/components/markdown-view';
+import { $t } from '#/locales';
 
 import MessageFiles from './files.vue';
 import MessageKnowledge from './knowledge.vue';
@@ -86,14 +87,14 @@ defineExpose({ scrollToBottom, handlerGoTop }); // 提供方法给 parent 调用
 /** 复制 */
 async function copyContent(content: string) {
   await copy(content);
-  message.success('复制成功！');
+  message.success($t('ai.chat.message.copySuccess'));
 }
 
 /** 删除 */
 async function handleDelete(id: number) {
   // 删除 message
   await deleteChatMessage(id);
-  message.success('删除成功！');
+  message.success($t('ai.chat.message.deleteSuccess'));
   // 回调
   emits('onDeleteSuccess');
 }

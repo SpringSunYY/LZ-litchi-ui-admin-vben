@@ -9,10 +9,11 @@ import { useDebounceFn } from '@vueuse/core';
 import { Image, Input, Pagination } from 'ant-design-vue';
 
 import { getImagePageMy } from '#/api/ai/image';
+import { $t } from '#/locales';
 
-const loading = ref(true); // 列表的加载中
-const list = ref<AiImageApi.Image[]>([]); // 列表的数据
-const total = ref(0); // 列表的总页数
+const loading = ref(true);
+const list = ref<AiImageApi.Image[]>([]);
+const total = ref(0);
 const queryParams = reactive({
   pageNo: 1,
   pageSize: 10,
@@ -20,7 +21,6 @@ const queryParams = reactive({
   prompt: undefined,
 });
 
-/** 查询列表 */
 async function getList() {
   loading.value = true;
   try {
@@ -34,13 +34,11 @@ async function getList() {
 
 const debounceGetList = useDebounceFn(getList, 80);
 
-/** 搜索按钮操作 */
 function handleQuery() {
   queryParams.pageNo = 1;
   getList();
 }
 
-/** 初始化 */
 onMounted(async () => {
   await getList();
 });
@@ -52,7 +50,7 @@ onMounted(async () => {
         v-model="queryParams.prompt"
         class="mb-5 w-full"
         size="large"
-        placeholder="请输入要搜索的内容"
+        :placeholder="$t('ai.image.square.searchPlaceholder')"
         @keyup.enter="handleQuery"
       />
       <div
@@ -69,10 +67,9 @@ onMounted(async () => {
           />
         </div>
       </div>
-      <!-- 分页 -->
       <Pagination
         :total="total"
-        :show-total="(total) => `共 ${total} 条`"
+        :show-total="(total) => $t('ai.image.message.totalItems', [total])"
         show-quick-jumper
         show-size-changer
         v-model:current="queryParams.pageNo"

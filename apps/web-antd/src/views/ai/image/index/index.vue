@@ -10,6 +10,7 @@ import { Segmented } from 'ant-design-vue';
 
 import { getModelSimpleList } from '#/api/ai/model/model';
 import { AiModelTypeEnum, AiPlatformEnum } from '#/utils';
+import { $t } from '#/locales';
 
 import Common from './modules/common/index.vue';
 import Dall3 from './modules/dall3/index.vue';
@@ -26,19 +27,19 @@ const commonRef = ref<any>(); // stable diffusion ref
 const selectPlatform = ref('common'); // 选中的平台
 const platformOptions = [
   {
-    label: '通用',
+    label: $t('ai.image.common.common'),
     value: 'common',
   },
   {
-    label: 'DALL3 绘画',
+    label: $t('ai.image.dall3.dall3'),
     value: AiPlatformEnum.OPENAI,
   },
   {
-    label: 'MJ 绘画',
+    label: $t('ai.image.midjourney.midjourney'),
     value: AiPlatformEnum.MIDJOURNEY,
   },
   {
-    label: 'SD 绘图',
+    label: $t('ai.image.stableDiffusion.stableDiffusion'),
     value: AiPlatformEnum.STABLE_DIFFUSION,
   },
 ];

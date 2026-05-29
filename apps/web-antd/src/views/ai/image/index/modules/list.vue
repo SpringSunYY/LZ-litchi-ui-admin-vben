@@ -16,6 +16,7 @@ import {
   getImagePageMy,
   midjourneyAction,
 } from '#/api/ai/image';
+import { $t } from '#/locales';
 import { AiImageStatusEnum } from '#/utils';
 
 import ImageCard from './card.vue';
@@ -24,7 +25,7 @@ import ImageDetail from './detail.vue';
 const emits = defineEmits(['onRegeneration']);
 const router = useRouter();
 const [Drawer, drawerApi] = useVbenDrawer({
-  title: '图片详情',
+  title: $t('ai.image.message.imageDetail'),
   footer: false,
 });
 const queryParams = reactive({
@@ -53,7 +54,7 @@ async function handleDetailOpen() {
 /** 获得 image 图片列表 */
 async function getImageList() {
   const loading = message.loading({
-    content: `加载中...`,
+    content: $t('ai.image.message.generating'),
   });
   try {
     // 1. 加载图片列表
@@ -113,10 +114,10 @@ async function handleImageButtonClick(
   }
   // 删除
   if (type === 'delete') {
-    await confirm(`是否删除照片?`);
+    await confirm($t('ai.image.message.confirmDelete'));
     await deleteImageMy(imageDetail.id);
     await getImageList();
-    message.success('删除成功!');
+    message.success($t('ai.image.message.deleteSuccess'));
     return;
   }
   // 下载
@@ -184,8 +185,10 @@ onUnmounted(async () => {
     }"
   >
     <template #title>
-      绘画任务
-      <Button @click="handleViewPublic">绘画作品</Button>
+      {{ $t('ai.image.message.drawingTask') }}
+      <Button @click="handleViewPublic">
+        {{ $t('ai.image.message.viewWorks') }}
+      </Button>
     </template>
 
     <div
@@ -207,7 +210,7 @@ onUnmounted(async () => {
     >
       <Pagination
         :total="pageTotal"
-        :show-total="(total) => `共 ${total} 条`"
+        :show-total="(total) => $t('ai.image.message.totalItems', [total])"
         show-quick-jumper
         show-size-changer
         v-model:current="queryParams.pageNo"

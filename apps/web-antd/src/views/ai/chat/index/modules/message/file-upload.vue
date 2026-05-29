@@ -7,6 +7,7 @@ import { formatFileSize, getFileIcon } from '@vben/utils';
 import { message } from 'ant-design-vue';
 
 import { useUpload } from '#/components/upload/use-upload';
+import { $t } from '#/locales';
 
 export interface FileItem {
   name: string;
@@ -97,14 +98,19 @@ async function handleFileSelect(event: Event) {
   }
 
   if (files.length + fileList.value.length > props.limit) {
-    message.error(`最多只能上传 ${props.limit} 个文件`);
+    message.error($t('ai.chat.message.fileLimit', [String(props.limit)]));
     target.value = '';
     return;
   }
 
   for (const file of files) {
     if (file.size > props.maxSize * 1024 * 1024) {
-      message.error(`文件 ${file.name} 大小超过 ${props.maxSize}MB`);
+      message.error(
+        $t('ai.chat.message.fileSizeExceeded', [
+          file.name,
+          String(props.maxSize),
+        ]),
+      );
       continue;
     }
 
@@ -157,7 +163,7 @@ async function uploadFile(fileItem: FileItem) {
     }
   } catch (error) {
     fileItem.uploading = false;
-    message.error(`文件 ${fileItem.name} 上传失败`);
+    message.error($t('ai.chat.message.fileUploadFailed', [fileItem.name]));
     emit('uploadError', error);
 
     const index = fileList.value.indexOf(fileItem);

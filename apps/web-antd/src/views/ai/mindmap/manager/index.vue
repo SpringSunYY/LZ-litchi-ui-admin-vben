@@ -89,7 +89,7 @@ const [Grid, gridApi] = useVbenVxeGrid({
         :is-start="false"
       />
     </Drawer>
-    <Grid table-title="思维导图管理列表">
+    <Grid :table-title="$t('ai.mindmap.list')">
       <template #actions="{ row }">
         <TableAction
           :actions="[

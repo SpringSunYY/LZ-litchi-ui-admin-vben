@@ -3,6 +3,8 @@ import type { PropType } from 'vue';
 
 import { Button } from 'ant-design-vue';
 
+import { $t } from '#/locales';
+
 defineProps({
   categoryList: {
     type: Array as PropType<string[]>,
@@ -11,7 +13,7 @@ defineProps({
   active: {
     type: String,
     required: false,
-    default: '全部',
+    default: () => $t('ai.chat.message.all'),
   },
 });
 

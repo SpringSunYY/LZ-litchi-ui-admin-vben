@@ -17,6 +17,7 @@ import {
 } from 'ant-design-vue';
 
 import { drawImage } from '#/api/ai/image';
+import { $t } from '#/locales';
 import {
   AiPlatformEnum,
   ImageHotEnglishWords,
@@ -30,42 +31,35 @@ const props = defineProps({
     type: Array<AiModelModelApi.Model>,
     default: () => [] as AiModelModelApi.Model[],
   },
-}); // 接收父组件传入的模型列表
+});
 const emits = defineEmits(['onDrawStart', 'onDrawComplete']);
 
 function hasChinese(str: string) {
   return /[\u4E00-\u9FA5]/.test(str);
 }
 
-// 定义属性
-const drawIn = ref<boolean>(false); // 生成中
-const selectHotWord = ref<string>(''); // 选中的热词
-// 表单
-const prompt = ref<string>(''); // 提示词
-const width = ref<number>(512); // 图片宽度
-const height = ref<number>(512); // 图片高度
-const sampler = ref<string>('DDIM'); // 采样方法
-const steps = ref<number>(20); // 迭代步数
-const seed = ref<number>(42); // 控制生成图像的随机性
-const scale = ref<number>(7.5); // 引导系数
-const clipGuidancePreset = ref<string>('NONE'); // 文本提示相匹配的图像(clip_guidance_preset) 简称 CLIP
-const stylePreset = ref<string>('3d-model'); // 风格
+const drawIn = ref<boolean>(false);
+const selectHotWord = ref<string>('');
+const prompt = ref<string>('');
+const width = ref<number>(512);
+const height = ref<number>(512);
+const sampler = ref<string>('DDIM');
+const steps = ref<number>(20);
+const seed = ref<number>(42);
+const scale = ref<number>(7.5);
+const clipGuidancePreset = ref<string>('NONE');
+const stylePreset = ref<string>('3d-model');
 
-/** 选择热词 */
 async function handleHotWordClick(hotWord: string) {
-  // 情况一：取消选中
   if (selectHotWord.value === hotWord) {
     selectHotWord.value = '';
     return;
   }
-  // 情况二：选中
-  selectHotWord.value = hotWord; // 选中
-  prompt.value = hotWord; // 替换提示词
+  selectHotWord.value = hotWord;
+  prompt.value = hotWord;
 }
 
-/** 图片生成 */
 async function handleGenerateImage() {
-  // 从 models 中查找匹配的模型
   const selectModel = 'stable-diffusion-v1-6';
   const matchedModel = props.models.find(
     (item) =>
@@ -73,47 +67,40 @@ async function handleGenerateImage() {
       item.platform === AiPlatformEnum.STABLE_DIFFUSION,
   );
   if (!matchedModel) {
-    message.error('该模型不可用，请选择其它模型');
+    message.error($t('ai.image.message.modelUnavailable'));
     return;
   }
 
-  // 二次确认
   if (hasChinese(prompt.value)) {
-    await alert('暂不支持中文！');
+    await alert($t('ai.image.message.noChineseSupport'));
     return;
   }
-  await confirm(`确认生成内容?`);
+  await confirm($t('ai.image.message.confirmGenerate'));
 
   try {
-    // 加载中
     drawIn.value = true;
-    // 回调
     emits('onDrawStart', AiPlatformEnum.STABLE_DIFFUSION);
-    // 发送请求
     const form = {
       modelId: matchedModel.id,
-      prompt: prompt.value, // 提示词
-      width: width.value, // 图片宽度
-      height: height.value, // 图片高度
+      prompt: prompt.value,
+      width: width.value,
+      height: height.value,
       options: {
-        seed: seed.value, // 随机种子
-        steps: steps.value, // 图片生成步数
-        scale: scale.value, // 引导系数
-        sampler: sampler.value, // 采样算法
-        clipGuidancePreset: clipGuidancePreset.value, // 文本提示相匹配的图像 CLIP
-        stylePreset: stylePreset.value, // 风格
+        seed: seed.value,
+        steps: steps.value,
+        scale: scale.value,
+        sampler: sampler.value,
+        clipGuidancePreset: clipGuidancePreset.value,
+        stylePreset: stylePreset.value,
       },
     } as unknown as AiImageApi.ImageDrawReqVO;
     await drawImage(form);
   } finally {
-    // 回调
     emits('onDrawComplete', AiPlatformEnum.STABLE_DIFFUSION);
-    // 加载结束
     drawIn.value = false;
   }
 }
 
-/** 填充值 */
 async function settingValues(detail: AiImageApi.Image) {
   prompt.value = detail.prompt;
   width.value = detail.width;
@@ -130,21 +117,22 @@ defineExpose({ settingValues });
 </script>
 <template>
   <div class="prompt">
-    <b>画面描述</b>
-    <p>建议使用“形容词 + 动词 + 风格”的格式，使用“，”隔开</p>
+    <b>{{ $t('ai.image.common.promptDescription') }}</b>
+    <p>{{ $t('ai.image.common.promptHint') }}</p>
     <Textarea
       v-model:value="prompt"
       :maxlength="1024"
       :rows="5"
       class="mt-4 w-full"
-      placeholder="例如：童话里的小屋应该是什么样子？"
+      :placeholder="$t('ai.image.common.promptPlaceholder')"
       show-count
     />
   </div>
 
-  <!-- 热词区域 -->
   <div class="mt-8 flex flex-col">
-    <div><b>随机热词</b></div>
+    <div>
+      <b>{{ $t('ai.image.common.hotWords') }}</b>
+    </div>
     <Space wrap class="mt-4 flex flex-wrap gap-2">
       <Button
         shape="round"
@@ -159,9 +147,10 @@ defineExpose({ settingValues });
     </Space>
   </div>
 
-  <!-- 参数项：采样方法 -->
   <div class="mt-8">
-    <div><b>采样方法</b></div>
+    <div>
+      <b>{{ $t('ai.image.stableDiffusion.sampler') }}</b>
+    </div>
     <Space wrap class="mt-4 w-full">
       <Select
         v-model:value="sampler"
@@ -180,9 +169,10 @@ defineExpose({ settingValues });
     </Space>
   </div>
 
-  <!-- CLIP -->
   <div class="mt-8">
-    <div><b>CLIP</b></div>
+    <div>
+      <b>{{ $t('ai.image.stableDiffusion.clip') }}</b>
+    </div>
     <Space wrap class="mt-4 w-full">
       <Select
         v-model:value="clipGuidancePreset"
@@ -201,9 +191,10 @@ defineExpose({ settingValues });
     </Space>
   </div>
 
-  <!-- 风格 -->
   <div class="mt-8">
-    <div><b>风格</b></div>
+    <div>
+      <b>{{ $t('ai.image.stableDiffusion.style') }}</b>
+    </div>
     <Space wrap class="mt-4 w-full">
       <Select
         v-model:value="stylePreset"
@@ -223,31 +214,32 @@ defineExpose({ settingValues });
     </Space>
   </div>
 
-  <!-- 图片尺寸 -->
-  <!-- TODO @AI：同 /Users/yunai/Java/yudao-ui-admin-vben-v5/apps/web-antd/src/views/ai/image/index/modules/common/index.vue 的问题 -->
   <div class="mt-8">
-    <div><b>图片尺寸</b></div>
+    <div>
+      <b>{{ $t('ai.image.stableDiffusion.size') }}</b>
+    </div>
     <Space wrap class="mt-4 w-full">
       <InputNumber
         v-model:value="width"
         class="w-40"
-        placeholder="图片宽度"
-        addon-before="宽"
+        :placeholder="$t('ai.image.common.width')"
+        :addon-before="$t('ai.image.common.width')"
         addon-after="px"
       />
       <InputNumber
         v-model:value="height"
         class="w-40"
-        placeholder="图片高度"
-        addon-before="高"
+        :placeholder="$t('ai.image.common.height')"
+        :addon-before="$t('ai.image.common.height')"
         addon-after="px"
       />
     </Space>
   </div>
 
-  <!-- 迭代步数 -->
   <div class="mt-8">
-    <div><b>迭代步数</b></div>
+    <div>
+      <b>{{ $t('ai.image.stableDiffusion.steps') }}</b>
+    </div>
     <Space wrap class="mt-4 w-full">
       <InputNumber
         v-model:value="steps"
@@ -258,9 +250,10 @@ defineExpose({ settingValues });
     </Space>
   </div>
 
-  <!-- 引导系数 -->
   <div class="mt-8">
-    <div><b>引导系数</b></div>
+    <div>
+      <b>{{ $t('ai.image.stableDiffusion.scale') }}</b>
+    </div>
     <Space wrap class="mt-4 w-full">
       <InputNumber
         v-model:value="scale"
@@ -272,9 +265,10 @@ defineExpose({ settingValues });
     </Space>
   </div>
 
-  <!-- 随机因子 -->
   <div class="mt-8">
-    <div><b>随机因子</b></div>
+    <div>
+      <b>{{ $t('ai.image.stableDiffusion.seed') }}</b>
+    </div>
     <Space wrap class="mt-4 w-full">
       <InputNumber
         v-model:value="seed"
@@ -285,7 +279,6 @@ defineExpose({ settingValues });
     </Space>
   </div>
 
-  <!-- 生成按钮 -->
   <div class="mt-12 flex justify-center">
     <Button
       type="primary"
@@ -295,7 +288,11 @@ defineExpose({ settingValues });
       :disabled="prompt.length === 0"
       @click="handleGenerateImage"
     >
-      {{ drawIn ? '生成中' : '生成内容' }}
+      {{
+        drawIn
+          ? $t('ai.image.message.generatingTip')
+          : $t('ai.image.message.generatingContent')
+      }}
     </Button>
   </div>
 </template>

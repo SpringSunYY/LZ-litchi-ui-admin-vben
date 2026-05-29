@@ -5,6 +5,8 @@ import { IconifyIcon } from '@vben/icons';
 
 import { Tooltip } from 'ant-design-vue';
 
+import { $t } from '#/locales';
+
 const props = defineProps<{
   segments: {
     content: string;
@@ -60,7 +62,8 @@ function handleClick(doc: any) {
     class="mt-2 rounded-lg bg-gray-50 p-2"
   >
     <div class="mb-2 flex items-center text-sm text-gray-400">
-      <IconifyIcon icon="lucide:file-text" class="mr-1" /> 知识引用
+      <IconifyIcon icon="lucide:file-text" class="mr-1" />
+      {{ $t('ai.chat.message.knowledgeReference') }}
     </div>
     <div class="flex flex-wrap gap-2">
       <div
@@ -72,7 +75,7 @@ function handleClick(doc: any) {
         <div class="mb-1 text-sm text-gray-600">
           {{ doc.title }}
           <span class="ml-1 text-xs text-gray-300">
-            （{{ doc.segments.length }} 条）
+            （{{ doc.segments.length }}）
           </span>
         </div>
       </div>
@@ -91,7 +94,7 @@ function handleClick(doc: any) {
           <div
             class="mb-2 block w-fit rounded-sm px-2 py-1 text-xs text-gray-400"
           >
-            分段 {{ segment.id }}
+            {{ $t('ai.chat.message.segment', [segment.id]) }}
           </div>
           <div class="mt-2 text-sm leading-[1.6] text-gray-600">
             {{ segment.content }}

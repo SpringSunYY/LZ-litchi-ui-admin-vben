@@ -3,6 +3,7 @@ import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 
 import { z } from '#/adapter/form';
 import { getModelSimpleList } from '#/api/ai/model/model';
+import { $t } from '#/locales';
 import {
   AiModelTypeEnum,
   CommonStatusEnum,
@@ -25,40 +26,48 @@ export function useFormSchema(): VbenFormSchema[] {
     {
       component: 'Input',
       fieldName: 'name',
-      label: '知识库名称',
+      label: $t('ai.knowledge.field.name'),
       componentProps: {
-        placeholder: '请输入知识库名称',
+        placeholder: $t('ui.placeholder.input', [
+          $t('ai.knowledge.field.name'),
+        ]),
       },
       rules: 'required',
     },
     {
       fieldName: 'description',
-      label: '知识库描述',
+      label: $t('ai.knowledge.field.description'),
       component: 'Textarea',
       componentProps: {
         rows: 3,
-        placeholder: '请输入知识库描述',
+        placeholder: $t('ui.placeholder.input', [
+          $t('ai.knowledge.field.description'),
+        ]),
       },
     },
     {
       component: 'ApiSelect',
       fieldName: 'embeddingModelId',
-      label: '向量模型',
+      label: $t('ai.knowledge.field.embeddingModel'),
       componentProps: {
         api: () => getModelSimpleList(AiModelTypeEnum.EMBEDDING),
         labelField: 'name',
         valueField: 'id',
         allowClear: true,
-        placeholder: '请选择向量模型',
+        placeholder: $t('ui.placeholder.select', [
+          $t('ai.knowledge.field.embeddingModel'),
+        ]),
       },
       rules: 'required',
     },
     {
       fieldName: 'topK',
-      label: '检索 topK',
+      label: $t('ai.knowledge.field.topK'),
       component: 'InputNumber',
       componentProps: {
-        placeholder: '请输入检索 topK',
+        placeholder: $t('ui.placeholder.input', [
+          $t('ai.knowledge.field.topK'),
+        ]),
         min: 0,
         max: 10,
       },
@@ -66,10 +75,12 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'similarityThreshold',
-      label: '检索相似度阈值',
+      label: $t('ai.knowledge.field.similarityThreshold'),
       component: 'InputNumber',
       componentProps: {
-        placeholder: '请输入检索相似度阈值',
+        placeholder: $t('ui.placeholder.input', [
+          $t('ai.knowledge.field.similarityThreshold'),
+        ]),
         min: 0,
         max: 1,
         step: 0.01,
@@ -79,7 +90,7 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'status',
-      label: '是否启用',
+      label: $t('ai.knowledge.field.status'),
       component: 'RadioGroup',
       componentProps: {
         options: getDictOptions(DICT_TYPE.COMMON_STATUS, 'number'),
@@ -96,26 +107,30 @@ export function useGridFormSchema(): VbenFormSchema[] {
   return [
     {
       fieldName: 'name',
-      label: '知识库名称',
+      label: $t('ai.knowledge.field.name'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入知识库名称',
+        placeholder: $t('ui.placeholder.input', [
+          $t('ai.knowledge.field.name'),
+        ]),
         allowClear: true,
       },
     },
     {
       fieldName: 'status',
-      label: '是否启用',
+      label: $t('ai.knowledge.field.status'),
       component: 'Select',
       componentProps: {
         options: getDictOptions(DICT_TYPE.COMMON_STATUS, 'number'),
-        placeholder: '请选择是否启用',
+        placeholder: $t('ui.placeholder.select', [
+          $t('ai.knowledge.field.status'),
+        ]),
         allowClear: true,
       },
     },
     {
       fieldName: 'createTime',
-      label: '创建时间',
+      label: $t('ai.knowledge.field.createTime'),
       component: 'RangePicker',
       componentProps: {
         ...getRangePickerDefaultProps(),
@@ -130,27 +145,27 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
   return [
     {
       field: 'id',
-      title: '编号',
+      title: $t('ai.knowledge.field.id'),
       minWidth: 100,
     },
     {
       field: 'name',
-      title: '知识库名称',
+      title: $t('ai.knowledge.field.name'),
       minWidth: 150,
     },
     {
       field: 'description',
-      title: '知识库描述',
+      title: $t('ai.knowledge.field.description'),
       minWidth: 200,
     },
     {
       field: 'embeddingModel',
-      title: '向量化模型',
+      title: $t('ai.knowledge.field.embeddingModel'),
       minWidth: 150,
     },
     {
       field: 'status',
-      title: '是否启用',
+      title: $t('ai.knowledge.field.status'),
       minWidth: 100,
       cellRender: {
         name: 'CellDict',
@@ -159,12 +174,12 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
     },
     {
       field: 'createTime',
-      title: '创建时间',
+      title: $t('ai.knowledge.field.createTime'),
       minWidth: 180,
       formatter: 'formatDateTime',
     },
     {
-      title: '操作',
+      title: $t('common.operation'),
       width: 280,
       fixed: 'right',
       slots: { default: 'actions' },

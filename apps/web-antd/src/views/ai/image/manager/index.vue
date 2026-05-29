@@ -37,23 +37,22 @@ async function handleUpdatePublicStatusChange(
   newStatus: boolean,
   row: AiImageApi.Image,
 ): Promise<boolean | undefined> {
-  const text = newStatus ? '公开' : '私有';
   return new Promise((resolve, reject) => {
     confirm({
-      content: `确认要将该图片切换为【${text}】吗？`,
+      content: newStatus
+        ? $t('ai.image.message.confirmPublic')
+        : $t('ai.image.message.confirmPrivate'),
     })
       .then(async () => {
-        // 更新图片状态
         await updateImage({
           id: row.id,
           publicStatus: newStatus,
         });
-        // 提示并返回成功
         message.success($t('ui.actionMessage.operationSuccess'));
         resolve(true);
       })
       .catch(() => {
-        reject(new Error('取消操作'));
+        reject(new Error($t('common.cancel')));
       });
   });
 }
@@ -92,9 +91,12 @@ const [Grid, gridApi] = useVbenVxeGrid({
 <template>
   <Page auto-content-height>
     <template #doc>
-      <DocAlert title="AI 绘图创作" url="https://doc.iocoder.cn/ai/image/" />
+      <DocAlert
+        :title="$t('ai.image.image')"
+        url="https://doc.iocoder.cn/ai/image/"
+      />
     </template>
-    <Grid table-title="绘画管理列表">
+    <Grid :table-title="$t('ai.image.list')">
       <template #actions="{ row }">
         <TableAction
           :actions="[

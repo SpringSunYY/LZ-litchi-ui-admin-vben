@@ -491,6 +491,7 @@ export function useGridColumns(
     {
       field: 'dataSourceConfigId',
       title: $t('infra.codegen.dataSource'),
+      sortable: true,
       formatter: ({ cellValue }) => getDataSourceConfigName?.(cellValue) || '-',
     },
     {

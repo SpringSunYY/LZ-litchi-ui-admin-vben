@@ -65,7 +65,10 @@ async function handleStatusChange(
 ): Promise<boolean | undefined> {
   return new Promise((resolve, reject) => {
     confirm({
-      content: `你要将片段 ${row.id} 的状态切换为【${getDictLabel(DICT_TYPE.COMMON_STATUS, newStatus)}】吗？`,
+      content: $t('ai.knowledge.segment.message.switchConfirm', [
+        row.id,
+        getDictLabel(DICT_TYPE.COMMON_STATUS, newStatus),
+      ]),
     })
       .then(async () => {
         // 更新片段状态
@@ -119,12 +122,14 @@ onMounted(() => {
 <template>
   <Page auto-content-height>
     <FormModal @success="handleRefresh" />
-    <Grid table-title="分段列表">
+    <Grid :table-title="$t('ai.knowledge.segment.list')">
       <template #toolbar-tools>
         <TableAction
           :actions="[
             {
-              label: $t('ui.actionTitle.create', ['分段']),
+              label: $t('ui.actionTitle.create', [
+                $t('ai.knowledge.segment.segment'),
+              ]),
               type: 'primary',
               icon: ACTION_ICON.ADD,
               auth: ['ai:knowledge:create'],
@@ -137,7 +142,9 @@ onMounted(() => {
         <div
           class="whitespace-pre-wrap border-l-4 border-blue-500 px-2.5 py-5 leading-5"
         >
-          <div class="mb-2 text-sm font-bold text-gray-600">完整内容：</div>
+          <div class="mb-2 text-sm font-bold text-gray-600">
+            {{ $t('ai.knowledge.segment.message.fullContent') }}：
+          </div>
           {{ row.content }}
         </div>
       </template>

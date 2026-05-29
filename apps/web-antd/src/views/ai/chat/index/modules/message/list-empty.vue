@@ -1,13 +1,15 @@
 <!-- 消息列表为空时，展示 prompt 列表 -->
 <script setup lang="ts">
+import { $t } from '#/locales';
+
 const emits = defineEmits(['onPrompt']);
 
 const promptList = [
   {
-    prompt: '今天气怎么样?',
+    prompt: $t('ai.chat.message.suggestWeather'),
   },
   {
-    prompt: '写一首好听的诗歌?',
+    prompt: $t('ai.chat.message.suggestPoem'),
   },
 ]; // prompt 列表
 
@@ -20,7 +22,9 @@ async function handlerPromptClick(prompt: any) {
   <div class="relative flex h-full w-full flex-row justify-center">
     <div class="flex flex-col justify-center">
       <!-- title -->
-      <div class="text-center text-3xl font-bold">芋道 AI</div>
+      <div class="text-center text-3xl font-bold">
+        {{ $t('ai.chat.message.aiBranding') }}
+      </div>
       <!-- role-list -->
       <div class="mt-5 flex w-96 flex-wrap items-center justify-center">
         <div

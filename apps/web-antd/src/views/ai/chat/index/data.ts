@@ -1,6 +1,7 @@
 import type { VbenFormSchema } from '#/adapter/form';
 
 import { getModelSimpleList } from '#/api/ai/model/model';
+import { $t } from '#/locales';
 import { AiModelTypeEnum } from '#/utils';
 
 export function useFormSchema(): VbenFormSchema[] {
@@ -15,32 +16,34 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'systemMessage',
-      label: '角色设定',
+      label: $t('ai.chat.field.systemMessage'),
       component: 'Textarea',
       componentProps: {
         rows: 4,
-        placeholder: '请输入角色设定',
+        placeholder: $t('ai.chat.field.systemMessage'),
       },
     },
     {
       component: 'ApiSelect',
       fieldName: 'modelId',
-      label: '模型',
+      label: $t('ai.chat.field.modelId'),
       componentProps: {
         api: () => getModelSimpleList(AiModelTypeEnum.CHAT),
         labelField: 'name',
         valueField: 'id',
         allowClear: true,
-        placeholder: '请选择模型',
+        placeholder: $t('ui.placeholder.select', [$t('ai.chat.field.modelId')]),
       },
       rules: 'required',
     },
     {
       fieldName: 'temperature',
-      label: '温度参数',
+      label: $t('ai.chat.field.temperature'),
       component: 'InputNumber',
       componentProps: {
-        placeholder: '请输入温度参数',
+        placeholder: $t('ui.placeholder.input', [
+          $t('ai.chat.field.temperature'),
+        ]),
         precision: 2,
         min: 0,
         max: 2,
@@ -49,10 +52,12 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'maxTokens',
-      label: '回复数 Token 数',
+      label: $t('ai.chat.field.maxTokens'),
       component: 'InputNumber',
       componentProps: {
-        placeholder: '请输入回复数 Token 数',
+        placeholder: $t('ui.placeholder.input', [
+          $t('ai.chat.field.maxTokens'),
+        ]),
         min: 0,
         max: 8192,
       },
@@ -60,10 +65,12 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'maxContexts',
-      label: '上下文数量',
+      label: $t('ai.chat.field.maxContexts'),
       component: 'InputNumber',
       componentProps: {
-        placeholder: '请输入上下文数量',
+        placeholder: $t('ui.placeholder.input', [
+          $t('ai.chat.field.maxContexts'),
+        ]),
         min: 0,
         max: 20,
       },

@@ -85,12 +85,14 @@ const [Grid, gridApi] = useVbenVxeGrid({
       <DocAlert title="AI 手册" url="https://doc.iocoder.cn/ai/build/" />
     </template>
     <FormModal @success="handleRefresh" />
-    <Grid table-title="API  密钥列表">
+    <Grid :table-title="$t('ai.model.apiKey.list')">
       <template #toolbar-tools>
         <TableAction
           :actions="[
             {
-              label: $t('ui.actionTitle.create', ['API  密钥']),
+              label: $t('ui.actionTitle.create', [
+                $t('ai.model.apiKey.apiKey'),
+              ]),
               type: 'primary',
               icon: ACTION_ICON.ADD,
               auth: ['ai:api-key:create'],

@@ -1,6 +1,7 @@
 import type { VbenFormSchema } from '#/adapter/form';
 import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 
+import { $t } from '#/locales';
 import { DICT_TYPE, getDictOptions, getRangePickerDefaultProps } from '#/utils';
 
 /** 列表的搜索表单 */
@@ -8,35 +9,37 @@ export function useGridFormSchema(): VbenFormSchema[] {
   return [
     {
       fieldName: 'code',
-      label: '流程标识',
+      label: $t('ai.workflow.field.code'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入流程标识',
+        placeholder: $t('ui.placeholder.input', [$t('ai.workflow.field.code')]),
         allowClear: true,
       },
     },
     {
       fieldName: 'name',
-      label: '流程名称',
+      label: $t('ai.workflow.field.name'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入流程名称',
+        placeholder: $t('ui.placeholder.input', [$t('ai.workflow.field.name')]),
         allowClear: true,
       },
     },
     {
       fieldName: 'status',
-      label: '状态',
+      label: $t('ai.workflow.field.status'),
       component: 'Select',
       componentProps: {
         options: getDictOptions(DICT_TYPE.COMMON_STATUS, 'number'),
-        placeholder: '请选择状态',
+        placeholder: $t('ui.placeholder.select', [
+          $t('ai.workflow.field.status'),
+        ]),
         allowClear: true,
       },
     },
     {
       fieldName: 'createTime',
-      label: '创建时间',
+      label: $t('ai.workflow.field.createTime'),
       component: 'RangePicker',
       componentProps: {
         ...getRangePickerDefaultProps(),
@@ -51,33 +54,33 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
   return [
     {
       field: 'id',
-      title: '编号',
+      title: $t('ai.workflow.field.id'),
       minWidth: 100,
     },
     {
       field: 'code',
-      title: '流程标识',
+      title: $t('ai.workflow.field.code'),
       minWidth: 150,
     },
     {
       field: 'name',
-      title: '流程名称',
+      title: $t('ai.workflow.field.name'),
       minWidth: 200,
     },
     {
       field: 'createTime',
-      title: '创建时间',
+      title: $t('ai.workflow.field.createTime'),
       minWidth: 180,
       formatter: 'formatDateTime',
     },
     {
       field: 'remark',
-      title: '备注',
+      title: $t('ai.workflow.field.remark'),
       minWidth: 200,
     },
     {
       field: 'status',
-      title: '状态',
+      title: $t('ai.workflow.field.status'),
       minWidth: 100,
       cellRender: {
         name: 'CellDict',
@@ -85,7 +88,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
       },
     },
     {
-      title: '操作',
+      title: $t('common.operation'),
       width: 130,
       fixed: 'right',
       slots: { default: 'actions' },

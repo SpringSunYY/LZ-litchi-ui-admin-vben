@@ -21,7 +21,7 @@ export function useFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'name',
       label: $t('infra.demo01Contact.field.name'),
-      rules: 'required',
+      // rules: 'required',
       component: 'Input',
       componentProps: {
         placeholder: $t('ui.placeholder.input', [
@@ -33,7 +33,7 @@ export function useFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'sex',
       label: $t('infra.demo01Contact.field.sex'),
-      rules: 'required',
+      // rules: 'required',
       component: 'I18nRadioGroup',
       componentProps: {
         options: getDictOptions(DICT_TYPE.SYSTEM_USER_SEX, 'number'),
@@ -45,7 +45,7 @@ export function useFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'birthday',
       label: $t('infra.demo01Contact.field.birthday'),
-      rules: 'required',
+      // rules: 'required',
       component: 'DatePicker',
       componentProps: {
         showTime: true,
@@ -57,7 +57,7 @@ export function useFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'age',
       label: $t('infra.demo01Contact.field.age'),
-      component: 'InputNumber',
+      component: 'Input',
       componentProps: {
         min: 0,
         controlsPosition: 'right',
@@ -70,7 +70,7 @@ export function useFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'description',
       label: $t('infra.demo01Contact.field.description'),
-      rules: 'required',
+      // rules: 'required',
       component: 'RichTextarea',
       componentProps: {
         moduleType: 'infra',

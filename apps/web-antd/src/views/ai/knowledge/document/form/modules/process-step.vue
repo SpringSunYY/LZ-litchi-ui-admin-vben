@@ -6,6 +6,7 @@ import { IconifyIcon } from '@vben/icons';
 import { Button, Progress } from 'ant-design-vue';
 
 import { getKnowledgeSegmentProcessList } from '#/api/ai/knowledge/segment';
+import { $t } from '#/locales';
 
 const props = defineProps({
   modelValue: {
@@ -139,7 +140,9 @@ onBeforeUnmount(() => {
 
         <!-- 分段数量 -->
         <div class="ml-2 text-sm text-gray-400">
-          分段数量：{{ file.count ? file.count : '-' }}
+          {{ $t('ai.knowledge.document.message.segmentCount') }}：{{
+            file.count ? file.count : '-'
+          }}
         </div>
       </div>
     </div>
@@ -151,7 +154,7 @@ onBeforeUnmount(() => {
         :disabled="!allProcessComplete"
         @click="handleComplete"
       >
-        完成
+        {{ $t('ai.knowledge.document.message.complete') }}
       </Button>
     </div>
   </div>

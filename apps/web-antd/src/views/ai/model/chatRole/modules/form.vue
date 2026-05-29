@@ -21,8 +21,8 @@ const emit = defineEmits(['success']);
 const formData = ref<AiModelChatRoleApi.ChatRole>();
 const getTitle = computed(() => {
   return formData.value?.id
-    ? $t('ui.actionTitle.edit', ['聊天角色'])
-    : $t('ui.actionTitle.create', ['聊天角色']);
+    ? $t('ui.actionTitle.edit', [$t('ai.model.chatRole.chatRole')])
+    : $t('ui.actionTitle.create', [$t('ai.model.chatRole.chatRole')]);
 });
 
 const [Form, formApi] = useVbenForm({

@@ -6,6 +6,8 @@ import { ref } from 'vue';
 import { useVbenDrawer } from '@vben/common-ui';
 import { IconifyIcon } from '@vben/icons';
 
+import { $t } from '#/locales';
+
 defineProps<{
   webSearchPages?: AiChatMessageApi.WebSearchPage[];
 }>();
@@ -15,7 +17,7 @@ const selectedResult = ref<AiChatMessageApi.WebSearchPage | null>(null); // 选�
 const iconLoadError = ref<Record<number, boolean>>({}); // 记录图标加载失败
 
 const [Drawer, drawerApi] = useVbenDrawer({
-  title: '联网搜索详情',
+  title: $t('ai.chat.message.webSearchDetail'),
   closable: true,
   footer: true,
   onCancel() {
@@ -55,7 +57,9 @@ function handleIconError(index: number) {
     >
       <div class="flex items-center gap-1.5">
         <IconifyIcon icon="lucide:search" :size="14" />
-        <span>联网搜索结果 ({{ webSearchPages.length }} 条)</span>
+        <span>{{
+          $t('ai.chat.message.webSearchResult', [webSearchPages.length])
+        }}</span>
       </div>
       <IconifyIcon
         :icon="isExpanded ? 'lucide:chevron-up' : 'lucide:chevron-down'"
@@ -117,7 +121,11 @@ function handleIconError(index: number) {
     </div>
 
     <!-- 联网搜索详情 Drawer -->
-    <Drawer class="w-[600px]" cancel-text="关闭" confirm-text="访问原文">
+    <Drawer
+      class="w-[600px]"
+      :cancel-text="$t('ai.chat.message.close')"
+      :confirm-text="$t('ai.chat.message.visitOriginal')"
+    >
       <div v-if="selectedResult">
         <!-- 标题区域 -->
         <div class="mb-4 flex items-start gap-3">
@@ -150,7 +158,9 @@ function handleIconError(index: number) {
         <div class="space-y-4">
           <!-- 简短描述 -->
           <div>
-            <div class="mb-2 text-sm font-semibold text-gray-900">简短描述</div>
+            <div class="mb-2 text-sm font-semibold text-gray-900">
+              {{ $t('ai.chat.message.shortDescription') }}
+            </div>
             <div
               class="rounded-lg bg-gray-50 p-3 text-sm leading-relaxed text-gray-700"
             >
@@ -159,7 +169,9 @@ function handleIconError(index: number) {
           </div>
           <!-- 内容摘要 -->
           <div v-if="selectedResult.summary">
-            <div class="mb-2 text-sm font-semibold text-gray-900">内容摘要</div>
+            <div class="mb-2 text-sm font-semibold text-gray-900">
+              {{ $t('ai.chat.message.contentSummary') }}
+            </div>
             <div
               class="max-h-[50vh] overflow-y-auto whitespace-pre-wrap rounded-lg bg-gray-50 p-3 text-sm leading-relaxed text-gray-900"
             >

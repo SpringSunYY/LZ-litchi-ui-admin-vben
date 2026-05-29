@@ -2,6 +2,7 @@ import type { VbenFormSchema } from '#/adapter/form';
 import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 import type { AiKnowledgeSegmentApi } from '#/api/ai/knowledge/segment';
 
+import { $t } from '#/locales';
 import { CommonStatusEnum, DICT_TYPE, getDictOptions } from '#/utils';
 
 /** 新增/修改的表单 */
@@ -25,10 +26,12 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'content',
-      label: '切片内容',
+      label: $t('ai.knowledge.segment.field.content'),
       component: 'Textarea',
       componentProps: {
-        placeholder: '请输入切片内容',
+        placeholder: $t('ui.placeholder.input', [
+          $t('ai.knowledge.segment.field.content'),
+        ]),
         rows: 6,
         showCount: true,
       },
@@ -41,19 +44,23 @@ export function useGridFormSchema(): VbenFormSchema[] {
   return [
     {
       fieldName: 'documentId',
-      label: '文档编号',
+      label: $t('ai.knowledge.segment.field.documentId'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入文档编号',
+        placeholder: $t('ui.placeholder.input', [
+          $t('ai.knowledge.segment.field.documentId'),
+        ]),
         allowClear: true,
       },
     },
     {
       fieldName: 'status',
-      label: '是否启用',
+      label: $t('ai.knowledge.segment.field.status'),
       component: 'Select',
       componentProps: {
-        placeholder: '请选择是否启用',
+        placeholder: $t('ui.placeholder.select', [
+          $t('ai.knowledge.segment.field.status'),
+        ]),
         allowClear: true,
         options: getDictOptions(DICT_TYPE.COMMON_STATUS, 'number'),
       },
@@ -71,7 +78,7 @@ export function useGridColumns(
   return [
     {
       field: 'id',
-      title: '分段编号',
+      title: $t('ai.knowledge.segment.field.id'),
       minWidth: 100,
     },
     {
@@ -81,27 +88,27 @@ export function useGridColumns(
     },
     {
       field: 'content',
-      title: '切片内容',
+      title: $t('ai.knowledge.segment.field.content'),
       minWidth: 250,
     },
     {
       field: 'contentLength',
-      title: '字符数',
+      title: $t('ai.knowledge.segment.field.contentLength'),
       minWidth: 100,
     },
     {
       field: 'tokens',
-      title: 'token 数量',
+      title: $t('ai.knowledge.segment.field.tokens'),
       minWidth: 120,
     },
     {
       field: 'retrievalCount',
-      title: '召回次数',
+      title: $t('ai.knowledge.segment.field.retrievalCount'),
       minWidth: 100,
     },
     {
       field: 'status',
-      title: '状态',
+      title: $t('ai.knowledge.segment.field.status'),
       minWidth: 100,
       align: 'center',
       cellRender: {
@@ -115,12 +122,12 @@ export function useGridColumns(
     },
     {
       field: 'createTime',
-      title: '创建时间',
+      title: $t('ai.knowledge.segment.field.createTime'),
       minWidth: 180,
       formatter: 'formatDateTime',
     },
     {
-      title: '操作',
+      title: $t('common.operation'),
       width: 150,
       fixed: 'right',
       slots: { default: 'actions' },

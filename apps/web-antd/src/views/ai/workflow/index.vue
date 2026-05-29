@@ -81,12 +81,12 @@ const [Grid, gridApi] = useVbenVxeGrid({
 
 <template>
   <Page auto-content-height>
-    <Grid table-title="AI 工作流列表">
+    <Grid :table-title="$t('ai.workflow.list')">
       <template #toolbar-tools>
         <TableAction
           :actions="[
             {
-              label: $t('ui.actionTitle.create', ['AI 工作流']),
+              label: $t('ui.actionTitle.create', [$t('ai.workflow.workflow')]),
               type: 'primary',
               icon: ACTION_ICON.ADD,
               auth: ['ai:workflow:create'],

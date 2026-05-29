@@ -11,6 +11,7 @@ import {
   DICT_TYPE,
   getDictOptions,
 } from '#/utils';
+import { $t } from '#/locales';
 
 /** 新增/修改的表单 */
 export function useFormSchema(): VbenFormSchema[] {
@@ -34,24 +35,28 @@ export function useFormSchema(): VbenFormSchema[] {
     {
       component: 'Input',
       fieldName: 'name',
-      label: '角色名称',
+      label: $t('ai.model.chatRole.field.name'),
       rules: 'required',
       componentProps: {
-        placeholder: '请输入角色名称',
+        placeholder: $t('ui.placeholder.input', [
+          $t('ai.model.chatRole.field.name'),
+        ]),
       },
     },
     {
       component: 'ImageUpload',
       fieldName: 'avatar',
-      label: '角色头像',
+      label: $t('ai.model.chatRole.field.avatar'),
       rules: 'required',
     },
     {
       fieldName: 'modelId',
-      label: '绑定模型',
+      label: $t('ai.model.chatRole.field.modelId'),
       component: 'ApiSelect',
       componentProps: {
-        placeholder: '请选择绑定模型',
+        placeholder: $t('ui.placeholder.select', [
+          $t('ai.model.chatRole.field.modelId'),
+        ]),
         api: () => getModelSimpleList(AiModelTypeEnum.CHAT),
         labelField: 'name',
         valueField: 'id',
@@ -67,10 +72,12 @@ export function useFormSchema(): VbenFormSchema[] {
     {
       component: 'Input',
       fieldName: 'category',
-      label: '角色类别',
+      label: $t('ai.model.chatRole.field.category'),
       rules: 'required',
       componentProps: {
-        placeholder: '请输入角色类别',
+        placeholder: $t('ui.placeholder.input', [
+          $t('ai.model.chatRole.field.category'),
+        ]),
       },
       dependencies: {
         triggerFields: ['formType'],
@@ -82,27 +89,33 @@ export function useFormSchema(): VbenFormSchema[] {
     {
       component: 'Textarea',
       fieldName: 'description',
-      label: '角色描述',
+      label: $t('ai.model.chatRole.field.description'),
       componentProps: {
-        placeholder: '请输入角色描述',
+        placeholder: $t('ui.placeholder.input', [
+          $t('ai.model.chatRole.field.description'),
+        ]),
       },
       rules: 'required',
     },
     {
       fieldName: 'systemMessage',
-      label: '角色设定',
+      label: $t('ai.model.chatRole.field.systemMessage'),
       component: 'Textarea',
       componentProps: {
-        placeholder: '请输入角色设定',
+        placeholder: $t('ui.placeholder.input', [
+          $t('ai.model.chatRole.field.systemMessage'),
+        ]),
       },
       rules: 'required',
     },
     {
       fieldName: 'knowledgeIds',
-      label: '引用知识库',
+      label: $t('ai.model.chatRole.field.knowledgeIds'),
       component: 'ApiSelect',
       componentProps: {
-        placeholder: '请选择引用知识库',
+        placeholder: $t('ui.placeholder.select', [
+          $t('ai.model.chatRole.field.knowledgeIds'),
+        ]),
         api: getSimpleKnowledgeList,
         labelField: 'name',
         mode: 'multiple',
@@ -112,10 +125,12 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'toolIds',
-      label: '引用工具',
+      label: $t('ai.model.chatRole.field.toolIds'),
       component: 'ApiSelect',
       componentProps: {
-        placeholder: '请选择引用工具',
+        placeholder: $t('ui.placeholder.select', [
+          $t('ai.model.chatRole.field.toolIds'),
+        ]),
         api: getToolSimpleList,
         mode: 'multiple',
         labelField: 'name',
@@ -125,10 +140,12 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'mcpClientNames',
-      label: '引用 MCP',
+      label: $t('ai.model.chatRole.field.mcpClientNames'),
       component: 'Select',
       componentProps: {
-        placeholder: '请选择 MCP',
+        placeholder: $t('ui.placeholder.select', [
+          $t('ai.model.chatRole.field.mcpClientNames'),
+        ]),
         options: getDictOptions(DICT_TYPE.AI_MCP_CLIENT_NAME, 'string'),
         mode: 'multiple',
         allowClear: true,
@@ -136,7 +153,7 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'publicStatus',
-      label: '是否公开',
+      label: $t('ai.model.chatRole.field.publicStatus'),
       component: 'RadioGroup',
       componentProps: {
         options: getDictOptions(DICT_TYPE.INFRA_BOOLEAN_STRING, 'boolean'),
@@ -154,10 +171,12 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'sort',
-      label: '角色排序',
+      label: $t('ai.model.chatRole.field.sort'),
       component: 'InputNumber',
       componentProps: {
-        placeholder: '请输入角色排序',
+        placeholder: $t('ui.placeholder.input', [
+          $t('ai.model.chatRole.field.sort'),
+        ]),
       },
       dependencies: {
         triggerFields: ['formType'],
@@ -169,7 +188,7 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'status',
-      label: '开启状态',
+      label: $t('ai.model.chatRole.field.status'),
       component: 'RadioGroup',
       componentProps: {
         options: getDictOptions(DICT_TYPE.COMMON_STATUS, 'number'),
@@ -192,26 +211,32 @@ export function useGridFormSchema(): VbenFormSchema[] {
   return [
     {
       fieldName: 'name',
-      label: '角色名称',
+      label: $t('ai.model.chatRole.field.name'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入角色名称',
+        placeholder: $t('ui.placeholder.input', [
+          $t('ai.model.chatRole.field.name'),
+        ]),
       },
     },
     {
       fieldName: 'category',
-      label: '角色类别',
+      label: $t('ai.model.chatRole.field.category'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入角色类别',
+        placeholder: $t('ui.placeholder.input', [
+          $t('ai.model.chatRole.field.category'),
+        ]),
       },
     },
     {
       fieldName: 'publicStatus',
-      label: '是否公开',
+      label: $t('ai.model.chatRole.field.publicStatus'),
       component: 'Select',
       componentProps: {
-        placeholder: '请选择是否公开',
+        placeholder: $t('ui.placeholder.select', [
+          $t('ai.model.chatRole.field.publicStatus'),
+        ]),
         options: getDictOptions(DICT_TYPE.INFRA_BOOLEAN_STRING, 'boolean'),
         allowClear: true,
       },
@@ -225,16 +250,16 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
   return [
     {
       field: 'name',
-      title: '角色名称',
+      title: $t('ai.model.chatRole.field.name'),
       minWidth: 100,
     },
     {
-      title: '绑定模型',
+      title: $t('ai.model.chatRole.field.modelName'),
       field: 'modelName',
       minWidth: 100,
     },
     {
-      title: '角色头像',
+      title: $t('ai.model.chatRole.field.avatar'),
       field: 'avatar',
       minWidth: 140,
       cellRender: {
@@ -246,53 +271,57 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
       },
     },
     {
-      title: '角色类别',
+      title: $t('ai.model.chatRole.field.category'),
       field: 'category',
       minWidth: 100,
     },
     {
-      title: '角色描述',
+      title: $t('ai.model.chatRole.field.description'),
       field: 'description',
       minWidth: 100,
     },
     {
-      title: '角色设定',
+      title: $t('ai.model.chatRole.field.systemMessage'),
       field: 'systemMessage',
       minWidth: 100,
     },
     {
-      title: '知识库',
+      title: $t('ai.model.chatRole.field.knowledgeIds'),
       field: 'knowledgeIds',
       minWidth: 100,
       formatter: ({ cellValue }) => {
         return !cellValue || cellValue.length === 0
           ? '-'
-          : `引用${cellValue.length}个`;
+          : $t('ai.model.chatRole.message.referencedKnowledge', [
+              cellValue.length,
+            ]);
       },
     },
     {
-      title: '工具',
+      title: $t('ai.model.chatRole.field.toolIds'),
       field: 'toolIds',
       minWidth: 100,
       formatter: ({ cellValue }) => {
         return !cellValue || cellValue.length === 0
           ? '-'
-          : `引用${cellValue.length}个`;
+          : $t('ai.model.chatRole.message.referencedTools', [
+              cellValue.length,
+            ]);
       },
     },
     {
-      title: 'MCP',
+      title: $t('ai.model.chatRole.field.mcpClientNames'),
       field: 'mcpClientNames',
       minWidth: 100,
       formatter: ({ cellValue }) => {
         return !cellValue || cellValue.length === 0
           ? '-'
-          : `引用${cellValue.length}个`;
+          : $t('ai.model.chatRole.message.referencedMcp', [cellValue.length]);
       },
     },
     {
       field: 'publicStatus',
-      title: '是否公开',
+      title: $t('ai.model.chatRole.field.publicStatus'),
       cellRender: {
         name: 'CellDict',
         props: { type: DICT_TYPE.INFRA_BOOLEAN_STRING },
@@ -301,7 +330,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
     },
     {
       field: 'status',
-      title: '状态',
+      title: $t('ai.model.chatRole.field.status'),
       cellRender: {
         name: 'CellDict',
         props: { type: DICT_TYPE.COMMON_STATUS },
@@ -309,12 +338,12 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
       minWidth: 80,
     },
     {
-      title: '角色排序',
+      title: $t('ai.model.chatRole.field.sort'),
       field: 'sort',
       minWidth: 80,
     },
     {
-      title: '操作',
+      title: $t('common.operation'),
       width: 130,
       fixed: 'right',
       slots: { default: 'actions' },

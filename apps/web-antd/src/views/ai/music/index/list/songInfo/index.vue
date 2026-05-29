@@ -3,6 +3,8 @@ import { inject } from 'vue';
 
 import { Button, Card, Image } from 'ant-design-vue';
 
+import { $t } from '#/locales';
+
 defineOptions({ name: 'AiMusicSongInfoIndex' });
 
 const currentSong = inject<any>('currentSong', {});
@@ -19,7 +21,9 @@ const currentSong = inject<any>('currentSong', {});
     <div class="text-xs">
       {{ currentSong.date }}
     </div>
-    <Button size="small" shape="round" class="my-2">信息复用</Button>
+    <Button size="small" shape="round" class="my-2">
+      {{ $t('ai.music.message.infoReuse') }}
+    </Button>
     <!-- eslint-disable-next-line vue/no-v-html -->
     <div class="text-xs" v-html="currentSong.lyric"></div>
   </Card>

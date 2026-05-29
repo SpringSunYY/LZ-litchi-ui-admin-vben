@@ -77,7 +77,10 @@ async function handleStatusChange(
 ): Promise<boolean | undefined> {
   return new Promise((resolve, reject) => {
     confirm({
-      content: `你要将${row.name}的状态切换为【${getDictLabel(DICT_TYPE.COMMON_STATUS, newStatus)}】吗？`,
+      content: $t('ai.knowledge.document.message.switchConfirm', [
+        row.name,
+        getDictLabel(DICT_TYPE.COMMON_STATUS, newStatus),
+      ]),
     })
       .then(async () => {
         // 更新文档状态
@@ -130,7 +133,7 @@ const [Grid, gridApi] = useVbenVxeGrid({
 onMounted(() => {
   // 如果知识库 ID 不存在，显示错误提示并关闭页面
   if (!route.query.knowledgeId) {
-    message.error('知识库 ID 不存在，无法查看文档列表');
+    message.error($t('ai.knowledge.document.message.idNotFound'));
     // 关闭当前路由，返回到知识库列表页面
     router.back();
   }
@@ -139,12 +142,14 @@ onMounted(() => {
 
 <template>
   <Page auto-content-height>
-    <Grid table-title="知识库文档列表">
+    <Grid :table-title="$t('ai.knowledge.document.list')">
       <template #toolbar-tools>
         <TableAction
           :actions="[
             {
-              label: $t('ui.actionTitle.create', ['知识库文档']),
+              label: $t('ui.actionTitle.create', [
+                $t('ai.knowledge.document.document'),
+              ]),
               type: 'primary',
               icon: ACTION_ICON.ADD,
               auth: ['ai:knowledge:create'],
@@ -164,7 +169,7 @@ onMounted(() => {
               onClick: handleEdit.bind(null, row.id),
             },
             {
-              label: '分段',
+              label: $t('ai.knowledge.segment.segment'),
               type: 'link',
               icon: ACTION_ICON.BOOK,
               auth: ['ai:knowledge:query'],

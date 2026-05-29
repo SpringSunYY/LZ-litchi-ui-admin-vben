@@ -5,6 +5,8 @@ import { provide, ref } from 'vue';
 
 import { Col, Empty, Row, TabPane, Tabs } from 'ant-design-vue';
 
+import { $t } from '#/locales';
+
 import audioBar from './audioBar/index.vue';
 import songCard from './songCard/index.vue';
 import songInfo from './songInfo/index.vue';
@@ -12,8 +14,8 @@ import songInfo from './songInfo/index.vue';
 defineOptions({ name: 'AiMusicListIndex' });
 
 const currentType = ref('mine');
-const loading = ref(false); // loading 状态
-const currentSong = ref({}); // 当前音乐
+const loading = ref(false);
+const currentSong = ref({});
 const mySongList = ref<Recordable<any>[]>([]);
 const squareSongList = ref<Recordable<any>[]>([]);
 
@@ -64,27 +66,32 @@ provide('currentSong', currentSong);
         class="flex-auto px-5"
         tab-position="bottom"
       >
-        <!-- 我的创作 -->
-        <TabPane key="mine" tab="我的创作" v-loading="loading">
+        <TabPane
+          key="mine"
+          :tab="$t('ai.music.message.myCreation')"
+          v-loading="loading"
+        >
           <Row v-if="mySongList.length > 0" :gutter="12">
             <Col v-for="song in mySongList" :key="song.id" :span="24">
               <songCard :song-info="song" @play="setCurrentSong(song)" />
             </Col>
           </Row>
-          <Empty v-else description="暂无音乐" />
+          <Empty v-else :description="$t('ai.music.message.noMusic')" />
         </TabPane>
 
-        <!-- 试听广场 -->
-        <TabPane key="square" tab="试听广场" v-loading="loading">
+        <TabPane
+          key="square"
+          :tab="$t('ai.music.message.listenSquare')"
+          v-loading="loading"
+        >
           <Row v-if="squareSongList.length > 0" :gutter="12">
             <Col v-for="song in squareSongList" :key="song.id" :span="24">
               <songCard :song-info="song" @play="setCurrentSong(song)" />
             </Col>
           </Row>
-          <Empty v-else description="暂无音乐" />
+          <Empty v-else :description="$t('ai.music.message.noMusic')" />
         </TabPane>
       </Tabs>
-      <!-- songInfo -->
       <songInfo class="flex-none" />
     </div>
     <audioBar class="flex-none" />

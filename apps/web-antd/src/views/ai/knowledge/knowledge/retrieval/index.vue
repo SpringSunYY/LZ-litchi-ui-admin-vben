@@ -16,6 +16,7 @@ import {
 
 import { getKnowledge } from '#/api/ai/knowledge/knowledge';
 import { searchKnowledgeSegment } from '#/api/ai/knowledge/segment';
+import { $t } from '#/locales';
 
 /** 知识库文档召回测试 */
 defineOptions({ name: 'KnowledgeDocumentRetrieval' });
@@ -35,7 +36,7 @@ const queryParams = reactive({
 /** 执行召回测试 */
 async function getRetrievalResult() {
   if (!queryParams.content) {
-    message.warning('请输入查询文本');
+    message.warning($t('ai.knowledge.message.queryPlaceholder'));
     return;
   }
 
@@ -76,7 +77,7 @@ async function getKnowledgeInfo(id: number) {
 onMounted(() => {
   // 如果知识库 ID 不存在，显示错误提示并关闭页面
   if (!route.query.id) {
-    message.error('知识库 ID 不存在，无法进行召回测试');
+    message.error($t('ai.knowledge.message.idNotFound'));
     router.back();
     return;
   }
@@ -92,10 +93,10 @@ onMounted(() => {
       <Card class="w-3/4 flex-1">
         <div class="mb-15">
           <h3 class="m-2 text-lg font-semibold leading-none tracking-tight">
-            召回测试
+            {{ $t('ai.knowledge.message.retrievalTest') }}
           </h3>
           <div class="m-2 text-sm text-gray-500">
-            根据给定的查询文本测试召回效果。
+            {{ $t('ai.knowledge.message.queryPlaceholder') }}
           </div>
         </div>
         <div>
@@ -103,14 +104,16 @@ onMounted(() => {
             <Textarea
               v-model:value="queryParams.content"
               :rows="8"
-              placeholder="请输入文本"
+              :placeholder="$t('ai.knowledge.message.queryPlaceholder')"
             />
             <div class="absolute bottom-2 right-2 text-sm text-gray-400">
               {{ queryParams.content?.length }} / 200
             </div>
           </div>
           <div class="m-2 flex items-center">
-            <span class="w-16 text-gray-500">topK:</span>
+            <span class="w-16 text-gray-500"
+              >{{ $t('ai.knowledge.field.topK') }}:</span
+            >
             <InputNumber
               v-model:value="queryParams.topK"
               :min="1"
@@ -119,7 +122,9 @@ onMounted(() => {
             />
           </div>
           <div class="m-2 flex items-center">
-            <span class="w-16 text-gray-500">相似度:</span>
+            <span class="w-16 text-gray-500"
+              >{{ $t('ai.knowledge.field.similarityThreshold') }}:</span
+            >
             <InputNumber
               v-model:value="queryParams.similarityThreshold"
               class="w-full"
@@ -135,7 +140,7 @@ onMounted(() => {
               @click="getRetrievalResult"
               :loading="loading"
             >
-              测试
+              {{ $t('ai.knowledge.message.retrievalTest') }}
             </Button>
           </div>
         </div>
@@ -144,13 +149,17 @@ onMounted(() => {
         <!-- 加载中状态 -->
         <template v-if="loading">
           <div class="flex h-72 items-center justify-center">
-            <Empty description="正在检索中..." />
+            <Empty :description="$t('ai.knowledge.message.retrieving')" />
           </div>
         </template>
 
         <!-- 有段落 -->
         <template v-else-if="segments.length > 0">
-          <div class="mb-15 font-bold">{{ segments.length }} 个召回段落</div>
+          <div class="mb-15 font-bold">
+            {{
+              $t('ai.knowledge.message.retrievedSegments', [segments.length])
+            }}
+          </div>
           <div>
             <div
               v-for="(segment, index) in segments"
@@ -161,8 +170,13 @@ onMounted(() => {
                 class="mb-2 flex items-center justify-between gap-8 text-sm text-gray-500"
               >
                 <span>
-                  分段({{ segment.id }}) · {{ segment.contentLength }} 字符数 ·
-                  {{ segment.tokens }} Token
+                  {{
+                    $t('ai.knowledge.message.segmentInfo', [
+                      segment.id,
+                      segment.contentLength,
+                      segment.tokens,
+                    ])
+                  }}
                 </span>
                 <span
                   class="whitespace-nowrap rounded-full bg-blue-50 px-2 py-1 text-sm text-blue-500"
@@ -182,10 +196,17 @@ onMounted(() => {
               <div class="flex items-center justify-between gap-8">
                 <div class="flex items-center gap-1 text-sm text-gray-500">
                   <IconifyIcon icon="lucide:file-text" />
-                  <span>{{ segment.documentName || '未知文档' }}</span>
+                  <span>{{
+                    segment.documentName ||
+                    $t('ai.knowledge.message.unknownDocument')
+                  }}</span>
                 </div>
                 <Button size="small" @click="toggleExpand(segment)">
-                  {{ segment.expanded ? '收起' : '展开' }}
+                  {{
+                    segment.expanded
+                      ? $t('ai.knowledge.message.collapse')
+                      : $t('ai.knowledge.message.expand')
+                  }}
                   <IconifyIcon
                     :icon="
                       segment.expanded
@@ -202,7 +223,9 @@ onMounted(() => {
         <!-- 无召回结果 -->
         <template v-else>
           <div class="flex h-72 items-center justify-center">
-            <Empty description="暂无召回结果" />
+            <Empty
+              :description="$t('ai.knowledge.message.noRetrievalResult')"
+            />
           </div>
         </template>
       </Card>

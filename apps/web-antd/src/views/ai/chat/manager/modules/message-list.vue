@@ -68,7 +68,7 @@ const [Grid, gridApi] = useVbenVxeGrid({
 
 <template>
   <Page auto-content-height>
-    <Grid table-title="消息列表">
+    <Grid :table-title="$t('ai.chat.message.list')">
       <template #actions="{ row }">
         <TableAction
           :actions="[

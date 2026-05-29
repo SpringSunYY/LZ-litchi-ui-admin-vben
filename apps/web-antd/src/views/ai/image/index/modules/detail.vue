@@ -8,6 +8,7 @@ import { formatDateTime } from '@vben/utils';
 import { Image } from 'ant-design-vue';
 
 import { getImageMy } from '#/api/ai/image';
+import { $t } from '#/locales';
 import {
   AiPlatformEnum,
   Dall3StyleList,
@@ -51,16 +52,24 @@ watch(
 
   <!-- 时间 -->
   <div class="mb-5 w-full overflow-hidden break-words">
-    <div class="text-lg font-bold">时间</div>
+    <div class="text-lg font-bold">{{ $t('ai.image.field.createTime') }}</div>
     <div class="mt-2">
-      <div>提交时间：{{ formatDateTime(detail.createTime) }}</div>
-      <div>生成时间：{{ formatDateTime(detail.finishTime) }}</div>
+      <div>
+        {{ $t('ai.image.field.submitTime') }}：{{
+          formatDateTime(detail.createTime)
+        }}
+      </div>
+      <div>
+        {{ $t('ai.image.field.finishTime') }}：{{
+          formatDateTime(detail.finishTime)
+        }}
+      </div>
     </div>
   </div>
 
   <!-- 模型 -->
   <div class="mb-5 w-full overflow-hidden break-words">
-    <div class="text-lg font-bold">模型</div>
+    <div class="text-lg font-bold">{{ $t('ai.image.field.model') }}</div>
     <div class="mt-2">
       {{ detail.model }}({{ detail.height }}x{{ detail.width }})
     </div>
@@ -68,7 +77,7 @@ watch(
 
   <!-- 提示词 -->
   <div class="mb-5 w-full overflow-hidden break-words">
-    <div class="text-lg font-bold">提示词</div>
+    <div class="text-lg font-bold">{{ $t('ai.image.field.prompt') }}</div>
     <div class="mt-2">
       {{ detail.prompt }}
     </div>
@@ -76,7 +85,7 @@ watch(
 
   <!-- 图片地址 -->
   <div class="mb-5 w-full overflow-hidden break-words">
-    <div class="text-lg font-bold">图片地址</div>
+    <div class="text-lg font-bold">{{ $t('ai.image.field.picUrl') }}</div>
     <div class="mt-2">
       {{ detail.picUrl }}
     </div>
@@ -90,7 +99,9 @@ watch(
     "
     class="mb-5 w-full overflow-hidden break-words"
   >
-    <div class="text-lg font-bold">采样方法</div>
+    <div class="text-lg font-bold">
+      {{ $t('ai.image.stableDiffusion.sampler') }}
+    </div>
     <div class="mt-2">
       {{
         StableDiffusionSamplers.find(
@@ -107,7 +118,9 @@ watch(
     "
     class="mb-5 w-full overflow-hidden break-words"
   >
-    <div class="text-lg font-bold">CLIP</div>
+    <div class="text-lg font-bold">
+      {{ $t('ai.image.stableDiffusion.clip') }}
+    </div>
     <div class="mt-2">
       {{
         StableDiffusionClipGuidancePresets.find(
@@ -124,7 +137,9 @@ watch(
     "
     class="mb-5 w-full overflow-hidden break-words"
   >
-    <div class="text-lg font-bold">风格</div>
+    <div class="text-lg font-bold">
+      {{ $t('ai.image.stableDiffusion.style') }}
+    </div>
     <div class="mt-2">
       {{
         StableDiffusionStylePresets.find(
@@ -141,7 +156,9 @@ watch(
     "
     class="mb-5 w-full overflow-hidden break-words"
   >
-    <div class="text-lg font-bold">迭代步数</div>
+    <div class="text-lg font-bold">
+      {{ $t('ai.image.stableDiffusion.steps') }}
+    </div>
     <div class="mt-2">{{ detail?.options?.steps }}</div>
   </div>
 
@@ -152,7 +169,9 @@ watch(
     "
     class="mb-5 w-full overflow-hidden break-words"
   >
-    <div class="text-lg font-bold">引导系数</div>
+    <div class="text-lg font-bold">
+      {{ $t('ai.image.stableDiffusion.scale') }}
+    </div>
     <div class="mt-2">{{ detail?.options?.scale }}</div>
   </div>
 
@@ -163,7 +182,9 @@ watch(
     "
     class="mb-5 w-full overflow-hidden break-words"
   >
-    <div class="text-lg font-bold">随机因子</div>
+    <div class="text-lg font-bold">
+      {{ $t('ai.image.stableDiffusion.seed') }}
+    </div>
     <div class="mt-2">{{ detail?.options?.seed }}</div>
   </div>
 
@@ -172,7 +193,7 @@ watch(
     v-if="detail.platform === AiPlatformEnum.OPENAI && detail?.options?.style"
     class="mb-5 w-full overflow-hidden break-words"
   >
-    <div class="text-lg font-bold">风格选择</div>
+    <div class="text-lg font-bold">{{ $t('ai.image.dall3.styleSelect') }}</div>
     <div class="mt-2">
       {{
         Dall3StyleList.find((item) => item.key === detail?.options?.style)?.name
@@ -187,7 +208,7 @@ watch(
     "
     class="mb-5 w-full overflow-hidden break-words"
   >
-    <div class="text-lg font-bold">模型版本</div>
+    <div class="text-lg font-bold">{{ $t('ai.image.midjourney.version') }}</div>
     <div class="mt-2">{{ detail?.options?.version }}</div>
   </div>
 
@@ -198,7 +219,9 @@ watch(
     "
     class="mb-5 w-full overflow-hidden break-words"
   >
-    <div class="text-lg font-bold">参考图</div>
+    <div class="text-lg font-bold">
+      {{ $t('ai.image.midjourney.referenceImage') }}
+    </div>
     <div class="mt-2">
       <Image :src="detail.options.referImageUrl" />
     </div>

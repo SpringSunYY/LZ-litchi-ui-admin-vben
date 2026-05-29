@@ -107,12 +107,14 @@ const [Grid, gridApi] = useVbenVxeGrid({
       <DocAlert title="AI 手册" url="https://doc.iocoder.cn/ai/build/" />
     </template>
     <FormModal @success="handleRefresh" />
-    <Grid table-title="AI 知识库列表">
+    <Grid :table-title="$t('ai.knowledge.list')">
       <template #toolbar-tools>
         <TableAction
           :actions="[
             {
-              label: $t('ui.actionTitle.create', ['AI 知识库']),
+              label: $t('ui.actionTitle.create', [
+                $t('ai.knowledge.knowledge'),
+              ]),
               type: 'primary',
               icon: ACTION_ICON.ADD,
               auth: ['ai:knowledge:create'],
@@ -139,7 +141,7 @@ const [Grid, gridApi] = useVbenVxeGrid({
               onClick: handleDocument.bind(null, row.id),
             },
             {
-              label: '召回测试',
+              label: $t('ai.knowledge.message.retrievalTest'),
               type: 'link',
               icon: ACTION_ICON.SEARCH,
               auth: ['ai:knowledge:query'],

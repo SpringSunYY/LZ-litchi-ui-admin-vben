@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import {
+  computed,
   getCurrentInstance,
   onBeforeUnmount,
   onMounted,
@@ -15,6 +16,7 @@ import { IconifyIcon } from '@vben/icons';
 import { Card } from 'ant-design-vue';
 
 import { getKnowledgeDocument } from '#/api/ai/knowledge/document';
+import { $t } from '#/locales';
 
 import ProcessStep from './modules/process-step.vue';
 import SplitStep from './modules/split-step.vue';
@@ -27,11 +29,11 @@ const uploadDocumentRef = ref();
 const documentSegmentRef = ref();
 const processCompleteRef = ref();
 const currentStep = ref(0); // 步骤控制
-const steps = [
-  { title: '上传文档' },
-  { title: '文档分段' },
-  { title: '处理并完成' },
-];
+const steps = computed(() => [
+  { title: $t('ai.knowledge.document.message.uploadDocument') },
+  { title: $t('ai.knowledge.document.message.documentSplit') },
+  { title: $t('ai.knowledge.document.message.processAndComplete') },
+]);
 const formData = ref({
   knowledgeId: undefined, // 知识库编号
   id: undefined, // 编辑的文档编号(documentId)
@@ -94,7 +96,7 @@ async function initData() {
 
 /** 切换到下一步 */
 function goToNextStep() {
-  if (currentStep.value < steps.length - 1) {
+  if (currentStep.value < steps.value.length - 1) {
     currentStep.value++;
   }
 }
@@ -142,7 +144,11 @@ onMounted(async () => {
             @click="handleBack"
           />
           <span class="ml-2.5 truncate text-base">
-            {{ formData.id ? '编辑知识库文档' : '创建知识库文档' }}
+            {{
+              formData.id
+                ? $t('ai.knowledge.document.message.editDocument')
+                : $t('ai.knowledge.document.message.createDocument')
+            }}
           </span>
         </div>
 

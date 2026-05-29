@@ -14,6 +14,7 @@ import { generateAcceptedFileTypes } from '@vben/utils';
 import { Button, Form, message, UploadDragger } from 'ant-design-vue';
 
 import { useUpload } from '#/components/upload/use-upload';
+import { $t } from '#/locales';
 
 const props = defineProps({
   modelValue: {
@@ -98,12 +99,14 @@ function beforeUpload(file: any) {
     Math.max(0, fileName.lastIndexOf('.') + 1),
   );
   if (!allowedExtensions.has(fileExtension)) {
-    message.error('不支持的文件类型！');
+    message.error($t('ai.knowledge.document.message.fileNotSupported'));
     return false;
   }
   // 1.2 检查文件大小
   if (!(file.size / 1024 / 1024 < maxFileSize)) {
-    message.error(`文件大小不能超过 ${maxFileSize} MB！`);
+    message.error(
+      $t('ai.knowledge.document.message.fileSizeExceeded', [maxFileSize]),
+    );
     return false;
   }
 
@@ -123,7 +126,7 @@ async function customRequest(info: UploadRequestOption) {
     };
     const res = await httpRequest(info.file as File, progressEvent);
     info.onSuccess!(res);
-    message.success('上传成功');
+    message.success($t('ai.knowledge.document.message.uploadSuccess'));
     ensureListExists();
     emit('update:modelValue', {
       ...props.modelValue,
@@ -163,12 +166,12 @@ function removeFile(index: number) {
 function handleNextStep() {
   // 1.1 检查是否有文件上传
   if (!modelData.value.list || modelData.value.list.length === 0) {
-    message.warning('请上传至少一个文件');
+    message.warning($t('ai.knowledge.document.message.uploadAtLeastOne'));
     return;
   }
   // 1.2 检查是否有文件正在上传
   if (uploadingCount.value > 0) {
-    message.warning('请等待所有文件上传完成');
+    message.warning($t('ai.knowledge.document.message.waitUploadComplete'));
     return;
   }
 
@@ -209,14 +212,15 @@ onMounted(() => {
                 class="mb-2.5 text-xs text-gray-400"
               />
               <div class="ant-upload-text text-base text-gray-400">
-                拖拽文件至此，或者
-                <em class="cursor-pointer not-italic text-blue-500">
-                  选择文件
-                </em>
+                {{ $t('ai.knowledge.document.message.dragOrSelectFile') }}
               </div>
               <div class="mt-2.5 text-sm text-gray-400">
-                已支持 {{ supportedFileTypes.join('、') }}，每个文件不超过
-                {{ maxFileSize }} MB。
+                {{
+                  $t('ai.knowledge.document.message.supportedTypes', [
+                    supportedFileTypes.join('、'),
+                    maxFileSize,
+                  ])
+                }}
               </div>
             </div>
           </UploadDragger>
@@ -256,7 +260,7 @@ onMounted(() => {
           @click="handleNextStep"
           :disabled="!isAllUploaded"
         >
-          下一步
+          {{ $t('ai.knowledge.document.message.nextStep') }}
         </Button>
       </div>
     </Form.Item>

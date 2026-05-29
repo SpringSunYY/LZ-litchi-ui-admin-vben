@@ -6,6 +6,8 @@ import { IconifyIcon } from '@vben/icons';
 import { useClipboard } from '@vueuse/core';
 import { Button, Card, message, Textarea } from 'ant-design-vue';
 
+import { $t } from '#/locales';
+
 const props = defineProps({
   content: {
     type: String,
@@ -47,7 +49,7 @@ function copyContent() {
 /** 复制成功的时候 copied.value 为 true */
 watch(copied, (val) => {
   if (val) {
-    message.success('复制成功');
+    message.success($t('ai.write.message.copySuccess'));
   }
 });
 </script>
@@ -55,7 +57,7 @@ watch(copied, (val) => {
   <Card class="flex h-full flex-col">
     <template #title>
       <h3 class="m-0 flex shrink-0 items-center justify-between px-7">
-        <span>预览</span>
+        <span>{{ $t('ai.write.message.titlePreview') }}</span>
         <Button
           type="primary"
           v-show="showCopy"
@@ -63,7 +65,7 @@ watch(copied, (val) => {
           size="small"
         >
           <IconifyIcon icon="lucide:copy" />
-          复制
+          {{ $t('ai.write.message.buttonCopy') }}
         </Button>
       </h3>
     </template>
@@ -85,14 +87,14 @@ watch(copied, (val) => {
               <IconifyIcon icon="lucide:ban" />
             </div>
           </template>
-          终止生成
+          {{ $t('ai.write.message.buttonStopGenerate') }}
         </Button>
         <Textarea
           id="inputId"
           v-model:value="compContent"
           :auto-size="true"
           :bordered="false"
-          placeholder="生成的内容……"
+          :placeholder="$t('ai.write.message.placeholderGeneratedContent')"
         />
       </div>
     </div>

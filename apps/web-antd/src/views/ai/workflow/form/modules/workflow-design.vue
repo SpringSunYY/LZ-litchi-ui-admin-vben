@@ -11,6 +11,7 @@ import { isNumber } from '@vben/utils';
 import { Button, Input, Select } from 'ant-design-vue';
 
 import { testWorkflow } from '#/api/ai/workflow';
+import { $t } from '#/locales';
 
 defineProps<{
   provider: any;
@@ -66,7 +67,7 @@ const [Drawer, drawerApi] = useVbenDrawer({
       // 设置参数
       paramsOfStartNode.value = paramDefinitions;
     } catch (error) {
-      console.error('加载参数失败:', error);
+      console.error($t('ai.workflow.message.parameterLoadFailed'), error);
     }
   },
 });
@@ -106,9 +107,12 @@ async function goRun() {
       try {
         convertedParams[paramKey] = convertParamValue(value, dataType);
       } catch (error: any) {
-        throw new Error(`参数 ${paramKey} 转换失败: ${error.message}`, {
-          cause: error,
-        });
+        throw new Error(
+          `${$t('ai.workflow.message.parameterConversionFailed', [
+            paramKey,
+          ])}: ${error.message}`,
+          { cause: error },
+        );
       }
     }
 
@@ -119,7 +123,7 @@ async function goRun() {
     });
   } catch (error: any) {
     error.value =
-      error.response?.data?.message || '运行失败，请检查参数和网络连接';
+      error.response?.data?.message || $t('ai.workflow.message.runFailed');
   } finally {
     loading.value = false;
   }
@@ -128,15 +132,14 @@ async function goRun() {
 /** 获取开始节点 */
 function getStartNode() {
   if (tinyflowRef.value) {
-    // TODO @xingyu：不确定是不是这里封装了 Tinyflow，现在 .getData() 会报错；
     const val = tinyflowRef.value.getData();
     const startNode = val!.nodes.find((node: any) => node.type === 'startNode');
     if (!startNode) {
-      throw new Error('流程缺少开始节点');
+      throw new Error($t('ai.workflow.message.workflowMissingStartNode'));
     }
     return startNode;
   }
-  throw new Error('请设计流程');
+  throw new Error($t('ai.workflow.message.pleaseDesignWorkflow'));
 }
 
 /** 添加参数项 */
@@ -157,7 +160,8 @@ function convertParamValue(value: string, dataType: string) {
   switch (dataType) {
     case 'Number': {
       const num = Number(value);
-      if (!isNumber(num)) throw new Error('非数字格式');
+      if (!isNumber(num))
+        throw new Error($t('ai.workflow.message.nonNumericFormat'));
       return num;
     }
     case 'String': {
@@ -170,18 +174,23 @@ function convertParamValue(value: string, dataType: string) {
       if (value.toLowerCase() === 'false') {
         return false;
       }
-      throw new Error('必须为 true/false');
+      throw new Error($t('ai.workflow.message.mustBeTrueOrFalse'));
     }
     case 'Array':
     case 'Object': {
       try {
         return JSON.parse(value);
       } catch (error: any) {
-        throw new Error(`JSON格式错误: ${error.message}`, { cause: error });
+        throw new Error(
+          `${$t('ai.workflow.message.jsonFormatError')}: ${error.message}`,
+          { cause: error },
+        );
       }
     }
     default: {
-      throw new Error(`不支持的类型: ${dataType}`);
+      throw new Error(
+        `${$t('ai.workflow.message.unsupportedType')}: ${dataType}`,
+      );
     }
   }
 }
@@ -189,7 +198,7 @@ function convertParamValue(value: string, dataType: string) {
 /** 表单校验 */
 async function validate() {
   if (!workflowData.value || !tinyflowRef.value) {
-    throw new Error('请设计流程');
+    throw new Error($t('ai.workflow.message.pleaseDesignWorkflow'));
   }
   workflowData.value = tinyflowRef.value.getData();
   return true;
@@ -214,16 +223,16 @@ defineExpose({ validate });
         type="primary"
         v-access:code="['ai:workflow:test']"
       >
-        测试
+        {{ $t('ai.workflow.action.test') }}
       </Button>
     </div>
 
-    <Drawer title="工作流测试">
+    <Drawer :title="$t('ai.workflow.message.workflowTest')">
       <fieldset
         class="min-inline-size-auto m-0 rounded-lg border border-gray-200 px-3 py-4"
       >
         <legend class="ml-2 px-2.5 text-base font-semibold text-gray-600">
-          <h3>运行参数配置</h3>
+          {{ $t('ai.workflow.message.runParamsConfig') }}
         </legend>
         <div class="p-2">
           <div
@@ -231,7 +240,11 @@ defineExpose({ validate });
             v-for="(param, index) in params4Test"
             :key="index"
           >
-            <Select class="w-48" v-model="param.key" placeholder="参数名">
+            <Select
+              class="w-48"
+              v-model="param.key"
+              :placeholder="$t('ai.workflow.message.paramName')"
+            >
               <Select.Option
                 v-for="(value, key) in paramsOfStartNode"
                 :key="key"
@@ -244,7 +257,7 @@ defineExpose({ validate });
             <Input
               class="mx-2 w-48"
               v-model:value="param.value"
-              placeholder="参数值"
+              :placeholder="$t('ai.workflow.message.paramValue')"
             />
             <Button danger plain circle @click="removeParam(index)">
               <template #icon>
@@ -253,7 +266,7 @@ defineExpose({ validate });
             </Button>
           </div>
           <Button type="primary" plain class="mt-2" @click="addParam">
-            添加参数
+            {{ $t('ai.workflow.message.addParam') }}
           </Button>
         </div>
       </fieldset>
@@ -262,10 +275,12 @@ defineExpose({ validate });
         class="bg-card m-0 mt-10 rounded-lg border border-gray-200 px-3 py-4"
       >
         <legend class="ml-2 px-2.5 text-base font-semibold text-gray-600">
-          <h3>运行结果</h3>
+          {{ $t('ai.workflow.message.runResult') }}
         </legend>
         <div class="p-2">
-          <div v-if="loading" class="text-primary">执行中...</div>
+          <div v-if="loading" class="text-primary">
+            {{ $t('ai.workflow.message.executing') }}
+          </div>
           <div v-else-if="error" class="text-danger">{{ error }}</div>
           <pre
             v-else-if="testResult"
@@ -273,7 +288,9 @@ defineExpose({ validate });
           >
             {{ JSON.stringify(testResult, null, 2) }}
           </pre>
-          <div v-else class="text-gray-400">点击运行查看结果</div>
+          <div v-else class="text-gray-400">
+            {{ $t('ai.workflow.message.clickRunToSeeResult') }}
+          </div>
         </div>
       </fieldset>
 
@@ -282,7 +299,7 @@ defineExpose({ validate });
         class="mt-2 w-full bg-green-500 text-white"
         @click="goRun"
       >
-        运行流程
+        {{ $t('ai.workflow.message.runWorkflow') }}
       </Button>
     </Drawer>
   </div>

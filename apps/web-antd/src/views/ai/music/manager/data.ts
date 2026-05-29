@@ -3,6 +3,7 @@ import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 import type { SystemUserApi } from '#/api/system/user';
 
 import { getSimpleUserList } from '#/api/system/user';
+import { $t } from '#/locales';
 import { DICT_TYPE, getDictOptions, getRangePickerDefaultProps } from '#/utils';
 
 /** 关联数据 */
@@ -14,48 +15,50 @@ export function useGridFormSchema(): VbenFormSchema[] {
   return [
     {
       fieldName: 'userId',
-      label: '用户编号',
+      label: $t('ai.music.field.userId'),
       component: 'ApiSelect',
       componentProps: {
         api: getSimpleUserList,
         labelField: 'nickname',
         valueField: 'id',
-        placeholder: '请选择用户编号',
+        placeholder: $t('ui.placeholder.select', [$t('ai.music.field.userId')]),
         allowClear: true,
       },
     },
     {
       fieldName: 'title',
-      label: '音乐名称',
+      label: $t('ai.music.field.title'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入音乐名称',
+        placeholder: $t('ui.placeholder.input', [$t('ai.music.field.title')]),
         allowClear: true,
       },
     },
     {
       fieldName: 'status',
-      label: '绘画状态',
+      label: $t('ai.music.field.status'),
       component: 'Select',
       componentProps: {
-        placeholder: '请选择绘画状态',
+        placeholder: $t('ui.placeholder.select', [$t('ai.music.field.status')]),
         allowClear: true,
         options: getDictOptions(DICT_TYPE.AI_MUSIC_STATUS, 'number'),
       },
     },
     {
       fieldName: 'generateMode',
-      label: '生成模式',
+      label: $t('ai.music.field.generateMode'),
       component: 'Select',
       componentProps: {
-        placeholder: '请选择生成模式',
+        placeholder: $t('ui.placeholder.select', [
+          $t('ai.music.field.generateMode'),
+        ]),
         allowClear: true,
         options: getDictOptions(DICT_TYPE.AI_GENERATE_MODE, 'number'),
       },
     },
     {
       fieldName: 'createTime',
-      label: '创建时间',
+      label: $t('ai.music.field.createTime'),
       component: 'RangePicker',
       componentProps: {
         ...getRangePickerDefaultProps(),
@@ -64,10 +67,12 @@ export function useGridFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'publicStatus',
-      label: '是否发布',
+      label: $t('ai.music.field.publicStatus'),
       component: 'Select',
       componentProps: {
-        placeholder: '请选择是否发布',
+        placeholder: $t('ui.placeholder.select', [
+          $t('ai.music.field.publicStatus'),
+        ]),
         allowClear: true,
         options: getDictOptions(DICT_TYPE.INFRA_BOOLEAN_STRING, 'boolean'),
       },
@@ -85,19 +90,19 @@ export function useGridColumns(
   return [
     {
       field: 'id',
-      title: '编号',
+      title: $t('ai.music.field.id'),
       minWidth: 180,
       fixed: 'left',
     },
     {
-      title: '音乐名称',
+      title: $t('ai.music.field.title'),
       minWidth: 180,
       fixed: 'left',
       field: 'title',
     },
     {
       minWidth: 180,
-      title: '用户',
+      title: $t('ai.music.field.user'),
       field: 'userId',
       formatter: ({ cellValue }) => {
         return userList.find((user) => user.id === cellValue)?.nickname || '-';
@@ -105,7 +110,7 @@ export function useGridColumns(
     },
     {
       field: 'status',
-      title: '音乐状态',
+      title: $t('ai.music.field.status'),
       minWidth: 100,
       cellRender: {
         name: 'CellDict',
@@ -114,37 +119,37 @@ export function useGridColumns(
     },
     {
       field: 'model',
-      title: '模型',
+      title: $t('ai.music.field.model'),
       minWidth: 180,
     },
     {
-      title: '内容',
+      title: $t('ai.music.field.content'),
       minWidth: 180,
       slots: { default: 'content' },
     },
     {
       field: 'duration',
-      title: '时长（秒）',
+      title: $t('ai.music.field.duration'),
       minWidth: 100,
     },
     {
       field: 'prompt',
-      title: '提示词',
+      title: $t('ai.music.field.prompt'),
       minWidth: 180,
     },
     {
       field: 'lyric',
-      title: '歌词',
+      title: $t('ai.music.field.lyric'),
       minWidth: 180,
     },
     {
       field: 'gptDescriptionPrompt',
-      title: '描述',
+      title: $t('ai.music.field.gptDescriptionPrompt'),
       minWidth: 180,
     },
     {
       field: 'generateMode',
-      title: '生成模式',
+      title: $t('ai.music.field.generateMode'),
       minWidth: 100,
       cellRender: {
         name: 'CellDict',
@@ -153,7 +158,7 @@ export function useGridColumns(
     },
     {
       field: 'tags',
-      title: '风格标签',
+      title: $t('ai.music.field.tags'),
       minWidth: 180,
       cellRender: {
         name: 'CellTags',
@@ -161,7 +166,7 @@ export function useGridColumns(
     },
     {
       minWidth: 100,
-      title: '是否发布',
+      title: $t('ai.music.field.publicStatus'),
       field: 'publicStatus',
       align: 'center',
       cellRender: {
@@ -175,22 +180,22 @@ export function useGridColumns(
     },
     {
       field: 'taskId',
-      title: '任务编号',
+      title: $t('ai.music.field.taskId'),
       minWidth: 180,
     },
     {
       field: 'errorMessage',
-      title: '错误信息',
+      title: $t('ai.music.field.errorMessage'),
       minWidth: 180,
     },
     {
       field: 'createTime',
-      title: '创建时间',
+      title: $t('ai.music.field.createTime'),
       minWidth: 180,
       formatter: 'formatDateTime',
     },
     {
-      title: '操作',
+      title: $t('common.operation'),
       width: 130,
       fixed: 'right',
       slots: { default: 'actions' },

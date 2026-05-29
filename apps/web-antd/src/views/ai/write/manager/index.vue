@@ -66,9 +66,12 @@ const [Grid, gridApi] = useVbenVxeGrid({
 <template>
   <Page auto-content-height>
     <template #doc>
-      <DocAlert title="AI 写作助手" url="https://doc.iocoder.cn/ai/write/" />
+      <DocAlert
+        :title="$t('ai.write.write')"
+        url="https://doc.iocoder.cn/ai/write/"
+      />
     </template>
-    <Grid table-title="写作管理列表">
+    <Grid :table-title="$t('ai.write.list')">
       <template #actions="{ row }">
         <TableAction
           :actions="[

@@ -4,6 +4,7 @@ import type { AiKnowledgeDocumentApi } from '#/api/ai/knowledge/document';
 
 import { z } from '#/adapter/form';
 import { getModelSimpleList } from '#/api/ai/model/model';
+import { $t } from '#/locales';
 import {
   AiModelTypeEnum,
   CommonStatusEnum,
@@ -25,37 +26,43 @@ export function useFormSchema(): VbenFormSchema[] {
     {
       component: 'Input',
       fieldName: 'name',
-      label: '知识库名称',
+      label: $t('ai.knowledge.field.name'),
       rules: 'required',
     },
     {
       fieldName: 'description',
-      label: '知识库描述',
+      label: $t('ai.knowledge.field.description'),
       component: 'Textarea',
       componentProps: {
         rows: 3,
-        placeholder: '请输入知识库描述',
+        placeholder: $t('ui.placeholder.input', [
+          $t('ai.knowledge.field.description'),
+        ]),
       },
     },
     {
       component: 'ApiSelect',
       fieldName: 'embeddingModelId',
-      label: '向量模型',
+      label: $t('ai.knowledge.field.embeddingModel'),
       componentProps: {
         api: () => getModelSimpleList(AiModelTypeEnum.EMBEDDING),
         labelField: 'name',
         valueField: 'id',
         allowClear: true,
-        placeholder: '请选择向量模型',
+        placeholder: $t('ui.placeholder.select', [
+          $t('ai.knowledge.field.embeddingModel'),
+        ]),
       },
       rules: 'required',
     },
     {
       fieldName: 'topK',
-      label: '检索 topK',
+      label: $t('ai.knowledge.field.topK'),
       component: 'InputNumber',
       componentProps: {
-        placeholder: '请输入检索 topK',
+        placeholder: $t('ui.placeholder.input', [
+          $t('ai.knowledge.field.topK'),
+        ]),
         min: 0,
         max: 10,
       },
@@ -63,10 +70,12 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'similarityThreshold',
-      label: '检索相似度阈值',
+      label: $t('ai.knowledge.field.similarityThreshold'),
       component: 'InputNumber',
       componentProps: {
-        placeholder: '请输入检索相似度阈值',
+        placeholder: $t('ui.placeholder.input', [
+          $t('ai.knowledge.field.similarityThreshold'),
+        ]),
         min: 0,
         max: 1,
         step: 0.01,
@@ -76,7 +85,7 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'status',
-      label: '是否启用',
+      label: $t('ai.knowledge.field.status'),
       component: 'RadioGroup',
       componentProps: {
         options: getDictOptions(DICT_TYPE.COMMON_STATUS, 'number'),
@@ -93,19 +102,23 @@ export function useGridFormSchema(): VbenFormSchema[] {
   return [
     {
       fieldName: 'name',
-      label: '文件名称',
+      label: $t('ai.knowledge.document.field.name'),
       component: 'Input',
       componentProps: {
-        placeholder: '请输入文件名称',
+        placeholder: $t('ui.placeholder.input', [
+          $t('ai.knowledge.document.field.name'),
+        ]),
         allowClear: true,
       },
     },
     {
       fieldName: 'status',
-      label: '是否启用',
+      label: $t('ai.knowledge.document.field.status'),
       component: 'Select',
       componentProps: {
-        placeholder: '请选择是否启用',
+        placeholder: $t('ui.placeholder.select', [
+          $t('ai.knowledge.document.field.status'),
+        ]),
         allowClear: true,
         options: getDictOptions(DICT_TYPE.COMMON_STATUS, 'number'),
       },
@@ -123,37 +136,37 @@ export function useGridColumns(
   return [
     {
       field: 'id',
-      title: '文档编号',
+      title: $t('ai.knowledge.document.field.id'),
       minWidth: 100,
     },
     {
       field: 'name',
-      title: '文件名称',
+      title: $t('ai.knowledge.document.field.name'),
       minWidth: 200,
     },
     {
       field: 'contentLength',
-      title: '字符数',
+      title: $t('ai.knowledge.document.field.contentLength'),
       minWidth: 100,
     },
     {
       field: 'tokens',
-      title: 'Token 数',
+      title: $t('ai.knowledge.document.field.tokens'),
       minWidth: 100,
     },
     {
       field: 'segmentMaxTokens',
-      title: '分片最大 Token 数',
+      title: $t('ai.knowledge.document.field.segmentMaxTokens'),
       minWidth: 150,
     },
     {
       field: 'retrievalCount',
-      title: '召回次数',
+      title: $t('ai.knowledge.document.field.retrievalCount'),
       minWidth: 100,
     },
     {
       field: 'status',
-      title: '是否启用',
+      title: $t('ai.knowledge.document.field.status'),
       minWidth: 100,
       align: 'center',
       cellRender: {
@@ -167,12 +180,12 @@ export function useGridColumns(
     },
     {
       field: 'createTime',
-      title: '上传时间',
+      title: $t('ai.knowledge.document.field.createTime'),
       minWidth: 180,
       formatter: 'formatDateTime',
     },
     {
-      title: '操作',
+      title: $t('common.operation'),
       minWidth: 150,
       fixed: 'right',
       slots: { default: 'actions' },

@@ -3,6 +3,7 @@ import { reactive, ref } from 'vue';
 
 import { Button, Textarea } from 'ant-design-vue';
 
+import { $t } from '#/locales';
 import { MindMapContentExample } from '#/utils';
 
 defineProps<{
@@ -27,17 +28,17 @@ defineExpose({
 <template>
   <div class="bg-card flex w-80 flex-col rounded-lg p-5">
     <h3 class="text-primary h-7 w-full text-center text-xl leading-7">
-      思维导图创作中心
+      {{ $t('ai.mindmap.mindmap') }}
     </h3>
     <div class="mt-4 flex-grow overflow-y-auto">
       <div>
-        <b>您的需求？</b>
+        <b>{{ $t('ai.mindmap.message.yourRequirement') }}</b>
         <Textarea
           v-model:value="formData.prompt"
           :maxlength="1024"
           :rows="8"
           class="mt-4 w-full"
-          placeholder="请输入提示词，让AI帮你完善"
+          :placeholder="$t('ai.mindmap.message.promptPlaceholder')"
           show-count
         />
         <Button
@@ -46,17 +47,17 @@ defineExpose({
           :loading="isGenerating"
           @click="emits('submit', formData)"
         >
-          智能生成思维导图
+          {{ $t('ai.mindmap.message.generating') }}
         </Button>
       </div>
       <div class="mt-7">
-        <b>使用已有内容生成？</b>
+        <b>{{ $t('ai.mindmap.message.useExistingContent') }}</b>
         <Textarea
           v-model:value="generatedContent"
           :maxlength="1024"
           :rows="8"
           class="mt-4 w-full"
-          placeholder="例如：童话里的小屋应该是什么样子？"
+          :placeholder="$t('ai.mindmap.message.existingPlaceholder')"
           show-count
         />
         <Button
@@ -65,7 +66,7 @@ defineExpose({
           @click="emits('directGenerate', generatedContent)"
           :disabled="isGenerating"
         >
-          直接生成
+          {{ $t('ai.mindmap.message.directGenerate') }}
         </Button>
       </div>
     </div>

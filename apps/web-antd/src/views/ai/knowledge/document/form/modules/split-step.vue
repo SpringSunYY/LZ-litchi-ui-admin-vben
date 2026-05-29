@@ -21,6 +21,7 @@ import {
   updateKnowledgeDocument,
 } from '#/api/ai/knowledge/document';
 import { splitContent } from '#/api/ai/knowledge/segment';
+import { $t } from '#/locales';
 
 const props = defineProps({
   modelValue: {
@@ -50,7 +51,7 @@ async function selectFile(index: number) {
 /** 获取文件分段内容 */
 async function splitContentFile(file: any) {
   if (!file || !file.url) {
-    message.warning('文件 URL 不存在');
+    message.warning($t('ai.knowledge.document.message.fileUrlNotExist'));
     return;
   }
 
@@ -62,7 +63,11 @@ async function splitContentFile(file: any) {
       modelData.value.segmentMaxTokens,
     );
   } catch (error) {
-    console.error('获取分段内容失败:', file, error);
+    console.error(
+      `${$t('ai.knowledge.document.message.splitFailed')}:`,
+      file,
+      error,
+    );
   } finally {
     splitLoading.value = false;
   }
@@ -80,7 +85,7 @@ async function handleAutoSegment() {
   }
   // 如果没有选中文件，提示请先选择文件
   if (!currentFile.value) {
-    message.warning('请先选择文件');
+    message.warning($t('ai.knowledge.document.message.selectFile'));
     return;
   }
 
@@ -103,7 +108,9 @@ async function handleSave() {
     !currentFile?.value?.segments ||
     currentFile.value.segments.length === 0
   ) {
-    message.warning('请先预览分段内容');
+    message.warning(
+      $t('ai.knowledge.document.message.pleasePreviewSplitFirst'),
+    );
     return;
   }
 
@@ -137,7 +144,11 @@ async function handleSave() {
       parentEl.exposed.goToNextStep();
     }
   } catch (error: any) {
-    console.error('保存失败:', modelData.value, error);
+    console.error(
+      `${$t('ai.knowledge.document.message.saveFailed')}:`,
+      modelData.value,
+      error,
+    );
   } finally {
     // 关闭按钮加载状态
     submitLoading.value = false;
@@ -172,10 +183,10 @@ onMounted(async () => {
     <div class="mb-5">
       <div class="mb-5 flex items-center justify-between">
         <div class="flex items-center text-base font-bold">
-          分段设置
+          {{ $t('ai.knowledge.document.message.splitSettings') }}
           <Tooltip placement="top">
             <template #title>
-              系统会自动将文档内容分割成多个段落，您可以根据需要调整分段方式和内容。
+              {{ $t('ai.knowledge.document.message.splitSettings') }}
             </template>
             <IconifyIcon
               icon="lucide:circle-alert"
@@ -185,13 +196,13 @@ onMounted(async () => {
         </div>
         <div>
           <Button type="primary" size="small" @click="handleAutoSegment">
-            预览分段
+            {{ $t('ai.knowledge.document.message.previewSplit') }}
           </Button>
         </div>
       </div>
       <div class="mb-5">
         <Form :label-col="{ span: 5 }">
-          <Form.Item label="最大 Token 数">
+          <Form.Item :label="$t('ai.knowledge.document.message.maxTokenNum')">
             <InputNumber
               v-model:value="modelData.segmentMaxTokens"
               :min="1"
@@ -202,7 +213,9 @@ onMounted(async () => {
       </div>
     </div>
     <div class="mb-2.5">
-      <div class="mb-2.5 text-base font-bold">分段预览</div>
+      <div class="mb-2.5 text-base font-bold">
+        {{ $t('ai.knowledge.document.message.splitPreview') }}
+      </div>
       <!-- 文件选择器 -->
       <div class="mb-2.5">
         <Dropdown
@@ -211,12 +224,16 @@ onMounted(async () => {
         >
           <div class="flex cursor-pointer items-center">
             <IconifyIcon icon="lucide:file-text" class="mr-1" />
-            <span>{{ currentFile?.name || '请选择文件' }}</span>
+            <span>{{
+              currentFile?.name ||
+              $t('ai.knowledge.document.message.selectFile')
+            }}</span>
             <span
               v-if="currentFile?.segments"
               class="ml-1 text-sm text-gray-500"
             >
-              ({{ currentFile.segments.length }}个分片)
+              ({{ currentFile.segments.length
+              }}{{ $t('ai.knowledge.document.message.segmentUnit') }})
             </span>
             <IconifyIcon icon="lucide:chevron-down" class="ml-1" />
           </div>
@@ -229,19 +246,24 @@ onMounted(async () => {
               >
                 {{ file.name }}
                 <span v-if="file.segments" class="ml-1 text-sm text-gray-500">
-                  ({{ file.segments.length }} 个分片)
+                  ({{ file.segments.length
+                  }}{{ $t('ai.knowledge.document.message.segmentUnit') }})
                 </span>
               </Menu.Item>
             </Menu>
           </template>
         </Dropdown>
-        <div v-else class="text-gray-400">暂无上传文件</div>
+        <div v-else class="text-gray-400">
+          {{ $t('ai.knowledge.document.message.noUploadedFiles') }}
+        </div>
       </div>
       <!-- 文件内容预览 -->
       <div class="max-h-[600px] overflow-y-auto rounded-md p-4">
         <div v-if="splitLoading" class="flex items-center justify-center py-5">
           <IconifyIcon icon="lucide:loader" class="is-loading" />
-          <span class="ml-2.5">正在加载分段内容...</span>
+          <span class="ml-2.5">{{
+            $t('ai.knowledge.document.message.loadingSplitContent')
+          }}</span>
         </div>
         <template
           v-else-if="
@@ -256,25 +278,35 @@ onMounted(async () => {
             class="mb-2.5"
           >
             <div class="mb-1 text-sm text-gray-500">
-              分片-{{ index + 1 }} · {{ segment.contentLength || 0 }} 字符数 ·
-              {{ segment.tokens || 0 }} Token
+              {{ $t('ai.knowledge.document.message.segmentUnit') }}-{{
+                index + 1
+              }}
+              · {{ segment.contentLength || 0 }}
+              {{ $t('ai.knowledge.document.message.charCount') }} ·
+              {{ segment.tokens || 0 }}
+              {{ $t('ai.knowledge.document.message.totalTokens') }}
             </div>
             <div class="bg-card rounded-md p-2">
               {{ segment.content }}
             </div>
           </div>
         </template>
-        <Empty v-else description="暂无预览内容" />
+        <Empty
+          v-else
+          :description="$t('ai.knowledge.document.message.noPreviewContent')"
+        />
       </div>
     </div>
     <!-- 添加底部按钮 -->
     <div class="mt-5 flex justify-between">
       <div>
-        <Button v-if="!modelData.id" @click="handlePrevStep">上一步</Button>
+        <Button v-if="!modelData.id" @click="handlePrevStep">
+          {{ $t('ai.knowledge.document.message.prevStep') }}
+        </Button>
       </div>
       <div>
         <Button type="primary" :loading="submitLoading" @click="handleSave">
-          保存并处理
+          {{ $t('ai.knowledge.document.message.saveAndProcess') }}
         </Button>
       </div>
     </div>

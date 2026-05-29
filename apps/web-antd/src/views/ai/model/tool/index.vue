@@ -88,12 +88,12 @@ const [Grid, gridApi] = useVbenVxeGrid({
       />
     </template>
     <FormModal @success="handleRefresh" />
-    <Grid table-title="工具列表">
+    <Grid :table-title="$t('ai.model.tool.list')">
       <template #toolbar-tools>
         <TableAction
           :actions="[
             {
-              label: $t('ui.actionTitle.create', ['工具']),
+              label: $t('ui.actionTitle.create', [$t('ai.model.tool.tool')]),
               type: 'primary',
               icon: ACTION_ICON.ADD,
               auth: ['ai:tool:create'],

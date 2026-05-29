@@ -21,8 +21,8 @@ const emit = defineEmits(['success']);
 const formData = ref<AiKnowledgeSegmentApi.KnowledgeSegment>();
 const getTitle = computed(() => {
   return formData.value?.id
-    ? $t('ui.actionTitle.edit', ['分段'])
-    : $t('ui.actionTitle.create', ['分段']);
+    ? $t('ui.actionTitle.edit', [$t('ai.knowledge.segment.segment')])
+    : $t('ui.actionTitle.create', [$t('ai.knowledge.segment.segment')]);
 });
 
 const [Form, formApi] = useVbenForm({

@@ -27,6 +27,7 @@ import {
   MidjourneyVersions,
   NijiVersionList,
 } from '#/utils';
+import { $t } from '#/locales';
 
 const props = defineProps({
   models: {
@@ -46,9 +47,7 @@ const selectSize = ref<string>('1:1'); // 选中 size
 const selectVersion = ref<any>('6.0'); // 选中的 version
 const versionList = ref<any>(MidjourneyVersions); // version 列表
 
-/** 选择热词 */
 async function handleHotWordClick(hotWord: string) {
-  // 情况一：取消选中
   if (selectHotWord.value === hotWord) {
     selectHotWord.value = '';
     return;
@@ -58,12 +57,10 @@ async function handleHotWordClick(hotWord: string) {
   prompt.value = hotWord; // 设置提示次
 }
 
-/** 点击 size 尺寸 */
 async function handleSizeClick(imageSize: ImageSize) {
   selectSize.value = imageSize.key;
 }
 
-/** 点击 model 模型 */
 async function handleModelClick(model: ImageModel) {
   selectModel.value = model.key;
   versionList.value =
@@ -71,27 +68,21 @@ async function handleModelClick(model: ImageModel) {
   selectVersion.value = versionList.value[0].value;
 }
 
-/** 图片生成 */
 async function handleGenerateImage() {
-  // 从 models 中查找匹配的模型
   const matchedModel = props.models.find(
     (item) =>
       item.model === selectModel.value &&
       item.platform === AiPlatformEnum.MIDJOURNEY,
   );
   if (!matchedModel) {
-    message.error('该模型不可用，请选择其它模型');
+    message.error($t('ai.image.message.modelUnavailable'));
     return;
   }
 
-  // 二次确认
-  await confirm(`确认生成内容?`);
+  await confirm($t('ai.image.message.confirmGenerate'));
   try {
-    // 加载中
     drawIn.value = true;
-    // 回调
     emits('onDrawStart', AiPlatformEnum.MIDJOURNEY);
-    // 发送请求
     const imageSize = MidjourneySizeList.find(
       (item) => selectSize.value === item.key,
     ) as ImageSize;
@@ -105,32 +96,24 @@ async function handleGenerateImage() {
     } as AiImageApi.ImageMidjourneyImagineReqVO;
     await midjourneyImagine(req);
   } finally {
-    // 回调
     emits('onDrawComplete', AiPlatformEnum.MIDJOURNEY);
-    // 加载结束
     drawIn.value = false;
   }
 }
 
-/** 填充值 */
 async function settingValues(detail: AiImageApi.Image) {
-  // 提示词
   prompt.value = detail.prompt;
-  // image size
   const imageSize = MidjourneySizeList.find(
     (item) => item.key === `${detail.width}:${detail.height}`,
   ) as ImageSize;
   selectSize.value = imageSize.key;
-  // 选中模型
   const model = MidjourneyModels.find(
     (item) => item.key === detail.options?.model,
   ) as ImageModel;
   await handleModelClick(model);
-  // 版本
   selectVersion.value = versionList.value.find(
     (item: any) => item.value === detail.options?.version,
   ).value;
-  // image
   referImageUrl.value = detail.options.referImageUrl;
 }
 
@@ -138,20 +121,20 @@ defineExpose({ settingValues });
 </script>
 <template>
   <div class="prompt">
-    <b>画面描述</b>
-    <p>建议使用“形容词+动词+风格”的格式，使用“，”隔开.</p>
+    <b>{{ $t('ai.image.common.promptDescription') }}</b>
+    <p>{{ $t('ai.image.common.promptHint') }}</p>
     <Textarea
       v-model:value="prompt"
       :maxlength="1024"
       :rows="5"
       class="mt-4 w-full"
-      placeholder="例如：童话里的小屋应该是什么样子？"
+      :placeholder="$t('ai.image.common.promptPlaceholder')"
       show-count
     />
   </div>
 
   <div class="mt-8 flex flex-col">
-    <div><b>随机热词</b></div>
+    <div><b>{{ $t('ai.image.common.hotWords') }}</b></div>
     <Space wrap class="mt-4 flex flex-wrap gap-2">
       <Button
         shape="round"
@@ -167,7 +150,7 @@ defineExpose({ settingValues });
   </div>
 
   <div class="mt-8">
-    <div><b>尺寸</b></div>
+    <div><b>{{ $t('ai.image.midjourney.size') }}</b></div>
     <Space wrap class="mt-4 flex w-full flex-wrap gap-2">
       <div
         class="flex cursor-pointer flex-col items-center overflow-hidden"
@@ -189,7 +172,7 @@ defineExpose({ settingValues });
   </div>
 
   <div class="mt-8">
-    <div><b>模型</b></div>
+    <div><b>{{ $t('ai.image.midjourney.model') }}</b></div>
     <Space wrap class="mt-4 flex flex-wrap gap-2">
       <div
         v-for="model in MidjourneyModels"
@@ -213,13 +196,13 @@ defineExpose({ settingValues });
   </div>
 
   <div class="mt-8">
-    <div><b>版本</b></div>
+    <div><b>{{ $t('ai.image.midjourney.version') }}</b></div>
     <Space wrap class="mt-5 flex w-full flex-wrap gap-2">
       <Select
         v-model:value="selectVersion"
         class="!w-80"
         allow-clear
-        placeholder="请选择版本"
+        :placeholder="$t('ai.image.midjourney.versionSelect')"
       >
         <Select.Option
           v-for="item in versionList"
@@ -233,7 +216,7 @@ defineExpose({ settingValues });
   </div>
 
   <div class="mt-8">
-    <div><b>参考图</b></div>
+    <div><b>{{ $t('ai.image.midjourney.referenceImage') }}</b></div>
     <Space wrap class="mt-4">
       <ImageUpload v-model:value="referImageUrl" :show-description="false" />
     </Space>
@@ -247,7 +230,7 @@ defineExpose({ settingValues });
       :disabled="prompt.length === 0"
       @click="handleGenerateImage"
     >
-      {{ drawIn ? '生成中' : '生成内容' }}
+      {{ drawIn ? $t('ai.image.message.generatingTip') : $t('ai.image.message.generatingContent') }}
     </Button>
   </div>
 </template>

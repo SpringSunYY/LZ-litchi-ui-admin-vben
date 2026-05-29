@@ -9,6 +9,8 @@ import { IconifyIcon } from '@vben/icons';
 
 import { Avatar, Button, Card, Dropdown, Menu } from 'ant-design-vue';
 
+import { $t } from '#/locales';
+
 const props = defineProps({
   loading: {
     type: Boolean,
@@ -104,20 +106,24 @@ async function handleTabsScroll() {
                 <Menu.Item @click="handleMoreClick(['delete', role])">
                   <div class="flex items-center">
                     <IconifyIcon icon="lucide:trash" color="red" />
-                    <span class="ml-2 text-red-500">删除</span>
+                    <span class="ml-2 text-red-500">{{
+                      $t('ai.chat.message.delete')
+                    }}</span>
                   </div>
                 </Menu.Item>
                 <Menu.Item @click="handleMoreClick(['edit', role])">
                   <div class="flex items-center">
                     <IconifyIcon icon="lucide:edit" color="#787878" />
-                    <span class="text-primary ml-2">编辑</span>
+                    <span class="text-primary ml-2">{{
+                      $t('ai.chat.message.edit')
+                    }}</span>
                   </div>
                 </Menu.Item>
               </Menu>
             </template>
           </Dropdown>
           <Button type="primary" size="small" @click="handleUseClick(role)">
-            使用
+            {{ $t('ai.chat.message.use') }}
           </Button>
         </div>
       </Card>
