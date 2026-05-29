@@ -9,43 +9,43 @@ export function getRangePickerDefaultProps() {
   return {
     format: 'YYYY-MM-DD HH:mm:ss',
     placeholder: [
-      $t('utils.rangePicker.beginTime'),
-      $t('utils.rangePicker.endTime'),
+      $t('ui.rangePicker.beginTime'),
+      $t('ui.rangePicker.endTime'),
     ],
     ranges: {
-      [$t('utils.rangePicker.today')]: () =>
+      [$t('ui.rangePicker.today')]: () =>
         [dayjs().startOf('day'), dayjs().endOf('day')] as [Dayjs, Dayjs],
-      [$t('utils.rangePicker.yesterday')]: () =>
+      [$t('ui.rangePicker.yesterday')]: () =>
         [
           dayjs().subtract(1, 'day').startOf('day'),
           dayjs().subtract(1, 'day').endOf('day'),
         ] as [Dayjs, Dayjs],
-      [$t('utils.rangePicker.last7Days')]: () =>
+      [$t('ui.rangePicker.last7Days')]: () =>
         [dayjs().subtract(7, 'day').startOf('day'), dayjs().endOf('day')] as [
           Dayjs,
           Dayjs,
         ],
-      [$t('utils.rangePicker.last30Days')]: () =>
+      [$t('ui.rangePicker.last30Days')]: () =>
         [dayjs().subtract(30, 'day').startOf('day'), dayjs().endOf('day')] as [
           Dayjs,
           Dayjs,
         ],
-      [$t('utils.rangePicker.lastMonth')]: () =>
+      [$t('ui.rangePicker.lastMonth')]: () =>
         [
           dayjs().subtract(1, 'month').startOf('month'),
           dayjs().subtract(1, 'month').endOf('month'),
         ] as [Dayjs, Dayjs],
-      [$t('utils.rangePicker.last3Months')]: () =>
+      [$t('ui.rangePicker.last3Months')]: () =>
         [
           dayjs().subtract(3, 'month').startOf('day'),
           dayjs().endOf('day'),
         ] as [Dayjs, Dayjs],
-      [$t('utils.rangePicker.lastYear')]: () =>
+      [$t('ui.rangePicker.lastYear')]: () =>
         [
           dayjs().subtract(1, 'year').startOf('day'),
           dayjs().endOf('day'),
         ] as [Dayjs, Dayjs],
-      [$t('utils.rangePicker.last3Years')]: () =>
+      [$t('ui.rangePicker.last3Years')]: () =>
         [
           dayjs().subtract(3, 'year').startOf('day'),
           dayjs().endOf('day'),

@@ -17,14 +17,14 @@ const loginRef =
   useTemplateRef<InstanceType<typeof AuthenticationCodeLogin>>('loginRef');
 function sendCodeApi(phoneNumber: string) {
   message.loading({
-    content: $t('page.auth.sendingCode'),
+    content: $t('ui.auth.sendingCode'),
     duration: 0,
     key: 'sending-code',
   });
   return new Promise((resolve) => {
     setTimeout(() => {
       message.success({
-        content: $t('page.auth.codeSentTo', [phoneNumber]),
+        content: $t('ui.auth.codeSentTo', [phoneNumber]),
         duration: 3,
         key: 'sending-code',
       });

@@ -74,7 +74,7 @@ const [Grid, gridApi] = useVbenVxeGrid({
   <Page auto-content-height>
     <template #doc>
       <DocAlert
-        :title="$t('page.oauth2.sso')"
+        :title="$t('ui.oauth2.sso')"
         url="https://doc.iocoder.cn/oauth2/"
       />
     </template>

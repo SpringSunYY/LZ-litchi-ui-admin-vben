@@ -78,7 +78,7 @@ const coreRoutes: RouteRecordRaw[] = [
         path: 'login',
         component: () => import('#/views/_core/authentication/login.vue'),
         meta: {
-          title: $t('page.auth.login'),
+          title: $t('ui.auth.login'),
         },
       },
       {
@@ -86,7 +86,7 @@ const coreRoutes: RouteRecordRaw[] = [
         path: 'code-login',
         component: () => import('#/views/_core/authentication/code-login.vue'),
         meta: {
-          title: $t('page.auth.codeLogin'),
+          title: $t('ui.auth.codeLogin'),
         },
       },
       {
@@ -95,7 +95,7 @@ const coreRoutes: RouteRecordRaw[] = [
         component: () =>
           import('#/views/_core/authentication/qrcode-login.vue'),
         meta: {
-          title: $t('page.auth.qrcodeLogin'),
+          title: $t('ui.auth.qrcodeLogin'),
         },
       },
       {
@@ -104,7 +104,7 @@ const coreRoutes: RouteRecordRaw[] = [
         component: () =>
           import('#/views/_core/authentication/forget-password.vue'),
         meta: {
-          title: $t('page.auth.forgetPassword'),
+          title: $t('ui.auth.forgetPassword'),
         },
       },
       {
@@ -112,7 +112,7 @@ const coreRoutes: RouteRecordRaw[] = [
         path: 'register',
         component: () => import('#/views/_core/authentication/register.vue'),
         meta: {
-          title: $t('page.auth.register'),
+          title: $t('ui.auth.register'),
         },
       },
       {
@@ -121,7 +121,7 @@ const coreRoutes: RouteRecordRaw[] = [
         component: () =>
           import('#/views/_core/authentication/social-login.vue'),
         meta: {
-          title: $t('page.auth.login'),
+          title: $t('ui.auth.login'),
         },
       },
       {
@@ -129,7 +129,7 @@ const coreRoutes: RouteRecordRaw[] = [
         path: 'sso-login',
         component: () => import('#/views/_core/authentication/sso-login.vue'),
         meta: {
-          title: $t('page.auth.login'),
+          title: $t('ui.auth.login'),
         },
       },
     ],

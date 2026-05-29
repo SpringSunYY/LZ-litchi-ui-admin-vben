@@ -25,10 +25,10 @@
     "updateAllMenu": "update All Menu",
     "clearCache": "Clear Cache {0}"
   },
-    "actionName": {
-      "reset": "Reset",
-      "search": "Search",
-      "searchDept": "Search department"
+  "actionName": {
+    "reset": "Reset",
+    "search": "Search",
+    "searchDept": "Search department"
   },
   "actionMessage": {
     "deleteConfirm": "Are you sure to delete {0}?",
@@ -301,5 +301,57 @@
       "remoteField": "Remote Field"
     }
   },
-  "none": "None"
+  "none": "None",
+  "auth": {
+    "login": "Login",
+    "register": "Register",
+    "codeLogin": "Code Login",
+    "qrcodeLogin": "Qr Code Login",
+    "forgetPassword": "Forget Password"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "analytics": "Analytics",
+    "workspace": "Workspace"
+  },
+  "action": {
+    "action": "Action",
+    "add": "Add",
+    "edit": "Edit",
+    "delete": "Delete",
+    "save": "Save",
+    "import": "Import",
+    "export": "Export",
+    "submit": "Submit",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "reset": "Reset",
+    "search": "Search",
+    "more": "More",
+    "view": "View"
+  },
+  "tenant": {
+    "placeholder": "Please select tenant",
+    "success": "Switch tenant success"
+  },
+  "oauth2": {
+    "client": "OAuth2 Client",
+    "token": "OAuth2 Token",
+    "sso": "OAuth 2.0 (SSO Single Sign-On)"
+  },
+  "rangePicker": {
+    "today": "Today",
+    "last7Days": "Last 7 Days",
+    "last30Days": "Last 30 Days",
+    "yesterday": "Yesterday",
+    "thisWeek": "This Week",
+    "thisMonth": "This Month",
+    "lastWeek": "Last Week",
+    "lastMonth": "Last Month",
+    "last3Months": "Last 3 Months",
+    "lastYear": "Last Year",
+    "last3Years": "Last 3 Years",
+    "beginTime": "Begin Time",
+    "endTime": "End Time"
+  }
 }

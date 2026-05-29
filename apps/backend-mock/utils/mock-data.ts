@@ -55,7 +55,7 @@ const dashboardMenus = [
   {
     meta: {
       order: -1,
-      title: 'page.dashboard.title',
+      title: 'ui.dashboard.title',
     },
     name: 'Dashboard',
     path: '/dashboard',
@@ -67,7 +67,7 @@ const dashboardMenus = [
         component: '/dashboard/analytics/index',
         meta: {
           affixTab: true,
-          title: 'page.dashboard.analytics',
+          title: 'ui.dashboard.analytics',
         },
       },
       {
@@ -75,7 +75,7 @@ const dashboardMenus = [
         path: '/workspace',
         component: '/dashboard/workspace/index',
         meta: {
-          title: 'page.dashboard.workspace',
+          title: 'ui.dashboard.workspace',
         },
       },
     ],
@@ -197,7 +197,7 @@ export const MOCK_MENU_LIST = [
     component: '/dashboard/workspace/index',
     meta: {
       icon: 'carbon:workspace',
-      title: 'page.dashboard.workspace',
+      title: 'ui.dashboard.workspace',
       affixTab: true,
       order: 0,
     },

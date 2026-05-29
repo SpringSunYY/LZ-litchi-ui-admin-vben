@@ -5,7 +5,7 @@ const routes: RouteRecordRaw[] = [
     meta: {
       icon: 'lucide:layout-dashboard',
       order: -1,
-      i18n: 'page.dashboard.title',
+      i18n: 'ui.dashboard.title',
       title: '概况',
     },
     name: 'Dashboard',
@@ -17,7 +17,7 @@ const routes: RouteRecordRaw[] = [
         component: () => import('#/views/dashboard/workspace/index.vue'),
         meta: {
           icon: 'carbon:workspace',
-          i18n: 'page.dashboard.workspace',
+          i18n: 'ui.dashboard.workspace',
           title: '工作台',
         },
       },
@@ -28,7 +28,7 @@ const routes: RouteRecordRaw[] = [
         meta: {
           affixTab: true,
           icon: 'lucide:area-chart',
-          i18n: 'page.dashboard.analytics',
+          i18n: 'ui.dashboard.analytics',
           title: '分析页',
         },
       },

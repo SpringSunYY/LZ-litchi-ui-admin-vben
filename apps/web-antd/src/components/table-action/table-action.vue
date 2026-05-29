@@ -179,7 +179,7 @@ function handleMenuClick(e: any) {
       <slot name="more">
         <Button :type="getDropdownList[0].type">
           <template #icon>
-            {{ $t('page.action.more') }}
+            {{ $t('ui.action.more') }}
             <IconifyIcon icon="lucide:ellipsis-vertical" />
           </template>
         </Button>

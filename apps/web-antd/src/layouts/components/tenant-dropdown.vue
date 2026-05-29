@@ -84,7 +84,7 @@ onMounted(async () => {
       v-model:value="value"
       :field-names="{ label: 'name', value: 'id' }"
       :options="tenantOptions"
-      :placeholder="$t('page.tenant.placeholder')"
+      :placeholder="$t('ui.tenant.placeholder')"
       :dropdown-style="{ position: 'fixed', zIndex: 1666 }"
       allow-clear
       class="w-40"
