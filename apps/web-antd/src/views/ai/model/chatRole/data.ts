@@ -304,9 +304,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
       formatter: ({ cellValue }) => {
         return !cellValue || cellValue.length === 0
           ? '-'
-          : $t('ai.model.chatRole.message.referencedTools', [
-              cellValue.length,
-            ]);
+          : $t('ai.model.chatRole.message.referencedTools', [cellValue.length]);
       },
     },
     {

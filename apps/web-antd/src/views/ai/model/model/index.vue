@@ -90,9 +90,7 @@ const [Grid, gridApi] = useVbenVxeGrid({
         <TableAction
           :actions="[
             {
-              label: $t('ui.actionTitle.create', [
-                $t('ai.model.model'),
-              ]),
+              label: $t('ui.actionTitle.create', [$t('ai.model.model')]),
               type: 'primary',
               icon: ACTION_ICON.ADD,
               auth: ['ai:model:create'],

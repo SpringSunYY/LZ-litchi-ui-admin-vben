@@ -46,9 +46,7 @@ export function useFormSchema(): VbenFormSchema[] {
       component: 'Select',
       componentProps: (values) => {
         return {
-          placeholder: $t('ui.placeholder.input', [
-            $t('ai.model.field.type'),
-          ]),
+          placeholder: $t('ui.placeholder.input', [$t('ai.model.field.type')]),
           disabled: !!values.id,
           options: getDictOptions(DICT_TYPE.AI_MODEL_TYPE, 'number'),
           allowClear: true,
@@ -77,9 +75,7 @@ export function useFormSchema(): VbenFormSchema[] {
       label: $t('ai.model.field.name'),
       rules: 'required',
       componentProps: {
-        placeholder: $t('ui.placeholder.input', [
-          $t('ai.model.field.name'),
-        ]),
+        placeholder: $t('ui.placeholder.input', [$t('ai.model.field.name')]),
       },
     },
     {
@@ -88,9 +84,7 @@ export function useFormSchema(): VbenFormSchema[] {
       label: $t('ai.model.field.model'),
       rules: 'required',
       componentProps: {
-        placeholder: $t('ui.placeholder.input', [
-          $t('ai.model.field.model'),
-        ]),
+        placeholder: $t('ui.placeholder.input', [$t('ai.model.field.model')]),
       },
     },
     {
@@ -98,9 +92,7 @@ export function useFormSchema(): VbenFormSchema[] {
       label: $t('ai.model.field.sort'),
       component: 'InputNumber',
       componentProps: {
-        placeholder: $t('ui.placeholder.input', [
-          $t('ai.model.field.sort'),
-        ]),
+        placeholder: $t('ui.placeholder.input', [$t('ai.model.field.sort')]),
       },
       rules: 'required',
     },
@@ -183,9 +175,7 @@ export function useGridFormSchema(): VbenFormSchema[] {
       label: $t('ai.model.field.name'),
       component: 'Input',
       componentProps: {
-        placeholder: $t('ui.placeholder.input', [
-          $t('ai.model.field.name'),
-        ]),
+        placeholder: $t('ui.placeholder.input', [$t('ai.model.field.name')]),
         allowClear: true,
       },
     },
@@ -194,9 +184,7 @@ export function useGridFormSchema(): VbenFormSchema[] {
       label: $t('ai.model.field.model'),
       component: 'Input',
       componentProps: {
-        placeholder: $t('ui.placeholder.input', [
-          $t('ai.model.field.model'),
-        ]),
+        placeholder: $t('ui.placeholder.input', [$t('ai.model.field.model')]),
         allowClear: true,
       },
     },

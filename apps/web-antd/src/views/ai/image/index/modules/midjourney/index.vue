@@ -134,7 +134,9 @@ defineExpose({ settingValues });
   </div>
 
   <div class="mt-8 flex flex-col">
-    <div><b>{{ $t('ai.image.common.hotWords') }}</b></div>
+    <div>
+      <b>{{ $t('ai.image.common.hotWords') }}</b>
+    </div>
     <Space wrap class="mt-4 flex flex-wrap gap-2">
       <Button
         shape="round"
@@ -150,7 +152,9 @@ defineExpose({ settingValues });
   </div>
 
   <div class="mt-8">
-    <div><b>{{ $t('ai.image.midjourney.size') }}</b></div>
+    <div>
+      <b>{{ $t('ai.image.midjourney.size') }}</b>
+    </div>
     <Space wrap class="mt-4 flex w-full flex-wrap gap-2">
       <div
         class="flex cursor-pointer flex-col items-center overflow-hidden"
@@ -172,7 +176,9 @@ defineExpose({ settingValues });
   </div>
 
   <div class="mt-8">
-    <div><b>{{ $t('ai.image.midjourney.model') }}</b></div>
+    <div>
+      <b>{{ $t('ai.image.midjourney.model') }}</b>
+    </div>
     <Space wrap class="mt-4 flex flex-wrap gap-2">
       <div
         v-for="model in MidjourneyModels"
@@ -196,7 +202,9 @@ defineExpose({ settingValues });
   </div>
 
   <div class="mt-8">
-    <div><b>{{ $t('ai.image.midjourney.version') }}</b></div>
+    <div>
+      <b>{{ $t('ai.image.midjourney.version') }}</b>
+    </div>
     <Space wrap class="mt-5 flex w-full flex-wrap gap-2">
       <Select
         v-model:value="selectVersion"
@@ -216,7 +224,9 @@ defineExpose({ settingValues });
   </div>
 
   <div class="mt-8">
-    <div><b>{{ $t('ai.image.midjourney.referenceImage') }}</b></div>
+    <div>
+      <b>{{ $t('ai.image.midjourney.referenceImage') }}</b>
+    </div>
     <Space wrap class="mt-4">
       <ImageUpload v-model:value="referImageUrl" :show-description="false" />
     </Space>
@@ -230,7 +240,11 @@ defineExpose({ settingValues });
       :disabled="prompt.length === 0"
       @click="handleGenerateImage"
     >
-      {{ drawIn ? $t('ai.image.message.generatingTip') : $t('ai.image.message.generatingContent') }}
+      {{
+        drawIn
+          ? $t('ai.image.message.generatingTip')
+          : $t('ai.image.message.generatingContent')
+      }}
     </Button>
   </div>
 </template>
