@@ -8,10 +8,7 @@ import { $t } from '#/locales';
 export function getRangePickerDefaultProps() {
   return {
     format: 'YYYY-MM-DD HH:mm:ss',
-    placeholder: [
-      $t('ui.rangePicker.beginTime'),
-      $t('ui.rangePicker.endTime'),
-    ],
+    placeholder: [$t('ui.rangePicker.beginTime'), $t('ui.rangePicker.endTime')],
     ranges: {
       [$t('ui.rangePicker.today')]: () =>
         [dayjs().startOf('day'), dayjs().endOf('day')] as [Dayjs, Dayjs],
@@ -36,20 +33,20 @@ export function getRangePickerDefaultProps() {
           dayjs().subtract(1, 'month').endOf('month'),
         ] as [Dayjs, Dayjs],
       [$t('ui.rangePicker.last3Months')]: () =>
-        [
-          dayjs().subtract(3, 'month').startOf('day'),
-          dayjs().endOf('day'),
-        ] as [Dayjs, Dayjs],
+        [dayjs().subtract(3, 'month').startOf('day'), dayjs().endOf('day')] as [
+          Dayjs,
+          Dayjs,
+        ],
       [$t('ui.rangePicker.lastYear')]: () =>
-        [
-          dayjs().subtract(1, 'year').startOf('day'),
-          dayjs().endOf('day'),
-        ] as [Dayjs, Dayjs],
+        [dayjs().subtract(1, 'year').startOf('day'), dayjs().endOf('day')] as [
+          Dayjs,
+          Dayjs,
+        ],
       [$t('ui.rangePicker.last3Years')]: () =>
-        [
-          dayjs().subtract(3, 'year').startOf('day'),
-          dayjs().endOf('day'),
-        ] as [Dayjs, Dayjs],
+        [dayjs().subtract(3, 'year').startOf('day'), dayjs().endOf('day')] as [
+          Dayjs,
+          Dayjs,
+        ],
     },
     showTime: {
       defaultValue: [
