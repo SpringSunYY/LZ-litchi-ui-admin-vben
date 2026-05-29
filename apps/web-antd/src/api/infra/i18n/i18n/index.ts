@@ -24,5 +24,6 @@ export function getI18nLocale(localeTarget: number) {
 export function getI18nLocaleMessage(localeTarget: number) {
   return requestClient.get<I18nApi.Message[]>(
     `/infra/i18n/locale/message?localeTarget=${localeTarget}`,
+    { timeout: 30_000 },
   );
 }

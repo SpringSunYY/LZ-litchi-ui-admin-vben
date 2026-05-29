@@ -55,19 +55,19 @@ const localesMap = loadLocalesMapFromDir(
 );
 
 /**
- * 生成当天的缓存键
+ * 生成当月的缓存键
  * @param lang 语言代码
  */
 function getCacheKey(lang: SupportedLanguagesType): string {
-  const today = new Date().toISOString().split('T')[0]; // 格式: YYYY-MM-DD
-  return `${I18N_CACHE_PREFIX}${lang}_${today}`;
+  const yearMonth = dayjs().format('YYYY-MM'); // 格式: YYYY-MM
+  return `${I18N_CACHE_PREFIX}${lang}_${yearMonth}`;
 }
 
 /**
  * 清除所有旧的 i18n 缓存（非当天的所有语言缓存）
  */
 function clearOldI18nCache(): void {
-  const today = new Date().toISOString().split('T')[0];
+  const yearMonth = dayjs().format('YYYY-MM');
   const prefix = I18N_CACHE_PREFIX;
   const keysToRemove: string[] = [];
 
@@ -75,9 +75,9 @@ function clearOldI18nCache(): void {
     const key = localStorage.key(i);
     if (
       key &&
-      key.startsWith(prefix) && // 检查是否不是今天的缓存
+      key.startsWith(prefix) && // 检查是否不是当月的缓存
       // @ts-ignore
-      !key.endsWith(today)
+      !key.endsWith(yearMonth)
     ) {
       keysToRemove.push(key);
     }
@@ -99,7 +99,7 @@ async function fetchRemoteMessages(
   try {
     const cacheKey = getCacheKey(lang);
 
-    // 尝试从缓存中获取当天的数据
+    // 尝试从缓存中获取当月的数据
     const cachedData = localStorage.getItem(cacheKey);
     if (cachedData) {
       const messages = JSON.parse(cachedData);
