@@ -19,20 +19,20 @@ apps/web-antd/src/locales/sql/
 
 ### 2.1 模块与文件名对应关系
 
-| 前端模块 | JSON 文件 | 对应后端 module_type |
-|---|---|---|
-| system | `zh-CN/system.json` | `system` |
-| infra | `zh-CN/infra.json` | `infra` |
-| ai | `zh-CN/ai.json` | `ai` |
-| bpm | `zh-CN/bpm.json` | `bpm` |
-| erp | `zh-CN/erp.json` | `erp` |
-| crm | `zh-CN/crm.json` | `crm` |
-| common | `zh-CN/common.json` | `common` |
-| ui | `zh-CN/ui.json` | `ui` |
-| page | `zh-CN/page.json` | `page` |
-| authentication | `zh-CN/authentication.json` | `authentication` |
-| preferences | `zh-CN/preferences.json` | `preferences` |
-| utils | `zh-CN/utils.json` | `utils` |
+| 前端模块       | JSON 文件                   | 对应后端 module_type |
+| -------------- | --------------------------- | -------------------- |
+| system         | `zh-CN/system.json`         | `system`             |
+| infra          | `zh-CN/infra.json`          | `infra`              |
+| ai             | `zh-CN/ai.json`             | `ai`                 |
+| bpm            | `zh-CN/bpm.json`            | `bpm`                |
+| erp            | `zh-CN/erp.json`            | `erp`                |
+| crm            | `zh-CN/crm.json`            | `crm`                |
+| common         | `zh-CN/common.json`         | `common`             |
+| ui             | `zh-CN/ui.json`             | `ui`                 |
+| page           | `zh-CN/page.json`           | `page`               |
+| authentication | `zh-CN/authentication.json` | `authentication`     |
+| preferences    | `zh-CN/preferences.json`    | `preferences`        |
+| utils          | `zh-CN/utils.json`          | `utils`              |
 
 > **动态性**：`module_type` 从 JSON 文件名推导（去掉 `-` 后转为小写），新增模块时自动适用，无需修改规范。
 
@@ -41,7 +41,7 @@ apps/web-antd/src/locales/sql/
 通过分析所有模块的 JSON 结构，归纳出以下 Key 层级模式：
 
 | 层级 | 模式 | 示例 | 说明 |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | 业务模块 | `{module}` | `ai` | 顶层业务模块名 |
 | 业务子模块 | `{module}.{subModule}` | `ai.chat` | 业务下的子模块 |
 | 业务名称 | `{module}.{business}` | `ai.workflow` | 业务主体 |
@@ -93,33 +93,33 @@ menu.keepAlive.yes
 
 根据 `infra_i18n_key_use_type` 字典，各字段按以下规则填充：
 
-| 字段 | 常量名 | 值                     | 说明     |
-|---|---|-----------------------|--------|
-| `is_system` | `@IS_SYSTEM` | `0`                   | 非系统内置  |
-| `locale_target` | `@LOCALE_TARGET` | `2`                   | 前端端使用端 |
-| `locale` | `@LOCALE_EN` / `@LOCALE_ZH_CN` | `'en-US'` / `'zh-CN'` | 语言     |
-| `remark` | `@REMARK` | `'ai auto generate'`  | 备注     |
-| `creator` | `@CREATOR` | `'0'`                 | 创建人    |
+| 字段 | 常量名 | 值 | 说明 |
+| --- | --- | --- | --- |
+| `is_system` | `@IS_SYSTEM` | `0` | 非系统内置 |
+| `locale_target` | `@LOCALE_TARGET` | `2` | 前端端使用端 |
+| `locale` | `@LOCALE_EN` / `@LOCALE_ZH_CN` | `'en-US'` / `'zh-CN'` | 语言 |
+| `remark` | `@REMARK` | `'ai auto generate'` | 备注 |
+| `creator` | `@CREATOR` | `'0'` | 创建人 |
 
 **use_type 和 order_num 根据 Key 层级动态判断**：
 
 根据 `infra_i18n_key_use_type` 字典数据：
 
-| sort 值 | 值 | 标签 | 适用层级 |
-|---|---|---|---|
-| 0 | `0` | 公共 | 顶层 key（如 `ai`、`system`） |
-| 1 | `1` | UI | UI 层 key（如 `ui.xxx`） |
-| 2 | `2` | 表单 | 字段层（`.field.xxx`） |
-| 3 | `3` | 字段 | 字段层（备用，与表单合并使用值 2） |
-| 4 | `4` | 功能 | 动作层（`.action.xxx`） |
-| 5 | `5` | 异常 | 后端校验消息（当前规范不生成） |
-| 6 | `6` | 菜单 | 菜单层（`.menu`） |
-| 7 | `7` | 字典 | 字典模块专用 |
+| sort 值 | 值  | 标签 | 适用层级                           |
+| ------- | --- | ---- | ---------------------------------- |
+| 0       | `0` | 公共 | 顶层 key（如 `ai`、`system`）      |
+| 1       | `1` | UI   | UI 层 key（如 `ui.xxx`）           |
+| 2       | `2` | 表单 | 字段层（`.field.xxx`）             |
+| 3       | `3` | 字段 | 字段层（备用，与表单合并使用值 2） |
+| 4       | `4` | 功能 | 动作层（`.action.xxx`）            |
+| 5       | `5` | 异常 | 后端校验消息（当前规范不生成）     |
+| 6       | `6` | 菜单 | 菜单层（`.menu`）                  |
+| 7       | `7` | 字典 | 字典模块专用                       |
 
 **use_type 判断规则**：
 
 | Key 层级 | use_type | order_num |
-|---|---|---|
+| --- | --- | --- |
 | `{module}` 或 `{module}.{business}`（顶层业务名） | `0`（公共） | `0` |
 | `{module}.{business}.menu`（菜单名） | `6`（菜单） | `6` |
 | `{module}.{business}.list`（列表标题） | `2`（表单） | `2` |
@@ -236,6 +236,7 @@ VALUES ('{name}', '{i18nKey}', @LOCALE_ZH_CN, @LOCALE_TARGET_BACKEND, @IS_SYSTEM
 ```
 
 > **变量说明**：INSERT 语句中根据 Key 层级选择对应的 use_type 和 order_num 变量：
+>
 > - 公共层：`@USE_TYPE_PUBLIC` / `@ORDER_NUM_PUBLIC`
 > - UI 层：`@USE_TYPE_UI` / `@ORDER_NUM_UI`
 > - 表单层：`@USE_TYPE_FORM` / `@ORDER_NUM_FORM`
@@ -250,92 +251,92 @@ VALUES ('{name}', '{i18nKey}', @LOCALE_ZH_CN, @LOCALE_TARGET_BACKEND, @IS_SYSTEM
 
 当 JSON 中 `{module}.{business}` 对应的 value 是业务名称时（如 `"chat": "AI 聊天"`），生成：
 
-| 字段 | 值 |
-|---|---|
-| message_key | `ai.chat` |
-| message_name | `AI聊天`（去掉空格） |
-| message (zh-CN) | `AI 聊天` |
-| message (en-US) | `ai chat` |
-| **use_type** | `0`（公共） |
-| **order_num** | `0` |
+| 字段            | 值                   |
+| --------------- | -------------------- |
+| message_key     | `ai.chat`            |
+| message_name    | `AI聊天`（去掉空格） |
+| message (zh-CN) | `AI 聊天`            |
+| message (en-US) | `ai chat`            |
+| **use_type**    | `0`（公共）          |
+| **order_num**   | `0`                  |
 
 ### 5.2 菜单名层（`.menu` 后缀）
 
 当 JSON 中 `{module}.{business}.menu` 存在时，生成：
 
-| 字段 | 值 |
-|---|---|
-| message_key | `ai.chat.menu` |
-| message_name | `AI聊天-菜单` |
-| message (zh-CN) | `AI 聊天` |
-| message (en-US) | `ai chat` |
-| **use_type** | `6`（菜单） |
-| **order_num** | `6` |
+| 字段            | 值             |
+| --------------- | -------------- |
+| message_key     | `ai.chat.menu` |
+| message_name    | `AI聊天-菜单`  |
+| message (zh-CN) | `AI 聊天`      |
+| message (en-US) | `ai chat`      |
+| **use_type**    | `6`（菜单）    |
+| **order_num**   | `6`            |
 
 ### 5.3 列表标题层（`.list` 后缀）
 
 当 JSON 中 `{module}.{business}.list` 存在时，生成：
 
-| 字段 | 值 |
-|---|---|
-| message_key | `ai.chat.list` |
-| message_name | `AI聊天-列表` |
-| message (zh-CN) | `AI 聊天列表` |
+| 字段            | 值             |
+| --------------- | -------------- |
+| message_key     | `ai.chat.list` |
+| message_name    | `AI聊天-列表`  |
+| message (zh-CN) | `AI 聊天列表`  |
 | message (en-US) | `ai chat list` |
-| **use_type** | `2`（表单） |
-| **order_num** | `2` |
+| **use_type**    | `2`（表单）    |
+| **order_num**   | `2`            |
 
 ### 5.4 字段层（`.field.{fieldName}` 后缀）
 
 当 JSON 中 `{module}.{business}.field` 对象存在字段时，展开每个字段生成：
 
-| 字段 | 值 |
-|---|---|
-| message_key | `ai.chat.field.id` |
-| message_name | `AI聊天-对话编号` |
-| message (zh-CN) | `对话编号` |
-| message (en-US) | `conversation id` |
-| **use_type** | `2`（表单） |
-| **order_num** | `2` |
+| 字段            | 值                 |
+| --------------- | ------------------ |
+| message_key     | `ai.chat.field.id` |
+| message_name    | `AI聊天-对话编号`  |
+| message (zh-CN) | `对话编号`         |
+| message (en-US) | `conversation id`  |
+| **use_type**    | `2`（表单）        |
+| **order_num**   | `2`                |
 
 ### 5.5 动作层（`.action.{action}` 后缀）
 
 当 JSON 中 `{module}.{business}.action` 对象存在动作时，展开每个动作生成：
 
-| 字段 | 值 |
-|---|---|
-| message_key | `ai.chat.action.create` |
-| message_name | `AI聊天-新建对话` |
-| message (zh-CN) | `新建对话` |
-| message (en-US) | `new conversation` |
-| **use_type** | `4`（功能） |
-| **order_num** | `4` |
+| 字段            | 值                      |
+| --------------- | ----------------------- |
+| message_key     | `ai.chat.action.create` |
+| message_name    | `AI聊天-新建对话`       |
+| message (zh-CN) | `新建对话`              |
+| message (en-US) | `new conversation`      |
+| **use_type**    | `4`（功能）             |
+| **order_num**   | `4`                     |
 
 ### 5.6 消息层（`.message.{name}` 后缀）
 
 当 JSON 中 `{module}.{business}.message` 对象存在消息时，展开每个消息生成：
 
-| 字段 | 值 |
-|---|---|
-| message_key | `ai.chat.message.switching` |
-| message_name | `AI聊天-对话中不允许切换` |
-| message (zh-CN) | `对话中，不允许切换！` |
+| 字段            | 值                                         |
+| --------------- | ------------------------------------------ |
+| message_key     | `ai.chat.message.switching`                |
+| message_name    | `AI聊天-对话中不允许切换`                  |
+| message (zh-CN) | `对话中，不允许切换！`                     |
 | message (en-US) | `conversation in progress, cannot switch!` |
-| **use_type** | `2`（表单） |
-| **order_num** | `2` |
+| **use_type**    | `2`（表单）                                |
+| **order_num**   | `2`                                        |
 
 ### 5.7 分组层（`.group.{name}` 后缀）
 
 当 JSON 中 `{module}.{business}.group` 对象存在时，展开每个分组生成：
 
-| 字段 | 值 |
-|---|---|
-| message_key | `ai.chat.group.pinned` |
-| message_name | `AI聊天-置顶` |
-| message (zh-CN) | `置顶` |
-| message (en-US) | `pinned` |
-| **use_type** | `2`（表单） |
-| **order_num** | `2` |
+| 字段            | 值                     |
+| --------------- | ---------------------- |
+| message_key     | `ai.chat.group.pinned` |
+| message_name    | `AI聊天-置顶`          |
+| message (zh-CN) | `置顶`                 |
+| message (en-US) | `pinned`               |
+| **use_type**    | `2`（表单）            |
+| **order_num**   | `2`                    |
 
 ### 5.8 嵌套子业务层
 
@@ -343,53 +344,53 @@ VALUES ('{name}', '{i18nKey}', @LOCALE_ZH_CN, @LOCALE_TARGET_BACKEND, @IS_SYSTEM
 
 1. **子业务根键**：如 `ai.model.apiKey` = "API 密钥"
 
-| 字段 | 值 |
-|---|---|
-| message_key | `ai.model.apiKey` |
-| **use_type** | `0`（公共） |
-| **order_num** | `0` |
+| 字段          | 值                |
+| ------------- | ----------------- |
+| message_key   | `ai.model.apiKey` |
+| **use_type**  | `0`（公共）       |
+| **order_num** | `0`               |
 
 2. **子业务 field**：如 `ai.model.apiKey.field.id`
 
-| 字段 | 值 |
-|---|---|
-| message_key | `ai.model.apiKey.field.id` |
-| **use_type** | `2`（表单） |
-| **order_num** | `2` |
+| 字段          | 值                         |
+| ------------- | -------------------------- |
+| message_key   | `ai.model.apiKey.field.id` |
+| **use_type**  | `2`（表单）                |
+| **order_num** | `2`                        |
 
 3. **子业务 action**：如 `ai.model.apiKey.action.query`
 
-| 字段 | 值 |
-|---|---|
-| message_key | `ai.model.apiKey.action.query` |
-| **use_type** | `4`（功能） |
-| **order_num** | `4` |
+| 字段          | 值                             |
+| ------------- | ------------------------------ |
+| message_key   | `ai.model.apiKey.action.query` |
+| **use_type**  | `4`（功能）                    |
+| **order_num** | `4`                            |
 
 ### 5.9 扁平结构
 
 当 JSON 是扁平结构（如 `common.json`、`ui.json`）时，Key 直接使用：
 
-| 字段 | 值 |
-|---|---|
-| message_key | `common.operation` |
-| message_name | `通用-操作` |
-| message (zh-CN) | `操作` |
-| message (en-US) | `operation` |
-| **use_type** | `1`（UI） |
-| **order_num** | `1` |
+| 字段            | 值                 |
+| --------------- | ------------------ |
+| message_key     | `common.operation` |
+| message_name    | `通用-操作`        |
+| message (zh-CN) | `操作`             |
+| message (en-US) | `operation`        |
+| **use_type**    | `1`（UI）          |
+| **order_num**   | `1`                |
 
 ### 5.10 标签子对象结构
 
 当 JSON 中存在 `{module}.{business}.{tag}` 且值为对象（如 `menu.alwaysShow.yes`），展开为独立键：
 
-| 字段 | 值 |
-|---|---|
-| message_key | `system.menu.alwaysShow.yes` |
-| message_name | `菜单管理-总是` |
-| message (zh-CN) | `总是` |
-| message (en-US) | `yes` |
-| **use_type** | `2`（表单） |
-| **order_num** | `2` |
+| 字段            | 值                           |
+| --------------- | ---------------------------- |
+| message_key     | `system.menu.alwaysShow.yes` |
+| message_name    | `菜单管理-总是`              |
+| message (zh-CN) | `总是`                       |
+| message (en-US) | `yes`                        |
+| **use_type**    | `2`（表单）                  |
+| **order_num**   | `2`                          |
 
 ---
 
@@ -433,7 +434,7 @@ apps/web-antd/src/locales/sql/
 根据 `infra_i18n_key_use_type` 字典，按 sort 字段排序：
 
 | sort 值 | value 值 | 标签 | 说明 | 本规范适用场景 |
-|---|---|---|---|---|
+| --- | --- | --- | --- | --- |
 | 0 | `0` | 公共 | 通用 | 顶层业务名（如 `ai`、`ai.workflow`） |
 | 1 | `1` | UI | 前端展示 | 扁平结构（如 `common.xxx`、`ui.xxx`） |
 | 2 | `2` | 表单 | 表单/字段 | 字段、消息、列表标题、分组等 |
