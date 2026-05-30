@@ -81,7 +81,7 @@ const projectItems: WorkbenchProjectItem[] = [
     content: '在线云图库，团队管理图片、AI生图、退片推荐等',
     icon: 'simple-icons:imagetoolbox',
     title: 'LZ-Picture',
-    url: 'https://github.com/SpringSunYY/litchi',
+    url: 'https://github.com/SpringSunYY/LZ-Picture',
   },
   {
     color: '#409EFF',

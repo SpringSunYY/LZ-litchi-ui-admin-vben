@@ -12,6 +12,7 @@ import { Descriptions, DescriptionsItem, Tooltip } from 'ant-design-vue';
 import { updateUserProfile } from '#/api/system/user/profile';
 import { CropperAvatar } from '#/components/cropper';
 import { useUpload } from '#/components/upload/use-upload';
+import { $t } from '#/locales';
 
 const props = defineProps<{
   profile?: SystemUserProfileApi.UserProfileRespVO;
@@ -32,12 +33,9 @@ async function handelUpload({
   file: Blob;
   filename: string;
 }) {
-  // 1. 上传头像，获取 URL
   const { httpRequest } = useUpload(undefined, 'system');
-  // 将 Blob 转换为 File
   const fileObj = new File([file], filename, { type: file.type });
   const avatar = await httpRequest(fileObj);
-  // 2. 更新用户头像
   await updateUserProfile({ avatar });
 }
 </script>
@@ -45,7 +43,7 @@ async function handelUpload({
 <template>
   <div v-if="profile">
     <div class="flex flex-col items-center">
-      <Tooltip title="点击上传头像">
+      <Tooltip :title="$t('system.profile.message.uploadAvatar')">
         <CropperAvatar
           :show-btn="false"
           :upload-api="handelUpload"
@@ -61,7 +59,7 @@ async function handelUpload({
           <template #label>
             <div class="flex items-center">
               <IconifyIcon icon="ant-design:user-outlined" class="mr-1" />
-              用户账号
+              {{ $t('system.user.field.username') }}
             </div>
           </template>
           {{ profile.username }}
@@ -73,7 +71,7 @@ async function handelUpload({
                 icon="ant-design:user-switch-outlined"
                 class="mr-1"
               />
-              所属角色
+              {{ $t('system.profile.field.roles') }}
             </div>
           </template>
           {{ profile.roles?.map((role) => role.name).join(',') }}
@@ -82,7 +80,7 @@ async function handelUpload({
           <template #label>
             <div class="flex items-center">
               <IconifyIcon icon="ant-design:phone-outlined" class="mr-1" />
-              手机号码
+              {{ $t('system.user.field.mobile') }}
             </div>
           </template>
           {{ profile.mobile }}
@@ -91,7 +89,7 @@ async function handelUpload({
           <template #label>
             <div class="flex items-center">
               <IconifyIcon icon="ant-design:mail-outlined" class="mr-1" />
-              用户邮箱
+              {{ $t('system.user.field.email') }}
             </div>
           </template>
           {{ profile.email }}
@@ -100,7 +98,7 @@ async function handelUpload({
           <template #label>
             <div class="flex items-center">
               <IconifyIcon icon="ant-design:team-outlined" class="mr-1" />
-              所属部门
+              {{ $t('system.profile.field.dept') }}
             </div>
           </template>
           {{ profile.dept?.name }}
@@ -112,7 +110,7 @@ async function handelUpload({
                 icon="ant-design:usergroup-add-outlined"
                 class="mr-1"
               />
-              所属岗位
+              {{ $t('system.profile.field.posts') }}
             </div>
           </template>
           {{ profile.posts?.map((post) => post.name).join(',') }}
@@ -124,7 +122,7 @@ async function handelUpload({
                 icon="ant-design:clock-circle-outlined"
                 class="mr-1"
               />
-              创建时间
+              {{ $t('system.user.field.createTime') }}
             </div>
           </template>
           {{ formatDateTime(profile.createTime) }}
@@ -133,7 +131,7 @@ async function handelUpload({
           <template #label>
             <div class="flex items-center">
               <IconifyIcon icon="ant-design:login-outlined" class="mr-1" />
-              登录时间
+              {{ $t('system.profile.field.loginDate') }}
             </div>
           </template>
           {{ formatDateTime(profile.loginDate) }}

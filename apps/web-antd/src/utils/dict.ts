@@ -1,6 +1,7 @@
 // TODO @YY：后续再优化
 // TODO @YY：可以共享么？
 
+import { $t } from '@vben/locales';
 import { isObject } from '@vben/utils';
 
 import { useDictStore } from '#/store';
@@ -39,7 +40,16 @@ export interface StringDictDataType extends DictDataType {
 function getDictLabel(dictType: string, value: any) {
   const dictStore = useDictStore();
   const dictObj = dictStore.getDictData(dictType, value);
-  return isObject(dictObj) ? dictObj.label : '';
+  if (!isObject(dictObj)) {
+    return '';
+  }
+  if (dictObj?.i18n) {
+    return $t(dictObj.i18n);
+  }
+  if (dictObj?.label) {
+    return dictObj.label;
+  }
+  return '';
 }
 
 /**

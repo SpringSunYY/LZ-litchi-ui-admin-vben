@@ -8,6 +8,7 @@ import { Page } from '@vben/common-ui';
 import { Card, Tabs } from 'ant-design-vue';
 
 import { getUserProfile } from '#/api/system/user/profile';
+import { $t } from '#/locales';
 import { useAuthStore } from '#/store';
 
 import BaseInfo from './modules/base-info.vue';
@@ -41,20 +42,30 @@ onMounted(loadProfile);
   <Page auto-content-height>
     <div class="flex flex-col lg:flex-row">
       <!-- 左侧 个人信息 -->
-      <Card class="w-full lg:w-2/5" title="个人信息">
+      <Card class="w-full lg:w-2/5" :title="$t('system.profile.profile')">
         <ProfileUser :profile="profile" @success="refreshProfile" />
       </Card>
 
       <!-- 右侧 标签页 -->
-      <Card class="mt-3 lg:mt-0 lg:ml-3 w-full lg:w-3/5">
+      <Card class="mt-3 w-full lg:ml-3 lg:mt-0 lg:w-3/5">
         <Tabs v-model:active-key="activeName" class="-mt-4">
-          <Tabs.TabPane key="basicInfo" tab="基本设置">
+          <Tabs.TabPane
+            key="basicInfo"
+            :tab="$t('system.profile.message.basicInfo')"
+          >
             <BaseInfo :profile="profile" @success="refreshProfile" />
           </Tabs.TabPane>
-          <Tabs.TabPane key="resetPwd" tab="密码设置">
+          <Tabs.TabPane
+            key="resetPwd"
+            :tab="$t('system.profile.message.password')"
+          >
             <ResetPwd />
           </Tabs.TabPane>
-          <Tabs.TabPane key="userSocial" tab="社交绑定" force-render>
+          <Tabs.TabPane
+            key="userSocial"
+            :tab="$t('system.profile.message.socialBind')"
+            force-render
+          >
             <UserSocial @update:active-name="activeName = $event" />
           </Tabs.TabPane>
           <!-- TODO @YY：在线设备 -->

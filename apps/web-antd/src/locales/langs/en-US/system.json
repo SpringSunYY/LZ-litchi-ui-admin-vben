@@ -779,6 +779,46 @@
       }
     }
   },
+  "profile": {
+    "profile": "profile",
+    "field": {
+      "roles": "roles",
+      "dept": "department",
+      "posts": "posts",
+      "loginDate": "login time",
+      "oldPassword": "old password",
+      "newPassword": "new password",
+      "confirmPassword": "confirm password",
+      "openid": "identifier",
+      "socialNickname": "nickname"
+    },
+    "action": {
+      "updateInfo": "update info",
+      "updatePassword": "change password"
+    },
+    "message": {
+      "basicInfo": "basic settings",
+      "password": "password settings",
+      "socialBind": "social binding",
+      "bindPlatform": "bind platform",
+      "operation": "operation",
+      "unbindConfirm": "confirm unbind [{0}] platform's [{1}] account?",
+      "bindSuccess": "bound successfully",
+      "uploadAvatar": "click to upload avatar",
+      "bind": "bind",
+      "bindAccount": "bind {0} account",
+      "unbind": "unbind",
+      "unbindSuccess": "unbound successfully",
+      "bound": "bound",
+      "passwordMin": "password must be at least 5 characters",
+      "passwordMax": "password must not exceed 20 characters",
+      "passwordOldRequired": "please enter password",
+      "passwordNewRequired": "please enter new password",
+      "passwordConfirmRequired": "please enter confirm password",
+      "passwordOldNewSame": "old and new passwords cannot be the same",
+      "passwordMismatch": "new password and confirm password do not match"
+    }
+  },
   "social": {
     "client": {
       "client": "social client",

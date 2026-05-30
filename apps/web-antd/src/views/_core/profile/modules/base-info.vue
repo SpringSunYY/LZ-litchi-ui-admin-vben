@@ -26,34 +26,40 @@ const [Form, formApi] = useVbenForm({
   },
   schema: [
     {
-      label: '用户昵称',
+      label: $t('system.user.field.nickname'),
       fieldName: 'nickname',
       component: 'Input',
       componentProps: {
-        placeholder: '请输入用户昵称',
+        placeholder: $t('ui.placeholder.input', [
+          $t('system.user.field.nickname'),
+        ]),
       },
       rules: 'required',
     },
     {
-      label: '用户手机',
+      label: $t('system.user.field.mobile'),
       fieldName: 'mobile',
       component: 'Input',
       componentProps: {
-        placeholder: '请输入用户手机',
+        placeholder: $t('ui.placeholder.input', [
+          $t('system.user.field.mobile'),
+        ]),
       },
       rules: z.string(),
     },
     {
-      label: '用户邮箱',
+      label: $t('system.user.field.email'),
       fieldName: 'email',
       component: 'Input',
       componentProps: {
-        placeholder: '请输入用户邮箱',
+        placeholder: $t('ui.placeholder.input', [
+          $t('system.user.field.email'),
+        ]),
       },
-      rules: z.string().email('请输入正确的邮箱'),
+      rules: z.string().email($t('ui.validate.email')),
     },
     {
-      label: '用户性别',
+      label: $t('system.user.field.sex'),
       fieldName: 'sex',
       component: 'RadioGroup',
       componentProps: {
@@ -68,7 +74,7 @@ const [Form, formApi] = useVbenForm({
     show: false,
   },
   submitButtonOptions: {
-    content: '更新信息',
+    content: $t('system.profile.action.updateInfo'),
   },
   handleSubmit,
 });

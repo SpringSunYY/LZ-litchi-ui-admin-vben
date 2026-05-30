@@ -59,6 +59,7 @@
   "mobileErrortip": "The phone number format is incorrect",
   "sendCode": "Get Security code",
   "sendText": "Resend in {0}s",
+  "sendSuccess": "Security code sent successfully",
   "thirdPartyLogin": "Or continue with",
   "loginAgainTitle": "Please Log In Again",
   "loginAgainSubTitle": "Your login session has expired. Please log in again to continue.",
@@ -66,5 +67,17 @@
     "center": "Align Center",
     "alignLeft": "Align Left",
     "alignRight": "Align Right"
+  },
+  "tenantName": "Tenant Name",
+  "formNotReady": "Form is not ready",
+  "invalidMobile": "Please enter a valid mobile number",
+  "sso": {
+    "authorize": "Authorization",
+    "thisAppRequests": "This third-party application requests the following permissions:",
+    "accessYourInfo": "access your personal information",
+    "modifyYourInfo": "modify your personal information",
+    "scope": "authorization scope",
+    "approve": "approve",
+    "reject": "reject"
   }
 }

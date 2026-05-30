@@ -779,6 +779,46 @@
       }
     }
   },
+  "profile": {
+    "profile": "个人中心",
+    "field": {
+      "roles": "所属角色",
+      "dept": "所属部门",
+      "posts": "所属岗位",
+      "loginDate": "登录时间",
+      "oldPassword": "旧密码",
+      "newPassword": "新密码",
+      "confirmPassword": "确认密码",
+      "openid": "标识",
+      "socialNickname": "昵称"
+    },
+    "action": {
+      "updateInfo": "更新信息",
+      "updatePassword": "修改密码"
+    },
+    "message": {
+      "basicInfo": "基本设置",
+      "password": "密码设置",
+      "socialBind": "社交绑定",
+      "bindPlatform": "绑定平台",
+      "operation": "操作",
+      "unbindConfirm": "确定解绑[{0}]平台的[{1}]账号吗？",
+      "bindSuccess": "绑定成功",
+      "uploadAvatar": "点击上传头像",
+      "bind": "绑定",
+      "bindAccount": "绑定{0}账号",
+      "unbind": "解绑",
+      "unbindSuccess": "解绑成功",
+      "bound": "已绑定",
+      "passwordMin": "密码长度不能少于 5 个字符",
+      "passwordMax": "密码长度不能超过 20 个字符",
+      "passwordOldRequired": "请输入密码",
+      "passwordNewRequired": "请输入新密码",
+      "passwordConfirmRequired": "请输入确认密码",
+      "passwordOldNewSame": "新旧密码不能相同",
+      "passwordMismatch": "新密码和确认密码不一致"
+    }
+  },
   "social": {
     "client": {
       "client": "社交客户端",

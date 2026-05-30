@@ -59,6 +59,7 @@
   "mobileLogin": "手机号登录",
   "sendCode": "获取验证码",
   "sendText": "{0}秒后重新获取",
+  "sendSuccess": "验证码发送成功",
   "thirdPartyLogin": "其他登录方式",
   "loginAgainTitle": "重新登录",
   "loginAgainSubTitle": "您的登录状态已过期，请重新登录以继续。",
@@ -66,5 +67,17 @@
     "center": "居中",
     "alignLeft": "居左",
     "alignRight": "居右"
+  },
+  "tenantName": "租户名称",
+  "formNotReady": "表单未准备好",
+  "invalidMobile": "请输入有效的手机号码",
+  "sso": {
+    "authorize": "授权确认",
+    "thisAppRequests": "此第三方应用请求获得以下权限：",
+    "accessYourInfo": "访问你的个人信息",
+    "modifyYourInfo": "修改你的个人信息",
+    "scope": "授权范围",
+    "approve": "同意授权",
+    "reject": "拒绝"
   }
 }

@@ -139,7 +139,7 @@ async function handleThirdLogin(type: number) {
   try {
     const isValid = await fetchTenantByCode(tenantCode.value);
     if (!isValid) {
-      message.warn($t('authentication.tenantCodeTip'));
+      message.warn($t('authentication.tenantErrorTip'));
       return;
     }
     // 计算 redirectUri

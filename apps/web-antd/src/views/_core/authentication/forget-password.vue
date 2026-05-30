@@ -149,20 +149,20 @@ const formSchema = computed((): VbenFormSchema[] => {
           try {
             const formApi = forgetPasswordRef.value?.getFormApi();
             if (!formApi) {
-              throw new Error('表单未准备好');
+            throw new Error($t('authentication.formNotReady'));
             }
             // 验证手机号
             await formApi.validateField('mobile');
             const isMobileValid = await formApi.isFieldValid('mobile');
             if (!isMobileValid) {
-              throw new Error('请输入有效的手机号码');
+              throw new Error($t('authentication.invalidMobile'));
             }
 
             // 发送验证码
             const { mobile } = await formApi.getValues();
             const scene = 23; // 场景：重置密码
             await sendSmsCode({ mobile, scene });
-            message.success('验证码发送成功');
+            message.success($t('authentication.sendSuccess'));
           } finally {
             loading.value = false;
           }

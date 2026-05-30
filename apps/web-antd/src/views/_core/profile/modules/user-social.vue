@@ -40,7 +40,7 @@ function useGridColumns(): VxeTableGridOptions['columns'] {
   return [
     {
       field: 'type',
-      title: '绑定平台',
+      title: $t('system.profile.message.bindPlatform'),
       minWidth: 100,
       cellRender: {
         name: 'CellDict',
@@ -49,17 +49,17 @@ function useGridColumns(): VxeTableGridOptions['columns'] {
     },
     {
       field: 'openid',
-      title: '标识',
+      title: $t('system.profile.field.openid'),
       minWidth: 180,
     },
     {
-      field: 'nickname',
-      title: '昵称',
+      field: 'socialNickname',
+      title: $t('system.profile.field.socialNickname'),
       minWidth: 180,
     },
     {
       field: 'operation',
-      title: '操作',
+      title: $t('system.profile.message.operation'),
       minWidth: 80,
       align: 'center',
       fixed: 'right',
@@ -67,7 +67,7 @@ function useGridColumns(): VxeTableGridOptions['columns'] {
         default: ({ row }: { row: SystemSocialUserApi.SocialUser }) => {
           return (
             <Button onClick={() => onUnbind(row)} type="link">
-              解绑
+              {$t('system.profile.message.unbind')}
             </Button>
           );
         },
@@ -104,11 +104,13 @@ const [Grid, gridApi] = useVbenVxeGrid({
 /** 解绑账号 */
 function onUnbind(row: SystemSocialUserApi.SocialUser) {
   confirm({
-    content: `确定解绑[${getDictLabel(DICT_TYPE.SYSTEM_SOCIAL_TYPE, row.type)}]平台的[${row.openid}]账号吗？`,
+    content: $t('system.profile.message.unbindConfirm', [
+      getDictLabel(DICT_TYPE.SYSTEM_SOCIAL_TYPE, row.type),
+      row.openid,
+    ]),
   }).then(async () => {
     await socialUnbind({ type: row.type, openid: row.openid });
-    // 提示成功
-    message.success($t('ui.actionMessage.operationSuccess'));
+    message.success($t('system.profile.message.unbindSuccess'));
     await gridApi.reload();
   });
 }
@@ -141,8 +143,7 @@ async function bindSocial() {
     return;
   }
   await socialBind({ type, code, state });
-  // 提示成功
-  message.success('绑定成功');
+  message.success($t('system.profile.message.bindSuccess'));
   emit('update:activeName', 'userSocial');
   await gridApi.reload();
   // 清理 URL 参数，避免刷新重复触发
@@ -191,9 +192,11 @@ onMounted(() => {
                     {{ item.socialUser?.nickname || item.socialUser?.openid }}
                   </template>
                   <template v-else>
-                    绑定{{
-                      getDictLabel(DICT_TYPE.SYSTEM_SOCIAL_TYPE, item.type)
-                    }}账号
+                    {{
+                      $t('system.profile.message.bindAccount', [
+                        getDictLabel(DICT_TYPE.SYSTEM_SOCIAL_TYPE, item.type),
+                      ])
+                    }}
                   </template>
                 </span>
               </div>
@@ -203,7 +206,11 @@ onMounted(() => {
                 type="link"
                 @click="onBind(item)"
               >
-                {{ item.socialUser ? '已绑定' : '绑定' }}
+                {{
+                  item.socialUser
+                    ? $t('system.profile.message.bound')
+                    : $t('system.profile.message.bind')
+                }}
               </Button>
             </div>
           </div>
