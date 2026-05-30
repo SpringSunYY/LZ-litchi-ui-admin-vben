@@ -15,11 +15,19 @@ export const overridesPreferences = defineOverridesPreferences({
   },
   footer: {
     /** 默认关闭 footer 页脚，因为有一定遮挡 */
-    enable: false,
+    enable: true,
     fixed: false,
+  },
+  logo: {
+    /** logo地址 */
+    source: '/logo.webp',
+    /** logo是否可见 */
+    enable: true,
+    /** logo图片适应方式 */
+    fit: 'contain',
   },
   copyright: {
     companyName: import.meta.env.VITE_APP_TITLE,
-    companySiteLink: 'https://gitee.com/litchicode/litchi-ui-admin-vben',
+    companySiteLink: 'https://springsun.online/',
   },
 });

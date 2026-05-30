@@ -431,6 +431,7 @@
       "noProcessDefinitions": "暂无可用流程定义"
     },
     "detail": {
+      "title": "流程详情",
       "instanceId": "编号：{0}",
       "submittedBy": "{0} 提交",
       "underReview": "审批中",

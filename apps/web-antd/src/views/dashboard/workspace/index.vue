@@ -6,12 +6,13 @@ import type {
   WorkbenchTrendItem,
 } from '@vben/common-ui';
 
-import { ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 
 import {
   AnalysisChartCard,
   WorkbenchHeader,
+  WorkbenchPoem,
   WorkbenchProject,
   WorkbenchQuickNav,
   WorkbenchTodo,
@@ -21,11 +22,53 @@ import { preferences } from '@vben/preferences';
 import { useUserStore } from '@vben/stores';
 import { openWindow } from '@vben/utils';
 
-import { $t } from '#/locales';
+import { getGithubCommits } from '#/api/core/github';
 
 import AnalyticsVisitsSource from '../analytics/analytics-visits-source.vue';
+import { poems, quotes } from './verse';
 
 const userStore = useUserStore();
+
+const greeting = computed(() => {
+  const hour = new Date().getHours();
+  if (hour < 12) return '早安';
+  if (hour < 18) return '下午好';
+  return '晚上好';
+});
+
+const todayDate = computed(() => {
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, '0');
+  const day = String(now.getDate()).padStart(2, '0');
+  const weekDays = [
+    '星期日',
+    '星期一',
+    '星期二',
+    '星期三',
+    '星期四',
+    '星期五',
+    '星期六',
+  ];
+  const week = weekDays[now.getDay()];
+  return `${year}-${month}-${day} ${week}`;
+});
+
+const quoteIndex = ref(Math.floor(Math.random() * quotes.length));
+
+function refreshQuote() {
+  quoteIndex.value = Math.floor(Math.random() * quotes.length);
+}
+
+const todayQuote = computed(() => quotes[quoteIndex.value]?.content || '');
+
+const poemIndex = ref(Math.floor(Math.random() * poems.length));
+
+function refreshPoem() {
+  poemIndex.value = Math.floor(Math.random() * poems.length);
+}
+
+const poemItem = computed(() => poems[poemIndex.value]);
 
 // 这是一个示例数据，实际项目中需要根据实际情况进行调整
 // url 也可以是内部路由，在 navTo 方法中识别处理，进行内部跳转
@@ -33,57 +76,57 @@ const userStore = useUserStore();
 const projectItems: WorkbenchProjectItem[] = [
   {
     color: '#6DB33F',
-    content: 'github.com/SpringSunYY/litchi',
-    date: '2025-01-02',
-    group: 'Spring Boot 单体架构',
-    icon: 'simple-icons:springboot',
-    title: 'litchi',
+    group: 'jdk21、vue3、若依框架',
+    date: '2025-02-28',
+    content: '在线云图库，团队管理图片、AI生图、退片推荐等',
+    icon: 'simple-icons:imagetoolbox',
+    title: 'LZ-Picture',
     url: 'https://github.com/SpringSunYY/litchi',
   },
   {
     color: '#409EFF',
-    content: 'github.com/litchicode/litchi-ui-admin-vue3',
-    date: '2025-02-03',
-    group: 'Vue3 + element-plus 管理后台',
+    group: 'jdk21、springBoot3、芋道框架',
+    date: '2026-03-23',
+    content: '开发国际化、租户管理、代码生成及项目优化等',
     icon: 'ep:element-plus',
-    title: 'litchi-ui-admin-vue3',
-    url: 'https://github.com/litchicode/litchi-ui-admin-vue3',
+    title: 'LZ-litchi',
+    url: 'https://github.com/SpringSunYY/LZ-litchi',
   },
   {
     color: '#ff4d4f',
-    content: 'github.com/litchicode/litchi-ui-mall-uniapp',
-    date: '2025-03-04',
-    group: 'Vue3 + uniapp 商城手机端',
+    group: 'vue3、vben Admin、芋道框架',
+    date: '2026-03-23',
+    content: '开发国际化、租户管理、代码生成及项目优化等',
     icon: 'icon-park-outline:mall-bag',
-    title: 'litchi-ui-mall-uniapp',
-    url: 'https://github.com/litchicode/litchi-ui-mall-uniapp',
+    title: 'LZ-litchi-ui-admin-vben',
+    url: 'https://github.com/SpringSunYY/LZ-litchi-ui-admin-vben',
   },
   {
     color: '#1890ff',
-    content: 'github.com/SpringSunYY/litchi-cloud',
-    date: '2025-04-05',
-    group: 'Spring Cloud 微服务架构',
-    icon: 'material-symbols:cloud-outline',
-    title: 'litchi-cloud',
-    url: 'https://github.com/SpringSunYY/litchi-cloud',
+    content: '基于若依优化代码生成、MP、导入导出等',
+    date: '2024-02-24',
+    group: 'jdk21、springBoot3、vue3、vue2',
+    icon: 'simple-icons:github',
+    title: 'LZ-RuoYi',
+    url: 'https://github.com/SpringSunYY/LZ-RuoYi',
   },
   {
     color: '#e18525',
     content: 'github.com/litchicode/litchi-ui-admin-vben',
-    date: '2025-05-06',
-    group: 'Vue3 + vben5(antd) 管理后台',
-    icon: 'devicon:antdesign',
-    title: 'litchi-ui-admin-vben',
-    url: 'https://github.com/litchicode/litchi-ui-admin-vben',
+    date: '2025-11-09',
+    group: 'python、falsk、vue2',
+    icon: 'simple-icons:python',
+    title: 'RuoYi_vue_flask',
+    url: 'https://github.com/SpringSunYY/RuoYi_vue_flask',
   },
   {
     color: '#2979ff',
-    content: 'github.com/litchicode/litchi-ui-admin-uniapp',
-    date: '2025-06-01',
+    content: '生成uniapp代码，若依框架手机端',
+    date: '2024-09-07',
     group: 'Vue3 + uniapp 管理手机端',
     icon: 'ant-design:mobile',
-    title: 'litchi-ui-admin-uniapp',
-    url: 'https://github.com/litchicode/litchi-ui-admin-uniapp',
+    title: 'LZ-RuoYi-App',
+    url: 'https://github.com/SpringSunYY/LZ-RuoYi-App',
   },
 ];
 
@@ -105,13 +148,13 @@ const quickNavItems: WorkbenchQuickNavItem[] = [
     color: '#7c3aed',
     icon: 'tabler:ai',
     title: 'AI 大模型',
-    url: '/ai',
+    url: '/ai/chat',
   },
   {
     color: '#3fb27f',
     icon: 'simple-icons:erpnext',
     title: 'ERP 系统',
-    url: '/erp',
+    url: '/erp/backlog',
   },
   {
     color: '#4daf1bc9',
@@ -121,9 +164,9 @@ const quickNavItems: WorkbenchQuickNavItem[] = [
   },
   {
     color: '#1a73e8',
-    icon: 'fa-solid:hdd',
-    title: 'IoT 物联网',
-    url: '/iot',
+    icon: 'fa-solid:fa-list-check',
+    title: 'BPM 工作流',
+    url: '/bpm/task/my',
   },
 ];
 
@@ -153,62 +196,12 @@ const todoItems = ref<WorkbenchTodoItem[]>([
     title: '广泛企业认可',
   },
 ]);
-const trendItems: WorkbenchTrendItem[] = [
-  {
-    avatar: 'svg:avatar-1',
-    content: `在 <a>开源组</a> 创建了项目 <a>Vue</a>`,
-    date: '刚刚',
-    title: '威廉',
-  },
-  {
-    avatar: 'svg:avatar-2',
-    content: `关注了 <a>威廉</a> `,
-    date: '1个小时前',
-    title: '艾文',
-  },
-  {
-    avatar: 'svg:avatar-3',
-    content: `发布了 <a>个人动态</a> `,
-    date: '1天前',
-    title: '克里斯',
-  },
-  {
-    avatar: 'svg:avatar-4',
-    content: `发表文章 <a>如何编写一个Vite插件</a> `,
-    date: '2天前',
-    title: 'Vben',
-  },
-  {
-    avatar: 'svg:avatar-1',
-    content: `回复了 <a>杰克</a> 的问题 <a>如何进行项目优化？</a>`,
-    date: '3天前',
-    title: '皮特',
-  },
-  {
-    avatar: 'svg:avatar-2',
-    content: `关闭了问题 <a>如何运行项目</a> `,
-    date: '1周前',
-    title: '杰克',
-  },
-  {
-    avatar: 'svg:avatar-3',
-    content: `发布了 <a>个人动态</a> `,
-    date: '1周前',
-    title: '威廉',
-  },
-  {
-    avatar: 'svg:avatar-4',
-    content: `推送了代码到 <a>Github</a>`,
-    date: '2021-04-01 20:00',
-    title: '威廉',
-  },
-  {
-    avatar: 'svg:avatar-4',
-    content: `发表文章 <a>如何编写使用 Admin Vben</a> `,
-    date: '2021-03-01 20:00',
-    title: 'Vben',
-  },
-];
+
+const trendItems = ref<WorkbenchTrendItem[]>([]);
+
+onMounted(async () => {
+  trendItems.value = await getGithubCommits();
+});
 
 const router = useRouter();
 
@@ -227,12 +220,6 @@ function navTo(nav: WorkbenchProjectItem | WorkbenchQuickNavItem) {
     console.warn(`Unknown URL for navigation item: ${nav.title} -> ${nav.url}`);
   }
 }
-
-const toTenant = () => {
-  router.push({
-    name: 'SystemDictType',
-  });
-};
 </script>
 
 <template>
@@ -241,11 +228,16 @@ const toTenant = () => {
       :avatar="userStore.userInfo?.avatar || preferences.app.defaultAvatar"
     >
       <template #title>
-        早安, {{ userStore.userInfo?.nickname }}, 开始您一天的工作吧！
+        {{ greeting }}, {{ userStore.userInfo?.nickname }}, 开始您一天的工作吧！
       </template>
-      <template #description> 今日晴，20℃ - 32℃！{{ $t('test') }} </template>
+      <template #description>
+        今天是{{ todayDate }}！
+        <br />
+        <span class="cursor-pointer" @click="refreshQuote">{{
+          todayQuote
+        }}</span>
+      </template>
     </WorkbenchHeader>
-    <AButton @click="toTenant()">租户列表</AButton>
     <div class="mt-5 flex flex-col lg:flex-row">
       <div class="mr-4 w-full lg:w-3/5">
         <WorkbenchProject :items="projectItems" title="项目" @click="navTo" />
@@ -258,6 +250,7 @@ const toTenant = () => {
           title="快捷导航"
           @click="navTo"
         />
+        <WorkbenchPoem :item="poemItem" class="mt-5" @refresh="refreshPoem" />
         <WorkbenchTodo :items="todoItems" class="mt-5" title="待办事项" />
         <AnalysisChartCard class="mt-5" title="访问来源">
           <AnalyticsVisitsSource />

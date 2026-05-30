@@ -32,6 +32,15 @@ interface WorkbenchTodoItem {
   title: string;
 }
 
+interface WorkbenchPoemItem {
+  title?: string;
+  author?: string;
+  content?: string;
+  dynasty?: string;
+  date?: string;
+  type?: 'poem' | 'sentence';
+}
+
 interface WorkbenchQuickNavItem {
   color?: string;
   icon: Component | string;
@@ -42,6 +51,7 @@ interface WorkbenchQuickNavItem {
 export type {
   AnalysisOverviewItem,
   WorkbenchProjectItem,
+  WorkbenchPoemItem,
   WorkbenchQuickNavItem,
   WorkbenchTodoItem,
   WorkbenchTrendItem,

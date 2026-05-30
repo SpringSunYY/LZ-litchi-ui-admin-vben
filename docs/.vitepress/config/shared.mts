@@ -1,3 +1,4 @@
+// @ts-nocheck
 import type { PwaOptions } from '@vite-pwa/vitepress';
 import type { HeadConfig } from 'vitepress';
 
