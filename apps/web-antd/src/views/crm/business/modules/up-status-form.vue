@@ -9,10 +9,8 @@ import { message } from 'ant-design-vue';
 
 import { useVbenForm } from '#/adapter/form';
 import { updateBusinessStatus } from '#/api/crm/business';
-import {
-  DEFAULT_STATUSES,
-  getBusinessStatusSimpleList,
-} from '#/api/crm/business/status';
+import { getBusinessStatusSimpleList } from '#/api/crm/business/status';
+import { DEFAULT_STATUSES } from '#/utils/constants/crm';
 import { $t } from '#/locales';
 
 const emit = defineEmits(['success']);
