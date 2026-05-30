@@ -23,17 +23,56 @@ export namespace GithubApi {
 
 const GITHUB_API_BASE = 'https://api.github.com';
 
-const REPOS = ['SpringSunYY/LZ-litchi', 'SpringSunYY/LZ-litchi-ui-admin-vben'];
+const REPOS = [
+  'SpringSunYY/LZ-litchi',
+  'SpringSunYY/LZ-litchi-ui-admin-vben',
+  'SpringSunYY/LZ-RuoYi',
+  'SpringSunYY/LZ-Picture',
+  'SpringSunYY/RuoYi_vue_flask',
+  'SpringSunYY/LZ-RuoYi-App',
+  'SpringSunYY/YY',
+];
+
+const CACHE_KEY = '__github_commits_cache__';
+const CACHE_TTL_MS = 30 * 60 * 1000; // 30 分钟
+
+interface CacheEntry {
+  data: WorkbenchTrendItem[];
+  timestamp: number;
+}
+
+function getCache(): CacheEntry | null {
+  try {
+    const raw = localStorage.getItem(CACHE_KEY);
+    if (!raw) return null;
+    return JSON.parse(raw) as CacheEntry;
+  } catch {
+    return null;
+  }
+}
+
+function setCache(data: WorkbenchTrendItem[]): void {
+  try {
+    localStorage.setItem(
+      CACHE_KEY,
+      JSON.stringify({ data, timestamp: Date.now() } satisfies CacheEntry),
+    );
+  } catch {
+    // storage 可能已满或被禁用，忽略即可
+  }
+}
+
+function clearCache(): void {
+  localStorage.removeItem(CACHE_KEY);
+}
 
 function fetchRepoCommits(repo: string): Promise<GithubApi.Commit[]> {
   return fetch(
     `${GITHUB_API_BASE}/repos/${repo}/commits?per_page=10&sha=main`,
-    {
-      headers: { Accept: 'application/vnd.github.v3+json' },
-    },
+    { headers: { Accept: 'application/vnd.github.v3+json' } },
   ).then((res) => {
     if (!res.ok) throw new Error(`GitHub API error: ${res.status}`);
-    return res.json();
+    return res.json() as Promise<GithubApi.Commit[]>;
   });
 }
 
@@ -72,12 +111,18 @@ function buildTrendItem(
 }
 
 export async function getGithubCommits(): Promise<WorkbenchTrendItem[]> {
+  const cached = getCache();
+  if (cached && Date.now() - cached.timestamp < CACHE_TTL_MS) {
+    return cached.data;
+  }
+
+  clearCache();
+
   try {
     const results = await Promise.all(
       REPOS.map((repo) => fetchRepoCommits(repo)),
     );
 
-    // 把仓库名和对应的 commit 配对
     const taggedCommits: Array<{ commit: GithubApi.Commit; repo: string }> = [];
     for (const [i, REPO] of REPOS.entries()) {
       const repo = REPO!;
@@ -92,9 +137,12 @@ export async function getGithubCommits(): Promise<WorkbenchTrendItem[]> {
         new Date(a.commit.commit.author.date).getTime(),
     );
 
-    return sorted
+    const data = sorted
       .slice(0, 10)
       .map(({ commit, repo }) => buildTrendItem(commit, repo));
+
+    setCache(data);
+    return data;
   } catch {
     return [];
   }
