@@ -149,7 +149,7 @@ const formSchema = computed((): VbenFormSchema[] => {
           try {
             const formApi = forgetPasswordRef.value?.getFormApi();
             if (!formApi) {
-            throw new Error($t('authentication.formNotReady'));
+              throw new Error($t('authentication.formNotReady'));
             }
             // 验证手机号
             await formApi.validateField('mobile');

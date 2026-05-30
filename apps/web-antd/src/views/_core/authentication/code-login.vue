@@ -150,7 +150,7 @@ const formSchema = computed((): VbenFormSchema[] => {
             const formApi = loginRef.value?.getFormApi();
             console.log('formApi', formApi);
             if (!formApi) {
-            throw new Error($t('authentication.formNotReady'));
+              throw new Error($t('authentication.formNotReady'));
             }
             // 验证手机号
             await formApi.validateField('mobile');
