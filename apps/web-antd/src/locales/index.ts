@@ -1,20 +1,15 @@
 import type { Locale } from 'ant-design-vue/es/locale';
 
-import type { App } from 'vue';
-
-import type { LocaleSetupOptions, SupportedLanguagesType } from '@vben/locales';
+import type { SetupI18nOptions } from '@vben/locales';
 
 import { ref } from 'vue';
 
-import { I18N_CACHE_PREFIX } from '@vben/constants';
 import {
   $t,
-  setupI18n as coreSetup,
-  i18n,
-  loadLocaleMessages,
-  loadLocalesMapFromDir,
+  LOCALE_FALLBACK,
   mergeRemoteMessages,
-  setRemoteMessageLoader,
+  getDefaultLocaleFromBackend as pkgGetDefaultLocaleFromBackend,
+  setupI18n as pkgSetupI18n,
 } from '@vben/locales';
 
 import antdDefaultLocale from 'ant-design-vue/es/locale/zh_CN';
@@ -42,182 +37,16 @@ import dayjsLocaleZhTw from 'dayjs/locale/zh-tw';
 
 import { getI18nLocale, getI18nLocaleMessage } from '#/api/infra/i18n/i18n';
 
+export { $t, LOCALE_FALLBACK, mergeRemoteMessages };
+
+export { type SetupI18nOptions };
+
 const antdLocale = ref<Locale>(antdDefaultLocale);
 
-/** 当前的 fallback 语言（由 setupI18n 传入，供 fetchRemoteMessages 使用） */
-let currentFallbackLocale: SupportedLanguagesType;
+const appModules = import.meta.glob('./langs/**/*.json');
 
-const modules = import.meta.glob('./langs/**/*.json');
-
-const localesMap = loadLocalesMapFromDir(
-  /\.\/langs\/([^/]+)\/(.*)\.json$/,
-  modules,
-);
-
-/**
- * 生成当月的缓存键
- * @param lang 语言代码
- */
-function getCacheKey(lang: SupportedLanguagesType): string {
-  const yearMonth = dayjs().format('YYYY-MM'); // 格式: YYYY-MM
-  return `${I18N_CACHE_PREFIX}${lang}_${yearMonth}`;
-}
-
-/**
- * 清除所有旧的 i18n 缓存（非当天的所有语言缓存）
- */
-function clearOldI18nCache(): void {
-  const yearMonth = dayjs().format('YYYY-MM');
-  const prefix = I18N_CACHE_PREFIX;
-  const keysToRemove: string[] = [];
-
-  for (let i = 0; i < localStorage.length; i++) {
-    const key = localStorage.key(i);
-    if (
-      key &&
-      key.startsWith(prefix) && // 检查是否不是当月的缓存
-      // @ts-ignore
-      !key.endsWith(yearMonth)
-    ) {
-      keysToRemove.push(key);
-    }
-  }
-
-  // 删除所有旧缓存
-  keysToRemove.forEach((key) => {
-    localStorage.removeItem(key);
-  });
-}
-
-/**
- * 从后端加载翻译消息，带本地缓存
- * @param lang 语言代码
- */
-async function fetchRemoteMessages(
-  lang: SupportedLanguagesType,
-): Promise<null | Record<string, string>> {
-  try {
-    const cacheKey = getCacheKey(lang);
-
-    // 尝试从缓存中获取当月的数据
-    const cachedData = localStorage.getItem(cacheKey);
-    if (cachedData) {
-      const messages = JSON.parse(cachedData);
-      i18n.global.mergeLocaleMessage(lang, messages);
-      return messages;
-    }
-
-    // 缓存未命中，调用后端获取所有语言的消息
-    const allMessages = await getI18nLocaleMessage(LOCALE_TARGET);
-
-    if (Array.isArray(allMessages)) {
-      // 按语言分组
-      const messagesByLang: Record<string, Record<string, string>> = {};
-      for (const item of allMessages) {
-        if (item.messageKey && item.locale && item.message) {
-          const langCode = item.locale.replaceAll(
-            '_',
-            '-',
-          ) as SupportedLanguagesType;
-          if (!messagesByLang[langCode]) {
-            messagesByLang[langCode] = {};
-          }
-          messagesByLang[langCode][item.messageKey] = item.message;
-        }
-      }
-
-      // 只有 API 返回了数据才处理缓存和 fallback
-      const hasData = Object.keys(messagesByLang).length > 0;
-      if (hasData) {
-        // 清除所有旧的缓存数据
-        clearOldI18nCache();
-
-        // 每种语言单独存储缓存
-        for (const [langCode, messages] of Object.entries(messagesByLang)) {
-          localStorage.setItem(
-            getCacheKey(langCode as SupportedLanguagesType),
-            JSON.stringify(messages),
-          );
-        }
-
-        // 合并 fallback 语言消息到 i18n
-        if (
-          lang !== currentFallbackLocale &&
-          messagesByLang[currentFallbackLocale]
-        ) {
-          i18n.global.mergeLocaleMessage(
-            currentFallbackLocale,
-            messagesByLang[currentFallbackLocale]!,
-          );
-        }
-      }
-      return messagesByLang[lang] ?? null;
-    }
-  } catch (error) {
-    console.error(`Failed to load remote messages for ${lang}:`, error);
-  }
-  return null;
-}
-
-/** 目标端，对应后端 localeTarget 字段（默认 2 = PC 管理后台） */
-const LOCALE_TARGET = Number(import.meta.env.VITE_APP_LOCALE_TARGET) || 2;
-
-/** 回退语言（后端默认语言不可用时使用） */
-const LOCALE_FALLBACK =
-  (import.meta.env.VITE_APP_LOCALE_FALLBACK as SupportedLanguagesType) ||
-  'zh-CN';
-
-/**
- * 从后端获取默认语言
- * 优先使用后端配置的默认语言（isDefault === 0），否则回退到 LOCALE_FALLBACK
- */
-async function getDefaultLocaleFromBackend(): Promise<SupportedLanguagesType> {
-  try {
-    const list = await getI18nLocale(LOCALE_TARGET);
-    if (Array.isArray(list)) {
-      const defaultItem = list.find(
-        (item: { isDefault?: number }) => item.isDefault === 0,
-      );
-      if (defaultItem?.locale) {
-        return defaultItem.locale.replaceAll(
-          '_',
-          '-',
-        ) as SupportedLanguagesType;
-      }
-    }
-  } catch {
-    // 获取失败，使用回退语言
-  }
-  return LOCALE_FALLBACK;
-}
-
-/**
- * 加载应用特有的语言包
- * @param lang
- */
-async function loadMessages(lang: SupportedLanguagesType) {
-  const [appLocaleMessages] = await Promise.all([
-    localesMap[lang]?.(),
-    loadThirdPartyMessage(lang),
-  ]);
-  return appLocaleMessages?.default;
-}
-
-/**
- * 加载第三方组件库的语言包
- * @param lang
- */
-async function loadThirdPartyMessage(lang: SupportedLanguagesType) {
-  await Promise.all([loadAntdLocale(lang), loadDayjsLocale(lang)]);
-}
-
-/**
- * 加载dayjs的语言包
- * @param lang
- */
-async function loadDayjsLocale(lang: SupportedLanguagesType) {
-  // dayjs 的 locale 代码映射（静态预导入，编译时解析，无运行动态 import）
-  const dayjsLocaleMap: Record<string, () => void> = {
+async function loadDayjsLocale(lang: string) {
+  const map: Record<string, () => void> = {
     'en-US': () => dayjs.locale(dayjsLocaleEn),
     'zh-CN': () => dayjs.locale(dayjsLocaleZhCn),
     'zh-TW': () => dayjs.locale(dayjsLocaleZhTw),
@@ -239,22 +68,12 @@ async function loadDayjsLocale(lang: SupportedLanguagesType) {
     'pl-PL': () => dayjs.locale(dayjsLocalePl),
     'nl-NL': () => dayjs.locale(dayjsLocaleNl),
   };
-
-  const setLocale = dayjsLocaleMap[lang];
-  if (setLocale) {
-    setLocale();
-  } else {
-    dayjs.locale(dayjsLocaleZhCn);
-  }
+  const fn = map[lang];
+  fn ? fn() : dayjs.locale(dayjsLocaleZhCn);
 }
 
-/**
- * 加载antd的语言包
- * @param lang
- */
-async function loadAntdLocale(lang: SupportedLanguagesType) {
-  // antd 的 locale 代码映射
-  const antdLocaleMap: Record<string, () => Promise<{ default: Locale }>> = {
+async function loadAntdLocale(lang: string) {
+  const map: Record<string, () => Promise<{ default: Locale }>> = {
     'en-US': () => import('ant-design-vue/es/locale/en_US'),
     'zh-CN': () => import('ant-design-vue/es/locale/zh_CN'),
     'zh-TW': () => import('ant-design-vue/es/locale/zh_TW'),
@@ -275,58 +94,42 @@ async function loadAntdLocale(lang: SupportedLanguagesType) {
     'pl-PL': () => import('ant-design-vue/es/locale/pl_PL'),
     'nl-NL': () => import('ant-design-vue/es/locale/nl_NL'),
   };
-
-  const loader = antdLocaleMap[lang];
+  const loader = map[lang];
   if (!loader) {
-    // 未知的语言，回退到默认语言
     antdLocale.value = antdDefaultLocale;
     return;
   }
-
   try {
-    const module = await loader();
-    antdLocale.value = module.default;
+    const mod = await loader();
+    antdLocale.value = mod.default;
   } catch {
-    // 加载失败，回退到默认语言
     antdLocale.value = antdDefaultLocale;
   }
 }
 
-async function setupI18n(
-  app: App,
-  options: LocaleSetupOptions = {},
-  defaultLocale?: SupportedLanguagesType,
-  fallbackLocale?: SupportedLanguagesType,
-) {
-  // 先设置 fallbackLocale，供 fetchRemoteMessages 使用（它在 coreSetup 内部被调用）
-  currentFallbackLocale = fallbackLocale ?? LOCALE_FALLBACK;
-
-  // 注册远程消息加载器
-  await setRemoteMessageLoader(fetchRemoteMessages);
-
-  await coreSetup(app, {
-    defaultLocale: defaultLocale ?? LOCALE_FALLBACK,
-    fallbackLocale: currentFallbackLocale,
-    loadMessages,
-    missingWarn: !import.meta.env.PROD,
-    ...options,
-  });
-
-  // 默认语言加载完成后，确保 fallback 语言也被加载并缓存
-  // fallback 需要完整加载（本地 + 远程），但不切换当前语言
-  if (currentFallbackLocale && currentFallbackLocale !== defaultLocale) {
-    const savedLocale = i18n.global.locale.value;
-    await loadLocaleMessages(currentFallbackLocale);
-    // loadLocaleMessages 会切换语言，加载完后切回当前语言
-    i18n.global.locale.value = savedLocale;
-  }
+async function loadThirdPartyMessage(lang: string) {
+  await Promise.all([loadAntdLocale(lang), loadDayjsLocale(lang)]);
 }
 
-export {
-  $t,
-  antdLocale,
-  getDefaultLocaleFromBackend,
-  LOCALE_FALLBACK,
-  mergeRemoteMessages,
-  setupI18n,
-};
+export { antdLocale };
+
+export async function setupI18n(
+  app: Parameters<typeof pkgSetupI18n>[0],
+  options?: SetupI18nOptions,
+) {
+  return pkgSetupI18n(app, {
+    ...options,
+    appModules,
+    thirdPartySetup: loadThirdPartyMessage,
+    localeTarget: 2,
+    getI18nLocaleApi: getI18nLocale,
+    getI18nLocaleMessageApi: getI18nLocaleMessage,
+  });
+}
+
+export async function getDefaultLocaleFromBackend() {
+  return pkgGetDefaultLocaleFromBackend({
+    localeTarget: 2,
+    getI18nLocaleApi: getI18nLocale,
+  });
+}

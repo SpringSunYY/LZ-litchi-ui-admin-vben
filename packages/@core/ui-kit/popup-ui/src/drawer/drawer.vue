@@ -3,11 +3,9 @@ import type { DrawerProps, ExtendedDrawerApi } from './drawer';
 
 import { computed, provide, ref, unref, useId, watch } from 'vue';
 
-import {
-  useIsMobile,
-  usePriorityValues,
-  useSimpleLocale,
-} from '@vben-core/composables';
+import { $t } from '@vben/locales';
+
+import { useIsMobile, usePriorityValues } from '@vben-core/composables';
 import { X } from '@vben-core/icons';
 import {
   Separator,
@@ -50,7 +48,6 @@ const id = useId();
 provide('DISMISSABLE_DRAWER_ID', id);
 
 const wrapperRef = ref<HTMLElement>();
-const { $t } = useSimpleLocale();
 const { isMobile } = useIsMobile();
 
 const state = props.drawerApi?.useStore?.();
@@ -129,12 +126,10 @@ async function pointerDownOutside(e: Event) {
   }
   try {
     await vbenConfirm({
-      content:
-        externalCloseConfirmTip.value ||
-        $t.value('ui.actionMessage.externalCloseTip'),
+      content: $t('ui.actionMessage.externalCloseTip'),
       title:
         externalCloseConfirmTitle.value ||
-        $t.value('ui.actionMessage.externalCloseConfirm'),
+        $t('ui.actionMessage.externalCloseConfirm'),
       icon: 'warning',
       showCancel: true,
     });
@@ -320,7 +315,7 @@ const getForceMount = computed(() => {
             @click="() => drawerApi?.onCancel()"
           >
             <slot name="cancelText">
-              {{ cancelText || $t('cancel') }}
+              {{ cancelText || $t('ui.common.cancel') }}
             </slot>
           </component>
           <slot name="center-footer"></slot>
@@ -331,7 +326,7 @@ const getForceMount = computed(() => {
             @click="() => drawerApi?.onConfirm()"
           >
             <slot name="confirmText">
-              {{ confirmText || $t('confirm') }}
+              {{ confirmText || $t('ui.common.confirm') }}
             </slot>
           </component>
         </slot>

@@ -5,7 +5,7 @@ import type { AlertProps } from './alert';
 
 import { computed, h, nextTick, ref } from 'vue';
 
-import { useSimpleLocale } from '@vben-core/composables';
+import { $t } from '@vben/locales';
 import {
   CircleAlert,
   CircleCheckBig,
@@ -37,7 +37,6 @@ const props = withDefaults(defineProps<AlertProps>(), {
 });
 const emits = defineEmits(['closed', 'confirm', 'opened']);
 const open = defineModel<boolean>('open', { default: false });
-const { $t } = useSimpleLocale();
 const components = globalShareState.getComponents();
 const isConfirm = ref(false);
 
@@ -191,7 +190,7 @@ async function handleOpenChange(val: boolean) {
               variant="ghost"
               @click="handleCancel"
             >
-              {{ cancelText || $t('cancel') }}
+              {{ cancelText || $t('ui.common.cancel') }}
             </component>
           </AlertDialogCancel>
           <AlertDialogAction as-child>
@@ -200,7 +199,7 @@ async function handleOpenChange(val: boolean) {
               :loading="loading"
               @click="handleConfirm"
             >
-              {{ confirmText || $t('confirm') }}
+              {{ confirmText || $t('ui.common.confirm') }}
             </component>
           </AlertDialogAction>
         </div>

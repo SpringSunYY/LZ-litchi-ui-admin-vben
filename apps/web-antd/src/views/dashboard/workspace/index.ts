@@ -11,6 +11,30 @@ export interface QuoteItem {
   content: string;
 }
 
+export interface ProjectItem {
+  color?: string;
+  group: string;
+  date: string;
+  content: string;
+  icon: string;
+  title: string;
+  url?: string;
+}
+
+export interface QuickNavItem {
+  color?: string;
+  icon: string;
+  title: string;
+  url?: string;
+}
+
+export interface TodoItem {
+  completed: boolean;
+  content: string;
+  date: string;
+  title: string;
+}
+
 export const quotes: QuoteItem[] = [
   { content: '海内存知己，天涯若比邻。——王勃' },
   { content: '会当凌绝顶，一览众山小。——杜甫' },
@@ -265,5 +289,128 @@ export const poems: PoemItem[] = [
     dynasty: '当代',
     type: 'sentence',
     date: '2026年5月',
+  },
+];
+
+export const projectItems: ProjectItem[] = [
+  {
+    color: '#6DB33F',
+    group: 'jdk21、vue3、若依框架',
+    date: '2025-02-28',
+    content: '在线云图库，团队管理图片、AI生图、退片推荐等',
+    icon: 'simple-icons:imagetoolbox',
+    title: 'LZ-Picture',
+    url: 'https://github.com/SpringSunYY/LZ-Picture',
+  },
+  {
+    color: '#409EFF',
+    group: 'jdk21、springBoot3、芋道框架',
+    date: '2026-03-23',
+    content: '开发国际化、租户管理、代码生成及项目优化等',
+    icon: 'ep:element-plus',
+    title: 'LZ-litchi',
+    url: 'https://github.com/SpringSunYY/LZ-litchi',
+  },
+  {
+    color: '#ff4d4f',
+    group: 'vue3、vben Admin、芋道框架',
+    date: '2026-03-23',
+    content: '开发国际化、租户管理、代码生成及项目优化等',
+    icon: 'icon-park-outline:mall-bag',
+    title: 'LZ-litchi-ui-admin-vben',
+    url: 'https://github.com/SpringSunYY/LZ-litchi-ui-admin-vben',
+  },
+  {
+    color: '#1890ff',
+    content: '基于若依优化代码生成、MP、导入导出等',
+    date: '2024-02-24',
+    group: 'jdk21、springBoot3、vue3、vue2',
+    icon: 'simple-icons:github',
+    title: 'LZ-RuoYi',
+    url: 'https://github.com/SpringSunYY/LZ-RuoYi',
+  },
+  {
+    color: '#e18525',
+    content: 'github.com/litchicode/litchi-ui-admin-vben',
+    date: '2025-11-09',
+    group: 'python、falsk、vue2',
+    icon: 'simple-icons:python',
+    title: 'RuoYi_vue_flask',
+    url: 'https://github.com/SpringSunYY/RuoYi_vue_flask',
+  },
+  {
+    color: '#2979ff',
+    content: '生成uniapp代码，若依框架手机端',
+    date: '2024-09-07',
+    group: 'Vue3 + uniapp 管理手机端',
+    icon: 'ant-design:mobile',
+    title: 'LZ-RuoYi-App',
+    url: 'https://github.com/SpringSunYY/LZ-RuoYi-App',
+  },
+];
+
+export const quickNavItems: QuickNavItem[] = [
+  {
+    color: '#1fdaca',
+    icon: 'ion:home-outline',
+    title: '首页',
+    url: '/',
+  },
+  {
+    color: '#ff6b6b',
+    icon: 'ep:shop',
+    title: '商城中心',
+    url: '/mall',
+  },
+  {
+    color: '#7c3aed',
+    icon: 'tabler:ai',
+    title: 'AI 大模型',
+    url: '/ai/chat',
+  },
+  {
+    color: '#3fb27f',
+    icon: 'simple-icons:erpnext',
+    title: 'ERP 系统',
+    url: '/erp/backlog',
+  },
+  {
+    color: '#4daf1bc9',
+    icon: 'simple-icons:civicrm',
+    title: 'CRM 系统',
+    url: '/crm',
+  },
+  {
+    color: '#1a73e8',
+    icon: 'tabler:pointer-collaboration-2',
+    title: 'BPM 工作流',
+    url: '/bpm/task/my',
+  },
+];
+
+export const todoItems: TodoItem[] = [
+  {
+    completed: false,
+    content: `系统支持 JDK 8/17/21，Vue 2/3`,
+    date: '2024-07-15 09:30:00',
+    title: '技术兼容性',
+  },
+  {
+    completed: false,
+    content: `后端提供 Spring Boot 2.7/3.2 + Cloud 双架构`,
+    date: '2024-08-30 14:20:00',
+    title: '架构灵活性',
+  },
+  {
+    completed: false,
+    content: `全部开源，个人与企业可 100% 直接使用，无需授权`,
+    date: '2024-07-25 16:45:00',
+    title: '开源免授权',
+  },
+  {
+    completed: false,
+    content: `国内使用最广泛的快速开发平台，远超 10w+ 企业使用`,
+    date: '2024-07-10 11:15:00',
+    title: '广泛企业认可',
   },
 ];

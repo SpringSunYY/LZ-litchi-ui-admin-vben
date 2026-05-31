@@ -50,7 +50,10 @@ async function bootstrap(namespace: string) {
   const savedLocale = preferences.app.locale;
   const currentLocale = savedLocale || backendDefault;
   // fallback 永远用后端默认语言，LOCALE_FALLBACK 只是后端不可用时的最后兜底
-  await setupI18n(app, {}, currentLocale, backendDefault);
+  await setupI18n(app, {
+    defaultLocale: currentLocale,
+    fallbackLocale: backendDefault,
+  });
 
   // 安装权限指令
   registerAccessDirective(app);

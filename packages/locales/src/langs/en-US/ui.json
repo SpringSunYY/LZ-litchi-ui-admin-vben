@@ -145,5 +145,14 @@
     "btn_zoom_in": "Zoom in",
     "btn_zoom_out": "Zoom out",
     "preview": "Preview"
+  },
+  "common": {
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "reset": "Reset",
+    "submit": "Submit",
+    "expand": "Expand",
+    "collapse": "Collapse",
+    "prompt": "Prompt"
   }
 }

@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+// @ts-nocheck
 import type { Demo03StudentApi } from '#/api/infra/demo/demo03/normal';
 
 import { h, onMounted, reactive, ref } from 'vue';

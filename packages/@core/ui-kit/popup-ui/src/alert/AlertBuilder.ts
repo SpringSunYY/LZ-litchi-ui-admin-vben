@@ -6,15 +6,14 @@ import type { AlertProps, BeforeCloseScope, PromptProps } from './alert';
 
 import { h, nextTick, ref, render } from 'vue';
 
-import { useSimpleLocale } from '@vben-core/composables';
+import { $t } from '@vben/locales';
+
 import { Input, VbenRenderContent } from '@vben-core/shadcn-ui';
 import { isFunction, isString } from '@vben-core/shared/utils';
 
 import Alert from './alert.vue';
 
 const alerts = ref<Array<{ container: HTMLElement; instance: Component }>>([]);
-
-const { $t } = useSimpleLocale();
 
 export function vbenAlert(options: AlertProps): Promise<void>;
 export function vbenAlert(
@@ -78,7 +77,7 @@ export function vbenAlert(
       },
       ...options,
       open: true,
-      title: options.title ?? $t.value('prompt'),
+      title: options.title ?? $t('ui.common.prompt'),
     };
 
     // 创建Alert组件的VNode

@@ -3,11 +3,9 @@ import type { ExtendedModalApi, ModalProps } from './modal';
 
 import { computed, nextTick, provide, ref, unref, useId, watch } from 'vue';
 
-import {
-  useIsMobile,
-  usePriorityValues,
-  useSimpleLocale,
-} from '@vben-core/composables';
+import { $t } from '@vben/locales';
+
+import { useIsMobile, usePriorityValues } from '@vben-core/composables';
 import { Expand, Shrink } from '@vben-core/icons';
 import {
   Dialog,
@@ -51,7 +49,6 @@ const footerRef = ref();
 const id = useId();
 provide('DISMISSABLE_MODAL_ID', id);
 
-const { $t } = useSimpleLocale();
 const { isMobile } = useIsMobile();
 const state = props.modalApi?.useStore?.();
 
@@ -189,12 +186,10 @@ async function pointerDownOutside(e: Event) {
   }
   try {
     await vbenConfirm({
-      content:
-        externalCloseConfirmTip.value ||
-        $t.value('ui.actionMessage.externalCloseTip'),
+      content: $t('ui.actionMessage.externalCloseTip'),
       title:
         externalCloseConfirmTitle.value ||
-        $t.value('ui.actionMessage.externalCloseConfirm'),
+        $t('ui.actionMessage.externalCloseConfirm'),
       icon: 'warning',
       showCancel: true,
     });
@@ -343,7 +338,7 @@ function handleClosed() {
             @click="() => modalApi?.onCancel()"
           >
             <slot name="cancelText">
-              {{ cancelText || $t('cancel') }}
+              {{ cancelText || $t('ui.common.cancel') }}
             </slot>
           </component>
           <slot name="center-footer"></slot>
@@ -355,7 +350,7 @@ function handleClosed() {
             @click="() => modalApi?.onConfirm()"
           >
             <slot name="confirmText">
-              {{ confirmText || $t('confirm') }}
+              {{ confirmText || $t('ui.common.confirm') }}
             </slot>
           </component>
         </slot>

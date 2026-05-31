@@ -32,7 +32,10 @@ import {
 import { extendsDefaultFormatter } from './extends';
 
 /** vxe-pc-ui 支持的语言映射（动态导入） */
-const vxeLocaleMap: Record<string, () => Promise<{ default: Record<string, string> }>> = {
+const vxeLocaleMap: Record<
+  string,
+  () => Promise<{ default: Record<string, string> }>
+> = {
   'zh-CN': () => import('vxe-pc-ui/lib/language/zh-CN'),
   'zh-TW': () => import('vxe-pc-ui/lib/language/zh-CHT'),
   'en-US': () => import('vxe-pc-ui/lib/language/en-US'),
@@ -135,7 +138,9 @@ export function setupVbenVxeTable(setupOptions: SetupVxeTable) {
     async ([isDarkValue, localeValue]) => {
       VxeUI.setTheme(isDarkValue ? 'dark' : 'light');
       const localeMessages = await loadVxeLocale(localeValue);
+      // @ts-ignore
       VxeUI.setI18n(localeValue, localeMessages);
+      // @ts-ignore
       VxeUI.setLanguage(localeValue);
     },
     {

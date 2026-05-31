@@ -418,7 +418,7 @@ export function useMessageGridColumns(): VxeTableGridOptions<I18nMessageApi.I18n
     {
       field: 'localeTarget',
       title: $t('infra.i18nMessage.field.localeTarget'),
-      visible: true,
+      visible: false,
       minWidth: 120,
       cellRender: {
         name: 'CellDict',

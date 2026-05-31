@@ -1293,6 +1293,9 @@ importers:
       '@vben-core/typings':
         specifier: workspace:*
         version: link:../../base/typings
+      '@vben/locales':
+        specifier: workspace:*
+        version: link:../../../locales
       '@vee-validate/zod':
         specifier: 'catalog:'
         version: 4.15.0(vue@3.5.13(typescript@5.8.3))(zod@3.24.4)
@@ -1377,6 +1380,9 @@ importers:
       '@vben-core/typings':
         specifier: workspace:*
         version: link:../../base/typings
+      '@vben/locales':
+        specifier: workspace:*
+        version: link:../../../locales
       '@vueuse/core':
         specifier: 'catalog:'
         version: 13.2.0(vue@3.5.13(typescript@5.8.3))
@@ -1731,6 +1737,9 @@ importers:
       '@vben-core/composables':
         specifier: workspace:*
         version: link:../@core/composables
+      '@vben/constants':
+        specifier: workspace:*
+        version: link:../constants
       vue:
         specifier: ^3.5.13
         version: 3.5.13(typescript@5.8.3)
