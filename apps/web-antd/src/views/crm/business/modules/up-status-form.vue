@@ -56,7 +56,7 @@ const [Form, formApi] = useVbenForm({
     {
       fieldName: 'status',
       label: $t('crm.business.field.stage'),
-      component: 'Select',
+      component: 'I18nSelect',
       dependencies: {
         triggerFields: [''],
         async componentProps() {

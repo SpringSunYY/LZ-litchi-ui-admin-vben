@@ -249,7 +249,7 @@ export function useGridFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'status',
       label: $t('erp.stockIn.field.status'),
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         options: getDictOptions(DICT_TYPE.ERP_AUDIT_STATUS, 'number'),
         placeholder: $t('ui.placeholder.select', [
@@ -320,7 +320,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
       title: $t('erp.stockIn.field.status'),
       minWidth: 120,
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.ERP_AUDIT_STATUS },
       },
     },

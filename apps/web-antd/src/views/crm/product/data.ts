@@ -74,7 +74,7 @@ export function useFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'unit',
       label: $t('crm.product.field.unit'),
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         options: getDictOptions(DICT_TYPE.CRM_PRODUCT_UNIT, 'number'),
       },
@@ -99,7 +99,7 @@ export function useFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'status',
       label: $t('crm.product.field.status'),
-      component: 'RadioGroup',
+      component: 'I18nRadioGroup',
       componentProps: {
         options: getDictOptions(DICT_TYPE.CRM_PRODUCT_STATUS, 'number'),
         buttonStyle: 'solid',
@@ -121,7 +121,7 @@ export function useGridFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'status',
       label: $t('crm.product.field.status'),
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         allowClear: true,
         options: getDictOptions(DICT_TYPE.CRM_PRODUCT_STATUS, 'number'),
@@ -151,7 +151,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
       field: 'unit',
       title: $t('crm.product.field.unit'),
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.CRM_PRODUCT_UNIT },
       },
     },
@@ -172,7 +172,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
       field: 'status',
       title: $t('crm.product.field.status'),
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.CRM_PRODUCT_STATUS },
       },
     },
@@ -223,7 +223,7 @@ export function useProductEditTableColumns(): VxeTableGridOptions['columns'] {
       title: $t('crm.product.productTable.productUnit'),
       minWidth: 100,
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.CRM_PRODUCT_UNIT },
       },
     },

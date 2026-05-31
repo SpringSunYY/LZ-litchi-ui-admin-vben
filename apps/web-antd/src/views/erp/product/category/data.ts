@@ -81,7 +81,7 @@ export function useFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'status',
       label: $t('erp.category.field.status'),
-      component: 'RadioGroup',
+      component: 'I18nRadioGroup',
       componentProps: {
         options: getDictOptions(DICT_TYPE.COMMON_STATUS, 'number'),
         buttonStyle: 'solid',
@@ -107,7 +107,7 @@ export function useQueryFormSchema(): VbenFormSchema[] {
       },
     },
     {
-      component: 'Select',
+      component: 'I18nSelect',
       fieldName: 'status',
       label: $t('erp.category.field.status'),
       componentProps: {
@@ -142,7 +142,7 @@ export function useGridColumns(): VxeTableGridOptions<ErpProductCategoryApi.Prod
       field: 'status',
       title: $t('erp.category.field.status'),
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.COMMON_STATUS },
       },
     },

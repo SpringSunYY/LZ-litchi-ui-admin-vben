@@ -31,7 +31,7 @@ export function useTransferFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'oldOwnerHandler',
       label: $t('crm.permission.field.oldOwnerHandler'),
-      component: 'RadioGroup',
+      component: 'I18nRadioGroup',
       componentProps: {
         options: [
           {
@@ -49,7 +49,7 @@ export function useTransferFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'oldOwnerPermissionLevel',
       label: $t('crm.permission.field.oldOwnerPermissionLevel'),
-      component: 'RadioGroup',
+      component: 'I18nRadioGroup',
       componentProps: {
         options: getDictOptions(
           DICT_TYPE.CRM_PERMISSION_LEVEL,
@@ -129,7 +129,7 @@ export function useFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'level',
       label: $t('crm.permission.field.level'),
-      component: 'RadioGroup',
+      component: 'I18nRadioGroup',
       componentProps: {
         options: getDictOptions(
           DICT_TYPE.CRM_PERMISSION_LEVEL,
@@ -141,7 +141,7 @@ export function useFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'bizType',
       label: $t('crm.permission.field.bizType'),
-      component: 'RadioGroup',
+      component: 'I18nRadioGroup',
       componentProps: {
         options: [
           {
@@ -219,7 +219,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
       field: 'level',
       title: $t('crm.permission.field.level'),
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.CRM_PERMISSION_LEVEL },
       },
     },

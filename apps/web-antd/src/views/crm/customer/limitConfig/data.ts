@@ -65,7 +65,7 @@ export function useFormSchema(confType: LimitConfType): VbenFormSchema[] {
     {
       fieldName: 'dealCountEnabled',
       label: $t('crm.customerLimitConfig.field.dealCountOccupied'),
-      component: 'RadioGroup',
+      component: 'I18nRadioGroup',
       componentProps: {
         options: [
           { label: $t('crm.customerLimitConfig.field.yes'), value: true },
@@ -124,7 +124,7 @@ export function useGridColumns(
       title: $t('crm.customerLimitConfig.field.dealCountOccupied'),
       visible: confType === LimitConfType.CUSTOMER_QUANTITY_LIMIT,
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.INFRA_BOOLEAN_STRING },
       },
     },

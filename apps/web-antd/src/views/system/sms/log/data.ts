@@ -47,7 +47,7 @@ export function useGridFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'sendStatus',
       label: $t('system.sms.log.field.sendStatus'),
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         options: getDictOptions(DICT_TYPE.SYSTEM_SMS_SEND_STATUS, 'number'),
         allowClear: true,
@@ -68,7 +68,7 @@ export function useGridFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'receiveStatus',
       label: $t('system.sms.log.field.receiveStatus'),
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         options: getDictOptions(DICT_TYPE.SYSTEM_SMS_RECEIVE_STATUS, 'number'),
         allowClear: true,
@@ -109,7 +109,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
       field: 'sendStatus',
       title: $t('system.sms.log.field.sendStatus'),
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.SYSTEM_SMS_SEND_STATUS },
       },
     },
@@ -122,7 +122,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
       field: 'receiveStatus',
       title: $t('system.sms.log.field.receiveStatus'),
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.SYSTEM_SMS_RECEIVE_STATUS },
       },
     },
@@ -135,7 +135,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
       field: 'channelCode',
       title: $t('system.sms.log.field.channelCode'),
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.SYSTEM_SMS_CHANNEL_CODE },
       },
     },
@@ -147,7 +147,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
       field: 'templateType',
       title: $t('system.sms.log.field.templateType'),
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.SYSTEM_SMS_TEMPLATE_TYPE },
       },
     },

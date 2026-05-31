@@ -41,7 +41,7 @@ const [Grid] = useVbenVxeGrid({
       {
         fieldName: 'remindType',
         label: $t('crm.backlog.field.expiryStatus'),
-        component: 'Select',
+        component: 'I18nSelect',
         componentProps: {
           allowClear: true,
           options: useReceivableRemindTypeOptions(),

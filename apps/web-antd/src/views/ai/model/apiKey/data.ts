@@ -19,7 +19,7 @@ export function useFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'platform',
       label: $t('ai.model.apiKey.field.platform'),
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         placeholder: $t('ui.placeholder.select', [
           $t('ai.model.apiKey.field.platform'),
@@ -64,7 +64,7 @@ export function useFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'status',
       label: $t('ai.model.apiKey.field.status'),
-      component: 'RadioGroup',
+      component: 'I18nRadioGroup',
       componentProps: {
         options: getDictOptions(DICT_TYPE.COMMON_STATUS, 'number'),
         buttonStyle: 'solid',
@@ -92,7 +92,7 @@ export function useGridFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'platform',
       label: $t('ai.model.apiKey.field.platform'),
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         allowClear: true,
         placeholder: $t('ui.placeholder.select', [
@@ -104,7 +104,7 @@ export function useGridFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'status',
       label: $t('ai.model.apiKey.field.status'),
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         allowClear: true,
         placeholder: $t('ui.placeholder.select', [
@@ -123,7 +123,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
       field: 'platform',
       title: $t('ai.model.apiKey.field.platform'),
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.AI_PLATFORM },
       },
       minWidth: 100,
@@ -147,7 +147,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
       field: 'status',
       title: $t('ai.model.apiKey.field.status'),
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.COMMON_STATUS },
       },
       minWidth: 80,

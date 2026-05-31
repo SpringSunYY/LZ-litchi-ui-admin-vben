@@ -31,7 +31,7 @@ export function useFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'type',
       label: $t('system.notice.field.type'),
-      component: 'RadioGroup',
+      component: 'I18nRadioGroup',
       componentProps: {
         options: getDictOptions(DICT_TYPE.SYSTEM_NOTICE_TYPE, 'number'),
         buttonStyle: 'solid',
@@ -60,7 +60,7 @@ export function useFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'status',
       label: $t('system.notice.field.status'),
-      component: 'RadioGroup',
+      component: 'I18nRadioGroup',
       componentProps: {
         options: getDictOptions(DICT_TYPE.COMMON_STATUS, 'number'),
         buttonStyle: 'solid',
@@ -98,7 +98,7 @@ export function useGridFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'status',
       label: $t('system.notice.field.status'),
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         options: getDictOptions(DICT_TYPE.COMMON_STATUS, 'number'),
         placeholder: $t('ui.placeholder.select', [
@@ -125,7 +125,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
       field: 'type',
       title: $t('system.notice.field.type'),
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.SYSTEM_NOTICE_TYPE },
       },
     },
@@ -133,7 +133,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
       field: 'status',
       title: $t('system.notice.field.status'),
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.COMMON_STATUS },
       },
     },

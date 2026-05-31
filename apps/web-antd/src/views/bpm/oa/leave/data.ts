@@ -24,7 +24,7 @@ export function useFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'type',
       label: $t('bpm.oa.leave.field.type'),
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         placeholder: $t('ui.placeholder.select', [
           $t('bpm.oa.leave.field.type'),
@@ -82,7 +82,7 @@ export function GridFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'type',
       label: $t('bpm.oa.leave.field.type'),
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         placeholder: $t('ui.placeholder.select', [
           $t('bpm.oa.leave.field.type'),
@@ -94,7 +94,7 @@ export function GridFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'status',
       label: $t('bpm.processInstance.field.status'),
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         placeholder: $t('ui.placeholder.select', [
           $t('bpm.processInstance.field.status'),
@@ -140,7 +140,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
       title: $t('bpm.oa.leave.field.status'),
       minWidth: 100,
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.BPM_PROCESS_INSTANCE_STATUS },
       },
     },
@@ -161,7 +161,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
       title: $t('bpm.oa.leave.field.type'),
       minWidth: 100,
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.BPM_OA_LEAVE_TYPE },
       },
     },

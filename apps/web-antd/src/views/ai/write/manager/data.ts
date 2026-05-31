@@ -28,7 +28,7 @@ export function useGridFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'type',
       label: $t('ai.write.field.type'),
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         allowClear: true,
         placeholder: $t('ui.placeholder.select', [$t('ai.write.field.type')]),
@@ -38,7 +38,7 @@ export function useGridFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'platform',
       label: $t('ai.write.field.platform'),
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         allowClear: true,
         placeholder: $t('ui.placeholder.select', [
@@ -81,7 +81,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
       title: $t('ai.write.field.type'),
       minWidth: 120,
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.AI_WRITE_TYPE },
       },
     },
@@ -90,7 +90,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
       title: $t('ai.write.field.platform'),
       minWidth: 120,
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.AI_WRITE_TYPE },
       },
     },
@@ -119,7 +119,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
       title: $t('ai.write.field.length'),
       minWidth: 120,
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.AI_WRITE_LENGTH },
       },
     },
@@ -128,7 +128,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
       title: $t('ai.write.field.format'),
       minWidth: 120,
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.AI_WRITE_FORMAT },
       },
     },
@@ -137,7 +137,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
       title: $t('ai.write.field.tone'),
       minWidth: 120,
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.AI_WRITE_TONE },
       },
     },
@@ -146,7 +146,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
       title: $t('ai.write.field.language'),
       minWidth: 120,
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.AI_WRITE_LANGUAGE },
       },
     },

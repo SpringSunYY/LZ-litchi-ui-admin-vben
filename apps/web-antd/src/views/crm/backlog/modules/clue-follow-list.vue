@@ -25,7 +25,7 @@ const [Grid] = useVbenVxeGrid({
       {
         fieldName: 'followUpStatus',
         label: $t('crm.backlog.field.status'),
-        component: 'Select',
+        component: 'I18nSelect',
         componentProps: {
           allowClear: true,
           options: useFollowUpStatusOptions(),

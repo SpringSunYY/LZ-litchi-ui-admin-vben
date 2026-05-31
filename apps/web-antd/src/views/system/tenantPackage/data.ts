@@ -111,7 +111,7 @@ export function useFormSchema(): VbenFormSchema[] {
       fieldName: 'status',
       label: $t('system.tenantPackage.field.status'),
       formItemClass: 'col-span-1',
-      component: 'RadioGroup',
+      component: 'I18nRadioGroup',
       defaultValue: 0,
       componentProps: {
         options: getDictOptions(
@@ -128,7 +128,7 @@ export function useFormSchema(): VbenFormSchema[] {
       label: $t('system.tenantPackage.field.published'),
       rules: 'required',
       formItemClass: 'col-span-1',
-      component: 'RadioGroup',
+      component: 'I18nRadioGroup',
       defaultValue: 0,
       componentProps: {
         options: getDictOptions(
@@ -144,7 +144,7 @@ export function useFormSchema(): VbenFormSchema[] {
       label: $t('system.tenantPackage.field.type'),
       formItemClass: 'col-span-1',
       rules: 'required',
-      component: 'Select',
+      component: 'I18nSelect',
       defaultValue: 0,
       componentProps: {
         options: getDictOptions(DICT_TYPE.SYSTEM_TENANT_PACKAGE_TYPE, 'number'),
@@ -209,7 +209,7 @@ export function useGridFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'type',
       label: $t('system.tenantPackage.field.type'),
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         allowClear: true,
         options: getDictOptions(DICT_TYPE.SYSTEM_TENANT_PACKAGE_TYPE, 'number'),
@@ -232,7 +232,7 @@ export function useGridFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'status',
       label: $t('system.tenantPackage.field.status'),
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         allowClear: true,
         options: getDictOptions(
@@ -247,7 +247,7 @@ export function useGridFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'published',
       label: $t('system.tenantPackage.field.published'),
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         allowClear: true,
         options: getDictOptions(
@@ -295,7 +295,7 @@ export function useGridColumns(): VxeTableGridOptions<SystemTenantPackageApi.Ten
       title: $t('system.tenantPackage.field.type'),
       minWidth: 120,
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.SYSTEM_TENANT_PACKAGE_TYPE },
       },
     },
@@ -326,7 +326,7 @@ export function useGridColumns(): VxeTableGridOptions<SystemTenantPackageApi.Ten
       title: $t('system.tenantPackage.field.status'),
       minWidth: 120,
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.SYSTEM_TENANT_PACKAGE_STATUS },
       },
     },
@@ -335,7 +335,7 @@ export function useGridColumns(): VxeTableGridOptions<SystemTenantPackageApi.Ten
       title: $t('system.tenantPackage.field.published'),
       minWidth: 120,
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.SYSTEM_TENANT_PACKAGE_PUBLISHED },
       },
     },

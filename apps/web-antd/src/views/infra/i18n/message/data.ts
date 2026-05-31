@@ -47,7 +47,7 @@ export function useKeyFormSchema(): VbenFormSchema[] {
       fieldName: 'isSystem',
       label: $t('infra.i18nMessage.field.isSystem'),
       rules: 'required',
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         options: getDictOptions(DICT_TYPE.INFRA_I18N_KEY_IS_SYSTEM, 'number'),
         placeholder: $t('ui.placeholder.select', [
@@ -59,7 +59,7 @@ export function useKeyFormSchema(): VbenFormSchema[] {
       fieldName: 'moduleType',
       label: $t('infra.i18nMessage.field.moduleType'),
       rules: 'required',
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         options: getDictOptions(DICT_TYPE.SYSTEM_MODULE_TYPE),
         placeholder: $t('ui.placeholder.select', [
@@ -71,7 +71,7 @@ export function useKeyFormSchema(): VbenFormSchema[] {
       fieldName: 'useType',
       label: $t('infra.i18nMessage.field.useType'),
       rules: 'required',
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         options: getDictOptions(DICT_TYPE.INFRA_I18N_KEY_USE_TYPE, 'number'),
         placeholder: $t('ui.placeholder.select', [
@@ -131,7 +131,7 @@ export function useKeyGridFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'isSystem',
       label: $t('infra.i18nMessage.field.isSystem'),
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         allowClear: true,
         options: getDictOptions(DICT_TYPE.INFRA_I18N_KEY_IS_SYSTEM, 'number'),
@@ -143,7 +143,7 @@ export function useKeyGridFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'moduleType',
       label: $t('infra.i18nMessage.field.moduleType'),
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         allowClear: true,
         options: getDictOptions(DICT_TYPE.SYSTEM_MODULE_TYPE),
@@ -155,7 +155,7 @@ export function useKeyGridFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'useType',
       label: $t('infra.i18nMessage.field.useType'),
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         allowClear: true,
         options: getDictOptions(DICT_TYPE.INFRA_I18N_KEY_USE_TYPE, 'number'),
@@ -191,7 +191,7 @@ export function useKeyGridColumns(): VxeTableGridOptions<I18nKeyApi.I18nKey>['co
       title: $t('infra.i18nMessage.field.isSystem'),
       minWidth: 120,
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.INFRA_I18N_KEY_IS_SYSTEM },
       },
     },
@@ -200,7 +200,7 @@ export function useKeyGridColumns(): VxeTableGridOptions<I18nKeyApi.I18nKey>['co
       title: $t('infra.i18nMessage.field.moduleType'),
       minWidth: 120,
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.SYSTEM_MODULE_TYPE },
       },
     },
@@ -209,7 +209,7 @@ export function useKeyGridColumns(): VxeTableGridOptions<I18nKeyApi.I18nKey>['co
       title: $t('infra.i18nMessage.field.useType'),
       minWidth: 120,
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.INFRA_I18N_KEY_USE_TYPE },
       },
     },
@@ -280,7 +280,7 @@ export function useMessageFormSchema(): VbenFormSchema[] {
       fieldName: 'isSystem',
       label: $t('infra.i18nMessage.field.isSystem'),
       rules: 'required',
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         options: getDictOptions(DICT_TYPE.INFRA_I18N_KEY_IS_SYSTEM, 'number'),
         placeholder: $t('ui.placeholder.select', [
@@ -293,7 +293,7 @@ export function useMessageFormSchema(): VbenFormSchema[] {
       fieldName: 'moduleType',
       label: $t('infra.i18nMessage.field.moduleType'),
       rules: 'required',
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         options: getDictOptions(DICT_TYPE.SYSTEM_MODULE_TYPE),
         placeholder: $t('ui.placeholder.select', [
@@ -306,7 +306,7 @@ export function useMessageFormSchema(): VbenFormSchema[] {
       fieldName: 'useType',
       label: $t('infra.i18nMessage.field.useType'),
       rules: 'required',
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         options: getDictOptions(DICT_TYPE.INFRA_I18N_KEY_USE_TYPE, 'number'),
         placeholder: $t('ui.placeholder.select', [
@@ -421,7 +421,7 @@ export function useMessageGridColumns(): VxeTableGridOptions<I18nMessageApi.I18n
       visible: false,
       minWidth: 120,
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.INFRA_I18N_LOCALE_TARGET },
       },
     },
@@ -431,7 +431,7 @@ export function useMessageGridColumns(): VxeTableGridOptions<I18nMessageApi.I18n
       visible: false,
       minWidth: 120,
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.INFRA_I18N_KEY_IS_SYSTEM },
       },
     },
@@ -441,7 +441,7 @@ export function useMessageGridColumns(): VxeTableGridOptions<I18nMessageApi.I18n
       visible: false,
       minWidth: 120,
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.SYSTEM_MODULE_TYPE },
       },
     },
@@ -451,7 +451,7 @@ export function useMessageGridColumns(): VxeTableGridOptions<I18nMessageApi.I18n
       visible: false,
       minWidth: 120,
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.INFRA_I18N_KEY_USE_TYPE },
       },
     },

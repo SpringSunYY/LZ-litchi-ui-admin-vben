@@ -52,7 +52,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
       field: 'logType',
       title: $t('system.loginlog.field.logType'),
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.SYSTEM_LOGIN_TYPE },
       },
     },
@@ -72,7 +72,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
       field: 'result',
       title: $t('system.loginlog.field.result'),
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.SYSTEM_LOGIN_RESULT },
       },
     },

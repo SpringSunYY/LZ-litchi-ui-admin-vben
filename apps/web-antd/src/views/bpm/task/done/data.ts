@@ -45,7 +45,7 @@ export function useGridFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'status',
       label: $t('bpm.task.field.status'),
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         options: getDictOptions(
           DICT_TYPE.BPM_PROCESS_INSTANCE_STATUS,
@@ -114,7 +114,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
       title: $t('bpm.task.done.field.approvalStatus'),
       minWidth: 180,
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.BPM_TASK_STATUS },
       },
     },

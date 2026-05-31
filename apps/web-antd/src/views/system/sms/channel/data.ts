@@ -35,7 +35,7 @@ export function useFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'code',
       label: $t('system.sms.channel.field.code'),
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         options: getDictOptions(DICT_TYPE.SYSTEM_SMS_CHANNEL_CODE, 'string'),
         placeholder: $t('ui.placeholder.select', [
@@ -47,7 +47,7 @@ export function useFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'status',
       label: $t('system.sms.channel.field.status'),
-      component: 'RadioGroup',
+      component: 'I18nRadioGroup',
       componentProps: {
         options: getDictOptions(DICT_TYPE.COMMON_STATUS, 'number'),
         buttonStyle: 'solid',
@@ -116,7 +116,7 @@ export function useGridFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'code',
       label: $t('system.sms.channel.field.code'),
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         allowClear: true,
         options: getDictOptions(DICT_TYPE.SYSTEM_SMS_CHANNEL_CODE, 'string'),
@@ -128,7 +128,7 @@ export function useGridFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'status',
       label: $t('system.sms.channel.field.status'),
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         allowClear: true,
         options: getDictOptions(DICT_TYPE.COMMON_STATUS, 'number'),
@@ -161,7 +161,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
       field: 'code',
       title: $t('system.sms.channel.field.code'),
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.SYSTEM_SMS_CHANNEL_CODE },
       },
     },
@@ -169,7 +169,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
       field: 'status',
       title: $t('system.sms.channel.field.status'),
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.COMMON_STATUS },
       },
     },

@@ -26,7 +26,7 @@ export function useGridFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'userType',
       label: $t('infra.apiErrorLog.field.userType'),
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         options: getDictOptions(DICT_TYPE.USER_TYPE, 'number'),
         allowClear: true,
@@ -58,7 +58,7 @@ export function useGridFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'processStatus',
       label: $t('infra.apiErrorLog.field.processStatus'),
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         options: getDictOptions(
           DICT_TYPE.INFRA_API_ERROR_LOG_PROCESS_STATUS,
@@ -89,7 +89,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
       field: 'userType',
       title: $t('infra.apiErrorLog.field.userType'),
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.USER_TYPE },
       },
     },
@@ -118,7 +118,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
       field: 'processStatus',
       title: $t('infra.apiErrorLog.field.processStatus'),
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.INFRA_API_ERROR_LOG_PROCESS_STATUS },
       },
     },

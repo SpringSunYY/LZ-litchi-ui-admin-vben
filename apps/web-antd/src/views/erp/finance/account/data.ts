@@ -29,7 +29,7 @@ export function useFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'status',
       label: $t('erp.account.field.status'),
-      component: 'RadioGroup',
+      component: 'I18nRadioGroup',
       componentProps: {
         options: getDictOptions(DICT_TYPE.COMMON_STATUS, 'number'),
         buttonStyle: 'solid',
@@ -52,7 +52,7 @@ export function useFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'defaultStatus',
       label: $t('erp.account.field.defaultStatus'),
-      component: 'RadioGroup',
+      component: 'I18nRadioGroup',
       componentProps: {
         options: [
           {
@@ -160,7 +160,7 @@ export function useGridColumns(
       title: $t('erp.account.field.status'),
       minWidth: 100,
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.COMMON_STATUS },
       },
     },

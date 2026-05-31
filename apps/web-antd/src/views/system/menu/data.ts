@@ -98,7 +98,7 @@ export function useFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'type',
       label: $t('system.menu.field.type'),
-      component: 'RadioGroup',
+      component: 'I18nRadioGroup',
       componentProps: {
         options: getDictOptions(DICT_TYPE.SYSTEM_MENU_TYPE, 'number'),
         buttonStyle: 'solid',
@@ -230,7 +230,7 @@ export function useFormSchema(): VbenFormSchema[] {
       fieldName: 'status',
       label: $t('system.menu.field.status'),
       formItemClass: 'col-span-1',
-      component: 'RadioGroup',
+      component: 'I18nRadioGroup',
       componentProps: {
         options: getDictOptions(DICT_TYPE.COMMON_STATUS, 'number'),
         buttonStyle: 'solid',
@@ -242,7 +242,7 @@ export function useFormSchema(): VbenFormSchema[] {
       fieldName: 'alwaysShow',
       label: $t('system.menu.field.alwaysShow'),
       formItemClass: 'col-span-1',
-      component: 'RadioGroup',
+      component: 'I18nRadioGroup',
       componentProps: {
         options: [
           { label: $t('system.menu.alwaysShow.yes'), value: true },
@@ -265,7 +265,7 @@ export function useFormSchema(): VbenFormSchema[] {
       fieldName: 'keepAlive',
       label: $t('system.menu.field.keepAlive'),
       formItemClass: 'col-span-1',
-      component: 'RadioGroup',
+      component: 'I18nRadioGroup',
       componentProps: {
         options: [
           { label: $t('system.menu.keepAlive.yes'), value: true },
@@ -288,7 +288,7 @@ export function useFormSchema(): VbenFormSchema[] {
       fieldName: 'newWindows',
       label: $t('system.menu.field.newWindows'),
       formItemClass: 'col-span-1',
-      component: 'RadioGroup',
+      component: 'I18nRadioGroup',
       componentProps: {
         options: [
           { label: $t('system.menu.newWindows.yes'), value: true },
@@ -352,7 +352,7 @@ export function useGridColumns(): VxeTableGridOptions<SystemMenuApi.Menu>['colum
       field: 'type',
       title: $t('system.menu.field.type'),
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.SYSTEM_MENU_TYPE },
       },
     },
@@ -376,7 +376,7 @@ export function useGridColumns(): VxeTableGridOptions<SystemMenuApi.Menu>['colum
       field: 'status',
       title: $t('system.menu.field.status'),
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.COMMON_STATUS },
       },
     },

@@ -21,7 +21,7 @@ export function useGridFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'userType',
       label: $t('system.notify.message.field.userType'),
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         allowClear: true,
         options: getDictOptions(DICT_TYPE.USER_TYPE, 'number'),
@@ -44,7 +44,7 @@ export function useGridFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'templateType',
       label: $t('system.notify.message.field.templateType'),
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         options: getDictOptions(
           DICT_TYPE.SYSTEM_NOTIFY_TEMPLATE_TYPE,
@@ -79,7 +79,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
       field: 'userType',
       title: $t('system.notify.message.field.userType'),
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.USER_TYPE },
       },
     },
@@ -114,7 +114,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
       field: 'templateType',
       title: $t('system.notify.message.field.templateType'),
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.SYSTEM_NOTIFY_TEMPLATE_TYPE },
       },
     },
@@ -122,7 +122,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
       field: 'readStatus',
       title: $t('system.notify.message.field.readStatus'),
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.INFRA_BOOLEAN_STRING },
       },
     },

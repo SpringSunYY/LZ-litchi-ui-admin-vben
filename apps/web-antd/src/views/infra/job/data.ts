@@ -111,7 +111,7 @@ export function useGridFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'status',
       label: $t('infra.job.field.status'),
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         options: getDictOptions(DICT_TYPE.INFRA_JOB_STATUS, 'number'),
         allowClear: true,
@@ -149,7 +149,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
       field: 'status',
       title: $t('infra.job.field.status'),
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.INFRA_JOB_STATUS },
       },
     },

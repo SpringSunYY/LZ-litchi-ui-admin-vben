@@ -60,7 +60,7 @@ export function useFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'contractId',
       label: $t('crm.receivable.field.contractId'),
-      component: 'Select',
+      component: 'I18nSelect',
       rules: 'required',
       dependencies: {
         triggerFields: ['customerId'],
@@ -86,7 +86,7 @@ export function useFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'planId',
       label: $t('crm.receivable.field.planId'),
-      component: 'Select',
+      component: 'I18nSelect',
       rules: 'required',
       dependencies: {
         triggerFields: ['contractId'],
@@ -140,7 +140,7 @@ export function useFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'returnType',
       label: $t('crm.receivable.field.returnType'),
-      component: 'Select',
+      component: 'I18nSelect',
       rules: 'required',
       componentProps: {
         options: getDictOptions(DICT_TYPE.CRM_RECEIVABLE_RETURN_TYPE, 'number'),
@@ -225,7 +225,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
       field: 'returnType',
       minWidth: 150,
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.CRM_RECEIVABLE_RETURN_TYPE },
       },
     },
@@ -273,7 +273,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
       minWidth: 100,
       fixed: 'right',
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.CRM_AUDIT_STATUS },
       },
     },

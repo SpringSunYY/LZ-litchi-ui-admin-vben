@@ -99,7 +99,7 @@ export function useFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'sex',
       label: $t('system.user.field.sex'),
-      component: 'RadioGroup',
+      component: 'I18nRadioGroup',
       componentProps: {
         options: getDictOptions(DICT_TYPE.SYSTEM_USER_SEX, 'number'),
         buttonStyle: 'solid',
@@ -110,7 +110,7 @@ export function useFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'status',
       label: $t('system.user.field.status'),
-      component: 'RadioGroup',
+      component: 'I18nRadioGroup',
       componentProps: {
         options: getDictOptions(DICT_TYPE.COMMON_STATUS, 'number'),
         buttonStyle: 'solid',

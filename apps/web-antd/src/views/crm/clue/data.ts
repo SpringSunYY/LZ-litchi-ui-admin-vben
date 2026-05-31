@@ -29,7 +29,7 @@ export function useFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'source',
       label: $t('crm.clue.field.customerSource'),
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         placeholder: $t('ui.placeholder.select', [
           $t('crm.clue.field.customerSource'),
@@ -98,7 +98,7 @@ export function useFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'industryId',
       label: $t('crm.clue.field.industryId'),
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         placeholder: $t('ui.placeholder.select', [
           $t('crm.clue.field.industryId'),
@@ -109,7 +109,7 @@ export function useFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'level',
       label: $t('crm.clue.field.level'),
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         placeholder: $t('ui.placeholder.select', [$t('crm.clue.field.level')]),
         options: getDictOptions(DICT_TYPE.CRM_CUSTOMER_LEVEL, 'number'),
@@ -173,7 +173,7 @@ export function useGridFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'transformStatus',
       label: $t('crm.clue.field.transformStatus'),
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         placeholder: $t('ui.placeholder.select', [
           $t('crm.clue.field.transformStatus'),
@@ -229,7 +229,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
       field: 'source',
       title: $t('crm.clue.field.source'),
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.CRM_CUSTOMER_SOURCE },
       },
     },
@@ -253,7 +253,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
       field: 'industryId',
       title: $t('crm.clue.field.industryId'),
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.CRM_CUSTOMER_INDUSTRY },
       },
     },
@@ -261,7 +261,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
       field: 'level',
       title: $t('crm.clue.field.level'),
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.CRM_CUSTOMER_LEVEL },
       },
     },

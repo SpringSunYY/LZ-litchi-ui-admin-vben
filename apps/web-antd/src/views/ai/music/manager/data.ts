@@ -37,7 +37,7 @@ export function useGridFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'status',
       label: $t('ai.music.field.status'),
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         placeholder: $t('ui.placeholder.select', [$t('ai.music.field.status')]),
         allowClear: true,
@@ -47,7 +47,7 @@ export function useGridFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'generateMode',
       label: $t('ai.music.field.generateMode'),
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         placeholder: $t('ui.placeholder.select', [
           $t('ai.music.field.generateMode'),
@@ -68,7 +68,7 @@ export function useGridFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'publicStatus',
       label: $t('ai.music.field.publicStatus'),
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         placeholder: $t('ui.placeholder.select', [
           $t('ai.music.field.publicStatus'),
@@ -113,7 +113,7 @@ export function useGridColumns(
       title: $t('ai.music.field.status'),
       minWidth: 100,
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.AI_MUSIC_STATUS },
       },
     },
@@ -152,7 +152,7 @@ export function useGridColumns(
       title: $t('ai.music.field.generateMode'),
       minWidth: 100,
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.AI_GENERATE_MODE },
       },
     },

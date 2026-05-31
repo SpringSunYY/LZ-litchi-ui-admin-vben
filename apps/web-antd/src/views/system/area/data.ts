@@ -67,7 +67,7 @@ export function useFormSchema(): VbenFormSchema[] {
       fieldName: 'level',
       label: $t('system.area.field.level'),
       rules: 'required',
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         options: getDictOptions(DICT_TYPE.SYSTEM_AREA_LEVEL, 'number'),
         placeholder: $t('ui.placeholder.select', [
@@ -165,7 +165,7 @@ export function useGridFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'level',
       label: $t('system.area.field.level'),
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         allowClear: true,
         options: getDictOptions(DICT_TYPE.SYSTEM_AREA_LEVEL, 'number'),
@@ -212,7 +212,7 @@ export function useGridColumns(): VxeTableGridOptions<AreaApi.Area>['columns'] {
       field: 'level',
       title: $t('system.area.field.level'),
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.SYSTEM_AREA_LEVEL },
       },
     },

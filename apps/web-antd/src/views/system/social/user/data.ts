@@ -10,7 +10,7 @@ export function useGridFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'type',
       label: $t('system.social.user.field.type'),
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         options: getDictOptions(DICT_TYPE.SYSTEM_SOCIAL_TYPE, 'number'),
         placeholder: $t('ui.placeholder.select', [
@@ -60,7 +60,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
       field: 'type',
       title: $t('system.social.user.field.type'),
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.SYSTEM_SOCIAL_TYPE },
       },
     },

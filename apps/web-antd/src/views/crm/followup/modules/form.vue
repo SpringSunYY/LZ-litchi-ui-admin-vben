@@ -48,7 +48,7 @@ const [Form, formApi] = useVbenForm({
     {
       fieldName: 'type',
       label: $t('crm.followup.field.type'),
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         options: getDictOptions(DICT_TYPE.CRM_FOLLOW_UP_TYPE, 'number'),
       },

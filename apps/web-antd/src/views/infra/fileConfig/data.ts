@@ -43,7 +43,7 @@ export function useFormSchema(): VbenFormSchema[] {
       label: $t('infra.fileConfig.field.pathType'),
       help: $t('infra.fileConfig.help.pathType'),
       rules: 'required',
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         options: getDictOptions(DICT_TYPE.INFRA_FILE_PATH_TYPE, 'number'),
         placeholder: $t('ui.placeholder.select', [
@@ -56,7 +56,7 @@ export function useFormSchema(): VbenFormSchema[] {
       label: $t('infra.fileConfig.field.returnType'),
       help: $t('infra.fileConfig.help.returnType'),
       rules: 'required',
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         options: getDictOptions(DICT_TYPE.INFRA_FILE_RETURN_TYPE, 'number'),
         placeholder: $t('ui.placeholder.select', [
@@ -82,7 +82,7 @@ export function useFormSchema(): VbenFormSchema[] {
       fieldName: 'fileType',
       label: $t('infra.fileConfig.field.fileType'),
       help: $t('infra.fileConfig.help.fileType'),
-      component: 'SelectToString',
+      component: 'I18nSelectToString',
       componentProps: {
         options: getDictOptions(DICT_TYPE.INFRA_FILE_FILE_TYPE, 'string'),
         type: 'select',
@@ -92,7 +92,7 @@ export function useFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'storage',
       label: $t('infra.fileConfig.field.storage'),
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         options: getDictOptions(DICT_TYPE.INFRA_FILE_STORAGE, 'number'),
         placeholder: $t('ui.placeholder.select', [
@@ -191,7 +191,7 @@ export function useFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'config.mode',
       label: $t('infra.fileConfig.field.mode'),
-      component: 'RadioGroup',
+      component: 'I18nRadioGroup',
       componentProps: {
         options: [
           {
@@ -276,7 +276,7 @@ export function useFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'config.enablePathStyleAccess',
       label: $t('infra.fileConfig.field.enablePathStyleAccess'),
-      component: 'RadioGroup',
+      component: 'I18nRadioGroup',
       componentProps: {
         options: [
           { label: $t('infra.fileConfig.option.enable'), value: true },
@@ -349,7 +349,7 @@ export function useGridFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'storage',
       label: $t('infra.fileConfig.field.storage'),
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         allowClear: true,
         options: getDictOptions(DICT_TYPE.INFRA_FILE_STORAGE, 'number'),
@@ -361,7 +361,7 @@ export function useGridFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'pathType',
       label: $t('infra.fileConfig.field.pathType'),
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         allowClear: true,
         options: getDictOptions(DICT_TYPE.INFRA_FILE_PATH_TYPE, 'number'),
@@ -373,7 +373,7 @@ export function useGridFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'returnType',
       label: $t('infra.fileConfig.field.returnType'),
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         allowClear: true,
         options: getDictOptions(DICT_TYPE.INFRA_FILE_RETURN_TYPE, 'number'),
@@ -390,7 +390,7 @@ export function useGridFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'fileType',
       label: $t('infra.fileConfig.field.fileType'),
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         allowClear: true,
         options: getDictOptions(DICT_TYPE.INFRA_FILE_FILE_TYPE, 'string'),
@@ -402,7 +402,7 @@ export function useGridFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'master',
       label: $t('infra.fileConfig.field.master'),
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         allowClear: true,
         options: getDictOptions(DICT_TYPE.INFRA_BOOLEAN_STRING, 'boolean'),
@@ -446,7 +446,7 @@ export function useGridColumns(): VxeTableGridOptions<InfraFileConfigApi.FileCon
       title: $t('infra.fileConfig.field.master'),
       minWidth: 60,
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.INFRA_BOOLEAN_STRING },
       },
     },
@@ -455,7 +455,7 @@ export function useGridColumns(): VxeTableGridOptions<InfraFileConfigApi.FileCon
       title: $t('infra.fileConfig.field.storage'),
       minWidth: 60,
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.INFRA_FILE_STORAGE },
       },
     },
@@ -464,7 +464,7 @@ export function useGridColumns(): VxeTableGridOptions<InfraFileConfigApi.FileCon
       title: $t('infra.fileConfig.field.pathType'),
       minWidth: 60,
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.INFRA_FILE_PATH_TYPE },
       },
     },
@@ -473,7 +473,7 @@ export function useGridColumns(): VxeTableGridOptions<InfraFileConfigApi.FileCon
       title: $t('infra.fileConfig.field.returnType'),
       minWidth: 60,
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.INFRA_FILE_RETURN_TYPE },
       },
     },
@@ -488,7 +488,7 @@ export function useGridColumns(): VxeTableGridOptions<InfraFileConfigApi.FileCon
       title: $t('infra.fileConfig.field.fileType'),
       minWidth: 60,
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.INFRA_FILE_FILE_TYPE },
       },
     },

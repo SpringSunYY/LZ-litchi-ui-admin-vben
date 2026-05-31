@@ -45,7 +45,7 @@ export function useGridFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'type',
       label: $t('infra.file.field.type'),
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         allowClear: true,
         options: getDictOptions(DICT_TYPE.INFRA_FILE_FILE_TYPE, 'string'),
@@ -60,7 +60,7 @@ export function useGridFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'moduleType',
       label: $t('infra.file.field.moduleType'),
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         allowClear: true,
         options: getDictOptions(DICT_TYPE.SYSTEM_MODULE_TYPE, 'string'),
@@ -119,7 +119,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
       field: 'type',
       title: $t('infra.file.field.type'),
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.INFRA_FILE_FILE_TYPE },
       },
     },
@@ -127,7 +127,6 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
       field: 'size',
       title: $t('infra.file.field.size'),
       formatter: ({ cellValue }) => {
-        // TODO @YY：后续优化下
         if (!cellValue) return $t('infra.file.sizeZero');
         const unitArr = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
         const index = Math.floor(Math.log(cellValue) / Math.log(1024));
@@ -140,7 +139,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
       field: 'moduleType',
       title: $t('infra.file.field.moduleType'),
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.SYSTEM_MODULE_TYPE },
       },
     },

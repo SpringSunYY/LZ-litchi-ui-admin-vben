@@ -104,7 +104,7 @@ export function useFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'returnType',
       label: $t('crm.receivablePlan.field.returnType'),
-      component: 'Select',
+      component: 'I18nSelect',
       rules: 'required',
       componentProps: {
         options: getDictOptions(DICT_TYPE.CRM_RECEIVABLE_RETURN_TYPE, 'number'),
@@ -204,7 +204,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
       field: 'returnType',
       minWidth: 130,
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.CRM_RECEIVABLE_RETURN_TYPE },
       },
     },

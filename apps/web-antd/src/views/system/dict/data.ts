@@ -50,7 +50,7 @@ export function useTypeFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'status',
       label: $t('system.dict.typeField.status'),
-      component: 'RadioGroup',
+      component: 'I18nRadioGroup',
       componentProps: {
         options: getDictOptions(DICT_TYPE.COMMON_STATUS, 'number'),
         buttonStyle: 'solid',
@@ -99,7 +99,7 @@ export function useTypeGridFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'status',
       label: $t('system.dict.typeField.status'),
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         options: getDictOptions(DICT_TYPE.COMMON_STATUS, 'number'),
         placeholder: $t('ui.placeholder.select', [
@@ -130,7 +130,7 @@ export function useTypeGridColumns(): VxeTableGridOptions['columns'] {
       field: 'status',
       title: $t('system.dict.typeField.status'),
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.COMMON_STATUS },
       },
     },
@@ -252,7 +252,7 @@ export function useDataFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'status',
       label: $t('system.dict.dataField.status'),
-      component: 'RadioGroup',
+      component: 'I18nRadioGroup',
       componentProps: {
         options: getDictOptions(DICT_TYPE.COMMON_STATUS, 'number'),
         placeholder: $t('ui.placeholder.select', [
@@ -266,7 +266,7 @@ export function useDataFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'colorType',
       label: $t('system.dict.dataField.colorType'),
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         options: colorOptions,
         placeholder: $t('ui.placeholder.select', [
@@ -315,7 +315,7 @@ export function useDataGridFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'status',
       label: $t('system.dict.dataField.status'),
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         options: getDictOptions(DICT_TYPE.COMMON_STATUS, 'number'),
         placeholder: $t('ui.placeholder.select', [
@@ -358,7 +358,7 @@ export function useDataGridColumns(): VxeTableGridOptions['columns'] {
       field: 'status',
       title: $t('system.dict.dataField.status'),
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.COMMON_STATUS },
       },
     },

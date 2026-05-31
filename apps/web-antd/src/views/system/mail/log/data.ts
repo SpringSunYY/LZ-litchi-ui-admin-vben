@@ -31,7 +31,7 @@ export function useGridFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'userType',
       label: $t('system.mail.log.field.userType'),
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         options: getDictOptions(DICT_TYPE.USER_TYPE, 'number'),
         allowClear: true,
@@ -43,7 +43,7 @@ export function useGridFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'sendStatus',
       label: $t('system.mail.log.field.sendStatus'),
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         options: getDictOptions(DICT_TYPE.SYSTEM_MAIL_SEND_STATUS, 'number'),
         allowClear: true,
@@ -112,7 +112,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
       field: 'sendStatus',
       title: $t('system.mail.log.field.sendStatus'),
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.SYSTEM_MAIL_SEND_STATUS },
       },
     },

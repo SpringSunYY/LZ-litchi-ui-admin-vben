@@ -25,7 +25,7 @@ const [Form, formApi] = useVbenForm({
   actionWrapperClass: 'text-center',
   schema: [
     {
-      component: 'RadioGroup',
+      component: 'I18nRadioGroup',
       fieldName: 'notifyEnabled',
       label: $t('crm.contract.config.notifyEnabled'),
       componentProps: {

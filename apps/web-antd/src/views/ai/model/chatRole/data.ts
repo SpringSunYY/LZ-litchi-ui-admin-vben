@@ -141,7 +141,7 @@ export function useFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'mcpClientNames',
       label: $t('ai.model.chatRole.field.mcpClientNames'),
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         placeholder: $t('ui.placeholder.select', [
           $t('ai.model.chatRole.field.mcpClientNames'),
@@ -154,7 +154,7 @@ export function useFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'publicStatus',
       label: $t('ai.model.chatRole.field.publicStatus'),
-      component: 'RadioGroup',
+      component: 'I18nRadioGroup',
       componentProps: {
         options: getDictOptions(DICT_TYPE.INFRA_BOOLEAN_STRING, 'boolean'),
         buttonStyle: 'solid',
@@ -189,7 +189,7 @@ export function useFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'status',
       label: $t('ai.model.chatRole.field.status'),
-      component: 'RadioGroup',
+      component: 'I18nRadioGroup',
       componentProps: {
         options: getDictOptions(DICT_TYPE.COMMON_STATUS, 'number'),
         buttonStyle: 'solid',
@@ -232,7 +232,7 @@ export function useGridFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'publicStatus',
       label: $t('ai.model.chatRole.field.publicStatus'),
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         placeholder: $t('ui.placeholder.select', [
           $t('ai.model.chatRole.field.publicStatus'),
@@ -321,7 +321,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
       field: 'publicStatus',
       title: $t('ai.model.chatRole.field.publicStatus'),
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.INFRA_BOOLEAN_STRING },
       },
       minWidth: 80,
@@ -330,7 +330,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
       field: 'status',
       title: $t('ai.model.chatRole.field.status'),
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.COMMON_STATUS },
       },
       minWidth: 80,

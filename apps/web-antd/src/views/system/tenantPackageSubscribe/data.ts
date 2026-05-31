@@ -120,7 +120,7 @@ export function useFormSchema(): VbenFormSchema[] {
       fieldName: 'status',
       label: $t('system.tenantPackageSubscribe.field.status'),
       rules: 'required',
-      component: 'RadioGroup',
+      component: 'I18nRadioGroup',
       defaultValue: 1,
       componentProps: {
         options: getDictOptions(
@@ -135,7 +135,7 @@ export function useFormSchema(): VbenFormSchema[] {
       fieldName: 'payStatus',
       label: $t('system.tenantPackageSubscribe.field.payStatus'),
       rules: 'required',
-      component: 'RadioGroup',
+      component: 'I18nRadioGroup',
       defaultValue: 0,
       componentProps: {
         options: getDictOptions(
@@ -211,7 +211,7 @@ export function useGridFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'packageType',
       label: $t('system.tenantPackageSubscribe.field.packageType'),
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         allowClear: true,
         options: getDictOptions(DICT_TYPE.SYSTEM_TENANT_PACKAGE_TYPE, 'number'),
@@ -223,7 +223,7 @@ export function useGridFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'packageStatus',
       label: $t('system.tenantPackageSubscribe.field.packageStatus'),
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         allowClear: true,
         options: getDictOptions(
@@ -260,7 +260,7 @@ export function useGridFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'status',
       label: $t('system.tenantPackageSubscribe.field.status'),
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         allowClear: true,
         options: getDictOptions(
@@ -275,7 +275,7 @@ export function useGridFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'payStatus',
       label: $t('system.tenantPackageSubscribe.field.payStatus'),
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         allowClear: true,
         options: getDictOptions(
@@ -341,7 +341,7 @@ export function useGridColumns(): VxeTableGridOptions<TenantPackageSubscribeApi.
       title: $t('system.tenantPackageSubscribe.field.packageType'),
       minWidth: 120,
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.SYSTEM_TENANT_PACKAGE_TYPE },
       },
     },
@@ -350,7 +350,7 @@ export function useGridColumns(): VxeTableGridOptions<TenantPackageSubscribeApi.
       title: $t('system.tenantPackageSubscribe.field.packageStatus'),
       minWidth: 120,
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.SYSTEM_TENANT_PACKAGE_STATUS },
       },
     },
@@ -401,7 +401,7 @@ export function useGridColumns(): VxeTableGridOptions<TenantPackageSubscribeApi.
       title: $t('system.tenantPackageSubscribe.field.status'),
       minWidth: 120,
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.SYSTEM_TENANT_PACKAGE_SUBSCRIBE_STATUS },
       },
     },
@@ -410,7 +410,7 @@ export function useGridColumns(): VxeTableGridOptions<TenantPackageSubscribeApi.
       title: $t('system.tenantPackageSubscribe.field.payStatus'),
       minWidth: 120,
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.SYSTEM_TENANT_PACKAGE_SUBSCRIBE_PAY_STATUS },
       },
     },

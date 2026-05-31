@@ -25,7 +25,7 @@ const [Form, formApi] = useVbenForm({
   actionWrapperClass: 'text-center',
   schema: [
     {
-      component: 'RadioGroup',
+      component: 'I18nRadioGroup',
       fieldName: 'enabled',
       label: $t('crm.customerLimitConfig.field.poolConfig'),
       componentProps: {
@@ -67,7 +67,7 @@ const [Form, formApi] = useVbenForm({
       },
     },
     {
-      component: 'RadioGroup',
+      component: 'I18nRadioGroup',
       fieldName: 'notifyEnabled',
       label: $t('crm.customerLimitConfig.field.notifyEnabled'),
       componentProps: {

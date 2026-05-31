@@ -312,7 +312,7 @@ export function useGridFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'status',
       label: $t('erp.payment.field.status'),
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         options: getDictOptions(DICT_TYPE.ERP_AUDIT_STATUS, 'number'),
         placeholder: $t('ui.placeholder.select', [
@@ -409,7 +409,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
       title: $t('erp.payment.field.status'),
       minWidth: 90,
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.ERP_AUDIT_STATUS },
       },
     },
@@ -448,7 +448,7 @@ export function usePurchaseInGridFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'paymentStatus',
       label: $t('erp.payment.field.paymentStatus'),
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         options: [
           { label: $t('erp.payment.message.unpaid'), value: 0 },
@@ -514,7 +514,7 @@ export function usePurchaseInGridColumns(): VxeTableGridOptions['columns'] {
       title: $t('erp.payment.field.status'),
       minWidth: 100,
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.ERP_AUDIT_STATUS },
       },
     },
@@ -547,7 +547,7 @@ export function useSaleReturnGridFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'refundStatus',
       label: $t('erp.payment.field.refundStatus'),
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         options: [
           { label: $t('erp.payment.message.unpaid'), value: 0 },
@@ -613,7 +613,7 @@ export function useSaleReturnGridColumns(): VxeTableGridOptions['columns'] {
       title: $t('erp.payment.field.status'),
       minWidth: 100,
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.ERP_AUDIT_STATUS },
       },
     },

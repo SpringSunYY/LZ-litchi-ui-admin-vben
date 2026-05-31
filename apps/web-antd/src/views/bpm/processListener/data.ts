@@ -50,7 +50,7 @@ export function useFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'status',
       label: $t('bpm.processListener.field.status'),
-      component: 'RadioGroup',
+      component: 'I18nRadioGroup',
       componentProps: {
         options: getDictOptions(DICT_TYPE.COMMON_STATUS, 'number'),
         buttonStyle: 'solid',
@@ -61,7 +61,7 @@ export function useFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'type',
       label: $t('bpm.processListener.field.type'),
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         options: getDictOptions(DICT_TYPE.BPM_PROCESS_LISTENER_TYPE, 'string'),
         allowClear: true,
@@ -71,7 +71,7 @@ export function useFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'event',
       label: $t('bpm.processListener.field.event'),
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         options: EVENT_OPTIONS,
         allowClear: true,
@@ -91,7 +91,7 @@ export function useFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'valueType',
       label: $t('bpm.processListener.field.valueType'),
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         options: getDictOptions(
           DICT_TYPE.BPM_PROCESS_LISTENER_VALUE_TYPE,
@@ -141,7 +141,7 @@ export function useGridFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'type',
       label: $t('bpm.processListener.field.type'),
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         placeholder: $t('ui.placeholder.select', [
           $t('bpm.processListener.field.type'),
@@ -171,7 +171,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
       title: $t('bpm.processListener.field.type'),
       minWidth: 200,
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.BPM_PROCESS_LISTENER_TYPE },
       },
     },
@@ -185,7 +185,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
       title: $t('bpm.processListener.field.valueType'),
       minWidth: 200,
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.BPM_PROCESS_LISTENER_VALUE_TYPE },
       },
     },

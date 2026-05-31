@@ -138,7 +138,7 @@ export function useBasicInfoFormSchema(): VbenFormSchema[] {
 export function useGenerationInfoBaseFormSchema(): VbenFormSchema[] {
   return [
     {
-      component: 'Select',
+      component: 'I18nSelect',
       fieldName: 'templateType',
       label: $t('infra.codegen.templateType'),
       componentProps: {
@@ -151,7 +151,7 @@ export function useGenerationInfoBaseFormSchema(): VbenFormSchema[] {
       rules: 'selectRequired',
     },
     {
-      component: 'Select',
+      component: 'I18nSelect',
       fieldName: 'frontType',
       label: $t('infra.codegen.frontType'),
       componentProps: {
@@ -161,7 +161,7 @@ export function useGenerationInfoBaseFormSchema(): VbenFormSchema[] {
       rules: 'selectRequired',
     },
     {
-      component: 'Select',
+      component: 'I18nSelect',
       fieldName: 'scene',
       label: $t('infra.codegen.scene'),
       componentProps: {
@@ -247,7 +247,7 @@ export function useGenerationInfoBaseFormSchema(): VbenFormSchema[] {
       rules: 'required',
     },
     {
-      component: 'RadioGroup',
+      component: 'I18nRadioGroup',
       fieldName: 'isI18n',
       label: $t('infra.codegen.isI18n'),
       help: $t('infra.codegen.isI18nHelp'),
@@ -266,7 +266,7 @@ export function useGenerationInfoBaseFormSchema(): VbenFormSchema[] {
       defaultValue: '0',
     },
     {
-      component: 'Select',
+      component: 'I18nSelect',
       fieldName: 'i18nModuleType',
       label: $t('infra.codegen.i18nModuleType'),
       help: $t('infra.codegen.i18nModuleTypeHelp'),
@@ -280,7 +280,7 @@ export function useGenerationInfoBaseFormSchema(): VbenFormSchema[] {
       },
     },
     {
-      component: 'RadioGroup',
+      component: 'I18nRadioGroup',
       fieldName: 'isImport',
       label: $t('infra.codegen.isImport'),
       help: $t('infra.codegen.isImportHelp'),
@@ -299,7 +299,7 @@ export function useGenerationInfoBaseFormSchema(): VbenFormSchema[] {
       defaultValue: '1',
     },
     {
-      component: 'RadioGroup',
+      component: 'I18nRadioGroup',
       fieldName: 'popupType',
       label: $t('infra.codegen.popupType'),
       help: $t('infra.codegen.popupTypeHelp'),
@@ -337,7 +337,7 @@ export function useGenerationInfoTreeFormSchema(
       formItemClass: 'md:col-span-2',
     },
     {
-      component: 'Select',
+      component: 'I18nSelect',
       fieldName: 'treeParentColumnId',
       label: $t('infra.codegen.treeParentColumn'),
       help: $t('infra.codegen.treeParentColumnHelp'),
@@ -353,7 +353,7 @@ export function useGenerationInfoTreeFormSchema(
       rules: 'selectRequired',
     },
     {
-      component: 'Select',
+      component: 'I18nSelect',
       fieldName: 'treeNameColumnId',
       label: $t('infra.codegen.treeNameColumn'),
       help: $t('infra.codegen.treeNameColumnHelp'),
@@ -389,7 +389,7 @@ export function useGenerationInfoSubTableFormSchema(
       formItemClass: 'md:col-span-2',
     },
     {
-      component: 'Select',
+      component: 'I18nSelect',
       fieldName: 'masterTableId',
       label: $t('infra.codegen.masterTable'),
       help: $t('infra.codegen.masterTableHelp'),
@@ -405,7 +405,7 @@ export function useGenerationInfoSubTableFormSchema(
       rules: 'selectRequired',
     },
     {
-      component: 'Select',
+      component: 'I18nSelect',
       fieldName: 'subJoinColumnId',
       label: $t('infra.codegen.subJoinColumn'),
       help: $t('infra.codegen.subJoinColumnHelp'),
@@ -421,7 +421,7 @@ export function useGenerationInfoSubTableFormSchema(
       rules: 'selectRequired',
     },
     {
-      component: 'RadioGroup',
+      component: 'I18nRadioGroup',
       fieldName: 'subJoinMany',
       label: $t('infra.codegen.joinRelation'),
       help: $t('infra.codegen.joinRelationHelp'),

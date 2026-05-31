@@ -429,7 +429,7 @@ export function useGridFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'paymentStatus',
       label: $t('erp.purchaseIn.field.paymentStatus'),
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         options: [
           { label: $t('erp.purchaseIn.message.unpaid'), value: 0 },
@@ -445,7 +445,7 @@ export function useGridFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'status',
       label: $t('erp.purchaseIn.field.auditStatus'),
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         options: getDictOptions(DICT_TYPE.ERP_AUDIT_STATUS, 'number'),
         placeholder: $t('ui.placeholder.select', [
@@ -535,7 +535,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
       title: $t('erp.purchaseIn.field.auditStatus'),
       minWidth: 120,
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.ERP_AUDIT_STATUS },
       },
     },

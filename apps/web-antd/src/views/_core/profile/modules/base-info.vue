@@ -61,7 +61,7 @@ const [Form, formApi] = useVbenForm({
     {
       label: $t('system.user.field.sex'),
       fieldName: 'sex',
-      component: 'RadioGroup',
+      component: 'I18nRadioGroup',
       componentProps: {
         options: getDictOptions(DICT_TYPE.SYSTEM_USER_SEX, 'number'),
         buttonStyle: 'solid',

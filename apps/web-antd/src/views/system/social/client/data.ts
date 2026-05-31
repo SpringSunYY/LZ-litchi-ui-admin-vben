@@ -35,7 +35,7 @@ export function useFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'socialType',
       label: $t('system.social.client.field.socialType'),
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         options: getDictOptions(DICT_TYPE.SYSTEM_SOCIAL_TYPE, 'number'),
       },
@@ -44,7 +44,7 @@ export function useFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'userType',
       label: $t('system.social.client.field.userType'),
-      component: 'RadioGroup',
+      component: 'I18nRadioGroup',
       componentProps: {
         options: getDictOptions(DICT_TYPE.USER_TYPE, 'number'),
         buttonStyle: 'solid',
@@ -92,7 +92,7 @@ export function useFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'status',
       label: $t('system.social.client.field.status'),
-      component: 'RadioGroup',
+      component: 'I18nRadioGroup',
       componentProps: {
         options: getDictOptions(DICT_TYPE.COMMON_STATUS, 'number'),
         buttonStyle: 'solid',
@@ -119,7 +119,7 @@ export function useGridFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'socialType',
       label: $t('system.social.client.field.socialType'),
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         options: getDictOptions(DICT_TYPE.SYSTEM_SOCIAL_TYPE, 'number'),
         placeholder: $t('ui.placeholder.select', [
@@ -131,7 +131,7 @@ export function useGridFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'userType',
       label: $t('system.social.client.field.userType'),
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         options: getDictOptions(DICT_TYPE.USER_TYPE, 'number'),
         placeholder: $t('ui.placeholder.select', [
@@ -153,7 +153,7 @@ export function useGridFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'status',
       label: $t('system.social.client.field.status'),
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         options: getDictOptions(DICT_TYPE.COMMON_STATUS, 'number'),
         placeholder: $t('ui.placeholder.select', [
@@ -180,7 +180,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
       field: 'socialType',
       title: $t('system.social.client.field.socialType'),
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.SYSTEM_SOCIAL_TYPE },
       },
     },
@@ -188,7 +188,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
       field: 'userType',
       title: $t('system.social.client.field.userType'),
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.USER_TYPE },
       },
     },
@@ -200,7 +200,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
       field: 'status',
       title: $t('system.social.client.field.status'),
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.COMMON_STATUS },
       },
     },

@@ -25,7 +25,7 @@ const [Grid] = useVbenVxeGrid({
       {
         fieldName: 'sceneType',
         label: $t('crm.backlog.field.attribution'),
-        component: 'Select',
+        component: 'I18nSelect',
         componentProps: {
           allowClear: true,
           options: useSceneTypeOptions(),

@@ -72,7 +72,7 @@ export function useFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'status',
       label: $t('system.oauth2.client.field.status'),
-      component: 'RadioGroup',
+      component: 'I18nRadioGroup',
       componentProps: {
         options: getDictOptions(DICT_TYPE.COMMON_STATUS, 'number'),
         buttonStyle: 'solid',
@@ -105,7 +105,7 @@ export function useFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'authorizedGrantTypes',
       label: $t('system.oauth2.client.field.authorizedGrantTypes'),
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         options: getDictOptions(DICT_TYPE.SYSTEM_OAUTH2_GRANT_TYPE),
         mode: 'multiple',
@@ -118,7 +118,7 @@ export function useFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'scopes',
       label: $t('system.oauth2.client.field.scopes'),
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         placeholder: $t('ui.placeholder.select', [
           $t('system.oauth2.client.field.scopes'),
@@ -129,7 +129,7 @@ export function useFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'autoApproveScopes',
       label: $t('system.oauth2.client.field.autoApproveScopes'),
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         placeholder: $t('ui.placeholder.select', [
           $t('system.oauth2.client.field.autoApproveScopes'),
@@ -140,7 +140,7 @@ export function useFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'redirectUris',
       label: $t('system.oauth2.client.field.redirectUris'),
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         placeholder: $t('ui.placeholder.select', [
           $t('system.oauth2.client.field.redirectUris'),
@@ -152,7 +152,7 @@ export function useFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'authorities',
       label: $t('system.oauth2.client.field.authorities'),
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         placeholder: $t('ui.placeholder.select', [
           $t('system.oauth2.client.field.authorities'),
@@ -163,7 +163,7 @@ export function useFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'resourceIds',
       label: $t('system.oauth2.client.field.resourceIds'),
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         mode: 'tags',
         placeholder: $t('ui.placeholder.select', [
@@ -199,7 +199,7 @@ export function useGridFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'status',
       label: $t('system.oauth2.client.field.status'),
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         options: getDictOptions(DICT_TYPE.COMMON_STATUS, 'number'),
         allowClear: true,
@@ -237,7 +237,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
       field: 'status',
       title: $t('system.oauth2.client.field.status'),
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.COMMON_STATUS },
       },
     },

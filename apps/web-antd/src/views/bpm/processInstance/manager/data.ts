@@ -67,7 +67,7 @@ export function useGridFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'status',
       label: $t('bpm.processInstance.field.status'),
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         options: getDictOptions(
           DICT_TYPE.BPM_PROCESS_INSTANCE_STATUS,
@@ -126,7 +126,7 @@ export function useGridColumns(
       title: $t('bpm.processInstance.field.status'),
       minWidth: 120,
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.BPM_PROCESS_INSTANCE_STATUS },
       },
     },

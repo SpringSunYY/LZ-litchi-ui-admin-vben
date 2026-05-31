@@ -53,7 +53,7 @@ export function useFormSchema(): VbenFormSchema[] {
       fieldName: 'localeStatus',
       label: $t('infra.i18nLocale.field.localeStatus'),
       rules: 'required',
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         options: getDictOptions(DICT_TYPE.INFRA_I18N_LOCALE_STATUS, 'number'),
         placeholder: $t('ui.placeholder.select', [
@@ -66,7 +66,7 @@ export function useFormSchema(): VbenFormSchema[] {
       label: $t('infra.i18nLocale.field.localeTarget'),
       rules: 'required',
       help: $t('infra.i18nLocale.help.localeTarget'),
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         options: getDictOptions(DICT_TYPE.INFRA_I18N_LOCALE_TARGET, 'number'),
         placeholder: $t('ui.placeholder.select', [
@@ -79,7 +79,7 @@ export function useFormSchema(): VbenFormSchema[] {
       label: $t('infra.i18nLocale.field.isDefault'),
       help: $t('infra.i18nLocale.help.isDefault'),
       rules: 'required',
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         options: getDictOptions(
           DICT_TYPE.INFRA_I18N_LOCALE_IS_DEFAULT,
@@ -131,7 +131,7 @@ export function useGridFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'localeStatus',
       label: $t('infra.i18nLocale.field.localeStatus'),
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         allowClear: true,
         options: getDictOptions(DICT_TYPE.INFRA_I18N_LOCALE_STATUS, 'number'),
@@ -143,7 +143,7 @@ export function useGridFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'localeTarget',
       label: $t('infra.i18nLocale.field.localeTarget'),
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         allowClear: true,
         options: getDictOptions(DICT_TYPE.INFRA_I18N_LOCALE_TARGET, 'number'),
@@ -155,7 +155,7 @@ export function useGridFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'isDefault',
       label: $t('infra.i18nLocale.field.isDefault'),
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         allowClear: true,
         options: getDictOptions(
@@ -208,7 +208,7 @@ export function useGridColumns(): VxeTableGridOptions<I18nLocaleApi.I18nLocale>[
       title: $t('infra.i18nLocale.field.localeStatus'),
       minWidth: 120,
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.INFRA_I18N_LOCALE_STATUS },
       },
     },
@@ -217,7 +217,7 @@ export function useGridColumns(): VxeTableGridOptions<I18nLocaleApi.I18nLocale>[
       title: $t('infra.i18nLocale.field.localeTarget'),
       minWidth: 120,
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.INFRA_I18N_LOCALE_TARGET },
       },
     },
@@ -226,7 +226,7 @@ export function useGridColumns(): VxeTableGridOptions<I18nLocaleApi.I18nLocale>[
       title: $t('infra.i18nLocale.field.isDefault'),
       minWidth: 120,
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.INFRA_I18N_LOCALE_IS_DEFAULT },
       },
     },

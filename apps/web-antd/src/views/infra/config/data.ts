@@ -60,7 +60,7 @@ export function useFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'visible',
       label: $t('infra.config.field.visible'),
-      component: 'RadioGroup',
+      component: 'I18nRadioGroup',
       componentProps: {
         options: getDictOptions(DICT_TYPE.INFRA_BOOLEAN_STRING, 'boolean'),
         buttonStyle: 'solid',
@@ -108,7 +108,7 @@ export function useGridFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'type',
       label: $t('infra.config.field.type'),
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         options: getDictOptions(DICT_TYPE.INFRA_CONFIG_TYPE, 'number'),
         placeholder: $t('ui.placeholder.select', [
@@ -156,7 +156,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
       field: 'visible',
       title: $t('infra.config.field.visible'),
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.INFRA_BOOLEAN_STRING },
       },
     },
@@ -164,7 +164,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
       field: 'type',
       title: $t('infra.config.field.type'),
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.INFRA_CONFIG_TYPE },
       },
     },

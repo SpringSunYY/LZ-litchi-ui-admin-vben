@@ -32,7 +32,7 @@ export function useFormSchema(): VbenFormSchema[] {
       fieldName: 'sex',
       label: '性别',
       rules: 'required',
-      component: 'RadioGroup',
+      component: 'I18nRadioGroup',
       componentProps: {
         options: getDictOptions(DICT_TYPE.SYSTEM_USER_SEX, 'number'),
         buttonStyle: 'solid',
@@ -74,7 +74,7 @@ export function useGridFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'sex',
       label: '性别',
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         allowClear: true,
         options: getDictOptions(DICT_TYPE.SYSTEM_USER_SEX, 'number'),
@@ -123,7 +123,7 @@ export function useGridColumns(
       title: '性别',
       minWidth: 120,
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.SYSTEM_USER_SEX },
       },
     },

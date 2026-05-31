@@ -43,7 +43,7 @@ const [Grid] = useVbenVxeGrid({
       {
         fieldName: 'expiryType',
         label: $t('crm.backlog.field.expiryStatus'),
-        component: 'Select',
+        component: 'I18nSelect',
         componentProps: {
           allowClear: true,
           options: useContractExpiryTypeOptions(),

@@ -66,7 +66,7 @@ export function useFormSchema(): VbenFormSchema[] {
       fieldName: 'industry',
       label: $t('system.tenant.field.industry'),
       rules: 'required',
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         options: getDictOptions(DICT_TYPE.SYSTEM_TENANT_INDUSTRY, 'number'),
         placeholder: $t('ui.placeholder.select', [
@@ -78,7 +78,7 @@ export function useFormSchema(): VbenFormSchema[] {
       fieldName: 'type',
       label: $t('system.tenant.field.type'),
       rules: 'required',
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         options: getDictOptions(DICT_TYPE.SYSTEM_TENANT_TYPE, 'number'),
         placeholder: $t('ui.placeholder.select', [
@@ -141,7 +141,7 @@ export function useFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'status',
       label: $t('system.tenant.field.status'),
-      component: 'RadioGroup',
+      component: 'I18nRadioGroup',
       componentProps: {
         options: getDictOptions(DICT_TYPE.COMMON_STATUS, 'number'),
         buttonStyle: 'solid',
@@ -202,7 +202,7 @@ export function useGridFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'industry',
       label: $t('system.tenant.field.industry'),
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         allowClear: true,
         options: getDictOptions(DICT_TYPE.SYSTEM_TENANT_INDUSTRY, 'number'),
@@ -214,7 +214,7 @@ export function useGridFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'type',
       label: $t('system.tenant.field.type'),
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         allowClear: true,
         options: getDictOptions(DICT_TYPE.SYSTEM_TENANT_TYPE, 'number'),
@@ -226,7 +226,7 @@ export function useGridFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'status',
       label: $t('system.tenant.field.status'),
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         allowClear: true,
         options: getDictOptions(DICT_TYPE.COMMON_STATUS, 'number'),
@@ -298,7 +298,7 @@ export function useGridColumns(): VxeTableGridOptions<SystemTenantApi.Tenant>['c
       title: $t('system.tenant.field.industry'),
       minWidth: 120,
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.SYSTEM_TENANT_INDUSTRY },
       },
     },
@@ -307,7 +307,7 @@ export function useGridColumns(): VxeTableGridOptions<SystemTenantApi.Tenant>['c
       title: $t('system.tenant.field.type'),
       minWidth: 120,
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.SYSTEM_TENANT_TYPE },
       },
     },
@@ -335,7 +335,7 @@ export function useGridColumns(): VxeTableGridOptions<SystemTenantApi.Tenant>['c
       title: $t('system.tenant.field.status'),
       minWidth: 120,
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.COMMON_STATUS },
       },
     },

@@ -31,7 +31,7 @@ export function useGridFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'platform',
       label: $t('ai.image.field.platform'),
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         placeholder: $t('ui.placeholder.select', [
           $t('ai.image.field.platform'),
@@ -43,7 +43,7 @@ export function useGridFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'status',
       label: $t('ai.image.field.status'),
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         placeholder: $t('ui.placeholder.select', [$t('ai.image.field.status')]),
         allowClear: true,
@@ -53,7 +53,7 @@ export function useGridFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'publicStatus',
       label: $t('ai.image.field.publicStatus'),
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         placeholder: $t('ui.placeholder.select', [
           $t('ai.image.field.publicStatus'),
@@ -109,7 +109,7 @@ export function useGridColumns(
       title: $t('ai.image.field.platform'),
       minWidth: 120,
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.AI_PLATFORM },
       },
     },
@@ -123,7 +123,7 @@ export function useGridColumns(
       title: $t('ai.image.field.status'),
       minWidth: 100,
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.AI_IMAGE_STATUS },
       },
     },

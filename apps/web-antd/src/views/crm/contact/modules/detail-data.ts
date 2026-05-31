@@ -130,7 +130,7 @@ export function useDetailListColumns(): VxeTableGridOptions['columns'] {
       field: 'sex',
       title: $t('crm.contact.field.sex'),
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.SYSTEM_USER_SEX },
       },
     },
@@ -158,7 +158,7 @@ export function useDetailListColumns(): VxeTableGridOptions['columns'] {
       field: 'master',
       title: $t('crm.contact.field.master'),
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.INFRA_BOOLEAN_STRING },
       },
     },

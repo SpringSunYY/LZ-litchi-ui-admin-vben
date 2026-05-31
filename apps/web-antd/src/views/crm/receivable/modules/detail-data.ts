@@ -116,7 +116,7 @@ export function useDetailListColumns(): VxeTableGridOptions['columns'] {
       field: 'returnType',
       minWidth: 150,
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.CRM_RECEIVABLE_RETURN_TYPE },
       },
     },
@@ -136,7 +136,7 @@ export function useDetailListColumns(): VxeTableGridOptions['columns'] {
       minWidth: 100,
       fixed: 'right',
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.CRM_AUDIT_STATUS },
       },
     },

@@ -30,7 +30,7 @@ export function useGridFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'industryId',
       label: $t('crm.customerPool.field.industryId'),
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         options: getDictOptions(DICT_TYPE.CRM_CUSTOMER_INDUSTRY, 'number'),
         placeholder: $t('ui.placeholder.select', [
@@ -41,7 +41,7 @@ export function useGridFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'level',
       label: $t('crm.customerPool.field.level'),
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         options: getDictOptions(DICT_TYPE.CRM_CUSTOMER_LEVEL, 'number'),
         placeholder: $t('ui.placeholder.select', [
@@ -52,7 +52,7 @@ export function useGridFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'source',
       label: $t('crm.customerPool.field.source'),
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         options: getDictOptions(DICT_TYPE.CRM_CUSTOMER_SOURCE, 'number'),
         placeholder: $t('ui.placeholder.select', [
@@ -77,7 +77,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
       field: 'source',
       minWidth: 100,
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.CRM_CUSTOMER_SOURCE },
       },
     },
@@ -101,7 +101,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
       field: 'level',
       minWidth: 135,
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.CRM_CUSTOMER_LEVEL },
       },
     },
@@ -110,7 +110,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
       field: 'industryId',
       minWidth: 100,
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.CRM_CUSTOMER_INDUSTRY },
       },
     },
@@ -130,7 +130,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
       field: 'dealStatus',
       minWidth: 80,
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.INFRA_BOOLEAN_STRING },
       },
     },

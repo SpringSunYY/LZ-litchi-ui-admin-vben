@@ -347,7 +347,7 @@ export function useGridFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'status',
       label: $t('erp.saleOrder.field.auditStatus'),
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         options: getDictOptions(DICT_TYPE.ERP_AUDIT_STATUS, 'number'),
         placeholder: $t('ui.placeholder.select', [
@@ -370,7 +370,7 @@ export function useGridFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'outStatus',
       label: $t('erp.saleOrder.field.outStatus'),
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         options: [
           { label: $t('erp.saleOrder.message.unOut'), value: 0 },
@@ -386,7 +386,7 @@ export function useGridFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'returnStatus',
       label: $t('erp.saleOrder.field.returnStatus'),
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         options: [
           { label: $t('erp.saleOrder.message.unReturn'), value: 0 },
@@ -479,7 +479,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
       title: $t('erp.saleOrder.field.auditStatus'),
       minWidth: 120,
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.ERP_AUDIT_STATUS },
       },
     },

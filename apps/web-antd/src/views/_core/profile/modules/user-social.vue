@@ -43,7 +43,7 @@ function useGridColumns(): VxeTableGridOptions['columns'] {
       title: $t('system.profile.message.bindPlatform'),
       minWidth: 100,
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.SYSTEM_SOCIAL_TYPE },
       },
     },

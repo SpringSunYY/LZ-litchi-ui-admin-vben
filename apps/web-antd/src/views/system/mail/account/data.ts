@@ -76,7 +76,7 @@ export function useFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'sslEnable',
       label: $t('system.mail.account.field.sslEnable'),
-      component: 'RadioGroup',
+      component: 'I18nRadioGroup',
       componentProps: {
         options: getDictOptions(DICT_TYPE.INFRA_BOOLEAN_STRING, 'boolean'),
         buttonStyle: 'solid',
@@ -87,7 +87,7 @@ export function useFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'starttlsEnable',
       label: $t('system.mail.account.field.starttlsEnable'),
-      component: 'RadioGroup',
+      component: 'I18nRadioGroup',
       componentProps: {
         options: getDictOptions(DICT_TYPE.INFRA_BOOLEAN_STRING, 'boolean'),
         buttonStyle: 'solid',
@@ -163,7 +163,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
       field: 'sslEnable',
       title: $t('system.mail.account.field.sslEnable'),
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.INFRA_BOOLEAN_STRING },
       },
     },
@@ -171,7 +171,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
       field: 'starttlsEnable',
       title: $t('system.mail.account.field.starttlsEnable'),
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.INFRA_BOOLEAN_STRING },
       },
     },

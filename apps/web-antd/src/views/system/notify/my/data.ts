@@ -16,7 +16,7 @@ export function useGridFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'readStatus',
       label: $t('system.notify.my.field.readStatus'),
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         options: getDictOptions(DICT_TYPE.INFRA_BOOLEAN_STRING, 'boolean'),
         allowClear: true,
@@ -58,7 +58,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
       field: 'templateType',
       title: $t('system.notify.my.field.templateType'),
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.SYSTEM_NOTIFY_TEMPLATE_TYPE },
       },
     },
@@ -70,7 +70,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
       field: 'readStatus',
       title: $t('system.notify.my.field.readStatus'),
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.INFRA_BOOLEAN_STRING },
       },
     },

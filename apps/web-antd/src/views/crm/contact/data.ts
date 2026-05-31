@@ -117,7 +117,7 @@ export function useFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'master',
       label: $t('crm.contact.field.master'),
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         placeholder: $t('ui.placeholder.select', [
           $t('crm.contact.field.master'),
@@ -128,7 +128,7 @@ export function useFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'sex',
       label: $t('crm.contact.field.sex'),
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         placeholder: $t('ui.placeholder.select', [$t('crm.contact.field.sex')]),
         options: getDictOptions(DICT_TYPE.SYSTEM_USER_SEX, 'number'),
@@ -282,7 +282,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
       field: 'sex',
       title: $t('crm.contact.field.sex'),
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.SYSTEM_USER_SEX },
       },
     },
@@ -310,7 +310,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
       field: 'master',
       title: $t('crm.contact.field.master'),
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.INFRA_BOOLEAN_STRING },
       },
     },

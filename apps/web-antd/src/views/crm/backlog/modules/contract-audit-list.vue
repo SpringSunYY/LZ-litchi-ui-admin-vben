@@ -43,7 +43,7 @@ const [Grid] = useVbenVxeGrid({
       {
         fieldName: 'auditStatus',
         label: $t('crm.backlog.field.contractStatus'),
-        component: 'Select',
+        component: 'I18nSelect',
         componentProps: {
           allowClear: true,
           options: useAuditStatusOptions(),

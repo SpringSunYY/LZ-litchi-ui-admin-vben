@@ -90,7 +90,7 @@ export function useDetailListColumns(
       field: 'productUnit',
       title: $t('crm.product.productTable.productUnit'),
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.CRM_PRODUCT_UNIT },
       },
     },

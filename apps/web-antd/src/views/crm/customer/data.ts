@@ -26,7 +26,7 @@ export function useFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'source',
       label: $t('crm.customer.field.source'),
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         options: getDictOptions(DICT_TYPE.CRM_CUSTOMER_SOURCE),
       },
@@ -73,7 +73,7 @@ export function useFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'industryId',
       label: $t('crm.customer.field.industryId'),
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         options: getDictOptions(DICT_TYPE.CRM_CUSTOMER_INDUSTRY),
       },
@@ -81,7 +81,7 @@ export function useFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'level',
       label: $t('crm.customer.field.level'),
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         options: getDictOptions(DICT_TYPE.CRM_CUSTOMER_LEVEL),
       },
@@ -163,7 +163,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
       field: 'source',
       title: $t('crm.customer.field.source'),
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.CRM_CUSTOMER_SOURCE },
       },
     },
@@ -187,7 +187,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
       field: 'industryId',
       title: $t('crm.customer.field.industryId'),
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.CRM_CUSTOMER_INDUSTRY },
       },
     },
@@ -195,7 +195,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
       field: 'level',
       title: $t('crm.customer.field.level'),
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.CRM_CUSTOMER_LEVEL },
       },
     },

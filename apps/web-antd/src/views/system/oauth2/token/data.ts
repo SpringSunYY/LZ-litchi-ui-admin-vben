@@ -20,7 +20,7 @@ export function useGridFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'userType',
       label: $t('system.oauth2.token.field.userType'),
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         options: getDictOptions(DICT_TYPE.USER_TYPE, 'number'),
         placeholder: $t('ui.placeholder.select', [
@@ -60,7 +60,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
       field: 'userType',
       title: $t('system.oauth2.token.field.userType'),
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.USER_TYPE },
       },
     },

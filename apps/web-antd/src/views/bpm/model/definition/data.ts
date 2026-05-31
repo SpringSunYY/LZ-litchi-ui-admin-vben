@@ -34,7 +34,7 @@ export function useGridColumns(): VxeTableGridOptions<BpmProcessDefinitionApi.Pr
       title: $t('bpm.definition.field.modelType'),
       minWidth: 120,
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.BPM_MODEL_TYPE },
       },
     },

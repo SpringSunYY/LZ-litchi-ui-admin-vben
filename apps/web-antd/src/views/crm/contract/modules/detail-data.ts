@@ -185,7 +185,7 @@ export function useDetailListColumns(): VxeTableGridOptions['columns'] {
       fixed: 'right',
       minWidth: 100,
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.CRM_AUDIT_STATUS },
       },
     },

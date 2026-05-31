@@ -42,7 +42,7 @@ export function useGridFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'bizType',
       label: $t('erp.stockRecord.field.bizType'),
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         placeholder: $t('ui.placeholder.select', [
           $t('erp.stockRecord.field.bizType'),
@@ -102,7 +102,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
       title: $t('erp.stockRecord.field.bizType'),
       width: 100,
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.ERP_STOCK_RECORD_BIZ_TYPE },
       },
     },

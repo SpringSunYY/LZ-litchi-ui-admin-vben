@@ -215,7 +215,7 @@ export function useGridColumnsMessage(): VxeTableGridOptions['columns'] {
       title: $t('ai.chat.message.field.useContext'),
       field: 'useContext',
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.INFRA_BOOLEAN_STRING },
       },
       minWidth: 100,

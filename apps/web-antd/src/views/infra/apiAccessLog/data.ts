@@ -21,7 +21,7 @@ export function useGridFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'userType',
       label: $t('infra.apiAccessLog.field.userType'),
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         options: getDictOptions(DICT_TYPE.USER_TYPE, 'number'),
         allowClear: true,
@@ -90,7 +90,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
       field: 'userType',
       title: $t('infra.apiAccessLog.field.userType'),
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.USER_TYPE },
       },
     },
@@ -138,7 +138,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
       field: 'operateType',
       title: $t('infra.apiAccessLog.field.operateType'),
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.INFRA_OPERATE_TYPE },
       },
     },

@@ -74,7 +74,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
       title: $t('bpm.task.manager.field.approvalStatus'),
       minWidth: 180,
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.BPM_TASK_STATUS },
       },
     },

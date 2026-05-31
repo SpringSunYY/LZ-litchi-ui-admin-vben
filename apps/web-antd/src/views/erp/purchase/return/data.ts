@@ -416,7 +416,7 @@ export function useGridFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'refundStatus',
       label: $t('erp.purchaseReturn.field.refundStatus'),
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         options: [
           { label: $t('erp.purchaseReturn.message.unrefunded'), value: 0 },
@@ -432,7 +432,7 @@ export function useGridFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'status',
       label: $t('erp.purchaseReturn.field.auditStatus'),
-      component: 'Select',
+      component: 'I18nSelect',
       componentProps: {
         options: getDictOptions(DICT_TYPE.ERP_AUDIT_STATUS, 'number'),
         placeholder: $t('ui.placeholder.select', [
@@ -522,7 +522,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
       title: $t('erp.purchaseReturn.field.auditStatus'),
       minWidth: 120,
       cellRender: {
-        name: 'CellDict',
+        name: 'CellI18nDict',
         props: { type: DICT_TYPE.ERP_AUDIT_STATUS },
       },
     },
