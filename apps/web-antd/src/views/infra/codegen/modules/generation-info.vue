@@ -36,7 +36,7 @@ const [BaseForm, baseFormApi] = useVbenForm({
   wrapperClass: 'grid grid-cols-1 md:grid-cols-2 gap-4',
   layout: 'horizontal',
   commonConfig: {
-    labelWidth: 100,
+    labelWidth: 120,
   },
   showDefaultActions: false,
   schema: useGenerationInfoBaseFormSchema(),
@@ -56,7 +56,7 @@ const [TreeForm, treeFormApi] = useVbenForm({
   wrapperClass: 'grid grid-cols-1 md:grid-cols-2 gap-4',
   layout: 'horizontal',
   commonConfig: {
-    labelWidth: 100,
+    labelWidth: 120,
   },
   showDefaultActions: false,
   schema: [],
@@ -67,7 +67,7 @@ const [SubForm, subFormApi] = useVbenForm({
   wrapperClass: 'grid grid-cols-1 md:grid-cols-2 gap-4',
   layout: 'horizontal',
   commonConfig: {
-    labelWidth: 100,
+    labelWidth: 150,
   },
   showDefaultActions: false,
   schema: [],

@@ -17,7 +17,7 @@ const [Form, formApi] = useVbenForm({
   schema: useBasicInfoFormSchema(),
   layout: 'horizontal',
   commonConfig: {
-    labelWidth: 100,
+    labelWidth: 120,
   },
   showDefaultActions: false,
 });

@@ -86,23 +86,23 @@ const [Grid] = useVbenVxeGrid({
 
 /** 模态框实例 */
 const [Modal, modalApi] = useVbenModal({
-  title: $t('infra.codegen.importTable'),
+  title: $t('infra.codegen.action.create'),
   class: 'w-1/2',
   async onConfirm() {
     // 1.1 获取表单值
     if (formData?.dataSourceConfigId === undefined) {
-      message.error($t('infra.codegen.selectDataSource'));
+      message.error($t('infra.codegen.message.selectDataSource'));
       return;
     }
     // 1.2 校验是否选择了表
     if (formData.tableNames.length === 0) {
-      message.error($t('infra.codegen.selectTables'));
+      message.error($t('infra.codegen.message.selectTables'));
       return;
     }
     modalApi.lock();
     // 2. 提交请求
     const hideLoading = message.loading({
-      content: () => $t('infra.codegen.importing'),
+      content: () => $t('infra.codegen.message.importing'),
       key: 'action_key_msg',
     });
     try {

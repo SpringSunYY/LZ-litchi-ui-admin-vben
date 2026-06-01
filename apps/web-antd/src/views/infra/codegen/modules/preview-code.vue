@@ -227,7 +227,7 @@ const [Modal, modalApi] = useVbenModal({
 </script>
 
 <template>
-  <Modal :title="$t('infra.codegen.preview')">
+  <Modal :title="$t('infra.codegen.action.preview')">
     <div class="flex h-full" v-loading="loading">
       <!-- 文件树 -->
       <div
@@ -266,7 +266,11 @@ const [Modal, modalApi] = useVbenModal({
           </Tabs.TabPane>
           <template #rightExtra>
             <Button type="primary" ghost @click="copyCode" :icon="h(Copy)">
-              {{ $t('ui.actionTitle.copy', [$t('infra.codegen.generateCode')]) }}
+              {{
+                $t('ui.actionTitle.copy', [
+                  $t('infra.codegen.action.generateCode'),
+                ])
+              }}
             </Button>
           </template>
         </Tabs>

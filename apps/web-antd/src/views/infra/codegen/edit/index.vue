@@ -49,12 +49,12 @@ async function submitForm() {
   // 表单验证
   const basicInfoValid = await basicInfoRef.value?.validate();
   if (!basicInfoValid) {
-    message.warn($t('infra.codegen.basicInfoValidationFailed'));
+    message.warn($t('infra.codegen.message.basicInfoValidationFailed'));
     return;
   }
   const generateInfoValid = await generateInfoRef.value?.validate();
   if (!generateInfoValid) {
-    message.warn($t('infra.codegen.generationInfoValidationFailed'));
+    message.warn($t('infra.codegen.message.generationInfoValidationFailed'));
     return;
   }
 
@@ -79,7 +79,7 @@ async function submitForm() {
     });
     close();
   } catch (error) {
-    console.error($t('infra.codegen.saveFailed'), error);
+    console.error($t('infra.codegen.message.saveFailed'), error);
   } finally {
     hideLoading();
   }
@@ -106,13 +106,13 @@ function prevStep() {
 /** 步骤配置 */
 const steps = [
   {
-    title: $t('infra.codegen.basicInfo'),
+    title: $t('infra.codegen.message.basicInfo'),
   },
   {
-    title: $t('infra.codegen.columnInfo'),
+    title: $t('infra.codegen.message.columnInfo'),
   },
   {
-    title: $t('infra.codegen.generationInfo'),
+    title: $t('infra.codegen.message.generationInfo'),
   },
 ];
 
@@ -159,13 +159,13 @@ getDetail();
 
       <div class="mt-4 flex justify-end space-x-2">
         <Button v-show="currentStep > 0" @click="prevStep">
-          {{ $t('infra.codegen.prevStep') }}
+          {{ $t('infra.codegen.message.prevStep') }}
         </Button>
         <Button v-show="currentStep < steps.length - 1" @click="nextStep">
-          {{ $t('infra.codegen.nextStep') }}
+          {{ $t('infra.codegen.message.nextStep') }}
         </Button>
         <Button type="primary" :loading="loading" @click="submitForm">
-          {{ $t('infra.codegen.save') }}
+          {{ $t('infra.codegen.message.save') }}
         </Button>
       </div>
     </div>

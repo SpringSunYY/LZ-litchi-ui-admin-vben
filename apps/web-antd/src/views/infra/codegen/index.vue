@@ -74,13 +74,13 @@ function handleEdit(row: InfraCodegenApi.CodegenTable) {
 /** 删除代码生成配置 */
 async function handleDelete(row: InfraCodegenApi.CodegenTable) {
   const hideLoading = message.loading({
-    content: $t('infra.actionMessage.deleting', [row.tableName]),
+    content: $t('ui.actionMessage.deleting', [row.tableName]),
     duration: 0,
     key: 'action_process_msg',
   });
   try {
     await deleteCodegenTable(row.id);
-    message.success($t('infra.actionMessage.deleteSuccess', [row.tableName]));
+    message.success($t('ui.actionMessage.deleteSuccess', [row.tableName]));
     onRefresh();
   } finally {
     hideLoading();
@@ -90,13 +90,13 @@ async function handleDelete(row: InfraCodegenApi.CodegenTable) {
 /** 同步数据库 */
 async function handleSync(row: InfraCodegenApi.CodegenTable) {
   const hideLoading = message.loading({
-    content: $t('infra.actionMessage.updating', [row.tableName]),
+    content: $t('ui.actionMessage.updating', [row.tableName]),
     key: 'action_key_msg',
   });
   try {
     await syncCodegenFromDB(row.id);
     message.success({
-      content: $t('infra.actionMessage.updateSuccess', [row.tableName]),
+      content: $t('ui.actionMessage.updateSuccess', [row.tableName]),
       key: 'action_key_msg',
     });
     onRefresh();
@@ -108,7 +108,7 @@ async function handleSync(row: InfraCodegenApi.CodegenTable) {
 /** 生成代码 */
 async function handleGenerate(row: InfraCodegenApi.CodegenTable) {
   const hideLoading = message.loading({
-    content: $t('infra.codegen.generatingCode'),
+    content: $t('infra.codegen.message.generatingCode'),
     key: 'action_key_msg',
   });
   try {
@@ -121,7 +121,7 @@ async function handleGenerate(row: InfraCodegenApi.CodegenTable) {
     link.click();
     window.URL.revokeObjectURL(url);
     message.success({
-      content: $t('infra.codegen.generateSuccess'),
+      content: $t('infra.codegen.message.generateSuccess'),
       key: 'action_key_msg',
     });
   } finally {
@@ -132,11 +132,11 @@ async function handleGenerate(row: InfraCodegenApi.CodegenTable) {
 /** 批量生成代码 */
 async function handleBatchGenerate() {
   if (selectedRows.value.length === 0) {
-    message.warning($t('infra.codegen.selectTablesTip'));
+    message.warning($t('infra.codegen.message.selectTablesTip'));
     return;
   }
   const hideLoading = message.loading({
-    content: $t('infra.codegen.batchGeneratingCode', [
+    content: $t('infra.codegen.message.batchGeneratingCode', [
       selectedRows.value.length,
     ]),
     duration: 0,
@@ -150,7 +150,7 @@ async function handleBatchGenerate() {
       fileName: `codegen-batch-${Date.now()}.zip`,
     });
     message.success({
-      content: $t('infra.codegen.batchGenerateSuccess', [
+      content: $t('infra.codegen.message.batchGenerateCodeSuccess', [
         selectedRows.value.length,
       ]),
       key: 'action_key_msg',
@@ -213,7 +213,7 @@ async function initDataSourceConfig() {
   try {
     dataSourceConfigList.value = await getDataSourceConfigList();
   } catch (error) {
-    console.error($t('infra.codegen.getDataSourceConfigFailed'), error);
+    console.error($t('infra.codegen.message.getDataSourceConfigFailed'), error);
   }
 }
 
@@ -240,19 +240,19 @@ initDataSourceConfig();
 
     <ImportModal @success="onRefresh" />
     <PreviewModal />
-    <Grid :table-title="$t('infra.codegen.listTitle')">
+    <Grid :table-title="$t('infra.codegen.list')">
       <template #toolbar-tools>
         <TableAction
           :actions="[
             {
-              label: $t('common.import', [$t('infra.common.table')]),
+              label: $t('common.import'),
               type: 'primary',
               icon: ACTION_ICON.ADD,
               auth: ['infra:codegen:create'],
               onClick: handleImport,
             },
             {
-              label: $t('infra.codegen.batchGenerateCode'),
+              label: $t('infra.codegen.action.batchGenerateCode'),
               type: 'primary',
               icon: ACTION_ICON.DOWNLOAD,
               auth: ['infra:codegen:download'],
@@ -266,14 +266,14 @@ initDataSourceConfig();
         <TableAction
           :actions="[
             {
-              label: $t('infra.codegen.preview'),
+              label: $t('infra.codegen.action.preview'),
               type: 'link',
               icon: ACTION_ICON.VIEW,
               auth: ['infra:codegen:preview'],
               onClick: handlePreview.bind(null, row),
             },
             {
-              label: $t('infra.codegen.generateCode'),
+              label: $t('infra.codegen.action.generateCode'),
               type: 'link',
               icon: ACTION_ICON.DOWNLOAD,
               auth: ['infra:codegen:download'],
@@ -288,7 +288,7 @@ initDataSourceConfig();
               onClick: handleEdit.bind(null, row),
             },
             {
-              label: $t('infra.codegen.sync'),
+              label: $t('infra.codegen.action.sync'),
               type: 'link',
               auth: ['infra:codegen:update'],
               onClick: handleSync.bind(null, row),
