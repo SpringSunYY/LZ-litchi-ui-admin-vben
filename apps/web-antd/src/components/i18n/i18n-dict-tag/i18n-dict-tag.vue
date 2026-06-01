@@ -68,8 +68,15 @@ function formatColorType(colorType?: string) {
 function getDictTagItem(v: string) {
   const dict = getDictObj(props.type, v);
   if (dict) {
+    let label = dict.label;
+    if (dict.i18n) {
+      const translated = $t(dict.i18n) as string;
+      if (translated && translated !== dict.i18n) {
+        label = translated;
+      }
+    }
     return {
-      label: dict.i18n ? $t(dict.i18n) : dict.label,
+      label,
       colorType: formatColorType(dict.colorType),
       matched: true,
     };

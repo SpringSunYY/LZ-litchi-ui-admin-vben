@@ -32,10 +32,16 @@ const emit = defineEmits<{
 }>();
 
 const i18nOptions = computed(() =>
-  props.options.map((item) => ({
-    ...item,
-    label: item.i18n ? $t(item.i18n) : item.label,
-  })),
+  props.options.map((item) => {
+    let label = item.label;
+    if (item.i18n) {
+      const translated = $t(item.i18n) as string;
+      if (translated && translated !== item.i18n) {
+        label = translated;
+      }
+    }
+    return { ...item, label };
+  }),
 );
 
 function handleChange(e: any) {

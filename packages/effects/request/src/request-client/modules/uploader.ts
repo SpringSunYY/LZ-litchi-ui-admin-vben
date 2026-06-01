@@ -34,7 +34,6 @@ class FileUploader {
         ...config?.headers,
       },
     };
-
     return this.client.post(url, formData, finalConfig);
   }
 }

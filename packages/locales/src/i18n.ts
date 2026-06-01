@@ -24,6 +24,24 @@ export const i18n = createI18n({
   missingWarn: false,
   fallbackWarn: false,
   messages: {},
+  messageResolver: (obj: unknown, path: string) => {
+    // 自定义解析器：首先检查平键，然后遍历嵌套路径。
+    const messages = obj as Record<string, any>;
+    // 1. 检查路径是否以平键形式存在（后端数据）
+    if (messages && path in messages) {
+      return messages[path];
+    }
+    // 2. 像默认 intlify 解析器一样遍历嵌套路径
+    let current: unknown = messages;
+    const parts = path.split('.');
+    for (const part of parts) {
+      if (current === null || typeof current !== 'object') {
+        return null;
+      }
+      current = (current as Record<string, any>)[part!];
+    }
+    return current as null | string;
+  },
 });
 
 export const $t = (...args: unknown[]) => (i18n.global as any).t(...args);
@@ -62,10 +80,7 @@ export async function setRemoteMessageLoader(
 export async function mergeRemoteMessages(lang: SupportedLanguagesType) {
   if (remoteMessageLoader) {
     try {
-      const messages = await remoteMessageLoader(lang);
-      if (messages) {
-        i18n.global.mergeLocaleMessage(lang, messages);
-      }
+      await remoteMessageLoader(lang);
     } catch (error) {
       console.error(`Failed to merge remote messages for ${lang}:`, error);
     }
@@ -228,6 +243,48 @@ function clearOldI18nCache(): void {
   });
 }
 
+/**
+ * Convert flat key-value map to nested object for vue-i18n mergeLocaleMessage.
+ * e.g. { "infra.i18nMessage.message": "foo" } → { infra: { i18nMessage: { message: "foo" } } }
+ */
+export function flattenToNested(
+  flat: Record<string, string>,
+): Record<string, any> {
+  const result: Record<string, any> = {};
+  for (const [key, value] of Object.entries(flat)) {
+    const parts = key.split('.');
+    let current: Record<string, any> = result;
+    for (let i = 0; i < parts.length - 1; i++) {
+      const part = parts[i]!;
+      if (current[part] !== null && typeof current[part] === 'object') {
+        current = current[part];
+      } else {
+        current[part] = {};
+        current = current[part];
+      }
+    }
+    const lastPart = parts.at(-1)!;
+    current[lastPart] = value;
+  }
+  return result;
+}
+
+/**
+ * Merge remote messages into i18n.
+ * Stores backend flat key-value pairs directly into the locale messages object.
+ */
+function mergeFlatMessages(
+  lang: SupportedLanguagesType,
+  flatMessages: Record<string, string>,
+) {
+  // 直接将扁平 key 合并进 vue-i18n 的 locale 消息对象
+  const messages = (i18n.global.messages as any).value;
+  if (!messages[lang]) {
+    messages[lang] = {};
+  }
+  Object.assign(messages[lang], flatMessages);
+}
+
 async function fetchRemoteMessages(
   lang: SupportedLanguagesType,
   options: SetupI18nOptions,
@@ -242,7 +299,7 @@ async function fetchRemoteMessages(
     const cachedData = localStorage.getItem(cacheKey);
     if (cachedData) {
       const messages = JSON.parse(cachedData);
-      i18n.global.mergeLocaleMessage(lang, messages);
+      mergeFlatMessages(lang, messages);
       return messages;
     }
 
@@ -274,14 +331,20 @@ async function fetchRemoteMessages(
           );
         }
 
+        // Always merge current language messages
+        if (messagesByLang[lang]) {
+          mergeFlatMessages(lang, messagesByLang[lang]);
+        }
+
+        // Merge fallback locale if different from current language
         if (
           lang !== currentFallbackLocale &&
           messagesByLang[currentFallbackLocale]
         ) {
-          i18n.global.mergeLocaleMessage(
-            currentFallbackLocale,
-            messagesByLang[currentFallbackLocale],
-          );
+          const fallbackMessages = messagesByLang[currentFallbackLocale];
+          if (fallbackMessages) {
+            mergeFlatMessages(currentFallbackLocale, fallbackMessages);
+          }
         }
       }
       return messagesByLang[lang] ?? null;

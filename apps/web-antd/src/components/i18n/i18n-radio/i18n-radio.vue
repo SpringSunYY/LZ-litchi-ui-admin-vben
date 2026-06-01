@@ -36,6 +36,16 @@ function handleChange(e: any) {
   emit('update:modelValue', value);
   emit('change', value);
 }
+
+function getLabel(option: DictDataType) {
+  if (option.i18n) {
+    const translated = $t(option.i18n) as string;
+    if (translated && translated !== option.i18n) {
+      return translated;
+    }
+  }
+  return option.label;
+}
 </script>
 
 <template>
@@ -45,6 +55,6 @@ function handleChange(e: any) {
     :checked="modelValue === option.value"
     @change="handleChange"
   >
-    {{ option.i18n ? $t(option.i18n) : option.label }}
+    {{ getLabel(option) }}
   </Radio>
 </template>

@@ -265,7 +265,7 @@ enum DICT_TYPE {
 
   SYSTEM_MENU_LAYOUT = 'system_menu_layout', // 菜单的布局
   SYSTEM_MENU_TYPE = 'system_menu_type',
-  SYSTEM_MODULE_TYPE = 'system_module_type', // 文件模块类型
+  SYSTEM_MODULE_TYPE = 'system_module_type', // 模块类型
   SYSTEM_NOTICE_TYPE = 'system_notice_type',
   SYSTEM_NOTIFY_TEMPLATE_TYPE = 'system_notify_template_type',
   SYSTEM_OAUTH2_GRANT_TYPE = 'system_oauth2_grant_type',

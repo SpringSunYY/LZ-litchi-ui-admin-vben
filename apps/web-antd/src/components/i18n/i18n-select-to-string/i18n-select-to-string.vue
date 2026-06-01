@@ -72,12 +72,21 @@ watch(
 );
 
 // Select 模式的 options
-const selectOptions = computed(() =>
-  props.options.map((item) => ({
-    label: item.i18n ? $t(item.i18n) : item.label,
-    value: String(item.value),
-  })),
+const i18nOptions = computed(() =>
+  props.options.map((item) => {
+    let label = item.label;
+    if (item.i18n) {
+      const translated = $t(item.i18n) as string;
+      if (translated && translated !== item.i18n) {
+        label = translated;
+      }
+    }
+    return { label, value: String(item.value) };
+  }),
 );
+
+// Select 专用选项（已转 label）
+const selectOptions = computed(() => i18nOptions.value);
 
 // Select 模式的 value
 const selectValue = computed({
@@ -126,7 +135,7 @@ function handleCheckboxGroupChange(e: any) {
         :disabled="disabled"
         @change="handleRadioChange"
       >
-        <template v-for="item in options" :key="String(item.value)">
+        <template v-for="item in i18nOptions" :key="String(item.value)">
           <Radio :value="String(item.value)">
             {{ item.label }}
           </Radio>
@@ -140,7 +149,7 @@ function handleCheckboxGroupChange(e: any) {
         :disabled="disabled"
         @change="handleCheckboxGroupChange"
       >
-        <template v-for="item in options" :key="String(item.value)">
+        <template v-for="item in i18nOptions" :key="String(item.value)">
           <Checkbox :value="String(item.value)">
             {{ item.label }}
           </Checkbox>

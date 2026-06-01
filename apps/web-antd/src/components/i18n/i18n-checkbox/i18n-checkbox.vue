@@ -40,6 +40,16 @@ function isChecked() {
   return props.modelValue.includes(String(props.option.value));
 }
 
+function getLabel(option: DictDataType) {
+  if (option.i18n) {
+    const translated = $t(option.i18n) as string;
+    if (translated && translated !== option.i18n) {
+      return translated;
+    }
+  }
+  return option.label;
+}
+
 function handleChange(e: CheckboxChangeEvent) {
   if (!props.option) return;
   const checked = (e.target as HTMLInputElement).checked;
@@ -61,6 +71,6 @@ function handleChange(e: CheckboxChangeEvent) {
     :disabled="props.disabled"
     @change="handleChange"
   >
-    {{ props.option?.i18n ? $t(props.option.i18n) : props.option.label }}
+    {{ getLabel(props.option) }}
   </Checkbox>
 </template>
