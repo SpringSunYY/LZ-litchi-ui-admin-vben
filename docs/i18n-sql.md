@@ -105,36 +105,37 @@ menu.keepAlive.yes
 
 根据 `infra_i18n_key_use_type` 字典数据：
 
-| sort 值 | 值  | 标签 | 适用层级                           |
-| ------- | --- | ---- | ---------------------------------- |
-| 0       | `0` | 公共 | 顶层 key（如 `ai`、`system`）      |
-| 1       | `1` | UI   | UI 层 key（如 `ui.xxx`）           |
-| 2       | `2` | 表单 | 字段层（`.field.xxx`）             |
-| 3       | `3` | 字段 | 字段层（备用，与表单合并使用值 2） |
-| 4       | `4` | 功能 | 动作层（`.action.xxx`）            |
-| 5       | `5` | 异常 | 后端校验消息（当前规范不生成）     |
-| 6       | `6` | 菜单 | 菜单层（`.menu`）                  |
-| 7       | `7` | 字典 | 字典模块专用                       |
+| sort 值 | 值 | 标签 | 适用层级 |
+| --- | --- | --- | --- |
+| 0 | `0` | 公共 | 顶层业务名（如 `ai.codegen`） |
+| 1 | `1` | UI | `common.json`、`ui.json` 所有 key，以及扁平结构的 UI 层 key |
+| 2 | `2` | 表单 | 列表标题（`.list`）、消息提示（`.message.*`）、分组（`.group.*`）、help 文案（`.help.*`） |
+| 3 | `3` | 字段 | 字段（`.field.*`） |
+| 4 | `4` | 功能 | 动作（`.action.*`） |
+| 5 | `5` | 异常 | 后端校验消息（当前规范不生成） |
+| 6 | `6` | 菜单 | 菜单（`.menu`） |
+| 7 | `7` | 字典 | 字典模块专用 |
 
 **use_type 判断规则**：
 
 | Key 层级 | use_type | order_num |
 | --- | --- | --- |
+| `common.*`（common.json 所有 key） | `1`（UI） | `1` |
+| `ui.*`（ui.json 所有 key） | `1`（UI） | `1` |
 | `{module}` 或 `{module}.{business}`（顶层业务名） | `0`（公共） | `0` |
 | `{module}.{business}.menu`（菜单名） | `6`（菜单） | `6` |
 | `{module}.{business}.list`（列表标题） | `2`（表单） | `2` |
-| `{module}.{business}.field.xxx`（字段） | `2`（表单） | `2` |
-| `{module}.{business}.action.xxx`（动作） | `4`（功能） | `4` |
-| `{module}.{business}.message.xxx`（消息提示） | `2`（表单） | `2` |
-| `{module}.{business}.group.xxx`（分组） | `2`（表单） | `2` |
+| `{module}.{business}.field.*`（字段） | `3`（字段） | `3` |
+| `{module}.{business}.action.*`（动作） | `4`（功能） | `4` |
+| `{module}.{business}.message.*`（消息提示） | `2`（表单） | `2` |
+| `{module}.{business}.group.*`（分组） | `2`（表单） | `2` |
+| `{module}.{business}.help.*`（帮助文案） | `2`（表单） | `2` |
 | 嵌套子业务根键 `{module}.{business}.apiKey` | `0`（公共） | `0` |
-| 嵌套子业务字段 `{module}.{business}.apiKey.field.xxx` | `2`（表单） | `2` |
-| 嵌套子业务动作 `{module}.{business}.apiKey.action.xxx` | `4`（功能） | `4` |
-| 扁平结构 `{module}.xxx`（如 `ui.formRules.required`） | `1`（UI） | `1` |
+| 嵌套子业务字段 `{module}.{business}.apiKey.field.*` | `3`（字段） | `3` |
+| 嵌套子业务动作 `{module}.{business}.apiKey.action.*` | `4`（功能） | `4` |
 | 标签子对象 `{module}.{business}.xxx.yyy`（如 `menu.alwaysShow.yes`） | `2`（表单） | `2` |
-| 特殊层级（如 `menu.xxx`） | `1`（UI） | `1` |
 
-> **优先级**：如果同一个 key 符合多条规则，按从上到下优先级取第一条。
+> **优先级**：如果同一个 key 符合多条规则，按从上到下优先级取第一条。`common` 和 `ui` 模块强制为 UI 类型，不走其他规则判断。
 
 ### 3.3 message_name 和 message 字段格式
 
@@ -156,7 +157,7 @@ menu.keepAlive.yes
 -- =============================================
 -- {模块名} 国际化 SQL（由 {module}.json 自动生成）
 -- 生成时间：{YYYY-MM-DD}
--- 规范版本：v1.1
+-- 规范版本：v1.3
 -- =============================================
 
 -- ---------------------------------------------
@@ -240,6 +241,7 @@ VALUES ('{name}', '{i18nKey}', @LOCALE_ZH_CN, @LOCALE_TARGET_BACKEND, @IS_SYSTEM
 > - 公共层：`@USE_TYPE_PUBLIC` / `@ORDER_NUM_PUBLIC`
 > - UI 层：`@USE_TYPE_UI` / `@ORDER_NUM_UI`
 > - 表单层：`@USE_TYPE_FORM` / `@ORDER_NUM_FORM`
+> - 字段层：`@USE_TYPE_FIELD` / `@ORDER_NUM_FIELD`
 > - 功能层：`@USE_TYPE_FUNCTION` / `@ORDER_NUM_FUNCTION`
 > - 菜单层：`@USE_TYPE_MENU` / `@ORDER_NUM_MENU`
 
@@ -296,8 +298,8 @@ VALUES ('{name}', '{i18nKey}', @LOCALE_ZH_CN, @LOCALE_TARGET_BACKEND, @IS_SYSTEM
 | message_name    | `AI聊天-对话编号`  |
 | message (zh-CN) | `对话编号`         |
 | message (en-US) | `conversation id`  |
-| **use_type**    | `2`（表单）        |
-| **order_num**   | `2`                |
+| **use_type**    | `3`（字段）        |
+| **order_num**   | `3`                |
 
 ### 5.5 动作层（`.action.{action}` 后缀）
 
@@ -355,8 +357,8 @@ VALUES ('{name}', '{i18nKey}', @LOCALE_ZH_CN, @LOCALE_TARGET_BACKEND, @IS_SYSTEM
 | 字段          | 值                         |
 | ------------- | -------------------------- |
 | message_key   | `ai.model.apiKey.field.id` |
-| **use_type**  | `2`（表单）                |
-| **order_num** | `2`                        |
+| **use_type**  | `3`（字段）                |
+| **order_num** | `3`                        |
 
 3. **子业务 action**：如 `ai.model.apiKey.action.query`
 
@@ -437,11 +439,11 @@ apps/web-antd/src/locales/sql/
 | --- | --- | --- | --- | --- |
 | 0 | `0` | 公共 | 通用 | 顶层业务名（如 `ai`、`ai.workflow`） |
 | 1 | `1` | UI | 前端展示 | 扁平结构（如 `common.xxx`、`ui.xxx`） |
-| 2 | `2` | 表单 | 表单/字段 | 字段、消息、列表标题、分组等 |
-| 3 | `3` | 字段 | 字段（备用） | 与表单合并，使用 value=2 |
-| 4 | `4` | 功能 | 功能 | 动作层（`.action.xxx`） |
+| 2 | `2` | 表单 | 表单/列表/消息 | 列表标题、消息提示、分组、help 文案等 |
+| 3 | `3` | 字段 | 字段 | 字段（`.field.*`） |
+| 4 | `4` | 功能 | 功能 | 动作（`.action.*`） |
 | 5 | `5` | 异常 | 后端校验消息 | 后端校验（当前规范不生成） |
-| 6 | `6` | 菜单 | 菜单 | 菜单层（`.menu`） |
+| 6 | `6` | 菜单 | 菜单 | 菜单（`.menu`） |
 | 7 | `7` | 字典 | 字典值 | 字典模块专用 |
 
 ---
@@ -462,17 +464,20 @@ apps/web-antd/src/locales/sql/
 │  └── @MODULE_TYPE = '{module}'  (动态，从 JSON 文件名推导)         │
 ├────────────────────────────────────────────────────────────────┤
 │  动态变量（根据 Key 层级选择）:                                      │
-│  ├── 公共层: @USE_TYPE_PUBLIC = 0,   @ORDER_NUM_PUBLIC = 0       │
-│  ├── UI 层:   @USE_TYPE_UI = 1,       @ORDER_NUM_UI = 1        │
-│  ├── 表单层:  @USE_TYPE_FORM = 2,      @ORDER_NUM_FORM = 2       │
-│  ├── 功能层:  @USE_TYPE_FUNCTION = 4,  @ORDER_NUM_FUNCTION = 4    │
-│  └── 菜单层:  @USE_TYPE_MENU = 6,      @ORDER_NUM_MENU = 6       │
+│  ├── 公共层:   @USE_TYPE_PUBLIC = 0,     @ORDER_NUM_PUBLIC = 0  │
+│  ├── UI 层:    @USE_TYPE_UI = 1,         @ORDER_NUM_UI = 1       │
+│  ├── 表单层:   @USE_TYPE_FORM = 2,       @ORDER_NUM_FORM = 2     │
+│  ├── 字段层:   @USE_TYPE_FIELD = 3,      @ORDER_NUM_FIELD = 3    │
+│  ├── 功能层:   @USE_TYPE_FUNCTION = 4,   @ORDER_NUM_FUNCTION = 4 │
+│  ├── 异常层:   @USE_TYPE_EXCEPTION = 5,  @ORDER_NUM_EXCEPTION = 5│
+│  ├── 菜单层:   @USE_TYPE_MENU = 6,       @ORDER_NUM_MENU = 6     │
+│  └── 字典层:   @USE_TYPE_DICT = 7,       @ORDER_NUM_DICT = 7     │
 ├────────────────────────────────────────────────────────────────┤
 │  use_type 判断优先级:                                             │
 │  1. 包含 .menu       → use_type=6（菜单）                       │
 │  2. 包含 .action     → use_type=4（功能）                       │
-│  3. 包含 .field      → use_type=2（表单）                       │
-│  4. 包含 .message / .list / .group  → use_type=2（表单）        │
+│  3. 包含 .field      → use_type=3（字段）                       │
+│  4. 包含 .message / .list / .group / .help  → use_type=2（表单）│
 │  5. 顶层 key（如 ai、system） → use_type=0（公共）              │
 │  6. 扁平结构（如 ui.xxx、common.xxx） → use_type=1（UI）         │
 ├────────────────────────────────────────────────────────────────┤
