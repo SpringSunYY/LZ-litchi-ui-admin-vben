@@ -385,6 +385,18 @@ export function useMessageGridFormSchema(): VbenFormSchema[] {
       },
       formItemClass: 'md:col-span-2',
     },
+    {
+      fieldName: 'useType',
+      label: $t('infra.i18nMessage.field.useType'),
+      component: 'I18nSelect',
+      componentProps: {
+        allowClear: true,
+        options: getDictOptions(DICT_TYPE.INFRA_I18N_KEY_USE_TYPE, 'number'),
+        placeholder: $t('ui.placeholder.select', [
+          $t('infra.i18nMessage.field.useType'),
+        ]),
+      },
+    },
   ];
 }
 
@@ -478,6 +490,27 @@ export function useMessageGridColumns(): VxeTableGridOptions<I18nMessageApi.I18n
       width: 200,
       fixed: 'right',
       slots: { default: 'actions' },
+    },
+  ];
+}
+
+/** 国际化信息导入的表单 */
+export function useI18nMessageImportSchema(): VbenFormSchema[] {
+  return [
+    /** 国际化信息导入文件 */
+    {
+      fieldName: 'file',
+      label: $t('ui.actionTitle.import', [$t('infra.i18nMessage')]),
+      component: 'Upload',
+      rules: 'required',
+      componentProps: {
+        accept: '.xls,.xlsx',
+        maxSize: 10,
+        maxNumber: 1,
+        uploadParams: {
+          type: 'file',
+        },
+      },
     },
   ];
 }

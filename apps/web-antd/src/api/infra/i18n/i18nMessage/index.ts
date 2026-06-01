@@ -57,5 +57,24 @@ export function deleteI18nMessageList(ids: number[]) {
 
 /** 导出国际化信息 */
 export function exportI18nMessage(params: any) {
-  return requestClient.download('/infra/i18n/message/export-excel', params);
+  return requestClient.download('/infra/i18n/message/export-excel', {
+    params,
+    timeout: 300_000,
+  });
+}
+
+/** 获取国际化信息导入模板 */
+export function importI18nMessageTemplate() {
+  return requestClient.download('/infra/I18n-message/get-import-template');
+}
+
+/** 导入国际化信息 */
+export function importI18nMessage(file: File) {
+  return requestClient.upload(
+    '/infra/i18n/message/import',
+    { file },
+    {
+      timeout: 300_000,
+    },
+  );
 }

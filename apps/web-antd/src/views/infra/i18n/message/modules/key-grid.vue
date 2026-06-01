@@ -135,7 +135,7 @@ defineExpose({ onRefresh });
         <TableAction
           :actions="[
             {
-              label: $t('ui.actionTitle.create', [$t('infra.i18nMessage.key')]),
+              label: $t('ui.actionTitle.create'),
               type: 'primary',
               icon: ACTION_ICON.ADD,
               auth: ['infra:message:create'],

@@ -5,7 +5,7 @@ import type { I18nMessageApi } from '#/api/infra/i18n/i18nMessage';
 
 import { ref, watch } from 'vue';
 
-import { useVbenModelDrawer } from '@vben/common-ui';
+import { useVbenModal, useVbenModelDrawer } from '@vben/common-ui';
 import { downloadFileFromBlobPart } from '@vben/utils';
 
 import { message } from 'ant-design-vue';
@@ -18,6 +18,7 @@ import {
   getI18nMessagePage,
 } from '#/api/infra/i18n/i18nMessage';
 import { $t } from '#/locales';
+import ImportForm from '#/views/infra/i18n/message/modules/import-form.vue';
 
 import { useMessageGridColumns, useMessageGridFormSchema } from '../data';
 import MessageForm from './message-form.vue';
@@ -46,16 +47,33 @@ function onRefresh() {
   gridApi.query();
 }
 
+const exportLoading = ref(false);
+
 /** 导出表格 */
 async function handleExport() {
-  const data = await exportI18nMessage({
-    ...(await gridApi.formApi.getValues()),
-    messageKey: props.row?.messageKey,
-  });
-  downloadFileFromBlobPart({
-    fileName: `${$t('infra.i18nMessage.messageLabel')}.xls`,
-    source: data,
-  });
+  exportLoading.value = true;
+  try {
+    const data = await exportI18nMessage({
+      ...(await gridApi.formApi.getValues()),
+      messageKey: props.row?.messageKey,
+    });
+    downloadFileFromBlobPart({
+      fileName: `${$t('infra.i18nMessage.messageLabel')}.xls`,
+      source: data,
+    });
+  } finally {
+    exportLoading.value = false;
+  }
+}
+
+const [ImportModal, importModalApi] = useVbenModal({
+  connectedComponent: ImportForm,
+  destroyOnClose: true,
+});
+
+/** 导入国际化信息 */
+function handleImport() {
+  importModalApi.open();
 }
 
 /** 创建国际化信息 */
@@ -199,15 +217,13 @@ defineExpose({ onRefresh });
 <template>
   <div class="flex h-full flex-col">
     <FormModal @success="onRefresh" />
-
+    <ImportModal @success="onRefresh" />
     <Grid :table-title="$t('infra.i18nMessage.messageList')">
       <template #toolbar-tools>
         <TableAction
           :actions="[
             {
-              label: $t('ui.actionTitle.create', [
-                $t('infra.i18nMessage.messageLabel'),
-              ]),
+              label: $t('ui.actionTitle.create'),
               type: 'primary',
               icon: ACTION_ICON.ADD,
               auth: ['infra:message:create'],
@@ -215,11 +231,19 @@ defineExpose({ onRefresh });
               onClick: handleCreate,
             },
             {
+              label: $t('ui.actionTitle.import'),
+              type: 'primary',
+              icon: ACTION_ICON.UPLOAD,
+              auth: ['infra:message:import'],
+              onClick: handleImport,
+            },
+            {
               label: $t('ui.actionTitle.export'),
               type: 'primary',
               icon: ACTION_ICON.DOWNLOAD,
               auth: ['infra:message:export'],
               onClick: handleExport,
+              loading: exportLoading,
             },
             {
               label: $t('ui.actionTitle.deleteBatch'),

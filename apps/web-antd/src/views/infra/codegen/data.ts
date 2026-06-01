@@ -280,7 +280,7 @@ export function useGenerationInfoBaseFormSchema(): VbenFormSchema[] {
       },
     },
     {
-      component: 'I18nRadioGroup',
+      component: 'RadioGroup',
       fieldName: 'isImport',
       label: $t('infra.codegen.isImport'),
       help: $t('infra.codegen.isImportHelp'),
@@ -299,7 +299,7 @@ export function useGenerationInfoBaseFormSchema(): VbenFormSchema[] {
       defaultValue: '1',
     },
     {
-      component: 'I18nRadioGroup',
+      component: 'RadioGroup',
       fieldName: 'popupType',
       label: $t('infra.codegen.popupType'),
       help: $t('infra.codegen.popupTypeHelp'),
@@ -337,7 +337,7 @@ export function useGenerationInfoTreeFormSchema(
       formItemClass: 'md:col-span-2',
     },
     {
-      component: 'I18nSelect',
+      component: 'Select',
       fieldName: 'treeParentColumnId',
       label: $t('infra.codegen.treeParentColumn'),
       help: $t('infra.codegen.treeParentColumnHelp'),
@@ -353,7 +353,7 @@ export function useGenerationInfoTreeFormSchema(
       rules: 'selectRequired',
     },
     {
-      component: 'I18nSelect',
+      component: 'Select',
       fieldName: 'treeNameColumnId',
       label: $t('infra.codegen.treeNameColumn'),
       help: $t('infra.codegen.treeNameColumnHelp'),
@@ -389,7 +389,7 @@ export function useGenerationInfoSubTableFormSchema(
       formItemClass: 'md:col-span-2',
     },
     {
-      component: 'I18nSelect',
+      component: 'Select',
       fieldName: 'masterTableId',
       label: $t('infra.codegen.masterTable'),
       help: $t('infra.codegen.masterTableHelp'),
@@ -405,7 +405,7 @@ export function useGenerationInfoSubTableFormSchema(
       rules: 'selectRequired',
     },
     {
-      component: 'I18nSelect',
+      component: 'Select',
       fieldName: 'subJoinColumnId',
       label: $t('infra.codegen.subJoinColumn'),
       help: $t('infra.codegen.subJoinColumnHelp'),
@@ -421,7 +421,7 @@ export function useGenerationInfoSubTableFormSchema(
       rules: 'selectRequired',
     },
     {
-      component: 'I18nRadioGroup',
+      component: 'RadioGroup',
       fieldName: 'subJoinMany',
       label: $t('infra.codegen.joinRelation'),
       help: $t('infra.codegen.joinRelationHelp'),

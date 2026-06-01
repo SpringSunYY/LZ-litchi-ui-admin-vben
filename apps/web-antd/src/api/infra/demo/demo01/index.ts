@@ -57,6 +57,7 @@ export function deleteDemo01ContactList(ids: number[]) {
 export function exportDemo01Contact(params: any) {
   return requestClient.download('/infra/demo01-contact/export-excel', {
     params,
+    timeout: 300_000,
   });
 }
 
@@ -67,7 +68,13 @@ export function importDemo01ContactTemplate() {
 
 /** 导入示例联系人 */
 export function importDemo01Contact(file: File) {
-  return requestClient.upload('/infra/demo01-contact/import', {
-    file,
-  });
+  return requestClient.upload(
+    '/infra/demo01-contact/import',
+    {
+      file,
+    },
+    {
+      timeout: 300_000,
+    },
+  );
 }
