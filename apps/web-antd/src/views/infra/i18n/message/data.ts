@@ -1,4 +1,4 @@
-import type { VbenFormSchema } from '#/adapter/form';
+import { type VbenFormSchema, z } from '#/adapter/form';
 import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 import type { I18nKeyApi } from '#/api/infra/i18n/i18nKey';
 import type { I18nMessageApi } from '#/api/infra/i18n/i18nMessage';
@@ -502,6 +502,7 @@ export function useI18nMessageImportSchema(): VbenFormSchema[] {
       fieldName: 'file',
       label: $t('ui.actionTitle.import', [$t('infra.i18nMessage')]),
       component: 'Upload',
+      labelWidth: 140,
       rules: 'required',
       componentProps: {
         accept: '.xls,.xlsx',
@@ -511,6 +512,18 @@ export function useI18nMessageImportSchema(): VbenFormSchema[] {
           type: 'file',
         },
       },
+    },
+    {
+      fieldName: 'updateSupport',
+      label: $t('infra.i18nMessage.import.updateSupport'),
+      labelWidth: 140,
+      component: 'Switch',
+      componentProps: {
+        checkedChildren: $t('common.yes'),
+        unCheckedChildren: $t('common.no'),
+      },
+      rules: z.boolean().default(false),
+      help: $t('infra.i18nMessage.import.help'),
     },
   ];
 }

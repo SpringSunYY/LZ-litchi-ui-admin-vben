@@ -69,10 +69,10 @@ export function importI18nMessageTemplate() {
 }
 
 /** 导入国际化信息 */
-export function importI18nMessage(file: File) {
+export function importI18nMessage(file: File, updateSupport: boolean) {
   return requestClient.upload(
     '/infra/i18n/message/import',
-    { file },
+    { file, updateSupport },
     {
       timeout: 300_000,
     },

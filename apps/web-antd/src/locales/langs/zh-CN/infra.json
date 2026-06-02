@@ -259,6 +259,10 @@
       "remark": "备注",
       "createTime": "创建时间"
     },
+    "import": {
+      "updateSupport": "是否更新",
+      "help": "是否更新国际化key，如果是则更新国际化key，与message无关，无论是否都会根据key和locale更新message信息"
+    },
     "action": {
       "query": "国际化键名查询",
       "create": "新增国际化键名",

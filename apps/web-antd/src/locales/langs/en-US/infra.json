@@ -259,6 +259,10 @@
       "remark": "remark",
       "createTime": "create time"
     },
+    "import": {
+      "updateSupport": "update support",
+      "help": "Whether to update the internationalization key. If yes, the internationalization key will be updated. This is unrelated to the message itself. Regardless, the message will be updated based on the key and locale settings."
+    },
     "action": {
       "query": "i18n key query",
       "create": "create i18n key",
