@@ -6,7 +6,7 @@ import CellImage from '#/components/image/image-preview.vue';
 
 interface CellFileAndImagesProps {
   /** 文件 URL，多个用 separator 分隔 */
-  value: string;
+  value?: string | null;
   /** 多个文件 URL 之间的分隔符 */
   separator?: string;
   /** 强制指定类型：'image' | 'file' | 'auto'，默认 auto */
@@ -14,7 +14,7 @@ interface CellFileAndImagesProps {
 }
 
 const props = withDefaults(defineProps<CellFileAndImagesProps>(), {
-  value: '',
+  value: null,
   separator: '||',
   type: 'auto',
 });

@@ -65,7 +65,7 @@ export function exportI18nMessage(params: any) {
 
 /** 获取国际化信息导入模板 */
 export function importI18nMessageTemplate() {
-  return requestClient.download('/infra/I18n-message/get-import-template');
+  return requestClient.download('/infra/i18n/message/get-import-template');
 }
 
 /** 导入国际化信息 */

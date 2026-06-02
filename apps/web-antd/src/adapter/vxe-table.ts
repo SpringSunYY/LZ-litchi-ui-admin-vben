@@ -90,34 +90,44 @@ setupVbenVxeTable({
       } as VxeTableGridOptions,
     });
 
+    // 防重复注册的辅助函数（vxe-table 内部使用 name 标识，同名会警告）
+    const addRenderer = (name: string, renderer: any) => {
+      if (!vxeUI.renderer.get(name)) {
+        vxeUI.renderer.add(name, renderer);
+      }
+    };
+    const addFormat = (name: string, format: any) => {
+      if (!vxeUI.formats.get(name)) {
+        vxeUI.formats.add(name, format);
+      }
+    };
+
     // 表格配置项可以用 cellRender: { name: 'CellImage' },
     // 支持单个图片URL或 || 分隔的多张图片字符串
     // 默认只显示第一张，点击后预览全部并支持左右切换
-    vxeUI.renderer.add('CellImage', {
-      renderTableDefault(_renderOpts, params) {
+    addRenderer('CellImage', {
+      renderTableDefault(_renderOpts: any, params: any) {
         const { column, row } = params;
         const value = row[column.field];
-        // 直接传递原始值给组件处理
         return h(CellImage, { src: value });
       },
     });
 
     // 表格配置项可以用 cellRender: { name: 'CellJson' },
     // 将 JSON 对象解析为 key: value 形式显示，支持复制 JSON
-    vxeUI.renderer.add('CellJson', {
-      renderTableDefault(_renderOpts, params) {
+    addRenderer('CellJson', {
+      renderTableDefault(_renderOpts: any, params: any) {
         const { column, row } = params;
         const value = row[column.field];
         return h(JsonPreview, { value });
       },
     });
 
-    vxeUI.renderer.add('CellImages', {
-      renderTableDefault(_renderOpts, params) {
+    addRenderer('CellImages', {
+      renderTableDefault(_renderOpts: any, params: any) {
         const { column, row } = params;
         if (column && column.field && row[column.field]) {
           let list = row[column.field];
-          // 如果是字符串且包含分隔符，拆分
           if (typeof list === 'string' && list.includes('||')) {
             list = list.split('||').map((item: string) => item.trim());
           }
@@ -131,8 +141,8 @@ setupVbenVxeTable({
 
     // 表格配置项可以用 cellRender: { name: 'CellFilePreview' },
     // 支持单个文件URL或 || 分隔的多个URL字符串
-    vxeUI.renderer.add('CellFilePreview', {
-      renderTableDefault(renderOpts, params) {
+    addRenderer('CellFilePreview', {
+      renderTableDefault(renderOpts: any, params: any) {
         const { props } = renderOpts;
         const { column, row } = params;
         return h(FilePreview, {
@@ -143,9 +153,8 @@ setupVbenVxeTable({
     });
 
     // 表格配置项可以用 cellRender: { name: 'CellLink' },
-    vxeUI.renderer.add('CellLink', {
-      // @ts-ignore
-      renderTableDefault(renderOpts, params) {
+    addRenderer('CellLink', {
+      renderTableDefault(_renderOpts: any, params: any) {
         const { column, row } = params;
         const value = row[column.field];
         return h(CellLink, { url: value });
@@ -156,8 +165,8 @@ setupVbenVxeTable({
     // type 可选值：'auto' 自动判断，'image' 强制图片，'file' 强制文件
     // 支持单个或多个文件/图片 URL，多个用 separator 分隔
     // 自动判断文件类型：图片扩展名使用图片预览，否则使用文件预览
-    vxeUI.renderer.add('CellFileAndImages', {
-      renderTableDefault(renderOpts, params) {
+    addRenderer('CellFileAndImages', {
+      renderTableDefault(renderOpts: any, params: any) {
         const { props } = renderOpts;
         const { column, row } = params;
         return h(CellFileAndImages, {
@@ -170,8 +179,8 @@ setupVbenVxeTable({
 
     // 表格配置项可以用 cellRender: { name: 'CellDict', props:{type: ''} },
     // 支持单个值或多个值（separator 分隔），未匹配时显示原字符
-    vxeUI.renderer.add('CellDict', {
-      renderTableDefault(renderOpts, params) {
+    addRenderer('CellDict', {
+      renderTableDefault(renderOpts: any, params: any) {
         const { props } = renderOpts;
         const { column, row } = params;
         if (!props?.type) {
@@ -184,10 +193,12 @@ setupVbenVxeTable({
           useOriginal: props.useOriginal,
         });
       },
-    }); // 表格配置项可以用 cellRender: { name: 'CellDict', props:{type: ''} },
+    });
+
+    // 表格配置项可以用 cellRender: { name: 'CellDict', props:{type: ''} },
     // 支持单个值或多个值（separator 分隔），未匹配时显示原字符
-    vxeUI.renderer.add('CellI18nDict', {
-      renderTableDefault(renderOpts, params) {
+    addRenderer('CellI18nDict', {
+      renderTableDefault(renderOpts: any, params: any) {
         const { props } = renderOpts;
         const { column, row } = params;
         if (!props?.type) {
@@ -368,24 +379,21 @@ setupVbenVxeTable({
     // 这里可以自行扩展 vxe-table 的全局配置，比如自定义格式化
     // vxeUI.formats.add
 
-    vxeUI.formats.add('formatPast2', {
-      tableCellFormatMethod({ cellValue }) {
+    addFormat('formatPast2', {
+      tableCellFormatMethod({ cellValue }: { cellValue: any }) {
         if (cellValue === null || cellValue === undefined) {
           return '';
         }
-        // 定义时间单位常量，便于维护
         const SECOND = 1000;
         const MINUTE = 60 * SECOND;
         const HOUR = 60 * MINUTE;
         const DAY = 24 * HOUR;
 
-        // 计算各时间单位
         const day = Math.floor(cellValue / DAY);
         const hour = Math.floor((cellValue % DAY) / HOUR);
         const minute = Math.floor((cellValue % HOUR) / MINUTE);
         const second = Math.floor((cellValue % MINUTE) / SECOND);
 
-        // 根据时间长短返回不同格式
         if (day > 0) {
           return `${day}${$t('ui.time.day')}${$t('ui.time.hour')}${$t('ui.time.minute')}`;
         }
@@ -402,14 +410,14 @@ setupVbenVxeTable({
     });
 
     // add by 星语：数量格式化，例如说：金额
-    vxeUI.formats.add('formatNumber', {
-      tableCellFormatMethod({ cellValue }, digits = 2) {
+    addFormat('formatNumber', {
+      tableCellFormatMethod({ cellValue }: { cellValue: any }, digits = 2) {
         return formatToFractionDigit(cellValue, digits);
       },
     });
 
-    vxeUI.formats.add('formatAmount2', {
-      tableCellFormatMethod({ cellValue }) {
+    addFormat('formatAmount2', {
+      tableCellFormatMethod({ cellValue }: { cellValue: any }) {
         return `${floatToFixed2(cellValue)}${$t('ui.amount.yuan')}`;
       },
     });
