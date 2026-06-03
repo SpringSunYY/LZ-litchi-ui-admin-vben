@@ -1,7 +1,16 @@
 <script lang="ts" setup>
 import type { VxeTableGridOptions } from '#/adapter/vxe-table';
+import { ACTION_ICON, TableAction, useVbenVxeGrid } from '#/adapter/vxe-table';
 import type { InfraCodegenApi } from '#/api/infra/codegen';
+import {
+  batchDownloadCodegen,
+  deleteCodegenTable,
+  downloadCodegen,
+  getCodegenTablePage,
+  syncCodegenFromDB,
+} from '#/api/infra/codegen';
 import type { InfraDataSourceConfigApi } from '#/api/infra/data-source-config';
+import { getDataSourceConfigList } from '#/api/infra/data-source-config';
 
 import { computed, ref } from 'vue';
 import { useRouter } from 'vue-router';
@@ -10,16 +19,6 @@ import { DocAlert, Page, useVbenModal } from '@vben/common-ui';
 import { downloadFileFromBlobPart } from '@vben/utils';
 
 import { message } from 'ant-design-vue';
-
-import { ACTION_ICON, TableAction, useVbenVxeGrid } from '#/adapter/vxe-table';
-import {
-  batchDownloadCodegen,
-  deleteCodegenTable,
-  downloadCodegen,
-  getCodegenTablePage,
-  syncCodegenFromDB,
-} from '#/api/infra/codegen';
-import { getDataSourceConfigList } from '#/api/infra/data-source-config';
 import { $t } from '#/locales';
 import { pickSort } from '#/utils';
 
@@ -198,10 +197,14 @@ const [Grid, gridApi] = useVbenVxeGrid({
     },
   } as VxeTableGridOptions<InfraCodegenApi.CodegenTable>,
   gridEvents: {
-    checkboxChange: ({ records }) => {
+    checkboxChange: ({
+      records,
+    }: {
+      records: InfraCodegenApi.CodegenTable[];
+    }) => {
       selectedRows.value = records;
     },
-    checkboxAll: ({ records }) => {
+    checkboxAll: ({ records }: { records: InfraCodegenApi.CodegenTable[] }) => {
       selectedRows.value = records;
     },
     sortChange: () => gridApi.query(),

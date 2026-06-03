@@ -76,9 +76,16 @@ function removeCodeMapKey(targetKey: any) {
 /** 复制代码 */
 async function copyCode() {
   const { copy } = useClipboard();
-  const file = previewFiles.value.find(
-    (item) => item.filePath === activeKey.value,
-  );
+  const key = [...codeMap.value.keys()].at(-1);
+  if (!key) return;
+  const file = previewFiles.value.find((item) => {
+    const list = key.split('.');
+    if (list.length > 2) {
+      const lang = list.pop();
+      return item.filePath === `${list.join('/')}.${lang}`;
+    }
+    return item.filePath === key;
+  });
   if (file) {
     await copy(file.code);
     message.success($t('ui.actionMessage.copySuccess'));
@@ -87,7 +94,12 @@ async function copyCode() {
 
 /** 文件节点点击事件 */
 function handleNodeClick(_: any[], e: any) {
-  if (!e.node.isLeaf) return;
+  if (!e.node.isLeaf) {
+    if (codeMap.value.has(e.node.key)) {
+      activeKey.value = e.node.key;
+    }
+    return;
+  }
 
   activeKey.value = e.node.key;
   const file = previewFiles.value.find((item) => {
