@@ -27,11 +27,11 @@ const [Form, formApi] = useVbenForm({
     {
       component: 'I18nRadioGroup',
       fieldName: 'enabled',
-      label: $t('crm.customerLimitConfig.field.poolConfig'),
+      label: $t('crm.customerPoolConfig.field.poolConfig'),
       componentProps: {
         options: [
-          { label: $t('crm.customerLimitConfig.field.enable'), value: true },
-          { label: $t('crm.customerLimitConfig.field.disable'), value: false },
+          { label: $t('crm.customerPoolConfig.field.enable'), value: true },
+          { label: $t('crm.customerPoolConfig.field.disable'), value: false },
         ],
       },
     },
@@ -43,7 +43,7 @@ const [Form, formApi] = useVbenForm({
         precision: 0,
       },
       renderComponentContent: () => ({
-        addonAfter: () => $t('crm.customerLimitConfig.field.contactExpireDays'),
+        addonAfter: () => $t('crm.customerPoolConfig.field.contactExpireDays'),
       }),
       dependencies: {
         triggerFields: ['enabled'],
@@ -54,8 +54,8 @@ const [Form, formApi] = useVbenForm({
       component: 'InputNumber',
       fieldName: 'dealExpireDays',
       renderComponentContent: () => ({
-        addonBefore: () => $t('crm.customerLimitConfig.field.or'),
-        addonAfter: () => $t('crm.customerLimitConfig.field.dealExpireDays'),
+        addonBefore: () => $t('crm.customerPoolConfig.field.or'),
+        addonAfter: () => $t('crm.customerPoolConfig.field.dealExpireDays'),
       }),
       componentProps: {
         min: 0,
@@ -69,11 +69,11 @@ const [Form, formApi] = useVbenForm({
     {
       component: 'I18nRadioGroup',
       fieldName: 'notifyEnabled',
-      label: $t('crm.customerLimitConfig.field.notifyEnabled'),
+      label: $t('crm.customerPoolConfig.field.notifyEnabled'),
       componentProps: {
         options: [
-          { label: $t('crm.customerLimitConfig.field.enable'), value: true },
-          { label: $t('crm.customerLimitConfig.field.disable'), value: false },
+          { label: $t('crm.customerPoolConfig.field.enable'), value: true },
+          { label: $t('crm.customerPoolConfig.field.disable'), value: false },
         ],
       },
       dependencies: {
@@ -90,8 +90,8 @@ const [Form, formApi] = useVbenForm({
         precision: 0,
       },
       renderComponentContent: () => ({
-        addonBefore: () => $t('crm.customerLimitConfig.field.notifyDays'),
-        addonAfter: () => $t('crm.customerLimitConfig.field.daysTip'),
+        addonBefore: () => $t('crm.customerPoolConfig.field.notifyDays'),
+        addonAfter: () => $t('crm.customerPoolConfig.field.daysTip'),
       }),
       dependencies: {
         triggerFields: ['notifyEnabled'],
@@ -143,7 +143,7 @@ onMounted(() => {
 
 <template>
   <Page auto-content-height>
-    <Card :title="$t('crm.customerLimitConfig.field.poolConfigTitle')">
+    <Card :title="$t('crm.customerPoolConfig.field.poolConfigTitle')">
       <Form class="w-1/4" />
     </Card>
   </Page>

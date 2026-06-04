@@ -28,6 +28,10 @@ const props = defineProps({
     type: Object as () => I18nKeyApi.I18nKey | null,
     default: null,
   },
+  messageKey: {
+    type: String,
+    default: '',
+  },
 });
 
 const emit = defineEmits<{
@@ -42,8 +46,23 @@ const [FormModal, formModalApi] = useVbenModelDrawer({
   placement: 'left',
 });
 
+const currentMessageKey = ref(props.row?.messageKey || props.messageKey);
+
+watch(
+  () => props.row,
+  (newRow, old) => {
+    if (newRow?.messageKey === old?.messageKey) {
+      return;
+    }
+    currentMessageKey.value = newRow?.messageKey || props.messageKey || '';
+    gridApi.query();
+  },
+  { immediate: true },
+);
+
 /** 刷新表格 */
 function onRefresh() {
+  currentMessageKey.value = '';
   gridApi.query();
 }
 
@@ -53,10 +72,24 @@ const exportLoading = ref(false);
 async function handleExport() {
   exportLoading.value = true;
   try {
-    const data = await exportI18nMessage({
-      ...(await gridApi.formApi.getValues()),
-      messageKey: props.row?.messageKey,
-    });
+    // 拆分 locale_localeTarget 为两个字段
+    const formValues = await gridApi.formApi.getValues();
+    const { locale, ...rest } = formValues;
+    let data;
+    if (locale && locale.includes('_')) {
+      const [localeVal, localeTarget] = locale.split('_');
+      data = await exportI18nMessage({
+        messageKey: currentMessageKey.value,
+        locale: localeVal,
+        localeTarget: Number(localeTarget),
+        ...rest,
+      });
+    } else {
+      data = await exportI18nMessage({
+        ...(await gridApi.formApi.getValues()),
+        messageKey: currentMessageKey.value,
+      });
+    }
     downloadFileFromBlobPart({
       fileName: `${$t('infra.i18nMessage.messageLabel')}.xls`,
       source: data,
@@ -149,6 +182,9 @@ function handleRowCheckboxChange({
 const [Grid, gridApi] = useVbenVxeGrid({
   formOptions: {
     schema: useMessageGridFormSchema(),
+    handleReset: async () => {
+      onRefresh();
+    },
   },
   gridOptions: {
     columns: useMessageGridColumns(),
@@ -167,7 +203,7 @@ const [Grid, gridApi] = useVbenVxeGrid({
             return await getI18nMessagePage({
               pageNo: page.currentPage,
               pageSize: page.pageSize,
-              messageKey: props.row?.messageKey,
+              messageKey: currentMessageKey.value,
               locale: localeVal,
               localeTarget: Number(localeTarget),
               ...rest,
@@ -176,7 +212,7 @@ const [Grid, gridApi] = useVbenVxeGrid({
           return await getI18nMessagePage({
             pageNo: page.currentPage,
             pageSize: page.pageSize,
-            messageKey: props.row?.messageKey,
+            messageKey: currentMessageKey.value,
             ...formValues,
           });
         },
@@ -200,16 +236,6 @@ const [Grid, gridApi] = useVbenVxeGrid({
     },
   },
 });
-
-/** 监听 row 变化，重新查询 */
-watch(
-  () => props.row?.messageKey,
-  () => {
-    if (props.row?.messageKey) {
-      onRefresh();
-    }
-  },
-);
 
 defineExpose({ onRefresh });
 </script>

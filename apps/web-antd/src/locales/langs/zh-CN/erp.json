@@ -1,7 +1,7 @@
 {
   "payment": {
     "payment": "付款单",
-    "menu": "付款单管理",
+    "menu": "付款单",
     "list": "付款单列表",
     "docTitle": "【财务】采购付款、销售收款",
     "field": {
@@ -81,7 +81,7 @@
   },
   "receipt": {
     "receipt": "收款单",
-    "menu": "收款单管理",
+    "menu": "收款单",
     "list": "收款单列表",
     "docTitle": "【财务】采购付款、销售收款",
     "field": {
@@ -159,7 +159,7 @@
   },
   "account": {
     "account": "结算账户",
-    "menu": "结算账户管理",
+    "menu": "结算账户",
     "list": "结算账户列表",
     "docTitle": "【财务】采购付款、销售收款",
     "field": {
@@ -206,7 +206,7 @@
   },
   "product": {
     "product": "产品信息",
-    "menu": "产品信息管理",
+    "menu": "产品信息",
     "list": "产品信息列表",
     "docTitle": "【产品】产品信息、分类、单位",
     "field": {
@@ -235,7 +235,7 @@
   },
   "category": {
     "category": "产品分类",
-    "menu": "产品分类管理",
+    "menu": "产品分类",
     "list": "产品分类列表",
     "field": {
       "id": "编号",
@@ -259,7 +259,7 @@
   },
   "unit": {
     "unit": "产品单位",
-    "menu": "产品单位管理",
+    "menu": "产品单位",
     "list": "产品单位列表",
     "field": {
       "id": "单位编号",
@@ -277,7 +277,7 @@
   },
   "purchaseIn": {
     "purchaseIn": "采购入库",
-    "menu": "采购入库管理",
+    "menu": "采购入库",
     "list": "采购入库列表",
     "docTitle": "【采购】采购订单、入库、退货",
     "field": {
@@ -360,7 +360,7 @@
   },
   "purchaseReturn": {
     "purchaseReturn": "采购退货",
-    "menu": "采购退货管理",
+    "menu": "采购退货",
     "list": "采购退货列表",
     "docTitle": "【采购】采购订单、入库、退货",
     "field": {
@@ -444,7 +444,7 @@
   },
   "supplier": {
     "supplier": "供应商",
-    "menu": "供应商管理",
+    "menu": "供应商信息",
     "list": "供应商列表",
     "docTitle": "【采购】采购订单、入库、退货",
     "field": {
@@ -475,7 +475,7 @@
   },
   "purchaseOrder": {
     "purchaseOrder": "采购订单",
-    "menu": "采购订单管理",
+    "menu": "采购订单",
     "list": "采购订单列表",
     "docTitle": "【采购】采购订单、入库、退货",
     "field": {
@@ -543,7 +543,7 @@
   },
   "customer": {
     "customer": "客户",
-    "menu": "客户管理",
+    "menu": "客户信息",
     "list": "客户列表",
     "docTitle": "【销售】销售订单、出库、退货",
     "field": {
@@ -574,7 +574,7 @@
   },
   "saleOrder": {
     "saleOrder": "销售订单",
-    "menu": "销售订单管理",
+    "menu": "销售订单",
     "list": "销售订单列表",
     "docTitle": "【销售】销售订单、出库、退货",
     "field": {
@@ -652,7 +652,7 @@
   },
   "saleOut": {
     "saleOut": "销售出库",
-    "menu": "销售出库管理",
+    "menu": "销售出库",
     "list": "销售出库列表",
     "docTitle": "【销售】销售订单、出库、退货",
     "field": {
@@ -731,7 +731,7 @@
   },
   "saleReturn": {
     "saleReturn": "销售退货",
-    "menu": "销售退货管理",
+    "menu": "销售退货",
     "list": "销售退货列表",
     "docTitle": "【销售】销售订单、出库、退货",
     "field": {
@@ -810,7 +810,7 @@
   },
   "stockIn": {
     "stockIn": "其它入库",
-    "menu": "其它入库管理",
+    "menu": "其它入库",
     "list": "其它入库列表",
     "docTitle": "【库存】其它入库、其它出库",
     "field": {
@@ -876,7 +876,7 @@
   },
   "stockOut": {
     "stockOut": "其它出库",
-    "menu": "其它出库管理",
+    "menu": "其它出库",
     "list": "其它出库列表",
     "docTitle": "【库存】其它入库、其它出库",
     "field": {
@@ -942,7 +942,7 @@
   },
   "stockCheck": {
     "stockCheck": "库存盘点",
-    "menu": "库存盘点管理",
+    "menu": "库存盘点",
     "list": "库存盘点列表",
     "docTitle": "【库存】库存调拨、库存盘点",
     "field": {
@@ -1006,7 +1006,7 @@
   },
   "stockMove": {
     "stockMove": "库存调拨",
-    "menu": "库存调拨管理",
+    "menu": "库存调拨",
     "list": "库存调拨列表",
     "docTitle": "【库存】库存调拨、库存盘点",
     "field": {
@@ -1071,7 +1071,7 @@
   },
   "warehouse": {
     "warehouse": "仓库",
-    "menu": "仓库管理",
+    "menu": "仓库信息",
     "list": "仓库列表",
     "docTitle": "【库存】产品库存、库存明细",
     "field": {
@@ -1107,7 +1107,7 @@
   },
   "stock": {
     "stock": "产品库存",
-    "menu": "产品库存管理",
+    "menu": "产品库存",
     "list": "产品库存列表",
     "docTitle": "【库存】产品库存、库存明细",
     "field": {
@@ -1132,7 +1132,7 @@
   },
   "stockRecord": {
     "stockRecord": "库存明细",
-    "menu": "库存明细管理",
+    "menu": "库存明细",
     "list": "库存明细列表",
     "docTitle": "【库存】产品库存、库存明细",
     "field": {

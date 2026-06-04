@@ -3,6 +3,7 @@ import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 import type { SystemMenuApi } from '#/api/system/menu';
 
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 
 import { DocAlert, Page, useVbenModelDrawer } from '@vben/common-ui';
 import { IconifyIcon } from '@vben/icons';
@@ -67,6 +68,7 @@ async function handleDelete(row: SystemMenuApi.Menu) {
 
 /** 切换树形展开/收缩状态 */
 const isExpanded = ref(false);
+
 function toggleExpand() {
   isExpanded.value = !isExpanded.value;
   gridApi.grid.setAllTreeExpand(isExpanded.value);
@@ -101,6 +103,18 @@ const [Grid, gridApi] = useVbenVxeGrid({
     },
   } as VxeTableGridOptions,
 });
+const router = useRouter();
+const toI18n = (i18n?: string) => {
+  if (!i18n) return;
+  const routeData = router.resolve({
+    name: 'i18nMessage',
+    query: {
+      messageKey: i18n,
+    },
+  });
+  // 使用新窗口打开
+  window.open(routeData?.href, '_blank');
+};
 </script>
 
 <template>
@@ -154,6 +168,9 @@ const [Grid, gridApi] = useVbenVxeGrid({
           <span class="flex-auto">{{ $t(row.name) }}</span>
           <div class="items-center justify-end"></div>
         </div>
+      </template>
+      <template #i18n="{ row }">
+        <a @click="toI18n(row.i18n)" v-if="row.i18n">{{ $t(row.i18n) }}</a>
       </template>
       <template #actions="{ row }">
         <TableAction

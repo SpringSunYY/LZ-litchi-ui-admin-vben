@@ -1,10 +1,8 @@
 {
-  "bpm": {
-    "menu": "workflow"
-  },
+  "menu": "workflow",
   "category": {
     "category": "process category",
-    "menu": "process category management",
+    "menu": "process category",
     "list": "process category list",
     "field": {
       "id": "category id",
@@ -27,7 +25,7 @@
   },
   "form": {
     "form": "process form",
-    "menu": "process form management",
+    "menu": "process form",
     "list": "process form list",
     "field": {
       "id": "id",
@@ -50,7 +48,7 @@
   },
   "group": {
     "group": "user group",
-    "menu": "user group management",
+    "menu": "user group",
     "list": "user group list",
     "field": {
       "id": "id",
@@ -70,7 +68,7 @@
   },
   "model": {
     "model": "process model",
-    "menu": "process model management",
+    "menu": "process model",
     "list": "process model list",
     "field": {
       "name": "process name",
@@ -234,7 +232,7 @@
   },
   "definition": {
     "definition": "process definition",
-    "menu": "process definition management",
+    "menu": "process definition",
     "list": "process definition list",
     "field": {
       "id": "definition id",
@@ -308,7 +306,7 @@
   },
   "processExpression": {
     "processExpression": "process expression",
-    "menu": "process expression management",
+    "menu": "process expression",
     "list": "process expression list",
     "field": {
       "id": "id",
@@ -336,7 +334,7 @@
   },
   "processListener": {
     "processListener": "process listener",
-    "menu": "process listener management",
+    "menu": "process listener",
     "list": "process listener list",
     "field": {
       "id": "id",
@@ -368,7 +366,7 @@
   },
   "processInstance": {
     "processInstance": "process instance",
-    "menu": "process instance management",
+    "menu": "process instance",
     "list": "process instance list",
     "myList": "my processes",
     "field": {
@@ -441,7 +439,7 @@
   },
   "task": {
     "task": "task",
-    "menu": "task management",
+    "menu": "task",
     "approvalCenter": "approval center",
     "todo": {
       "todo": "todo tasks",

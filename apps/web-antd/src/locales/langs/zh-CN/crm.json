@@ -404,7 +404,7 @@
     "business": "商机",
     "detail": "商机详情",
     "list": "商机列表",
-    "menu":"商机管理",
+    "menu": "商机管理",
     "field": {
       "name": "商机名称",
       "ownerUser": "负责人",
@@ -459,6 +459,7 @@
   "businessStatus": {
     "businessStatus": "商机状态组",
     "list": "商机状态列表",
+    "menu": "商机状态配置",
     "field": {
       "name": "状态组名",
       "dept": "应用部门",
@@ -549,6 +550,7 @@
       "subordinateResponsible": "下属负责的"
     },
     "config": {
+      "menu": "合同配置",
       "title": "合同配置设置",
       "notifyEnabled": "提前提醒设置",
       "notifyDays": "提前天数",
@@ -577,6 +579,24 @@
       "createTime": "创建时间",
       "updateTime": "更新时间",
       "creatorName": "创建人"
+    }
+  },
+  "customerPoolConfig": {
+    "customerPoolConfig": "客户公海配置",
+    "menu": "客户公海配置",
+    "list": "客户公海配置列表",
+    "field": {
+      "poolConfig": "公海规则设置",
+      "enabled": "客户公海规则设置",
+      "contactExpireDays": "跟进过期天数",
+      "dealExpireDays": "成交过期天数",
+      "notifyEnabled": "提前提醒设置",
+      "notifyDays": "提前提醒天数",
+      "daysTip": "天提醒",
+      "poolConfigTitle": "客户公海规则设置",
+      "enable": "开启",
+      "disable": "关闭",
+      "or": "或"
     }
   },
   "customerLimitConfig": {
@@ -831,8 +851,9 @@
     }
   },
   "statistics": {
-    "statistics": "统计",
+    "menu": "数据统计",
     "customer": {
+      "menu": "客户分析",
       "customerTotal": "客户总量",
       "followUpSummary": "跟进汇总",
       "followUpType": "跟进方式",
@@ -873,6 +894,7 @@
       "businessWinCount": "赢单数量"
     },
     "funnel": {
+      "menu": "销售漏斗",
       "title": "销售漏斗",
       "businessAnalysis": "商机分析",
       "businessInversionRateAnalysis": "商机转化率分析",
@@ -891,6 +913,7 @@
       "orderDate": "下单日期"
     },
     "performance": {
+      "menu": "销售业绩",
       "contractCountAnalysis": "合同数量统计",
       "contractPriceAnalysis": "合同金额统计",
       "receivablePriceAnalysis": "回款金额统计",
@@ -910,6 +933,7 @@
       "receivableAmount": "回款金额"
     },
     "portrait": {
+      "menu": "客户画像",
       "areaAnalysis": "地区分布",
       "levelAnalysis": "级别分布",
       "sourceAnalysis": "来源分布",
@@ -933,6 +957,7 @@
       "dealCustomer": "成交客户"
     },
     "rank": {
+      "menu": "数据排行",
       "contractPriceAnalysis": "合同金额排行",
       "receivablePriceAnalysis": "回款金额排行",
       "contractCountAnalysis": "签约合同数排行",

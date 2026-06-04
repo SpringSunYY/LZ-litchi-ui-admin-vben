@@ -55,7 +55,7 @@
   },
   "customer": {
     "customer": "customer",
-    "menu": "customer",
+    "menu": "customer management",
     "detail": "customer detail",
     "list": "customer list",
     "field": {
@@ -281,7 +281,7 @@
   },
   "clue": {
     "clue": "clue",
-    "menu": "clue",
+    "menu": "clue management",
     "detail": "clue detail",
     "list": "clue list",
     "field": {
@@ -342,7 +342,7 @@
   },
   "contact": {
     "contact": "contact",
-    "menu": "contact",
+    "menu": "contact management",
     "detail": "contact detail",
     "list": "contact list",
     "field": {
@@ -402,7 +402,7 @@
   },
   "business": {
     "business": "business",
-    "menu": "business",
+    "menu": "business management",
     "detail": "business detail",
     "list": "business list",
     "field": {
@@ -456,20 +456,21 @@
       "changeStatusTitle": "change business status"
     }
   },
-    "businessStatus": {
-      "businessStatus": "business status type",
-      "list": "business status list",
-      "field": {
-        "name": "status name",
-        "dept": "department",
-        "status": "status",
-        "selectDept": "please select department",
-        "allCompany": "all company",
-        "createTime": "create time",
-        "creator": "creator",
-        "stageSetting": "stage setting",
-        "stage": "stage",
-        "stageName": "stage name",
+  "businessStatus": {
+    "businessStatus": "business status type",
+    "list": "business status list",
+    "menu": "business status config",
+    "field": {
+      "name": "status name",
+      "dept": "department",
+      "status": "status",
+      "selectDept": "please select department",
+      "allCompany": "all company",
+      "createTime": "create time",
+      "creator": "creator",
+      "stageSetting": "stage setting",
+      "stage": "stage",
+      "stageName": "stage name",
       "winRate": "win rate",
       "operation": "operation",
       "end": "end",
@@ -478,14 +479,14 @@
       "stagePhase": "stage {0}"
     },
     "action": {
-        "create": "create business status",
-        "delete": "delete business status",
-        "query": "query business status"
-      }
-    },
+      "create": "create business status",
+      "delete": "delete business status",
+      "query": "query business status"
+    }
+  },
   "contract": {
     "contract": "contract",
-    "menu": "contract",
+    "menu": "contract management",
     "detail": "contract detail",
     "list": "contract list",
     "field": {
@@ -549,6 +550,7 @@
       "subordinateResponsible": "subordinate's responsible"
     },
     "config": {
+      "menu": "contract config",
       "title": "contract settings",
       "notifyEnabled": "advance reminder settings",
       "notifyDays": "advance days",
@@ -577,6 +579,24 @@
       "createTime": "create time",
       "updateTime": "update time",
       "creatorName": "creator"
+    }
+  },
+  "customerPoolConfig": {
+    "customerPoolConfig": "customer pool config",
+    "menu": "customer pool config",
+    "list": "customer pool config list",
+    "field": {
+      "poolConfig": "pool rules settings",
+      "enabled": "customer pool rules settings",
+      "contactExpireDays": "contact expire days",
+      "dealExpireDays": "deal expire days",
+      "notifyEnabled": "advance reminder settings",
+      "notifyDays": "advance reminder days",
+      "daysTip": "days reminder",
+      "poolConfigTitle": "customer pool rules settings",
+      "enable": "enable",
+      "disable": "disable",
+      "or": "or"
     }
   },
   "customerLimitConfig": {
@@ -661,7 +681,7 @@
   },
   "product": {
     "product": "product",
-    "menu": "product",
+    "menu": "product management",
     "detail": "product detail",
     "list": "product list",
     "field": {
@@ -731,7 +751,7 @@
   },
   "receivable": {
     "receivable": "receivable",
-    "menu": "receivable",
+    "menu": "receivable management",
     "detail": "receivable detail",
     "list": "receivable list",
     "field": {
@@ -832,8 +852,9 @@
     }
   },
   "statistics": {
-    "statistics": "statistics",
+    "menu": "statistics",
     "customer": {
+      "menu": "customer analyze",
       "customerTotal": "customer total",
       "followUpSummary": "follow up summary",
       "followUpType": "follow up type",
@@ -874,6 +895,7 @@
       "businessWinCount": "win business count"
     },
     "funnel": {
+      "menu": "sales funnel",
       "title": "sales funnel",
       "businessAnalysis": "business analysis",
       "businessInversionRateAnalysis": "business conversion rate analysis",
@@ -892,6 +914,7 @@
       "orderDate": "order date"
     },
     "performance": {
+      "menu": "employee performance",
       "contractCountAnalysis": "contract count statistics",
       "contractPriceAnalysis": "contract amount statistics",
       "receivablePriceAnalysis": "receivable amount statistics",
@@ -911,6 +934,7 @@
       "receivableAmount": "receivable amount"
     },
     "portrait": {
+      "menu": "customer portrait",
       "areaAnalysis": "area distribution",
       "levelAnalysis": "level distribution",
       "sourceAnalysis": "source distribution",
@@ -934,6 +958,7 @@
       "dealCustomer": "deal customers"
     },
     "rank": {
+      "menu": "ranking",
       "contractPriceAnalysis": "contract amount ranking",
       "receivablePriceAnalysis": "receivable amount ranking",
       "contractCountAnalysis": "contract count ranking",

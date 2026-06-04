@@ -349,6 +349,11 @@ export function useGridColumns(): VxeTableGridOptions<SystemMenuApi.Menu>['colum
       treeNode: true,
     },
     {
+      field: 'i18n',
+      title: $t('system.menu.field.i18n'),
+      slots: { default: 'i18n' },
+    },
+    {
       field: 'type',
       title: $t('system.menu.field.type'),
       cellRender: {

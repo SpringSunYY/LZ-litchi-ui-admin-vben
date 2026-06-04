@@ -5,7 +5,7 @@ const routes: RouteRecordRaw[] = [
     path: '/bpm',
     name: 'bpm',
     meta: {
-      i18n: 'bpm.bpm.menu',
+      i18n: 'bpm.menu',
       title: '工作流',
       hideInMenu: true,
     },

@@ -1,7 +1,7 @@
 {
   "payment": {
     "payment": "payment",
-    "menu": "payment management",
+    "menu": "payment order",
     "list": "payment list",
     "docTitle": "finance: purchase payment, sale receipt",
     "field": {
@@ -81,7 +81,7 @@
   },
   "receipt": {
     "receipt": "receipt",
-    "menu": "receipt management",
+    "menu": "receipt order",
     "list": "receipt list",
     "docTitle": "finance: purchase payment, sale receipt",
     "field": {
@@ -159,7 +159,7 @@
   },
   "account": {
     "account": "account",
-    "menu": "account management",
+    "menu": "account order",
     "list": "account list",
     "docTitle": "finance: purchase payment, sale receipt",
     "field": {
@@ -206,7 +206,7 @@
   },
   "product": {
     "product": "product info",
-    "menu": "product info management",
+    "menu": "product info",
     "list": "product info list",
     "docTitle": "product: product info, category, unit",
     "field": {
@@ -235,7 +235,7 @@
   },
   "category": {
     "category": "product category",
-    "menu": "product category management",
+    "menu": "product category",
     "list": "product category list",
     "field": {
       "id": "id",
@@ -259,7 +259,7 @@
   },
   "unit": {
     "unit": "product unit",
-    "menu": "product unit management",
+    "menu": "product unit",
     "list": "product unit list",
     "field": {
       "id": "unit id",
@@ -277,7 +277,7 @@
   },
   "purchaseIn": {
     "purchaseIn": "purchase in",
-    "menu": "purchase in management",
+    "menu": "purchase in",
     "list": "purchase in list",
     "docTitle": "purchase: purchase order, in, return",
     "field": {
@@ -360,7 +360,7 @@
   },
   "purchaseReturn": {
     "purchaseReturn": "purchase return",
-    "menu": "purchase return management",
+    "menu": "purchase return",
     "list": "purchase return list",
     "docTitle": "purchase: purchase order, in, return",
     "field": {
@@ -444,7 +444,7 @@
   },
   "supplier": {
     "supplier": "supplier",
-    "menu": "supplier management",
+    "menu": "supplier info",
     "list": "supplier list",
     "docTitle": "purchase: purchase order, in, return",
     "field": {
@@ -475,7 +475,7 @@
   },
   "purchaseOrder": {
     "purchaseOrder": "purchase order",
-    "menu": "purchase order management",
+    "menu": "purchase order",
     "list": "purchase order list",
     "docTitle": "purchase: purchase order, in, return",
     "field": {
@@ -543,7 +543,7 @@
   },
   "customer": {
     "customer": "customer",
-    "menu": "customer management",
+    "menu": "customer info",
     "list": "customer list",
     "docTitle": "sale: sale order, out, return",
     "field": {
@@ -574,7 +574,7 @@
   },
   "saleOrder": {
     "saleOrder": "sale order",
-    "menu": "sale order management",
+    "menu": "sale order",
     "list": "sale order list",
     "docTitle": "sale: sale order, out, return",
     "field": {
@@ -652,7 +652,7 @@
   },
   "saleOut": {
     "saleOut": "sale out",
-    "menu": "sale out management",
+    "menu": "sale out",
     "list": "sale out list",
     "docTitle": "sale: sale order, out, return",
     "field": {
@@ -731,7 +731,7 @@
   },
   "saleReturn": {
     "saleReturn": "sale return",
-    "menu": "sale return management",
+    "menu": "sale return",
     "list": "sale return list",
     "docTitle": "sale: sale order, out, return",
     "field": {
@@ -810,7 +810,7 @@
   },
   "stockIn": {
     "stockIn": "stock in",
-    "menu": "stock in management",
+    "menu": "stock in",
     "list": "stock in list",
     "docTitle": "stock: stock in, out",
     "field": {
@@ -876,7 +876,7 @@
   },
   "stockOut": {
     "stockOut": "stock out",
-    "menu": "stock out management",
+    "menu": "stock out",
     "list": "stock out list",
     "docTitle": "stock: stock in, out",
     "field": {
@@ -942,7 +942,7 @@
   },
   "stockCheck": {
     "stockCheck": "stock check",
-    "menu": "stock check management",
+    "menu": "stock check",
     "list": "stock check list",
     "docTitle": "stock: stock move, check",
     "field": {
@@ -1006,7 +1006,7 @@
   },
   "stockMove": {
     "stockMove": "stock move",
-    "menu": "stock move management",
+    "menu": "stock move",
     "list": "stock move list",
     "docTitle": "stock: stock move, check",
     "field": {
@@ -1071,7 +1071,7 @@
   },
   "warehouse": {
     "warehouse": "warehouse",
-    "menu": "warehouse management",
+    "menu": "warehouse info",
     "list": "warehouse list",
     "docTitle": "stock: product stock, stock record",
     "field": {
@@ -1107,7 +1107,7 @@
   },
   "stock": {
     "stock": "product stock",
-    "menu": "product stock management",
+    "menu": "product stock",
     "list": "product stock list",
     "docTitle": "stock: product stock, stock record",
     "field": {
@@ -1132,7 +1132,7 @@
   },
   "stockRecord": {
     "stockRecord": "stock record",
-    "menu": "stock record management",
+    "menu": "stock record",
     "list": "stock record list",
     "docTitle": "stock: product stock, stock record",
     "field": {

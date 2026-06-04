@@ -34,7 +34,7 @@ export function useFormSchema(): VbenFormSchema[] {
       fieldName: 'sex',
       label: $t('infra.demo01Contact.field.sex'),
       // rules: 'required',
-      component: 'I18nRadioGroup',
+      component: 'Input',
       componentProps: {
         options: getDictOptions(DICT_TYPE.SYSTEM_USER_SEX, 'number'),
         buttonStyle: 'solid',

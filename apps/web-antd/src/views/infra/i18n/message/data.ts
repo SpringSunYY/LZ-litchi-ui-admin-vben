@@ -1,8 +1,9 @@
-import { type VbenFormSchema, z } from '#/adapter/form';
+import type { VbenFormSchema } from '#/adapter/form';
 import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 import type { I18nKeyApi } from '#/api/infra/i18n/i18nKey';
 import type { I18nMessageApi } from '#/api/infra/i18n/i18nMessage';
 
+import { z } from '#/adapter/form';
 import { getI18nLocalePage } from '#/api/infra/i18n/i18nLocale';
 import { $t } from '#/locales';
 import { DICT_TYPE, getDictLabel, getDictOptions } from '#/utils';

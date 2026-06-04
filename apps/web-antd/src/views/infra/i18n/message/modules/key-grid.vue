@@ -24,10 +24,18 @@ import { $t } from '#/locales';
 import { useKeyGridColumns, useKeyGridFormSchema } from '../data';
 import KeyForm from './key-form.vue';
 
+const props = defineProps({
+  messageKey: {
+    type: String,
+    default: '',
+  },
+});
 const emit = defineEmits<{
   deleted: [];
   select: [row: I18nKeyApi.I18nKey];
 }>();
+
+const currentMessageKey = ref(props.messageKey);
 
 const [FormModal, formModalApi] = useVbenModelDrawer({
   connectedComponent: KeyForm,
@@ -91,6 +99,10 @@ const gridEvents: VxeGridListeners<I18nKeyApi.I18nKey> = {
 const [Grid, gridApi] = useVbenVxeGrid({
   formOptions: {
     schema: useKeyGridFormSchema(),
+    handleReset: () => {
+      currentMessageKey.value = '';
+      gridApi.query();
+    },
   },
   gridOptions: {
     columns: useKeyGridColumns(),
@@ -102,6 +114,12 @@ const [Grid, gridApi] = useVbenVxeGrid({
     proxyConfig: {
       ajax: {
         query: async ({ page }, formValues) => {
+          if (formValues.messageKey === undefined) {
+            gridApi.formApi.setValues({
+              messageKey: currentMessageKey.value,
+            });
+            formValues.messageKey = currentMessageKey.value;
+          }
           return await getI18nKeyPage({
             pageNo: page.currentPage,
             pageSize: page.pageSize,

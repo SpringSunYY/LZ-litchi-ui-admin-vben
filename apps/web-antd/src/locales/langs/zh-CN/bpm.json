@@ -1,10 +1,8 @@
 {
-  "bpm": {
-    "menu": "工作流"
-  },
+  "menu": "工作流",
   "category": {
     "category": "流程分类",
-    "menu": "流程分类管理",
+    "menu": "流程分类",
     "list": "流程分类列表",
     "field": {
       "id": "分类编号",
@@ -27,7 +25,7 @@
   },
   "form": {
     "form": "流程表单",
-    "menu": "流程表单管理",
+    "menu": "流程表单",
     "list": "流程表单列表",
     "field": {
       "id": "编号",
@@ -50,7 +48,7 @@
   },
   "group": {
     "group": "用户分组",
-    "menu": "用户分组管理",
+    "menu": "用户分组",
     "list": "用户分组列表",
     "field": {
       "id": "编号",
@@ -70,7 +68,7 @@
   },
   "model": {
     "model": "流程模型",
-    "menu": "流程模型管理",
+    "menu": "流程模型",
     "list": "流程模型列表",
     "field": {
       "name": "流程名",
@@ -233,7 +231,7 @@
   },
   "definition": {
     "definition": "流程定义",
-    "menu": "流程定义管理",
+    "menu": "流程定义",
     "list": "流程定义列表",
     "field": {
       "id": "定义编号",
@@ -307,7 +305,7 @@
   },
   "processExpression": {
     "processExpression": "流程表达式",
-    "menu": "流程表达式管理",
+    "menu": "流程表达式",
     "list": "流程表达式列表",
     "field": {
       "id": "编号",
@@ -335,7 +333,7 @@
   },
   "processListener": {
     "processListener": "流程监听器",
-    "menu": "流程监听器管理",
+    "menu": "流程监听器",
     "list": "流程监听器列表",
     "field": {
       "id": "编号",
@@ -367,7 +365,7 @@
   },
   "processInstance": {
     "processInstance": "流程实例",
-    "menu": "流程实例管理",
+    "menu": "流程实例",
     "list": "流程实例列表",
     "myList": "我的流程",
     "field": {
@@ -439,8 +437,8 @@
     }
   },
   "task": {
-    "task": "任务",
-    "menu": "任务管理",
+    "task": "流程任务",
+    "menu": "流程任务",
     "approvalCenter": "审批中心",
     "todo": {
       "title": "流程详情",
@@ -498,7 +496,7 @@
     },
     "manager": {
       "manager": "流程任务",
-      "menu": "任务管理",
+      "menu": "流程任务",
       "list": "任务列表",
       "action": {
         "history": "历史"
