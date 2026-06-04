@@ -33,6 +33,7 @@ defineEmits(['click']);
     <CardContent class="flex flex-wrap p-0">
       <template v-for="(item, index) in items" :key="item.title">
         <div
+          @click="$emit('click', item)"
           :class="{
             'border-r-0': index % 3 === 2,
             'border-b-0': index < 3,
@@ -47,7 +48,6 @@ defineEmits(['click']);
               :color="item.color"
               :icon="item.icon"
               class="size-8 transition-all duration-300 group-hover:scale-110"
-              @click="$emit('click', item)"
             />
             <span class="ml-4 text-lg font-medium">{{ item.title }}</span>
           </div>

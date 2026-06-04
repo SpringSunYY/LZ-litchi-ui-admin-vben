@@ -7,6 +7,7 @@ import {
   CardHeader,
   CardTitle,
   VbenIcon,
+  VbenTooltip,
 } from '@vben-core/shadcn-ui';
 
 interface Props {
@@ -46,10 +47,23 @@ withDefaults(defineProps<Props>(), {
                 {{ item.title }}
               </p>
               <!-- eslint-disable vue/no-v-html -->
-              <p
-                class="text-foreground/80 *:text-primary mt-1 truncate text-xs leading-5"
-                v-html="item.content"
-              ></p>
+              <VbenTooltip
+                :side="'top'"
+                :delay-duration="300"
+                :content-style="{
+                  maxWidth: '300px',
+                  whiteSpace: 'normal',
+                  wordBreak: 'break-all',
+                }"
+              >
+                <template #trigger>
+                  <p
+                    class="text-foreground/80 *:text-primary mt-1 truncate text-xs leading-5"
+                    v-html="item.content"
+                  ></p>
+                </template>
+                <span v-html="item.content"></span>
+              </VbenTooltip>
             </div>
           </div>
           <div class="hidden h-full shrink-0 sm:flex sm:flex-col sm:items-end">
