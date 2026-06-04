@@ -27,6 +27,8 @@ interface VbenDropdownMenuItem {
 
 interface DropdownMenuProps {
   menus: VbenDropdownMenuItem[];
+  /** loading 时阻止菜单打开（但不视觉禁用 trigger） */
+  loading?: boolean;
 }
 
 export type { DropdownMenuProps, VbenDropdownMenuItem };

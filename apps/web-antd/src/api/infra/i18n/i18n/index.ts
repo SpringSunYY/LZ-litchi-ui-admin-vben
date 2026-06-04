@@ -15,12 +15,27 @@ export namespace I18nApi {
   }
 }
 
+/** 获取国际化更新，如果当前状态和后台不同则返回true，反之false */
+export function getI18nUpdated(currentUpdate: boolean, locale: string) {
+  return requestClient.get<boolean>(
+    `/infra/i18n/locale/updated?updated=${currentUpdate}&&locale=${locale}`,
+  );
+}
+
+/** 获取当前状态 */
+export function getI18nStatus(locale: string) {
+  return requestClient.get<boolean>(
+    `/infra/i18n/locale/status?locale=${locale}`,
+  );
+}
+/** 获取国际化国家信息 */
 export function getI18nLocale(localeTarget: number) {
   return requestClient.get<I18nApi.Locale[]>(
     `/infra/i18n/locale/target?localeTarget=${localeTarget}`,
   );
 }
 
+/** 获取国际化国家信息 */
 export function getI18nLocaleMessage(localeTarget: number) {
   return requestClient.get<I18nApi.Message[]>(
     `/infra/i18n/locale/message?localeTarget=${localeTarget}`,

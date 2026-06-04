@@ -3,20 +3,20 @@ import type { SupportedLanguagesType } from '@vben/locales';
 
 import { computed, onMounted, ref, watch } from 'vue';
 
-import { I18N_CACHE_PREFIX, SUPPORT_LANGUAGES } from '@vben/constants';
+import { SUPPORT_LANGUAGES } from '@vben/constants';
 import { Languages } from '@vben/icons';
-import { $t, loadLocaleMessages } from '@vben/locales';
+import {
+  $t,
+  cachedLocaleList,
+  clearI18nCaches,
+  i18nLoading,
+  loadLocaleMessages,
+} from '@vben/locales';
 import { preferences, updatePreferences } from '@vben/preferences';
 
 import { VbenDropdownRadioMenu, VbenIconButton } from '@vben-core/shadcn-ui';
 
-import { Trash2 } from 'lucide-vue-next';
-
-interface I18nLocale {
-  localeName?: string;
-  locale?: string;
-  isDefault?: number;
-}
+import { Loader2, Trash2 } from 'lucide-vue-next';
 
 defineOptions({
   name: 'LanguageToggle',
@@ -25,8 +25,6 @@ defineOptions({
 /** 后端返回的地区选项 */
 const menuItems = ref<Array<{ label: string; value: string }>>([]);
 
-/** 后端 locale 与框架 SupportedLanguagesType 的映射（动态构建） */
-const localeMap = ref<Record<string, SupportedLanguagesType>>({});
 /** 反向映射：框架格式 -> 后端格式 */
 const reverseLocaleMap = ref<Record<string, string>>({});
 
@@ -46,34 +44,27 @@ function toBackendLocale(locale: string): string {
 /** 加载后端菜单并动态构建映射 */
 async function loadMenu() {
   try {
-    const resp = await fetch(
-      '/admin-api/infra/i18n/locale/target?localeTarget=2',
-    );
-    if (!resp.ok) return;
-    const json = await resp.json();
-    const list: I18nLocale[] = json?.data ?? [];
+    // 优先使用 bootstrap 阶段已缓存的语言列表，避免重复调用 API
+    const list = cachedLocaleList.value;
+    if (list.length === 0) return;
 
-    menuItems.value = list.map((item: I18nLocale) => ({
+    menuItems.value = list.map((item) => ({
       label: item.localeName ?? '',
       value: item.locale ?? '',
     }));
 
-    // 动态构建映射
-    const map: Record<string, SupportedLanguagesType> = {};
     const reverse: Record<string, string> = {};
     let defaultLang = '';
 
     for (const item of list) {
       const backend = item.locale ?? '';
       const framework = toFrameworkLocale(backend);
-      map[backend] = framework;
       reverse[framework] = backend;
       if (item.isDefault === 0) {
         defaultLang = backend;
       }
     }
 
-    localeMap.value = map;
     reverseLocaleMap.value = reverse;
     defaultBackendLocale.value = defaultLang;
   } catch {
@@ -83,29 +74,15 @@ async function loadMenu() {
 
 /** 清除所有 i18n 缓存 */
 function clearI18nCache() {
-  const prefix = I18N_CACHE_PREFIX;
-  const keysToRemove: string[] = [];
-
-  for (let i = 0; i < localStorage.length; i++) {
-    const key = localStorage.key(i);
-    if (key && key.startsWith(prefix)) {
-      keysToRemove.push(key);
-    }
-  }
-
-  keysToRemove.forEach((key) => {
-    localStorage.removeItem(key);
-  });
+  const count = clearI18nCaches();
 
   // 清除后回退到后端默认语言
   const defaultLang = toFrameworkLocale(defaultBackendLocale.value);
   updatePreferences({ app: { locale: defaultLang } });
   syncCurrentValue();
 
-  // 显示提示消息（使用国际化）
   // eslint-disable-next-line no-alert
-  alert($t('ui.alert.clearCacheSuccess', { count: keysToRemove.length }));
-  // 延迟刷新页面以重新加载翻译
+  alert($t('ui.alert.clearCacheSuccess', { count }));
   setTimeout(() => {
     window.location.reload();
   }, 1000);
@@ -119,7 +96,6 @@ async function handleUpdate(value: string | undefined) {
       locale: lang,
     },
   });
-  // loadLocaleMessages 内部会自动调用 mergeRemoteMessages
   await loadLocaleMessages(lang);
 }
 
@@ -127,7 +103,6 @@ async function handleUpdate(value: string | undefined) {
 const currentValue = ref<string>('');
 function syncCurrentValue() {
   const pref = preferences.app.locale;
-  // 如果有偏好，使用偏好的框架格式转换为后端格式
   if (pref) {
     currentValue.value = reverseLocaleMap.value[pref] ?? toBackendLocale(pref);
   } else if (defaultBackendLocale.value) {
@@ -180,10 +155,15 @@ onMounted(async () => {
     <VbenDropdownRadioMenu
       :menus="dropdownMenus"
       :model-value="currentValue"
+      :loading="i18nLoading"
       @update:model-value="handleUpdate"
     >
       <VbenIconButton>
-        <Languages class="text-foreground size-4" />
+        <Loader2
+          v-if="i18nLoading"
+          class="text-foreground size-4 animate-spin"
+        />
+        <Languages v-else class="text-foreground size-4" />
       </VbenIconButton>
     </VbenDropdownRadioMenu>
   </div>

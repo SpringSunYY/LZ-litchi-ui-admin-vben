@@ -6,6 +6,9 @@ import { ref } from 'vue';
 
 import {
   $t,
+  clearI18nCaches,
+  getLocaleInfo,
+  i18nLoading,
   LOCALE_FALLBACK,
   mergeRemoteMessages,
   getDefaultLocaleFromBackend as pkgGetDefaultLocaleFromBackend,
@@ -35,9 +38,21 @@ import dayjsLocaleVi from 'dayjs/locale/vi';
 import dayjsLocaleZhCn from 'dayjs/locale/zh-cn';
 import dayjsLocaleZhTw from 'dayjs/locale/zh-tw';
 
-import { getI18nLocale, getI18nLocaleMessage } from '#/api/infra/i18n/i18n';
+import {
+  getI18nLocale,
+  getI18nLocaleMessage,
+  getI18nStatus,
+  getI18nUpdated,
+} from '#/api/infra/i18n/i18n';
 
-export { $t, LOCALE_FALLBACK, mergeRemoteMessages };
+export {
+  $t,
+  clearI18nCaches,
+  getLocaleInfo,
+  i18nLoading,
+  LOCALE_FALLBACK,
+  mergeRemoteMessages,
+};
 
 export { type SetupI18nOptions };
 
@@ -121,15 +136,15 @@ export async function setupI18n(
     ...options,
     appModules,
     thirdPartySetup: loadThirdPartyMessage,
-    localeTarget: 2,
     getI18nLocaleApi: getI18nLocale,
     getI18nLocaleMessageApi: getI18nLocaleMessage,
+    getI18nUpdatedApi: getI18nUpdated,
+    getI18nStatusApi: getI18nStatus,
   });
 }
 
 export async function getDefaultLocaleFromBackend() {
   return pkgGetDefaultLocaleFromBackend({
-    localeTarget: 2,
     getI18nLocaleApi: getI18nLocale,
   });
 }

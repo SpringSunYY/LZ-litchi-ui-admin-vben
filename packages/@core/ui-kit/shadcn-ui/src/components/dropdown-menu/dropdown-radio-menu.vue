@@ -1,6 +1,8 @@
 <script lang="ts" setup>
 import type { DropdownMenuProps } from './interface';
 
+import { ref, watch } from 'vue';
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,9 +15,21 @@ import {
 interface Props extends DropdownMenuProps {}
 
 defineOptions({ name: 'DropdownRadioMenu' });
-withDefaults(defineProps<Props>(), {});
+const props = withDefaults(defineProps<Props>(), {
+  loading: false,
+});
 
 const modelValue = defineModel<string>();
+const open = ref(false);
+
+watch(
+  () => props.loading,
+  (loading) => {
+    if (loading) {
+      open.value = false;
+    }
+  },
+);
 
 function handleItemClick(menu: any) {
   if (menu.handler) {
@@ -24,10 +38,22 @@ function handleItemClick(menu: any) {
     modelValue.value = menu.value;
   }
 }
+
+function handleTriggerPointerDown(e: PointerEvent) {
+  if (props.loading) {
+    e.preventDefault();
+    e.stopPropagation();
+  }
+}
 </script>
 <template>
-  <DropdownMenu>
-    <DropdownMenuTrigger as-child class="flex items-center gap-1">
+  <DropdownMenu v-model:open="open">
+    <DropdownMenuTrigger
+      as-child
+      class="flex items-center gap-1"
+      :class="props.loading ? 'pointer-events-none' : ''"
+      @pointerdown="handleTriggerPointerDown"
+    >
       <slot></slot>
     </DropdownMenuTrigger>
     <DropdownMenuContent align="start">

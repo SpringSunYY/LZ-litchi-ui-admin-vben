@@ -3,6 +3,7 @@ export {
   $te,
   getDefaultLocaleFromBackend,
   i18n,
+  i18nLoading,
   loadLocaleMessages,
   loadLocalesMap,
   loadLocalesMapFromDir,
@@ -12,6 +13,12 @@ export {
   setupI18n,
 } from './i18n';
 
+export {
+  clearI18nCaches,
+  getGetI18nLocaleApi,
+  getLocaleInfo,
+  cachedLocaleList,
+} from './i18n';
 export type { LocaleTarget, SetupI18nOptions } from './i18n';
 export type { LocaleSetupOptions, SupportedLanguagesType } from './typing';
 export { useI18n } from 'vue-i18n';

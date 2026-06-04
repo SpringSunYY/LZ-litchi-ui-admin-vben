@@ -61,8 +61,10 @@ watch(
 );
 
 /** 刷新表格 */
-function onRefresh() {
-  currentMessageKey.value = '';
+function onRefresh(isClear = true) {
+  if (isClear) {
+    currentMessageKey.value = '';
+  }
   gridApi.query();
 }
 
@@ -242,7 +244,7 @@ defineExpose({ onRefresh });
 
 <template>
   <div class="flex h-full flex-col">
-    <FormModal @success="onRefresh" />
+    <FormModal @success="onRefresh(false)" />
     <ImportModal @success="onRefresh" />
     <Grid :table-title="$t('infra.i18nMessage.messageList')">
       <template #toolbar-tools>

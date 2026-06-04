@@ -8,11 +8,66 @@ import type {
   SupportedLanguagesType,
 } from './typing';
 
-import { unref } from 'vue';
+import { ref, unref } from 'vue';
 import { createI18n } from 'vue-i18n';
 
-/** i18n 远程消息缓存 key 前缀 */
+/** i18n 远程消息缓存 key */
 const I18N_CACHE_PREFIX = 'i18n_messages_';
+
+/** 后端 updated 状态缓存 key */
+const I18N_UPDATED_PREFIX = 'i18n_updated_';
+
+/** i18n 加载中状态（用于 UI 反馈） */
+export const i18nLoading = ref(false);
+
+/** 语言列表 API（由 app 层注入） */
+let appGetI18nLocale:
+  | ((
+      target: LocaleTarget,
+    ) => Promise<
+      Array<{ isDefault?: number; locale?: string; localeName?: string }>
+    >)
+  | null = null;
+
+/** 当前 localeTarget（由 app 层注入，默认为环境变量或 2 = PC 管理后台） */
+let currentLocaleTarget: LocaleTarget =
+  Number(import.meta.env.VITE_I18N_LOCALE_TARGET) || 2;
+
+/** 缓存的语言列表（由 getDefaultLocaleFromBackend 填充，供 language-toggle 等组件复用） */
+export const cachedLocaleList = ref<
+  Array<{ isDefault?: number; locale?: string; localeName?: string }>
+>([]);
+
+/**
+ * 设置语言列表 API 和 localeTarget（app 层在 setupI18n 时注入）
+ */
+export function setGetI18nLocaleApi(
+  fn: (
+    target: LocaleTarget,
+  ) => Promise<
+    Array<{ isDefault?: number; locale?: string; localeName?: string }>
+  >,
+  localeTarget?: LocaleTarget,
+) {
+  appGetI18nLocale = fn;
+  if (localeTarget !== undefined) {
+    currentLocaleTarget = localeTarget;
+  }
+}
+
+/**
+ * 获取已注入的语言列表 API（供 language-toggle 等组件使用）
+ */
+export function getGetI18nLocaleApi() {
+  return appGetI18nLocale;
+}
+
+/**
+ * 获取当前 localeTarget
+ */
+export function getLocaleTarget(): LocaleTarget {
+  return currentLocaleTarget;
+}
 
 const DEFAULT_LOCALE: SupportedLanguagesType = 'en-US';
 
@@ -80,9 +135,12 @@ export async function setRemoteMessageLoader(
 export async function mergeRemoteMessages(lang: SupportedLanguagesType) {
   if (remoteMessageLoader) {
     try {
+      i18nLoading.value = true;
       await remoteMessageLoader(lang);
     } catch (error) {
       console.error(`Failed to merge remote messages for ${lang}:`, error);
+    } finally {
+      i18nLoading.value = false;
     }
   }
 }
@@ -214,26 +272,73 @@ export interface SetupI18nOptions extends LocaleSetupOptions {
   ) => Promise<
     Array<{ locale?: string; message?: string; messageKey?: string }>
   >;
+  /** 后端 i18n API — 检查后端是否有更新，返回 true 表示有更新需重新拉取 */
+  getI18nUpdatedApi?: (
+    currentUpdated: boolean,
+    lang: string,
+  ) => Promise<boolean>;
+  /** 后端 i18n API — 获取后端国际化状态 */
+  getI18nStatusApi?: (lang: string) => Promise<boolean>;
 }
 
 function getCacheKey(lang: SupportedLanguagesType): string {
-  const now = new Date();
-  const year = now.getFullYear();
-  const month = String(now.getMonth() + 1).padStart(2, '0');
-  return `${I18N_CACHE_PREFIX}${lang}_${year}-${month}`;
+  return `${I18N_CACHE_PREFIX}${lang}`;
 }
 
-function clearOldI18nCache(): void {
-  const now = new Date();
-  const year = now.getFullYear();
-  const month = String(now.getMonth() + 1).padStart(2, '0');
-  const currentYearMonth = `${year}-${month}`;
-  const prefix = I18N_CACHE_PREFIX;
+function getUpdatedKey(lang: SupportedLanguagesType): string {
+  return `${I18N_UPDATED_PREFIX}${lang}`;
+}
+
+/**
+ * 获取语言列表，每次都从后端拉取（语言列表数据量小，无需缓存）
+ */
+export async function getLocaleInfo(options: {
+  getI18nLocaleApi?: (
+    target: LocaleTarget,
+  ) => Promise<
+    Array<{ isDefault?: number; locale?: string; localeName?: string }>
+  >;
+  localeTarget?: LocaleTarget;
+}): Promise<Array<{
+  isDefault?: number;
+  locale?: string;
+  localeName?: string;
+}> | null> {
+  const localeTarget = options.localeTarget ?? currentLocaleTarget;
+  const api = options.getI18nLocaleApi ?? appGetI18nLocale;
+  if (!api) return null;
+
+  const list = await api(localeTarget);
+  return Array.isArray(list) ? list : null;
+}
+
+/**
+ * 更改更新信息缓存
+ */
+export function setI18nUpdated(key: string, value?: string) {
+  if (!value) {
+    localStorage.setItem(key, 'true');
+  }
+  // 指定值，就是这两种状态
+  if (value === 'false') {
+    localStorage.setItem(key, 'true');
+  } else if (value === 'true') {
+    localStorage.setItem(key, 'false');
+  } else {
+    localStorage.setItem(key, 'true');
+  }
+}
+
+/**
+ * 清除所有 i18n 相关缓存（消息缓存、updated 状态缓存）
+ */
+export function clearI18nCaches() {
+  const prefixes = [I18N_CACHE_PREFIX, I18N_UPDATED_PREFIX];
   const keysToRemove: string[] = [];
 
   for (let i = 0; i < localStorage.length; i++) {
     const key = localStorage.key(i);
-    if (key && key.startsWith(prefix) && !key.endsWith(currentYearMonth)) {
+    if (key && prefixes.some((p) => key.startsWith(p))) {
       keysToRemove.push(key);
     }
   }
@@ -241,6 +346,8 @@ function clearOldI18nCache(): void {
   keysToRemove.forEach((key) => {
     localStorage.removeItem(key);
   });
+
+  return keysToRemove.length;
 }
 
 /**
@@ -285,24 +392,89 @@ function mergeFlatMessages(
   Object.assign(messages[lang], flatMessages);
 }
 
+/**
+ * 确保 fallback 语言消息已加载到 vue-i18n，避免 fallback 链断裂。
+ * 优先从后端响应数据（messagesByLang）加载；否则从 localStorage 缓存加载。
+ */
+function ensureFallbackMessages(
+  messagesByLang?: Record<string, Record<string, string>>,
+) {
+  if (!currentFallbackLocale) return;
+  const messages = (i18n.global.messages as any).value;
+  // 如果 fallback 语言已有消息，跳过
+  if (
+    messages[currentFallbackLocale] &&
+    Object.keys(messages[currentFallbackLocale]).length > 0
+  ) {
+    return;
+  }
+
+  // 优先用后端响应数据
+  if (messagesByLang?.[currentFallbackLocale]) {
+    mergeFlatMessages(
+      currentFallbackLocale,
+      messagesByLang[currentFallbackLocale]!,
+    );
+    return;
+  }
+
+  // 其次从 localStorage 缓存加载
+  const fallbackCached = localStorage.getItem(
+    getCacheKey(currentFallbackLocale),
+  );
+  if (fallbackCached) {
+    mergeFlatMessages(currentFallbackLocale, JSON.parse(fallbackCached));
+  }
+}
+
 async function fetchRemoteMessages(
   lang: SupportedLanguagesType,
   options: SetupI18nOptions,
 ): Promise<null | Record<string, string>> {
-  const { localeTarget = 2, getI18nLocaleMessageApi } = options;
+  const {
+    localeTarget = currentLocaleTarget,
+    getI18nLocaleMessageApi,
+    getI18nUpdatedApi,
+    getI18nStatusApi,
+  } = options;
 
   if (!getI18nLocaleMessageApi) return null;
 
   try {
     const cacheKey = getCacheKey(lang);
-
+    const updatedKey = getUpdatedKey(lang);
     const cachedData = localStorage.getItem(cacheKey);
-    if (cachedData) {
-      const messages = JSON.parse(cachedData);
-      mergeFlatMessages(lang, messages);
-      return messages;
-    }
+    const cachedUpdated = localStorage.getItem(updatedKey) || null;
 
+    // 有缓存：拿上次保存的后端状态去比对是否有更新
+    if (cachedData) {
+      try {
+        const backendUpdated = await getI18nUpdatedApi?.(
+          cachedUpdated === 'true',
+          lang,
+        );
+        // 后端返回 true = 前后端状态不一致，需要拉取新数据
+        if (backendUpdated) {
+          // 后端返回 true，需要拉取新数据
+        } else {
+          const messages = JSON.parse(cachedData);
+          mergeFlatMessages(lang, messages);
+          // 走缓存时也要加载 fallback 语言消息，否则 fallback 链断裂
+          ensureFallbackMessages();
+          return messages;
+        }
+      } catch (error) {
+        console.warn(
+          `[i18n][${lang}] getI18nUpdatedApi error, using cache`,
+          error,
+        );
+        const messages = JSON.parse(cachedData);
+        mergeFlatMessages(lang, messages);
+        ensureFallbackMessages();
+        return messages;
+      }
+    }
+    // 无缓存 或 后端有更新：重新拉取全部消息
     const allMessages = await getI18nLocaleMessageApi(localeTarget);
 
     if (Array.isArray(allMessages)) {
@@ -322,34 +494,45 @@ async function fetchRemoteMessages(
 
       const hasData = Object.keys(messagesByLang).length > 0;
       if (hasData) {
-        clearOldI18nCache();
-
+        // 持久化所有语言缓存
         for (const [langCode, messages] of Object.entries(messagesByLang)) {
           localStorage.setItem(
             getCacheKey(langCode as SupportedLanguagesType),
             JSON.stringify(messages),
           );
         }
+        // 如果没有更新缓存，拿当前状态缓存
+        if (cachedUpdated === null) {
+          const updated = await getI18nStatusApi?.(lang);
+          setI18nUpdated(updatedKey, updated ? 'false' : 'true');
+        } else {
+          // 拉取完成后标记缓存为最新,和上次状态相反
+          setI18nUpdated(updatedKey, cachedUpdated as string);
+        }
 
-        // Always merge current language messages
         if (messagesByLang[lang]) {
           mergeFlatMessages(lang, messagesByLang[lang]);
         }
 
-        // Merge fallback locale if different from current language
-        if (
-          lang !== currentFallbackLocale &&
-          messagesByLang[currentFallbackLocale]
-        ) {
-          const fallbackMessages = messagesByLang[currentFallbackLocale];
-          if (fallbackMessages) {
-            mergeFlatMessages(currentFallbackLocale, fallbackMessages);
-          }
-        }
+        // 强制加载 fallback 语言消息，不管当前语言是否就是 fallback
+        ensureFallbackMessages(messagesByLang);
       }
       return messagesByLang[lang] ?? null;
     }
   } catch (error) {
+    // 拉取失败，如果有缓存则降级使用
+    const cacheKey = getCacheKey(lang);
+    const cachedData = localStorage.getItem(cacheKey);
+    if (cachedData) {
+      try {
+        const messages = JSON.parse(cachedData);
+        mergeFlatMessages(lang, messages);
+        ensureFallbackMessages();
+        return messages;
+      } catch {
+        // 缓存损坏，无可用数据
+      }
+    }
     console.error(`Failed to load remote messages for ${lang}:`, error);
   }
   return null;
@@ -383,13 +566,18 @@ let currentFallbackLocale: SupportedLanguagesType;
 export async function getDefaultLocaleFromBackend(
   options: SetupI18nOptions = {},
 ): Promise<SupportedLanguagesType> {
-  const { localeTarget = 2, getI18nLocaleApi } = options;
+  const localeTarget = options.localeTarget ?? currentLocaleTarget;
+  const getApi = options.getI18nLocaleApi ?? appGetI18nLocale;
 
-  if (!getI18nLocaleApi) return LOCALE_FALLBACK;
+  if (!getApi) return LOCALE_FALLBACK;
 
   try {
-    const list = await getI18nLocaleApi(localeTarget);
-    if (Array.isArray(list)) {
+    const list = await getLocaleInfo({
+      getI18nLocaleApi: getApi,
+      localeTarget,
+    });
+    if (list) {
+      cachedLocaleList.value = list;
       const defaultItem = list.find((item) => item.isDefault === 0);
       if (defaultItem?.locale) {
         return defaultItem.locale.replaceAll(
@@ -408,12 +596,6 @@ async function setupI18nCore(app: App, options: LocaleSetupOptions = {}) {
   const { defaultLocale = 'zh-CN', fallbackLocale } = options;
   loadMessages = options.loadMessages || (async () => ({}));
 
-  if (fallbackLocale && fallbackLocale !== defaultLocale) {
-    i18n.global.fallbackRoot = true;
-    // @ts-ignore
-    i18n.global.fallbackLocale.value = fallbackLocale;
-  }
-
   if (fallbackLocale) {
     i18n.global.fallbackRoot = true;
     // @ts-ignore
@@ -428,9 +610,11 @@ export async function setupI18n(app: App, options: SetupI18nOptions = {}) {
   const {
     appModules: modules,
     thirdPartySetup: tpSetup,
-    localeTarget = 2,
+    localeTarget = Number(import.meta.env.VITE_I18N_LOCALE_TARGET) || 2,
     getI18nLocaleApi,
     getI18nLocaleMessageApi,
+    getI18nUpdatedApi,
+    getI18nStatusApi,
     defaultLocale,
     fallbackLocale,
   } = options;
@@ -439,11 +623,17 @@ export async function setupI18n(app: App, options: SetupI18nOptions = {}) {
   thirdPartySetup = tpSetup ?? null;
   currentFallbackLocale = fallbackLocale ?? LOCALE_FALLBACK;
 
+  if (getI18nLocaleApi) {
+    setGetI18nLocaleApi(getI18nLocaleApi as any, localeTarget);
+  }
+
   await setRemoteMessageLoader((lang) =>
     fetchRemoteMessages(lang, {
       localeTarget,
       getI18nLocaleApi,
       getI18nLocaleMessageApi,
+      getI18nUpdatedApi,
+      getI18nStatusApi,
     }),
   );
 
