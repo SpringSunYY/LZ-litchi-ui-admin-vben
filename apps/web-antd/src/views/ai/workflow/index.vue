@@ -22,6 +22,7 @@ function handleRefresh() {
 function handleCreate() {
   router.push({
     name: 'AiWorkflowCreate',
+    params: { id: 0, type: 'create' },
   });
 }
 
