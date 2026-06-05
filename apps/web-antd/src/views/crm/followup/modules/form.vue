@@ -12,7 +12,7 @@ import { getBusinessPageByCustomer } from '#/api/crm/business';
 import { getContactPageByCustomer } from '#/api/crm/contact';
 import { createFollowUpRecord } from '#/api/crm/followup';
 import { $t } from '#/locales';
-import { DICT_TYPE, getDictOptions } from '#/utils';
+import { DICT_TYPE, getDictOptions, MODULE_TYPE_ENUM } from '#/utils';
 
 const emit = defineEmits(['success']);
 
@@ -76,7 +76,7 @@ const [Form, formApi] = useVbenForm({
       label: $t('crm.followup.field.picUrls'),
       component: 'ImageUpload',
       componentProps: {
-        moduleType: 'crm',
+        moduleType: MODULE_TYPE_ENUM.CRM,
       },
     },
     {

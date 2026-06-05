@@ -4,7 +4,12 @@ import type { Demo01ContactApi } from '#/api/infra/demo/demo01';
 
 import { $t } from '@vben/locales';
 
-import { DICT_TYPE, getDictOptions, getRangePickerDefaultProps } from '#/utils';
+import {
+  DICT_TYPE,
+  MODULE_TYPE_ENUM,
+  getDictOptions,
+  getRangePickerDefaultProps,
+} from '#/utils';
 
 /** 新增/修改的表单 */
 export function useFormSchema(): VbenFormSchema[] {
@@ -73,7 +78,7 @@ export function useFormSchema(): VbenFormSchema[] {
       // rules: 'required',
       component: 'RichTextarea',
       componentProps: {
-        moduleType: 'infra',
+        moduleType: MODULE_TYPE_ENUM.INFRA,
       },
     },
     /** 头像 */

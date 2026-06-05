@@ -15,6 +15,7 @@ import { Button, Form, message, UploadDragger } from 'ant-design-vue';
 
 import { useUpload } from '#/components/upload/use-upload';
 import { $t } from '#/locales';
+import { MODULE_TYPE_ENUM } from '#/utils';
 
 const props = defineProps({
   modelValue: {
@@ -124,7 +125,11 @@ async function customRequest(info: UploadRequestOption) {
       const percent = Math.trunc((e.loaded / e.total!) * 100);
       info.onProgress!({ percent });
     };
-    const res = await httpRequest(info.file as File, progressEvent);
+    const res = await httpRequest(
+      info.file as File,
+      progressEvent,
+      MODULE_TYPE_ENUM.AI,
+    );
     info.onSuccess!(res);
     message.success($t('ai.knowledge.document.message.uploadSuccess'));
     ensureListExists();

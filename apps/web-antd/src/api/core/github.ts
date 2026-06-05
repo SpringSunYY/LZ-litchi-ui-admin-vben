@@ -37,7 +37,7 @@ const CACHE_KEY = '__github_commits_cache__';
 const CACHE_TTL_MS = 30 * 60 * 1000; // 30 分钟
 
 interface CacheEntry {
-  data: WorkbenchTrendItem[];
+  data: Array<{ commit: GithubApi.Commit; repo: string }>;
   timestamp: number;
 }
 
@@ -45,13 +45,22 @@ function getCache(): CacheEntry | null {
   try {
     const raw = localStorage.getItem(CACHE_KEY);
     if (!raw) return null;
-    return JSON.parse(raw) as CacheEntry;
+    const parsed = JSON.parse(raw) as CacheEntry;
+    if (!Array.isArray(parsed.data) || !parsed.data.length) return null;
+    if (typeof parsed.data[0]?.repo !== 'string') {
+      clearCache();
+      return null;
+    }
+    return parsed;
   } catch {
+    clearCache();
     return null;
   }
 }
 
-function setCache(data: WorkbenchTrendItem[]): void {
+function setCache(
+  data: Array<{ commit: GithubApi.Commit; repo: string }>,
+): void {
   try {
     localStorage.setItem(
       CACHE_KEY,
@@ -113,7 +122,9 @@ function buildTrendItem(
 export async function getGithubCommits(): Promise<WorkbenchTrendItem[]> {
   const cached = getCache();
   if (cached && Date.now() - cached.timestamp < CACHE_TTL_MS) {
-    return cached.data;
+    return cached.data
+      .slice(0, 10)
+      .map(({ commit, repo }) => buildTrendItem(commit, repo));
   }
 
   clearCache();
@@ -137,12 +148,10 @@ export async function getGithubCommits(): Promise<WorkbenchTrendItem[]> {
         new Date(a.commit.commit.author.date).getTime(),
     );
 
-    const data = sorted
+    setCache(sorted);
+    return sorted
       .slice(0, 10)
       .map(({ commit, repo }) => buildTrendItem(commit, repo));
-
-    setCache(data);
-    return data;
   } catch {
     return [];
   }

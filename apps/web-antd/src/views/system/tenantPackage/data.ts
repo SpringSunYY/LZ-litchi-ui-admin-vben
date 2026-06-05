@@ -6,6 +6,7 @@ import { z } from '#/adapter/form';
 import { $t } from '#/locales';
 import {
   CommonStatusEnum,
+  MODULE_TYPE_ENUM,
   DICT_TYPE,
   getDictOptions,
   getRangePickerDefaultProps,
@@ -159,7 +160,7 @@ export function useFormSchema(): VbenFormSchema[] {
       rules: 'required',
       component: 'ImageUpload',
       componentProps: {
-        moduleType: 'system',
+        moduleType: MODULE_TYPE_ENUM.SYSTEM,
       },
     },
     {

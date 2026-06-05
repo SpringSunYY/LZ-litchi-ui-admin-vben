@@ -9,7 +9,12 @@ import { formatDateTime } from '@vben/utils';
 import { z } from '#/adapter/form';
 import { DictTag } from '#/components/dict-tag';
 import { $t } from '#/locales';
-import { CommonStatusEnum, DICT_TYPE, getDictOptions } from '#/utils';
+import {
+  CommonStatusEnum,
+  MODULE_TYPE_ENUM,
+  DICT_TYPE,
+  getDictOptions,
+} from '#/utils';
 
 /** 新增/修改的表单 */
 export function useFormSchema(): VbenFormSchema[] {
@@ -45,7 +50,7 @@ export function useFormSchema(): VbenFormSchema[] {
       component: 'RichTextarea',
       rules: 'required',
       componentProps: {
-        moduleType: 'system',
+        moduleType: MODULE_TYPE_ENUM.SYSTEM,
       },
     },
     {
@@ -54,7 +59,7 @@ export function useFormSchema(): VbenFormSchema[] {
       component: 'FileUpload',
       componentProps: {
         maxSize: 100,
-        moduleType: 'system',
+        moduleType: MODULE_TYPE_ENUM.SYSTEM,
       },
     },
     {

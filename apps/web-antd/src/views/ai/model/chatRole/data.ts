@@ -5,13 +5,14 @@ import { z } from '#/adapter/form';
 import { getSimpleKnowledgeList } from '#/api/ai/knowledge/knowledge';
 import { getModelSimpleList } from '#/api/ai/model/model';
 import { getToolSimpleList } from '#/api/ai/model/tool';
+import { $t } from '#/locales';
 import {
   AiModelTypeEnum,
   CommonStatusEnum,
   DICT_TYPE,
   getDictOptions,
+  MODULE_TYPE_ENUM,
 } from '#/utils';
-import { $t } from '#/locales';
 
 /** 新增/修改的表单 */
 export function useFormSchema(): VbenFormSchema[] {
@@ -48,6 +49,9 @@ export function useFormSchema(): VbenFormSchema[] {
       fieldName: 'avatar',
       label: $t('ai.model.chatRole.field.avatar'),
       rules: 'required',
+      componentProps: {
+        moduleType: MODULE_TYPE_ENUM.AI,
+      },
     },
     {
       fieldName: 'modelId',

@@ -3,7 +3,12 @@ import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 
 import { z } from '#/adapter/form';
 import { $t } from '#/locales';
-import { CommonStatusEnum, DICT_TYPE, getDictOptions } from '#/utils';
+import {
+  CommonStatusEnum,
+  DICT_TYPE,
+  getDictOptions,
+  MODULE_TYPE_ENUM,
+} from '#/utils';
 
 /** 新增/修改的表单 */
 export function useFormSchema(): VbenFormSchema[] {
@@ -55,7 +60,7 @@ export function useFormSchema(): VbenFormSchema[] {
       component: 'ImageUpload',
       componentProps: {
         limit: 1,
-        moduleType: 'system',
+        moduleType: MODULE_TYPE_ENUM.SYSTEM,
       },
       rules: 'required',
     },

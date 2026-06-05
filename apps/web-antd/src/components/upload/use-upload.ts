@@ -91,7 +91,7 @@ export function useUploadType({
 }
 
 // TODO @YY：目前保持和 admin-vue3 一致，后续可能重构
-export function useUpload(directory?: string, moduleType?: string) {
+export function useUpload(directory?: string, defaultModuleType?: string) {
   // 后端上传地址
   const uploadUrl = getUploadUrl();
   // 是否使用前端直连上传
@@ -102,6 +102,7 @@ export function useUpload(directory?: string, moduleType?: string) {
   async function httpRequest(
     file: File,
     onUploadProgress?: AxiosProgressEvent,
+    moduleType?: string,
   ) {
     // 模式一：前端上传
     if (isClientUpload) {
@@ -119,16 +120,24 @@ export function useUpload(directory?: string, moduleType?: string) {
         })
         .then(() => {
           // 1.4. 记录文件信息到后端（异步）
-          createFile0(presignedInfo, file, moduleType);
+          createFile0(presignedInfo, file, defaultModuleType || moduleType);
           // 通知成功，数据格式保持与后端上传的返回结果一致
           return { url: presignedInfo.url };
         });
     } else {
       // 模式二：后端上传（timeout: 0 防止大文件上传超时）
-      //@ts-ignore
-      return uploadFile({ file, directory, moduleType }, onUploadProgress, {
-        timeout: 0,
-      });
+      return uploadFile(
+        {
+          file,
+          directory,
+          moduleType: defaultModuleType || moduleType,
+        },
+        onUploadProgress,
+        // @ts-ignore 忽略类型检查
+        {
+          timeout: 0,
+        },
+      );
     }
   }
 

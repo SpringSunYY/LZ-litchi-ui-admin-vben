@@ -10,3 +10,11 @@ export const UserTypeEnum = {
   MEMBER: 1, // 会员
   ADMIN: 2, // 管理员
 };
+
+export const MODULE_TYPE_ENUM = {
+  SYSTEM: 'system', // 系统模块
+  BIZ: 'biz', // 业务模块
+  AI: 'ai', // AI 模块
+  CRM: 'crm', // CRM 模块
+  INFRA: 'infra', // 基础模块
+};

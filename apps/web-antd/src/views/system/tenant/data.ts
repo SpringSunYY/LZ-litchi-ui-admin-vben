@@ -10,6 +10,7 @@ import {
   DICT_TYPE,
   getDictOptions,
   getRangePickerDefaultProps,
+  MODULE_TYPE_ENUM,
 } from '#/utils';
 
 /** 新增/修改的表单 */
@@ -110,7 +111,7 @@ export function useFormSchema(): VbenFormSchema[] {
       label: $t('system.tenant.field.qualifications'),
       component: 'FileUpload',
       componentProps: {
-        moduleType: 'system',
+        moduleType: MODULE_TYPE_ENUM.SYSTEM,
       },
     },
     {

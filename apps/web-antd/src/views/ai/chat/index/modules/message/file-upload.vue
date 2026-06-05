@@ -8,6 +8,7 @@ import { message } from 'ant-design-vue';
 
 import { useUpload } from '#/components/upload/use-upload';
 import { $t } from '#/locales';
+import { MODULE_TYPE_ENUM } from '#/utils';
 
 export interface FileItem {
   name: string;
@@ -137,7 +138,11 @@ async function uploadFile(fileItem: FileItem) {
       }
     }, 100);
 
-    const response = await httpRequest(fileItem.raw!);
+    const response = await httpRequest(
+      fileItem.raw!,
+      undefined,
+      MODULE_TYPE_ENUM.AI,
+    );
     clearInterval(progressInterval);
 
     fileItem.uploading = false;
