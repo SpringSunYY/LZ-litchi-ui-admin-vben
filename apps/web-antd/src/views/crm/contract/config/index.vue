@@ -94,7 +94,7 @@ onMounted(() => {
 <template>
   <Page auto-content-height>
     <Card :title="$t('crm.contract.config.title')">
-      <Form class="w-1/4" />
+      <Form class="w-100%" />
     </Card>
   </Page>
 </template>

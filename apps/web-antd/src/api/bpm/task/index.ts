@@ -14,6 +14,7 @@ export namespace BpmTaskApi {
     status: number; // 监听器状态
     event: string; // 监听事件
     valueType: string; // 监听器值类型
+    processInstance: BpmProcessInstanceApi.ProcessInstanceVO;
   }
 
   // 流程任务 VO

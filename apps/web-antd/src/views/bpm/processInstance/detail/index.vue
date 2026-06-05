@@ -247,12 +247,7 @@ onMounted(async () => {
 
 <template>
   <Page auto-content-height>
-    <Card
-      :body-style="{
-        overflowY: 'auto',
-        paddingTop: '12px',
-      }"
-    >
+    <Card>
       <template #title>
         <span class="text-[#878c93]">{{
           $t('bpm.processInstance.detail.instanceId', [id || '-'])
@@ -271,9 +266,6 @@ onMounted(async () => {
               :type="DICT_TYPE.BPM_PROCESS_INSTANCE_STATUS"
               :value="processInstance.status"
             />
-          </div>
-
-          <div class="mb-10px text-13px h-35px flex items-center gap-5">
             <div
               class="flex items-center gap-2 rounded-3xl bg-gray-100 px-[10px] py-[4px] dark:bg-gray-600"
             >
@@ -457,7 +449,7 @@ onMounted(async () => {
 }
 
 .tab-pane-content {
-  height: calc(100vh - 420px);
+  height: 55vh;
   padding-right: 12px;
   overflow: hidden auto;
 }

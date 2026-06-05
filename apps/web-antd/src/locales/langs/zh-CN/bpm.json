@@ -462,6 +462,9 @@
       "done": "已办任务",
       "menu": "已办任务",
       "list": "已办任务列表",
+      "message": {
+        "clickCardTip": "点击卡片，实时查看流程详情"
+      },
       "action": {
         "history": "历史"
       },

@@ -462,6 +462,9 @@
       "done": "done tasks",
       "menu": "done tasks",
       "list": "done task list",
+      "message": {
+        "clickCardTip": "Click a card to view process details in real time"
+      },
       "action": {
         "history": "history"
       },
