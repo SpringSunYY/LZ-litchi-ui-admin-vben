@@ -1,3 +1,19 @@
+# 你好，YY <img src="assets/blob-sunglasses.gif" width="30"/>
+
+<div align="center">
+  <a href="https://github.com/SpringSunYY">
+    <img src="https://readme-typing-svg.vercel.app?font=Fira+Code&size=32&pause=1000&color=09F724&center=true&vCenter=true&width=600&height=60&lines=Hello%2C+I+am+YY;Welcome+to+my+code+world%F0%9F%9A%80" alt="Typing SVG" />
+  </a>
+</div>
+
+<div align="center">
+  <a href="https://github.com/SpringSunYY">
+    <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&pause=1000&width=435&lines=%E7%83%AD%E7%88%B1%E5%8F%AF%E6%8A%B5%E5%B2%81%E6%9C%88%E6%BC%AB%E9%95%BF%EF%BC%81%E8%AE%A9%E6%AD%A3%E7%A1%AE%E7%9A%84%E4%BA%8B%E6%83%85%E6%8C%81%E7%BB%AD%E5%8F%91%E7%94%9F%EF%BC%81" alt="Typing SVG" />
+  </a>
+</div>
+
+# **严肃声明：现在、未来都不会有商业版本，所有代码全部开源!！**
+
 - 如果这个项目让你有所收获，记得 Star 关注哦，这对我是非常不错的鼓励与支持。本项目基于芋道开发。
 
   ## 🐶 新手必读
@@ -29,8 +45,6 @@
   - 实时通信，采用 Spring WebSocket 实现，内置 Token 身份校验，支持 WebSocket 集群
   - 集成阿里云、腾讯云等短信渠道，集成 MinIO、阿里云、腾讯云、七牛云等云存储服务
 
-  ##
-
   ## 😎 开源协议
 
   **为什么推荐使用本项目？**
@@ -43,15 +57,35 @@
 
   ## 🤝 项目外包
 
-  我们也是接外包滴，如果你有项目想要外包，可以微信联系【**SpringSun_YY**】。
+  - 我们也是接外包滴，如果你有项目想要外包，可以微信联系【**SpringSun_YY**】。
 
-  团队包含专业的项目经理、架构师、前端工程师、后端工程师、测试工程师、运维工程师，可以提供全流程的外包服务。
-
-  项目可以是OA 系统、ERP 系统、CRM系统等等，或者您的二次开发。
-
-​ 外包项目请联系【非项目需求请勿扫码，非客服，不解答项目问题】
+  - 团队包含专业的项目经理、架构师、前端工程师、后端工程师、测试工程师、运维工程师，可以提供全流程的外包服务。
+  - 项目可以是OA 系统、ERP 系统、CRM系统等等，或者您的二次开发。
+  - 外包项目请联系【非项目需求请勿扫码，非客服，不解答项目问题】
 
 ![alt 定制开发](assets/wx.png)
+
+![2](assets/2.png)
+
+## 😁 联系我
+
+<p align="center" style="display:flex; justify-content:center; gap:20px; flex-wrap:wrap;">
+  <a href="mailto:3217778348@qq.com">
+    <img height="60" src="./assets/qqmail.png" alt="QQ邮箱" title="QQ邮箱" />
+  </a>
+  <a href="mailto:waitspringyy@gmail.com">
+    <img height="60" src="./assets/gmail.png" alt="Google邮箱" title="Google邮箱" />
+  </a>
+  <a href="https://www.douyin.com/user/MS4wLjABAAAAgisqDvuV-EkMlik_LCT0fWvuIV1HoMY55uxeHiqpLg4?from_tab_name=main" target="_blank">
+    <img height="60" src="./assets/douyin.png" alt="抖音" title="抖音" />
+  </a>
+  <a href="https://space.bilibili.com/3546627304327173" target="_blank">
+    <img height="60" src="./assets/bilibili.png" alt="B站" title="B站" />
+  </a>
+  <a href="https://www.youtube.com/@SpringSunYY" target="_blank">
+    <img height="60" src="./assets/youtube.png" alt="YouTube" title="YouTube" />
+  </a>
+</p>
 
 ## 技术栈
 
