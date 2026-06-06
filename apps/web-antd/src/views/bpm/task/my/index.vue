@@ -3,9 +3,9 @@ import type { PageParam, PageResult } from '@vben/request';
 
 import type { BpmTaskApi } from '#/api/bpm/task';
 
-import { computed, nextTick, onMounted, ref, watch } from 'vue';
+import { computed, h, nextTick, onMounted, ref, watch } from 'vue';
 
-import { Page } from '@vben/common-ui';
+import { Page, prompt } from '@vben/common-ui';
 import { IconifyIcon } from '@vben/icons';
 import { formatDateTime } from '@vben/utils';
 
@@ -15,25 +15,35 @@ import {
   DatePicker,
   Empty,
   Input,
+  message,
   Popover,
   Select,
   Skeleton,
   Tag,
+  Textarea,
 } from 'ant-design-vue';
 
 import { getCategorySimpleList } from '#/api/bpm/category';
-import { getTaskTodoPage } from '#/api/bpm/task';
+import {
+  cancelProcessInstanceByStartUser,
+  getProcessInstanceMyPage,
+} from '#/api/bpm/processInstance';
 import { EllipsisContent } from '#/components/ellipsis-content';
 import I18nSelect from '#/components/i18n/i18n-select/i18n-select.vue';
 import { $t } from '#/locales';
 import { router } from '#/router';
-import { DICT_TYPE, getDictOptions, getRangePickerDefaultProps } from '#/utils';
+import {
+  BpmProcessInstanceStatus,
+  DICT_TYPE,
+  getDictOptions,
+  getRangePickerDefaultProps,
+} from '#/utils';
 
 import ProcessInstanceDetail from '../../processInstance/detail/index.vue';
 
-defineOptions({ name: 'BpmTodoTask' });
+defineOptions({ name: 'BpmProcessInstanceMy' });
 
-type TaskTodoQuery = PageParam & {
+type TaskMyQuery = PageParam & {
   category?: string;
   createTime?: [string, string];
   name?: string;
@@ -55,7 +65,7 @@ const loadingMore = ref(false);
 const categoryOptions = ref<any[]>([]);
 const listContainerRef = ref<HTMLElement>();
 const filterPopoverOpen = ref(false);
-const queryForm = ref<TaskTodoQuery>({
+const queryForm = ref<TaskMyQuery>({
   pageNo: 1,
   pageSize: DEFAULT_PAGE_SIZE,
   name: undefined,
@@ -83,12 +93,11 @@ const statusOptions = computed(() =>
 const detailRenderKey = ref('');
 
 const detailProps = computed(() => {
-  if (!selectedTask.value?.processInstance?.id) {
+  if (!selectedTask.value?.id) {
     return null;
   }
   return {
-    id: String(selectedTask.value.processInstance.id),
-    taskId: String(selectedTask.value.id),
+    id: String(selectedTask.value.id),
   };
 });
 
@@ -103,17 +112,17 @@ const hasAdvancedFilters = computed(
 watch(
   detailProps,
   (value) => {
-    detailRenderKey.value = value ? `${value.id}-${value.taskId || ''}` : '';
+    detailRenderKey.value = value ? `${value.id}` : '';
   },
   { immediate: true },
 );
 
 function getTaskTitle(row: BpmTaskApi.TaskVO) {
-  return row.processInstance?.name || row.name || '-';
+  return row.name || '-';
 }
 
 function getTaskSummary(row: BpmTaskApi.TaskVO): SummaryItem[] {
-  const summary = (row.processInstance as any)?.summary;
+  const summary = (row as any)?.summary;
   if (!Array.isArray(summary)) {
     return [];
   }
@@ -124,16 +133,56 @@ function handleSelect(row: BpmTaskApi.TaskVO) {
   selectedTask.value = row;
 }
 
-function handleAudit(row: BpmTaskApi.TaskVO) {
-  if (!row.processInstance?.id) {
-    return;
-  }
+function handleDetail(row: BpmTaskApi.TaskVO) {
   router.push({
     name: 'BpmProcessInstanceDetail',
-    query: {
-      id: row.processInstance.id,
-      taskId: row.id,
+    query: { id: row.id },
+  });
+}
+
+/** 刷新表格 */
+function onRefresh() {
+  selectedTask.value = undefined;
+  hasMore.value = true;
+  queryForm.value.pageNo = 1;
+  loadTaskList();
+}
+
+/** 取消流程实例 */
+function handleCancel(row: BpmTaskApi.TaskVO) {
+  prompt({
+    async beforeClose(scope) {
+      if (scope.isConfirm) {
+        if (scope.value) {
+          try {
+            await cancelProcessInstanceByStartUser(row.id, scope.value);
+            message.success($t('bpm.processInstance.message.cancelSuccess'));
+            onRefresh();
+          } catch {
+            return false;
+          }
+        } else {
+          message.error($t('bpm.oa.leave.message.cancelReasonEmpty'));
+          return false;
+        }
+      }
     },
+    component: () => {
+      return h(Textarea, {
+        placeholder: $t('bpm.processInstance.message.cancelReasonPlaceholder'),
+        allowClear: true,
+        rows: 2,
+        rules: [
+          {
+            required: true,
+            message: $t('bpm.oa.leave.message.cancelReasonEmpty'),
+          },
+        ],
+      });
+    },
+    content: $t('bpm.oa.leave.message.cancelReasonEmpty'),
+    title: $t('bpm.processInstance.message.cancelProcess'),
+    modelPropName: 'value',
   });
 }
 
@@ -162,7 +211,7 @@ async function loadTaskList(append = false) {
     listLoading.value = true;
   }
   try {
-    const data = (await getTaskTodoPage(
+    const data = (await getProcessInstanceMyPage(
       buildParams(),
     )) as unknown as PageResult<BpmTaskApi.TaskVO>;
     const items = data?.list || [];
@@ -269,7 +318,9 @@ onMounted(async () => {
                   allow-clear
                   size="large"
                   :placeholder="
-                    $t('ui.placeholder.input', [$t('bpm.task.field.name')])
+                    $t('ui.placeholder.input', [
+                      $t('bpm.processInstance.field.name'),
+                    ])
                   "
                   @press-enter="handleSearch"
                 >
@@ -312,7 +363,7 @@ onMounted(async () => {
                       class="bpm-task-filter-field done-task-filter-field"
                       :placeholder="
                         $t('ui.placeholder.input', [
-                          $t('bpm.task.field.processDefinitionId'),
+                          $t('bpm.processInstance.field.processDefinition'),
                         ])
                       "
                       @press-enter="handleAdvancedSearch"
@@ -328,7 +379,7 @@ onMounted(async () => {
                       :field-names="{ label: 'name', value: 'code' }"
                       :placeholder="
                         $t('ui.placeholder.select', [
-                          $t('bpm.task.field.category'),
+                          $t('bpm.processInstance.field.category'),
                         ])
                       "
                     />
@@ -340,7 +391,7 @@ onMounted(async () => {
                       :options="statusOptions"
                       :placeholder="
                         $t('ui.placeholder.select', [
-                          $t('bpm.task.field.status'),
+                          $t('bpm.processInstance.field.status'),
                         ])
                       "
                     />
@@ -399,7 +450,7 @@ onMounted(async () => {
                 <div
                   class="text-base font-semibold text-[var(--ant-color-text)]"
                 >
-                  {{ $t('bpm.task.todo.list') }}
+                  {{ $t('bpm.processInstance.myList') }}
                 </div>
                 <div
                   class="mt-1 text-xs text-[var(--ant-color-text-secondary)]"
@@ -450,39 +501,83 @@ onMounted(async () => {
                         {{ getTaskTitle(item) }}
                       </div>
                     </div>
-                    <Tag color="processing" class="mr-0 rounded-full px-2">
-                      {{ $t('bpm.task.todo.action.handle') }}
-                    </Tag>
+                    <!-- 审批中状态 -->
+                    <template
+                      v-if="
+                        item.status === BpmProcessInstanceStatus.RUNNING &&
+                        (item as any).tasks?.length > 0
+                      "
+                    >
+                      <template v-if="(item as any).tasks.length === 1">
+                        <Tag color="processing" class="mr-0 rounded-full px-2">
+                          {{ (item as any).tasks[0].assigneeUser?.nickname }}
+                          ({{ (item as any).tasks[0].name }})
+                          {{ $t('bpm.processInstance.detail.underReview') }}
+                        </Tag>
+                      </template>
+                      <template v-else>
+                        <Tag color="processing" class="mr-0 rounded-full px-2">
+                          {{
+                            $t('bpm.processInstance.status.multiApproving', [
+                              (item as any).tasks[0].assigneeUser?.nickname,
+                              (item as any).tasks.length - 1,
+                              (item as any).tasks[0].name,
+                            ])
+                          }}
+                        </Tag>
+                      </template>
+                    </template>
+                    <!-- 非审批中状态 -->
+                    <template v-else>
+                      <Tag
+                        :color="
+                          item.status === 2
+                            ? 'success'
+                            : item.status === 3
+                              ? 'error'
+                              : item.status === 4
+                                ? 'default'
+                                : 'default'
+                        "
+                        class="mr-0 rounded-full px-2"
+                      >
+                        {{
+                          statusOptions.find(
+                            (o) => String(o.value) === String(item.status),
+                          )?.label || '-'
+                        }}
+                      </Tag>
+                    </template>
                   </div>
 
                   <div class="bpm-task-meta-item done-task-meta-item">
                     <span class="bpm-task-meta-label done-task-meta-label">
-                      {{ $t('bpm.task.todo.field.startUser') }}
+                      {{ $t('bpm.processInstance.field.categoryName') }}
                     </span>
                     <span class="bpm-task-meta-value done-task-meta-value">
-                      {{ item.processInstance?.startUser?.nickname || '-' }}
+                      {{ (item as any).categoryName || '-' }}
                     </span>
                   </div>
                   <div class="bpm-task-meta-item done-task-meta-item">
                     <span class="bpm-task-meta-label done-task-meta-label">
-                      {{ $t('bpm.task.todo.field.currentTask') }}
+                      {{ $t('bpm.processInstance.field.startTime') }}
                     </span>
                     <span class="bpm-task-meta-value done-task-meta-value">
-                      {{ item.name || '-' }}
+                      {{ formatDateTime((item as any).startTime) }}
                     </span>
                   </div>
                   <div class="bpm-task-meta-item done-task-meta-item">
                     <span class="bpm-task-meta-label done-task-meta-label">
-                      {{ $t('bpm.task.field.taskTime') }}
+                      {{ $t('bpm.processInstance.field.endTime') }}
                     </span>
                     <span class="bpm-task-meta-value done-task-meta-value">
-                      {{ formatDateTime(item.processInstance?.createTime) }}
+                      {{ formatDateTime((item as any).endTime) }}
                     </span>
                   </div>
 
                   <div class="bpm-task-meta-item done-task-meta-item">
                     <EllipsisContent
-                      :title="$t('bpm.task.todo.field.summary')"
+                      :title="$t('bpm.processInstance.field.summary')"
                       class="bpm-task-meta-label done-task-meta-label"
                     >
                       <div
@@ -511,16 +606,36 @@ onMounted(async () => {
                       type="link"
                       size="small"
                       class="bpm-task-action-button done-task-history-button"
-                      @click.stop="handleAudit(item)"
+                      @click.stop="handleDetail(item)"
                     >
                       <span
                         class="bpm-task-action-content done-task-history-content"
                       >
                         <IconifyIcon
-                          icon="lucide:check-circle"
+                          icon="lucide:eye"
                           class="bpm-task-action-icon done-task-history-icon"
                         />
-                        <span>{{ $t('bpm.task.todo.action.handle') }}</span>
+                        <span>{{ $t('common.detail') }}</span>
+                      </span>
+                    </Button>
+                    <Button
+                      v-if="item.status === BpmProcessInstanceStatus.RUNNING"
+                      type="link"
+                      size="small"
+                      danger
+                      class="bpm-task-action-button done-task-history-button"
+                      @click.stop="handleCancel(item)"
+                    >
+                      <span
+                        class="bpm-task-action-content done-task-history-content"
+                      >
+                        <IconifyIcon
+                          icon="lucide:x-circle"
+                          class="bpm-task-action-icon done-task-history-icon"
+                        />
+                        <span>{{
+                          $t('bpm.processInstance.action.cancel')
+                        }}</span>
                       </span>
                     </Button>
                   </div>
@@ -553,7 +668,6 @@ onMounted(async () => {
             v-if="detailProps"
             :key="detailRenderKey"
             :id="detailProps.id"
-            :task-id="detailProps.taskId"
           />
           <div
             v-else

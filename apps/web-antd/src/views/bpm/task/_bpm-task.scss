@@ -1,0 +1,331 @@
+$bpm-task-sidebar-width: 400px;
+
+// ===== 布局 =====
+@mixin bpm-task-layout {
+  .bpm-task-layout {
+    display: flex;
+    height: 90%;
+  }
+
+  .bpm-task-sidebar {
+    flex-shrink: 0;
+    flex-direction: column;
+    width: $bpm-task-sidebar-width;
+    height: 110%;
+  }
+
+  .bpm-task-content {
+    flex: 1;
+    min-width: 0;
+
+    @media (max-width: 1279px) {
+      display: none;
+    }
+
+    .bpm-task-content-process {
+      margin-top: -18px;
+    }
+
+    .bpm-task-content-empty {
+      margin: 30px;
+    }
+  }
+
+  /* stylelint-disable-next-line selector-pseudo-class-no-unknown */
+  .bpm-task-sidebar > :deep(.ant-card) {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  /* stylelint-disable-next-line selector-pseudo-class-no-unknown */
+  .bpm-task-sidebar > :deep(.ant-card-body) {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    min-height: 0;
+  }
+
+  /* stylelint-disable-next-line selector-pseudo-class-no-unknown */
+  .bpm-task-sidebar > :deep(.ant-card-body > .p-4) {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    min-height: 0;
+  }
+
+  .bpm-task-list {
+    flex: 1;
+    min-height: 0;
+    padding-right: 8px;
+    overflow-y: auto;
+  }
+}
+
+// ===== 卡片 =====
+@mixin bpm-task-card {
+  .bpm-task-card {
+    display: flex;
+    flex-direction: column;
+    background: var(--ant-color-bg-container) !important;
+    border: 1px solid color-mix(in srgb, hsl(var(--primary)) 50%, transparent) !important;
+    border-radius: 16px !important;
+    box-shadow: 0 1px 3px
+      color-mix(in srgb, var(--ant-color-text) 6%, transparent) !important;
+    transition:
+      border-color 0.2s ease,
+      border-width 0.15s ease,
+      box-shadow 0.2s ease,
+      transform 0.2s ease;
+  }
+
+  .bpm-task-card:hover {
+    border-color: color-mix(
+      in srgb,
+      hsl(var(--primary)) 55%,
+      transparent
+    ) !important;
+    border-width: 2px !important;
+    box-shadow: 0 10px 24px
+      color-mix(in srgb, hsl(var(--primary)) 12%, transparent) !important;
+    transform: translateY(-2px);
+  }
+
+  .bpm-task-card--active {
+    border-color: hsl(var(--primary)) !important;
+    border-width: 3px !important;
+    box-shadow:
+      0 0 0 2px color-mix(in srgb, hsl(var(--primary)) 20%, transparent),
+      0 12px 28px color-mix(in srgb, hsl(var(--primary)) 16%, transparent) !important;
+  }
+
+  .bpm-task-card-action {
+    display: flex;
+    gap: 4px;
+    justify-content: flex-end;
+    margin-top: auto;
+  }
+}
+
+// ===== Skeleton =====
+@mixin bpm-task-skeleton {
+  .bpm-task-skeleton {
+    background: var(--ant-color-bg-container);
+    border: 1px solid
+      color-mix(in srgb, var(--ant-color-border) 72%, transparent);
+    box-shadow: 0 1px 3px
+      color-mix(in srgb, var(--ant-color-text) 4%, transparent);
+  }
+}
+
+// ===== Chip =====
+@mixin bpm-task-chip {
+  .bpm-task-chip {
+    display: inline-flex;
+    gap: 6px;
+    align-items: center;
+    max-width: 100%;
+    padding: 4px 10px;
+    color: var(--ant-color-text-secondary);
+    background: color-mix(
+      in srgb,
+      var(--ant-color-fill-quaternary) 82%,
+      transparent
+    );
+    border: 1px solid
+      color-mix(in srgb, var(--ant-color-border) 72%, transparent);
+    border-radius: 9999px;
+  }
+
+  .bpm-task-chip-key {
+    font-weight: 600;
+  }
+
+  .bpm-task-chip-value {
+    max-width: 160px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: var(--ant-color-text);
+    white-space: nowrap;
+  }
+}
+
+// ===== 分割线 =====
+@mixin bpm-task-divider {
+  .bpm-task-divider {
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      color-mix(in srgb, var(--ant-color-border) 88%, transparent) 50%,
+      transparent 100%
+    );
+  }
+}
+
+// ===== Meta =====
+@mixin bpm-task-meta {
+  .bpm-task-meta-item,
+  .bpm-task-instance {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .bpm-task-meta-label {
+    color: var(--ant-color-text-secondary);
+  }
+
+  .bpm-task-meta-value {
+    min-width: 0;
+    font-weight: 500;
+    color: var(--ant-color-text);
+  }
+}
+
+// ===== 按钮 =====
+@mixin bpm-task-action-button {
+  .bpm-task-action-button {
+    display: inline-flex;
+    align-items: center;
+    padding-inline: 0;
+    font-weight: 500;
+  }
+
+  /* stylelint-disable-next-line selector-pseudo-class-no-unknown */
+  .bpm-task-action-button :deep(.ant-btn-icon-only),
+  /* stylelint-disable-next-line selector-pseudo-class-no-unknown */
+  .bpm-task-action-button :deep(.ant-btn-loading-icon),
+  /* stylelint-disable-next-line selector-pseudo-class-no-unknown */
+  .bpm-task-action-button :deep(.ant-btn-icon) {
+    display: inline-flex;
+    align-items: center;
+    align-self: center;
+    justify-content: center;
+    line-height: 1;
+  }
+
+  .bpm-task-action-content {
+    display: inline-flex;
+    gap: 4px;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+  }
+
+  .bpm-task-action-icon {
+    display: inline-flex;
+    align-items: center;
+    align-self: center;
+    justify-content: center;
+    font-size: 14px;
+    line-height: 1;
+    transform: translateY(1px);
+  }
+
+  /* stylelint-disable-next-line selector-pseudo-class-no-unknown */
+  .bpm-task-action-icon :deep(svg) {
+    display: block;
+  }
+}
+
+// ===== 图标按钮 =====
+@mixin bpm-task-icon-button {
+  .bpm-task-icon-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    min-width: 40px;
+    padding: 0;
+    border-radius: 12px;
+  }
+
+  /* stylelint-disable-next-line selector-pseudo-class-no-unknown */
+  .bpm-task-icon-button :deep(.ant-btn-icon) {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .bpm-task-prefix-icon,
+  .bpm-task-action-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    color: var(--ant-color-text-secondary);
+  }
+}
+
+// ===== Toolbar =====
+@mixin bpm-task-toolbar {
+  .bpm-task-toolbar {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    padding: 1px;
+    background: color-mix(
+      in srgb,
+      var(--ant-color-bg-container) 92%,
+      transparent
+    );
+    backdrop-filter: blur(8px);
+  }
+}
+
+// ===== 筛选弹层 =====
+@mixin bpm-task-filter {
+  /* stylelint-disable-next-line selector-pseudo-class-no-unknown */
+  .bpm-task-filter-popover :deep(.ant-popover-inner) {
+    padding: 12px;
+    background: var(--ant-color-bg-elevated);
+    border-radius: 16px;
+  }
+
+  .bpm-task-popover-panel {
+    width: 320px;
+    min-width: 320px;
+    max-width: 320px;
+  }
+
+  .bpm-task-filter-field {
+    width: 100%;
+  }
+
+  /* stylelint-disable-next-line selector-pseudo-class-no-unknown */
+  .bpm-task-filter-field :deep(.ant-select-selector),
+  /* stylelint-disable-next-line selector-pseudo-class-no-unknown */
+  .bpm-task-filter-field :deep(.ant-input-affix-wrapper),
+  /* stylelint-disable-next-line selector-pseudo-class-no-unknown */
+  .bpm-task-filter-field :deep(.ant-input),
+  /* stylelint-disable-next-line selector-pseudo-class-no-unknown */
+  .bpm-task-filter-field :deep(.ant-select) {
+    width: 100%;
+  }
+}
+
+// ===== 内容区 =====
+@mixin bpm-task-content {
+  .bpm-task-content-process {
+    height: 100%;
+  }
+
+  .bpm-task-content-empty {
+    margin: 30px;
+  }
+}
+
+// ===== 数量徽章 =====
+@mixin bpm-task-total-badge {
+  .bpm-task-total-badge {
+    padding: 4px 8px;
+    font-size: 12px;
+    font-weight: 600;
+    color: hsl(var(--primary));
+    background: color-mix(in srgb, hsl(var(--primary)) 12%, transparent);
+    border: 1px solid color-mix(in srgb, hsl(var(--primary)) 24%, transparent);
+    border-radius: 9999px;
+  }
+}

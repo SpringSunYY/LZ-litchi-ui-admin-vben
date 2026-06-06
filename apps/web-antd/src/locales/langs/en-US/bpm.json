@@ -445,6 +445,9 @@
       "todo": "todo tasks",
       "menu": "todo tasks",
       "list": "todo task list",
+      "message": {
+        "clickCardTip": "Click a card to view process details in real time"
+      },
       "action": {
         "handle": "handle"
       },
@@ -486,6 +489,9 @@
       "copy": "copy tasks",
       "menu": "copy tasks",
       "list": "copy task list",
+      "message": {
+        "clickCardTip": "Click a card to view process details in real time"
+      },
       "field": {
         "processName": "process name",
         "summary": "summary",
@@ -495,12 +501,18 @@
         "copier": "copied by",
         "copyReason": "reason",
         "copyTime": "copied at"
+      },
+      "action": {
+        "detail": "detail"
       }
     },
     "manager": {
       "manager": "task management",
       "menu": "task management",
       "list": "task list",
+      "message": {
+        "clickCardTip": "Click a card to view process details in real time"
+      },
       "action": {
         "history": "history"
       },

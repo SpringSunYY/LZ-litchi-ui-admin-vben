@@ -207,7 +207,7 @@ function handleExpand() {
           :class="{
             '!cursor-pointer': expand,
             ['block truncate']: line === 1,
-            [$style.ellipsisMultiLine]: line > 1,
+            [$style.ellipsisMultiLine]: (line ?? 1) > 1,
           }"
           :style="{
             '-webkit-line-clamp': isExpand ? '' : line,

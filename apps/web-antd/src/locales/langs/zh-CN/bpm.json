@@ -445,6 +445,9 @@
       "todo": "待办任务",
       "menu": "待办任务",
       "list": "待办任务列表",
+      "message": {
+        "clickCardTip": "点击卡片，实时查看流程详情"
+      },
       "action": {
         "handle": "办理"
       },
@@ -486,6 +489,9 @@
       "copy": "抄送任务",
       "menu": "抄送任务",
       "list": "抄送任务列表",
+      "message": {
+        "clickCardTip": "点击卡片，实时查看流程详情"
+      },
       "field": {
         "processName": "流程名称",
         "summary": "摘要",
@@ -495,12 +501,18 @@
         "copier": "抄送人",
         "copyReason": "抄送意见",
         "copyTime": "抄送时间"
+      },
+      "action": {
+        "detail": "详情"
       }
     },
     "manager": {
       "manager": "流程任务",
       "menu": "流程任务",
       "list": "任务列表",
+      "message": {
+        "clickCardTip": "点击卡片，实时查看流程详情"
+      },
       "action": {
         "history": "历史"
       },

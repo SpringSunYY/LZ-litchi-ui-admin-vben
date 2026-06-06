@@ -12,64 +12,56 @@ export function getRangePickerDefaultProps() {
     presets: [
       {
         label: $t('ui.rangePicker.today'),
-        value: () =>
-          [dayjs().startOf('day'), dayjs().endOf('day')] as [Dayjs, Dayjs],
+        value: [dayjs().startOf('day'), dayjs().endOf('day')] as [Dayjs, Dayjs],
       },
       {
         label: $t('ui.rangePicker.yesterday'),
-        value: () =>
-          [
-            dayjs().subtract(1, 'day').startOf('day'),
-            dayjs().subtract(1, 'day').endOf('day'),
-          ] as [Dayjs, Dayjs],
+        value: [
+          dayjs().subtract(1, 'day').startOf('day'),
+          dayjs().subtract(1, 'day').endOf('day'),
+        ] as [Dayjs, Dayjs],
       },
       {
         label: $t('ui.rangePicker.last7Days'),
-        value: () =>
-          [dayjs().subtract(7, 'day').startOf('day'), dayjs().endOf('day')] as [
-            Dayjs,
-            Dayjs,
-          ],
+        value: [
+          dayjs().subtract(7, 'day').startOf('day'),
+          dayjs().endOf('day'),
+        ] as [Dayjs, Dayjs],
       },
       {
         label: $t('ui.rangePicker.last30Days'),
-        value: () =>
-          [
-            dayjs().subtract(30, 'day').startOf('day'),
-            dayjs().endOf('day'),
-          ] as [Dayjs, Dayjs],
+        value: [
+          dayjs().subtract(30, 'day').startOf('day'),
+          dayjs().endOf('day'),
+        ] as [Dayjs, Dayjs],
       },
       {
         label: $t('ui.rangePicker.lastMonth'),
-        value: () =>
-          [
-            dayjs().subtract(1, 'month').startOf('month'),
-            dayjs().subtract(1, 'month').endOf('month'),
-          ] as [Dayjs, Dayjs],
+        value: [
+          dayjs().subtract(1, 'month').startOf('month'),
+          dayjs().subtract(1, 'month').endOf('month'),
+        ] as [Dayjs, Dayjs],
       },
       {
         label: $t('ui.rangePicker.last3Months'),
-        value: () =>
-          [
-            dayjs().subtract(3, 'month').startOf('day'),
-            dayjs().endOf('day'),
-          ] as [Dayjs, Dayjs],
+        value: [
+          dayjs().subtract(3, 'month').startOf('day'),
+          dayjs().endOf('day'),
+        ] as [Dayjs, Dayjs],
       },
       {
         label: $t('ui.rangePicker.lastYear'),
-        value: () =>
-          [
-            dayjs().subtract(1, 'year').startOf('day'),
-            dayjs().endOf('day'),
-          ] as [Dayjs, Dayjs],
+        value: [
+          dayjs().subtract(1, 'year').startOf('day'),
+          dayjs().endOf('day'),
+        ] as [Dayjs, Dayjs],
       },
       {
         label: $t('ui.rangePicker.last3Years'),
-        value: () =>
-          [
-            dayjs().subtract(3, 'year').startOf('day'),
-            dayjs().endOf('day'),
-          ] as [Dayjs, Dayjs],
+        value: [
+          dayjs().subtract(3, 'year').startOf('day'),
+          dayjs().endOf('day'),
+        ] as [Dayjs, Dayjs],
       },
     ],
     showTime: {

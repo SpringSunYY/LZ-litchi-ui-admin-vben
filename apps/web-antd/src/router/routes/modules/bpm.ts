@@ -22,7 +22,7 @@ const routes: RouteRecordRaw[] = [
           {
             path: 'my',
             name: 'BpmTaskMy',
-            component: () => import('#/views/bpm/processInstance/index.vue'),
+            component: () => import('#/views/bpm/task/my/index.vue'),
             meta: {
               title: '我的流程',
               i18n: 'bpm.processInstance.myList',

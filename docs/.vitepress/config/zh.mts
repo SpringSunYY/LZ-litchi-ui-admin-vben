@@ -193,7 +193,7 @@ function sidebarComponents(): DefaultTheme.SidebarItem[] {
           text: 'CountToAnimator 数字动画',
         },
         {
-          link: 'common-ui/vben-ellipsis-text',
+          link: 'common-ui/vben-ellipsis-content',
           text: 'EllipsisText 省略文本',
         },
       ],
