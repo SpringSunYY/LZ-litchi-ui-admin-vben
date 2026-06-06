@@ -60,5 +60,5 @@ export function deleteI18nLocaleList(ids: number[]) {
 
 /** 导出国际化国家 */
 export function exportI18nLocale(params: any) {
-  return requestClient.download('/infra/i18n-locale/export/excel', params);
+  return requestClient.download('/infra/i18n/locale/export-excel', params);
 }
