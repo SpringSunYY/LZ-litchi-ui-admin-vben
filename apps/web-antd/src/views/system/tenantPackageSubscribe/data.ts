@@ -10,6 +10,7 @@ export function useFormSchema(): VbenFormSchema[] {
   return [
     {
       fieldName: 'id',
+      label: $t('system.tenantPackageSubscribe.field.id'),
       component: 'Input',
       dependencies: {
         triggerFields: [''],
