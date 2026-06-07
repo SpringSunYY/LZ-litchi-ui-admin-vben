@@ -61,7 +61,6 @@
     "input": "请输入{0}",
     "select": "请选择{0}",
     "date": "请选择{0}",
-    "placeholder": "",
     "autoGenerate": "保存时自动生成"
   },
   "validate": {

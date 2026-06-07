@@ -409,7 +409,7 @@ INSERT INTO infra_i18n_key (message_name, message_key, is_system, module_type, u
 VALUES ('短信管理-菜单', 'system.messages.sms.menu', @IS_SYSTEM, @MODULE_TYPE, @USE_TYPE_MENU, @ORDER_NUM_MENU, @REMARK, @CREATOR, NOW(), @CREATOR, NOW(), 0);
 DELETE FROM infra_i18n_message WHERE message_key = 'system.messages.sms.menu' AND locale = @LOCALE_EN;
 INSERT INTO infra_i18n_message (message_name, message_key, locale, locale_target, is_system, module_type, use_type, message, remark, creator, create_time, updater, update_time, deleted)
-VALUES ('短信管理-菜单', 'system.messages.sms.menu', @LOCALE_EN, @LOCALE_TARGET_BACKEND, @IS_SYSTEM, @MODULE_TYPE, @USE_TYPE_MENU, 'sms management', @REMARK, @CREATOR, NOW(), @CREATOR, NOW(), 0);
+VALUES ('短信管理-菜单', 'system.messages.sms.menu', @LOCALE_EN, @LOCALE_TARGET_BACKEND, @IS_SYSTEM, @MODULE_TYPE, @USE_TYPE_MENU, 'sms', @REMARK, @CREATOR, NOW(), @CREATOR, NOW(), 0);
 DELETE FROM infra_i18n_message WHERE message_key = 'system.messages.sms.menu' AND locale = @LOCALE_ZH_CN;
 INSERT INTO infra_i18n_message (message_name, message_key, locale, locale_target, is_system, module_type, use_type, message, remark, creator, create_time, updater, update_time, deleted)
 VALUES ('短信管理-菜单', 'system.messages.sms.menu', @LOCALE_ZH_CN, @LOCALE_TARGET_BACKEND, @IS_SYSTEM, @MODULE_TYPE, @USE_TYPE_MENU, '短信管理', @REMARK, @CREATOR, NOW(), @CREATOR, NOW(), 0);
@@ -421,7 +421,7 @@ INSERT INTO infra_i18n_key (message_name, message_key, is_system, module_type, u
 VALUES ('邮箱管理-菜单', 'system.messages.mail.menu', @IS_SYSTEM, @MODULE_TYPE, @USE_TYPE_MENU, @ORDER_NUM_MENU, @REMARK, @CREATOR, NOW(), @CREATOR, NOW(), 0);
 DELETE FROM infra_i18n_message WHERE message_key = 'system.messages.mail.menu' AND locale = @LOCALE_EN;
 INSERT INTO infra_i18n_message (message_name, message_key, locale, locale_target, is_system, module_type, use_type, message, remark, creator, create_time, updater, update_time, deleted)
-VALUES ('邮箱管理-菜单', 'system.messages.mail.menu', @LOCALE_EN, @LOCALE_TARGET_BACKEND, @IS_SYSTEM, @MODULE_TYPE, @USE_TYPE_MENU, 'email management', @REMARK, @CREATOR, NOW(), @CREATOR, NOW(), 0);
+VALUES ('邮箱管理-菜单', 'system.messages.mail.menu', @LOCALE_EN, @LOCALE_TARGET_BACKEND, @IS_SYSTEM, @MODULE_TYPE, @USE_TYPE_MENU, 'email', @REMARK, @CREATOR, NOW(), @CREATOR, NOW(), 0);
 DELETE FROM infra_i18n_message WHERE message_key = 'system.messages.mail.menu' AND locale = @LOCALE_ZH_CN;
 INSERT INTO infra_i18n_message (message_name, message_key, locale, locale_target, is_system, module_type, use_type, message, remark, creator, create_time, updater, update_time, deleted)
 VALUES ('邮箱管理-菜单', 'system.messages.mail.menu', @LOCALE_ZH_CN, @LOCALE_TARGET_BACKEND, @IS_SYSTEM, @MODULE_TYPE, @USE_TYPE_MENU, '邮箱管理', @REMARK, @CREATOR, NOW(), @CREATOR, NOW(), 0);
@@ -433,7 +433,7 @@ INSERT INTO infra_i18n_key (message_name, message_key, is_system, module_type, u
 VALUES ('站内信管理-菜单', 'system.messages.notify.menu', @IS_SYSTEM, @MODULE_TYPE, @USE_TYPE_MENU, @ORDER_NUM_MENU, @REMARK, @CREATOR, NOW(), @CREATOR, NOW(), 0);
 DELETE FROM infra_i18n_message WHERE message_key = 'system.messages.notify.menu' AND locale = @LOCALE_EN;
 INSERT INTO infra_i18n_message (message_name, message_key, locale, locale_target, is_system, module_type, use_type, message, remark, creator, create_time, updater, update_time, deleted)
-VALUES ('站内信管理-菜单', 'system.messages.notify.menu', @LOCALE_EN, @LOCALE_TARGET_BACKEND, @IS_SYSTEM, @MODULE_TYPE, @USE_TYPE_MENU, 'notification management', @REMARK, @CREATOR, NOW(), @CREATOR, NOW(), 0);
+VALUES ('站内信管理-菜单', 'system.messages.notify.menu', @LOCALE_EN, @LOCALE_TARGET_BACKEND, @IS_SYSTEM, @MODULE_TYPE, @USE_TYPE_MENU, 'notification', @REMARK, @CREATOR, NOW(), @CREATOR, NOW(), 0);
 DELETE FROM infra_i18n_message WHERE message_key = 'system.messages.notify.menu' AND locale = @LOCALE_ZH_CN;
 INSERT INTO infra_i18n_message (message_name, message_key, locale, locale_target, is_system, module_type, use_type, message, remark, creator, create_time, updater, update_time, deleted)
 VALUES ('站内信管理-菜单', 'system.messages.notify.menu', @LOCALE_ZH_CN, @LOCALE_TARGET_BACKEND, @IS_SYSTEM, @MODULE_TYPE, @USE_TYPE_MENU, '站内信管理', @REMARK, @CREATOR, NOW(), @CREATOR, NOW(), 0);
@@ -713,7 +713,7 @@ INSERT INTO infra_i18n_key (message_name, message_key, is_system, module_type, u
 VALUES ('流程管理-菜单', 'bpm.manager.menu', @IS_SYSTEM, @MODULE_TYPE, @USE_TYPE_MENU, @ORDER_NUM_MENU, @REMARK, @CREATOR, NOW(), @CREATOR, NOW(), 0);
 DELETE FROM infra_i18n_message WHERE message_key = 'bpm.manager.menu' AND locale = @LOCALE_EN;
 INSERT INTO infra_i18n_message (message_name, message_key, locale, locale_target, is_system, module_type, use_type, message, remark, creator, create_time, updater, update_time, deleted)
-VALUES ('流程管理-菜单', 'bpm.manager.menu', @LOCALE_EN, @LOCALE_TARGET_BACKEND, @IS_SYSTEM, @MODULE_TYPE, @USE_TYPE_MENU, 'process management', @REMARK, @CREATOR, NOW(), @CREATOR, NOW(), 0);
+VALUES ('流程管理-菜单', 'bpm.manager.menu', @LOCALE_EN, @LOCALE_TARGET_BACKEND, @IS_SYSTEM, @MODULE_TYPE, @USE_TYPE_MENU, 'process', @REMARK, @CREATOR, NOW(), @CREATOR, NOW(), 0);
 DELETE FROM infra_i18n_message WHERE message_key = 'bpm.manager.menu' AND locale = @LOCALE_ZH_CN;
 INSERT INTO infra_i18n_message (message_name, message_key, locale, locale_target, is_system, module_type, use_type, message, remark, creator, create_time, updater, update_time, deleted)
 VALUES ('流程管理-菜单', 'bpm.manager.menu', @LOCALE_ZH_CN, @LOCALE_TARGET_BACKEND, @IS_SYSTEM, @MODULE_TYPE, @USE_TYPE_MENU, '流程管理', @REMARK, @CREATOR, NOW(), @CREATOR, NOW(), 0);
@@ -1393,7 +1393,7 @@ INSERT INTO infra_i18n_key (message_name, message_key, is_system, module_type, u
 VALUES ('采购管理-菜单', 'erp.purcharse.menu', @IS_SYSTEM, @MODULE_TYPE, @USE_TYPE_MENU, @ORDER_NUM_MENU, @REMARK, @CREATOR, NOW(), @CREATOR, NOW(), 0);
 DELETE FROM infra_i18n_message WHERE message_key = 'erp.purcharse.menu' AND locale = @LOCALE_EN;
 INSERT INTO infra_i18n_message (message_name, message_key, locale, locale_target, is_system, module_type, use_type, message, remark, creator, create_time, updater, update_time, deleted)
-VALUES ('采购管理-菜单', 'erp.purcharse.menu', @LOCALE_EN, @LOCALE_TARGET_BACKEND, @IS_SYSTEM, @MODULE_TYPE, @USE_TYPE_MENU, 'purchase management', @REMARK, @CREATOR, NOW(), @CREATOR, NOW(), 0);
+VALUES ('采购管理-菜单', 'erp.purcharse.menu', @LOCALE_EN, @LOCALE_TARGET_BACKEND, @IS_SYSTEM, @MODULE_TYPE, @USE_TYPE_MENU, 'purchase', @REMARK, @CREATOR, NOW(), @CREATOR, NOW(), 0);
 DELETE FROM infra_i18n_message WHERE message_key = 'erp.purcharse.menu' AND locale = @LOCALE_ZH_CN;
 INSERT INTO infra_i18n_message (message_name, message_key, locale, locale_target, is_system, module_type, use_type, message, remark, creator, create_time, updater, update_time, deleted)
 VALUES ('采购管理-菜单', 'erp.purcharse.menu', @LOCALE_ZH_CN, @LOCALE_TARGET_BACKEND, @IS_SYSTEM, @MODULE_TYPE, @USE_TYPE_MENU, '采购管理', @REMARK, @CREATOR, NOW(), @CREATOR, NOW(), 0);
@@ -1405,7 +1405,7 @@ INSERT INTO infra_i18n_key (message_name, message_key, is_system, module_type, u
 VALUES ('销售管理-菜单', 'erp.sale.menu', @IS_SYSTEM, @MODULE_TYPE, @USE_TYPE_MENU, @ORDER_NUM_MENU, @REMARK, @CREATOR, NOW(), @CREATOR, NOW(), 0);
 DELETE FROM infra_i18n_message WHERE message_key = 'erp.sale.menu' AND locale = @LOCALE_EN;
 INSERT INTO infra_i18n_message (message_name, message_key, locale, locale_target, is_system, module_type, use_type, message, remark, creator, create_time, updater, update_time, deleted)
-VALUES ('销售管理-菜单', 'erp.sale.menu', @LOCALE_EN, @LOCALE_TARGET_BACKEND, @IS_SYSTEM, @MODULE_TYPE, @USE_TYPE_MENU, 'sales management', @REMARK, @CREATOR, NOW(), @CREATOR, NOW(), 0);
+VALUES ('销售管理-菜单', 'erp.sale.menu', @LOCALE_EN, @LOCALE_TARGET_BACKEND, @IS_SYSTEM, @MODULE_TYPE, @USE_TYPE_MENU, 'sales', @REMARK, @CREATOR, NOW(), @CREATOR, NOW(), 0);
 DELETE FROM infra_i18n_message WHERE message_key = 'erp.sale.menu' AND locale = @LOCALE_ZH_CN;
 INSERT INTO infra_i18n_message (message_name, message_key, locale, locale_target, is_system, module_type, use_type, message, remark, creator, create_time, updater, update_time, deleted)
 VALUES ('销售管理-菜单', 'erp.sale.menu', @LOCALE_ZH_CN, @LOCALE_TARGET_BACKEND, @IS_SYSTEM, @MODULE_TYPE, @USE_TYPE_MENU, '销售管理', @REMARK, @CREATOR, NOW(), @CREATOR, NOW(), 0);
@@ -1417,7 +1417,7 @@ INSERT INTO infra_i18n_key (message_name, message_key, is_system, module_type, u
 VALUES ('财务管理-菜单', 'erp.finance.menu', @IS_SYSTEM, @MODULE_TYPE, @USE_TYPE_MENU, @ORDER_NUM_MENU, @REMARK, @CREATOR, NOW(), @CREATOR, NOW(), 0);
 DELETE FROM infra_i18n_message WHERE message_key = 'erp.finance.menu' AND locale = @LOCALE_EN;
 INSERT INTO infra_i18n_message (message_name, message_key, locale, locale_target, is_system, module_type, use_type, message, remark, creator, create_time, updater, update_time, deleted)
-VALUES ('财务管理-菜单', 'erp.finance.menu', @LOCALE_EN, @LOCALE_TARGET_BACKEND, @IS_SYSTEM, @MODULE_TYPE, @USE_TYPE_MENU, 'financial management', @REMARK, @CREATOR, NOW(), @CREATOR, NOW(), 0);
+VALUES ('财务管理-菜单', 'erp.finance.menu', @LOCALE_EN, @LOCALE_TARGET_BACKEND, @IS_SYSTEM, @MODULE_TYPE, @USE_TYPE_MENU, 'financial', @REMARK, @CREATOR, NOW(), @CREATOR, NOW(), 0);
 DELETE FROM infra_i18n_message WHERE message_key = 'erp.finance.menu' AND locale = @LOCALE_ZH_CN;
 INSERT INTO infra_i18n_message (message_name, message_key, locale, locale_target, is_system, module_type, use_type, message, remark, creator, create_time, updater, update_time, deleted)
 VALUES ('财务管理-菜单', 'erp.finance.menu', @LOCALE_ZH_CN, @LOCALE_TARGET_BACKEND, @IS_SYSTEM, @MODULE_TYPE, @USE_TYPE_MENU, '财务管理', @REMARK, @CREATOR, NOW(), @CREATOR, NOW(), 0);
@@ -1577,7 +1577,7 @@ INSERT INTO infra_i18n_key (message_name, message_key, is_system, module_type, u
 VALUES ('音乐管理-菜单', 'ai.console.music.menu', @IS_SYSTEM, @MODULE_TYPE, @USE_TYPE_MENU, @ORDER_NUM_MENU, @REMARK, @CREATOR, NOW(), @CREATOR, NOW(), 0);
 DELETE FROM infra_i18n_message WHERE message_key = 'ai.console.music.menu' AND locale = @LOCALE_EN;
 INSERT INTO infra_i18n_message (message_name, message_key, locale, locale_target, is_system, module_type, use_type, message, remark, creator, create_time, updater, update_time, deleted)
-VALUES ('音乐管理-菜单', 'ai.console.music.menu', @LOCALE_EN, @LOCALE_TARGET_BACKEND, @IS_SYSTEM, @MODULE_TYPE, @USE_TYPE_MENU, 'music management', @REMARK, @CREATOR, NOW(), @CREATOR, NOW(), 0);
+VALUES ('音乐管理-菜单', 'ai.console.music.menu', @LOCALE_EN, @LOCALE_TARGET_BACKEND, @IS_SYSTEM, @MODULE_TYPE, @USE_TYPE_MENU, 'music', @REMARK, @CREATOR, NOW(), @CREATOR, NOW(), 0);
 DELETE FROM infra_i18n_message WHERE message_key = 'ai.console.music.menu' AND locale = @LOCALE_ZH_CN;
 INSERT INTO infra_i18n_message (message_name, message_key, locale, locale_target, is_system, module_type, use_type, message, remark, creator, create_time, updater, update_time, deleted)
 VALUES ('音乐管理-菜单', 'ai.console.music.menu', @LOCALE_ZH_CN, @LOCALE_TARGET_BACKEND, @IS_SYSTEM, @MODULE_TYPE, @USE_TYPE_MENU, '音乐管理', @REMARK, @CREATOR, NOW(), @CREATOR, NOW(), 0);
@@ -1589,7 +1589,7 @@ INSERT INTO infra_i18n_key (message_name, message_key, is_system, module_type, u
 VALUES ('导图管理-菜单', 'ai.console.mindMap.menu', @IS_SYSTEM, @MODULE_TYPE, @USE_TYPE_MENU, @ORDER_NUM_MENU, @REMARK, @CREATOR, NOW(), @CREATOR, NOW(), 0);
 DELETE FROM infra_i18n_message WHERE message_key = 'ai.console.mindMap.menu' AND locale = @LOCALE_EN;
 INSERT INTO infra_i18n_message (message_name, message_key, locale, locale_target, is_system, module_type, use_type, message, remark, creator, create_time, updater, update_time, deleted)
-VALUES ('导图管理-菜单', 'ai.console.mindMap.menu', @LOCALE_EN, @LOCALE_TARGET_BACKEND, @IS_SYSTEM, @MODULE_TYPE, @USE_TYPE_MENU, 'mind map management', @REMARK, @CREATOR, NOW(), @CREATOR, NOW(), 0);
+VALUES ('导图管理-菜单', 'ai.console.mindMap.menu', @LOCALE_EN, @LOCALE_TARGET_BACKEND, @IS_SYSTEM, @MODULE_TYPE, @USE_TYPE_MENU, 'mind map', @REMARK, @CREATOR, NOW(), @CREATOR, NOW(), 0);
 DELETE FROM infra_i18n_message WHERE message_key = 'ai.console.mindMap.menu' AND locale = @LOCALE_ZH_CN;
 INSERT INTO infra_i18n_message (message_name, message_key, locale, locale_target, is_system, module_type, use_type, message, remark, creator, create_time, updater, update_time, deleted)
 VALUES ('导图管理-菜单', 'ai.console.mindMap.menu', @LOCALE_ZH_CN, @LOCALE_TARGET_BACKEND, @IS_SYSTEM, @MODULE_TYPE, @USE_TYPE_MENU, '导图管理', @REMARK, @CREATOR, NOW(), @CREATOR, NOW(), 0);

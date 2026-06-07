@@ -11,57 +11,72 @@
     <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&pause=1000&width=435&lines=%E7%83%AD%E7%88%B1%E5%8F%AF%E6%8A%B5%E5%B2%81%E6%9C%88%E6%BC%AB%E9%95%BF%EF%BC%81%E8%AE%A9%E6%AD%A3%E7%A1%AE%E7%9A%84%E4%BA%8B%E6%83%85%E6%8C%81%E7%BB%AD%E5%8F%91%E7%94%9F%EF%BC%81" alt="Typing SVG" />
   </a>
 </div>
-
 # **严肃声明：现在、未来都不会有商业版本，所有代码全部开源!！**
 
-- 如果这个项目让你有所收获，记得 Star 关注哦，这对我是非常不错的鼓励与支持。本项目基于芋道开发。
+## 🧑‍💻开发必读
 
-  ## 🐶 新手必读
+> 因为国际化有几万条，数据量大，默认初始化SQL不提供国际化信息，可以联系我们给您【见下面联系方式】（推荐），或者可以自行运行代码国际化Python脚本，运行对应SQL，同时，因为根据芋道二次开发，原来没有国际化，国际化信息生成是使用AI生成的对应国际化Key，已经创建对应的国际化规范文档，可以使用规范文档生成，如果您觉得我们生成的不够好，可以自己生成，生成之后一定要在【国际化-国家地区】刷新国际化缓存，因为您直接执行SQL的话和系统无关，刷新不了缓存的。
+>
+> 后端脚本文件【consolidate_i18n_sql.py】会生成所有模块的国际化SQL，执行对应SQL即可
+>
+> 前端文件【apps/web-antd/src/locales/generate_i18n_sql.py】会生成一个all.sql和对应模块SQL，选择all.sql可以直接全部执行
+>
+> 后端规范文档【litchi-doc/i18n】、前端规范文档【litchi-doc/i18n】
+>
+> 注意注意，还有一个菜单的国际化和字典的国际化，菜单因为有一些没有生成，初始化SQL放在这里了【apps/web-antd/src/locales/menu-i18n.sql】，字典的使用字典管理-创建国际化功能可以帮您自动生成，也可以使用Excel表格直接导入，文件在后端【sql/i18n】
+>
+> 最后，如果国际化部分没有的话可以_Issues_ ，也可以自行生成，如果想要其他语言，可以导出为Excel文件，检查没有错后导入就行了，发给豆包【帮我把message列翻译en-US，其他列不变，返回数据给我，翻译内容尽量简短，所有message列内容都要翻译】，豆包会给你生成一个新的翻译的Excel文件，这波豆包上大分，我用其他AI还不能给我生成Excel文件。当前我们使用这个方法是可以的，后续如果有新的方法待续。
+>
+> 还有一点，当前提供的SQL初始化脚本数据库为MySQL（后端【sql/mysql/lz-litchi-simp.sql】），如果您有其他的数据库需求，理论上是可以实现的，因为芋道本身就支持多个数据库，但是您要自己初始化SQL，如果您这样做了，还成功了，麻烦您也给我们一份，因为我们也很需要😁😁😁
+>
+> 如果这个项目让你有所收获，记得 Star 关注哦，这对我们是非常不错的鼓励与支持。本项目基于芋道开发。
 
-  - 演示地址【Vue3 + vben(ant-design-vue)】：先待定
-  - 演示视频：待定待定
-  - 启动教程：待定待定
-  - 视频教程：待定待定
-  - 后端代码：https://github.com/SpringSunYY/LZ-litchi
+## 🐶 新手必读
 
-  ## 🐯 平台简介
+- 演示地址【Vue3 + vben(ant-design-vue)】：先待定
+- 演示视频：待定待定
+- 启动教程：待定待定
+- 视频教程：待定待定
+- 后端代码：https://github.com/SpringSunYY/LZ-litchi
 
-  **荔枝**，以开发者为中心，打造中国第一流的快速开发平台，全部开源，个人与企业可 100% 免费使用。
+## 🐯 平台简介
 
-  > 有任何问题，或者想要的功能，可以在 _Issues_ 中提给YY。
-  >
-  > 😜 给项目点点 Star 吧，这对我们真的很重要！
+**荔枝**，以开发者为中心，打造中国第一流的快速开发平台，全部开源，个人与企业可 100% 免费使用。
 
-  - Java 后端：`JDK 21 + Spring Boot 3.4.5`，没错就是12345
-  - 管理后台的电脑端：Vue3 、`vben(ant-design-vue)`
-  - 后端采用 Spring Boot 多模块架构、MySQL + MyBatis Plus、Redis + Redisson
-  - 数据库可使用 MySQL、Oracle、PostgreSQL、SQL Server、MariaDB、国产达梦 DM、TiDB 等
-  - 消息队列可使用 Event、Redis、RabbitMQ、Kafka、RocketMQ 等
-  - 权限认证使用 Spring Security & Token & Redis，支持多终端、多种用户的认证系统，支持 SSO 单点登录
-  - 支持加载动态权限菜单，按钮级别权限控制，Redis 缓存提升性能
-  - 支持 SaaS 多租户，可自定义每个租户的权限，提供透明化的多租户底层封装，为租户订阅租户套餐，让租户拥有权限
-  - 工作流使用 Flowable，支持动态表单、在线设计流程、会签 / 或签、多种任务分配方式
-  - 高效率开发，使用代码生成器可以一键生成 Java、Vue 前后端代码、SQL 脚本、接口文档，支持单表、树表、主子表、国际化
-  - 实时通信，采用 Spring WebSocket 实现，内置 Token 身份校验，支持 WebSocket 集群
-  - 集成阿里云、腾讯云等短信渠道，集成 MinIO、阿里云、腾讯云、七牛云等云存储服务
+> 有任何问题，或者想要的功能，可以在 _Issues_ 中提给YY。
+>
+> 😜 给项目点点 Star 吧，这对我们真的很重要！
 
-  ## 😎 开源协议
+- Java 后端：`JDK 21 + Spring Boot 3.4.5`，没错就是12345
+- 管理后台的电脑端：Vue3 、`vben(ant-design-vue)`
+- 后端采用 Spring Boot 多模块架构、MySQL + MyBatis Plus、Redis + Redisson
+- 数据库可使用 MySQL、Oracle、PostgreSQL、SQL Server、MariaDB、国产达梦 DM、TiDB 等
+- 消息队列可使用 Event、Redis、RabbitMQ、Kafka、RocketMQ 等
+- 权限认证使用 Spring Security & Token & Redis，支持多终端、多种用户的认证系统，支持 SSO 单点登录
+- 支持加载动态权限菜单，按钮级别权限控制，Redis 缓存提升性能
+- 支持 SaaS 多租户，可自定义每个租户的权限，提供透明化的多租户底层封装，为租户订阅租户套餐，让租户拥有权限
+- 工作流使用 Flowable，支持动态表单、在线设计流程、会签 / 或签、多种任务分配方式
+- 高效率开发，使用代码生成器可以一键生成 Java、Vue 前后端代码、SQL 脚本、接口文档，支持单表、树表、主子表、国际化
+- 实时通信，采用 Spring WebSocket 实现，内置 Token 身份校验，支持 WebSocket 集群
+- 集成阿里云、腾讯云等短信渠道，集成 MinIO、阿里云、腾讯云、七牛云等云存储服务
 
-  **为什么推荐使用本项目？**
+## 😎 开源协议
 
-  ① 本项目采用比 Apache 2.0 更宽松的 [MIT License](https://gitee.com/zhijiantianya/litchi/blob/master/LICENSE) 开源协议，个人与企业可 100% 免费使用，不用保留类作者、Copyright 信息。
+**为什么推荐使用本项目？**
 
-  ② 代码全部开源，不会像其他项目一样，只开源部分代码，让你无法了解整个项目的架构设计。
+① 本项目采用比 Apache 2.0 更宽松的 [MIT License](https://gitee.com/zhijiantianya/litchi/blob/master/LICENSE) 开源协议，个人与企业可 100% 免费使用，不用保留类作者、Copyright 信息。
 
-  ③ 代码整洁、架构整洁，遵循《阿里巴巴 Java 开发手册》规范，代码注释详细。
+② 代码全部开源，不会像其他项目一样，只开源部分代码，让你无法了解整个项目的架构设计。
 
-  ## 🤝 项目外包
+③ 代码整洁、架构整洁，遵循《阿里巴巴 Java 开发手册》规范，代码注释详细。
 
-  - 我们也是接外包滴，如果你有项目想要外包，可以微信联系【**SpringSun_YY**】。
+## 🤝 项目外包
 
-  - 团队包含专业的项目经理、架构师、前端工程师、后端工程师、测试工程师、运维工程师，可以提供全流程的外包服务。
-  - 项目可以是OA 系统、ERP 系统、CRM系统等等，或者您的二次开发。
-  - 外包项目请联系【非项目需求请勿扫码，非客服，不解答项目问题】
+- 我们也是接外包滴，如果你有项目想要外包，可以微信联系【**SpringSun_YY**】。
+
+- 团队包含专业的项目经理、架构师、前端工程师、后端工程师、测试工程师、运维工程师，可以提供全流程的外包服务。
+- 项目可以是OA 系统、ERP 系统、CRM系统等等，或者您的二次开发。
+- 外包项目请联系【非项目需求请勿扫码，非客服，不解答项目问题】
 
 ![alt 定制开发](assets/wx.png)
 
@@ -87,7 +102,7 @@
   </a>
 </p>
 
-## 技术栈
+## 🚀 技术栈
 
 | 框架 | 说明 | 版本 |
 | --- | --- | --- |

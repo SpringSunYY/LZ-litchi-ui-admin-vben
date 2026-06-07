@@ -61,7 +61,6 @@
     "input": "Please enter {0}",
     "select": "Please select {0}",
     "date": "Please select {0}",
-    "placeholder": "",
     "autoGenerate": "Auto generated on save"
   },
   "validate": {
