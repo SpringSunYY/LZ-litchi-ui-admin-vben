@@ -79,6 +79,12 @@ const [Grid, gridApi] = useVbenVxeGrid({
     columns: useGridColumns(getLeaderName),
     height: 'auto',
     keepSource: true,
+    scrollY: {
+      enabled: true,
+      gt: 201,
+      cacheSize: 201,
+      oSize: 201,
+    },
     pagerConfig: {
       enabled: false,
     },

@@ -81,12 +81,13 @@ setupVbenVxeTable({
          *  cacheSize: 50 滚动缓存行数
          *  oSize: 20 渲染 overscan 行数，减少滚动时的白屏
          */
-        scrollY: {
-          enabled: true,
-          gt: 201,
-          cacheSize: 201,
-          oSize: 50,
-        },
+        //此处不再配置，由页面自己配置，防止影响其他页
+        // scrollY: {
+        //   enabled: true,
+        //   gt: 201,
+        //   cacheSize: 201,
+        //   oSize: 50,
+        // },
       } as VxeTableGridOptions,
     });
 

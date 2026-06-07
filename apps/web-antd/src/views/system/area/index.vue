@@ -91,6 +91,12 @@ const [Grid, gridApi] = useVbenVxeGrid({
       expandAll: false,
       reserve: true,
     },
+    scrollY: {
+      enabled: true,
+      gt: 201,
+      cacheSize: 201,
+      oSize: 201,
+    },
     pagerConfig: {
       enabled: false,
     },

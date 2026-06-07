@@ -82,6 +82,12 @@ const [Grid, gridApi] = useVbenVxeGrid({
     pagerConfig: {
       enabled: false,
     },
+    scrollY: {
+      enabled: true,
+      gt: 201,
+      cacheSize: 201,
+      oSize: 201,
+    },
     proxyConfig: {
       ajax: {
         query: async (_params) => {
