@@ -25,7 +25,7 @@
 >
 > 注意注意，还有一个菜单的国际化和字典的国际化，菜单因为有一些没有生成，初始化SQL放在这里了【apps/web-antd/src/locales/menu-i18n.sql】，字典的使用字典管理-创建国际化功能可以帮您自动生成，也可以使用Excel表格直接导入，文件在后端【sql/i18n】
 >
-> 最后，如果国际化部分没有的话可以_Issues_ ，也可以自行生成，如果想要其他语言，可以导出为Excel文件，检查没有错后导入就行了，发给豆包【帮我把message列翻译en-US，其他列不变，返回数据给我，翻译内容尽量简短，所有message列内容都要翻译】，豆包会给你生成一个新的翻译的Excel文件，这波豆包上大分，我用其他AI还不能给我生成Excel文件。当前我们使用这个方法是可以的，后续如果有新的方法待续。
+> 最后，如果国际化部分没有的话可以*Issues* ，也可以自行生成，如果想要其他语言，可以导出为Excel文件，检查没有错后导入就行了，发给豆包【帮我把message列翻译en-US，其他列不变，返回数据给我，翻译内容尽量简短，所有message列内容都要翻译】，豆包会给你生成一个新的翻译的Excel文件，这波豆包上大分，我用其他AI还不能给我生成Excel文件。当前我们使用这个方法是可以的，后续如果有新的方法待续。
 >
 > 还有一点，当前提供的SQL初始化脚本数据库为MySQL（后端【sql/mysql/lz-litchi-simp.sql】），如果您有其他的数据库需求，理论上是可以实现的，因为芋道本身就支持多个数据库，但是您要自己初始化SQL，如果您这样做了，还成功了，麻烦您也给我们一份，因为我们也很需要😁😁😁
 >
@@ -33,7 +33,7 @@
 
 ## 🐶 新手必读
 
-- 演示地址【Vue3 + vben(ant-design-vue)】：先待定
+- 演示地址：https://www.litchi.work【租户编码：litchi、账号：admin、密码：admin123】
 - 演示视频：待定待定
 - 启动教程：待定待定
 - 视频教程：待定待定
@@ -186,8 +186,6 @@
 | 延迟节点 | 执行到该节点，审批等待一段时间再执行，支持固定时长、固定日期等 |
 | 拓展设置 | 流程前置/后置通知，节点（任务）前置、后置通知，流程报表，自动审批去重，自定流程编号、标题、摘要，流程报表等 |
 
-###
-
 ### 基础设施
 
 | 功能 | 描述 |
@@ -290,3 +288,64 @@
 | 文件 & 配置 | ![文件配置](assets/文件配置.jpg) | ![文件配置](assets/文件配置.jpg) |  |
 | 定时任务 | ![定时任务](assets/定时任务.jpg) | ![定时任务-日志](assets/定时任务-日志.jpg) | ![定时任务-详情](assets/定时任务-详情.jpg) |
 | API 日志 | ![访问日志](assets/访问日志.jpg) | ![错误日志](assets/错误日志.jpg) |  |
+
+## 💕 项目部署
+
+- 推荐使用宝塔部署，一键安装好Nginx后，直接新增一个HTML项目即可，操作猛猛简单
+
+- 可以直接使用下面的Nginx配置，注意您的文件地址即可，使用这个配置，后面可以直接在项目管理部署您的SSL证书
+
+- 打包好，成功部署后访问你的你的项目就行了
+
+### 修改配置文件
+
+![项目部署-配置](assets/项目部署-配置.jpg)
+
+![项目部署-修改配置](assets/项目部署-修改配置.jpg)
+
+### 打包
+
+- 运行找到根目录下【package.json】文件打包
+
+![项目部署-打包](assets/项目部署-打包.jpg)
+
+### nginx配置
+
+```nginx
+server
+{
+    listen 80;
+    server_name litchi.work;
+    #修改成您的文件地址
+    root /www/wwwroot/code/front/dist;
+    index index.html;
+	#error_page 404/404.html;
+    # Vue history 模式支持
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+
+    # 后端接口代理
+    location /admin-api/ {
+        proxy_pass http://127.0.0.1:48080;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+
+    location /app-api/ {
+        proxy_pass http://127.0.0.1:48080;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+
+    # 可选：禁止访问隐藏文件
+    location ~ /\. {
+        deny all;
+    }
+
+    access_log /www/wwwlogs/litchi.work.log;
+    error_log /www/wwwlogs/litchi.work.error.log;
+}
+```
