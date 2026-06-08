@@ -13,6 +13,8 @@ export namespace InfraFileApi {
     path: string;
     name?: string;
     url?: string;
+    absolutePath?: string;
+    relativePath?: string;
     size?: number;
     type?: string;
     createTime?: Date;

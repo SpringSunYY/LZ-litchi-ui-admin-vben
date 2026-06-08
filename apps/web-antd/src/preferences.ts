@@ -29,5 +29,8 @@ export const overridesPreferences = defineOverridesPreferences({
   copyright: {
     companyName: import.meta.env.VITE_APP_TITLE,
     companySiteLink: 'https://springsun.online/',
+    date: '2026',
+    icp: '粤ICP备2025445613号',
+    icpLink: 'https://beian.miit.gov.cn/',
   },
 });

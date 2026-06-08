@@ -109,7 +109,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
       },
     },
     {
-      field: 'relativePath',
+      field: 'absolutePath',
       title: $t('infra.file.field.relativePath'),
       cellRender: {
         name: 'CellFileAndImages',

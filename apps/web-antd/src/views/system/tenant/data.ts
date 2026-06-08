@@ -88,6 +88,18 @@ export function useFormSchema(): VbenFormSchema[] {
       },
     },
     {
+      fieldName: 'phone',
+      label: $t('system.tenant.field.accountCount'),
+      rules: 'required',
+      component: 'InputNumber',
+      componentProps: {
+        placeholder: $t('ui.placeholder.accountCount', [
+          $t('system.tenant.field.phone'),
+        ]),
+      },
+      defaultValue: 30,
+    },
+    {
       fieldName: 'addressCode',
       label: $t('system.tenant.field.addressCode'),
       component: 'ApiTreeSelect',

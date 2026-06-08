@@ -66,7 +66,7 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       fieldName: 'orderNum',
-      label: $t('system.tenantPackage.field.sort'),
+      label: $t('system.tenantPackage.field.orderNum'),
       rules: 'required',
       formItemClass: 'col-span-1',
       component: 'InputNumber',
@@ -75,7 +75,7 @@ export function useFormSchema(): VbenFormSchema[] {
         min: 0,
         max: 10,
         placeholder: $t('ui.placeholder.input', [
-          $t('system.tenantPackage.field.sort'),
+          $t('system.tenantPackage.field.orderNum'),
         ]),
       },
     },

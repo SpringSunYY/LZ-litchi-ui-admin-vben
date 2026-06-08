@@ -32,13 +32,13 @@ function handleUpload() {
 /** 复制链接到剪贴板 */
 const { copy } = useClipboard({ legacy: true });
 async function handleCopyUrl(row: InfraFileApi.File) {
-  if (!row.url) {
+  if (!row.relativePath) {
     message.error($t('infra.file.message.urlEmpty'));
     return;
   }
 
   try {
-    await copy(row.url);
+    await copy(row.relativePath);
     message.success($t('ui.actionMessage.copySuccess'));
   } catch {
     message.error($t('infra.file.message.copyFailed'));
