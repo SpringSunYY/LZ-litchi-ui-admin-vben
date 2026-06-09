@@ -50,3 +50,4 @@ vite.config.ts.*
 *.sw?
 .history
 /.codegraph/
+/apps/web-antd/src/locales/sql/

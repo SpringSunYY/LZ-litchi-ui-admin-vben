@@ -210,7 +210,6 @@ export function useDataFormSchema(): VbenFormSchema[] {
       fieldName: 'label',
       label: $t('system.dict.dataField.label'),
       component: 'Input',
-      help: $t('system.dict.help.label'),
       componentProps: {
         placeholder: $t('ui.placeholder.input', [
           $t('system.dict.dataField.label'),
@@ -222,6 +221,7 @@ export function useDataFormSchema(): VbenFormSchema[] {
       fieldName: 'i18n',
       label: $t('system.dict.dataField.i18n'),
       component: 'Input',
+      help: $t('system.dict.help.i18n'),
       componentProps: {
         placeholder: $t('ui.placeholder.input', [
           $t('system.dict.dataField.i18n'),

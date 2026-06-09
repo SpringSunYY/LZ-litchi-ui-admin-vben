@@ -61,9 +61,11 @@ watch(
 );
 
 /** 刷新表格 */
-function onRefresh(isClear = true) {
+async function onRefresh(isClear = true) {
   if (isClear) {
     currentMessageKey.value = '';
+    await gridApi.formApi.resetForm();
+    await gridApi.formApi.setLatestSubmissionValues({});
   }
   gridApi.query();
 }
@@ -185,7 +187,7 @@ const [Grid, gridApi] = useVbenVxeGrid({
   formOptions: {
     schema: useMessageGridFormSchema(),
     handleReset: async () => {
-      onRefresh();
+      await onRefresh();
     },
   },
   gridOptions: {

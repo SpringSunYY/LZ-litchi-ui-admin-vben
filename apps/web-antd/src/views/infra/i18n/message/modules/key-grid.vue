@@ -99,9 +99,11 @@ const gridEvents: VxeGridListeners<I18nKeyApi.I18nKey> = {
 const [Grid, gridApi] = useVbenVxeGrid({
   formOptions: {
     schema: useKeyGridFormSchema(),
-    handleReset: () => {
+    handleReset: async () => {
       currentMessageKey.value = '';
-      gridApi.query();
+      await gridApi.formApi.resetForm();
+      await gridApi.formApi.setLatestSubmissionValues({});
+      await gridApi.query();
     },
   },
   gridOptions: {
