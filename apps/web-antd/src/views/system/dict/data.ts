@@ -125,6 +125,7 @@ export function useTypeGridColumns(): VxeTableGridOptions['columns'] {
     {
       field: 'type',
       title: $t('system.dict.typeField.type'),
+      slots: { default: 'type' },
     },
     {
       field: 'status',

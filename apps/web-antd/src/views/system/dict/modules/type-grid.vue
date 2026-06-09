@@ -6,6 +6,7 @@ import type {
 import type { SystemDictTypeApi } from '#/api/system/dict/type';
 
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 
 import { useVbenModal } from '@vben/common-ui';
 import { downloadFileFromBlobPart } from '@vben/utils';
@@ -117,6 +118,20 @@ const [Grid, gridApi] = useVbenVxeGrid({
   } as VxeTableGridOptions<SystemDictTypeApi.DictType>,
   gridEvents,
 });
+
+/** 跳转到 i18n 页面，message的key是精确匹配，所以跳过去message页面为空 */
+const router = useRouter();
+const toI18n = (i18n?: string) => {
+  if (!i18n) return;
+  const routeData = router.resolve({
+    name: 'i18nMessage',
+    query: {
+      messageKey: i18n,
+    },
+  });
+  // 使用新窗口打开
+  window.open(routeData?.href, '_blank');
+};
 </script>
 
 <template>
@@ -171,6 +186,9 @@ const [Grid, gridApi] = useVbenVxeGrid({
             },
           ]"
         />
+      </template>
+      <template #type="{ row }">
+        <a @click="toI18n(row.type)" v-if="row.type">{{ row.type }}</a>
       </template>
     </Grid>
   </div>

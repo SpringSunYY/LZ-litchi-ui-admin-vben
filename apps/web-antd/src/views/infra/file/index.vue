@@ -29,16 +29,16 @@ function handleUpload() {
   formModalApi.setData(null).open();
 }
 
-/** 复制链接到剪贴板 */
+/** 复制链接到剪贴板，直接复制绝对路径 */
 const { copy } = useClipboard({ legacy: true });
 async function handleCopyUrl(row: InfraFileApi.File) {
-  if (!row.relativePath) {
+  if (!row.absolutePath) {
     message.error($t('infra.file.message.urlEmpty'));
     return;
   }
 
   try {
-    await copy(row.relativePath);
+    await copy(row.absolutePath);
     message.success($t('ui.actionMessage.copySuccess'));
   } catch {
     message.error($t('infra.file.message.copyFailed'));

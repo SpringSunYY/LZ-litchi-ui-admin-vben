@@ -88,13 +88,13 @@ export function useFormSchema(): VbenFormSchema[] {
       },
     },
     {
-      fieldName: 'phone',
+      fieldName: 'accountCount',
       label: $t('system.tenant.field.accountCount'),
       rules: 'required',
       component: 'InputNumber',
       componentProps: {
         placeholder: $t('ui.placeholder.accountCount', [
-          $t('system.tenant.field.phone'),
+          $t('system.tenant.field.accountCount'),
         ]),
       },
       defaultValue: 30,

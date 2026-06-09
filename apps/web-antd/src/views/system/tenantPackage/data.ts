@@ -342,7 +342,7 @@ export function useGridColumns(): VxeTableGridOptions<SystemTenantPackageApi.Ten
     },
     {
       field: 'orderNum',
-      title: $t('system.tenantPackage.field.sort'),
+      title: $t('system.tenantPackage.field.orderNum'),
       minWidth: 120,
     },
     {

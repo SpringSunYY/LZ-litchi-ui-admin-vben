@@ -3,6 +3,7 @@ import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 import type { SystemDictDataApi } from '#/api/system/dict/data';
 
 import { ref, watch } from 'vue';
+import { useRouter } from 'vue-router';
 
 import { useVbenModelDrawer } from '@vben/common-ui';
 import { downloadFileFromBlobPart } from '@vben/utils';
@@ -144,6 +145,20 @@ function getTagColor(colorType?: string) {
   return isHexColor(color) ? color : colorType;
 }
 
+/** 跳转国际化 */
+const router = useRouter();
+const toI18n = (i18n?: string) => {
+  if (!i18n) return;
+  const routeData = router.resolve({
+    name: 'i18nMessage',
+    query: {
+      messageKey: i18n,
+    },
+  });
+  // 使用新窗口打开
+  window.open(routeData?.href, '_blank');
+};
+
 /** 监听 dictType 变化，重新查询 */
 watch(
   () => props.dictType,
@@ -223,7 +238,11 @@ defineExpose({ onRefresh });
         </Tag>
       </template>
       <template #i18n="{ row }">
-        <Tag v-if="row.i18n" :color="getTagColor(row.colorType)">
+        <Tag
+          v-if="row.i18n"
+          @click="toI18n(row.i18n)"
+          :color="getTagColor(row.colorType)"
+        >
           {{ $t(row.i18n) }}
         </Tag>
       </template>
