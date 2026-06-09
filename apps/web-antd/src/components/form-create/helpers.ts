@@ -2,11 +2,9 @@ import type { Ref } from 'vue';
 
 import type { Menu } from '#/components/form-create/typing';
 
-import FcDesigner from '@form-create/antd-designer';
+import { computed, nextTick, onMounted, ref, watch } from 'vue';
 
 import { i18n } from '@vben/locales';
-
-import { computed, nextTick, onMounted, watch } from 'vue';
 
 import { apiSelectRule } from '#/components/form-create/rules/data';
 
@@ -55,10 +53,10 @@ export function makeRequiredRule() {
 
 export const localeProps = (
   t: (msg: string) => any,
-  prefix: string,
+  _prefix: string,
   rules: any[],
 ) => {
-  return rules.map((rule: { field: string; title: any; options?: any[] }) => {
+  return rules.map((rule: { field: string; options?: any[]; title: any }) => {
     if (rule.field === 'formCreate$required') {
       rule.title = t('ui.formCreate.props.required') || rule.title;
     } else if (rule.field && rule.field !== '_optionType') {
@@ -66,7 +64,7 @@ export const localeProps = (
     }
     if (rule.options && Array.isArray(rule.options)) {
       rule.options = rule.options.map(
-        (opt: { label: string | number; value: any }) => {
+        (opt: { label: number | string; value: any }) => {
           if (typeof opt.label === 'string') {
             const translated = t(`ui.formCreate.props.${opt.label}`);
             if (translated && translated !== opt.label) {
@@ -135,8 +133,15 @@ export const parseFormFields = (
  * - 部门选择器
  * - 富文本
  * - 国际化支持
+ *
+ * @param designer FcDesigner 组件 ref
+ * @param loadFormConfig 可选，表单配置加载函数
+ * @returns locale — 响应式的设计器语言包，需绑定到 <FcDesigner :locale="locale">
  */
-export const useFormCreateDesigner = async (designer: Ref) => {
+export const useFormCreateDesigner = (
+  designer: Ref,
+  loadFormConfig?: () => Promise<void>,
+) => {
   const labels = useFormCreateLabels();
   const editorRule = useEditorRule(labels.tinymce.value);
   const uploadFileRule = useUploadFileRule(labels.fileUpload.value);
@@ -154,30 +159,20 @@ export const useFormCreateDesigner = async (designer: Ref) => {
       import('@form-create/antd-designer/locale/en.es.js' /* @vite-ignore */),
   };
 
-  /**
-   * 设置设计器的多语言
-   */
-  const setupDesignerLocale = async () => {
-    if (!designer.value) return;
-    const currentLocale = i18n.global.locale.value as string;
-    const loader = localeMap[currentLocale] ?? localeMap['zh-CN']!;
-    const { default: designerLocale } = await loader();
-    // FcDesigner.useLocale 是静态方法，会自动更新全局响应式语言状态
-    FcDesigner.useLocale(designerLocale);
-    // 监听应用语言切换，同步更新设计器
-    watch(
-      () => i18n.global.locale.value,
-      async (newLocale) => {
-        const targetLoader = localeMap[newLocale] ?? localeMap['zh-CN']!;
-        const { default: targetLocale } = await targetLoader();
-        FcDesigner.useLocale(targetLocale);
-      },
-    );
-  };
+  /** 响应式的设计器语言包，供模板 :locale="locale" 绑定 */
+  const locale = ref<Record<string, any> | undefined>(undefined);
 
-  /**
-   * 构建表单组件
-   */
+  /** 加载并设置语言包 */
+  const applyLocale = async (localeKey: string) => {
+    const loader = localeMap[localeKey] ?? localeMap['zh-CN']!;
+    const { default: lang } = await loader();
+    lang.name = localeKey;
+    locale.value = lang;
+
+    if (loadFormConfig) {
+      await loadFormConfig();
+    }
+  };
   const buildFormComponents = () => {
     // 移除自带的上传组件规则，使用 uploadFileRule、uploadImgRule、uploadImgsRule 替代
     designer.value?.removeMenuItem('upload');
@@ -249,6 +244,32 @@ export const useFormCreateDesigner = async (designer: Ref) => {
     await nextTick();
     buildFormComponents();
     buildSystemMenu();
-    setupDesignerLocale();
+
+    // 刷新页面时 designer.value 可能还未赋值，等待它可用
+    if (!designer.value) {
+      await new Promise<void>((resolve) => {
+        const stop = watch(
+          () => designer.value,
+          (val) => {
+            if (val) {
+              stop();
+              resolve();
+            }
+          },
+        );
+      });
+    }
+
+    await applyLocale(i18n.global.locale.value as string);
+
+    // 监听应用语言切换，同步更新设计器
+    watch(
+      () => i18n.global.locale.value,
+      async (newLocale) => {
+        await applyLocale(newLocale);
+      },
+    );
   });
+
+  return { locale };
 };

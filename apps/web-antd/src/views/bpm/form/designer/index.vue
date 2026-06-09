@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { computed, onMounted, ref } from 'vue';
+import { computed, ref } from 'vue';
 
 import { Page, useVbenModal } from '@vben/common-ui';
 import { IconifyIcon } from '@vben/icons';
@@ -62,9 +62,25 @@ const designerConfig = ref({
   appendConfigData: [], // 定义渲染规则所需的formData
 });
 
-useFormCreateDesigner(designerRef); // 表单设计器增强
+// 初始化设计器
+async function initializeDesigner() {
+  const id = currentFormId.value;
 
-// 计算属性：获取当前需要加载的表单ID
+  if (props.type === 'copy' && !id) {
+    message.error($t('bpm.form.message.copyIdEmpty'));
+    return;
+  }
+
+  if (id) {
+    await loadFormConfig(Number(id));
+  }
+}
+
+const { locale: designerLocale } = useFormCreateDesigner(designerRef, () =>
+  initializeDesigner(),
+); // 表单设计器增强
+
+// 保存表单
 const currentFormId = computed(() => {
   switch (props.type) {
     case 'copy': {
@@ -93,20 +109,6 @@ async function loadFormConfig(id: number | string) {
   }
 }
 
-// 初始化设计器
-async function initializeDesigner() {
-  const id = currentFormId.value;
-
-  if (props.type === 'copy' && !id) {
-    message.error($t('bpm.form.message.copyIdEmpty'));
-    return;
-  }
-
-  if (id) {
-    await loadFormConfig(Number(id));
-  }
-}
-
 // 保存表单
 function handleSave() {
   formModalApi
@@ -127,17 +129,18 @@ function onBack() {
     },
   });
 }
-
-onMounted(() => {
-  initializeDesigner();
-});
 </script>
 
 <template>
   <Page auto-content-height>
     <FormModal @success="onBack" />
 
-    <FcDesigner class="my-designer" ref="designerRef" :config="designerConfig">
+    <FcDesigner
+      class="my-designer"
+      ref="designerRef"
+      :config="designerConfig"
+      :locale="designerLocale"
+    >
       <template #handle>
         <Button size="small" type="primary" @click="handleSave">
           <IconifyIcon icon="mdi:content-save" />

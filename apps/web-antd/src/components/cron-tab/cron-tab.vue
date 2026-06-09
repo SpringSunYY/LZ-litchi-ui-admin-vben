@@ -572,7 +572,7 @@ function inputChange() {
         <Tabs.TabPane key="second">
           <template #tab>
             <div class="sc-cron-num">
-              <h2>{{ $t('common.second') || 'Second' }}</h2>
+              <h2>{{ $t('ui.cron.second') || 'Second' }}</h2>
               <h4>{{ value_second }}</h4>
             </div>
           </template>
