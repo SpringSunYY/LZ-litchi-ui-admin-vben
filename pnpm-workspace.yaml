@@ -209,3 +209,4 @@ catalog:
   markmap-view: ^0.18.12
   '@microsoft/fetch-event-source': ^2.0.1
   '@tinyflow-ai/vue': ^1.3.4
+  cron-parser: ^5.5.0

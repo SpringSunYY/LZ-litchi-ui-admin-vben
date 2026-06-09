@@ -46,6 +46,7 @@
     "@vueuse/core": "catalog:",
     "@vueuse/integrations": "catalog:",
     "ant-design-vue": "catalog:",
+    "cron-parser": "catalog:",
     "cropperjs": "catalog:",
     "crypto-js": "catalog:",
     "dayjs": "catalog:",

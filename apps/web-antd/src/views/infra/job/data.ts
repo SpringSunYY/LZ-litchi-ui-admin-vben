@@ -2,16 +2,16 @@ import type { VbenFormSchema } from '#/adapter/form';
 import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 import type { DescriptionItemSchema } from '#/components/description';
 
-import { h } from 'vue';
+import { h, markRaw } from 'vue';
 
 import { formatDateTime } from '@vben/utils';
 
 import { Timeline } from 'ant-design-vue';
 
+import { CronTab } from '#/components/cron-tab';
 import { DictTag } from '#/components/dict-tag';
 import { $t } from '#/locales';
 import { DICT_TYPE, getDictOptions } from '#/utils';
-
 /** 新增/修改的表单 */
 export function useFormSchema(): VbenFormSchema[] {
   return [
@@ -56,7 +56,8 @@ export function useFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'cronExpression',
       label: $t('infra.job.field.cronExpression'),
-      component: 'Input',
+      // component: 'Input',
+      component: markRaw(CronTab),
       componentProps: {
         placeholder: $t('ui.placeholder.input', [
           $t('infra.job.field.cronExpression'),
