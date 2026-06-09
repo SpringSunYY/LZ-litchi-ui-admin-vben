@@ -218,28 +218,28 @@
 
 ## 🐨 技术栈
 
-| 框架                                                         | 说明                 | 版本    |
-| ------------------------------------------------------------ | -------------------- | ------- |
-| [Vue](https://staging-cn.vuejs.org/)                         | vue框架              | 3.5.30  |
-| [Vite](https://cn.vitejs.dev//)                              | 开发与构建工具       | 8.0.0   |
-| [Ant Design Vue](https://www.antdv.com/)                     | Ant Design Vue       | 4.2.6   |
-| [Element Plus](https://element-plus.org/zh-CN/)              | Element Plus         | 2.13.5  |
-| [Naive UI](https://www.naiveui.com/)                         | Naive UI             | 2.44.1  |
-| [TDesign](https://tdesign.tencent.com/)                      | TDesign              | 1.18.5  |
-| [TypeScript](https://www.typescriptlang.org/docs/)           | JavaScript 超集      | 5.9.3   |
-| [pinia](https://pinia.vuejs.org/)                            | Vue 存储库替代 vuex5 | 3.0.4   |
-| [vueuse](https://vueuse.org/)                                | 常用工具集           | 14.2.1  |
-| [vue-i18n](https://kazupon.github.io/vue-i18n/zh/introduction.html/) | 国际化               | 11.3.0  |
-| [vue-router](https://router.vuejs.org/)                      | Vue 路由             | 5.0.3   |
-| [Tailwind CSS](https://tailwindcss.com/)                     | 原子 CSS             | 4.2.1   |
-| [Iconify](https://iconify.design/)                           | 图标组件             | 5.0.0   |
-| [Iconify](https://icon-sets.iconify.design/)                 | 在线图标库           | 2.2.449 |
-| [TinyMCE](https://www.tiny.cloud/)                           | 富文本编辑器         | 7.3.0   |
-| [Echarts](https://echarts.apache.org/)                       | 图表库               | 6.0.0   |
-| [axios](https://axios-http.com/)                             | http客户端           | 1.13.6  |
-| [dayjs](https://day.js.org/)                                 | 日期处理库           | 1.11.20 |
-| [vee-validate](https://vee-validate.logaretm.com/)           | 表单验证             | 4.15.1  |
-| [zod](https://zod.dev/)                                      | 数据验证             | 3.25.76 |
+| 框架 | 说明 | 版本 |
+| --- | --- | --- |
+| [Vue](https://staging-cn.vuejs.org/) | vue框架 | 3.5.30 |
+| [Vite](https://cn.vitejs.dev//) | 开发与构建工具 | 8.0.0 |
+| [Ant Design Vue](https://www.antdv.com/) | Ant Design Vue | 4.2.6 |
+| [Element Plus](https://element-plus.org/zh-CN/) | Element Plus | 2.13.5 |
+| [Naive UI](https://www.naiveui.com/) | Naive UI | 2.44.1 |
+| [TDesign](https://tdesign.tencent.com/) | TDesign | 1.18.5 |
+| [TypeScript](https://www.typescriptlang.org/docs/) | JavaScript 超集 | 5.9.3 |
+| [pinia](https://pinia.vuejs.org/) | Vue 存储库替代 vuex5 | 3.0.4 |
+| [vueuse](https://vueuse.org/) | 常用工具集 | 14.2.1 |
+| [vue-i18n](https://kazupon.github.io/vue-i18n/zh/introduction.html/) | 国际化 | 11.3.0 |
+| [vue-router](https://router.vuejs.org/) | Vue 路由 | 5.0.3 |
+| [Tailwind CSS](https://tailwindcss.com/) | 原子 CSS | 4.2.1 |
+| [Iconify](https://iconify.design/) | 图标组件 | 5.0.0 |
+| [Iconify](https://icon-sets.iconify.design/) | 在线图标库 | 2.2.449 |
+| [TinyMCE](https://www.tiny.cloud/) | 富文本编辑器 | 7.3.0 |
+| [Echarts](https://echarts.apache.org/) | 图表库 | 6.0.0 |
+| [axios](https://axios-http.com/) | http客户端 | 1.13.6 |
+| [dayjs](https://day.js.org/) | 日期处理库 | 1.11.20 |
+| [vee-validate](https://vee-validate.logaretm.com/) | 表单验证 | 4.15.1 |
+| [zod](https://zod.dev/) | 数据验证 | 3.25.76 |
 
 ## 🐷 演示图
 
