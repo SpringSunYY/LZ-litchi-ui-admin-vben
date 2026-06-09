@@ -218,44 +218,28 @@
 
 ## 🐨 技术栈
 
-### 模块
-
-| 项目                   | 说明                         |
-| ---------------------- | ---------------------------- |
-| `litchi-dependencies`  | Maven 依赖版本管理           |
-| `litchi-framework`     | Java 框架拓展                |
-| `litchi-server`        | 管理后台 + 用户 APP 的服务端 |
-| `litchi-module-system` | 系统功能的 Module 模块       |
-| `litchi-module-infra`  | 基础设施的 Module 模块       |
-| `litchi-module-bpm`    | 工作流程的 Module 模块       |
-| `litchi-module-erp`    | ERP 系统的 Module 模块       |
-| `litchi-module-crm`    | CRM 系统的 Module 模块       |
-| `litchi-module-ai`     | AI 大模型的 Module 模块      |
-
-### 框架
-
-| 框架 | 说明 | 版本 |
-| --- | --- | --- |
-| [Spring Boot](https://spring.io/projects/spring-boot) | 应用开发框架 | 3.4.5 |
-| [MySQL](https://www.mysql.com/cn/) | 数据库服务器 | 5.7 / 8.0+ |
-| [Druid](https://github.com/alibaba/druid) | JDBC 连接池、监控组件 | 1.2.23 |
-| [MyBatis Plus](https://mp.baomidou.com/) | MyBatis 增强工具包 | 3.5.7 |
-| [Dynamic Datasource](https://dynamic-datasource.com/) | 动态数据源 | 4.3.1 |
-| [Redis](https://redis.io/) | key-value 数据库 | 5.0 / 6.0 /7.0 |
-| [Redisson](https://github.com/redisson/redisson) | Redis 客户端 | 3.32.0 |
-| [Spring MVC](https://github.com/spring-projects/spring-framework/tree/master/spring-webmvc) | MVC 框架 | 6.1.10 |
-| [Spring Security](https://github.com/spring-projects/spring-security) | Spring 安全框架 | 6.3.1 |
-| [Hibernate Validator](https://github.com/hibernate/hibernate-validator) | 参数校验组件 | 8.0.1 |
-| [Flowable](https://github.com/flowable/flowable-engine) | 工作流引擎 | 7.0.0 |
-| [Quartz](https://github.com/quartz-scheduler) | 任务调度组件 | 2.3.2 |
-| [Springdoc](https://springdoc.org/) | Swagger 文档 | 2.3.0 |
-| [SkyWalking](https://skywalking.apache.org/) | 分布式应用追踪系统 | 9.0.0 |
-| [Spring Boot Admin](https://github.com/codecentric/spring-boot-admin) | Spring Boot 监控平台 | 3.3.2 |
-| [Jackson](https://github.com/FasterXML/jackson) | JSON 工具库 | 2.17.1 |
-| [MapStruct](https://mapstruct.org/) | Java Bean 转换 | 1.6.3 |
-| [Lombok](https://projectlombok.org/) | 消除冗长的 Java 代码 | 1.18.34 |
-| [JUnit](https://junit.org/junit5/) | Java 单元测试框架 | 5.10.1 |
-| [Mockito](https://github.com/mockito/mockito) | Java Mock 框架 | 5.7.0 |
+| 框架                                                         | 说明                 | 版本    |
+| ------------------------------------------------------------ | -------------------- | ------- |
+| [Vue](https://staging-cn.vuejs.org/)                         | vue框架              | 3.5.30  |
+| [Vite](https://cn.vitejs.dev//)                              | 开发与构建工具       | 8.0.0   |
+| [Ant Design Vue](https://www.antdv.com/)                     | Ant Design Vue       | 4.2.6   |
+| [Element Plus](https://element-plus.org/zh-CN/)              | Element Plus         | 2.13.5  |
+| [Naive UI](https://www.naiveui.com/)                         | Naive UI             | 2.44.1  |
+| [TDesign](https://tdesign.tencent.com/)                      | TDesign              | 1.18.5  |
+| [TypeScript](https://www.typescriptlang.org/docs/)           | JavaScript 超集      | 5.9.3   |
+| [pinia](https://pinia.vuejs.org/)                            | Vue 存储库替代 vuex5 | 3.0.4   |
+| [vueuse](https://vueuse.org/)                                | 常用工具集           | 14.2.1  |
+| [vue-i18n](https://kazupon.github.io/vue-i18n/zh/introduction.html/) | 国际化               | 11.3.0  |
+| [vue-router](https://router.vuejs.org/)                      | Vue 路由             | 5.0.3   |
+| [Tailwind CSS](https://tailwindcss.com/)                     | 原子 CSS             | 4.2.1   |
+| [Iconify](https://iconify.design/)                           | 图标组件             | 5.0.0   |
+| [Iconify](https://icon-sets.iconify.design/)                 | 在线图标库           | 2.2.449 |
+| [TinyMCE](https://www.tiny.cloud/)                           | 富文本编辑器         | 7.3.0   |
+| [Echarts](https://echarts.apache.org/)                       | 图表库               | 6.0.0   |
+| [axios](https://axios-http.com/)                             | http客户端           | 1.13.6  |
+| [dayjs](https://day.js.org/)                                 | 日期处理库           | 1.11.20 |
+| [vee-validate](https://vee-validate.logaretm.com/)           | 表单验证             | 4.15.1  |
+| [zod](https://zod.dev/)                                      | 数据验证             | 3.25.76 |
 
 ## 🐷 演示图
 
