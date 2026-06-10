@@ -1,11 +1,15 @@
+import { useI18n } from '@vben/locales';
 import { buildUUID } from '@vben/utils';
 
 import {
   localeProps,
   makeRequiredRule,
 } from '#/components/form-create/helpers';
+import { DICT_TYPE, getDictOptions } from '#/utils';
 
 export const useUploadFileRule = (label?: string) => {
+  const { t } = useI18n();
+
   const name = 'FileUpload';
   return {
     icon: 'icon-upload',
@@ -20,9 +24,19 @@ export const useUploadFileRule = (label?: string) => {
         $required: false,
       };
     },
-    props(_: any, { t }: any) {
+    props(_: any) {
       return localeProps(t, `${name}.props`, [
         makeRequiredRule(),
+        {
+          type: 'select',
+          field: 'moduleType',
+          title: t('ui.formCreate.props.moduleType'),
+          value: 'bpm',
+          options: getDictOptions(DICT_TYPE.SYSTEM_MODULE_TYPE, 'string'),
+          props: {
+            allowClear: true,
+          },
+        },
         {
           type: 'select',
           field: 'fileType',
@@ -36,6 +50,14 @@ export const useUploadFileRule = (label?: string) => {
             { label: 'ppt', value: 'ppt' },
             { label: 'pptx', value: 'pptx' },
             { label: 'txt', value: 'txt' },
+            { label: 'rtf', value: 'rtf' },
+            { label: 'md', value: 'md' },
+            { label: 'csv', value: 'csv' },
+            { label: 'tsv', value: 'tsv' },
+            { label: 'json', value: 'json' },
+            { label: 'xml', value: 'xml' },
+            { label: 'html', value: 'html' },
+            { label: 'htm', value: 'htm' },
             { label: 'pdf', value: 'pdf' },
             { label: 'rar', value: 'rar' },
             { label: 'zip', value: 'zip' },
@@ -44,11 +66,16 @@ export const useUploadFileRule = (label?: string) => {
             { label: 'tar', value: 'tar' },
             { label: 'mp3', value: 'mp3' },
             { label: 'wav', value: 'wav' },
+            { label: 'flac', value: 'flac' },
+            { label: 'aac', value: 'aac' },
+            { label: 'ogg', value: 'ogg' },
             { label: 'mp4', value: 'mp4' },
             { label: 'avi', value: 'avi' },
             { label: 'mov', value: 'mov' },
             { label: 'wmv', value: 'wmv' },
             { label: 'flv', value: 'flv' },
+            { label: 'mkv', value: 'mkv' },
+            { label: 'webm', value: 'webm' },
           ],
           props: {
             mode: 'multiple',

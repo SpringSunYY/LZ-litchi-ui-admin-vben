@@ -15,6 +15,7 @@ export * from './tree';
 export * from './unique';
 export * from './update-css-variables';
 export * from './upload';
+export * from './url';
 export * from './util';
 export * from './uuid'; // add by YY：从 vben2.0 复制
 export * from './window';

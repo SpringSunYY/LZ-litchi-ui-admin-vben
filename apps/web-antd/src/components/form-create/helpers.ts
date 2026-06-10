@@ -7,6 +7,8 @@ import { computed, nextTick, onMounted, ref, watch } from 'vue';
 import { i18n } from '@vben/locales';
 
 import { apiSelectRule } from '#/components/form-create/rules/data';
+import { useAreaSelectRule } from '#/components/form-create/rules/use-area-select-rule';
+import { useIframeRule } from '#/components/form-create/rules/use-iframe-rule';
 import {
   applyFormCreateRuntimeLocale,
   getFormCreateRuntimeLocale,
@@ -44,6 +46,10 @@ export const useFormCreateLabels = () => {
     apiSelect: computed(() => t('ui.formCreate.labels.apiSelect')),
     /** 系统字段 */
     systemMenuTitle: computed(() => t('ui.formCreate.labels.systemMenuTitle')),
+    /** 地区选择器 */
+    areaSelect: computed(() => t('ui.formCreate.labels.areaSelect')),
+    /** 网页iframe */
+    webIframe: computed(() => t('ui.formCreate.labels.iframe')),
   };
 };
 
@@ -75,12 +81,6 @@ export const localeProps = (
     if (rule.options && Array.isArray(rule.options)) {
       rule.options = rule.options.map(
         (opt: { label: number | string; value: any }) => {
-          if (typeof opt.label === 'string') {
-            const translated = t(`ui.formCreate.props.${opt.label}`);
-            if (translated && translated !== opt.label) {
-              opt.label = translated;
-            }
-          }
           return opt;
         },
       );
@@ -143,6 +143,8 @@ export const parseFormFields = (
  * - 部门选择器
  * - 富文本
  * - 国际化支持
+ * - 地区选择器
+ * - 网页iframe
  *
  * @param designer FcDesigner 组件 ref
  * @param loadFormConfig 可选，表单配置加载函数
@@ -166,7 +168,7 @@ export const useFormCreateDesigner = (
   const uploadFileRule = useUploadFileRule(labels.fileUpload.value);
   const uploadImageRule = useUploadImageRule(labels.imageUpload.value);
   const uploadImagesRule = useUploadImagesRule(labels.imagesUpload.value);
-
+  const iFrameRule = useIframeRule(labels.webIframe.value);
   type FcDesignerLocale = { default: Record<string, any> };
 
   const localeMap: Record<string, () => Promise<FcDesignerLocale>> = {
@@ -205,6 +207,7 @@ export const useFormCreateDesigner = (
       uploadFileRule,
       uploadImageRule,
       uploadImagesRule,
+      iFrameRule,
     ];
     components.forEach((component) => {
       // 插入组件规则
@@ -236,6 +239,12 @@ export const useFormCreateDesigner = (
     props: [...apiSelectRule],
     event: ['click', 'change', 'visibleChange', 'clear', 'blur', 'focus'],
   });
+  const areaSelectRole0 = useAreaSelectRule({
+    name: 'AreaSelect',
+    label: labels.areaSelect.value,
+    icon: 'icon-eye',
+    event: ['click', 'change', 'visibleChange', 'clear', 'blur', 'focus'],
+  });
 
   /**
    * 构建系统字段菜单
@@ -246,6 +255,7 @@ export const useFormCreateDesigner = (
       deptSelectRule,
       dictSelectRule,
       apiSelectRule0,
+      areaSelectRole0,
     ];
     const menu: Menu = {
       name: 'system',

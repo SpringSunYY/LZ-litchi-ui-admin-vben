@@ -4,16 +4,18 @@ import type { App } from 'vue';
 import FcDesigner from '@form-create/antd-designer';
 import Antd from 'ant-design-vue';
 
-// ======================= 样式 =======================
-import '#/components/form-create/styles/designer-dark.scss';
-
 // ======================= 自定义组件 =======================
 import { useApiSelect } from '#/components/form-create';
+import AreaSelect from '#/components/form-create/components/area-select.vue';
 import DictSelect from '#/components/form-create/components/dict-select.vue';
+import IframeComponent from '#/components/form-create/components/iframe.vue';
 import { useFileUpload } from '#/components/form-create/components/use-file-upload';
 import { useImageUpload } from '#/components/form-create/components/use-image-upload';
 import { useImagesUpload } from '#/components/form-create/components/use-images-upload';
 import { Tinymce } from '#/components/tinymce';
+
+// ======================= 样式 =======================
+import '#/components/form-create/styles/designer-dark.scss';
 
 const UserSelect = useApiSelect({
   name: 'UserSelect',
@@ -40,6 +42,8 @@ const components = [
   FileUpload,
   Tinymce,
   DictSelect,
+  AreaSelect,
+  IframeComponent,
   UserSelect,
   DeptSelect,
   ApiSelect,

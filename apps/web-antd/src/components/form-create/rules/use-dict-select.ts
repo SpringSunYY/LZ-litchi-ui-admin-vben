@@ -1,5 +1,6 @@
 import { onMounted, ref } from 'vue';
 
+import { useI18n } from '@vben/locales';
 import { buildUUID, cloneDeep } from '@vben/utils';
 
 import * as DictDataApi from '#/api/system/dict/type';
@@ -13,6 +14,7 @@ import { selectRule } from '#/components/form-create/rules/data';
  * 字典选择器规则，如果规则使用到动态数据则需要单独配置不能使用 useSelectRule
  */
 export const useDictSelectRule = (label?: string) => {
+  const { t } = useI18n();
   const name = 'DictSelect';
   const dictOptions = ref<{ label: string; value: string }[]>([]); // 字典类型下拉数据
   onMounted(async () => {
@@ -39,8 +41,9 @@ export const useDictSelectRule = (label?: string) => {
         $required: false,
       };
     },
-    props(_: any, { t }: any) {
+    props(_: any) {
       const rules = cloneDeep(selectRule);
+      console.log('name', name);
       return localeProps(t, `${name}.props`, [
         makeRequiredRule(),
         {
