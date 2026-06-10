@@ -14,9 +14,6 @@ import { createI18n } from 'vue-i18n';
 /** i18n 远程消息缓存 key */
 const I18N_CACHE_PREFIX = 'i18n_messages_';
 
-/** 后端 updated 状态缓存 key */
-const I18N_UPDATED_PREFIX = 'i18n_updated_';
-
 /** i18n 加载中状态（用于 UI 反馈） */
 export const i18nLoading = ref(false);
 
@@ -30,8 +27,12 @@ let appGetI18nLocale:
   | null = null;
 
 /** 当前 localeTarget（由 app 层注入，默认为环境变量或 2 = PC 管理后台） */
-let currentLocaleTarget: LocaleTarget =
+export const CURRENT_LOCALE_TARGET: number =
   Number(import.meta.env.VITE_I18N_LOCALE_TARGET) || 2;
+
+export const LOCALE_FALLBACK: SupportedLanguagesType =
+  (import.meta.env.VITE_APP_LOCALE_FALLBACK as SupportedLanguagesType) ||
+  'zh-CN';
 
 /** 缓存的语言列表（由 getDefaultLocaleFromBackend 填充，供 language-toggle 等组件复用） */
 export const cachedLocaleList = ref<
@@ -47,12 +48,8 @@ export function setGetI18nLocaleApi(
   ) => Promise<
     Array<{ isDefault?: number; locale?: string; localeName?: string }>
   >,
-  localeTarget?: LocaleTarget,
 ) {
   appGetI18nLocale = fn;
-  if (localeTarget !== undefined) {
-    currentLocaleTarget = localeTarget;
-  }
 }
 
 /**
@@ -62,20 +59,11 @@ export function getGetI18nLocaleApi() {
   return appGetI18nLocale;
 }
 
-/**
- * 获取当前 localeTarget
- */
-export function getLocaleTarget(): LocaleTarget {
-  return currentLocaleTarget;
-}
-
-const DEFAULT_LOCALE: SupportedLanguagesType = 'en-US';
-
 export const i18n = createI18n({
   globalInjection: true,
   legacy: false,
   locale: '',
-  fallbackLocale: DEFAULT_LOCALE,
+  fallbackLocale: LOCALE_FALLBACK,
   missingWarn: false,
   fallbackWarn: false,
   messages: {},
@@ -249,11 +237,11 @@ let appModules: null | Record<string, () => Promise<unknown>> = null;
 let thirdPartySetup: ((lang: SupportedLanguagesType) => Promise<void>) | null =
   null;
 
-export const LOCALE_FALLBACK: SupportedLanguagesType =
-  (import.meta.env.VITE_APP_LOCALE_FALLBACK as SupportedLanguagesType) ||
-  'zh-CN';
-
 export type LocaleTarget = number;
+
+function getCacheKey(lang: SupportedLanguagesType): string {
+  return `${I18N_CACHE_PREFIX}${lang}`;
+}
 
 export interface SetupI18nOptions extends LocaleSetupOptions {
   /** app 层的 locale modules（import.meta.glob 结果），用于扩展 package 自带的 locale */
@@ -273,20 +261,7 @@ export interface SetupI18nOptions extends LocaleSetupOptions {
     Array<{ locale?: string; message?: string; messageKey?: string }>
   >;
   /** 后端 i18n API — 检查后端是否有更新，返回 true 表示有更新需重新拉取 */
-  getI18nUpdatedApi?: (
-    currentUpdated: boolean,
-    lang: string,
-  ) => Promise<boolean>;
-  /** 后端 i18n API — 获取后端国际化状态 */
-  getI18nStatusApi?: (lang: string) => Promise<boolean>;
-}
-
-function getCacheKey(lang: SupportedLanguagesType): string {
-  return `${I18N_CACHE_PREFIX}${lang}`;
-}
-
-function getUpdatedKey(lang: SupportedLanguagesType): string {
-  return `${I18N_UPDATED_PREFIX}${lang}`;
+  getI18nUpdatedApi?: (localeTarget: number, lang: string) => Promise<boolean>;
 }
 
 /**
@@ -304,7 +279,7 @@ export async function getLocaleInfo(options: {
   locale?: string;
   localeName?: string;
 }> | null> {
-  const localeTarget = options.localeTarget ?? currentLocaleTarget;
+  const localeTarget = options.localeTarget ?? CURRENT_LOCALE_TARGET;
   const api = options.getI18nLocaleApi ?? appGetI18nLocale;
   if (!api) return null;
 
@@ -333,7 +308,7 @@ export function setI18nUpdated(key: string, value?: string) {
  * 清除所有 i18n 相关缓存（消息缓存、updated 状态缓存）
  */
 export function clearI18nCaches() {
-  const prefixes = [I18N_CACHE_PREFIX, I18N_UPDATED_PREFIX];
+  const prefixes = [I18N_CACHE_PREFIX];
   const keysToRemove: string[] = [];
 
   for (let i = 0; i < localStorage.length; i++) {
@@ -432,25 +407,22 @@ async function fetchRemoteMessages(
   options: SetupI18nOptions,
 ): Promise<null | Record<string, string>> {
   const {
-    localeTarget = currentLocaleTarget,
+    localeTarget = CURRENT_LOCALE_TARGET,
     getI18nLocaleMessageApi,
     getI18nUpdatedApi,
-    getI18nStatusApi,
   } = options;
 
   if (!getI18nLocaleMessageApi) return null;
 
   try {
     const cacheKey = getCacheKey(lang);
-    const updatedKey = getUpdatedKey(lang);
     const cachedData = localStorage.getItem(cacheKey);
-    const cachedUpdated = localStorage.getItem(updatedKey) || null;
 
     // 有缓存：拿上次保存的后端状态去比对是否有更新
     if (cachedData) {
       try {
         const backendUpdated = await getI18nUpdatedApi?.(
-          cachedUpdated === 'true',
+          CURRENT_LOCALE_TARGET,
           lang,
         );
         // 后端返回 true = 前后端状态不一致，需要拉取新数据
@@ -500,14 +472,6 @@ async function fetchRemoteMessages(
             getCacheKey(langCode as SupportedLanguagesType),
             JSON.stringify(messages),
           );
-        }
-        // 如果没有更新缓存，拿当前状态缓存
-        if (cachedUpdated === null) {
-          const updated = await getI18nStatusApi?.(lang);
-          setI18nUpdated(updatedKey, updated ? 'false' : 'true');
-        } else {
-          // 拉取完成后标记缓存为最新,和上次状态相反
-          setI18nUpdated(updatedKey, cachedUpdated as string);
         }
 
         if (messagesByLang[lang]) {
@@ -566,7 +530,7 @@ let currentFallbackLocale: SupportedLanguagesType;
 export async function getDefaultLocaleFromBackend(
   options: SetupI18nOptions = {},
 ): Promise<SupportedLanguagesType> {
-  const localeTarget = options.localeTarget ?? currentLocaleTarget;
+  const localeTarget = options.localeTarget ?? CURRENT_LOCALE_TARGET;
   const getApi = options.getI18nLocaleApi ?? appGetI18nLocale;
 
   if (!getApi) return LOCALE_FALLBACK;
@@ -598,7 +562,6 @@ async function setupI18nCore(app: App, options: LocaleSetupOptions = {}) {
 
   if (fallbackLocale) {
     i18n.global.fallbackRoot = true;
-    // @ts-ignore
     i18n.global.fallbackLocale.value = fallbackLocale;
   }
 
@@ -614,7 +577,6 @@ export async function setupI18n(app: App, options: SetupI18nOptions = {}) {
     getI18nLocaleApi,
     getI18nLocaleMessageApi,
     getI18nUpdatedApi,
-    getI18nStatusApi,
     defaultLocale,
     fallbackLocale,
   } = options;
@@ -624,7 +586,7 @@ export async function setupI18n(app: App, options: SetupI18nOptions = {}) {
   currentFallbackLocale = fallbackLocale ?? LOCALE_FALLBACK;
 
   if (getI18nLocaleApi) {
-    setGetI18nLocaleApi(getI18nLocaleApi as any, localeTarget);
+    setGetI18nLocaleApi(getI18nLocaleApi as any);
   }
 
   await setRemoteMessageLoader((lang) =>
@@ -633,7 +595,6 @@ export async function setupI18n(app: App, options: SetupI18nOptions = {}) {
       getI18nLocaleApi,
       getI18nLocaleMessageApi,
       getI18nUpdatedApi,
-      getI18nStatusApi,
     }),
   );
 
