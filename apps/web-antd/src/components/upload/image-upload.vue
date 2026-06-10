@@ -6,13 +6,15 @@ import type { FileUploadProps } from './typing';
 
 import type { AxiosProgressEvent } from '#/api/infra/file';
 
-import { computed, nextTick, ref, toRefs, unref, watch } from 'vue';
+import { computed, nextTick, ref, toRefs, unref, useAttrs, watch } from 'vue';
 
 import { CloudUpload } from '@vben/icons';
 import { $t } from '@vben/locales';
 import { isFunction, isObject, isString } from '@vben/utils';
 
 import { message, Modal, Upload } from 'ant-design-vue';
+
+import { MODULE_TYPE_ENUM } from '#/utils';
 
 import { checkImgType, defaultImageAccepts } from './helper';
 import { UploadResultStatus } from './typing';
@@ -34,9 +36,10 @@ const props = withDefaults(defineProps<FileUploadProps>(), {
   api: undefined,
   resultField: '',
   showDescription: true,
-  moduleType: 'infra',
+  moduleType: MODULE_TYPE_ENUM.INFRA,
 });
 const emit = defineEmits(['change', 'update:value', 'delete']);
+const attrs = useAttrs();
 const { accept, helpText, maxNumber, maxSize, minSize } = toRefs(props);
 const isInnerOperate = ref<boolean>(false);
 const { getAccept, getStringAccept } = useUploadType({
@@ -222,12 +225,27 @@ function getValue() {
   // 多个文件用 || 分隔符拼接成字符串
   return list.length > 0 ? list.join('||') : '';
 }
+
+const uploadAttrs = computed(() => {
+  const {
+    value: _value,
+    'onUpdate:value': _onUpdateValue,
+    'onUpdate:modelValue': _onUpdateModelValue,
+    modelValue: _modelValue,
+    id: _id,
+    name: _name,
+    field: _field,
+    formCreateInject: _formCreateInject,
+    ...rest
+  } = attrs;
+  return rest;
+});
 </script>
 
 <template>
   <div>
     <Upload
-      v-bind="$attrs"
+      v-bind="uploadAttrs"
       v-model:file-list="fileList"
       :accept="getStringAccept"
       :before-upload="beforeUpload"

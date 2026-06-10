@@ -2,7 +2,7 @@
 import type { BpmProcessInstanceApi } from '#/api/bpm/processInstance';
 import type { SystemUserApi } from '#/api/system/user';
 
-import { nextTick, onMounted, ref, shallowRef, watch } from 'vue';
+import { computed, nextTick, onMounted, ref, shallowRef, watch } from 'vue';
 
 import { Page } from '@vben/common-ui';
 import { formatDateTime } from '@vben/utils';
@@ -15,6 +15,7 @@ import {
 } from '#/api/bpm/processInstance';
 import { getSimpleUserList } from '#/api/system/user';
 import DictTag from '#/components/dict-tag/dict-tag.vue';
+import { useFormCreateLocale } from '#/components/form-create';
 import { $t } from '#/locales';
 import {
   BpmModelFormType,
@@ -90,7 +91,10 @@ const detailForm = ref({
   rule: [],
   option: {},
   value: {},
-}); // 流程实例的表单详情
+});
+const formCreateLocale = useFormCreateLocale(
+  computed(() => detailForm.value.option),
+); // 流程实例的表单详情
 
 const writableFields: Array<string> = []; // 表单可以编辑的字段
 
@@ -328,6 +332,7 @@ onMounted(async () => {
                     class="h-full"
                   >
                     <form-create
+                      :locale="formCreateLocale"
                       v-model="detailForm.value"
                       v-model:api="fApi"
                       :option="detailForm.option"

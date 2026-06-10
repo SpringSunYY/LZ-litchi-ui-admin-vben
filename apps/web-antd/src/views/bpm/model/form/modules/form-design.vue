@@ -3,7 +3,7 @@ import type { Rule } from 'ant-design-vue/es/form';
 
 import type { BpmFormApi } from '#/api/bpm/form';
 
-import { ref, watch } from 'vue';
+import { computed, ref, watch } from 'vue';
 
 import { CircleHelp } from '@vben/icons';
 
@@ -20,6 +20,7 @@ import {
 } from 'ant-design-vue';
 
 import { getFormDetail } from '#/api/bpm/form';
+import { useFormCreateLocale } from '#/components/form-create';
 import { $t } from '#/locales';
 import {
   BpmModelFormType,
@@ -50,6 +51,9 @@ const formPreview = ref({
     formData: {},
   },
 });
+const formCreateLocale = useFormCreateLocale(
+  computed(() => formPreview.value.option),
+);
 
 /** 监听表单ID变化，加载表单数据 */
 watch(
@@ -209,6 +213,7 @@ defineExpose({ validate });
         }}</span>
       </div>
       <FormCreate
+        :locale="formCreateLocale"
         v-model:api="formPreview.formData"
         :rule="formPreview.rule"
         :option="formPreview.option"

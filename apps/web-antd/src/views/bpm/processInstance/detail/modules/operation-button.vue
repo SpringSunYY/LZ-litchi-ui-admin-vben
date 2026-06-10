@@ -37,6 +37,7 @@ import {
 import * as TaskApi from '#/api/bpm/task';
 import * as UserApi from '#/api/system/user';
 import { $t } from '#/locales';
+import { useFormCreateLocale } from '#/components/form-create';
 import {
   BpmCandidateStrategyEnum,
   BpmModelFormType,
@@ -93,7 +94,10 @@ const returnList = ref([] as any); // 退回节点
 
 // ========== 审批信息 ==========
 const runningTask = ref<any>(); // 运行中的任务
-const approveForm = ref<any>({}); // 审批通过时，额外的补充信息
+const approveForm = ref<any>({});
+const formCreateLocale = useFormCreateLocale(
+  computed(() => approveForm.value?.option),
+); // 审批通过时，额外的补充信息
 const approveFormFApi = ref<any>({}); // approveForms 的 fAPi
 const nodeTypeName = ref('bpm.operation.approver'); // 节点类型名称，对应 i18n key
 
@@ -785,6 +789,7 @@ defineExpose({ loadTodoTask });
                   </span>
                 </template>
                 <FormCreate
+                  :locale="formCreateLocale"
                   v-model:value="approveForm.value"
                   v-model:api="approveFormFApi"
                   :option="approveForm.option"

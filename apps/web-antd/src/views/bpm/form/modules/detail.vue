@@ -6,11 +6,13 @@ import { useVbenModal } from '@vben/common-ui';
 import FormCreate from '@form-create/ant-design-vue';
 
 import { getFormDetail } from '#/api/bpm/form';
+import { useFormCreateLocale } from '#/components/form-create';
 import { $t } from '#/locales';
 import { setConfAndFields2 } from '#/utils';
 
 /** 详情 */
 const formConfig = ref<any>({});
+const formCreateLocale = useFormCreateLocale(formConfig);
 
 const [Modal, modalApi] = useVbenModal({
   footer: false,
@@ -46,6 +48,10 @@ const [Modal, modalApi] = useVbenModal({
       maxHeight: '100px',
     }"
   >
-    <FormCreate :option="formConfig.option" :rule="formConfig.rule" />
+    <FormCreate
+      :locale="formCreateLocale"
+      :option="formConfig.option"
+      :rule="formConfig.rule"
+    />
   </Modal>
 </template>

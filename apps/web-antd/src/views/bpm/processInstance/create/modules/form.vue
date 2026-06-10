@@ -15,6 +15,7 @@ import {
   createProcessInstance,
   getApprovalDetail as getApprovalDetailApi,
 } from '#/api/bpm/processInstance';
+import { useFormCreateLocale } from '#/components/form-create';
 import { $t } from '#/locales';
 import { router } from '#/router';
 import {
@@ -80,6 +81,9 @@ const detailForm = ref<ProcessFormData>({
   option: {},
   value: {},
 });
+const formCreateLocale = useFormCreateLocale(
+  computed(() => detailForm.value.option),
+);
 
 /** 监听表单数据变化 */
 watch(
@@ -336,6 +340,7 @@ defineExpose({ initProcessInfo });
             class="flex-1 overflow-auto"
           >
             <form-create
+              :locale="formCreateLocale"
               :rule="detailForm.rule"
               v-model:api="fApi"
               v-model="detailForm.value"

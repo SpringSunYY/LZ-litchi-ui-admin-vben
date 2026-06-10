@@ -8,6 +8,7 @@ import { $t } from '@vben/locales';
 import { Button, Upload } from 'ant-design-vue';
 
 import { useUpload } from '#/components/upload/use-upload';
+import { MODULE_TYPE_ENUM } from '#/utils';
 
 defineOptions({ name: 'TinymceFileUpload' });
 
@@ -23,7 +24,7 @@ const props = defineProps({
   },
   moduleType: {
     // 文件模块类型
-    default: '',
+    default: MODULE_TYPE_ENUM.INFRA,
     type: String,
   },
 });
@@ -60,11 +61,7 @@ async function customRequest(info: UploadRequestOption<any>) {
 </script>
 <template>
   <div :class="[{ fullscreen }]" class="tinymce-file-upload">
-    <Upload
-      :show-upload-list="false"
-      multiple
-      :custom-request="customRequest"
-    >
+    <Upload :show-upload-list="false" multiple :custom-request="customRequest">
       <Button v-bind="{ ...getButtonProps }">
         {{ $t('ui.upload.fileUpload') }}
       </Button>

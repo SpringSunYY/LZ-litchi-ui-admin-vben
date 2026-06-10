@@ -7,11 +7,11 @@ import { IconifyIcon } from '@vben/icons';
 import FcDesigner from '@form-create/antd-designer';
 import { Button, message } from 'ant-design-vue';
 
+import { setConfAndFields } from '#/utils/formCreate';
 import { getFormDetail } from '#/api/bpm/form';
 import { useFormCreateDesigner } from '#/components/form-create';
 import { $t } from '#/locales';
 import { router } from '#/router';
-import { setConfAndFields } from '#/utils';
 import Form from '#/views/bpm/form/modules/form.vue';
 
 defineOptions({ name: 'BpmFormEditor' });

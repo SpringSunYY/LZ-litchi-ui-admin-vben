@@ -22,8 +22,8 @@ import { $t } from '@vben/locales';
 import { notification } from 'ant-design-vue';
 import dayjs from 'dayjs';
 
-import { FilePreview } from '#/components/file-preview';
 import { EllipsisContent } from '#/components/ellipsis-content';
+import { FilePreview } from '#/components/file-preview';
 import {
   I18nCheckbox,
   I18nCheckboxGroup,

@@ -7,6 +7,10 @@ import { computed, nextTick, onMounted, ref, watch } from 'vue';
 import { i18n } from '@vben/locales';
 
 import { apiSelectRule } from '#/components/form-create/rules/data';
+import {
+  applyFormCreateRuntimeLocale,
+  getFormCreateRuntimeLocale,
+} from '#/utils/formCreate';
 
 import {
   useDictSelectRule,
@@ -41,6 +45,12 @@ export const useFormCreateLabels = () => {
     /** 系统字段 */
     systemMenuTitle: computed(() => t('ui.formCreate.labels.systemMenuTitle')),
   };
+};
+
+export const useFormCreateLocale = (
+  option?: Ref<Record<string, any> | undefined>,
+) => {
+  return computed(() => getFormCreateRuntimeLocale(option?.value || {}));
 };
 
 export function makeRequiredRule() {
@@ -143,6 +153,15 @@ export const useFormCreateDesigner = (
   loadFormConfig?: () => Promise<void>,
 ) => {
   const labels = useFormCreateLabels();
+
+  const applyRuntimeLocale = () => {
+    const option = designer.value?.getOption?.();
+    if (!option) {
+      return;
+    }
+    const runtimeOption = applyFormCreateRuntimeLocale(option);
+    designer.value?.setOption?.(runtimeOption);
+  };
   const editorRule = useEditorRule(labels.tinymce.value);
   const uploadFileRule = useUploadFileRule(labels.fileUpload.value);
   const uploadImageRule = useUploadImageRule(labels.imageUpload.value);
@@ -169,8 +188,11 @@ export const useFormCreateDesigner = (
     lang.name = localeKey;
     locale.value = lang;
 
+    applyRuntimeLocale();
+
     if (loadFormConfig) {
       await loadFormConfig();
+      applyRuntimeLocale();
     }
   };
   const buildFormComponents = () => {

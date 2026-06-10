@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-//@ts-nocheck
 import type { IPropTypes } from '@tinymce/tinymce-vue/lib/cjs/main/ts/components/EditorPropTypes';
 import type { Editor as EditorType } from 'tinymce/tinymce';
 
@@ -24,6 +23,7 @@ import { buildShortUUID, isNumber } from '@vben/utils';
 import Editor from '@tinymce/tinymce-vue';
 
 import { useUpload } from '#/components/upload/use-upload';
+import { MODULE_TYPE_ENUM } from '#/utils';
 
 import FileUpload from './file-upload.vue';
 import { bindHandlers } from './helper';
@@ -69,8 +69,8 @@ const props = defineProps({
     default: true,
   },
   moduleType: {
-    // 文件模块类型
-    default: '',
+    // 文件模块类型,默认：BPM，因为创建组件没有没有模块类型
+    default: MODULE_TYPE_ENUM.BPM,
     type: String,
   },
 });
@@ -331,7 +331,7 @@ function handleFileDone(name: string, url: string) {
   editor.execCommand('mceInsertContent', false, linkHtml);
 }
 
-function handleFileError(name: string) {
+function handleFileError() {
   // 文件上传失败，不需要特殊处理
 }
 </script>
@@ -361,7 +361,7 @@ function handleFileError(name: string) {
       v-if="!initOptions.inline && init"
       v-model="modelValue"
       :init="initOptions"
-      :style="{ visibility: 'hidden', zIndex: 3000 }"
+      :style="{ visibility: 'hidden', zIndex: 3000, marginBottom: '8px' }"
       :tinymce-script-src="tinymceScriptSrc"
       license-key="gpl"
     />

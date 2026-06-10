@@ -3,6 +3,7 @@ import type { PropType } from 'vue';
 import { defineComponent, useAttrs } from 'vue';
 
 import FileUpload from '#/components/upload/file-upload.vue';
+import { MODULE_TYPE_ENUM } from '#/utils';
 
 export const useFileUpload = () => {
   return defineComponent({
@@ -56,7 +57,7 @@ export const useFileUpload = () => {
       // 模块类型
       moduleType: {
         type: String,
-        default: 'bpm',
+        default: MODULE_TYPE_ENUM.BPM,
       },
     },
     setup(props, { emit }) {

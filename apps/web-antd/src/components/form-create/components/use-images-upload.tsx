@@ -3,6 +3,7 @@ import type { PropType } from 'vue';
 import { defineComponent, toRefs, useAttrs } from 'vue';
 
 import ImageUpload from '#/components/upload/image-upload.vue';
+import { MODULE_TYPE_ENUM } from '#/utils';
 
 // 将 MIME 类型或字符串转换为文件扩展名数组
 function convertFileType(fileTypes: string | string[]): string[] {
@@ -61,7 +62,7 @@ export const useImagesUpload = () => {
       // 模块类型
       moduleType: {
         type: String,
-        default: 'bpm',
+        default: MODULE_TYPE_ENUM.BPM,
       },
     },
     setup(props, { emit }) {

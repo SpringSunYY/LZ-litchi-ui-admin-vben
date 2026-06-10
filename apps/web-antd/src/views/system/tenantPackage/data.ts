@@ -6,10 +6,10 @@ import { z } from '#/adapter/form';
 import { $t } from '#/locales';
 import {
   CommonStatusEnum,
-  MODULE_TYPE_ENUM,
   DICT_TYPE,
   getDictOptions,
   getRangePickerDefaultProps,
+  MODULE_TYPE_ENUM,
 } from '#/utils';
 
 /** 新增/修改的表单 */
@@ -167,6 +167,9 @@ export function useFormSchema(): VbenFormSchema[] {
       fieldName: 'description',
       label: $t('system.tenantPackage.field.description'),
       component: 'RichTextarea',
+      componentProps: {
+        moduleType: MODULE_TYPE_ENUM.SYSTEM,
+      },
     },
     {
       fieldName: 'remark',

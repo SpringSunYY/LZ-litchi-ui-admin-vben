@@ -5,7 +5,7 @@ import type { VxeTableGridOptions } from '@vben/plugins/vxe-table';
 
 import type { BpmTaskApi } from '#/api/bpm/task';
 
-import { nextTick, onMounted, ref, shallowRef } from 'vue';
+import { computed, nextTick, onMounted, ref, shallowRef } from 'vue';
 
 import { useVbenModal } from '@vben/common-ui';
 import { IconifyIcon } from '@vben/icons';
@@ -14,6 +14,7 @@ import { Button } from 'ant-design-vue';
 
 import { useVbenVxeGrid } from '#/adapter/vxe-table';
 import { getTaskListByProcessInstanceId } from '#/api/bpm/task';
+import { useFormCreateLocale } from '#/components/form-create';
 import { $t } from '#/locales';
 import { DICT_TYPE, setConfAndFields2 } from '#/utils';
 
@@ -133,6 +134,9 @@ const taskForm = ref<TaskForm>({
   option: {},
   value: {},
 });
+const formCreateLocale = useFormCreateLocale(
+  computed(() => taskForm.value.option),
+);
 
 /**
  * 显示表单详情
@@ -210,6 +214,7 @@ defineExpose({
     <Modal class="w-[800px]">
       <form-create
         ref="formRef"
+        :locale="formCreateLocale"
         v-model="taskForm.value"
         :option="taskForm.option"
         :rule="taskForm.rule"
