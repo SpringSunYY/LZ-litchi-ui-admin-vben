@@ -34,7 +34,6 @@ import {
 } from './tinymce';
 
 type InitOptions = IPropTypes['init'];
-
 defineOptions({ name: 'Tinymce', inheritAttrs: false });
 
 const props = defineProps({
@@ -67,6 +66,35 @@ const props = defineProps({
   showFileUpload: {
     type: Boolean,
     default: true,
+  },
+  fileAccept: {
+    type: Array as PropType<string[]>,
+    default: () => [
+      'doc',
+      'docx',
+      'xls',
+      'xlsx',
+      'ppt',
+      'pptx',
+      'pdf',
+      'txt',
+      'md',
+      'csv',
+      'zip',
+      'rar',
+    ],
+  },
+  fileMaxSize: {
+    type: Number,
+    default: 20,
+  },
+  imageAccept: {
+    type: Array as PropType<string[]>,
+    default: () => ['jpg', 'jpeg', 'png', 'gif', 'webp', 'bmp', 'svg'],
+  },
+  imageMaxSize: {
+    type: Number,
+    default: 10,
   },
   moduleType: {
     // 文件模块类型,默认：BPM，因为创建组件没有没有模块类型
@@ -161,8 +189,9 @@ const initOptions = computed((): InitOptions => {
     quickbars_selection_toolbar:
       'bold italic | quicklink h2 h3 blockquote quickimage quicktable',
     toolbar_mode: 'sliding',
+    ui_mode: 'split',
     ...options,
-    images_upload_handler: (blobInfo) => {
+    images_upload_handler: (blobInfo: { blob: () => Blob }) => {
       return new Promise((resolve, reject) => {
         const file = blobInfo.blob() as File;
         const { httpRequest } = useUpload(undefined, props.moduleType);
@@ -176,9 +205,9 @@ const initOptions = computed((): InitOptions => {
           });
       });
     },
-    setup: (editor) => {
+    setup: (editor: EditorType) => {
       editorRef.value = editor;
-      editor.on('init', (e) => initSetup(e));
+      editor.on('init', (e: unknown) => initSetup(e));
     },
   };
 });
@@ -229,6 +258,7 @@ function setEditorMode() {
 }
 
 function destroy() {
+  fullscreen.value = false;
   const editor = unref(editorRef);
   editor?.destroy();
 }
@@ -338,30 +368,36 @@ function handleFileError() {
 
 <template>
   <div :style="{ width: containerWidth }" class="app-tinymce">
-    <ImgUpload
-      v-if="showImageUpload"
-      v-show="editorRef"
-      :disabled="disabled"
-      :fullscreen="fullscreen"
-      :module-type="moduleType"
-      @done="handleDone"
-      @error="handleError"
-      @uploading="handleImageUploading"
-    />
-    <FileUpload
-      v-if="showFileUpload"
-      v-show="editorRef"
-      :disabled="disabled"
-      :fullscreen="fullscreen"
-      :module-type="moduleType"
-      @done="handleFileDone"
-      @error="handleFileError"
-    />
+    <div :class="[{ fullscreen }]" class="app-tinymce-upload-actions">
+      <ImgUpload
+        v-if="showImageUpload"
+        v-show="editorRef"
+        :accept="imageAccept"
+        :max-size="imageMaxSize"
+        :disabled="disabled"
+        :fullscreen="fullscreen"
+        :module-type="moduleType"
+        @done="handleDone"
+        @error="handleError"
+        @uploading="handleImageUploading"
+      />
+      <FileUpload
+        v-if="showFileUpload"
+        v-show="editorRef"
+        :accept="fileAccept"
+        :max-size="fileMaxSize"
+        :disabled="disabled"
+        :fullscreen="fullscreen"
+        :module-type="moduleType"
+        @done="handleFileDone"
+        @error="handleFileError"
+      />
+    </div>
     <Editor
       v-if="!initOptions.inline && init"
       v-model="modelValue"
       :init="initOptions"
-      :style="{ visibility: 'hidden', zIndex: 3000, marginBottom: '8px' }"
+      :style="{ zIndex: 5000, marginBottom: '8px' }"
       :tinymce-script-src="tinymceScriptSrc"
       license-key="gpl"
     />
@@ -369,15 +405,31 @@ function handleFileError() {
   </div>
 </template>
 <style lang="scss">
-.tox.tox-silver-sink.tox-tinymce-aux {
-  z-index: 2025; /* 由于 vben modal/drawer 的 zIndex 为 2000，需要调整 z-index（默认 1300）超过它，避免遮挡 */
+.tox.tox-silver-sink.tox-tinymce-aux,
+.tox-dialog-wrap {
+  z-index: 3000 !important; /* 由于 vben modal/drawer 的 zIndex 为 2000，需要调整 z-index（默认 1300）超过它，避免遮挡 */
 }
 </style>
-
 <style lang="scss" scoped>
 .app-tinymce {
   position: relative;
   line-height: normal;
+
+  .app-tinymce-upload-actions {
+    position: absolute;
+    top: 4px;
+    right: 10px;
+    z-index: 20;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: flex-end;
+
+    &.fullscreen {
+      position: fixed;
+      z-index: 10000;
+    }
+  }
 
   :deep(.textarea) {
     z-index: -1;
