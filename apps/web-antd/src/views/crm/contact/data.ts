@@ -3,7 +3,7 @@ import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 
 import { getSimpleContactList } from '#/api/crm/contact';
 import { getCustomerSimpleList } from '#/api/crm/customer';
-import { getAreaTree } from '#/api/system/area';
+import { getAreaTree } from '#/api/infra/area';
 import { getSimpleUserList } from '#/api/system/user';
 import { $t } from '#/locales';
 import { DICT_TYPE, getDictOptions } from '#/utils';

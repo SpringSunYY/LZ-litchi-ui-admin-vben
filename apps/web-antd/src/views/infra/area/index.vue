@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import type { VxeTableGridOptions } from '#/adapter/vxe-table';
-import type { AreaApi } from '#/api/system/area';
+import type { AreaApi } from '#/api/infra/area';
 
 import { ref } from 'vue';
 
@@ -10,7 +10,12 @@ import { downloadFileFromBlobPart } from '@vben/utils';
 import { message } from 'ant-design-vue';
 
 import { ACTION_ICON, TableAction, useVbenVxeGrid } from '#/adapter/vxe-table';
-import { deleteArea, exportArea, getAreaList } from '#/api/system/area';
+import {
+  clearAreaCache,
+  deleteArea,
+  exportArea,
+  getAreaList,
+} from '#/api/infra/area';
 import { $t } from '#/locales';
 
 import { useGridColumns, useGridFormSchema } from './data';
@@ -72,7 +77,7 @@ async function handleDelete(row: AreaApi.Area) {
 async function handleExport() {
   const data = await exportArea(await gridApi.formApi.getValues());
   downloadFileFromBlobPart({
-    fileName: `${$t('system.area.area')}.xls`,
+    fileName: `${$t('infra.area.area')}.xls`,
     source: data,
   });
 }
@@ -118,13 +123,27 @@ const [Grid, gridApi] = useVbenVxeGrid({
   } as VxeTableGridOptions<AreaApi.Area>,
   gridEvents: {},
 });
+
+/**
+ * 清除地区缓存
+ */
+const clearCacheLoading = ref(false);
+async function handleClearCache() {
+  try {
+    clearCacheLoading.value = true;
+    await clearAreaCache();
+    message.success($t('ui.actionMessage.operationSuccess'));
+  } finally {
+    clearCacheLoading.value = false;
+  }
+}
 </script>
 
 <template>
   <Page auto-content-height>
     <FormModal @success="onRefresh" />
 
-    <Grid :table-title="$t('system.area.list')">
+    <Grid :table-title="$t('infra.area.list')">
       <template #toolbar-tools>
         <TableAction
           :actions="[
@@ -134,18 +153,26 @@ const [Grid, gridApi] = useVbenVxeGrid({
               onClick: toggleExpand,
             },
             {
-              label: $t('ui.actionTitle.create', [$t('system.area.area')]),
+              label: $t('ui.actionTitle.create', [$t('infra.area.area')]),
               type: 'primary',
               icon: ACTION_ICON.ADD,
-              auth: ['system:area:create'],
+              auth: ['infra:area:create'],
               onClick: handleCreate,
             },
             {
               label: $t('ui.actionTitle.export'),
               type: 'primary',
               icon: ACTION_ICON.DOWNLOAD,
-              auth: ['system:area:export'],
+              auth: ['infra:area:export'],
               onClick: handleExport,
+            },
+            {
+              label: $t('ui.actionTitle.clearCache'),
+              type: 'primary',
+              icon: ACTION_ICON.REFRESH,
+              auth: ['infra:locale:create'],
+              onClick: handleClearCache,
+              loading: clearCacheLoading,
             },
           ]"
         />
@@ -157,14 +184,14 @@ const [Grid, gridApi] = useVbenVxeGrid({
               label: $t('common.append'),
               type: 'link',
               icon: ACTION_ICON.ADD,
-              auth: ['system:area:create'],
+              auth: ['infra:area:create'],
               onClick: handleAppend.bind(null, row),
             },
             {
               label: $t('common.edit'),
               type: 'link',
               icon: ACTION_ICON.EDIT,
-              auth: ['system:area:update'],
+              auth: ['infra:area:update'],
               onClick: handleEdit.bind(null, row),
             },
             {
@@ -172,7 +199,7 @@ const [Grid, gridApi] = useVbenVxeGrid({
               type: 'link',
               danger: true,
               icon: ACTION_ICON.DELETE,
-              auth: ['system:area:delete'],
+              auth: ['infra:area:delete'],
               popConfirm: {
                 title: $t('ui.actionMessage.deleteConfirm', [row.id]),
                 confirm: handleDelete.bind(null, row),

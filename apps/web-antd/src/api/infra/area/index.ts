@@ -32,41 +32,53 @@ export namespace AreaApi {
 
 /** 获得地区树 */
 export function getAreaTree() {
-  return requestClient.get<SystemAreaApi.Area[]>('/system/area/tree');
+  return requestClient.get<SystemAreaApi.Area[]>('/infra/area/tree');
 }
 
 /** 获得 IP 对应的地区名 */
 export function getAreaByIp(ip: string) {
-  return requestClient.get<string>(`/system/area/get-by-ip?ip=${ip}`);
+  return requestClient.get<string>(`/infra/area/get-by-ip?ip=${ip}`);
 }
 
 /** 查询地区信息列表 */
 export function getAreaList(params: any) {
-  return requestClient.get<AreaApi.Area[]>('/system/area/list', { params });
+  return requestClient.get<AreaApi.Area[]>('/infra/area/list', {
+    params,
+    timeout: 30_000,
+  });
 }
 
 /** 查询地区信息详情 */
 export function getArea(id: number) {
-  return requestClient.get<AreaApi.Area>(`/system/area/get?id=${id}`);
+  return requestClient.get<AreaApi.Area>(`/infra/area/get?id=${id}`);
 }
 
 /** 新增地区信息 */
 export function createArea(data: AreaApi.Area) {
-  return requestClient.post('/system/area/create', data);
+  return requestClient.post('/infra/area/create', data);
 }
 
 /** 修改地区信息 */
 export function updateArea(data: AreaApi.Area) {
-  return requestClient.put('/system/area/update', data);
+  return requestClient.put('/infra/area/update', data);
 }
 
 /** 删除地区信息 */
 export function deleteArea(id: number) {
-  return requestClient.delete(`/system/area/delete?id=${id}`);
+  return requestClient.delete(`/infra/area/delete?id=${id}`);
 }
-
 
 /** 导出地区信息 */
 export function exportArea(params: any) {
-  return requestClient.download('/system/area/export-excel', params);
+  return requestClient.download('/infra/area/export-excel', {
+    params,
+    timeout: 300_000,
+  });
+}
+
+/**
+ * 清除缓存
+ */
+export function clearAreaCache() {
+  return requestClient.delete('/infra/area/clear-cache');
 }

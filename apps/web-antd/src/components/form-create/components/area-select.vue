@@ -6,7 +6,7 @@ import { useI18n } from '@vben/locales';
 
 import { Cascader } from 'ant-design-vue';
 
-import { getAreaTree } from '#/api/system/area';
+import { getAreaTree } from '#/api/infra/area';
 import { AreaLevelEnum } from '#/utils';
 
 defineOptions({ name: 'AreaSelect' });

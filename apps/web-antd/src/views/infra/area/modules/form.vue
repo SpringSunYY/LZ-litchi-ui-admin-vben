@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { AreaApi } from '#/api/system/area';
+import type { AreaApi } from '#/api/infra/area';
 
 import { computed, ref } from 'vue';
 
@@ -8,7 +8,7 @@ import { useVbenModelDrawer } from '@vben/common-ui';
 import { message } from 'ant-design-vue';
 
 import { useVbenForm } from '#/adapter/form';
-import { createArea, getArea, updateArea } from '#/api/system/area';
+import { createArea, getArea, updateArea } from '#/api/infra/area';
 import { $t } from '#/locales';
 
 import { useFormSchema } from '../data';
@@ -17,8 +17,8 @@ const emit = defineEmits(['success']);
 const formData = ref<AreaApi.Area>();
 const getTitle = computed(() => {
   return formData.value?.id
-    ? $t('ui.actionTitle.edit', [$t('system.area.area')])
-    : $t('ui.actionTitle.create', [$t('system.area.area')]);
+    ? $t('ui.actionTitle.edit', [$t('infra.area.area')])
+    : $t('ui.actionTitle.create', [$t('infra.area.area')]);
 });
 
 const [Form, formApi] = useVbenForm({

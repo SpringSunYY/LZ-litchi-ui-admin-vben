@@ -1,30 +1,4 @@
 {
-  "area": {
-    "area": "area",
-    "menu": "area",
-    "list": "area list",
-    "field": {
-      "id": "id",
-      "name": "area name",
-      "parentId": "parent id",
-      "parentIdName": "parent area",
-      "postalCode": "postal code",
-      "level": "level",
-      "longitude": "longitude",
-      "latitude": "latitude",
-      "source": "data source",
-      "geoJson": "geo json",
-      "sortNum": "sort order",
-      "createTime": "create time"
-    },
-    "action": {
-      "query": "area query",
-      "create": "create area",
-      "export": "export area",
-      "update": "update area",
-      "delete": "delete area"
-    }
-  },
   "dept": {
     "dept": "department",
     "menu": "department management",

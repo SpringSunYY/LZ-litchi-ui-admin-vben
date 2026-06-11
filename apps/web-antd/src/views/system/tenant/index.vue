@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import type { VxeTableGridOptions } from '#/adapter/vxe-table';
-import type { SystemAreaApi } from '#/api/system/area';
+import type { SystemAreaApi } from '#/api/infra/area';
 import type { SystemTenantApi } from '#/api/system/tenant';
 
 import { onMounted, ref } from 'vue';
@@ -16,7 +16,7 @@ import { downloadFileFromBlobPart } from '@vben/utils';
 import { message, TreeSelect } from 'ant-design-vue';
 
 import { ACTION_ICON, TableAction, useVbenVxeGrid } from '#/adapter/vxe-table';
-import { getAreaTree } from '#/api/system/area';
+import { getAreaTree } from '#/api/infra/area';
 import {
   deleteTenant,
   exportTenant,

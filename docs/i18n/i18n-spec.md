@@ -48,7 +48,7 @@ src/locales/langs/
 ```
 
 - 使用 **点号(.)** 分隔，不用冒号
-- **Key 路径**（`system.area.field.name` 等）全部使用小写，段与段之间用点号分隔
+- **Key 路径**（`infra.area.field.name` 等）全部使用小写，段与段之间用点号分隔
 
 ### 3.2 层级结构
 
@@ -65,11 +65,11 @@ src/locales/langs/
 
 | 类型 | 格式 | 示例 | 说明 |
 | --- | --- | --- | --- |
-| 业务名称 | `{module}.{business}` | `system.area` | 表单/列表标题 |
-| 菜单名称 | `{module}.{business}.menu` | `system.area.menu` | 侧边栏菜单显示 |
-| 列表标题 | `{module}.{business}.list` | `system.area.list` | 列表页面标题 |
-| 字段 | `{module}.{business}.field.{fieldName}` | `system.area.field.name` | 字段标签 |
-| 动作 | `{module}.{business}.action.{action}` | `system.area.action.query` | 与后端权限/按钮语义对齐的动作文案 |
+| 业务名称 | `{module}.{business}` | `infra.area` | 表单/列表标题 |
+| 菜单名称 | `{module}.{business}.menu` | `infra.area.menu` | 侧边栏菜单显示 |
+| 列表标题 | `{module}.{business}.list` | `infra.area.list` | 列表页面标题 |
+| 字段 | `{module}.{business}.field.{fieldName}` | `infra.area.field.name` | 字段标签 |
+| 动作 | `{module}.{business}.action.{action}` | `infra.area.action.query` | 与后端权限/按钮语义对齐的动作文案 |
 
 ---
 
@@ -152,7 +152,7 @@ src/locales/langs/
 ```typescript
 data.unshift({
   id: 0,
-  name: $t('ui.treeRoot', [$t('system.area.field.parentIdName')]),
+  name: $t('ui.treeRoot', [$t('infra.area.field.parentIdName')]),
 });
 ```
 
@@ -220,11 +220,11 @@ data.unshift({
 import { $t } from '#/locales';
 
 // 直接使用
-$t('system.area.field.name');
+$t('infra.area.field.name');
 
 // 带参数（用于 placeholder、actionTitle 等）
-$t('ui.placeholder.input', [$t('system.area.field.name')]);
-$t('ui.actionTitle.create', [$t('system.area.area')]);
+$t('ui.placeholder.input', [$t('infra.area.field.name')]);
+$t('ui.actionTitle.create', [$t('infra.area.area')]);
 ```
 
 ### 5.2 占位符使用
@@ -238,8 +238,8 @@ $t('ui.actionTitle.create', [$t('system.area.area')]);
 ```typescript
 // 使用方式
 $t('ui.placeholder.input', ['名称']); // 中文：请输入名称
-$t('ui.placeholder.input', [$t('system.area.field.name')]); // 支持嵌套
-$t('ui.treeRoot', [$t('system.area.field.parentIdName')]); // 上级树：根节点显示名
+$t('ui.placeholder.input', [$t('infra.area.field.name')]); // 支持嵌套
+$t('ui.treeRoot', [$t('infra.area.field.parentIdName')]); // 上级树：根节点显示名
 ```
 
 ### 5.3 动作按钮
@@ -254,10 +254,10 @@ $t('ui.treeRoot', [$t('system.area.field.parentIdName')]); // 上级树：根节
 | 批量删除 | `ui.actionTitle.deleteBatch` | `批量删除{0}` |
 
 ```typescript
-label: $t('ui.actionTitle.create', [$t('system.area.area')]);
+label: $t('ui.actionTitle.create', [$t('infra.area.area')]);
 ```
 
-**与业务 `action` 的配合**：工具栏上「带业务名的创建/导出」等可继续用 `ui.actionTitle.*`；需要与权限名一一对应、或供其他模块/动态菜单引用时，使用 `{module}.{business}.action.{name}`，例如 `$t('system.area.action.query')`。
+**与业务 `action` 的配合**：工具栏上「带业务名的创建/导出」等可继续用 `ui.actionTitle.*`；需要与权限名一一对应、或供其他模块/动态菜单引用时，使用 `{module}.{business}.action.{name}`，例如 `$t('infra.area.action.query')`。
 
 ### 5.4 菜单国际化
 
@@ -269,7 +269,7 @@ label: $t('ui.actionTitle.create', [$t('system.area.area')]);
   path: '/system/area',
   name: 'system-area',
   meta: {
-    title: $t('system.area.menu'),  // 侧边栏菜单名称
+    title: $t('infra.area.menu'),  // 侧边栏菜单名称
   }
 }
 ```
@@ -292,7 +292,7 @@ message.success($t('ui.actionMessage.deleteSuccess', [row.id]));
 
 ## 六、具体模块示例
 
-### 6.1 system.area 完整示例
+### 6.1 infra.area 完整示例
 
 #### 中文文件 `zh-CN/system.json`（节选，与仓库一致）
 
@@ -374,35 +374,35 @@ import { $t } from '#/locales';
 // 表单字段
 {
   fieldName: 'name',
-  label: $t('system.area.field.name'),
+  label: $t('infra.area.field.name'),
   component: 'Input',
   componentProps: {
-    placeholder: $t('ui.placeholder.input', [$t('system.area.field.name')]),
+    placeholder: $t('ui.placeholder.input', [$t('infra.area.field.name')]),
   },
 }
 
 // 上级 ApiTreeSelect：根节点用 ui.treeRoot + 父级字段 label（勿单独建 topLevelArea）
 {
   fieldName: 'parentId',
-  label: $t('system.area.field.parentIdName'),
+  label: $t('infra.area.field.parentIdName'),
   component: 'ApiTreeSelect',
   componentProps: {
     api: async () => {
       const data = await getAreaList({});
       data.unshift({
         id: 0,
-        name: $t('ui.treeRoot', [$t('system.area.field.parentIdName')]),
+        name: $t('ui.treeRoot', [$t('infra.area.field.parentIdName')]),
       });
       return handleTree(data);
     },
-    placeholder: $t('ui.placeholder.select', [$t('system.area.field.parentIdName')]),
+    placeholder: $t('ui.placeholder.select', [$t('infra.area.field.parentIdName')]),
   },
 }
 
 // 表格列
 {
   field: 'name',
-  title: $t('system.area.field.name'),
+  title: $t('infra.area.field.name'),
 }
 
 // 通用操作
@@ -416,7 +416,7 @@ import { $t } from '#/locales';
 ```vue
 <template>
   <!-- 列表标题 -->
-  <Grid :table-title="$t('system.area.list')">
+  <Grid :table-title="$t('infra.area.list')">
     <!-- 工具栏：树表展开/收缩用 common，与权限无关 -->
     <TableAction
       :actions="[
@@ -425,13 +425,13 @@ import { $t } from '#/locales';
           onClick: toggleExpand,
         },
         {
-          label: $t('ui.actionTitle.create', [$t('system.area.area')]),
-          auth: ['system:area:create'],
+          label: $t('ui.actionTitle.create', [$t('infra.area.area')]),
+          auth: ['infra.area:create'],
           onClick: handleCreate,
         },
         {
           label: $t('ui.actionTitle.export'),
-          auth: ['system:area:export'],
+          auth: ['infra.area:export'],
           onClick: handleExport,
         },
       ]"
@@ -442,12 +442,12 @@ import { $t } from '#/locales';
       :actions="[
         {
           label: $t('common.append'),
-          auth: ['system:area:create'],
+          auth: ['infra.area:create'],
           onClick: handleAppend.bind(null, row),
         },
         {
           label: $t('common.edit'),
-          auth: ['system:area:update'],
+          auth: ['infra.area:update'],
           onClick: handleEdit.bind(null, row),
         },
       ]"
@@ -458,7 +458,7 @@ import { $t } from '#/locales';
 <script setup>
 // 导出文件名
 downloadFileFromBlobPart({
-  fileName: $t('system.area.area') + '.xls',
+  fileName: $t('infra.area.area') + '.xls',
   source: data,
 });
 </script>
@@ -470,8 +470,8 @@ downloadFileFromBlobPart({
 <script setup>
 const getTitle = computed(() => {
   return formData.value?.id
-    ? $t('ui.actionTitle.edit', [$t('system.area.area')])
-    : $t('ui.actionTitle.create', [$t('system.area.area')]);
+    ? $t('ui.actionTitle.edit', [$t('infra.area.area')])
+    : $t('ui.actionTitle.create', [$t('infra.area.area')]);
 });
 </script>
 
@@ -553,12 +553,12 @@ const getTitle = computed(() => {
 │  └── en-US/system.json                                      │
 ├─────────────────────────────────────────────────────────────┤
 │  Key 格式: {module}.{business}.{type}.{name}                │
-│  ├── system.area                    业务名称（表单/列表标题）   │
-│  ├── system.area.menu               菜单名称（侧边栏菜单显示）   │
-│  ├── system.area.list               列表标题                 │
-│  ├── system.area.field.xxx           字段                    │
-│  ├── system.area.action.xxx         动作（与权限对齐）        │
-│  └── system.area.message.xxx         提示/确认文案            │
+│  ├── infra.area                    业务名称（表单/列表标题）   │
+│  ├── infra.area.menu               菜单名称（侧边栏菜单显示）   │
+│  ├── infra.area.list               列表标题                 │
+│  ├── infra.area.field.xxx           字段                    │
+│  ├── infra.area.action.xxx         动作（与权限对齐）        │
+│  └── infra.area.message.xxx         提示/确认文案            │
 ├─────────────────────────────────────────────────────────────┤
 │  通用: common.json → expand / collapse / append 等            │
 ├─────────────────────────────────────────────────────────────┤
@@ -583,4 +583,4 @@ const getTitle = computed(() => {
 
 ### 9.2 菜单按钮与 `action` 键
 
-后端 `system_menu` 中按钮的 `name` / 权限标识若采用 `system:area:query` 等形式，前端展示名优先使用 `{module}.{business}.action.query` 等同名键，便于与 SQL 生成的 `infra_i18n_key` / 权限体系一致。
+后端 `system_menu` 中按钮的 `name` / 权限标识若采用 `infra.area:query` 等形式，前端展示名优先使用 `{module}.{business}.action.query` 等同名键，便于与 SQL 生成的 `infra_i18n_key` / 权限体系一致。

@@ -1,7 +1,7 @@
 import type { VbenFormSchema } from '#/adapter/form';
 import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 
-import { getAreaTree } from '#/api/system/area';
+import { getAreaTree } from '#/api/infra/area';
 import { getSimpleUserList } from '#/api/system/user';
 import { $t } from '#/locales';
 import { DICT_TYPE, getDictOptions, getRangePickerDefaultProps } from '#/utils';

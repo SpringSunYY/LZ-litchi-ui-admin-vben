@@ -3,7 +3,7 @@ import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 import type { SystemTenantApi } from '#/api/system/tenant';
 
 import { z } from '#/adapter/form';
-import { getAreaTree } from '#/api/system/area';
+import { getAreaTree } from '#/api/infra/area';
 import { $t } from '#/locales';
 import {
   CommonStatusEnum,
