@@ -105,7 +105,7 @@ export function useFormSchema(): VbenFormSchema[] {
       component: 'ApiTreeSelect',
       componentProps: {
         api: () => getAreaTree(),
-        fieldNames: { label: 'name', value: 'id', children: 'children' },
+        fieldNames: { label: 'name', value: 'code', children: 'children' },
       },
     },
     {

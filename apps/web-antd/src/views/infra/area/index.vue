@@ -4,7 +4,7 @@ import type { AreaApi } from '#/api/infra/area';
 
 import { ref } from 'vue';
 
-import { Page, useVbenModelDrawer } from '@vben/common-ui';
+import { Page, useVbenModal, useVbenModelDrawer } from '@vben/common-ui';
 import { downloadFileFromBlobPart } from '@vben/utils';
 
 import { message } from 'ant-design-vue';
@@ -17,6 +17,7 @@ import {
   getAreaList,
 } from '#/api/infra/area';
 import { $t } from '#/locales';
+import ImportForm from '#/views/infra/area/modules/import-form.vue';
 
 import { useGridColumns, useGridFormSchema } from './data';
 import Form from './modules/form.vue';
@@ -73,13 +74,33 @@ async function handleDelete(row: AreaApi.Area) {
   }
 }
 
-/** 导出表格 */
+/** 导出地区信息 */
+const exportLoading = ref(false);
 async function handleExport() {
-  const data = await exportArea(await gridApi.formApi.getValues());
-  downloadFileFromBlobPart({
-    fileName: `${$t('infra.area.area')}.xls`,
-    source: data,
-  });
+  try {
+    exportLoading.value = true;
+    message.loading({
+      content: $t('ui.actionMessage.exporting'),
+      key: 'action_key_msg',
+    });
+    const data = await exportArea(await gridApi.formApi.getValues());
+    downloadFileFromBlobPart({
+      fileName: `${$t('infra.area.area')}.xls`,
+      source: data,
+    });
+  } finally {
+    exportLoading.value = false;
+  }
+}
+
+const [ImportModal, importModalApi] = useVbenModal({
+  connectedComponent: ImportForm,
+  destroyOnClose: true,
+});
+
+/** 导入地区信息 */
+function handleImport() {
+  importModalApi.open();
 }
 
 const [Grid, gridApi] = useVbenVxeGrid({
@@ -90,8 +111,8 @@ const [Grid, gridApi] = useVbenVxeGrid({
     columns: useGridColumns(),
     height: 'auto',
     treeConfig: {
-      parentField: 'parentId',
-      rowField: 'id',
+      parentField: 'parentCode',
+      rowField: 'code',
       transform: true,
       expandAll: false,
       reserve: true,
@@ -142,7 +163,7 @@ async function handleClearCache() {
 <template>
   <Page auto-content-height>
     <FormModal @success="onRefresh" />
-
+    <ImportModal @success="onRefresh" />
     <Grid :table-title="$t('infra.area.list')">
       <template #toolbar-tools>
         <TableAction
@@ -164,6 +185,7 @@ async function handleClearCache() {
               type: 'primary',
               icon: ACTION_ICON.DOWNLOAD,
               auth: ['infra:area:export'],
+              loading: exportLoading,
               onClick: handleExport,
             },
             {
@@ -173,6 +195,13 @@ async function handleClearCache() {
               auth: ['infra:locale:create'],
               onClick: handleClearCache,
               loading: clearCacheLoading,
+            },
+            {
+              label: $t('ui.actionTitle.import', [$t('infra.area.area')]),
+              type: 'primary',
+              icon: ACTION_ICON.UPLOAD,
+              auth: ['infra:area:import'],
+              onClick: handleImport,
             },
           ]"
         />

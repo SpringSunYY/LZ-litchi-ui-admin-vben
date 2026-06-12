@@ -57,7 +57,7 @@ interface Props {
 // Ant Design Vue Cascader 的 fieldNames 配置
 const fieldNames = {
   label: 'name',
-  value: 'id',
+  value: 'code',
   children: 'children',
 };
 

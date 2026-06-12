@@ -150,14 +150,14 @@ export function useFormSchema(): VbenFormSchema[] {
       },
     },
     {
-      fieldName: 'areaId',
-      label: $t('crm.contact.field.areaId'),
+      fieldName: 'areaCode',
+      label: $t('crm.contact.field.areaCode'),
       component: 'ApiTreeSelect',
       componentProps: {
         api: () => getAreaTree(),
-        fieldNames: { label: 'name', value: 'id', children: 'children' },
+        fieldNames: { label: 'name', value: 'code', children: 'children' },
         placeholder: $t('ui.placeholder.select', [
-          $t('crm.contact.field.areaId'),
+          $t('crm.contact.field.areaCode'),
         ]),
       },
     },

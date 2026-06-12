@@ -6,8 +6,7 @@
     "field": {
       "id": "id",
       "name": "area name",
-      "parentId": "parent id",
-      "parentIdName": "parent area",
+      "parentCode": "parent code",
       "postalCode": "postal code",
       "level": "level",
       "longitude": "longitude",
@@ -42,7 +41,7 @@
       "createTime": "create time",
       "file": "file upload",
       "uploadTime": "upload time",
-      "administrativeCode": "administrative code"
+      "code": "administrative code"
     },
     "action": {
       "query": "file query",

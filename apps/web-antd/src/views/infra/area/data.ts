@@ -2,9 +2,7 @@ import type { VbenFormSchema } from '#/adapter/form';
 import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 import type { AreaApi } from '#/api/infra/area';
 
-import { handleTree } from '@vben/utils';
-
-import { getAreaList } from '#/api/infra/area';
+import { getAreaTree } from '#/api/infra/area';
 import { $t } from '#/locales';
 import { DICT_TYPE, getDictOptions, getRangePickerDefaultProps } from '#/utils';
 
@@ -20,39 +18,31 @@ export function useFormSchema(): VbenFormSchema[] {
       },
     },
     {
-      fieldName: 'parentId',
-      label: $t('infra.area.field.parentIdName'),
+      fieldName: 'parentCode',
+      label: $t('infra.area.field.parentCode'),
       component: 'ApiTreeSelect',
       componentProps: {
-        allowClear: true,
         api: async () => {
-          const data = await getAreaList({});
-          // @ts-ignore 提示有异常
-          data.unshift({
-            id: 0,
-            name: $t('ui.treeRoot', [$t('infra.area.field.parentIdName')]),
-          });
-          return handleTree(data);
+          const res = await getAreaTree();
+          return [
+            {
+              code: '0',
+              name: $t('ui.treeRoot', [$t('infra.area.area')]),
+              children: res,
+            },
+          ];
         },
-        labelField: 'name',
-        valueField: 'id',
-        childrenField: 'children',
-        placeholder: $t('ui.placeholder.select', [
-          $t('infra.area.field.parentIdName'),
-        ]),
-        treeDefaultExpandAll: false,
+        fieldNames: { label: 'name', value: 'code', children: 'children' },
       },
       rules: 'selectRequired',
     },
     {
-      fieldName: 'administrativeCode',
-      label: $t('infra.area.field.administrativeCode'),
+      fieldName: 'code',
+      label: $t('infra.area.field.code'),
       rules: 'required',
       component: 'Input',
       componentProps: {
-        placeholder: $t('ui.placeholder.input', [
-          $t('infra.area.field.administrativeCode'),
-        ]),
+        placeholder: $t('ui.placeholder.input', [$t('infra.area.field.code')]),
       },
     },
     {
@@ -80,7 +70,7 @@ export function useFormSchema(): VbenFormSchema[] {
       rules: 'required',
       component: 'I18nSelect',
       componentProps: {
-        options: getDictOptions(DICT_TYPE.SYSTEM_AREA_LEVEL, 'number'),
+        options: getDictOptions(DICT_TYPE.INFRA_AREA_LEVEL, 'number'),
         placeholder: $t('ui.placeholder.select', [
           $t('infra.area.field.level'),
         ]),
@@ -143,14 +133,12 @@ export function useFormSchema(): VbenFormSchema[] {
 export function useGridFormSchema(): VbenFormSchema[] {
   return [
     {
-      fieldName: 'administrativeCode',
-      label: $t('infra.area.field.administrativeCode'),
+      fieldName: 'code',
+      label: $t('infra.area.field.code'),
       component: 'Input',
       componentProps: {
         allowClear: true,
-        placeholder: $t('ui.placeholder.input', [
-          $t('infra.area.field.administrativeCode'),
-        ]),
+        placeholder: $t('ui.placeholder.input', [$t('infra.area.field.code')]),
       },
     },
     {
@@ -173,24 +161,24 @@ export function useGridFormSchema(): VbenFormSchema[] {
         ]),
       },
     },
-    {
-      fieldName: 'parentId',
-      label: $t('infra.area.field.parentId'),
-      component: 'Input',
-      componentProps: {
-        allowClear: true,
-        placeholder: $t('ui.placeholder.input', [
-          $t('infra.area.field.parentId'),
-        ]),
-      },
-    },
+    // {
+    //   fieldName: 'parentId',
+    //   label: $t('infra.area.field.parentId'),
+    //   component: 'Input',
+    //   componentProps: {
+    //     allowClear: true,
+    //     placeholder: $t('ui.placeholder.input', [
+    //       $t('infra.area.field.parentId'),
+    //     ]),
+    //   },
+    // },
     {
       fieldName: 'level',
       label: $t('infra.area.field.level'),
       component: 'I18nSelect',
       componentProps: {
         allowClear: true,
-        options: getDictOptions(DICT_TYPE.SYSTEM_AREA_LEVEL, 'number'),
+        options: getDictOptions(DICT_TYPE.INFRA_AREA_LEVEL, 'number'),
         placeholder: $t('ui.placeholder.select', [
           $t('infra.area.field.level'),
         ]),
@@ -217,8 +205,8 @@ export function useGridColumns(): VxeTableGridOptions<AreaApi.Area>['columns'] {
       visible: false,
     },
     {
-      field: 'administrativeCode',
-      title: $t('infra.area.field.administrativeCode'),
+      field: 'code',
+      title: $t('infra.area.field.code'),
       treeNode: true,
     },
     {
@@ -231,8 +219,8 @@ export function useGridColumns(): VxeTableGridOptions<AreaApi.Area>['columns'] {
       title: $t('infra.area.field.postalCode'),
     },
     {
-      field: 'parentId',
-      title: $t('infra.area.field.parentId'),
+      field: 'parentCode',
+      title: $t('infra.area.field.parentCode'),
       visible: false,
     },
     {
@@ -240,7 +228,7 @@ export function useGridColumns(): VxeTableGridOptions<AreaApi.Area>['columns'] {
       title: $t('infra.area.field.level'),
       cellRender: {
         name: 'CellI18nDict',
-        props: { type: DICT_TYPE.SYSTEM_AREA_LEVEL },
+        props: { type: DICT_TYPE.INFRA_AREA_LEVEL },
       },
     },
     {
@@ -281,6 +269,27 @@ export function useGridColumns(): VxeTableGridOptions<AreaApi.Area>['columns'] {
       width: 200,
       fixed: 'right',
       slots: { default: 'actions' },
+    },
+  ];
+}
+
+/** 地区信息导入的表单 */
+export function useAreaImportSchema(): VbenFormSchema[] {
+  return [
+    /** 地区信息导入文件 */
+    {
+      fieldName: 'file',
+      label: $t('ui.actionTitle.import', [$t('infra.area.area')]),
+      component: 'Upload',
+      rules: 'required',
+      componentProps: {
+        accept: '.xls,.xlsx',
+        maxSize: 10,
+        maxNumber: 1,
+        uploadParams: {
+          type: 'file',
+        },
+      },
     },
   ];
 }

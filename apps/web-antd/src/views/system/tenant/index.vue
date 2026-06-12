@@ -130,7 +130,7 @@ const [Grid, gridApi] = useVbenVxeGrid({
 });
 
 const addressList = ref<SystemAreaApi.Area[]>([]);
-const addressMap = ref<Map<number, SystemAreaApi.Area>>(new Map());
+const addressMap = ref<Map<string, SystemAreaApi.Area>>(new Map());
 
 function getAddressList() {
   getAreaTree().then((res) => {
@@ -140,20 +140,20 @@ function getAddressList() {
 }
 
 function getAddressMap() {
-  const map = new Map<number, SystemAreaApi.Area & { children?: any[] }>();
+  const map = new Map<string, SystemAreaApi.Area & { children?: any[] }>();
 
-  function traverse(nodes: any[], parentId?: number) {
+  function traverse(nodes: any[], parentCode?: string) {
     for (const node of nodes) {
       // 显式设置 parentId
-      if (parentId !== undefined) {
-        node.parentId = parentId;
+      if (parentCode !== undefined) {
+        node.parentCode = parentCode;
       }
-      if (node.id) {
-        map.set(node.id, node);
+      if (node.code) {
+        map.set(node.code, node);
       }
       // 递归处理子节点，传入当前节点的 id 作为父级 id
       if (node.children?.length) {
-        traverse(node.children, node.id);
+        traverse(node.children, node.code);
       }
     }
   }
@@ -165,10 +165,8 @@ function getAddressMap() {
 function getAreaFullName(addressCode: string): string {
   if (!addressCode || addressList.value.length === 0) return '';
   const flatMap = addressMap.value;
-  const target = [...flatMap.values()].find(
-    (n) => n.id === Number(addressCode),
-  );
-  if (!target || !target.id) {
+  const target = [...flatMap.values()].find((n) => n.code === addressCode);
+  if (!target || !target.code) {
     return '';
   }
   const names: string[] = [];
@@ -177,8 +175,8 @@ function getAreaFullName(addressCode: string): string {
   while (current && count < 10) {
     // 添加循环保护
     names.unshift(current.name);
-    if (current.parentId === null || current.parentId === undefined) break;
-    current = flatMap.get(current.parentId);
+    if (current.parentCode === null || current.parentCode === undefined) break;
+    current = flatMap.get(current.parentCode);
     count++;
   }
   return names.join('/');
@@ -204,7 +202,7 @@ onMounted(() => {
           v-bind="slotProps"
           :tree-data="addressList"
           :dropdown-style="{ maxHeight: '400px', overflow: 'auto' }"
-          :field-names="{ label: 'name', value: 'id', children: 'children' }"
+          :field-names="{ label: 'name', value: 'code', children: 'children' }"
           :placeholder="$t('ui.placeholder.select')"
           allow-clear
         />

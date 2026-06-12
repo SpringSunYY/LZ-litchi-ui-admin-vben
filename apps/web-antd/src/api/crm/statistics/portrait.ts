@@ -28,7 +28,7 @@ export namespace CrmStatisticsPortraitApi {
 
   /** 客户地区统计信息 */
   export interface CustomerArea extends CustomerBase {
-    areaId: number;
+    areaCode: number;
     areaName: string;
     areaPortion: number | string;
   }

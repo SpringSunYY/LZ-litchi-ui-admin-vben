@@ -6,7 +6,7 @@ export namespace SystemAreaApi {
     id?: number;
     name: string;
     code: string;
-    parentId?: number;
+    parentCode?: string;
     sort?: number;
     status?: number;
     createTime?: Date;
@@ -81,4 +81,18 @@ export function exportArea(params: any) {
  */
 export function clearAreaCache() {
   return requestClient.delete('/infra/area/clear-cache');
+}
+
+/** 获取地区信息导入模板 */
+export function importAreaTemplate() {
+  return requestClient.download('/infra/area/get-import-template');
+}
+
+/** 导入地区信息 */
+export function importArea(file: File) {
+  return requestClient.upload(
+    '/infra/area/import',
+    { file },
+    { timeout: 30_000 },
+  );
 }

@@ -22,7 +22,7 @@ export namespace CrmContactApi {
     qq: string; // QQ
     wechat: string; // wechat
     email: string; // email
-    areaId: number; // 所在地
+    areaCode: number; // 所在地
     areaName?: string; // 所在地名称
     detailAddress: string; // 详细地址
     sex: number; // 性别

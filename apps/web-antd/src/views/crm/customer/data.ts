@@ -87,12 +87,12 @@ export function useFormSchema(): VbenFormSchema[] {
       },
     },
     {
-      fieldName: 'areaId',
-      label: $t('crm.customer.field.areaId'),
+      fieldName: 'areaCode',
+      label: $t('crm.customer.field.areaCode'),
       component: 'ApiTreeSelect',
       componentProps: {
         api: () => getAreaTree(),
-        fieldNames: { label: 'name', value: 'id', children: 'children' },
+        fieldNames: { label: 'name', value: 'code', children: 'children' },
       },
     },
     {
