@@ -146,6 +146,7 @@ export function useFormSchema(formType: string): VbenFormSchema[] {
       fieldName: 'discountPrice',
       label: $t('erp.receipt.field.discountPrice'),
       component: 'InputNumber',
+      rules: 'required',
       componentProps: {
         disabled: formType === 'detail',
         placeholder: $t('ui.placeholder.input', [

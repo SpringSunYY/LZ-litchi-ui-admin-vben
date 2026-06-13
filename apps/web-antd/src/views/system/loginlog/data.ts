@@ -30,6 +30,50 @@ export function useGridFormSchema(): VbenFormSchema[] {
       },
     },
     {
+      fieldName: 'userIpAddr',
+      label: $t('system.loginlog.field.userIpAddr'),
+      component: 'Input',
+      componentProps: {
+        allowClear: true,
+        placeholder: $t('ui.placeholder.input', [
+          $t('system.loginlog.field.userIpAddr'),
+        ]),
+      },
+    },
+    {
+      fieldName: 'userAgent',
+      label: $t('system.loginlog.field.userAgent'),
+      component: 'Input',
+      componentProps: {
+        allowClear: true,
+        placeholder: $t('ui.placeholder.input', [
+          $t('system.loginlog.field.userAgent'),
+        ]),
+      },
+    },
+    {
+      fieldName: 'userBrowser',
+      label: $t('system.loginlog.field.userBrowser'),
+      component: 'Input',
+      componentProps: {
+        allowClear: true,
+        placeholder: $t('ui.placeholder.input', [
+          $t('system.loginlog.field.userBrowser'),
+        ]),
+      },
+    },
+    {
+      fieldName: 'userPlatform',
+      label: $t('system.loginlog.field.userPlatform'),
+      component: 'Input',
+      componentProps: {
+        allowClear: true,
+        placeholder: $t('ui.placeholder.input', [
+          $t('system.loginlog.field.userPlatform'),
+        ]),
+      },
+    },
+    {
       fieldName: 'createTime',
       label: $t('system.loginlog.field.createTime'),
       component: 'RangePicker',
@@ -65,8 +109,21 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
       title: $t('system.loginlog.field.userIp'),
     },
     {
+      field: 'userIpAddr',
+      title: $t('system.loginlog.field.userIpAddr'),
+    },
+    {
       field: 'userAgent',
       title: $t('system.loginlog.field.userAgent'),
+      visible: false,
+    },
+    {
+      field: 'userBrowser',
+      title: $t('system.loginlog.field.userBrowser'),
+    },
+    {
+      field: 'userPlatform',
+      title: $t('system.loginlog.field.userPlatform'),
     },
     {
       field: 'result',
@@ -80,6 +137,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
       field: 'createTime',
       title: $t('system.loginlog.field.createTime'),
       formatter: 'formatDateTime',
+      sortable: true,
     },
     {
       title: $t('common.operation'),

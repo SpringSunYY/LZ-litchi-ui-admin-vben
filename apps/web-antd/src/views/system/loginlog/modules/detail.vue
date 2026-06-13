@@ -64,8 +64,17 @@ const [Modal, modalApi] = useVbenModal({
       <Descriptions.Item :label="$t('system.loginlog.field.userIp')">
         {{ formData?.userIp }}
       </Descriptions.Item>
+      <Descriptions.Item :label="$t('system.loginlog.field.userIpAddr')">
+        {{ formData?.userIpAddr }}
+      </Descriptions.Item>
       <Descriptions.Item :label="$t('system.loginlog.field.userAgent')">
         {{ formData?.userAgent }}
+      </Descriptions.Item>
+      <Descriptions.Item :label="$t('system.loginlog.field.userBrowser')">
+        {{ formData?.userBrowser }}
+      </Descriptions.Item>
+      <Descriptions.Item :label="$t('system.loginlog.field.userPlatform')">
+        {{ formData?.userPlatform }}
       </Descriptions.Item>
       <Descriptions.Item :label="$t('system.loginlog.field.result')">
         <DictTag

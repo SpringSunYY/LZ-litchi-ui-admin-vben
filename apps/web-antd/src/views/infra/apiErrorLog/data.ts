@@ -109,6 +109,7 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
       field: 'exceptionTime',
       title: $t('infra.apiErrorLog.field.exceptionTime'),
       formatter: 'formatDateTime',
+      sortable: true,
     },
     {
       field: 'exceptionName',

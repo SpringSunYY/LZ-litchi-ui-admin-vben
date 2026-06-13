@@ -15,7 +15,10 @@ export namespace InfraApiAccessLogApi {
     responseBody: string;
     requestUrl: string;
     userIp: string;
+    userIpAddr: string;
     userAgent: string;
+    userBrowser: string;
+    userPlatform: string;
     operateModule: string;
     operateName: string;
     operateType: number;

@@ -194,7 +194,7 @@ export function useFormItemColumns(
   return [
     {
       type: 'seq',
-      title: $t('erp.saleOrder.message.seq') || 'seq',
+      title: $t('erp.saleOrder.field.seq') || 'seq',
       minWidth: 50,
       fixed: 'left',
     },

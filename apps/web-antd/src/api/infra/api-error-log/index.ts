@@ -14,7 +14,10 @@ export namespace InfraApiErrorLogApi {
     requestParams: string;
     requestUrl: string;
     userIp: string;
+    userIpAddr: string;
     userAgent: string;
+    userBrowser: string;
+    userPlatform: string;
     exceptionTime: string;
     exceptionName: string;
     exceptionMessage: string;

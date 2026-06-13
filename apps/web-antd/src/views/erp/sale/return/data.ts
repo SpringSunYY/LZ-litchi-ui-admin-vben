@@ -232,7 +232,7 @@ export function useFormItemColumns(
   return [
     {
       type: 'seq',
-      title: $t('erp.saleReturn.message.seq') || 'seq',
+      title: $t('erp.saleReturn.field.seq') || 'seq',
       minWidth: 50,
       fixed: 'left',
     },

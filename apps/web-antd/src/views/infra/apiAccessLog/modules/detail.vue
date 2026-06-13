@@ -66,8 +66,17 @@ const [Modal, modalApi] = useVbenModal({
       <Descriptions.Item :label="$t('infra.apiAccessLog.field.userIp')">
         {{ formData?.userIp }}
       </Descriptions.Item>
+      <Descriptions.Item :label="$t('infra.apiAccessLog.field.userIpAddr')">
+        {{ formData?.userIpAddr }}
+      </Descriptions.Item>
       <Descriptions.Item :label="$t('infra.apiAccessLog.field.userAgent')">
         {{ formData?.userAgent }}
+      </Descriptions.Item>
+      <Descriptions.Item :label="$t('infra.apiAccessLog.field.userBrowser')">
+        {{ formData?.userBrowser }}
+      </Descriptions.Item>
+      <Descriptions.Item :label="$t('infra.apiAccessLog.field.userPlatform')">
+        {{ formData?.userPlatform }}
       </Descriptions.Item>
       <Descriptions.Item :label="$t('infra.apiAccessLog.field.requestMethod')">
         {{ formData?.requestMethod }} {{ formData?.requestUrl }}

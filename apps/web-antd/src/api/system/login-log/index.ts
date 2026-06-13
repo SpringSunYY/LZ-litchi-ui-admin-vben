@@ -14,7 +14,10 @@ export namespace SystemLoginLogApi {
     result: number;
     status: number;
     userIp: string;
+    userIpAddr: string;
     userAgent: string;
+    userBrowser: string;
+    userPlatform: string;
     createTime: string;
   }
 }

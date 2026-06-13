@@ -11,6 +11,7 @@ import {
   useVbenVxeGrid,
 } from '@vben/plugins/vxe-table';
 import {
+  erpCountInputFormatter,
   floatToFixed2,
   formatToFractionDigit,
   isFunction,
@@ -243,6 +244,12 @@ setupVbenVxeTable({
         }
 
         return h(Switch, finallyProps);
+      },
+    });
+
+    vxeUI.formats.add('formatAmount3', {
+      tableCellFormatMethod({ cellValue }) {
+        return erpCountInputFormatter(cellValue);
       },
     });
 

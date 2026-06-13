@@ -110,10 +110,12 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
       field: 'beginTime',
       title: $t('infra.apiAccessLog.field.beginTime'),
       formatter: 'formatDateTime',
+      sortable: true,
     },
     {
       field: 'duration',
       title: $t('infra.apiAccessLog.field.duration'),
+      sortable: true,
       formatter: ({ cellValue }) =>
         `${cellValue} ${$t('infra.apiAccessLog.unit.duration')}`,
     },

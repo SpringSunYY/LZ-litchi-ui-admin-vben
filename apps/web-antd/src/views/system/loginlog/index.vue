@@ -11,6 +11,7 @@ import { $t } from '#/locales';
 
 import { useGridColumns, useGridFormSchema } from './data';
 import Detail from './modules/detail.vue';
+import { pickSort } from '#/utils';
 
 const [DetailModal, detailModalApi] = useVbenModal({
   connectedComponent: Detail,
@@ -46,11 +47,14 @@ const [Grid, gridApi] = useVbenVxeGrid({
     keepSource: true,
     proxyConfig: {
       ajax: {
-        query: async ({ page }, formValues) => {
+        query: async (ctx, formValues) => {
+          const { page } = ctx || {};
+          const { sortBy, sort } = pickSort(ctx);
           return await getLoginLogPage({
             pageNo: page.currentPage,
             pageSize: page.pageSize,
             ...formValues,
+            ...(sortBy?.length ? { sortBy, sort } : {}),
           });
         },
       },

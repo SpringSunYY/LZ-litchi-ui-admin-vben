@@ -6,9 +6,9 @@ import { $t } from '@vben/locales';
 
 import {
   DICT_TYPE,
-  MODULE_TYPE_ENUM,
   getDictOptions,
   getRangePickerDefaultProps,
+  MODULE_TYPE_ENUM,
 } from '#/utils';
 
 /** 新增/修改的表单 */

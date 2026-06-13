@@ -3,8 +3,8 @@ import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 
 import { getProductSimpleList } from '#/api/erp/product/product';
 import { getWarehouseSimpleList } from '#/api/erp/stock/warehouse';
-import { DICT_TYPE, getDictOptions, getRangePickerDefaultProps } from '#/utils';
 import { $t } from '#/locales';
+import { DICT_TYPE, getDictOptions, getRangePickerDefaultProps } from '#/utils';
 
 /** 搜索表单 */
 export function useGridFormSchema(): VbenFormSchema[] {

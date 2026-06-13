@@ -9,8 +9,8 @@ import { getProductSimpleList } from '#/api/erp/product/product';
 import { getCustomerSimpleList } from '#/api/erp/sale/customer';
 import { getWarehouseSimpleList } from '#/api/erp/stock/warehouse';
 import { getSimpleUserList } from '#/api/system/user';
-import { DICT_TYPE, getDictOptions, getRangePickerDefaultProps } from '#/utils';
 import { $t } from '#/locales';
+import { DICT_TYPE, getDictOptions, getRangePickerDefaultProps } from '#/utils';
 
 /** 表单的配置项 */
 export function useFormSchema(formType: string): VbenFormSchema[] {
@@ -234,7 +234,7 @@ export function useFormItemColumns(
   return [
     {
       type: 'seq',
-      title: $t('erp.saleOut.message.seq') || 'seq',
+      title: $t('erp.saleOut.field.seq') || 'seq',
       minWidth: 50,
       fixed: 'left',
     },
