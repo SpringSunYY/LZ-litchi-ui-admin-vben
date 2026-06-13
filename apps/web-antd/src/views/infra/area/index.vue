@@ -14,6 +14,7 @@ import {
   clearAreaCache,
   deleteArea,
   exportArea,
+  getAreaIp,
   getAreaList,
 } from '#/api/infra/area';
 import { $t } from '#/locales';
@@ -21,6 +22,7 @@ import ImportForm from '#/views/infra/area/modules/import-form.vue';
 
 import { useGridColumns, useGridFormSchema } from './data';
 import Form from './modules/form.vue';
+import IpQueryForm from './modules/ip-query-form.vue';
 
 const [FormModal, formModalApi] = useVbenModelDrawer({
   connectedComponent: Form,
@@ -51,6 +53,17 @@ function handleEdit(row: AreaApi.Area) {
   formModalApi.setData(row).open();
 }
 
+const [IpQueryFormModal, formIpQueryModalApi] = useVbenModelDrawer({
+  connectedComponent: IpQueryForm,
+  destroyOnClose: true,
+  type: 'modal',
+});
+
+/** 查询 IP */
+function handleQueryIp() {
+  formIpQueryModalApi.setData(null).open();
+}
+
 /** 新增下级地区信息 */
 function handleAppend(row: AreaApi.Area) {
   formModalApi.setData({ parentId: row.id }).open();
@@ -76,6 +89,7 @@ async function handleDelete(row: AreaApi.Area) {
 
 /** 导出地区信息 */
 const exportLoading = ref(false);
+
 async function handleExport() {
   try {
     exportLoading.value = true;
@@ -149,6 +163,7 @@ const [Grid, gridApi] = useVbenVxeGrid({
  * 清除地区缓存
  */
 const clearCacheLoading = ref(false);
+
 async function handleClearCache() {
   try {
     clearCacheLoading.value = true;
@@ -158,13 +173,23 @@ async function handleClearCache() {
     clearCacheLoading.value = false;
   }
 }
+
+const currentIpAddr = ref('');
+
+function getCurrentIpAddr() {
+  getAreaIp().then((res) => {
+    currentIpAddr.value = res || '';
+  });
+}
+getCurrentIpAddr();
 </script>
 
 <template>
   <Page auto-content-height>
     <FormModal @success="onRefresh" />
+    <IpQueryFormModal />
     <ImportModal @success="onRefresh" />
-    <Grid :table-title="$t('infra.area.list')">
+    <Grid :table-title="`${$t('infra.area.list')} - ${currentIpAddr}`">
       <template #toolbar-tools>
         <TableAction
           :actions="[
@@ -202,6 +227,12 @@ async function handleClearCache() {
               icon: ACTION_ICON.UPLOAD,
               auth: ['infra:area:import'],
               onClick: handleImport,
+            },
+            {
+              label: `IP ${$t('common.query')}`,
+              type: 'primary',
+              icon: ACTION_ICON.IP,
+              onClick: handleQueryIp,
             },
           ]"
         />

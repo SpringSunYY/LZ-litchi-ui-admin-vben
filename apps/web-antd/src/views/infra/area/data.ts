@@ -2,6 +2,7 @@ import type { VbenFormSchema } from '#/adapter/form';
 import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 import type { AreaApi } from '#/api/infra/area';
 
+import { z } from '#/adapter/form';
 import { getAreaTree } from '#/api/infra/area';
 import { $t } from '#/locales';
 import { DICT_TYPE, getDictOptions, getRangePickerDefaultProps } from '#/utils';
@@ -269,6 +270,29 @@ export function useGridColumns(): VxeTableGridOptions<AreaApi.Area>['columns'] {
       width: 200,
       fixed: 'right',
       slots: { default: 'actions' },
+    },
+  ];
+}
+
+/** 列表的字段 */
+export function useIpQueryFormSchema(): VbenFormSchema[] {
+  return [
+    {
+      fieldName: 'ip',
+      label: 'infra.area.field.ip',
+      component: 'Input',
+      componentProps: {
+        placeholder: $t('ui.placeholder.input', [$t('infra.area.field.ip')]),
+      },
+      rules: z.string().ip({ message: $t('infra.area.help.ip') }),
+    },
+    {
+      fieldName: 'result',
+      label: $t('infra.area.field.name'),
+      component: 'Input',
+      componentProps: {
+        readonly: true,
+      },
     },
   ];
 }

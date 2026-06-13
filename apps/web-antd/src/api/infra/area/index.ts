@@ -40,6 +40,11 @@ export function getAreaByIp(ip: string) {
   return requestClient.get<string>(`/infra/area/get-by-ip?ip=${ip}`);
 }
 
+/** 获取当前用户ip 地址 */
+export function getAreaIp() {
+  return requestClient.get<string>('/infra/area/get-ip-addr');
+}
+
 /** 查询地区信息列表 */
 export function getAreaList(params: any) {
   return requestClient.get<AreaApi.Area[]>('/infra/area/list', {

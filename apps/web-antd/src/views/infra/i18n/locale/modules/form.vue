@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { I18nLocaleApi } from '#/api/infra/i18nLocale';
+import type { I18nLocaleApi } from '#/api/infra/i18n/i18nLocale';
 
 import { computed, ref } from 'vue';
 
