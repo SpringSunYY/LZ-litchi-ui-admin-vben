@@ -14,10 +14,10 @@ export {
 } from './i18n';
 
 export {
+  cachedLocaleList,
   clearI18nCaches,
   getGetI18nLocaleApi,
   getLocaleInfo,
-  cachedLocaleList,
 } from './i18n';
 export type { LocaleTarget, SetupI18nOptions } from './i18n';
 export type { LocaleSetupOptions, SupportedLanguagesType } from './typing';

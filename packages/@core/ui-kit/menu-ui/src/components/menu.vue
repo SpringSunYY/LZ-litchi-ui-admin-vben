@@ -341,8 +341,8 @@ function getActivePaths() {
     :class="[
       theme,
       b(),
-      is(mode, true),
-      is(theme, true),
+      is(mode!, true),
+      is(theme!, true),
       is('rounded', rounded),
       is('collapse', collapse),
       is('menu-align', mode === 'horizontal'),

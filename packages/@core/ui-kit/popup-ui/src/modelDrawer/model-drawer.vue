@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import type {ExtendedModelDrawerApi, ModelDrawerProps} from './model-drawer';
+import type { ExtendedModelDrawerApi, ModelDrawerProps } from './model-drawer';
 
-import {useIsMobile, usePriorityValues} from '@vben-core/composables';
+import { usePriorityValues } from '@vben-core/composables';
 
 import DrawerPanel from '../drawer/drawer.vue';
 import ModalPanel from '../modal/modal.vue';
@@ -18,7 +18,6 @@ const props = withDefaults(defineProps<Props>(), {
   modelDrawerApi: undefined,
 });
 
-const {isMobile} = useIsMobile();
 const state = props.modelDrawerApi?.useStore?.();
 
 const {
@@ -63,7 +62,7 @@ const {
   <!-- Modal 模式 -->
   <ModalPanel
     v-if="type === 'modal'"
-    :modal-api="modelDrawerApi"
+    :modal-api="modelDrawerApi as any"
     :title="title"
     :description="description"
     :header="showHeader"
@@ -88,6 +87,9 @@ const {
     :open-auto-focus="openAutoFocus"
     :overlay-blur="overlayBlur"
     :submitting="submitting"
+    :destroy-on-close="destroyOnClose"
+    :show-cancel-button="showCancelButton"
+    :show-confirm-button="showConfirmButton"
     :title-tooltip="titleTooltip"
     :z-index="zIndex"
     :append-to-main="appendToMain"
@@ -101,7 +103,7 @@ const {
   <!-- Drawer 模式 -->
   <DrawerPanel
     v-else
-    :drawer-api="modelDrawerApi"
+    :drawer-api="modelDrawerApi as any"
     :title="title"
     :description="description"
     :header="showHeader"
@@ -123,6 +125,9 @@ const {
     :overlay-blur="overlayBlur"
     :placement="placement"
     :submitting="submitting"
+    :destroy-on-close="destroyOnClose"
+    :show-cancel-button="showCancelButton"
+    :show-confirm-button="showConfirmButton"
     :title-tooltip="titleTooltip"
     :z-index="zIndex"
     :append-to-main="appendToMain"

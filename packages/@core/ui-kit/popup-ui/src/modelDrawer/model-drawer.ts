@@ -2,6 +2,8 @@ import type { Component, Ref } from 'vue';
 
 import type { MaybePromise } from '@vben-core/typings';
 
+import type { ModelDrawerApi } from './model-drawer-api';
+
 export type ModelDrawerType = 'drawer' | 'modal';
 
 export type DrawerPlacement = 'bottom' | 'left' | 'right' | 'top';
@@ -187,35 +189,7 @@ export interface ModelDrawerState extends ModelDrawerProps {
   sharedData?: Record<string, any>;
 }
 
-export type ExtendedModelDrawerApi = {
-  /** 关闭弹窗 */
-  close(): Promise<void>;
-  /** 获取共享数据 */
-  getData<T extends object = Record<string, any>>(): T;
-  /** 锁定弹窗状态 */
-  lock(isLocked?: boolean): ExtendedModelDrawerApi;
-  /** 取消操作 */
-  onCancel(): void;
-  /** 弹窗关闭动画结束回调 */
-  onClosed(): void;
-  /** 确认操作 */
-  onConfirm(): void;
-  /** 弹窗打开动画结束回调 */
-  onOpened(): void;
-  /** 打开弹窗 */
-  open(): void;
-  /** 设置共享数据 */
-  setData<T>(payload: T): ExtendedModelDrawerApi;
-  /** 设置状态 */
-  setState(
-    stateOrFn:
-      | ((prev: ModelDrawerState) => Partial<ModelDrawerState>)
-      | Partial<ModelDrawerState>,
-  ): ExtendedModelDrawerApi;
-  /** 共享数据 */
-  sharedData: Record<'payload', any>;
-  /** 解除弹窗锁定状态 */
-  unlock(): ExtendedModelDrawerApi;
+export type ExtendedModelDrawerApi = ModelDrawerApi & {
   useStore: <T = NoInfer<ModelDrawerState>>(
     selector?: (state: NoInfer<ModelDrawerState>) => T,
   ) => Readonly<Ref<T>>;

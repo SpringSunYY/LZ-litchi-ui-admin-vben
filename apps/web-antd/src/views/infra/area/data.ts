@@ -279,7 +279,7 @@ export function useIpQueryFormSchema(): VbenFormSchema[] {
   return [
     {
       fieldName: 'ip',
-      label: 'infra.area.field.ip',
+      label: $t('infra.area.field.ip'),
       component: 'Input',
       componentProps: {
         placeholder: $t('ui.placeholder.input', [$t('infra.area.field.ip')]),
