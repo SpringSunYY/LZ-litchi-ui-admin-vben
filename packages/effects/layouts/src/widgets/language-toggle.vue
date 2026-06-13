@@ -14,6 +14,7 @@ import {
 } from '@vben/locales';
 import { preferences, updatePreferences } from '@vben/preferences';
 
+import { alert, confirm } from '@vben-core/popup-ui';
 import { VbenDropdownRadioMenu, VbenIconButton } from '@vben-core/shadcn-ui';
 
 import { Loader2, Trash2 } from 'lucide-vue-next';
@@ -73,16 +74,26 @@ async function loadMenu() {
 }
 
 /** 清除所有 i18n 缓存 */
-function clearI18nCache() {
+async function clearI18nCache() {
+  await confirm({
+    title: $t('ui.menu.clearCache'),
+    content: $t('ui.alert.clearCacheConfirm'),
+    icon: 'warning',
+  });
+
   const count = clearI18nCaches();
 
-  // 清除后回退到后端默认语言
   const defaultLang = toFrameworkLocale(defaultBackendLocale.value);
   updatePreferences({ app: { locale: defaultLang } });
   syncCurrentValue();
 
-  // eslint-disable-next-line no-alert
-  alert($t('ui.alert.clearCacheSuccess', { count }));
+  await alert({
+    content: $t('ui.alert.clearCacheSuccess', { count }),
+    icon: 'success',
+    showCancel: false,
+    confirmText: $t('ui.common.confirm'),
+  });
+
   setTimeout(() => {
     window.location.reload();
   }, 1000);

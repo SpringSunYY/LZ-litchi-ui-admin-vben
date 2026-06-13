@@ -219,6 +219,7 @@
     "clearCache": "清除缓存"
   },
   "alert": {
+    "clearCacheConfirm": "确定要清除所有语言缓存吗？",
     "clearCacheSuccess": "已清除 {count} 条缓存数据，页面将在 1 秒后刷新"
   },
   "time": {

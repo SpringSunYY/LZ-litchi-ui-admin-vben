@@ -288,23 +288,6 @@ export async function getLocaleInfo(options: {
 }
 
 /**
- * 更改更新信息缓存
- */
-export function setI18nUpdated(key: string, value?: string) {
-  if (!value) {
-    localStorage.setItem(key, 'true');
-  }
-  // 指定值，就是这两种状态
-  if (value === 'false') {
-    localStorage.setItem(key, 'true');
-  } else if (value === 'true') {
-    localStorage.setItem(key, 'false');
-  } else {
-    localStorage.setItem(key, 'true');
-  }
-}
-
-/**
  * 清除所有 i18n 相关缓存（消息缓存、updated 状态缓存）
  */
 export function clearI18nCaches() {

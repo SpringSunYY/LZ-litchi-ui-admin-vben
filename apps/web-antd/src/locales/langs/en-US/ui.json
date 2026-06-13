@@ -219,6 +219,7 @@
     "clearCache": "Clear Cache"
   },
   "alert": {
+    "clearCacheConfirm": "Are you sure you want to clear all language caches?",
     "clearCacheSuccess": "Cleared {count} cache entries. Page will refresh in 1 second"
   },
   "time": {

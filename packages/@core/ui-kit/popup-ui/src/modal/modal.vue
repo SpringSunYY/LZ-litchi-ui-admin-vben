@@ -187,7 +187,8 @@ async function pointerDownOutside(e: Event) {
   try {
     await vbenConfirm({
       content:
-        externalCloseConfirmTip.value || 'ui.actionMessage.externalCloseTip',
+        externalCloseConfirmTip.value ||
+        $t('ui.actionMessage.externalCloseTip'),
       title:
         externalCloseConfirmTitle.value ||
         $t('ui.actionMessage.externalCloseConfirm'),
