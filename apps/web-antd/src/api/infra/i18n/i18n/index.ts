@@ -15,10 +15,10 @@ export namespace I18nApi {
   }
 }
 
-/** 获取国际化更新，如果当前状态和后台不同则返回true，反之false */
-export function getI18nUpdated(localeTarget: number, locale: string) {
-  return requestClient.get<boolean>(
-    `/infra/i18n/locale/updated?localeTarget=${localeTarget}&&locale=${locale}`,
+/** 获取国际化更新Key，判断缓存key与返回key是否相同，如果不相同则表示有更新了 */
+export function getI18nUpdateKey(localeTarget: number, locale: string) {
+  return requestClient.get<string>(
+    `/infra/i18n/locale/update-key?localeTarget=${localeTarget}&&locale=${locale}`,
   );
 }
 

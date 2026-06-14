@@ -41,7 +41,7 @@ import dayjsLocaleZhTw from 'dayjs/locale/zh-tw';
 import {
   getI18nLocale,
   getI18nLocaleMessage,
-  getI18nUpdated,
+  getI18nUpdateKey,
 } from '#/api/infra/i18n/i18n';
 
 export {
@@ -137,7 +137,7 @@ export async function setupI18n(
     thirdPartySetup: loadThirdPartyMessage,
     getI18nLocaleApi: getI18nLocale,
     getI18nLocaleMessageApi: getI18nLocaleMessage,
-    getI18nUpdatedApi: getI18nUpdated,
+    getI18nUpdateKeyApi: getI18nUpdateKey,
   });
 }
 
