@@ -4,6 +4,7 @@ import type { InfraApiAccessLogApi } from '#/api/infra/api-access-log';
 import { ref } from 'vue';
 
 import { JsonViewer, useVbenModal } from '@vben/common-ui';
+import { $t } from '@vben/locales';
 import { formatDateTime } from '@vben/utils';
 
 import { Descriptions } from 'ant-design-vue';

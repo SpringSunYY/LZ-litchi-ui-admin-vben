@@ -14,4 +14,5 @@ export const ACTION_ICON = {
   BOOK: 'lucide:book',
   AUDIT: 'lucide:file-check',
   IP: 'fa:map-marker',
+  GRANT: 'lucide:user-round-key',
 };

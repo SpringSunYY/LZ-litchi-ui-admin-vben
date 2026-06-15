@@ -4,6 +4,7 @@ import type { InfraApiErrorLogApi } from '#/api/infra/api-error-log';
 import { ref } from 'vue';
 
 import { JsonViewer, useVbenModal } from '@vben/common-ui';
+import { $t } from '@vben/locales';
 import { formatDateTime } from '@vben/utils';
 
 import { Descriptions } from 'ant-design-vue';
@@ -19,6 +20,8 @@ const [Modal, modalApi] = useVbenModal({
       formData.value = undefined;
       return;
     }
+    console.log($t('infra.apiErrorLog.field.userIpAddr'));
+    console.log($t('infra.apiErrorLog.field.userId'));
     // 加载数据
     const data = modalApi.getData<InfraApiErrorLogApi.ApiErrorLog>();
     if (!data || !data.id) {

@@ -143,7 +143,7 @@ const [Grid, gridApi] = useVbenVxeGrid({
             {
               label: $t('common.grant'),
               type: 'link',
-              icon: ACTION_ICON.GRANT as string,
+              icon: ACTION_ICON.GRANT,
               auth: ['system:tenantPackage:update'],
               onClick: handleGrant.bind(null, row),
             },
