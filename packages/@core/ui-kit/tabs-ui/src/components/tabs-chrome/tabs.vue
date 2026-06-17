@@ -41,7 +41,7 @@ const style = computed(() => {
 const tabsView = computed(() => {
   return props.tabs.map((tab) => {
     const { fullPath, meta, name, path, key } = tab || {};
-    const { affixTab, icon, newTabTitle, tabClosable, title } = meta || {};
+    const { affixTab, icon, extraTitle, tabClosable, title } = meta || {};
     return {
       affixTab: !!affixTab,
       closable: Reflect.has(meta, 'tabClosable') ? !!tabClosable : true,
@@ -51,7 +51,7 @@ const tabsView = computed(() => {
       meta,
       name,
       path,
-      title: (newTabTitle || title || name) as string,
+      title: (extraTitle || title || name) as string,
     } as TabConfig;
   });
 });

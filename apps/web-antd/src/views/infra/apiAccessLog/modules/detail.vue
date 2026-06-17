@@ -9,7 +9,7 @@ import { formatDateTime } from '@vben/utils';
 
 import { Descriptions } from 'ant-design-vue';
 
-import { DictTag } from '#/components/dict-tag';
+import I18nDictTag from '#/components/i18n/i18n-dict-tag/i18n-dict-tag.vue';
 import { DICT_TYPE } from '#/utils';
 
 const formData = ref<InfraApiAccessLogApi.ApiAccessLog>();
@@ -62,7 +62,7 @@ const [Modal, modalApi] = useVbenModal({
       </Descriptions.Item>
       <Descriptions.Item :label="$t('infra.apiAccessLog.field.userId')">
         {{ formData?.userId }}
-        <DictTag :type="DICT_TYPE.USER_TYPE" :value="formData?.userType" />
+        <I18nDictTag :type="DICT_TYPE.USER_TYPE" :value="formData?.userType" />
       </Descriptions.Item>
       <Descriptions.Item :label="$t('infra.apiAccessLog.field.userIp')">
         {{ formData?.userIp }}

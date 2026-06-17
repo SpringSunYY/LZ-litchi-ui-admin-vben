@@ -16,6 +16,7 @@ import {
   getProductPage,
 } from '#/api/crm/product';
 import { $t } from '#/locales';
+import { setPendingExtraTitle } from '#/router/state';
 
 import { useGridColumns, useGridFormSchema } from './data';
 import Form from './modules/form.vue';
@@ -43,6 +44,7 @@ async function handleExport() {
 
 /** 打开详情 */
 function handleDetail(row: CrmProductApi.Product) {
+  setPendingExtraTitle(row.name);
   push({ name: 'CrmProductDetail', params: { id: row.id } });
 }
 

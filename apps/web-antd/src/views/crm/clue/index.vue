@@ -12,6 +12,7 @@ import { Button, message } from 'ant-design-vue';
 import { ACTION_ICON, TableAction, useVbenVxeGrid } from '#/adapter/vxe-table';
 import { deleteClue, exportClue, getCluePage } from '#/api/crm/clue';
 import { $t } from '#/locales';
+import { setPendingExtraTitle } from '#/router/state';
 
 import { useGridColumns, useGridFormSchema } from './data';
 import Form from './modules/form.vue';
@@ -67,6 +68,7 @@ async function handleExport() {
 
 /** 查看线索详情 */
 function handleDetail(row: CrmClueApi.Clue) {
+  setPendingExtraTitle(row.name ?? row.id);
   push({ name: 'CrmClueDetail', params: { id: row.id } });
 }
 

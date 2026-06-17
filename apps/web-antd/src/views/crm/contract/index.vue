@@ -18,6 +18,7 @@ import {
   submitContract,
 } from '#/api/crm/contract';
 import { $t } from '#/locales';
+import { setPendingExtraTitle } from '#/router/state';
 
 import { useGridColumns, useGridFormSchema } from './data';
 import Form from './modules/form.vue';
@@ -91,26 +92,31 @@ async function handleSubmit(row: CrmContractApi.Contract) {
 
 /** 查看合同详情 */
 function handleDetail(row: CrmContractApi.Contract) {
+  setPendingExtraTitle(row.name);
   push({ name: 'CrmContractDetail', params: { id: row.id } });
 }
 
 /** 查看客户详情 */
 function handleCustomerDetail(row: CrmContractApi.Contract) {
+  setPendingExtraTitle(row.customerName ?? row.customerId);
   push({ name: 'CrmCustomerDetail', params: { id: row.customerId } });
 }
 
 /** 查看联系人详情 */
 function handleContactDetail(row: CrmContractApi.Contract) {
+  setPendingExtraTitle(row.contactName || row.signContactId);
   push({ name: 'CrmContactDetail', params: { id: row.signContactId } });
 }
 
 /** 查看商机详情 */
 function handleBusinessDetail(row: CrmContractApi.Contract) {
+  setPendingExtraTitle(row.businessName ?? row.businessId);
   push({ name: 'CrmBusinessDetail', params: { id: row.businessId } });
 }
 
 /** 查看审批详情 */
 function handleProcessDetail(row: CrmContractApi.Contract) {
+  setPendingExtraTitle(row.name ?? row.processInstanceId);
   push({
     name: 'BpmProcessInstanceDetail',
     query: { id: row.processInstanceId },

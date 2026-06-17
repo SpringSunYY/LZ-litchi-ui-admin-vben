@@ -9,6 +9,7 @@ import { Button } from 'ant-design-vue';
 import { useVbenVxeGrid } from '#/adapter/vxe-table';
 import { getCustomerPage } from '#/api/crm/customer';
 import { $t } from '#/locales';
+import { setPendingExtraTitle } from '#/router/state';
 import { useGridColumns } from '#/views/crm/customer/data';
 
 import { useFollowUpStatusOptions } from '../data';
@@ -16,6 +17,7 @@ import { useFollowUpStatusOptions } from '../data';
 const { push } = useRouter();
 
 function handleDetail(row: CrmCustomerApi.Customer) {
+  setPendingExtraTitle(row.name ?? row.id);
   push({ name: 'CrmCustomerDetail', params: { id: row.id } });
 }
 

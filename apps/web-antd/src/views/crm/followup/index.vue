@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import type { VxeTableGridOptions } from '#/adapter/vxe-table';
+import type { CrmContactApi } from '#/api/crm/contact';
 import type { CrmFollowUpApi } from '#/api/crm/followup';
 
 import { watch } from 'vue';
@@ -16,6 +17,7 @@ import {
 } from '#/api/crm/followup';
 import { BizTypeEnum } from '#/api/crm/permission';
 import { $t } from '#/locales';
+import { setPendingExtraTitle } from '#/router/state';
 import { DICT_TYPE } from '#/utils';
 
 import FollowUpRecordForm from './modules/form.vue';
@@ -59,13 +61,15 @@ async function handleDelete(row: CrmFollowUpApi.FollowUpRecord) {
 }
 
 /** 打开联系人详情 */
-function openContactDetail(id: number) {
-  push({ name: 'CrmContactDetail', params: { id } });
+function openContactDetail(row: CrmContactApi.Contact) {
+  setPendingExtraTitle(row.name || row.id);
+  push({ name: 'CrmContactDetail', params: { id: row.id } });
 }
 
 /** 打开商机详情 */
-function openBusinessDetail(id: number) {
-  push({ name: 'CrmBusinessDetail', params: { id } });
+function openBusinessDetail(row: CrmContactApi.Contact) {
+  setPendingExtraTitle(row.name || row.id);
+  push({ name: 'CrmBusinessDetail', params: { id: row.id } });
 }
 
 const [FormModal, formModalApi] = useVbenModal({
@@ -162,12 +166,12 @@ watch(
         />
       </template>
       <template #contacts="{ row }">
-        <Button type="link" @click="openContactDetail(row.id)">
+        <Button type="link" @click="openContactDetail(row)">
           {{ row.name }}
         </Button>
       </template>
       <template #businesses="{ row }">
-        <Button type="link" @click="openBusinessDetail(row.id)">
+        <Button type="link" @click="openBusinessDetail(row)">
           {{ row.name }}
         </Button>
       </template>

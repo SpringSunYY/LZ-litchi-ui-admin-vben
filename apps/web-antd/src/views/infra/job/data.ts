@@ -9,7 +9,7 @@ import { formatDateTime } from '@vben/utils';
 import { Timeline } from 'ant-design-vue';
 
 import { CronTab } from '#/components/cron-tab';
-import { DictTag } from '#/components/dict-tag';
+import I18nDictTag from '#/components/i18n/i18n-dict-tag/i18n-dict-tag.vue';
 import { $t } from '#/locales';
 import { DICT_TYPE, getDictOptions } from '#/utils';
 /** 新增/修改的表单 */
@@ -190,7 +190,7 @@ export function useDetailSchema(): DescriptionItemSchema[] {
       field: 'status',
       label: $t('infra.job.field.status'),
       content: (data) =>
-        h(DictTag, {
+        h(I18nDictTag, {
           type: DICT_TYPE.INFRA_JOB_STATUS,
           value: data?.status,
         }),

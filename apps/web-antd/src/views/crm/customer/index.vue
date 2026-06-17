@@ -17,6 +17,7 @@ import {
   getCustomerPage,
 } from '#/api/crm/customer';
 import { $t } from '#/locales';
+import { setPendingExtraTitle } from '#/router/state';
 
 import { useGridColumns, useGridFormSchema } from './data';
 import Form from './modules/form.vue';
@@ -84,6 +85,7 @@ async function handleDelete(row: CrmCustomerApi.Customer) {
 
 /** 查看客户详情 */
 function handleDetail(row: CrmCustomerApi.Customer) {
+  setPendingExtraTitle(row.name ?? row.id);
   push({ name: 'CrmCustomerDetail', params: { id: row.id } });
 }
 

@@ -31,7 +31,7 @@ import {
   getDemo03StudentPage,
 } from '#/api/infra/demo/demo03/normal';
 import { ContentWrap } from '#/components/content-wrap';
-import { DictTag } from '#/components/dict-tag';
+import I18nDictTag from '#/components/i18n/i18n-dict-tag/i18n-dict-tag.vue';
 import { TableToolbar } from '#/components/table-toolbar';
 import { useTableToolbar } from '#/hooks';
 import { $t } from '#/locales';
@@ -281,7 +281,7 @@ onMounted(() => {
         <VxeColumn field="name" title="名字" align="center" />
         <VxeColumn field="sex" title="性别" align="center">
           <template #default="{ row }">
-            <DictTag :type="DICT_TYPE.SYSTEM_USER_SEX" :value="row.sex" />
+            <I18nDictTag :type="DICT_TYPE.SYSTEM_USER_SEX" :value="row.sex" />
           </template>
         </VxeColumn>
         <VxeColumn field="birthday" title="出生日期" align="center">

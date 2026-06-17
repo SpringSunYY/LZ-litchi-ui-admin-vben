@@ -8,7 +8,7 @@ import { useVbenModal } from '@vben/common-ui';
 import { Descriptions, DescriptionsItem, Image } from 'ant-design-vue';
 
 import { getSocialUser } from '#/api/system/social/user';
-import { DictTag } from '#/components/dict-tag';
+import I18nDictTag from '#/components/i18n/i18n-dict-tag/i18n-dict-tag.vue';
 import { $t } from '#/locales';
 import { DICT_TYPE } from '#/utils';
 
@@ -51,7 +51,10 @@ const [Modal, modalApi] = useVbenModal({
       :label-style="{ width: '185px' }"
     >
       <DescriptionsItem :label="$t('system.social.user.field.type')">
-        <DictTag :type="DICT_TYPE.SYSTEM_SOCIAL_TYPE" :value="formData?.type" />
+        <I18nDictTag
+          :type="DICT_TYPE.SYSTEM_SOCIAL_TYPE"
+          :value="formData?.type"
+        />
       </DescriptionsItem>
       <DescriptionsItem :label="$t('system.social.user.field.nickname')">
         {{ formData?.nickname }}

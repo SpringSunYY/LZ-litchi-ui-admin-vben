@@ -13,6 +13,7 @@ import { accessRoutes, coreRouteNames } from '#/router/routes';
 import { useAuthStore, useDictStore } from '#/store';
 
 import { generateAccess } from './access';
+import { getAndClearPendingExtraTitle } from './state';
 
 /**
  * 通用守卫配置
@@ -30,6 +31,14 @@ function setupCommonGuard(router: Router) {
       startProgress();
     }
     return true;
+  });
+
+  router.beforeResolve((to) => {
+    // 从模块级变量中获取本次导航的追加标题
+    const extraTitle = getAndClearPendingExtraTitle();
+    if (extraTitle) {
+      to.meta.extraTitle = String(extraTitle);
+    }
   });
 
   router.afterEach((to) => {

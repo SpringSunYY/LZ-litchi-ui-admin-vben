@@ -9,6 +9,7 @@ import { Button } from 'ant-design-vue';
 import { useVbenVxeGrid } from '#/adapter/vxe-table';
 import { getReceivablePage } from '#/api/crm/receivable';
 import { $t } from '#/locales';
+import { setPendingExtraTitle } from '#/router/state';
 import { useGridColumns } from '#/views/crm/receivable/data';
 
 import { useAuditStatusOptions } from '../data';
@@ -16,6 +17,7 @@ import { useAuditStatusOptions } from '../data';
 const { push } = useRouter();
 
 function handleProcessDetail(row: CrmReceivableApi.Receivable) {
+  setPendingExtraTitle(row.no ?? row.id);
   push({
     name: 'BpmProcessInstanceDetail',
     query: { id: row.processInstanceId },
@@ -23,14 +25,17 @@ function handleProcessDetail(row: CrmReceivableApi.Receivable) {
 }
 
 function handleDetail(row: CrmReceivableApi.Receivable) {
+  setPendingExtraTitle(row.customerName ?? row.id);
   push({ name: 'CrmReceivableDetail', params: { id: row.id } });
 }
 
 function handleCustomerDetail(row: CrmReceivableApi.Receivable) {
+  setPendingExtraTitle(row.customerName ?? row.id);
   push({ name: 'CrmCustomerDetail', params: { id: row.customerId } });
 }
 
 function handleContractDetail(row: CrmReceivableApi.Receivable) {
+  setPendingExtraTitle(row?.contract?.name ?? row.id);
   push({ name: 'CrmContractDetail', params: { id: row.contractId } });
 }
 

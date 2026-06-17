@@ -20,6 +20,7 @@ import { $t } from '#/locales';
 
 import { useDetailListColumns } from './detail-data';
 import Form from './form.vue';
+import { setPendingExtraTitle } from '#/router/state';
 
 const props = defineProps<{
   bizId: number; // 业务编号
@@ -50,6 +51,7 @@ function handleCreate() {
 
 /** 查看合同详情 */
 function handleDetail(row: CrmContractApi.Contract) {
+  setPendingExtraTitle(row.name || row.id);
   push({ name: 'CrmContractDetail', params: { id: row.id } });
 }
 

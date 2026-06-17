@@ -11,6 +11,7 @@ import { Button } from 'ant-design-vue';
 import { useVbenVxeGrid } from '#/adapter/vxe-table';
 import { getReceivablePlanPage } from '#/api/crm/receivable/plan';
 import { $t } from '#/locales';
+import { setPendingExtraTitle } from '#/router/state';
 import Form from '#/views/crm/receivable/modules/form.vue';
 import { useGridColumns } from '#/views/crm/receivable/plan/data';
 
@@ -24,10 +25,12 @@ const [FormModal, formModalApi] = useVbenModal({
 });
 
 function handleDetail(row: CrmReceivablePlanApi.Plan) {
+  setPendingExtraTitle(row.customerName ?? row.id);
   push({ name: 'CrmReceivableDetail', params: { id: row.id } });
 }
 
 function handleCustomerDetail(row: CrmReceivablePlanApi.Plan) {
+  setPendingExtraTitle(row.customerName ?? row.id);
   push({ name: 'CrmCustomerDetail', params: { id: row.customerId } });
 }
 

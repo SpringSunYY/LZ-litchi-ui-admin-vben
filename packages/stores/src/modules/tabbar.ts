@@ -158,8 +158,8 @@ export const useTabbarStore = defineStore('core-tabbar', {
           if (Reflect.has(curMeta, 'affixTab')) {
             mergedTab.meta.affixTab = curMeta.affixTab;
           }
-          if (Reflect.has(curMeta, 'newTabTitle')) {
-            mergedTab.meta.newTabTitle = curMeta.newTabTitle;
+          if (Reflect.has(curMeta, 'extraTitle')) {
+            mergedTab.meta.extraTitle = curMeta.extraTitle;
           }
         }
         tab = mergedTab;
@@ -371,12 +371,12 @@ export const useTabbarStore = defineStore('core-tabbar', {
      * @zh_CN 重置标签页标题
      */
     async resetTabTitle(tab: TabDefinition) {
-      if (tab?.meta?.newTabTitle) {
+      if (tab?.meta?.extraTitle) {
         return;
       }
       const findTab = this.tabs.find((item) => equalTab(item, tab));
       if (findTab) {
-        findTab.meta.newTabTitle = undefined;
+        findTab.meta.extraTitle = undefined;
         await this.updateCacheTabs();
       }
     },
@@ -422,7 +422,7 @@ export const useTabbarStore = defineStore('core-tabbar', {
       const findTab = this.tabs.find((item) => equalTab(item, tab));
 
       if (findTab) {
-        findTab.meta.newTabTitle = title;
+        findTab.meta.extraTitle = title;
 
         await this.updateCacheTabs();
       }
@@ -578,7 +578,7 @@ function cloneTab(route: TabDefinition): TabDefinition {
       : undefined) as RouteRecordNormalized[],
     meta: {
       ...meta,
-      newTabTitle: meta.newTabTitle,
+      extraTitle: meta.extraTitle,
     },
   };
 }

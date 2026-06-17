@@ -5,7 +5,7 @@ import { h } from 'vue';
 
 import { erpPriceInputFormatter } from '@vben/utils';
 
-import { DictTag } from '#/components/dict-tag';
+import I18nDictTag from '#/components/i18n/i18n-dict-tag/i18n-dict-tag.vue';
 import { $t } from '#/locales';
 import { DICT_TYPE } from '#/utils';
 
@@ -20,7 +20,7 @@ export function useDetailSchema(): DescriptionItemSchema[] {
       field: 'unit',
       label: $t('crm.product.field.unit'),
       content: (data) =>
-        h(DictTag, { type: DICT_TYPE.CRM_PRODUCT_UNIT, value: data?.unit }),
+        h(I18nDictTag, { type: DICT_TYPE.CRM_PRODUCT_UNIT, value: data?.unit }),
     },
     {
       field: 'price',
@@ -62,13 +62,16 @@ export function useDetailBaseSchema(): DescriptionItemSchema[] {
       field: 'status',
       label: $t('crm.product.field.status'),
       content: (data) =>
-        h(DictTag, { type: DICT_TYPE.CRM_PRODUCT_STATUS, value: data?.status }),
+        h(I18nDictTag, {
+          type: DICT_TYPE.CRM_PRODUCT_STATUS,
+          value: data?.status,
+        }),
     },
     {
       field: 'unit',
       label: $t('crm.product.field.unit'),
       content: (data) =>
-        h(DictTag, { type: DICT_TYPE.CRM_PRODUCT_UNIT, value: data?.unit }),
+        h(I18nDictTag, { type: DICT_TYPE.CRM_PRODUCT_UNIT, value: data?.unit }),
     },
   ];
 }

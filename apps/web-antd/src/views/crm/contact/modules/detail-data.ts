@@ -5,7 +5,7 @@ import { h } from 'vue';
 
 import { formatDateTime } from '@vben/utils';
 
-import { DictTag } from '#/components/dict-tag';
+import I18nDictTag from '#/components/i18n/i18n-dict-tag/i18n-dict-tag.vue';
 import { $t } from '#/locales';
 import { DICT_TYPE } from '#/utils';
 
@@ -83,7 +83,7 @@ export function useDetailBaseSchema(): DescriptionItemSchema[] {
       field: 'master',
       label: $t('crm.contact.field.master'),
       content: (data) =>
-        h(DictTag, {
+        h(I18nDictTag, {
           type: DICT_TYPE.INFRA_BOOLEAN_STRING,
           value: data?.master,
         }),
@@ -92,7 +92,7 @@ export function useDetailBaseSchema(): DescriptionItemSchema[] {
       field: 'sex',
       label: $t('crm.contact.field.sex'),
       content: (data) =>
-        h(DictTag, { type: DICT_TYPE.SYSTEM_USER_SEX, value: data?.sex }),
+        h(I18nDictTag, { type: DICT_TYPE.SYSTEM_USER_SEX, value: data?.sex }),
     },
     {
       field: 'contactNextTime',

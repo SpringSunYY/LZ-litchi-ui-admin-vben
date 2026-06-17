@@ -86,12 +86,18 @@ export function useTabbar() {
   };
 
   function wrapperTabLocale(tab: RouteLocationNormalizedGeneric) {
-    const { i18n, title } = tab?.meta || {};
+    const { i18n, title, extraTitle } = tab?.meta || {};
+    const localeTitle = $t(i18n || (title as string));
+    const mergedTitle = extraTitle
+      ? `${localeTitle}-${extraTitle}`
+      : localeTitle;
+    const { extraTitle: _, ...restMeta } = tab?.meta || {};
+    void _;
     return {
       ...tab,
       meta: {
-        ...tab?.meta,
-        title: $t(i18n || (title as string)),
+        ...restMeta,
+        title: mergedTitle,
       },
     };
   }
@@ -107,10 +113,13 @@ export function useTabbar() {
   watch(
     () => route.fullPath,
     () => {
-      const meta = route.matched?.[route.matched.length - 1]?.meta;
+      const matchedMeta = route.matched?.[route.matched.length - 1]?.meta;
+      const mergedMeta = matchedMeta
+        ? { ...matchedMeta, ...route.meta }
+        : route.meta;
       tabbarStore.addTab({
         ...route,
-        meta: meta || route.meta,
+        meta: mergedMeta,
       });
     },
     { immediate: true },

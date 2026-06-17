@@ -4,7 +4,7 @@ import { h } from 'vue';
 
 import { formatDateTime } from '@vben/utils';
 
-import { DictTag } from '#/components/dict-tag';
+import I18nDictTag from '#/components/i18n/i18n-dict-tag/i18n-dict-tag.vue';
 import { $t } from '#/locales';
 import { DICT_TYPE } from '#/utils';
 
@@ -15,7 +15,10 @@ export function useDetailSchema(): DescriptionItemSchema[] {
       field: 'level',
       label: $t('crm.customer.field.level'),
       content: (data) =>
-        h(DictTag, { type: DICT_TYPE.CRM_CUSTOMER_LEVEL, value: data?.level }),
+        h(I18nDictTag, {
+          type: DICT_TYPE.CRM_CUSTOMER_LEVEL,
+          value: data?.level,
+        }),
     },
     {
       field: 'dealStatus',
@@ -44,7 +47,7 @@ export function useDetailBaseSchema(): DescriptionItemSchema[] {
       field: 'source',
       label: $t('crm.customer.field.source'),
       content: (data) =>
-        h(DictTag, {
+        h(I18nDictTag, {
           type: DICT_TYPE.CRM_CUSTOMER_SOURCE,
           value: data?.source,
         }),
@@ -81,7 +84,7 @@ export function useDetailBaseSchema(): DescriptionItemSchema[] {
       field: 'industryId',
       label: $t('crm.customer.field.industryId'),
       content: (data) =>
-        h(DictTag, {
+        h(I18nDictTag, {
           type: DICT_TYPE.CRM_CUSTOMER_INDUSTRY,
           value: data?.industryId,
         }),
@@ -90,7 +93,10 @@ export function useDetailBaseSchema(): DescriptionItemSchema[] {
       field: 'level',
       label: $t('crm.customer.field.level'),
       content: (data) =>
-        h(DictTag, { type: DICT_TYPE.CRM_CUSTOMER_LEVEL, value: data?.level }),
+        h(I18nDictTag, {
+          type: DICT_TYPE.CRM_CUSTOMER_LEVEL,
+          value: data?.level,
+        }),
     },
     {
       field: 'contactNextTime',

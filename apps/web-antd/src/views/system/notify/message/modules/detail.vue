@@ -8,7 +8,7 @@ import { formatDateTime } from '@vben/utils';
 
 import { Descriptions } from 'ant-design-vue';
 
-import { DictTag } from '#/components/dict-tag';
+import I18nDictTag from '#/components/i18n/i18n-dict-tag/i18n-dict-tag.vue';
 import { $t } from '#/locales';
 import { DICT_TYPE } from '#/utils';
 
@@ -47,7 +47,7 @@ const [Modal, modalApi] = useVbenModal({
         {{ formData?.id }}
       </Descriptions.Item>
       <Descriptions.Item :label="$t('system.notify.message.field.userType')">
-        <DictTag :type="DICT_TYPE.USER_TYPE" :value="formData?.userType" />
+        <I18nDictTag :type="DICT_TYPE.USER_TYPE" :value="formData?.userType" />
       </Descriptions.Item>
       <Descriptions.Item :label="$t('system.notify.message.field.userId')">
         {{ formData?.userId }}
@@ -74,13 +74,13 @@ const [Modal, modalApi] = useVbenModal({
       <Descriptions.Item
         :label="$t('system.notify.message.field.templateType')"
       >
-        <DictTag
+        <I18nDictTag
           :type="DICT_TYPE.SYSTEM_NOTIFY_TEMPLATE_TYPE"
           :value="formData?.templateType"
         />
       </Descriptions.Item>
       <Descriptions.Item :label="$t('system.notify.message.field.readStatus')">
-        <DictTag
+        <I18nDictTag
           :type="DICT_TYPE.INFRA_BOOLEAN_STRING"
           :value="formData?.readStatus"
         />

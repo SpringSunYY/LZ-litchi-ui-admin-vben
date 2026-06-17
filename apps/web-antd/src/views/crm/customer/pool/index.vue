@@ -12,6 +12,7 @@ import { Button } from 'ant-design-vue';
 import { ACTION_ICON, TableAction, useVbenVxeGrid } from '#/adapter/vxe-table';
 import { exportCustomer, getCustomerPage } from '#/api/crm/customer';
 import { $t } from '#/locales';
+import { setPendingExtraTitle } from '#/router/state';
 
 import { useGridColumns, useGridFormSchema } from './data';
 
@@ -28,6 +29,7 @@ async function handleExport() {
 
 /** 查看客户详情 */
 function handleDetail(row: CrmCustomerApi.Customer) {
+  setPendingExtraTitle(row.name ?? row.id);
   push({ name: 'CrmCustomerDetail', params: { id: row.id } });
 }
 

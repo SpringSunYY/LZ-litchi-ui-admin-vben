@@ -7,7 +7,7 @@ import { h } from 'vue';
 import { formatDateTime } from '@vben/utils';
 
 import { z } from '#/adapter/form';
-import { DictTag } from '#/components/dict-tag';
+
 import { $t } from '#/locales';
 import {
   CommonStatusEnum,
@@ -169,7 +169,7 @@ export function useDetailSchema(): DescriptionItemSchema[] {
       label: $t('system.notice.field.type'),
       span: 1,
       content: (data) =>
-        h(DictTag, {
+        h(I18nDictTag, {
           type: DICT_TYPE.SYSTEM_NOTICE_TYPE,
           value: data?.type,
         }),
@@ -179,7 +179,7 @@ export function useDetailSchema(): DescriptionItemSchema[] {
       label: $t('system.notice.field.status'),
       span: 1,
       content: (data) =>
-        h(DictTag, {
+        h(I18nDictTag, {
           type: DICT_TYPE.COMMON_STATUS,
           value: data?.status,
         }),

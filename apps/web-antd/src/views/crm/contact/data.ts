@@ -32,6 +32,7 @@ export function useFormSchema(): VbenFormSchema[] {
       fieldName: 'ownerUserId',
       label: $t('crm.contact.field.ownerUserId'),
       component: 'ApiSelect',
+      rules: 'required',
       componentProps: {
         api: () => getSimpleUserList(),
         fieldNames: {
@@ -47,6 +48,7 @@ export function useFormSchema(): VbenFormSchema[] {
       fieldName: 'customerId',
       label: $t('crm.contact.field.customerName'),
       component: 'ApiSelect',
+      rules: 'required',
       componentProps: {
         api: () => getCustomerSimpleList(),
         fieldNames: {

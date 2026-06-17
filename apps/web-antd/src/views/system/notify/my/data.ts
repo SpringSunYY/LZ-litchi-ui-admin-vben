@@ -6,7 +6,6 @@ import { h } from 'vue';
 
 import { formatDateTime } from '@vben/utils';
 
-import { DictTag } from '#/components/dict-tag';
 import { $t } from '#/locales';
 import { DICT_TYPE, getDictOptions, getRangePickerDefaultProps } from '#/utils';
 
@@ -103,7 +102,7 @@ export function useDetailSchema(): DescriptionItemSchema[] {
       field: 'templateType',
       label: $t('system.notify.my.field.templateType'),
       content: (data) =>
-        h(DictTag, {
+        h(I18nDictTag, {
           type: DICT_TYPE.SYSTEM_NOTIFY_TEMPLATE_TYPE,
           value: data?.templateType,
         }),
@@ -112,7 +111,7 @@ export function useDetailSchema(): DescriptionItemSchema[] {
       field: 'readStatus',
       label: $t('system.notify.my.field.readStatus'),
       content: (data) =>
-        h(DictTag, {
+        h(I18nDictTag, {
           type: DICT_TYPE.INFRA_BOOLEAN_STRING,
           value: data?.readStatus,
         }),

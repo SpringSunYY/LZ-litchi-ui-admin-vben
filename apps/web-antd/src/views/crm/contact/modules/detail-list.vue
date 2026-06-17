@@ -18,6 +18,7 @@ import {
 } from '#/api/crm/contact';
 import { BizTypeEnum } from '#/api/crm/permission';
 import { $t } from '#/locales';
+import { setPendingExtraTitle } from '#/router/state';
 
 import { useDetailListColumns } from './detail-data';
 import ListModal from './detail-list-modal.vue';
@@ -95,11 +96,13 @@ async function handleDeleteContactBusinessList() {
 
 /** 查看联系人详情 */
 function handleDetail(row: CrmContactApi.Contact) {
+  setPendingExtraTitle(row.name ?? row.id);
   push({ name: 'CrmContactDetail', params: { id: row.id } });
 }
 
 /** 查看客户详情 */
 function handleCustomerDetail(row: CrmContactApi.Contact) {
+  setPendingExtraTitle(row.customerName ?? row.customerId);
   push({ name: 'CrmCustomerDetail', params: { id: row.customerId } });
 }
 

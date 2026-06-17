@@ -18,6 +18,7 @@ import {
   submitReceivable,
 } from '#/api/crm/receivable';
 import { $t } from '#/locales';
+import { setPendingExtraTitle } from '#/router/state';
 
 import { useGridColumns, useGridFormSchema } from './data';
 import Form from './modules/form.vue';
@@ -92,21 +93,25 @@ async function handleSubmit(row: CrmReceivableApi.Receivable) {
 
 /** 查看回款详情 */
 function handleDetail(row: CrmReceivableApi.Receivable) {
+  setPendingExtraTitle(row.customerName ?? row.id);
   push({ name: 'CrmReceivableDetail', params: { id: row.id } });
 }
 
 /** 查看客户详情 */
 function handleCustomerDetail(row: CrmReceivableApi.Receivable) {
+  setPendingExtraTitle(row.customerName ?? row.id);
   push({ name: 'CrmCustomerDetail', params: { id: row.customerId } });
 }
 
 /** 查看合同详情 */
 function handleContractDetail(row: CrmReceivableApi.Receivable) {
+  setPendingExtraTitle(row.customerName ?? row.id);
   push({ name: 'CrmContractDetail', params: { id: row.contractId } });
 }
 
 /** 查看审批详情 */
 function handleProcessDetail(row: CrmReceivableApi.Receivable) {
+  setPendingExtraTitle(row.customerName ?? row.id);
   push({
     name: 'BpmProcessInstanceDetail',
     query: { id: row.processInstanceId },

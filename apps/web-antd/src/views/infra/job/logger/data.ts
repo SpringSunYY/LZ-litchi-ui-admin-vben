@@ -8,7 +8,7 @@ import { formatDateTime } from '@vben/utils';
 
 import dayjs from 'dayjs';
 
-import { DictTag } from '#/components/dict-tag';
+import I18nDictTag from '#/components/i18n/i18n-dict-tag/i18n-dict-tag.vue';
 import { $t } from '#/locales';
 import { DICT_TYPE, getDictOptions } from '#/utils';
 
@@ -165,7 +165,7 @@ export function useDetailSchema(): DescriptionItemSchema[] {
       field: 'status',
       label: $t('infra.jobLog.field.status'),
       content: (data) =>
-        h(DictTag, {
+        h(I18nDictTag, {
           type: DICT_TYPE.INFRA_JOB_LOG_STATUS,
           value: data?.status,
         }),

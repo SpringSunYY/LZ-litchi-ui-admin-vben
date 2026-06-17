@@ -6,7 +6,6 @@ import { h } from 'vue';
 
 import dayjs from 'dayjs';
 
-import { DictTag } from '#/components/dict-tag';
 import { $t } from '#/locales';
 import { DICT_TYPE, getDictOptions, getRangePickerDefaultProps } from '#/utils';
 
@@ -192,7 +191,7 @@ export function useDetailFormSchema(): DescriptionItemSchema[] {
       label: $t('bpm.oa.leave.field.type'),
       field: 'type',
       content: (data) =>
-        h(DictTag, {
+        h(I18nDictTag, {
           type: DICT_TYPE.BPM_OA_LEAVE_TYPE,
           value: data?.type,
         }),

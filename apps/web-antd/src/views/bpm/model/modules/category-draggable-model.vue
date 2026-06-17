@@ -31,7 +31,7 @@ import {
   updateModelSortBatch,
   updateModelState,
 } from '#/api/bpm/model';
-import { DictTag } from '#/components/dict-tag';
+
 import { $t } from '#/locales';
 import { BpmModelFormType, DICT_TYPE } from '#/utils';
 
@@ -583,7 +583,7 @@ const handleRenameSuccess = () => {
               </template>
               <!-- 流程类型列 -->
               <template v-else-if="column.key === 'type'">
-                <!-- <DictTag :value="record.type" :type="DICT_TYPE.BPM_MODEL_TYPE" /> -->
+                <!-- <I18nDictTag  :value="record.type" :type="DICT_TYPE.BPM_MODEL_TYPE" /> -->
                 <!-- <Tag>{{ record.type }}</Tag> -->
                 <DictTag
                   :type="DICT_TYPE.BPM_MODEL_TYPE"

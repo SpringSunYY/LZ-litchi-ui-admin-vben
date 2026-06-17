@@ -38,7 +38,7 @@ function handleRefresh() {
 async function handleExport() {
   const data = await exportFinancePayment(await gridApi.formApi.getValues());
   downloadFileFromBlobPart({
-    fileName: $t('erp.payment.list') + '.xls',
+    fileName: `${$t('erp.payment.list')}.xls`,
     source: data,
   });
 }

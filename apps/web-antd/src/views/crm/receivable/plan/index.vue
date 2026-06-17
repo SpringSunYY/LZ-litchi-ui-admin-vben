@@ -17,6 +17,7 @@ import {
   getReceivablePlanPage,
 } from '#/api/crm/receivable/plan';
 import { $t } from '#/locales';
+import { setPendingExtraTitle } from '#/router/state';
 
 import ReceivableForm from '../modules/form.vue';
 import { useGridColumns, useGridFormSchema } from './data';
@@ -84,11 +85,13 @@ function handleCreateReceivable(row: CrmReceivablePlanApi.Plan) {
 
 /** 查看回款计划详情 */
 function handleDetail(row: CrmReceivablePlanApi.Plan) {
+  setPendingExtraTitle(row.customerName || row.id);
   push({ name: 'CrmReceivablePlanDetail', params: { id: row.id } });
 }
 
 /** 查看客户详情 */
 function handleCustomerDetail(row: CrmReceivablePlanApi.Plan) {
+  setPendingExtraTitle(row.customerName || row.id);
   push({ name: 'CrmCustomerDetail', params: { id: row.customerId } });
 }
 

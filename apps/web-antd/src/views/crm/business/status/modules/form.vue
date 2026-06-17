@@ -15,9 +15,9 @@ import {
   updateBusinessStatus,
 } from '#/api/crm/business/status';
 import { $t } from '#/locales';
+import { DEFAULT_STATUSES } from '#/utils/constants/crm';
 
 import { useFormColumns, useFormSchema } from '../data';
-import { DEFAULT_STATUSES } from '#/utils/constants/crm';
 
 const emit = defineEmits(['success']);
 const formData = ref<CrmBusinessStatusApi.BusinessStatus>();
@@ -98,7 +98,7 @@ const [Modal, modalApi] = useVbenModal({
       await formApi.setValues(formData.value as any);
       await gridApi.grid.reloadData(
         (formData.value!.statuses =
-          //@ts-ignore 忽略类型检查
+          // @ts-ignore 忽略类型检查
           formData.value?.statuses?.concat(DEFAULT_STATUSES)) as any,
       );
     } finally {
@@ -132,7 +132,7 @@ const [Grid, gridApi] = useVbenVxeGrid({
       mode: 'cell',
     },
     columns: useFormColumns(),
-    //@ts-ignore 忽略类型检查
+    // @ts-ignore 忽略类型检查
     data: formData.value?.statuses?.concat(DEFAULT_STATUSES),
     border: true,
     showOverflow: true,

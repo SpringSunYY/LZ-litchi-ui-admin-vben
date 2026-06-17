@@ -16,6 +16,7 @@ import {
   getBusinessPage,
 } from '#/api/crm/business';
 import { $t } from '#/locales';
+import { setPendingExtraTitle } from '#/router/state';
 
 import { useGridColumns, useGridFormSchema } from './data';
 import Form from './modules/form.vue';
@@ -69,11 +70,13 @@ async function handleDelete(row: CrmBusinessApi.Business) {
 
 /** 查看商机详情 */
 function handleDetail(row: CrmBusinessApi.Business) {
+  setPendingExtraTitle(row.name);
   push({ name: 'CrmBusinessDetail', params: { id: row.id } });
 }
 
 /** 查看客户详情 */
 function handleCustomerDetail(row: CrmBusinessApi.Business) {
+  setPendingExtraTitle(row.customerName || row.customerId);
   push({ name: 'CrmCustomerDetail', params: { id: row.customerId } });
 }
 

@@ -5,7 +5,7 @@ import { h } from 'vue';
 
 import { erpPriceInputFormatter, formatDateTime } from '@vben/utils';
 
-import { DictTag } from '#/components/dict-tag';
+import I18nDictTag from '#/components/i18n/i18n-dict-tag/i18n-dict-tag.vue';
 import { $t } from '#/locales';
 import { DICT_TYPE } from '#/utils';
 
@@ -68,7 +68,7 @@ export function useDetailBaseSchema(): DescriptionItemSchema[] {
       field: 'returnType',
       label: $t('crm.receivable.field.returnType'),
       content: (data) =>
-        h(DictTag, {
+        h(I18nDictTag, {
           type: DICT_TYPE.CRM_RECEIVABLE_RETURN_TYPE,
           value: data?.returnType,
         }),

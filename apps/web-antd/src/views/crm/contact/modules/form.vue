@@ -59,7 +59,16 @@ const [Modal, modalApi] = useVbenModal({
     }
     // 加载数据
     const data = modalApi.getData<CrmContactApi.Contact>();
-    if (!data || !data.id) {
+    if (!data) {
+      return;
+    }
+    // 如果有customerId,先设置
+    if (data.customerId) {
+      await formApi.setValues({
+        customerId: data.customerId,
+      });
+    }
+    if (!data.id) {
       return;
     }
     modalApi.lock();

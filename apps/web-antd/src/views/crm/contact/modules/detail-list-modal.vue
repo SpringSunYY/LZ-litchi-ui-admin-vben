@@ -12,6 +12,7 @@ import { Button, message } from 'ant-design-vue';
 import { ACTION_ICON, TableAction, useVbenVxeGrid } from '#/adapter/vxe-table';
 import { getContactPageByCustomer } from '#/api/crm/contact';
 import { $t } from '#/locales';
+import { setPendingExtraTitle } from '#/router/state';
 
 import { useDetailListColumns } from './detail-data';
 import Form from './form.vue';
@@ -46,11 +47,13 @@ function handleCreate() {
 
 /** 查看联系人详情 */
 function handleDetail(row: CrmContactApi.Contact) {
+  setPendingExtraTitle(row.name ?? row.id);
   push({ name: 'CrmContactDetail', params: { id: row.id } });
 }
 
 /** 查看客户详情 */
 function handleCustomerDetail(row: CrmContactApi.Contact) {
+  setPendingExtraTitle(row.customerName ?? row.customerId);
   push({ name: 'CrmCustomerDetail', params: { id: row.customerId } });
 }
 

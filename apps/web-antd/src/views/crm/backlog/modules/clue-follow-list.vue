@@ -9,6 +9,7 @@ import { Button } from 'ant-design-vue';
 import { useVbenVxeGrid } from '#/adapter/vxe-table';
 import { getCluePage } from '#/api/crm/clue';
 import { $t } from '#/locales';
+import { setPendingExtraTitle } from '#/router/state';
 import { useGridColumns } from '#/views/crm/clue/data';
 
 import { useFollowUpStatusOptions } from '../data';
@@ -16,6 +17,7 @@ import { useFollowUpStatusOptions } from '../data';
 const { push } = useRouter();
 
 function handleDetail(row: CrmClueApi.Clue) {
+  setPendingExtraTitle(row.name ?? row.id);
   push({ name: 'CrmClueDetail', params: { id: row.id } });
 }
 
