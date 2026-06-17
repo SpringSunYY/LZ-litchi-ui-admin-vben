@@ -8,15 +8,14 @@ import { IconifyIcon } from '@vben/icons';
 import { createReusableTemplate } from '@vueuse/core';
 import { Button, message, Textarea } from 'ant-design-vue';
 
+import { I18nDictTagSelect } from '#/components/i18n/i18n-dict-tag-select';
+import { $t } from '#/locales';
 import {
   AiWriteTypeEnum,
   DICT_TYPE,
   getDictOptions,
   WriteExample,
 } from '#/utils';
-import { $t } from '#/locales';
-
-import Tag from './tag.vue';
 
 type TabType = AiWriteApi.Write['type'];
 
@@ -217,22 +216,22 @@ function handleSubmit() {
         </template>
 
         <ReuseLabel :label="$t('ai.write.message.labelLength')" />
-        <Tag
+        <I18nDictTagSelect
           v-model="formData.length"
           :tags="getDictOptions(DICT_TYPE.AI_WRITE_LENGTH, 'number')"
         />
         <ReuseLabel :label="$t('ai.write.message.labelFormat')" />
-        <Tag
+        <I18nDictTagSelect
           v-model="formData.format"
-          :tags="getDictOptions(DICT_TYPE.AI_WRITE_FORMAT, 'number')"
+          :tags="getDictOptions(DICT_TYPE.AI_WRITE_FORMAT, 'number') || []"
         />
         <ReuseLabel :label="$t('ai.write.message.labelTone')" />
-        <Tag
+        <I18nDictTagSelect
           v-model="formData.tone"
           :tags="getDictOptions(DICT_TYPE.AI_WRITE_TONE, 'number')"
         />
         <ReuseLabel :label="$t('ai.write.message.labelLanguage')" />
-        <Tag
+        <I18nDictTagSelect
           v-model="formData.language"
           :tags="getDictOptions(DICT_TYPE.AI_WRITE_LANGUAGE, 'number')"
         />

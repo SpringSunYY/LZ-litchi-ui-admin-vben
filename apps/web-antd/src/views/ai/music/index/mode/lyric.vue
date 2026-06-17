@@ -7,6 +7,9 @@ import { $t } from '#/locales';
 
 import Title from '../title/index.vue';
 
+// Tag.CheckableTag 才能支持选中态（普通 Tag 没有 checked / checkable）
+const { CheckableTag } = Tag;
+
 defineOptions({ name: 'AiMusicModeLyric' });
 
 const tags = [
@@ -20,6 +23,7 @@ const tags = [
 ];
 
 const showCustom = ref(false);
+const activeTag = ref<string>('');
 
 const formData = reactive({
   lyric: '',
@@ -27,6 +31,20 @@ const formData = reactive({
   name: '',
   version: '',
 });
+
+function onTagChange(key: string, checked: boolean) {
+  // 与"自定义"互斥
+  showCustom.value = false;
+  activeTag.value = checked ? key : '';
+  formData.style = activeTag.value;
+}
+
+function toggleCustom() {
+  showCustom.value = !showCustom.value;
+  if (showCustom.value) {
+    activeTag.value = '';
+  }
+}
 
 defineExpose({
   formData,
@@ -50,9 +68,15 @@ defineExpose({
 
     <Title :title="$t('ai.music.message.musicStyle')">
       <Space class="flex-wrap">
-        <Tag v-for="tag in tags" :key="tag.key" class="mb-2">
+        <CheckableTag
+          v-for="tag in tags"
+          :key="tag.key"
+          class="mb-2 cursor-pointer"
+          :checked="activeTag === tag.key"
+          @change="(checked: boolean) => onTagChange(tag.key, checked)"
+        >
           {{ tag.label }}
-        </Tag>
+        </CheckableTag>
       </Space>
 
       <Button
@@ -60,7 +84,7 @@ defineExpose({
         shape="round"
         size="small"
         class="mb-2"
-        @click="showCustom = !showCustom"
+        @click="toggleCustom"
       >
         {{ $t('ai.music.message.customStyle') }}
       </Button>

@@ -2,9 +2,8 @@
 <script setup lang="ts">
 const props = withDefaults(
   defineProps<{
-    [k: string]: any;
-    modelValue: string;
-    tags?: { label: string; value: string }[];
+    modelValue: number | string;
+    tags?: { i18n?: string; label: string; value: number | string }[];
   }>(),
   {
     tags: () => [],
@@ -12,11 +11,8 @@ const props = withDefaults(
 );
 
 const emits = defineEmits<{
-  (e: 'update:modelValue', value: string): void;
+  (e: 'update:modelValue', value: number | string): void;
 }>();
-
-// 解构 props 以便在 template 中使用
-const { modelValue, tags } = props;
 </script>
 
 <template>
@@ -26,11 +22,12 @@ const { modelValue, tags } = props;
       :key="tag.value"
       class="border-card-100 bg-card mb-2 cursor-pointer rounded border-2 border-solid px-1 text-xs leading-6"
       :class="
-        modelValue === tag.value && '!border-primary-500 !text-primary-500'
+        props.modelValue === tag.value &&
+        '!border-primary-500 !text-primary-500'
       "
       @click="emits('update:modelValue', tag.value)"
     >
-      {{ tag.label }}
+      {{ tag.i18n ? $t(tag.i18n) : tag.label }}
     </span>
   </div>
 </template>

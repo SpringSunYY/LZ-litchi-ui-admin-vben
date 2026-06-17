@@ -28,6 +28,7 @@ import {
   I18nCheckbox,
   I18nCheckboxGroup,
 } from '#/components/i18n/i18n-checkbox';
+import { I18nDictTagSelect } from '#/components/i18n/i18n-dict-tag-select';
 import { I18nRadio, I18nRadioGroup } from '#/components/i18n/i18n-radio';
 import { I18nSelect } from '#/components/i18n/i18n-select';
 import { I18nSelectToString } from '#/components/i18n/i18n-select-to-string';
@@ -164,6 +165,7 @@ export type ComponentType =
   | 'FileUpload'
   | 'I18nCheckbox'
   | 'I18nCheckboxGroup'
+  | 'I18nDictTagSelect'
   | 'I18nRadio'
   | 'I18nRadioGroup'
   | 'I18nSelect'
@@ -229,6 +231,7 @@ async function initComponentAdapter() {
     CheckboxGroup,
     I18nCheckbox,
     I18nCheckboxGroup,
+    I18nDictTagSelect,
     DatePicker: withDayjsValue(DatePicker),
     // 自定义默认按钮
     DefaultButton: (props, { attrs, slots }) => {
