@@ -37,7 +37,7 @@ const [Modal, modalApi] = useVbenModal({
 
 <template>
   <Modal
-    :title="$t('system.notify.message.message.detail')"
+    :title="$t('system.notify.message.detail.detail')"
     class="w-1/2"
     :show-cancel-button="false"
     :show-confirm-button="false"

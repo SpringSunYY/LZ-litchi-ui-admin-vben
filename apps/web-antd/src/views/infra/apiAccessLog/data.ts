@@ -72,6 +72,61 @@ export function useGridFormSchema(): VbenFormSchema[] {
         ]),
       },
     },
+    {
+      fieldName: 'requestMethod',
+      label: $t('infra.apiAccessLog.field.requestMethod'),
+      component: 'Input',
+      componentProps: {
+        allowClear: true,
+        placeholder: $t('ui.placeholder.input', [
+          $t('infra.apiAccessLog.field.requestMethod'),
+        ]),
+      },
+    },
+    {
+      fieldName: 'userIp',
+      label: $t('infra.apiAccessLog.field.userIp'),
+      component: 'Input',
+      componentProps: {
+        allowClear: true,
+        placeholder: $t('ui.placeholder.input', [
+          $t('infra.apiAccessLog.field.userIp'),
+        ]),
+      },
+    },
+    {
+      fieldName: 'userIpAddr',
+      label: $t('infra.apiAccessLog.field.userIpAddr'),
+      component: 'Input',
+      componentProps: {
+        allowClear: true,
+        placeholder: $t('ui.placeholder.input', [
+          $t('infra.apiAccessLog.field.userIpAddr'),
+        ]),
+      },
+    },
+    {
+      fieldName: 'userBrowser',
+      label: $t('infra.apiAccessLog.field.userBrowser'),
+      component: 'Input',
+      componentProps: {
+        allowClear: true,
+        placeholder: $t('ui.placeholder.input', [
+          $t('infra.apiAccessLog.field.userBrowser'),
+        ]),
+      },
+    },
+    {
+      fieldName: 'userPlatform',
+      label: $t('infra.apiAccessLog.field.userPlatform'),
+      component: 'Input',
+      componentProps: {
+        allowClear: true,
+        placeholder: $t('ui.placeholder.input', [
+          $t('infra.apiAccessLog.field.userPlatform'),
+        ]),
+      },
+    },
   ];
 }
 

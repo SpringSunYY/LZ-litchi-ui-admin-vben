@@ -274,7 +274,7 @@ export function useGridFormSchema(): VbenFormSchema[] {
 /** 列表的字段 */
 export function useGridColumns(): VxeTableGridOptions<SystemTenantApi.Tenant>['columns'] {
   return [
-    { type: 'checkbox', width: 40 },
+    // { type: 'checkbox', width: 40 },
     {
       field: 'id',
       title: $t('system.tenant.field.id'),

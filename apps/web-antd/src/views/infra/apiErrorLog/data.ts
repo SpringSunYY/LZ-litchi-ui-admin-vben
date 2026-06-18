@@ -71,6 +71,61 @@ export function useGridFormSchema(): VbenFormSchema[] {
       },
       defaultValue: InfraApiErrorLogProcessStatusEnum.INIT,
     },
+    {
+      fieldName: 'requestMethod',
+      label: $t('infra.apiErrorLog.field.requestMethod'),
+      component: 'Input',
+      componentProps: {
+        allowClear: true,
+        placeholder: $t('ui.placeholder.input', [
+          $t('infra.apiErrorLog.field.requestMethod'),
+        ]),
+      },
+    },
+    {
+      fieldName: 'userIp',
+      label: $t('infra.apiErrorLog.field.userIp'),
+      component: 'Input',
+      componentProps: {
+        allowClear: true,
+        placeholder: $t('ui.placeholder.input', [
+          $t('infra.apiErrorLog.field.userIp'),
+        ]),
+      },
+    },
+    {
+      fieldName: 'userIpAddr',
+      label: $t('infra.apiErrorLog.field.userIpAddr'),
+      component: 'Input',
+      componentProps: {
+        allowClear: true,
+        placeholder: $t('ui.placeholder.input', [
+          $t('infra.apiErrorLog.field.userIpAddr'),
+        ]),
+      },
+    },
+    {
+      fieldName: 'userBrowser',
+      label: $t('infra.apiErrorLog.field.userBrowser'),
+      component: 'Input',
+      componentProps: {
+        allowClear: true,
+        placeholder: $t('ui.placeholder.input', [
+          $t('infra.apiErrorLog.field.userBrowser'),
+        ]),
+      },
+    },
+    {
+      fieldName: 'userPlatform',
+      label: $t('infra.apiErrorLog.field.userPlatform'),
+      component: 'Input',
+      componentProps: {
+        allowClear: true,
+        placeholder: $t('ui.placeholder.input', [
+          $t('infra.apiErrorLog.field.userPlatform'),
+        ]),
+      },
+    },
   ];
 }
 
