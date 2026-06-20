@@ -20,8 +20,6 @@ const [Modal, modalApi] = useVbenModal({
       formData.value = undefined;
       return;
     }
-    console.log($t('infra.apiErrorLog.field.userIpAddr'));
-    console.log($t('infra.apiErrorLog.field.userId'));
     // 加载数据
     const data = modalApi.getData<InfraApiErrorLogApi.ApiErrorLog>();
     if (!data || !data.id) {
@@ -98,7 +96,7 @@ const [Modal, modalApi] = useVbenModal({
         <JsonViewer :value="formData?.exceptionStackTrace" preview-mode />
       </Descriptions.Item>
       <Descriptions.Item :label="$t('infra.apiErrorLog.field.processStatus')">
-        <DictTag
+        <I18nDictTag
           :type="DICT_TYPE.INFRA_API_ERROR_LOG_PROCESS_STATUS"
           :value="formData?.processStatus"
         />

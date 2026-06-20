@@ -111,7 +111,7 @@ const [Modal, modalApi] = useVbenModal({
         {{ formData?.operateName }}
       </Descriptions.Item>
       <Descriptions.Item :label="$t('infra.apiAccessLog.field.operateType')">
-        <DictTag
+        <I18nDictTag
           :type="DICT_TYPE.INFRA_OPERATE_TYPE"
           :value="formData?.operateType"
         />

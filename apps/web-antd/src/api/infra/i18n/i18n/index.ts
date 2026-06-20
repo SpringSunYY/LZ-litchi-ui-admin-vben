@@ -29,7 +29,7 @@ export function getI18nLocale(localeTarget: number) {
   );
 }
 
-/** 获取国际化国家信息 */
+/** 获取国际化message信息 */
 export function getI18nLocaleMessage(localeTarget: number) {
   return requestClient.get<I18nApi.Message[]>(
     `/infra/i18n/locale/message?localeTarget=${localeTarget}`,

@@ -4,13 +4,7 @@ import type { Demo01ContactApi } from '#/api/infra/demo/demo01';
 
 import { $t } from '@vben/locales';
 
-import {
-  DICT_TYPE,
-  getDictOptions,
-  getRangePickerDefaultProps,
-  MODULE_TYPE_ENUM,
-} from '#/utils';
-
+import { DICT_TYPE, getDictOptions, getRangePickerDefaultProps } from '#/utils';
 /** 新增/修改的表单 */
 export function useFormSchema(): VbenFormSchema[] {
   return [
@@ -26,7 +20,7 @@ export function useFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'name',
       label: $t('infra.demo01Contact.field.name'),
-      // rules: 'required',
+      rules: 'required',
       component: 'Input',
       componentProps: {
         placeholder: $t('ui.placeholder.input', [
@@ -38,10 +32,10 @@ export function useFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'sex',
       label: $t('infra.demo01Contact.field.sex'),
-      // rules: 'required',
-      component: 'Input',
+      rules: 'required',
+      component: 'I18nRadioGroup',
       componentProps: {
-        options: getDictOptions(DICT_TYPE.SYSTEM_USER_SEX, 'number'),
+        options: getDictOptions(DICT_TYPE.SYSTEM_USER_SEX, 'boolean'),
         buttonStyle: 'solid',
         optionType: 'button',
       },
@@ -50,7 +44,7 @@ export function useFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'birthday',
       label: $t('infra.demo01Contact.field.birthday'),
-      // rules: 'required',
+      rules: 'required',
       component: 'DatePicker',
       componentProps: {
         showTime: true,
@@ -62,7 +56,7 @@ export function useFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'age',
       label: $t('infra.demo01Contact.field.age'),
-      component: 'Input',
+      component: 'InputNumber',
       componentProps: {
         min: 0,
         controlsPosition: 'right',
@@ -75,10 +69,10 @@ export function useFormSchema(): VbenFormSchema[] {
     {
       fieldName: 'description',
       label: $t('infra.demo01Contact.field.description'),
-      // rules: 'required',
+      rules: 'required',
       component: 'RichTextarea',
       componentProps: {
-        moduleType: MODULE_TYPE_ENUM.INFRA,
+        moduleType: 'infra',
       },
     },
     /** 头像 */
@@ -117,7 +111,7 @@ export function useGridFormSchema(): VbenFormSchema[] {
       component: 'I18nSelect',
       componentProps: {
         allowClear: true,
-        options: getDictOptions(DICT_TYPE.SYSTEM_USER_SEX, 'number'),
+        options: getDictOptions(DICT_TYPE.SYSTEM_USER_SEX, 'boolean'),
         placeholder: $t('ui.placeholder.select', [
           $t('infra.demo01Contact.field.sex'),
         ]),
@@ -252,7 +246,9 @@ export function useDemo01ContactImportSchema(): VbenFormSchema[] {
     /** 示例联系人导入文件 */
     {
       fieldName: 'file',
-      label: $t('ui.actionTitle.import', [$t('infra.demo01Contact')]),
+      label: $t('ui.actionTitle.import', [
+        $t('infra.demo01Contact.demo01Contact'),
+      ]),
       component: 'Upload',
       rules: 'required',
       componentProps: {

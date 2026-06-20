@@ -114,6 +114,7 @@ const handleGenerateI18n = function () {
   generateDictDataI18n().then(() => {
     message.success($t('ui.actionMessage.operationSuccess'));
     generateI18nLoading.value = false;
+    gridApi.query();
   });
 };
 

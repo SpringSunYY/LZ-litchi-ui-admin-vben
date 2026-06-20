@@ -53,7 +53,7 @@ const [Modal, modalApi] = useVbenModal({
         {{ formData?.id }}
       </Descriptions.Item>
       <Descriptions.Item :label="$t('system.loginlog.field.logType')">
-        <DictTag
+        <I18nDictTag
           :type="DICT_TYPE.SYSTEM_LOGIN_TYPE"
           :value="formData?.logType"
         />
@@ -77,7 +77,7 @@ const [Modal, modalApi] = useVbenModal({
         {{ formData?.userPlatform }}
       </Descriptions.Item>
       <Descriptions.Item :label="$t('system.loginlog.field.result')">
-        <DictTag
+        <I18nDictTag
           :type="DICT_TYPE.SYSTEM_LOGIN_RESULT"
           :value="formData?.result"
         />

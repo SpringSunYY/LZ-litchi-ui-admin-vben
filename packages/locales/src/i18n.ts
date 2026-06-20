@@ -390,6 +390,7 @@ function ensureFallbackMessages(
   }
 }
 
+/** 获取国际化信息*/
 async function fetchRemoteMessages(
   lang: SupportedLanguagesType,
   options: SetupI18nOptions,
