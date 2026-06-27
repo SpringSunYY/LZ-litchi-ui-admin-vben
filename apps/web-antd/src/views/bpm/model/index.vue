@@ -165,9 +165,16 @@ async function handleCategorySortSubmit() {
           @press-enter="getList"
           class="!w-60"
         />
+        <Button class="ml-2" type="primary" @click="getList">
+          <div class="flex items-center gap-1">
+            <IconifyIcon icon="lucide:search" />
+          </div>
+        </Button>
         <Button class="ml-2" type="primary" @click="createModel">
-          <IconifyIcon icon="lucide:plus" />
-          {{ $t('bpm.model.message.createModel') }}
+          <div class="flex items-center gap-1">
+            <IconifyIcon icon="lucide:plus" />
+            {{ $t('bpm.model.message.createModel') }}
+          </div>
         </Button>
         <Dropdown class="ml-2" placement="bottomRight" arrow>
           <Button>

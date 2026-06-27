@@ -15,7 +15,7 @@ export const overridesPreferences = defineOverridesPreferences({
   },
   footer: {
     /** 默认关闭 footer 页脚，因为有一定遮挡 */
-    enable: true,
+    enable: false,
     fixed: false,
   },
   logo: {

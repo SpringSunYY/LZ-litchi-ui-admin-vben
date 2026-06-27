@@ -1,15 +1,14 @@
 <script lang="ts" setup>
 import type { BpmModelApi, ModelCategoryInfo } from '#/api/bpm/model';
 
-import { computed, ref, watchEffect } from 'vue';
+import { computed, nextTick, ref, shallowRef, watch } from 'vue';
 import { useRouter } from 'vue-router';
 
 import { confirm, EllipsisText, useVbenModal } from '@vben/common-ui';
 import { IconifyIcon } from '@vben/icons';
 import { useUserStore } from '@vben/stores';
-import { cloneDeep, formatDateTime, isEqual } from '@vben/utils';
+import { cloneDeep, formatDateTime } from '@vben/utils';
 
-import { useDebounceFn } from '@vueuse/core';
 import { useSortable } from '@vueuse/integrations/useSortable';
 import {
   Button,
@@ -31,7 +30,7 @@ import {
   updateModelSortBatch,
   updateModelState,
 } from '#/api/bpm/model';
-
+import I18nDictTag from '#/components/i18n/i18n-dict-tag/i18n-dict-tag.vue';
 import { $t } from '#/locales';
 import { BpmModelFormType, DICT_TYPE } from '#/utils';
 
@@ -65,12 +64,18 @@ const userStore = useUserStore();
 const userId = userStore.userInfo?.id;
 const isModelSorting = ref(false);
 const originalData = ref<BpmModelApi.ModelVO[]>([]);
-const modelList = ref<BpmModelApi.ModelVO[]>([]);
+// 用 shallowRef：避免 Vue 对每个 item 做 Proxy 包装，
+// 这能让 Sortable 改写的数组结构和 ant-design-vue Table 的 data 同步更可靠
+const modelList = shallowRef<BpmModelApi.ModelVO[]>([]);
 const isExpand = ref(false);
 const tableRef = ref();
 
-// 排序引用，以便后续启用或禁用排序
-const sortableInstance = ref<any>(null);
+// useSortable 返回的控制器 { start, stop, option }，不是 Sortable 实例本身
+const sortableCtl = ref<null | {
+  option: (name: string, value?: any) => any;
+  start: () => void;
+  stop: () => void;
+}>(null);
 /** 解决 v-model 问题，使用计算属性 */
 const expandKeys = computed(() => (isExpand.value ? ['1'] : []));
 
@@ -124,33 +129,93 @@ const columns = [
 ];
 
 /** 处理模型的排序 */
-function handleModelSort() {
-  // 保存初始数据
+async function handleModelSort() {
+  // 保存初始数据，以便取消时回滚
   originalData.value = cloneDeep(props.categoryInfo.modelList);
+  modelList.value = cloneDeep(props.categoryInfo.modelList);
   // 展开数据
   isExpand.value = true;
   isModelSorting.value = true;
-  // 如果排序实例不存在，则初始化
-  if (sortableInstance.value) {
-    // 已存在实例，则启用排序功能
-    sortableInstance.value.option('disabled', false);
-  } else {
-    const sortableClass = `.category-${props.categoryInfo.id} .ant-table .ant-table-tbody`;
-    sortableInstance.value = useSortable(sortableClass, modelList, {
-      disabled: false, // 启用排序
-    });
+
+  // 关键修复：必须等 Table 渲染完成，再去查 tbody 节点。
+  await nextTick();
+  await nextTick();
+
+  // 先销毁旧实例（vueuse 对同一元素只会初始化一次，必须先 stop 才能重建）
+  sortableCtl.value?.stop();
+  sortableCtl.value = null;
+
+  const sortableSelector = `.category-${props.categoryInfo.id} tbody`;
+  const target = document.querySelector(sortableSelector);
+  if (!target) {
+    console.warn('[model-sort] 未找到可排序的 tbody 节点:', sortableSelector);
+    return;
   }
+
+  sortableCtl.value = useSortable(sortableSelector, modelList, {
+    disabled: false,
+    animation: 150,
+    // 整个 tr 都可以作为拖动源
+    handle: '.bpm-drag-handle',
+    // 禁用 vueuse 默认 onUpdate：它会基于 tbody 子节点索引（含 measure row）splice，
+    // 与我们 modelList 数组索引错位，导致乱序。我们自己接管 onEnd。
+    onUpdate: () => {},
+    onEnd: (evt) => {
+      // 不依赖 Sortable 给的 oldIndex/newIndex（它们含 measure row 干扰），
+      // 直接按 tbody 里真实可见的 data-row-key 顺序重排 modelList。
+      const tbody = evt.to as HTMLElement | undefined;
+      if (!tbody) return;
+
+      // 按 DOM 当前顺序收集所有数据行的 key
+      const rowEls = [
+        ...tbody.querySelectorAll<HTMLElement>('tr[data-row-key]'),
+      ];
+      const domKeyOrder: string[] = rowEls
+        .map((el) => el.dataset.rowKey)
+        .filter((k): k is string => !!k);
+
+      const currentIds = modelList.value.map((item) => String(item.id));
+      // 如果 DOM 顺序与当前数组顺序完全一致，说明只是拖了一下又放回原位
+      if (
+        domKeyOrder.length === currentIds.length &&
+        domKeyOrder.every((k, i) => k === currentIds[i])
+      ) {
+        return;
+      }
+
+      // 按 DOM 顺序重排 modelList
+      const map = new Map(
+        modelList.value.map((item) => [String(item.id), item]),
+      );
+      const newList: BpmModelApi.ModelVO[] = [];
+      for (const key of domKeyOrder) {
+        const item = map.get(key);
+        if (item) newList.push(item);
+      }
+      // 兜底：把没出现在 DOM 里的 item 也补上（理论上不会发生）
+      if (newList.length < modelList.value.length) {
+        for (const item of modelList.value) {
+          if (!domKeyOrder.includes(String(item.id))) {
+            newList.push(item);
+          }
+        }
+      }
+
+      modelList.value = newList;
+    },
+  }) as any;
 }
 
 /** 处理模型的排序提交 */
 async function handleModelSortSubmit() {
   try {
-    // 保存排序
     const ids = modelList.value.map((item) => item.id);
     await updateModelSortBatch(ids);
-    // 刷新列表
-    isModelSorting.value = false;
     message.success($t('bpm.model.message.sortModelSuccess'));
+    isModelSorting.value = false;
+    // 销毁排序实例，让父组件 getList 刷新 props 时自然恢复
+    sortableCtl.value?.stop();
+    sortableCtl.value = null;
     emit('success');
   } catch (error) {
     console.error('排序保存失败', error);
@@ -159,13 +224,10 @@ async function handleModelSortSubmit() {
 
 /** 处理模型的排序取消 */
 function handleModelSortCancel() {
-  // 恢复初始数据
   modelList.value = cloneDeep(originalData.value);
   isModelSorting.value = false;
-  // 禁用排序功能
-  if (sortableInstance.value) {
-    sortableInstance.value.option('disabled', true);
-  }
+  sortableCtl.value?.stop();
+  sortableCtl.value = null;
 }
 
 /** 处理下拉菜单命令 */
@@ -348,31 +410,38 @@ function handleDefinitionList(row: any) {
   });
 }
 
-/** 更新 modelList 模型列表 */
-const updateModelList = useDebounceFn(() => {
-  const newModelList = props.categoryInfo.modelList;
-  if (!isEqual(modelList.value, newModelList)) {
-    modelList.value = cloneDeep(newModelList);
-    if (newModelList?.length > 0) {
+/**
+ * 同步外部 props.modelList 到本地 modelList。
+ * 必须用 watch（不是 watchEffect），并在排序模式下跳过覆盖，
+ * 否则 Sortable 拖动改写数组后会被 props 同步反向回滚，导致"拖了但顺序没变"。
+ */
+watch(
+  () => props.categoryInfo.modelList,
+  (newList) => {
+    if (!newList) return;
+    // 排序模式下不要用 props 覆盖，否则拖动结果会被擦掉
+    if (isModelSorting.value) return;
+    // 防御性：过滤掉 undefined / null，避免 ant-design-vue Table 渲染时报 "record is undefined"
+    const safeList = newList.filter((item) => item != null);
+    modelList.value = safeList as BpmModelApi.ModelVO[];
+    if (safeList.length > 0) {
       isExpand.value = true;
     }
-    // 关闭排序
-    isModelSorting.value = false;
-    // 重置排序实例
-    sortableInstance.value = null;
-  }
-}, 100);
+  },
+  { immediate: true, deep: false },
+);
 
-/** 监听分类信息和排序状态变化 */
-watchEffect(() => {
-  if (props.categoryInfo?.modelList) {
-    updateModelList();
-  }
-
-  if (props.isCategorySorting) {
-    isExpand.value = false;
-  }
-});
+/** 分类整体进入排序模式时收起子表，避免子表自身拖拽与外层冲突 */
+watch(
+  () => props.isCategorySorting,
+  (val) => {
+    if (val) {
+      isExpand.value = false;
+      sortableCtl.value?.stop();
+      sortableCtl.value = null;
+    }
+  },
+);
 
 /** 自定义表格行渲染 */
 function customRow(_record: any) {
@@ -502,15 +571,17 @@ const handleRenameSuccess = () => {
             row-key="id"
           >
             <template #bodyCell="{ column, record }">
+              <!-- 防御：ant-design-vue 在 measure row / 切换 data 时可能传 undefined -->
+              <template v-if="!record"></template>
               <!-- 流程名 -->
-              <template v-if="column.key === 'name'">
+              <template v-if="record && column.key === 'name'">
                 <div class="flex items-center">
                   <Tooltip
                     v-if="isModelSorting"
                     :title="$t('bpm.model.message.dragSortTip')"
                   >
                     <span
-                      class="icon-[ic--round-drag-indicator] mr-2.5 cursor-move text-2xl text-gray-500"
+                      class="bpm-drag-handle icon-[ic--round-drag-indicator] mr-2.5 cursor-move text-2xl text-gray-500"
                     ></span>
                   </Tooltip>
                   <div
@@ -534,7 +605,7 @@ const handleRenameSuccess = () => {
               </template>
 
               <!-- 可见范围列-->
-              <template v-else-if="column.key === 'startUserIds'">
+              <template v-else-if="record && column.key === 'startUserIds'">
                 <span
                   v-if="
                     !record.startUsers?.length && !record.startDepts?.length
@@ -582,16 +653,16 @@ const handleRenameSuccess = () => {
                 </span>
               </template>
               <!-- 流程类型列 -->
-              <template v-else-if="column.key === 'type'">
+              <template v-else-if="record && column.key === 'type'">
                 <!-- <I18nDictTag  :value="record.type" :type="DICT_TYPE.BPM_MODEL_TYPE" /> -->
                 <!-- <Tag>{{ record.type }}</Tag> -->
-                <DictTag
+                <I18nDictTag
                   :type="DICT_TYPE.BPM_MODEL_TYPE"
                   :value="record.type"
                 />
               </template>
               <!-- 表单信息列 -->
-              <template v-else-if="column.key === 'formType'">
+              <template v-else-if="record && column.key === 'formType'">
                 <!-- TODO BpmModelFormType.NORMAL -->
                 <Button
                   v-if="record.formType === BpmModelFormType.NORMAL"
@@ -611,7 +682,7 @@ const handleRenameSuccess = () => {
                 <span v-else>{{ $t('bpm.model.message.noForm') }}</span>
               </template>
               <!-- 最后发布列 -->
-              <template v-else-if="column.key === 'deploymentTime'">
+              <template v-else-if="record && column.key === 'deploymentTime'">
                 <div class="flex items-center justify-center">
                   <span v-if="record.processDefinition" class="w-[150px]">
                     {{
@@ -634,7 +705,7 @@ const handleRenameSuccess = () => {
                 </div>
               </template>
               <!-- 操作列 -->
-              <template v-else-if="column.key === 'operation'">
+              <template v-else-if="record && column.key === 'operation'">
                 <div class="flex items-center space-x-0">
                   <!-- TODO 权限校验-->
                   <Button
