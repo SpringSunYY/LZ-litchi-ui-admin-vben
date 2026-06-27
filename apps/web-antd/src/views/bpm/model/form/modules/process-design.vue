@@ -3,15 +3,12 @@ import type { Ref } from 'vue';
 
 import { computed, inject, nextTick, ref } from 'vue';
 
-import { $t } from '#/locales';
 import { BpmModelType } from '#/utils';
 
-// TODO BPM 流程模型设计器 BpmModelEditor 待整合
+import BpmModelEditor from './bpm-model-editor.vue';
 import SimpleModelDesign from './simple-model-design.vue';
 
-// 创建本地数据副本
-const modelData = defineModel<any>();
-
+const modelData = defineModel<any>(); // 创建本地数据副本
 const processData = inject('processData') as Ref;
 
 const simpleDesign = ref();
@@ -20,17 +17,18 @@ const simpleDesign = ref();
 async function validate() {
   // 获取最新的流程数据
   if (!processData.value) {
-    throw new Error($t('bpm.model.message.designProcess'));
+    throw new Error('请设计流程');
   }
   if (modelData.value.type === BpmModelType.SIMPLE) {
     // 简易设计器校验
     const validateResult = await simpleDesign.value?.validateConfig();
     if (!validateResult) {
-      throw new Error($t('bpm.model.message.completeDesignConfig'));
+      throw new Error('请完善设计配置');
     }
   }
   return true;
 }
+
 /** 处理设计器保存成功 */
 async function handleDesignSuccess(data?: any) {
   if (data) {
@@ -40,7 +38,7 @@ async function handleDesignSuccess(data?: any) {
       bpmnXml: modelData.value.type === BpmModelType.BPMN ? data : null,
       simpleModel: modelData.value.type === BpmModelType.BPMN ? null : data,
     };
-    // 使用emit更新父组件的数据
+    // 使用 emit 更新父组件的数据
     await nextTick();
     // 更新表单的模型数据部分
     modelData.value = newModelData;
@@ -51,13 +49,20 @@ async function handleDesignSuccess(data?: any) {
 const showDesigner = computed(() => {
   return Boolean(modelData.value?.key && modelData.value?.name);
 });
+
 defineExpose({ validate });
 </script>
 <template>
   <div class="h-full">
     <!-- BPMN设计器 -->
     <template v-if="modelData.type === BpmModelType.BPMN">
-      <!-- TODO BPMN 流程设计器 -->
+      <BpmModelEditor
+        v-if="showDesigner"
+        :model-id="modelData.id"
+        :model-key="modelData.key"
+        :model-name="modelData.name"
+        @success="handleDesignSuccess"
+      />
     </template>
     <!-- Simple设计器 -->
     <template v-else>

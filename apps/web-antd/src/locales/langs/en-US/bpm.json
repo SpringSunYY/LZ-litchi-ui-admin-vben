@@ -562,6 +562,7 @@
     "copy": "copy",
     "cancel": "cancel",
     "reSubmit": "re-submit",
+    "print": "Print",
     "approver": "approve",
     "transactor": "handle",
     "approveSuccess": "approved",
@@ -963,6 +964,23 @@
       "fixedQuantity": "fixed quantity",
       "numberForm": "number form",
       "multiForm": "multi-select form"
+    }
+  },
+  "selectModal": {
+    "userSelectModal": {
+      "title": "select user",
+      "confirmText": "confirm",
+      "cancelText": "cancel",
+      "searchDept": "search department",
+      "total": "total {0} items",
+      "pleaseSelectUser": "please select a user",
+      "unselected": "unselected",
+      "selected": "selected"
+    },
+    "deptSelectModal": {
+      "title": "select department",
+      "confirmText": "confirm",
+      "cancelText": "cancel"
     }
   }
 }

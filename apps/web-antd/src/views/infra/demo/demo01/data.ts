@@ -35,7 +35,7 @@ export function useFormSchema(): VbenFormSchema[] {
       rules: 'required',
       component: 'I18nRadioGroup',
       componentProps: {
-        options: getDictOptions(DICT_TYPE.SYSTEM_USER_SEX, 'boolean'),
+        options: getDictOptions(DICT_TYPE.SYSTEM_USER_SEX, 'number'),
         buttonStyle: 'solid',
         optionType: 'button',
       },

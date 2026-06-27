@@ -1,18 +1,18 @@
 <script lang="ts" setup>
-import type { SimpleFlowNode } from '#/components/simple-process-design';
+import type { SimpleFlowNode } from '#/views/bpm/components/simple-process-design';
 
 import { ref, watch } from 'vue';
 
-import { SimpleProcessViewer } from '#/components/simple-process-design';
 import { BpmNodeTypeEnum, BpmTaskStatusEnum } from '#/utils';
+import { SimpleProcessViewer } from '#/views/bpm/components/simple-process-design';
 
-defineOptions({ name: 'ProcessInstanceSimpleViewer' });
+defineOptions({ name: 'BpmProcessInstanceSimpleViewer' });
 
 const props = withDefaults(
   defineProps<{
-    loading?: boolean;
+    loading?: boolean; // 是否加载中
     modelView?: any;
-    simpleJson?: string;
+    simpleJson?: string; // Simple 模型结构数据 (json 格式)
   }>(),
   {
     loading: false,
@@ -21,26 +21,29 @@ const props = withDefaults(
   },
 );
 
-const simpleModel = ref<SimpleFlowNode | undefined>(undefined);
-const tasks = ref([]);
-const processInstance = ref();
+const simpleModel = ref<any>({});
+const tasks = ref([]); // 用户任务
+const processInstance = ref(); // 流程实例
 
+/** 监控模型视图 包括任务列表、进行中的活动节点编号等 */
 watch(
   () => props.modelView,
-  (newModelView) => {
+  async (newModelView) => {
     if (newModelView) {
-      tasks.value = newModelView.tasks || [];
+      tasks.value = newModelView.tasks;
       processInstance.value = newModelView.processInstance;
-
+      // 已经拒绝的活动节点编号集合，只包括 UserTask
       const rejectedTaskActivityIds: string[] =
-        newModelView.rejectedTaskActivityIds || [];
+        newModelView.rejectedTaskActivityIds;
+      // 进行中的活动节点编号集合， 只包括 UserTask
       const unfinishedTaskActivityIds: string[] =
-        newModelView.unfinishedTaskActivityIds || [];
+        newModelView.unfinishedTaskActivityIds;
+      // 已经完成的活动节点编号集合， 包括 UserTask、Gateway 等
       const finishedActivityIds: string[] =
-        newModelView.finishedTaskActivityIds || [];
+        newModelView.finishedTaskActivityIds;
+      // 已经完成的连线节点编号集合，只包括 SequenceFlow
       const finishedSequenceFlowActivityIds: string[] =
-        newModelView.finishedSequenceFlowActivityIds || [];
-
+        newModelView.finishedSequenceFlowActivityIds;
       setSimpleModelNodeTaskStatus(
         newModelView.simpleModel,
         newModelView.processInstance?.status,
@@ -49,33 +52,32 @@ watch(
         finishedActivityIds,
         finishedSequenceFlowActivityIds,
       );
-      simpleModel.value = newModelView.simpleModel || undefined;
+      simpleModel.value = newModelView.simpleModel || {};
     }
   },
-  { immediate: true },
 );
 
+/** 监控模型结构数据 */
 watch(
   () => props.simpleJson,
-  (value) => {
+  async (value) => {
     if (value) {
       simpleModel.value = JSON.parse(value);
     }
   },
 );
 
-function setSimpleModelNodeTaskStatus(
+const setSimpleModelNodeTaskStatus = (
   simpleModel: SimpleFlowNode | undefined,
   processStatus: number,
   rejectedTaskActivityIds: string[],
   unfinishedTaskActivityIds: string[],
   finishedActivityIds: string[],
   finishedSequenceFlowActivityIds: string[],
-) {
+) => {
   if (!simpleModel) {
     return;
   }
-
   // 结束节点
   if (simpleModel.type === BpmNodeTypeEnum.END_EVENT_NODE) {
     simpleModel.activityStatus = finishedActivityIds.includes(simpleModel.id)
@@ -83,8 +85,7 @@ function setSimpleModelNodeTaskStatus(
       : BpmTaskStatusEnum.NOT_START;
     return;
   }
-
-  // 审批类节点：发起人 / 审批人 / 办理人 / 子流程
+  // 审批节点
   if (
     simpleModel.type === BpmNodeTypeEnum.START_USER_NODE ||
     simpleModel.type === BpmNodeTypeEnum.USER_TASK_NODE ||
@@ -99,45 +100,47 @@ function setSimpleModelNodeTaskStatus(
     } else if (finishedActivityIds.includes(simpleModel.id)) {
       simpleModel.activityStatus = BpmTaskStatusEnum.APPROVE;
     }
+    // TODO 是不是还缺一个 cancel 的状态 @jason：
   }
-
-  // 抄送节点：只有通过和未执行状态
+  // 抄送节点
   if (simpleModel.type === BpmNodeTypeEnum.COPY_TASK_NODE) {
+    // 抄送节点,只有通过和未执行状态
     simpleModel.activityStatus = finishedActivityIds.includes(simpleModel.id)
       ? BpmTaskStatusEnum.APPROVE
       : BpmTaskStatusEnum.NOT_START;
   }
-
-  // 延迟器节点：只有通过和未执行状态
+  // 延迟器节点
   if (simpleModel.type === BpmNodeTypeEnum.DELAY_TIMER_NODE) {
+    // 延迟器节点,只有通过和未执行状态
     simpleModel.activityStatus = finishedActivityIds.includes(simpleModel.id)
       ? BpmTaskStatusEnum.APPROVE
       : BpmTaskStatusEnum.NOT_START;
   }
-
-  // 触发器节点：只有通过和未执行状态
+  // 触发器节点
   if (simpleModel.type === BpmNodeTypeEnum.TRIGGER_NODE) {
+    // 触发器节点,只有通过和未执行状态
     simpleModel.activityStatus = finishedActivityIds.includes(simpleModel.id)
       ? BpmTaskStatusEnum.APPROVE
       : BpmTaskStatusEnum.NOT_START;
   }
 
-  // 条件节点（SequenceFlow）：只有通过和未执行状态
+  // 条件节点对应 SequenceFlow
   if (simpleModel.type === BpmNodeTypeEnum.CONDITION_NODE) {
+    // 条件节点,只有通过和未执行状态
     simpleModel.activityStatus = finishedSequenceFlowActivityIds.includes(
       simpleModel.id,
     )
       ? BpmTaskStatusEnum.APPROVE
       : BpmTaskStatusEnum.NOT_START;
   }
-
-  // 网关节点：条件分支 / 并行分支 / 包容分支 / 路由分支
+  // 网关节点
   if (
     simpleModel.type === BpmNodeTypeEnum.CONDITION_BRANCH_NODE ||
     simpleModel.type === BpmNodeTypeEnum.PARALLEL_BRANCH_NODE ||
     simpleModel.type === BpmNodeTypeEnum.INCLUSIVE_BRANCH_NODE ||
     simpleModel.type === BpmNodeTypeEnum.ROUTER_BRANCH_NODE
   ) {
+    // 网关节点。只有通过和未执行状态
     simpleModel.activityStatus = finishedActivityIds.includes(simpleModel.id)
       ? BpmTaskStatusEnum.APPROVE
       : BpmTaskStatusEnum.NOT_START;
@@ -153,7 +156,6 @@ function setSimpleModelNodeTaskStatus(
     });
   }
 
-  // 递归处理后续节点
   setSimpleModelNodeTaskStatus(
     simpleModel.childNode,
     processStatus,
@@ -162,13 +164,11 @@ function setSimpleModelNodeTaskStatus(
     finishedActivityIds,
     finishedSequenceFlowActivityIds,
   );
-}
+};
 </script>
-
 <template>
   <div v-loading="loading">
     <SimpleProcessViewer
-      v-if="simpleModel"
       :flow-node="simpleModel"
       :tasks="tasks"
       :process-instance="processInstance"

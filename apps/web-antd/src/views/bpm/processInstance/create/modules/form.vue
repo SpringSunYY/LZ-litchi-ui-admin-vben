@@ -30,6 +30,7 @@ import {
 } from '#/utils';
 import ProcessInstanceSimpleViewer from '#/views/bpm/processInstance/detail/modules/simple-bpm-viewer.vue';
 import ProcessInstanceTimeline from '#/views/bpm/processInstance/detail/modules/time-line.vue';
+import ProcessInstanceBpmnViewer from '#/views/bpm/processInstance/detail/modules/bpm-viewer.vue';
 
 /** 类型定义 */
 interface ProcessFormData {
@@ -365,6 +366,10 @@ defineExpose({ initProcessInfo });
         class="flex flex-1 overflow-hidden"
       >
         <div class="w-full">
+          <ProcessInstanceBpmnViewer
+            :bpmn-xml="bpmnXML"
+            v-if="BpmModelType.BPMN === selectProcessDefinition.modelType"
+          />
           <ProcessInstanceSimpleViewer
             :simple-json="simpleJson"
             v-if="selectProcessDefinition.modelType === BpmModelType.SIMPLE"

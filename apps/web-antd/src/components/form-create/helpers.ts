@@ -1,3 +1,5 @@
+import type { Rule } from '@form-create/ant-design-vue';
+
 import type { Ref } from 'vue';
 
 import type { Menu } from '#/components/form-create/typing';
@@ -5,6 +7,8 @@ import type { Menu } from '#/components/form-create/typing';
 import { computed, nextTick, onMounted, ref, watch } from 'vue';
 
 import { i18n } from '@vben/locales';
+
+import formCreate from '@form-create/ant-design-vue';
 
 import { apiSelectRule } from '#/components/form-create/rules/data';
 import { useAreaSelectRule } from '#/components/form-create/rules/use-area-select-rule';
@@ -305,3 +309,12 @@ export const useFormCreateDesigner = (
 
   return { locale };
 };
+
+/** 解码表单 Fields */
+export function decodeFields(fields: string[]) {
+  const rule: Rule[] = [];
+  fields.forEach((item) => {
+    rule.push(formCreate.parseJson(item));
+  });
+  return rule;
+}

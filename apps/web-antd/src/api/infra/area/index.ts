@@ -1,6 +1,6 @@
 import { requestClient } from '#/api/request';
 
-export namespace SystemAreaApi {
+export namespace InfraAreaApi {
   /** 地区信息 */
   export interface Area {
     id?: number;
@@ -32,7 +32,7 @@ export namespace AreaApi {
 
 /** 获得地区树 */
 export function getAreaTree() {
-  return requestClient.get<SystemAreaApi.Area[]>('/infra/area/tree');
+  return requestClient.get<InfraAreaApi.Area[]>('/infra/area/tree');
 }
 
 /** 获得 IP 对应的地区名 */

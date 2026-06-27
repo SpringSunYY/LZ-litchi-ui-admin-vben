@@ -56,7 +56,13 @@
     "vue": "catalog:",
     "vue-dompurify-html": "catalog:",
     "vue-router": "catalog:",
-    "vue3-signature": "catalog:"
+    "vue3-signature": "catalog:",
+    "bpmn-js": "catalog:",
+    "bpmn-js-properties-panel": "catalog:",
+    "bpmn-js-token-simulation": "catalog:",
+    "steady-xml": "catalog:",
+    "diagram-js": "catalog:",
+    "vue3-print-nb": "catalog:"
   },
   "devDependencies": {
     "@types/crypto-js": "catalog:"

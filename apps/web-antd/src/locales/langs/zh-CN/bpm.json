@@ -562,6 +562,7 @@
     "copy": "抄送",
     "cancel": "取消",
     "reSubmit": "再次提交",
+    "print": "打印",
     "approver": "审批",
     "transactor": "办理",
     "approveSuccess": "审批通过成功",
@@ -963,6 +964,23 @@
       "fixedQuantity": "固定数量",
       "numberForm": "数字表单",
       "multiForm": "多选表单"
+    }
+  },
+  "selectModal": {
+    "userSelectModal": {
+      "title": "选择用户",
+      "confirmText": "确定",
+      "cancelText": "取消",
+      "searchDept": "搜索部门",
+      "total": "共 {0} 条",
+      "pleaseSelectUser": "请选择用户",
+      "unselected": "未选",
+      "selected": "已选"
+    },
+    "deptSelectModal": {
+      "title": "部门选择",
+      "confirmText": "确认",
+      "cancelText": "取消"
     }
   }
 }

@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
-import ContentWrap from '#/components/content-wrap/content-wrap.vue';
-import { SimpleProcessDesigner } from '#/components/simple-process-design';
+import { ContentWrap } from '#/components/content-wrap';
+import { SimpleProcessDesigner } from '#/views/bpm/components/simple-process-design';
 
 defineOptions({ name: 'SimpleModelDesign' });
 
@@ -15,6 +15,7 @@ defineProps<{
 }>();
 
 const emit = defineEmits(['success']);
+
 const designerRef = ref();
 
 /** 保存成功回调 */
@@ -23,14 +24,16 @@ function handleSuccess(data?: any) {
     emit('success', data);
   }
 }
+
 /** 设计器配置校验 */
 async function validateConfig() {
   return await designerRef.value.validate();
 }
+
 defineExpose({ validateConfig });
 </script>
 <template>
-  <ContentWrap :body-style="{ padding: '20px 16px' }">
+  <ContentWrap class="px-4 py-5">
     <SimpleProcessDesigner
       :model-form-id="modelFormId"
       :model-name="modelName"

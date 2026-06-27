@@ -12,8 +12,6 @@ import {
   Form,
   FormItem,
   Input,
-  Radio,
-  RadioGroup,
   Select,
   SelectOption,
   Tooltip,
@@ -21,6 +19,7 @@ import {
 
 import { getFormDetail } from '#/api/bpm/form';
 import { useFormCreateLocale } from '#/components/form-create';
+import { I18nRadioGroup } from '#/components/i18n/i18n-radio';
 import { $t } from '#/locales';
 import {
   BpmModelFormType,
@@ -125,18 +124,10 @@ defineExpose({ validate });
       name="formType"
       class="mb-5"
     >
-      <RadioGroup v-model:value="modelData.formType">
-        <Radio
-          v-for="dict in getDictOptions(
-            DICT_TYPE.BPM_MODEL_FORM_TYPE,
-            'number',
-          )"
-          :key="dict.value as string"
-          :value="dict.value"
-        >
-          {{ dict.label }}
-        </Radio>
-      </RadioGroup>
+      <I18nRadioGroup
+        v-model:value="modelData.formType"
+        :options="getDictOptions(DICT_TYPE.BPM_MODEL_FORM_TYPE, 'number')"
+      />
     </FormItem>
     <FormItem
       v-if="modelData.formType === BpmModelFormType.NORMAL"

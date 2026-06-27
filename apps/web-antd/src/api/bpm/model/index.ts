@@ -21,6 +21,7 @@ export namespace BpmModelApi {
     suspensionState: number;
     formType?: number;
     formCustomViewPath?: string;
+    formFields?: string[];
   }
 
   /** 流程模型 VO */

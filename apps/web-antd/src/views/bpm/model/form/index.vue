@@ -10,7 +10,7 @@ import { useRoute, useRouter } from 'vue-router';
 
 import { confirm, Page } from '@vben/common-ui';
 import { useTabs } from '@vben/hooks';
-import { ArrowLeft } from '@vben/icons';
+import { IconifyIcon } from '@vben/icons';
 import { useUserStore } from '@vben/stores';
 
 import { Button, Card, message } from 'ant-design-vue';
@@ -36,7 +36,6 @@ import ProcessDesign from './modules/process-design.vue';
 
 defineOptions({ name: 'BpmModelCreate' });
 
-// 流程定义类型
 type BpmProcessDefinitionType = Omit<
   BpmProcessDefinitionApi.ProcessDefinitionVO,
   'modelId' | 'modelType'
@@ -46,42 +45,17 @@ type BpmProcessDefinitionType = Omit<
 };
 
 const router = useRouter();
-
 const route = useRoute();
-
 const userStore = useUserStore();
+const tabs = useTabs();
 
-// 基础信息组件引用
-const basicInfoRef = ref<InstanceType<typeof BasicInfo>>();
-// 表单设计组件引用
-const formDesignRef = ref<InstanceType<typeof FormDesign>>();
-// 流程设计组件引用
-const processDesignRef = ref<InstanceType<typeof ProcessDesign>>();
-// 更多设置组件引用
-const extraSettingRef = ref<InstanceType<typeof ExtraSetting>>();
+const basicInfoRef = ref<InstanceType<typeof BasicInfo>>(); // 基础信息组件引用
+const formDesignRef = ref<InstanceType<typeof FormDesign>>(); // 表单设计组件引用
+const processDesignRef = ref<InstanceType<typeof ProcessDesign>>(); // 流程设计组件引用
+const extraSettingRef = ref<InstanceType<typeof ExtraSetting>>(); // 更多设置组件引用
 
-/** 步骤校验函数 */
-async function validateBasic() {
-  await basicInfoRef.value?.validate();
-}
-
-/** 表单设计校验 */
-async function validateForm() {
-  await formDesignRef.value?.validate();
-}
-
-/** 流程设计校验 */
-async function validateProcess() {
-  await processDesignRef.value?.validate();
-}
-
-/** 更多设置校验 */
-async function validateExtra() {
-  await extraSettingRef.value?.validate();
-}
-
+const actionType = route.params.type as string; // 操作类型：create、copy、update
 const currentStep = ref(-1); // 步骤控制。-1 用于，一开始全部不展示等当前页面数据初始化完成
-
 const steps = [
   { title: $t('bpm.model.step.basicInfo'), validator: validateBasic },
   { title: $t('bpm.model.step.formDesign'), validator: validateForm },
@@ -89,7 +63,6 @@ const steps = [
   { title: $t('bpm.model.step.extraSetting'), validator: validateExtra },
 ];
 
-// 表单数据
 const formData: any = ref({
   id: undefined,
   name: '',
@@ -124,22 +97,39 @@ const formData: any = ref({
     enable: false,
     summary: [],
   },
-});
+  allowWithdrawTask: false,
+}); // 表单数据
+const processData = ref<any>(); // 流程数据
 
-// 流程数据
-const processData = ref<any>();
-
-provide('processData', processData);
-provide('modelData', formData);
-
-// 数据列表
 const formList = ref<BpmFormApi.FormVO[]>([]);
 const categoryList = ref<BpmCategoryApi.CategoryVO[]>([]);
 const userList = ref<SystemUserApi.User[]>([]);
 const deptList = ref<SystemDeptApi.Dept[]>([]);
 
+provide('processData', processData);
+provide('modelData', formData);
+
+/** 步骤校验函数 */
+async function validateBasic() {
+  await basicInfoRef.value?.validate();
+}
+
+/** 表单设计校验 */
+async function validateForm() {
+  await formDesignRef.value?.validate();
+}
+
+/** 流程设计校验 */
+async function validateProcess() {
+  await processDesignRef.value?.validate();
+}
+
+/** 更多设置校验 */
+async function validateExtra() {
+  await extraSettingRef.value?.validate();
+}
+
 /** 初始化数据 */
-const actionType = route.params.type as string;
 async function initData() {
   if (actionType === 'definition') {
     // 情况一：流程定义场景（恢复）
@@ -179,7 +169,17 @@ async function initData() {
     // 特殊：复制场景
     if (route.params.type === 'copy') {
       delete formData.value.id;
-      formData.value.name += $t('common.copySuffix');
+      if (formData.value.bpmnXml) {
+        formData.value.bpmnXml = formData.value.bpmnXml.replaceAll(
+          formData.value.name,
+          `${formData.value.name}副本`,
+        );
+        formData.value.bpmnXml = formData.value.bpmnXml.replaceAll(
+          formData.value.key,
+          `${formData.value.key}_copy`,
+        );
+      }
+      formData.value.name += '副本';
       formData.value.key += '_copy';
     }
   } else {
@@ -198,7 +198,6 @@ async function initData() {
 
   // 最终，设置 currentStep 切换到第一步
   currentStep.value = 0;
-
   // 以前未配置更多设置的流程
   extraSettingRef.value?.initData();
 }
@@ -263,9 +262,11 @@ async function validateAllSteps() {
   return true;
 }
 
+const saveLoading = ref<boolean>(false);
 /** 保存操作 */
 async function handleSave() {
   try {
+    saveLoading.value = true;
     // 保存前校验所有步骤的数据
     const result = await validateAllSteps();
     if (!result) {
@@ -295,7 +296,7 @@ async function handleSave() {
         break;
       }
       case 'update': {
-        // 修改场景
+        // 情况二：修改场景
         await updateModel(modelData);
         // 提示成功
         message.success($t('bpm.model.message.updateSuccess'));
@@ -312,44 +313,49 @@ async function handleSave() {
 
     // 返回列表页（排除更新的情况）
     if (actionType !== 'update') {
-      router.push({ path: '/bpm/manager/model' });
+      await router.push({ name: 'BpmModel' });
     }
   } catch (error: any) {
     console.error('保存失败:', error);
-    // message.warning(error.msg || '请完善所有步骤的必填信息');
+  } finally {
+    saveLoading.value = false;
   }
 }
-
+// 发布加载中状态
+const deployLoading = ref<boolean>(false);
 /** 发布操作 */
 async function handleDeploy() {
   try {
-    // 修改场景下直接发布，新增场景下需要先确认
+    // 1.1 修改场景下直接发布，新增场景下需要先确认
     if (!formData.value.id) {
       await confirm($t('bpm.model.message.confirmDeployForm'));
     }
-    // 校验所有步骤
+    deployLoading.value = true;
+    // 1.2 校验所有步骤
     await validateAllSteps();
 
-    // 更新表单数据
+    // 2.1 更新表单数据
     const modelData = {
       ...formData.value,
     };
-
-    // 先保存所有数据
+    // 2.2 先保存所有数据
     if (formData.value.id) {
       await updateModel(modelData);
     } else {
       const result = await createModel(modelData);
       formData.value.id = result.id;
     }
-
-    // 发布
+    // 2.3 发布
     await deployModel(formData.value.id);
+
+    // 3. 路由并提示
     message.success($t('bpm.model.message.deploySuccessForm'));
-    await router.push({ path: '/bpm/manager/model' });
+    await router.push({ name: 'BpmModel' });
   } catch (error: any) {
     console.error('发布失败:', error);
     message.warning(error.message || $t('bpm.model.message.deployFailed'));
+  } finally {
+    deployLoading.value = false;
   }
 }
 
@@ -378,14 +384,10 @@ async function handleStepClick(index: number) {
   }
 }
 
-const tabs = useTabs();
-
 /** 返回列表页 */
 function handleBack() {
-  // 关闭当前页签
   tabs.closeCurrentTab();
-  // 跳转到列表页，使用路径， 目前后端的路由 name： 'name'+ menuId
-  router.push({ path: '/bpm/manager/model' });
+  router.push({ name: 'BpmModel' });
 }
 
 /** 初始化 */
@@ -407,11 +409,12 @@ onBeforeUnmount(() => {
     <div class="mx-auto">
       <!-- 头部导航栏 -->
       <div
-        class="absolute inset-x-0 top-0 z-10 flex h-12 items-center border-b bg-white px-5"
+        class="bg-card absolute inset-x-0 top-0 z-10 flex h-12 items-center border-b px-5"
       >
         <!-- 左侧标题 -->
-        <div class="flex w-[200px] items-center overflow-hidden">
-          <ArrowLeft
+        <div class="flex w-48 items-center overflow-hidden">
+          <IconifyIcon
+            icon="lucide:arrow-left"
             class="size-5 flex-shrink-0 cursor-pointer"
             @click="handleBack"
           />
@@ -438,7 +441,7 @@ onBeforeUnmount(() => {
               @click="handleStepClick(index)"
             >
               <div
-                class="mr-2 flex h-7 w-7 items-center justify-center rounded-full border-2 border-solid text-[15px]"
+                class="mr-2 flex h-7 w-7 items-center justify-center rounded-full border-2 border-solid text-base"
                 :class="[
                   currentStep === index
                     ? 'border-blue-500 bg-blue-500 text-white'
@@ -447,18 +450,19 @@ onBeforeUnmount(() => {
               >
                 {{ index + 1 }}
               </div>
-              <span class="whitespace-nowrap text-base font-bold">{{
-                step.title
-              }}</span>
+              <span class="whitespace-nowrap text-base font-bold">
+                {{ step.title }}
+              </span>
             </div>
           </div>
         </div>
 
         <!-- 右侧按钮 -->
-        <div class="flex w-[200px] items-center justify-end gap-2">
+        <div class="flex w-48 items-center justify-end gap-2">
           <Button
             v-if="actionType === 'update'"
             type="primary"
+            :loading="deployLoading"
             @click="handleDeploy"
           >
             {{ $t('bpm.model.message.publish') }}
@@ -471,41 +475,43 @@ onBeforeUnmount(() => {
           </Button>
         </div>
       </div>
-      <!-- 主体内容 -->
-      <Card :body-style="{ padding: '10px' }" class="mb-4">
-        <div class="mt-[50px]">
-          <!-- {{ $t('bpm.model.step.basicInfo') }} -->
-          <div v-if="currentStep === 0" class="mx-auto w-4/6">
-            <BasicInfo
-              v-model="formData"
-              :category-list="categoryList"
-              :user-list="userList"
-              :dept-list="deptList"
-              ref="basicInfoRef"
-            />
-          </div>
-          <!-- {{ $t('bpm.model.step.formDesign') }} -->
-          <div v-if="currentStep === 1" class="mx-auto w-4/6">
-            <FormDesign
-              v-model="formData"
-              :form-list="formList"
-              ref="formDesignRef"
-            />
-          </div>
+      <div class="mt-12">
+        <!-- 主体内容 -->
+        <Card :body-style="{ padding: '10px', marginTop: '10px' }" class="mb-4">
+          <div class="mt-12">
+            <!-- 第一步：基本信息 -->
+            <div v-if="currentStep === 0" class="mx-auto w-4/6">
+              <BasicInfo
+                v-model="formData"
+                :category-list="categoryList"
+                :user-list="userList"
+                :dept-list="deptList"
+                ref="basicInfoRef"
+              />
+            </div>
+            <!-- 第二步：表单设计  -->
+            <div v-if="currentStep === 1" class="mx-auto w-4/6">
+              <FormDesign
+                v-model="formData"
+                :form-list="formList"
+                ref="formDesignRef"
+              />
+            </div>
 
-          <!-- {{ $t('bpm.model.step.processDesign') }} -->
-          <ProcessDesign
-            v-if="currentStep === 2"
-            v-model="formData"
-            ref="processDesignRef"
-          />
+            <!-- 第三步：流程设计 -->
+            <ProcessDesign
+              v-if="currentStep === 2"
+              v-model="formData"
+              ref="processDesignRef"
+            />
 
-          <!-- {{ $t('bpm.model.step.extraSetting') }} -->
-          <div v-if="currentStep === 3" class="mx-auto w-4/6">
-            <ExtraSetting v-model="formData" ref="extraSettingRef" />
+            <!-- 第四步：更多设置 -->
+            <div v-show="currentStep === 3" class="mx-auto w-4/6">
+              <ExtraSetting v-model="formData" ref="extraSettingRef" />
+            </div>
           </div>
-        </div>
-      </Card>
+        </Card>
+      </div>
     </div>
   </Page>
 </template>

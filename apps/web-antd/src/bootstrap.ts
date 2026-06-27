@@ -1,5 +1,7 @@
 import { createApp, watchEffect } from 'vue';
 import VueDOMPurifyHTML from 'vue-dompurify-html';
+// @ts-expect-error - vue3-print-nb 没有官方类型声明
+import print from 'vue3-print-nb';
 
 import { registerAccessDirective } from '@vben/access';
 import { registerLoadingDirective } from '@vben/common-ui/es/loading';
@@ -71,6 +73,9 @@ async function bootstrap(namespace: string) {
   // vue-dompurify-html
   // TODO @dhb52：VueDOMPurifyHTML 是不是不用引入哈？
   app.use(VueDOMPurifyHTML);
+
+  // 注册 v-print 指令（vue3-print-nb），供 BPM 流程详情打印使用
+  app.use(print);
 
   // 配置Motion插件
   const { MotionPlugin } = await import('@vben/plugins/motion');

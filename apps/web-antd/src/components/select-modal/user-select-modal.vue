@@ -41,9 +41,9 @@ const props = withDefaults(
     title?: string;
   }>(),
   {
-    title: '选择用户',
-    confirmText: '确 定',
-    cancelText: '取 消',
+    title: '',
+    confirmText: '',
+    cancelText: '',
   },
 );
 
@@ -83,7 +83,7 @@ const [Modal, modalApi] = useVbenModal({
     try {
       // 设置标题
       if (data.title) {
-        modalApi.setTitle(data.title);
+        modalApi.setState({ title: data.title });
       }
 
       // 加载部门数据
@@ -369,7 +369,7 @@ async function handleDeptSelect(selectedKeys: Key[], _info: any) {
 // 确认选择
 function handleConfirm() {
   if (selectedUserIds.value.length === 0) {
-    message.warning('请选择用户');
+    message.warning($t('bpm.selectModal.userSelectModal.pleaseSelectUser'));
     return;
   }
   emit(
@@ -416,7 +416,7 @@ function processDeptNode(node: any): DeptTreeNode {
           <div class="border-b p-2">
             <Input
               v-model:value="deptSearchKeys"
-              placeholder="搜索部门"
+              :placeholder="$t('bpm.selectModal.userSelectModal.searchDept')"
               allow-clear
               @input="(e) => handleDeptSearch(e.target?.value ?? '')"
             />
@@ -435,7 +435,10 @@ function processDeptNode(node: any): DeptTreeNode {
           :row-key="(record) => String(record.id)"
           :data-source="transferDataSource"
           v-model:target-keys="selectedUserIds"
-          :titles="['未选', '已选']"
+          :titles="[
+            $t('bpm.selectModal.userSelectModal.unselected'),
+            $t('bpm.selectModal.userSelectModal.selected'),
+          ]"
           :show-search="true"
           :show-select-all="true"
           :filter-option="filterOption"
@@ -453,7 +456,10 @@ function processDeptNode(node: any): DeptTreeNode {
                 v-model:page-size="leftListState.pagination.pageSize"
                 :total="leftListState.pagination.total"
                 :show-size-changer="true"
-                :show-total="(total) => `共 ${total} 条`"
+                :show-total="
+                  (total) =>
+                    $t('bpm.selectModal.userSelectModal.total', [total])
+                "
                 size="small"
                 @change="handleLeftPaginationChange"
               />
@@ -465,7 +471,10 @@ function processDeptNode(node: any): DeptTreeNode {
                 v-model:page-size="rightListState.pagination.pageSize"
                 :total="rightListState.pagination.total"
                 :show-size-changer="true"
-                :show-total="(total) => `共 ${total} 条`"
+                :show-total="
+                  (total) =>
+                    $t('bpm.selectModal.userSelectModal.total', [total])
+                "
                 size="small"
                 @change="handleRightPaginationChange"
               />
@@ -480,9 +489,13 @@ function processDeptNode(node: any): DeptTreeNode {
         :disabled="selectedUserIds.length === 0"
         @click="handleConfirm"
       >
-        {{ props.confirmText }}
+        {{
+          props.confirmText || $t('bpm.selectModal.userSelectModal.confirmText')
+        }}
       </Button>
-      <Button @click="handleCancel">{{ props.cancelText }}</Button>
+      <Button @click="handleCancel">{{
+        props.cancelText || $t('bpm.selectModal.userSelectModal.cancelText')
+      }}</Button>
     </template>
   </Modal>
 </template>

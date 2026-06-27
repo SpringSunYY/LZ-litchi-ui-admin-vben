@@ -4,10 +4,20 @@ import type { SystemUserApi } from '#/api/system/user';
 
 import { computed, nextTick, onMounted, ref, shallowRef, watch } from 'vue';
 
-import { Page } from '@vben/common-ui';
+import { Page, useVbenModal } from '@vben/common-ui';
+import { IconifyIcon } from '@vben/icons';
 import { formatDateTime } from '@vben/utils';
 
-import { Avatar, Card, Col, message, Row, TabPane, Tabs } from 'ant-design-vue';
+import {
+  Avatar,
+  Button,
+  Card,
+  Col,
+  message,
+  Row,
+  TabPane,
+  Tabs,
+} from 'ant-design-vue';
 
 import {
   getApprovalDetail as getApprovalDetailApi,
@@ -34,6 +44,7 @@ import {
 
 import ProcessInstanceBpmnViewer from './modules/bpm-viewer.vue';
 import ProcessInstanceOperationButton from './modules/operation-button.vue';
+import ProcessssPrint from './modules/process-print.vue';
 import ProcessInstanceSimpleViewer from './modules/simple-bpm-viewer.vue';
 import BpmProcessInstanceTaskList from './modules/task-list.vue';
 import ProcessInstanceTimeline from './modules/time-line.vue';
@@ -69,6 +80,16 @@ const processInstance = ref<BpmProcessInstanceApi.ProcessInstanceVO>(); // 流�
 const processDefinition = ref<any>({}); // 流程定义
 const processModelView = ref<any>({}); // 流程模型视图
 const operationButtonRef = ref(); // 操作按钮组件 ref
+const [PrintModal, printModalApi] = useVbenModal({
+  connectedComponent: ProcessssPrint,
+  destroyOnClose: true,
+});
+
+/** 打开打印对话框 */
+function handlePrint() {
+  printModalApi.setData({ processInstanceId: props.id }).open();
+}
+
 const auditIconsMap: {
   [key: string]:
     | typeof SvgBpmApproveIcon
@@ -195,6 +216,7 @@ async function getProcessModelView() {
 
 // 审批节点信息
 const activityNodes = ref<BpmProcessInstanceApi.ApprovalNodeInfo[]>([]);
+
 /**
  * 设置表单权限
  */
@@ -253,9 +275,20 @@ onMounted(async () => {
   <Page auto-content-height>
     <Card>
       <template #title>
-        <span class="text-[#878c93]">{{
-          $t('bpm.processInstance.detail.instanceId', [id || '-'])
-        }}</span>
+        <div class="flex items-center gap-4">
+          <span class="text-[#878c93]">
+            {{ $t('bpm.processInstance.detail.instanceId', [id || '-']) }}
+          </span>
+          <Button class="ml-2" @click="handlePrint">
+            <div class="flex items-center gap-1">
+              <IconifyIcon
+                icon="lucide:printer"
+                class="hover:text-primary cursor-pointer"
+              />
+              {{ $t('bpm.operation.print') }}
+            </div>
+          </Button>
+        </div>
       </template>
 
       <div class="flex h-[100%] flex-col">
@@ -361,25 +394,26 @@ onMounted(async () => {
               :tab="$t('bpm.processInstance.tab.processDiagram')"
               key="diagram"
               class="tab-pane-content"
+              :force-render="true"
             >
-              <div class="h-full">
-                <ProcessInstanceSimpleViewer
-                  v-show="
-                    processDefinition.modelType &&
-                    processDefinition.modelType === BpmModelType.SIMPLE
-                  "
-                  :loading="processInstanceLoading"
-                  :model-view="processModelView"
-                />
-                <ProcessInstanceBpmnViewer
-                  v-show="
-                    processDefinition.modelType &&
-                    processDefinition.modelType === BpmModelType.BPMN
-                  "
-                  :loading="processInstanceLoading"
-                  :model-view="processModelView"
-                />
-              </div>
+              <ProcessInstanceSimpleViewer
+                style="height: 100%"
+                v-show="
+                  processDefinition.modelType &&
+                  processDefinition.modelType === BpmModelType.SIMPLE
+                "
+                :loading="processInstanceLoading"
+                :model-view="processModelView"
+              />
+              <ProcessInstanceBpmnViewer
+                style="height: 100%"
+                v-show="
+                  processDefinition.modelType &&
+                  processDefinition.modelType === BpmModelType.BPMN
+                "
+                :loading="processInstanceLoading"
+                :model-view="processModelView"
+              />
             </TabPane>
 
             <TabPane
@@ -396,7 +430,6 @@ onMounted(async () => {
               </div>
             </TabPane>
 
-            <!-- TODO 待开发 -->
             <TabPane
               :tab="$t('bpm.processInstance.tab.flowComment')"
               key="comment"
@@ -410,7 +443,7 @@ onMounted(async () => {
       </div>
 
       <template #actions>
-        <div class="px-4">
+        <div class="flex items-center px-4">
           <ProcessInstanceOperationButton
             ref="operationButtonRef"
             :process-instance="processInstance"
@@ -424,6 +457,9 @@ onMounted(async () => {
         </div>
       </template>
     </Card>
+
+    <!-- 打印流程弹窗 -->
+    <PrintModal />
   </Page>
 </template>
 

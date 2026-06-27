@@ -29,11 +29,11 @@ const props = withDefaults(
     title?: string;
   }>(),
   {
-    cancelText: '取消',
+    cancelText: '',
     checkStrictly: false,
-    confirmText: '确认',
+    confirmText: '',
     multiple: true,
-    title: '部门选择',
+    title: '',
   },
 );
 
@@ -122,7 +122,11 @@ function handleCheck() {
 }
 </script>
 <template>
-  <Modal :title="title" key="dept-select-modal" class="w-[40%]">
+  <Modal
+    :title="title || $t('bpm.selectModal.deptSelectModal.title')"
+    key="dept-select-modal"
+    class="w-[40%]"
+  >
     <Row class="h-full">
       <Col :span="24">
         <Card class="h-full">

@@ -13,16 +13,9 @@ import { ref, watch } from 'vue';
 import { useVbenModal } from '@vben/common-ui';
 import { CircleHelp, IconifyIcon, Plus, X } from '@vben/icons';
 
-import {
-  Avatar,
-  Button,
-  Form,
-  Input,
-  Radio,
-  Select,
-  Tooltip,
-} from 'ant-design-vue';
+import { Avatar, Button, Form, Input, Select, Tooltip } from 'ant-design-vue';
 
+import { I18nRadioGroup } from '#/components/i18n/i18n-radio';
 import { DeptSelectModal, UserSelectModal } from '#/components/select-modal';
 import { ImageUpload } from '#/components/upload';
 import { $t } from '#/locales';
@@ -156,6 +149,7 @@ function openStartUserSelect() {
 function openStartDeptSelect() {
   deptSelectModalApi.setData({ selectedList: selectedStartDepts.value }).open();
 }
+
 /** 处理部门选择确认 */
 function handleDeptSelectConfirm(depts: SystemDeptApi.Dept[]) {
   modelData.value = {
@@ -354,34 +348,24 @@ defineExpose({ validate });
         name="type"
         class="mb-5"
       >
-        <Radio.Group v-model:value="modelData.type">
-          <!-- TODO BPMN 流程类型需要整合，暂时禁用 -->
-          <Radio
-            v-for="dict in getIntDictOptions(DICT_TYPE.BPM_MODEL_TYPE)"
-            :key="dict.value"
-            :value="dict.value"
-            :disabled="dict.value === 10"
-          >
-            {{ dict.label }}
-          </Radio>
-        </Radio.Group>
+        <I18nRadioGroup
+          v-model:value="modelData.type"
+          :options="getIntDictOptions(DICT_TYPE.BPM_MODEL_TYPE)"
+          button-style="solid"
+          option-type="button"
+        />
       </Form.Item>
       <Form.Item
         :label="$t('bpm.model.basic.visible')"
         name="visible"
         class="mb-5"
       >
-        <Radio.Group v-model:value="modelData.visible">
-          <Radio
-            v-for="(dict, index) in getBoolDictOptions(
-              DICT_TYPE.INFRA_BOOLEAN_STRING,
-            )"
-            :key="index"
-            :value="dict.value"
-          >
-            {{ dict.label }}
-          </Radio>
-        </Radio.Group>
+        <I18nRadioGroup
+          v-model:value="modelData.visible"
+          :options="getBoolDictOptions(DICT_TYPE.INFRA_BOOLEAN_STRING)"
+          button-style="solid"
+          option-type="button"
+        />
       </Form.Item>
       <Form.Item
         :label="$t('bpm.model.basic.whoCanStart')"

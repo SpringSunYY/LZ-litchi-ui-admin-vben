@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import type { VxeTableGridOptions } from '#/adapter/vxe-table';
-import type { SystemAreaApi } from '#/api/infra/area';
+import type { InfraAreaApi } from '#/api/infra/area';
 import type { SystemTenantApi } from '#/api/system/tenant';
 
 import { onMounted, ref } from 'vue';
@@ -131,8 +131,8 @@ const [Grid, gridApi] = useVbenVxeGrid({
   } as VxeTableGridOptions<SystemTenantApi.Tenant>,
 });
 
-const addressList = ref<SystemAreaApi.Area[]>([]);
-const addressMap = ref<Map<string, SystemAreaApi.Area>>(new Map());
+const addressList = ref<InfraAreaApi.Area[]>([]);
+const addressMap = ref<Map<string, InfraAreaApi.Area>>(new Map());
 
 function getAddressList() {
   getAreaTree().then((res) => {
@@ -142,7 +142,7 @@ function getAddressList() {
 }
 
 function getAddressMap() {
-  const map = new Map<string, SystemAreaApi.Area & { children?: any[] }>();
+  const map = new Map<string, InfraAreaApi.Area & { children?: any[] }>();
 
   function traverse(nodes: any[], parentCode?: string) {
     for (const node of nodes) {
@@ -172,7 +172,7 @@ function getAreaFullName(addressCode: string): string {
     return '';
   }
   const names: string[] = [];
-  let current: SystemAreaApi.Area | undefined = target;
+  let current: InfraAreaApi.Area | undefined = target;
   let count = 0;
   while (current && count < 10) {
     // 添加循环保护

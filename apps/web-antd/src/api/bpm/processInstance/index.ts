@@ -16,6 +16,7 @@ export namespace BpmProcessInstanceApi {
 
   export type User = {
     avatar: string;
+    deptName?: string;
     id: number;
     nickname: string;
   };
@@ -91,6 +92,19 @@ export namespace BpmProcessInstanceApi {
     }[];
     taskId: string;
   };
+
+  /** 流程实例的打印数据响应 */
+  export interface ProcessPrintDataRespVO {
+    printTemplateEnable: boolean;
+    printTemplateHtml?: string;
+    processInstance: ProcessInstanceVO;
+    tasks: {
+      description: string;
+      id: number;
+      name: string;
+      signPicUrl?: string;
+    }[];
+  }
 }
 
 /** 查询我的流程实例分页 */
@@ -193,5 +207,12 @@ export async function getFormFieldsPermission(params: any) {
 export async function getProcessInstanceBpmnModelView(id: string) {
   return requestClient.get<BpmProcessInstanceApi.ProcessInstanceVO>(
     `/bpm/process-instance/get-bpmn-model-view?id=${id}`,
+  );
+}
+
+/** 获取流程实例打印数据 */
+export async function getProcessInstancePrintData(id: string) {
+  return requestClient.get<BpmProcessInstanceApi.ProcessPrintDataRespVO>(
+    `/bpm/process-instance/get-print-data?processInstanceId=${id}`,
   );
 }
