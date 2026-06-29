@@ -2,13 +2,16 @@
 import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 import type { InfraFileApi } from '#/api/infra/file';
 
+import { ref } from 'vue';
+
 import { Page, useVbenModal } from '@vben/common-ui';
+import { formatFileSize } from '@vben/utils';
 
 import { useClipboard } from '@vueuse/core';
 import { message } from 'ant-design-vue';
 
 import { ACTION_ICON, TableAction, useVbenVxeGrid } from '#/adapter/vxe-table';
-import { deleteFile, getFilePage } from '#/api/infra/file';
+import { deleteFile, getFileCount, getFilePage } from '#/api/infra/file';
 import { $t } from '#/locales';
 
 import { useGridColumns, useGridFormSchema } from './data';
@@ -31,6 +34,7 @@ function handleUpload() {
 
 /** 复制链接到剪贴板，直接复制绝对路径 */
 const { copy } = useClipboard({ legacy: true });
+
 async function handleCopyUrl(row: InfraFileApi.File) {
   if (!row.absolutePath) {
     message.error($t('infra.file.message.urlEmpty'));
@@ -63,6 +67,11 @@ async function handleDelete(row: InfraFileApi.File) {
   }
 }
 
+const fileCount = ref<InfraFileApi.FileCountRespVO>({
+  fileCount: 0,
+  fileSize: 0,
+});
+
 const [Grid, gridApi] = useVbenVxeGrid({
   formOptions: {
     schema: useGridFormSchema(),
@@ -74,6 +83,9 @@ const [Grid, gridApi] = useVbenVxeGrid({
     proxyConfig: {
       ajax: {
         query: async ({ page }, formValues) => {
+          getFileCount(formValues).then((res) => {
+            fileCount.value = res;
+          });
           return await getFilePage({
             pageNo: page.currentPage,
             pageSize: page.pageSize,
@@ -96,7 +108,19 @@ const [Grid, gridApi] = useVbenVxeGrid({
 <template>
   <Page auto-content-height>
     <FormModal @success="onRefresh" />
-    <Grid :table-title="$t('infra.file.list')">
+    <Grid>
+      <template #table-title>
+        <div class="flex items-center">
+          <span>{{ $t('infra.file.list') }}</span>
+          -
+          <span>{{
+            $t('infra.file.fileCount', [
+              fileCount.fileCount,
+              formatFileSize(fileCount.fileSize),
+            ])
+          }}</span>
+        </div>
+      </template>
       <template #toolbar-tools>
         <TableAction
           :actions="[

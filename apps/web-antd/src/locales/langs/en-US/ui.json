@@ -453,5 +453,22 @@
       "monthly1And15": "1st and 15th of month",
       "yearlyJan1": "Jan 1st at midnight"
     }
+  },
+  "selectModal": {
+    "userSelectModal": {
+      "title": "select user",
+      "confirmText": "confirm",
+      "cancelText": "cancel",
+      "searchDept": "search department",
+      "total": "total {0} items",
+      "pleaseSelectUser": "please select a user",
+      "unselected": "unselected",
+      "selected": "selected"
+    },
+    "deptSelectModal": {
+      "title": "select department",
+      "confirmText": "confirm",
+      "cancelText": "cancel"
+    }
   }
 }

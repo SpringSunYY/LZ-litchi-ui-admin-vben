@@ -59,7 +59,8 @@
       "hint": "supports .jpg, .png, .gif, .webp image files",
       "placeholder": "select a file to upload"
     },
-    "sizeZero": "0 b"
+    "sizeZero": "0 b",
+    "fileCount": "file count {0} items,file count size {1}"
   },
   "fileConfig": {
     "fileConfig": "file config",

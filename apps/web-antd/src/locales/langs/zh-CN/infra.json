@@ -59,7 +59,8 @@
       "hint": "支持 .jpg、.png、.gif、.webp 格式图片文件",
       "placeholder": "请选择要上传的文件"
     },
-    "sizeZero": "0 B"
+    "sizeZero": "0 B",
+    "fileCount": "文件总数{0}个，总大小{1}"
   },
   "fileConfig": {
     "fileConfig": "文件配置",

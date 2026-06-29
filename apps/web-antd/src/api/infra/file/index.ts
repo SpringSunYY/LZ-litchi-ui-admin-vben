@@ -20,6 +20,11 @@ export namespace InfraFileApi {
     createTime?: Date;
     moduleType?: string;
   }
+  /** 文件大小 */
+  export interface FileCountRespVO {
+    fileSize: number;
+    fileCount: number;
+  }
 
   /** 文件预签名地址 */
   export interface FilePresignedUrlRespVO {
@@ -40,6 +45,13 @@ export namespace InfraFileApi {
 /** 查询文件列表 */
 export function getFilePage(params: PageParam) {
   return requestClient.get<PageResult<InfraFileApi.File>>('/infra/file/page', {
+    params,
+  });
+}
+
+/** 查询文件大小 */
+export function getFileCount(params?: PageParam) {
+  return requestClient.get<InfraFileApi.FileCountRespVO>('/infra/file/count', {
     params,
   });
 }

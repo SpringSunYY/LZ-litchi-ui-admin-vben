@@ -123,7 +123,7 @@ function handleCheck() {
 </script>
 <template>
   <Modal
-    :title="title || $t('bpm.selectModal.deptSelectModal.title')"
+    :title="title || $t('ui.selectModal.deptSelectModal.title')"
     key="dept-select-modal"
     class="w-[40%]"
   >

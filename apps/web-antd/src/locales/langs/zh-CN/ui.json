@@ -453,5 +453,22 @@
       "monthly1And15": "每月 1 号和 15 号",
       "yearlyJan1": "每年 1 月 1 日凌晨"
     }
+  },
+  "selectModal": {
+    "userSelectModal": {
+      "title": "选择用户",
+      "confirmText": "确定",
+      "cancelText": "取消",
+      "searchDept": "搜索部门",
+      "total": "共 {0} 条",
+      "pleaseSelectUser": "请选择用户",
+      "unselected": "未选",
+      "selected": "已选"
+    },
+    "deptSelectModal": {
+      "title": "部门选择",
+      "confirmText": "确认",
+      "cancelText": "取消"
+    }
   }
 }

@@ -6,6 +6,7 @@ import { h } from 'vue';
 
 import { formatDateTime } from '@vben/utils';
 
+import I18nDictTag from '#/components/i18n/i18n-dict-tag/i18n-dict-tag.vue';
 import { $t } from '#/locales';
 import { DICT_TYPE, getDictOptions, getRangePickerDefaultProps } from '#/utils';
 

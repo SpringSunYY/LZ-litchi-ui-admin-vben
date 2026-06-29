@@ -369,7 +369,7 @@ async function handleDeptSelect(selectedKeys: Key[], _info: any) {
 // 确认选择
 function handleConfirm() {
   if (selectedUserIds.value.length === 0) {
-    message.warning($t('bpm.selectModal.userSelectModal.pleaseSelectUser'));
+    message.warning($t('ui.selectModal.userSelectModal.pleaseSelectUser'));
     return;
   }
   emit(
@@ -416,7 +416,7 @@ function processDeptNode(node: any): DeptTreeNode {
           <div class="border-b p-2">
             <Input
               v-model:value="deptSearchKeys"
-              :placeholder="$t('bpm.selectModal.userSelectModal.searchDept')"
+              :placeholder="$t('ui.selectModal.userSelectModal.searchDept')"
               allow-clear
               @input="(e) => handleDeptSearch(e.target?.value ?? '')"
             />
@@ -436,8 +436,8 @@ function processDeptNode(node: any): DeptTreeNode {
           :data-source="transferDataSource"
           v-model:target-keys="selectedUserIds"
           :titles="[
-            $t('bpm.selectModal.userSelectModal.unselected'),
-            $t('bpm.selectModal.userSelectModal.selected'),
+            $t('ui.selectModal.userSelectModal.unselected'),
+            $t('ui.selectModal.userSelectModal.selected'),
           ]"
           :show-search="true"
           :show-select-all="true"
@@ -457,8 +457,7 @@ function processDeptNode(node: any): DeptTreeNode {
                 :total="leftListState.pagination.total"
                 :show-size-changer="true"
                 :show-total="
-                  (total) =>
-                    $t('bpm.selectModal.userSelectModal.total', [total])
+                  (total) => $t('ui.selectModal.userSelectModal.total', [total])
                 "
                 size="small"
                 @change="handleLeftPaginationChange"
@@ -472,8 +471,7 @@ function processDeptNode(node: any): DeptTreeNode {
                 :total="rightListState.pagination.total"
                 :show-size-changer="true"
                 :show-total="
-                  (total) =>
-                    $t('bpm.selectModal.userSelectModal.total', [total])
+                  (total) => $t('ui.selectModal.userSelectModal.total', [total])
                 "
                 size="small"
                 @change="handleRightPaginationChange"
@@ -490,12 +488,14 @@ function processDeptNode(node: any): DeptTreeNode {
         @click="handleConfirm"
       >
         {{
-          props.confirmText || $t('bpm.selectModal.userSelectModal.confirmText')
+          props.confirmText || $t('ui.selectModal.userSelectModal.confirmText')
         }}
       </Button>
-      <Button @click="handleCancel">{{
-        props.cancelText || $t('bpm.selectModal.userSelectModal.cancelText')
-      }}</Button>
+      <Button @click="handleCancel">
+        {{
+          props.cancelText || $t('ui.selectModal.userSelectModal.cancelText')
+        }}
+      </Button>
     </template>
   </Modal>
 </template>
