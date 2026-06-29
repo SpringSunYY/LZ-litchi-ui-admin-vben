@@ -6,7 +6,6 @@ import type { SimpleFlowNode } from '../../consts';
 import { reactive, ref } from 'vue';
 
 import { useVbenDrawer } from '@vben/common-ui';
-import { BpmNodeTypeEnum } from '#/utils';
 import { IconifyIcon } from '@vben/icons';
 
 import {
@@ -22,6 +21,9 @@ import {
   Select,
   SelectOption,
 } from 'ant-design-vue';
+
+import { $t } from '#/locales';
+import { BpmNodeTypeEnum } from '#/utils';
 
 import {
   DELAY_TYPE,
@@ -52,13 +54,25 @@ const formRef = ref(); // 表单 Ref
 // 表单校验规则
 const formRules: Record<string, Rule[]> = reactive({
   delayType: [
-    { required: true, message: '延迟时间不能为空', trigger: 'change' },
+    {
+      required: true,
+      message: $t('bpm.simpleProcessDesign.action.delayTimeCannotEmpty'),
+      trigger: 'change',
+    },
   ],
   timeDuration: [
-    { required: true, message: '延迟时间不能为空', trigger: 'change' },
+    {
+      required: true,
+      message: $t('bpm.simpleProcessDesign.action.delayTimeCannotEmpty'),
+      trigger: 'change',
+    },
   ],
   dateTime: [
-    { required: true, message: '延迟时间不能为空', trigger: 'change' },
+    {
+      required: true,
+      message: $t('bpm.simpleProcessDesign.action.delayTimeCannotEmpty'),
+      trigger: 'change',
+    },
   ],
 });
 
@@ -74,10 +88,18 @@ const configForm = ref({
 function getShowText(): string {
   let showText = '';
   if (configForm.value.delayType === DelayTypeEnum.FIXED_TIME_DURATION) {
-    showText = `延迟${configForm.value.timeDuration}${TIME_UNIT_TYPES?.find((item) => item.value === configForm.value.timeUnit)?.label}`;
+    // 延迟{timeDuration}{unit}
+    showText = $t('bpm.simpleProcessDesign.default.delayFor', [
+      configForm.value.timeDuration,
+      TIME_UNIT_TYPES?.find((item) => item.value === configForm.value.timeUnit)
+        ?.label,
+    ]);
   }
   if (configForm.value.delayType === DelayTypeEnum.FIXED_DATE_TIME) {
-    showText = `延迟至${configForm.value.dateTime.replace('T', ' ')}`;
+    // 延迟至{dateTime}
+    showText = $t('bpm.simpleProcessDesign.default.delayTo', [
+      configForm.value.dateTime.replace('T', ' '),
+    ]);
   }
   return showText;
 }
@@ -183,7 +205,10 @@ defineExpose({ openDrawer }); // 暴露方法给父组件
         :label-col="{ span: 24 }"
         :wrapper-col="{ span: 24 }"
       >
-        <FormItem label="延迟时间" name="delayType">
+        <FormItem
+          :label="$t('bpm.simpleProcessDesign.default.delayType')"
+          name="delayType"
+        >
           <RadioGroup v-model:value="configForm.delayType">
             <Radio
               v-for="item in DELAY_TYPE"
@@ -219,7 +244,9 @@ defineExpose({ openDrawer }); // 暴露方法给父组件
               </Select>
             </Col>
             <Col>
-              <span class="inline-flex h-8 items-center">后进入下一节点</span>
+              <span class="inline-flex h-8 items-center">{{
+                $t('bpm.simpleProcessDesign.delayType.afterEnterNextNode')
+              }}</span>
             </Col>
           </Row>
         </FormItem>
@@ -233,12 +260,16 @@ defineExpose({ openDrawer }); // 暴露方法给父组件
                 class="mr-2"
                 v-model:value="configForm.dateTime"
                 show-time
-                placeholder="请选择日期和时间"
+                :placeholder="
+                  $t('bpm.simpleProcessDesign.placeholder.selectTime')
+                "
                 value-format="YYYY-MM-DDTHH:mm:ss"
               />
             </Col>
             <Col>
-              <span class="inline-flex h-8 items-center">后进入下一节点</span>
+              <span class="inline-flex h-8 items-center">{{
+                $t('bpm.simpleProcessDesign.delayType.afterEnterNextNode')
+              }}</span>
             </Col>
           </Row>
         </FormItem>

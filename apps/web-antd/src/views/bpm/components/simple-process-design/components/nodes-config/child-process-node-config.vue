@@ -29,6 +29,7 @@ import {
 import { getFormDetail } from '#/api/bpm/form';
 import { getModelList } from '#/api/bpm/model';
 import { parseFormFields } from '#/components/form-create';
+import { $t } from '#/locales';
 import { BpmNodeTypeEnum } from '#/utils';
 
 import {
@@ -72,53 +73,121 @@ const activeTabName = ref('child');
 const formRef = ref(); // 表单 Ref
 // 表单校验规则
 const formRules: Record<string, Rule[]> = reactive({
-  async: [{ required: true, message: '是否异步不能为空', trigger: 'change' }],
+  async: [
+    {
+      required: true,
+      message: $t('bpm.simpleProcessDesign.childProcess.asyncCannotEmpty'),
+      trigger: 'change',
+    },
+  ],
   calledProcessDefinitionKey: [
-    { required: true, message: '子流程不能为空', trigger: 'change' },
+    {
+      required: true,
+      message: $t(
+        'bpm.simpleProcessDesign.childProcess.childProcessCannotEmpty',
+      ),
+      trigger: 'change',
+    },
   ],
   skipStartUserNode: [
     {
       required: true,
-      message: '是否自动跳过子流程发起节点不能为空',
+      message: $t(
+        'bpm.simpleProcessDesign.childProcess.skipStartNodeCannotEmpty',
+      ),
       trigger: 'change',
     },
   ],
   startUserType: [
-    { required: true, message: '子流程发起人不能为空', trigger: 'change' },
+    {
+      required: true,
+      message: $t(
+        'bpm.simpleProcessDesign.childProcess.childProcessInitiatorCannotEmpty',
+      ),
+      trigger: 'change',
+    },
   ],
   startUserEmptyType: [
     {
       required: true,
-      message: '当子流程发起人为空时不能为空',
+      message: $t(
+        'bpm.simpleProcessDesign.childProcess.whenChildEmptyCannotEmpty',
+      ),
       trigger: 'change',
     },
   ],
   startUserFormField: [
-    { required: true, message: '子流程发起人字段不能为空', trigger: 'change' },
+    {
+      required: true,
+      message: $t(
+        'bpm.simpleProcessDesign.childProcess.childFormUserFieldCannotEmpty',
+      ),
+      trigger: 'change',
+    },
   ],
   timeoutEnable: [
-    { required: true, message: '超时设置是否开启不能为空', trigger: 'change' },
+    {
+      required: true,
+      message: $t(
+        'bpm.simpleProcessDesign.childProcess.timeoutEnableCannotEmpty',
+      ),
+      trigger: 'change',
+    },
   ],
   timeoutType: [
-    { required: true, message: '超时设置时间不能为空', trigger: 'change' },
+    {
+      required: true,
+      message: $t('bpm.simpleProcessDesign.childProcess.timeoutCannotEmpty'),
+      trigger: 'change',
+    },
   ],
   timeDuration: [
-    { required: true, message: '超时设置时间不能为空', trigger: 'change' },
+    {
+      required: true,
+      message: $t('bpm.simpleProcessDesign.childProcess.timeoutCannotEmpty'),
+      trigger: 'change',
+    },
   ],
   dateTime: [
-    { required: true, message: '超时设置时间不能为空', trigger: 'change' },
+    {
+      required: true,
+      message: $t('bpm.simpleProcessDesign.childProcess.timeoutCannotEmpty'),
+      trigger: 'change',
+    },
   ],
   multiInstanceEnable: [
-    { required: true, message: '多实例设置不能为空', trigger: 'change' },
+    {
+      required: true,
+      message: $t(
+        'bpm.simpleProcessDesign.childProcess.multiInstanceEnableCannotEmpty',
+      ),
+      trigger: 'change',
+    },
   ],
   sequential: [
-    { required: true, message: '是否串行不能为空', trigger: 'change' },
+    {
+      required: true,
+      message: $t('bpm.simpleProcessDesign.childProcess.sequentialCannotEmpty'),
+      trigger: 'change',
+    },
   ],
   multiInstanceSourceType: [
-    { required: true, message: '实例数量不能为空', trigger: 'change' },
+    {
+      required: true,
+      message: $t(
+        'bpm.simpleProcessDesign.childProcess.instanceQuantityCannotEmpty',
+      ),
+      trigger: 'change',
+    },
   ],
   approveRatio: [
-    { required: true, message: '完成比例不能为空', trigger: 'change' },
+    {
+      required: true,
+      message: $t(
+        'bpm.simpleProcessDesign.childProcess.completeRatioCannotEmpty',
+      ),
+      trigger: 'change',
+    },
   ],
 });
 
@@ -253,7 +322,10 @@ const saveConfig = async () => {
     }
   }
 
-  currentNode.value.showText = `调用子流程：${childInfo.name}`;
+  currentNode.value.showText = $t(
+    'bpm.simpleProcessDesign.childProcess.callSubProcess',
+    [childInfo.name],
+  );
   drawerApi.close();
   return true;
 };
@@ -380,7 +452,8 @@ onMounted(async () => {
   try {
     childProcessOptions.value = await getModelList(undefined);
   } catch (error) {
-    console.error('获取模型列表失败', error);
+    // 获取模型列表失败
+    console.error($t('bpm.simpleProcessDesign.childProcess.loadFailed'), error);
   }
 });
 </script>
@@ -416,7 +489,7 @@ onMounted(async () => {
         :rules="formRules"
       >
         <FormItem
-          label="是否异步执行"
+          :label="$t('bpm.simpleProcessDesign.childProcess.asyncExecute')"
           name="async"
           label-align="left"
           :label-col="{ span: 8 }"
@@ -424,11 +497,14 @@ onMounted(async () => {
         >
           <Switch
             v-model:checked="configForm.async"
-            checked-children="是"
-            un-checked-children="否"
+            :checked-children="$t('bpm.simpleProcessDesign.switch.yes')"
+            :un-checked-children="$t('bpm.simpleProcessDesign.switch.no')"
           />
         </FormItem>
-        <FormItem label="选择子流程" name="calledProcessDefinitionKey">
+        <FormItem
+          :label="$t('bpm.simpleProcessDesign.action.selectChildProcess')"
+          name="calledProcessDefinitionKey"
+        >
           <Select
             v-model:value="configForm.calledProcessDefinitionKey"
             allow-clear
@@ -444,7 +520,7 @@ onMounted(async () => {
           </Select>
         </FormItem>
         <FormItem
-          label="是否自动跳过子流程发起节点"
+          :label="$t('bpm.simpleProcessDesign.childProcess.skipStartNode')"
           name="skipStartUserNode"
           label-align="left"
           :label-col="{ span: 12 }"
@@ -452,11 +528,14 @@ onMounted(async () => {
         >
           <Switch
             v-model:checked="configForm.skipStartUserNode"
-            checked-children="跳过"
-            un-checked-children="不跳过"
+            :checked-children="$t('bpm.simpleProcessDesign.action.skip')"
+            :un-checked-children="$t('bpm.simpleProcessDesign.action.notSkip')"
           />
         </FormItem>
-        <FormItem label="主→子变量传递" name="inVariables">
+        <FormItem
+          :label="$t('bpm.simpleProcessDesign.action.mainToChildVariable')"
+          name="inVariables"
+        >
           <div
             class="flex"
             v-for="(item, index) in configForm.inVariables"
@@ -467,7 +546,9 @@ onMounted(async () => {
                 :name="['inVariables', index, 'source']"
                 :rules="{
                   required: true,
-                  message: '变量不能为空',
+                  message: $t(
+                    'bpm.simpleProcessDesign.childProcess.variableCannotEmpty',
+                  ),
                   trigger: 'blur',
                 }"
               >
@@ -487,7 +568,9 @@ onMounted(async () => {
                 :name="['inVariables', index, 'target']"
                 :rules="{
                   required: true,
-                  message: '变量不能为空',
+                  message: $t(
+                    'bpm.simpleProcessDesign.childProcess.variableCannotEmpty',
+                  ),
                   trigger: 'blur',
                 }"
               >
@@ -519,12 +602,13 @@ onMounted(async () => {
             <template #icon>
               <IconifyIcon class="size-4" icon="lucide:plus" />
             </template>
-            添加一行
+            <!-- 添加一行 -->
+            {{ $t('bpm.simpleProcessDesign.childProcess.addRow') }}
           </Button>
         </FormItem>
         <FormItem
           v-if="configForm.async === false"
-          label="子→主变量传递"
+          :label="$t('bpm.simpleProcessDesign.action.childToMainVariable')"
           name="outVariables"
         >
           <div
@@ -537,7 +621,9 @@ onMounted(async () => {
                 :name="['outVariables', index, 'source']"
                 :rules="{
                   required: true,
-                  message: '变量不能为空',
+                  message: $t(
+                    'bpm.simpleProcessDesign.childProcess.variableCannotEmpty',
+                  ),
                   trigger: 'blur',
                 }"
               >
@@ -557,7 +643,9 @@ onMounted(async () => {
                 :name="['outVariables', index, 'target']"
                 :rules="{
                   required: true,
-                  message: '变量不能为空',
+                  message: $t(
+                    'bpm.simpleProcessDesign.childProcess.variableCannotEmpty',
+                  ),
                   trigger: 'blur',
                 }"
               >
@@ -589,10 +677,14 @@ onMounted(async () => {
             <template #icon>
               <IconifyIcon class="size-4" icon="lucide:plus" />
             </template>
-            添加一行
+            <!-- 添加一行 -->
+            {{ $t('bpm.simpleProcessDesign.childProcess.addRow') }}
           </Button>
         </FormItem>
-        <FormItem label="子流程发起人" name="startUserType">
+        <FormItem
+          :label="$t('bpm.simpleProcessDesign.action.childProcessInitiator')"
+          name="startUserType"
+        >
           <RadioGroup v-model:value="configForm.startUserType">
             <Radio
               v-for="item in CHILD_PROCESS_START_USER_TYPE"
@@ -607,7 +699,7 @@ onMounted(async () => {
           v-if="
             configForm.startUserType === ChildProcessStartUserTypeEnum.FROM_FORM
           "
-          label="子流程发起人字段"
+          :label="$t('bpm.simpleProcessDesign.action.childFormUserField')"
           name="startUserFormField"
         >
           <Select v-model:value="configForm.startUserFormField" allow-clear>
@@ -625,7 +717,7 @@ onMounted(async () => {
           v-if="
             configForm.startUserType === ChildProcessStartUserTypeEnum.FROM_FORM
           "
-          label="当子流程发起人为空时"
+          :label="$t('bpm.simpleProcessDesign.action.whenChildEmpty')"
           name="startUserEmptyType"
         >
           <RadioGroup v-model:value="configForm.startUserEmptyType">
@@ -639,9 +731,11 @@ onMounted(async () => {
           </RadioGroup>
         </FormItem>
 
-        <Divider>超时设置</Divider>
+        <Divider>
+          {{ $t('bpm.simpleProcessDesign.childProcess.timeoutSetting') }}
+        </Divider>
         <FormItem
-          label="启用开关"
+          :label="$t('bpm.simpleProcessDesign.action.enableSwitch')"
           name="timeoutEnable"
           label-align="left"
           :label-col="{ span: 5 }"
@@ -649,8 +743,8 @@ onMounted(async () => {
         >
           <Switch
             v-model:checked="configForm.timeoutEnable"
-            checked-children="开启"
-            un-checked-children="关闭"
+            :checked-children="$t('bpm.simpleProcessDesign.action.open')"
+            :un-checked-children="$t('bpm.simpleProcessDesign.action.close')"
           />
         </FormItem>
         <div v-if="configForm.timeoutEnable">
@@ -670,7 +764,10 @@ onMounted(async () => {
           >
             <Row :gutter="8">
               <Col>
-                <span class="inline-flex h-8 items-center"> 当超过 </span>
+                <!-- 当超过 -->
+                <span class="inline-flex h-8 items-center">{{
+                  $t('bpm.simpleProcessDesign.action.overTime')
+                }}</span>
               </Col>
               <Col>
                 <FormItem name="timeDuration">
@@ -695,7 +792,10 @@ onMounted(async () => {
                 </Select>
               </Col>
               <Col>
-                <span class="inline-flex h-8 items-center">后进入下一节点</span>
+                <!-- 后进入下一节点 -->
+                <span class="inline-flex h-8 items-center">{{
+                  $t('bpm.simpleProcessDesign.delayType.afterEnterNextNode')
+                }}</span>
               </Col>
             </Row>
           </FormItem>
@@ -710,22 +810,30 @@ onMounted(async () => {
                   v-model:value="configForm.dateTime"
                   type="date"
                   show-time
-                  placeholder="请选择日期和时间"
+                  :placeholder="
+                    $t('bpm.simpleProcessDesign.placeholder.selectTime')
+                  "
                   value-format="YYYY-MM-DDTHH:mm:ss"
                 />
               </Col>
               <Col>
+                <!-- 后进入下一节点 -->
                 <span class="inline-flex h-8 items-center">
-                  后进入下一节点
+                  {{
+                    $t('bpm.simpleProcessDesign.delayType.afterEnterNextNode')
+                  }}
                 </span>
               </Col>
             </Row>
           </FormItem>
         </div>
 
-        <Divider>多实例设置</Divider>
+        <!-- 多实例设置 -->
+        <Divider>
+          {{ $t('bpm.simpleProcessDesign.action.multiInstanceSetting') }}
+        </Divider>
         <FormItem
-          label="启用开关"
+          :label="$t('bpm.simpleProcessDesign.action.enableSwitch')"
           label-align="left"
           name="multiInstanceEnable"
           :label-col="{ span: 5 }"
@@ -733,27 +841,27 @@ onMounted(async () => {
         >
           <Switch
             v-model:checked="configForm.multiInstanceEnable"
-            checked-children="开启"
-            un-checked-children="关闭"
+            :checked-children="$t('bpm.simpleProcessDesign.action.open')"
+            :un-checked-children="$t('bpm.simpleProcessDesign.action.close')"
           />
         </FormItem>
         <div v-if="configForm.multiInstanceEnable">
           <FormItem
             name="sequential"
-            label="是否串行"
+            :label="$t('bpm.simpleProcessDesign.childProcess.serial')"
             label-align="left"
             :label-col="{ span: 5 }"
             :wrapper-col="{ span: 4 }"
           >
             <Switch
               v-model:checked="configForm.sequential"
-              checked-children="是"
-              un-checked-children="否"
+              :checked-children="$t('bpm.simpleProcessDesign.switch.yes')"
+              :un-checked-children="$t('bpm.simpleProcessDesign.switch.no')"
             />
           </FormItem>
           <FormItem
             name="approveRatio"
-            label="完成比例(%)"
+            :label="$t('bpm.simpleProcessDesign.childProcess.completeRatioTip')"
             label-align="left"
             :label-col="{ span: 6 }"
             :wrapper-col="{ span: 4 }"
@@ -767,7 +875,7 @@ onMounted(async () => {
           </FormItem>
           <FormItem
             name="multiInstanceSourceType"
-            label="实例数量"
+            :label="$t('bpm.simpleProcessDesign.childProcess.instanceQuantity')"
             label-align="left"
             :label-col="{ span: 6 }"
             :wrapper-col="{ span: 12 }"
@@ -792,13 +900,15 @@ onMounted(async () => {
               ChildProcessMultiInstanceSourceTypeEnum.FIXED_QUANTITY
             "
             name="multiInstanceSource"
-            label="固定数量"
+            :label="$t('bpm.simpleProcessDesign.childProcess.fixedQuantity')"
             label-align="left"
             :label-col="{ span: 6 }"
             :wrapper-col="{ span: 12 }"
             :rules="{
               required: true,
-              message: '固定数量不能为空',
+              message: $t(
+                'bpm.simpleProcessDesign.childProcess.fixedQuantityCannotEmpty',
+              ),
               trigger: 'change',
             }"
           >
@@ -813,13 +923,15 @@ onMounted(async () => {
               ChildProcessMultiInstanceSourceTypeEnum.NUMBER_FORM
             "
             name="multiInstanceSource"
-            label="数字表单"
+            :label="$t('bpm.simpleProcessDesign.childProcess.numberForm')"
             label-align="left"
             :label-col="{ span: 6 }"
             :wrapper-col="{ span: 12 }"
             :rules="{
               required: true,
-              message: '数字表单字段不能为空',
+              message: $t(
+                'bpm.simpleProcessDesign.childProcess.numberFormCannotEmpty',
+              ),
               trigger: 'change',
             }"
           >
@@ -840,13 +952,15 @@ onMounted(async () => {
               ChildProcessMultiInstanceSourceTypeEnum.MULTIPLE_FORM
             "
             name="multiInstanceSource"
-            label="多选表单"
+            :label="$t('bpm.simpleProcessDesign.childProcess.multiForm')"
             label-align="left"
             :label-col="{ span: 6 }"
             :wrapper-col="{ span: 12 }"
             :rules="{
               required: true,
-              message: '多选表单字段不能为空',
+              message: $t(
+                'bpm.simpleProcessDesign.childProcess.multiFormCannotEmpty',
+              ),
               trigger: 'change',
             }"
           >

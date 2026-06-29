@@ -22,6 +22,7 @@ import { getSimpleDeptList } from '#/api/system/dept';
 import { getSimplePostList } from '#/api/system/post';
 import { getSimpleRoleList } from '#/api/system/role';
 import { getSimpleUserList } from '#/api/system/user';
+import { $t } from '#/locales';
 import { BpmModelFormType, BpmNodeTypeEnum } from '#/utils';
 
 import { NODE_DEFAULT_TEXT, NodeId } from '../consts';
@@ -123,14 +124,16 @@ const [ErrorModal, errorModalApi] = useVbenModal({
 function updateModel() {
   if (!processNodeTree.value) {
     processNodeTree.value = {
-      name: '发起人',
+      // 发起人
+      name: $t('bpm.simpleProcessDesign.node.startUser'),
       type: BpmNodeTypeEnum.START_USER_NODE,
       id: NodeId.START_USER_NODE_ID,
       // 默认为空，需要进行配置
       showText: '',
       childNode: {
         id: NodeId.END_EVENT_NODE_ID,
-        name: '结束',
+        // 结束
+        name: $t('bpm.simpleProcessDesign.node.endEvent'),
         type: BpmNodeTypeEnum.END_EVENT_NODE,
       },
     };
@@ -150,7 +153,8 @@ async function saveSimpleFlowModel(
     processData.value = simpleModelNode;
     emits('success', simpleModelNode);
   } catch (error) {
-    console.error('保存失败:', error);
+    // 保存失败
+    console.error($t('bpm.simpleProcessDesign.toolbar.saveFailed'), error);
   }
 }
 
@@ -236,8 +240,14 @@ defineExpose({ validate });
       :readonly="false"
       @save="saveSimpleFlowModel"
     />
-    <ErrorModal title="流程设计校验不通过" class="w-2/5">
-      <div class="mb-2 text-base">以下节点配置不完善，请修改相关配置</div>
+    <ErrorModal
+      :title="$t('bpm.simpleProcessDesign.childProcess.designValidateFailed')"
+      class="w-2/5"
+    >
+      <div class="mb-2 text-base">
+        <!-- 以下节点配置不完善，请修改相关配置 -->
+        {{ $t('bpm.simpleProcessDesign.action.nodeConfigIncomplete') }}
+      </div>
       <div
         class="mb-3 rounded-md p-2 text-sm"
         v-for="(item, index) in errorModalApi.getData()"
@@ -246,7 +256,10 @@ defineExpose({ validate });
         {{ item.name }} : {{ NODE_DEFAULT_TEXT.get(item.type) }}
       </div>
       <template #footer>
-        <Button type="primary" @click="errorModalApi.close()">知道了</Button>
+        <!-- 知道了 -->
+        <Button type="primary" @click="errorModalApi.close()">
+          {{ $t('bpm.simpleProcessDesign.childProcess.confirm') }}
+        </Button>
       </template>
     </ErrorModal>
   </div>

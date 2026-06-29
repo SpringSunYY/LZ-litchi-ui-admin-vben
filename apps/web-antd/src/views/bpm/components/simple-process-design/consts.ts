@@ -1,3 +1,4 @@
+import { $t } from '#/locales';
 import { BpmNodeTypeEnum, BpmTaskStatusEnum } from '#/utils';
 
 interface DictDataType {
@@ -629,268 +630,670 @@ export const DEFAULT_CONDITION_GROUP_VALUE = {
   ],
 };
 
+// 节点未配置时显示的默认提示文本（原文 → 国际化 key）
 export const NODE_DEFAULT_TEXT = new Map<number, string>();
-NODE_DEFAULT_TEXT.set(BpmNodeTypeEnum.USER_TASK_NODE, '请配置审批人');
-NODE_DEFAULT_TEXT.set(BpmNodeTypeEnum.COPY_TASK_NODE, '请配置抄送人');
-NODE_DEFAULT_TEXT.set(BpmNodeTypeEnum.CONDITION_NODE, '请设置条件');
-NODE_DEFAULT_TEXT.set(BpmNodeTypeEnum.START_USER_NODE, '请设置发起人');
-NODE_DEFAULT_TEXT.set(BpmNodeTypeEnum.DELAY_TIMER_NODE, '请设置延迟器');
-NODE_DEFAULT_TEXT.set(BpmNodeTypeEnum.ROUTER_BRANCH_NODE, '请设置路由节点');
-NODE_DEFAULT_TEXT.set(BpmNodeTypeEnum.TRIGGER_NODE, '请设置触发器');
-NODE_DEFAULT_TEXT.set(BpmNodeTypeEnum.TRANSACTOR_NODE, '请设置办理人');
-NODE_DEFAULT_TEXT.set(BpmNodeTypeEnum.CHILD_PROCESS_NODE, '请设置子流程');
+// 请配置审批人
+NODE_DEFAULT_TEXT.set(
+  BpmNodeTypeEnum.USER_TASK_NODE,
+  $t('bpm.simpleProcessDesign.nodeText.userTask'),
+);
+// 请配置抄送人
+NODE_DEFAULT_TEXT.set(
+  BpmNodeTypeEnum.COPY_TASK_NODE,
+  $t('bpm.simpleProcessDesign.nodeText.copyTask'),
+);
+// 请设置条件
+NODE_DEFAULT_TEXT.set(
+  BpmNodeTypeEnum.CONDITION_NODE,
+  $t('bpm.simpleProcessDesign.nodeText.condition'),
+);
+// 请设置发起人
+NODE_DEFAULT_TEXT.set(
+  BpmNodeTypeEnum.START_USER_NODE,
+  $t('bpm.simpleProcessDesign.nodeText.startUser'),
+);
+// 请设置延迟器
+NODE_DEFAULT_TEXT.set(
+  BpmNodeTypeEnum.DELAY_TIMER_NODE,
+  $t('bpm.simpleProcessDesign.nodeText.delayTimer'),
+);
+// 请设置路由节点
+NODE_DEFAULT_TEXT.set(
+  BpmNodeTypeEnum.ROUTER_BRANCH_NODE,
+  $t('bpm.simpleProcessDesign.nodeText.routerBranch'),
+);
+// 请设置触发器
+NODE_DEFAULT_TEXT.set(
+  BpmNodeTypeEnum.TRIGGER_NODE,
+  $t('bpm.simpleProcessDesign.nodeText.trigger'),
+);
+// 请设置办理人
+NODE_DEFAULT_TEXT.set(
+  BpmNodeTypeEnum.TRANSACTOR_NODE,
+  $t('bpm.simpleProcessDesign.nodeText.transactor'),
+);
+// 请设置子流程
+NODE_DEFAULT_TEXT.set(
+  BpmNodeTypeEnum.CHILD_PROCESS_NODE,
+  $t('bpm.simpleProcessDesign.nodeText.childProcess'),
+);
 
+// 节点的默认名称（原文 → 国际化 key）
 export const NODE_DEFAULT_NAME = new Map<number, string>();
-NODE_DEFAULT_NAME.set(BpmNodeTypeEnum.USER_TASK_NODE, '审批人');
-NODE_DEFAULT_NAME.set(BpmNodeTypeEnum.COPY_TASK_NODE, '抄送人');
-NODE_DEFAULT_NAME.set(BpmNodeTypeEnum.CONDITION_NODE, '条件');
-NODE_DEFAULT_NAME.set(BpmNodeTypeEnum.START_USER_NODE, '发起人');
-NODE_DEFAULT_NAME.set(BpmNodeTypeEnum.DELAY_TIMER_NODE, '延迟器');
-NODE_DEFAULT_NAME.set(BpmNodeTypeEnum.ROUTER_BRANCH_NODE, '路由分支');
-NODE_DEFAULT_NAME.set(BpmNodeTypeEnum.TRIGGER_NODE, '触发器');
-NODE_DEFAULT_NAME.set(BpmNodeTypeEnum.TRANSACTOR_NODE, '办理人');
-NODE_DEFAULT_NAME.set(BpmNodeTypeEnum.CHILD_PROCESS_NODE, '子流程');
+// 审批人
+NODE_DEFAULT_NAME.set(
+  BpmNodeTypeEnum.USER_TASK_NODE,
+  $t('bpm.simpleProcessDesign.node.userTask'),
+);
+// 抄送人
+NODE_DEFAULT_NAME.set(
+  BpmNodeTypeEnum.COPY_TASK_NODE,
+  $t('bpm.simpleProcessDesign.node.copyTask'),
+);
+// 条件
+NODE_DEFAULT_NAME.set(
+  BpmNodeTypeEnum.CONDITION_NODE,
+  $t('bpm.simpleProcessDesign.node.condition'),
+);
+// 发起人
+NODE_DEFAULT_NAME.set(
+  BpmNodeTypeEnum.START_USER_NODE,
+  $t('bpm.simpleProcessDesign.node.startUser'),
+);
+// 延迟器
+NODE_DEFAULT_NAME.set(
+  BpmNodeTypeEnum.DELAY_TIMER_NODE,
+  $t('bpm.simpleProcessDesign.node.delayTimer'),
+);
+// 路由分支
+NODE_DEFAULT_NAME.set(
+  BpmNodeTypeEnum.ROUTER_BRANCH_NODE,
+  $t('bpm.simpleProcessDesign.node.routerBranch'),
+);
+// 触发器
+NODE_DEFAULT_NAME.set(
+  BpmNodeTypeEnum.TRIGGER_NODE,
+  $t('bpm.simpleProcessDesign.node.trigger'),
+);
+// 办理人
+NODE_DEFAULT_NAME.set(
+  BpmNodeTypeEnum.TRANSACTOR_NODE,
+  $t('bpm.simpleProcessDesign.node.transactor'),
+);
+// 子流程
+NODE_DEFAULT_NAME.set(
+  BpmNodeTypeEnum.CHILD_PROCESS_NODE,
+  $t('bpm.simpleProcessDesign.node.childProcess'),
+);
 
 // 候选人策略。暂时不从字典中取。 后续可能调整。控制显示顺序
+// 原文 → 国际化 key（bpm.simpleProcessDesign.candidateStrategy.*）
 export const CANDIDATE_STRATEGY: DictDataType[] = [
-  { label: '指定成员', value: CandidateStrategy.USER as any },
-  { label: '指定角色', value: CandidateStrategy.ROLE as any },
-  { label: '指定岗位', value: CandidateStrategy.POST as any },
-  { label: '部门成员', value: CandidateStrategy.DEPT_MEMBER as any },
-  { label: '部门负责人', value: CandidateStrategy.DEPT_LEADER as any },
+  // 指定成员
   {
-    label: '连续多级部门负责人',
+    label: $t('bpm.simpleProcessDesign.candidateStrategy.assignUser'),
+    value: CandidateStrategy.USER as any,
+  },
+  // 指定角色
+  {
+    label: $t('bpm.simpleProcessDesign.candidateStrategy.assignRole'),
+    value: CandidateStrategy.ROLE as any,
+  },
+  // 指定岗位
+  {
+    label: $t('bpm.simpleProcessDesign.candidateStrategy.assignPost'),
+    value: CandidateStrategy.POST as any,
+  },
+  // 部门成员
+  {
+    label: $t('bpm.simpleProcessDesign.candidateStrategy.deptMember'),
+    value: CandidateStrategy.DEPT_MEMBER as any,
+  },
+  // 部门负责人
+  {
+    label: $t('bpm.simpleProcessDesign.candidateStrategy.deptLeader'),
+    value: CandidateStrategy.DEPT_LEADER as any,
+  },
+  // 连续多级部门负责人
+  {
+    label: $t('bpm.simpleProcessDesign.candidateStrategy.multiLevelDeptLeader'),
     value: CandidateStrategy.MULTI_LEVEL_DEPT_LEADER as any,
   },
-  { label: '发起人自选', value: CandidateStrategy.START_USER_SELECT as any },
-  { label: '审批人自选', value: CandidateStrategy.APPROVE_USER_SELECT as any },
-  { label: '发起人本人', value: CandidateStrategy.START_USER as any },
+  // 发起人自选
   {
-    label: '发起人部门负责人',
+    label: $t('bpm.simpleProcessDesign.candidateStrategy.startUserSelect'),
+    value: CandidateStrategy.START_USER_SELECT as any,
+  },
+  // 审批人自选
+  {
+    label: $t('bpm.simpleProcessDesign.candidateStrategy.approveUserSelect'),
+    value: CandidateStrategy.APPROVE_USER_SELECT as any,
+  },
+  // 发起人本人
+  {
+    label: $t('bpm.simpleProcessDesign.candidateStrategy.startUserSelf'),
+    value: CandidateStrategy.START_USER as any,
+  },
+  // 发起人部门负责人
+  {
+    label: $t('bpm.simpleProcessDesign.candidateStrategy.startUserDeptLeader'),
     value: CandidateStrategy.START_USER_DEPT_LEADER as any,
   },
+  // 发起人连续部门负责人
   {
-    label: '发起人连续部门负责人',
+    label: $t(
+      'bpm.simpleProcessDesign.candidateStrategy.startUserMultiLevelDeptLeader',
+    ),
     value: CandidateStrategy.START_USER_MULTI_LEVEL_DEPT_LEADER as any,
   },
-  { label: '用户组', value: CandidateStrategy.USER_GROUP as any },
-  { label: '表单内用户字段', value: CandidateStrategy.FORM_USER as any },
+  // 用户组
   {
-    label: '表单内部门负责人',
+    label: $t('bpm.simpleProcessDesign.candidateStrategy.userGroup'),
+    value: CandidateStrategy.USER_GROUP as any,
+  },
+  // 表单内用户字段
+  {
+    label: $t('bpm.simpleProcessDesign.candidateStrategy.formUserField'),
+    value: CandidateStrategy.FORM_USER as any,
+  },
+  // 表单内部门负责人
+  {
+    label: $t('bpm.simpleProcessDesign.candidateStrategy.formDeptLeader'),
     value: CandidateStrategy.FORM_DEPT_LEADER as any,
   },
-  { label: '流程表达式', value: CandidateStrategy.EXPRESSION as any },
+  // 流程表达式
+  {
+    label: $t('bpm.simpleProcessDesign.candidateStrategy.processExpression'),
+    value: CandidateStrategy.EXPRESSION as any,
+  },
 ];
-// 审批节点 的审批类型
+// 审批节点 的审批类型（原文 → bpm.simpleProcessDesign.approveType.*）
 export const APPROVE_TYPE: DictDataType[] = [
-  { label: '人工审批', value: ApproveType.USER as any },
-  { label: '自动通过', value: ApproveType.AUTO_APPROVE as any },
-  { label: '自动拒绝', value: ApproveType.AUTO_REJECT as any },
+  // 人工审批
+  {
+    label: $t('bpm.simpleProcessDesign.approveType.manual'),
+    value: ApproveType.USER as any,
+  },
+  // 自动通过
+  {
+    label: $t('bpm.simpleProcessDesign.approveType.autoApprove'),
+    value: ApproveType.AUTO_APPROVE as any,
+  },
+  // 自动拒绝
+  {
+    label: $t('bpm.simpleProcessDesign.approveType.autoReject'),
+    value: ApproveType.AUTO_REJECT as any,
+  },
 ];
 
+// 多人审批方式（原文 → bpm.simpleProcessDesign.approveMethod.*）
+// 注：原文中的 "会签（可同时审批，至少 % 人必须审批通过）" 中 % 为动态数字占位，i18n 使用 {0}% 表示
 export const APPROVE_METHODS: DictDataType[] = [
+  // 按顺序依次审批
   {
-    label: '按顺序依次审批',
+    label: $t('bpm.simpleProcessDesign.approveMethod.sequential'),
     value: ApproveMethodType.SEQUENTIAL_APPROVE as any,
   },
+  // 会签（可同时审批，至少 % 人必须审批通过）
   {
-    label: '会签（可同时审批，至少 % 人必须审批通过）',
+    label: $t('bpm.simpleProcessDesign.approveMethod.counterSign', [100]),
     value: ApproveMethodType.APPROVE_BY_RATIO as any,
   },
+  // 或签(可同时审批，有一人通过即可)
   {
-    label: '或签(可同时审批，有一人通过即可)',
+    label: $t('bpm.simpleProcessDesign.approveMethod.orSign'),
     value: ApproveMethodType.ANY_APPROVE as any,
   },
+  // 随机挑选一人审批
   {
-    label: '随机挑选一人审批',
+    label: $t('bpm.simpleProcessDesign.approveMethod.randomOne'),
     value: ApproveMethodType.RANDOM_SELECT_ONE_APPROVE as any,
   },
 ];
 
+// 条件配置类型（原文 → bpm.simpleProcessDesign.condition.*）
 export const CONDITION_CONFIG_TYPES: DictDataType[] = [
-  { label: '条件规则', value: ConditionType.RULE as any },
-  { label: '条件表达式', value: ConditionType.EXPRESSION as any },
+  // 条件规则
+  {
+    label: $t('bpm.simpleProcessDesign.condition.rule'),
+    value: ConditionType.RULE as any,
+  },
+  // 条件表达式
+  {
+    label: $t('bpm.simpleProcessDesign.condition.expression'),
+    value: ConditionType.EXPRESSION as any,
+  },
 ];
 
-// 时间单位类型
+// 时间单位类型（原文 → bpm.simpleProcessDesign.timeUnit.*）
 export const TIME_UNIT_TYPES: DictDataType[] = [
-  { label: '分钟', value: TimeUnitType.MINUTE as any },
-  { label: '小时', value: TimeUnitType.HOUR as any },
-  { label: '天', value: TimeUnitType.DAY as any },
+  // 分钟
+  {
+    label: $t('bpm.simpleProcessDesign.timeUnit.minute'),
+    value: TimeUnitType.MINUTE as any,
+  },
+  // 小时
+  {
+    label: $t('bpm.simpleProcessDesign.timeUnit.hour'),
+    value: TimeUnitType.HOUR as any,
+  },
+  // 天
+  {
+    label: $t('bpm.simpleProcessDesign.timeUnit.day'),
+    value: TimeUnitType.DAY as any,
+  },
 ];
-// 超时处理执行动作类型
+// 超时处理执行动作类型（原文 → bpm.simpleProcessDesign.timeoutHandlerType.*）
 export const TIMEOUT_HANDLER_TYPES: DictDataType[] = [
-  { label: '自动提醒', value: 1 },
-  { label: '自动同意', value: 2 },
-  { label: '自动拒绝', value: 3 },
+  // 自动提醒
+  {
+    label: $t('bpm.simpleProcessDesign.timeoutHandlerType.autoRemind'),
+    value: 1,
+  },
+  // 自动同意
+  {
+    label: $t('bpm.simpleProcessDesign.timeoutHandlerType.autoApprove'),
+    value: 2,
+  },
+  // 自动拒绝
+  {
+    label: $t('bpm.simpleProcessDesign.timeoutHandlerType.autoReject'),
+    value: 3,
+  },
 ];
+// 审批驳回处理类型（原文 → bpm.simpleProcessDesign.rejectHandlerType.*）
 export const REJECT_HANDLER_TYPES: DictDataType[] = [
-  { label: '终止流程', value: RejectHandlerType.FINISH_PROCESS as any },
-  { label: '驳回到指定节点', value: RejectHandlerType.RETURN_USER_TASK as any },
+  // 终止流程
+  {
+    label: $t('bpm.simpleProcessDesign.rejectHandlerType.finishProcess'),
+    value: RejectHandlerType.FINISH_PROCESS as any,
+  },
+  // 驳回到指定节点
+  {
+    label: $t('bpm.simpleProcessDesign.rejectHandlerType.returnNode'),
+    value: RejectHandlerType.RETURN_USER_TASK as any,
+  },
   // { label: '结束任务', value: RejectHandlerType.FINISH_TASK }
 ];
+// 审批人为空的处理类型（原文 → bpm.simpleProcessDesign.assignEmptyHandlerType.*）
 export const ASSIGN_EMPTY_HANDLER_TYPES: DictDataType[] = [
-  { label: '自动通过', value: 1 },
-  { label: '自动拒绝', value: 2 },
-  { label: '指定成员审批', value: 3 },
-  { label: '转交给流程管理员', value: 4 },
+  // 自动通过
+  {
+    label: $t('bpm.simpleProcessDesign.assignEmptyHandlerType.autoApprove'),
+    value: 1,
+  },
+  // 自动拒绝
+  {
+    label: $t('bpm.simpleProcessDesign.assignEmptyHandlerType.autoReject'),
+    value: 2,
+  },
+  // 指定成员审批
+  {
+    label: $t('bpm.simpleProcessDesign.assignEmptyHandlerType.assignUser'),
+    value: 3,
+  },
+  // 转交给流程管理员
+  {
+    label: $t('bpm.simpleProcessDesign.assignEmptyHandlerType.transferAdmin'),
+    value: 4,
+  },
 ];
+// 审批人与发起人相同的处理类型（原文 → bpm.simpleProcessDesign.assignStartUserHandlerType.*）
 export const ASSIGN_START_USER_HANDLER_TYPES: DictDataType[] = [
-  { label: '由发起人对自己审批', value: 1 },
-  { label: '自动跳过', value: 2 },
-  { label: '转交给部门负责人审批', value: 3 },
+  // 由发起人对自己审批
+  {
+    label: $t('bpm.simpleProcessDesign.assignStartUserHandlerType.selfApprove'),
+    value: 1,
+  },
+  // 自动跳过
+  {
+    label: $t('bpm.simpleProcessDesign.assignStartUserHandlerType.autoSkip'),
+    value: 2,
+  },
+  // 转交给部门负责人审批
+  {
+    label: $t(
+      'bpm.simpleProcessDesign.assignStartUserHandlerType.transferDeptLeader',
+    ),
+    value: 3,
+  },
 ];
 
-// 比较运算符
+// 比较运算符（原文 → bpm.simpleProcessDesign.condition.op*）
 export const COMPARISON_OPERATORS: DictDataType[] = [
+  // 等于
   {
     value: '==',
-    label: '等于',
+    label: $t('bpm.simpleProcessDesign.condition.opEq'),
   },
+  // 不等于
   {
     value: '!=',
-    label: '不等于',
+    label: $t('bpm.simpleProcessDesign.condition.opNe'),
   },
+  // 大于
   {
     value: '>',
-    label: '大于',
+    label: $t('bpm.simpleProcessDesign.condition.opGt'),
   },
+  // 大于等于
   {
     value: '>=',
-    label: '大于等于',
+    label: $t('bpm.simpleProcessDesign.condition.opGte'),
   },
+  // 小于
   {
     value: '<',
-    label: '小于',
+    label: $t('bpm.simpleProcessDesign.condition.opLt'),
   },
+  // 小于等于
   {
     value: '<=',
-    label: '小于等于',
+    label: $t('bpm.simpleProcessDesign.condition.opLte'),
   },
+  // 包含
   {
     value: 'contain',
-    label: '包含',
+    label: $t('bpm.simpleProcessDesign.condition.opContains'),
   },
+  // 不包含
   {
     value: '!contain',
-    label: '不包含',
+    label: $t('bpm.simpleProcessDesign.condition.opNotContains'),
   },
 ];
-// 审批操作按钮名称
+// 审批操作按钮名称（原文 → bpm.simpleProcessDesign.operation.*）
 export const OPERATION_BUTTON_NAME = new Map<number, string>();
-OPERATION_BUTTON_NAME.set(OperationButtonType.APPROVE, '通过');
-OPERATION_BUTTON_NAME.set(OperationButtonType.REJECT, '拒绝');
-OPERATION_BUTTON_NAME.set(OperationButtonType.TRANSFER, '转办');
-OPERATION_BUTTON_NAME.set(OperationButtonType.DELEGATE, '委派');
-OPERATION_BUTTON_NAME.set(OperationButtonType.ADD_SIGN, '加签');
-OPERATION_BUTTON_NAME.set(OperationButtonType.RETURN, '退回');
-OPERATION_BUTTON_NAME.set(OperationButtonType.COPY, '抄送');
+// 通过
+OPERATION_BUTTON_NAME.set(
+  OperationButtonType.APPROVE,
+  $t('bpm.simpleProcessDesign.operation.approve'),
+);
+// 拒绝
+OPERATION_BUTTON_NAME.set(
+  OperationButtonType.REJECT,
+  $t('bpm.simpleProcessDesign.operation.reject'),
+);
+// 转办
+OPERATION_BUTTON_NAME.set(
+  OperationButtonType.TRANSFER,
+  $t('bpm.simpleProcessDesign.operation.transfer'),
+);
+// 委派
+OPERATION_BUTTON_NAME.set(
+  OperationButtonType.DELEGATE,
+  $t('bpm.simpleProcessDesign.operation.delegate'),
+);
+// 加签
+OPERATION_BUTTON_NAME.set(
+  OperationButtonType.ADD_SIGN,
+  $t('bpm.simpleProcessDesign.operation.addSign'),
+);
+// 退回
+OPERATION_BUTTON_NAME.set(
+  OperationButtonType.RETURN,
+  $t('bpm.simpleProcessDesign.operation.return'),
+);
+// 抄送
+OPERATION_BUTTON_NAME.set(
+  OperationButtonType.COPY,
+  $t('bpm.simpleProcessDesign.operation.copy'),
+);
 
-// 默认的按钮权限设置
+// 默认的按钮权限设置（displayName 原文 → bpm.simpleProcessDesign.operation.*）
 export const DEFAULT_BUTTON_SETTING: ButtonSetting[] = [
-  { id: OperationButtonType.APPROVE, displayName: '通过', enable: true },
-  { id: OperationButtonType.REJECT, displayName: '拒绝', enable: true },
-  { id: OperationButtonType.TRANSFER, displayName: '转办', enable: true },
-  { id: OperationButtonType.DELEGATE, displayName: '委派', enable: true },
-  { id: OperationButtonType.ADD_SIGN, displayName: '加签', enable: true },
-  { id: OperationButtonType.RETURN, displayName: '退回', enable: true },
+  // 通过
+  {
+    id: OperationButtonType.APPROVE,
+    displayName: $t('bpm.simpleProcessDesign.operation.approve'),
+    enable: true,
+  },
+  // 拒绝
+  {
+    id: OperationButtonType.REJECT,
+    displayName: $t('bpm.simpleProcessDesign.operation.reject'),
+    enable: true,
+  },
+  // 转办
+  {
+    id: OperationButtonType.TRANSFER,
+    displayName: $t('bpm.simpleProcessDesign.operation.transfer'),
+    enable: true,
+  },
+  // 委派
+  {
+    id: OperationButtonType.DELEGATE,
+    displayName: $t('bpm.simpleProcessDesign.operation.delegate'),
+    enable: true,
+  },
+  // 加签
+  {
+    id: OperationButtonType.ADD_SIGN,
+    displayName: $t('bpm.simpleProcessDesign.operation.addSign'),
+    enable: true,
+  },
+  // 退回
+  {
+    id: OperationButtonType.RETURN,
+    displayName: $t('bpm.simpleProcessDesign.operation.return'),
+    enable: true,
+  },
 ];
 
-// 办理人默认的按钮权限设置
+// 办理人默认的按钮权限设置（displayName 原文 → bpm.simpleProcessDesign.operation.*）
 export const TRANSACTOR_DEFAULT_BUTTON_SETTING: ButtonSetting[] = [
-  { id: OperationButtonType.APPROVE, displayName: '办理', enable: true },
-  { id: OperationButtonType.REJECT, displayName: '拒绝', enable: false },
-  { id: OperationButtonType.TRANSFER, displayName: '转办', enable: false },
-  { id: OperationButtonType.DELEGATE, displayName: '委派', enable: false },
-  { id: OperationButtonType.ADD_SIGN, displayName: '加签', enable: false },
-  { id: OperationButtonType.RETURN, displayName: '退回', enable: false },
+  // 办理
+  {
+    id: OperationButtonType.APPROVE,
+    displayName: $t('bpm.simpleProcessDesign.operation.handle'),
+    enable: true,
+  },
+  // 拒绝
+  {
+    id: OperationButtonType.REJECT,
+    displayName: $t('bpm.simpleProcessDesign.operation.reject'),
+    enable: false,
+  },
+  // 转办
+  {
+    id: OperationButtonType.TRANSFER,
+    displayName: $t('bpm.simpleProcessDesign.operation.transfer'),
+    enable: false,
+  },
+  // 委派
+  {
+    id: OperationButtonType.DELEGATE,
+    displayName: $t('bpm.simpleProcessDesign.operation.delegate'),
+    enable: false,
+  },
+  // 加签
+  {
+    id: OperationButtonType.ADD_SIGN,
+    displayName: $t('bpm.simpleProcessDesign.operation.addSign'),
+    enable: false,
+  },
+  // 退回
+  {
+    id: OperationButtonType.RETURN,
+    displayName: $t('bpm.simpleProcessDesign.operation.return'),
+    enable: false,
+  },
 ];
 
-// 发起人的按钮权限。暂时定死，不可以编辑
+// 发起人的按钮权限。暂时定死，不可以编辑（displayName 原文 → bpm.simpleProcessDesign.operation.*）
 export const START_USER_BUTTON_SETTING: ButtonSetting[] = [
-  { id: OperationButtonType.APPROVE, displayName: '提交', enable: true },
-  { id: OperationButtonType.REJECT, displayName: '拒绝', enable: false },
-  { id: OperationButtonType.TRANSFER, displayName: '转办', enable: false },
-  { id: OperationButtonType.DELEGATE, displayName: '委派', enable: false },
-  { id: OperationButtonType.ADD_SIGN, displayName: '加签', enable: false },
-  { id: OperationButtonType.RETURN, displayName: '退回', enable: false },
+  // 提交
+  {
+    id: OperationButtonType.APPROVE,
+    displayName: $t('bpm.simpleProcessDesign.operation.submit'),
+    enable: true,
+  },
+  // 拒绝
+  {
+    id: OperationButtonType.REJECT,
+    displayName: $t('bpm.simpleProcessDesign.operation.reject'),
+    enable: false,
+  },
+  // 转办
+  {
+    id: OperationButtonType.TRANSFER,
+    displayName: $t('bpm.simpleProcessDesign.operation.transfer'),
+    enable: false,
+  },
+  // 委派
+  {
+    id: OperationButtonType.DELEGATE,
+    displayName: $t('bpm.simpleProcessDesign.operation.delegate'),
+    enable: false,
+  },
+  // 加签
+  {
+    id: OperationButtonType.ADD_SIGN,
+    displayName: $t('bpm.simpleProcessDesign.operation.addSign'),
+    enable: false,
+  },
+  // 退回
+  {
+    id: OperationButtonType.RETURN,
+    displayName: $t('bpm.simpleProcessDesign.operation.return'),
+    enable: false,
+  },
 ];
 
+// 多级部门等级（原文 → bpm.simpleProcessDesign.deptLevel.levelN）
 export const MULTI_LEVEL_DEPT: DictDataType[] = [
-  { label: '第 1 级部门', value: 1 },
-  { label: '第 2 级部门', value: 2 },
-  { label: '第 3 级部门', value: 3 },
-  { label: '第 4 级部门', value: 4 },
-  { label: '第 5 级部门', value: 5 },
-  { label: '第 6 级部门', value: 6 },
-  { label: '第 7 级部门', value: 7 },
-  { label: '第 8 级部门', value: 8 },
-  { label: '第 9 级部门', value: 9 },
-  { label: '第 10 级部门', value: 10 },
-  { label: '第 11 级部门', value: 11 },
-  { label: '第 12 级部门', value: 12 },
-  { label: '第 13 级部门', value: 13 },
-  { label: '第 14 级部门', value: 14 },
-  { label: '第 15 级部门', value: 15 },
+  // 第 1 级部门
+  { label: $t('bpm.simpleProcessDesign.deptLevel.level1'), value: 1 },
+  // 第 2 级部门
+  { label: $t('bpm.simpleProcessDesign.deptLevel.level2'), value: 2 },
+  // 第 3 级部门
+  { label: $t('bpm.simpleProcessDesign.deptLevel.level3'), value: 3 },
+  // 第 4 级部门
+  { label: $t('bpm.simpleProcessDesign.deptLevel.level4'), value: 4 },
+  // 第 5 级部门
+  { label: $t('bpm.simpleProcessDesign.deptLevel.level5'), value: 5 },
+  // 第 6 级部门
+  { label: $t('bpm.simpleProcessDesign.deptLevel.level6'), value: 6 },
+  // 第 7 级部门
+  { label: $t('bpm.simpleProcessDesign.deptLevel.level7'), value: 7 },
+  // 第 8 级部门
+  { label: $t('bpm.simpleProcessDesign.deptLevel.level8'), value: 8 },
+  // 第 9 级部门
+  { label: $t('bpm.simpleProcessDesign.deptLevel.level9'), value: 9 },
+  // 第 10 级部门
+  { label: $t('bpm.simpleProcessDesign.deptLevel.level10'), value: 10 },
+  // 第 11 级部门
+  { label: $t('bpm.simpleProcessDesign.deptLevel.level11'), value: 11 },
+  // 第 12 级部门
+  { label: $t('bpm.simpleProcessDesign.deptLevel.level12'), value: 12 },
+  // 第 13 级部门
+  { label: $t('bpm.simpleProcessDesign.deptLevel.level13'), value: 13 },
+  // 第 14 级部门
+  { label: $t('bpm.simpleProcessDesign.deptLevel.level14'), value: 14 },
+  // 第 15 级部门
+  { label: $t('bpm.simpleProcessDesign.deptLevel.level15'), value: 15 },
 ];
 
+// 延迟类型（原文 → bpm.simpleProcessDesign.delayType.*）
 export const DELAY_TYPE = [
-  { label: '固定时长', value: DelayTypeEnum.FIXED_TIME_DURATION },
-  { label: '固定日期', value: DelayTypeEnum.FIXED_DATE_TIME },
+  // 固定时长
+  {
+    label: $t('bpm.simpleProcessDesign.delayType.fixedDuration'),
+    value: DelayTypeEnum.FIXED_TIME_DURATION,
+  },
+  // 固定日期
+  {
+    label: $t('bpm.simpleProcessDesign.delayType.fixedDate'),
+    value: DelayTypeEnum.FIXED_DATE_TIME,
+  },
 ];
 
+// HTTP 请求参数来源类型（原文 → bpm.simpleProcessDesign.httpRequest.*）
 export const BPM_HTTP_REQUEST_PARAM_TYPES = [
+  // 固定值
   {
     value: 1,
-    label: '固定值',
+    label: $t('bpm.simpleProcessDesign.httpRequest.fixedValue'),
   },
+  // 表单
   {
     value: 2,
-    label: '表单',
+    label: $t('bpm.simpleProcessDesign.httpRequest.fromForm'),
   },
 ];
 
+// 触发器类型（原文 → bpm.simpleProcessDesign.trigger.*）
 export const TRIGGER_TYPES: DictDataType[] = [
-  { label: '发送 HTTP 请求', value: TriggerTypeEnum.HTTP_REQUEST as any },
-  { label: '接收 HTTP 回调', value: TriggerTypeEnum.HTTP_CALLBACK as any },
-  { label: '修改表单数据', value: TriggerTypeEnum.FORM_UPDATE as any },
-  { label: '删除表单数据', value: TriggerTypeEnum.FORM_DELETE as any },
+  // 发送 HTTP 请求
+  {
+    label: $t('bpm.simpleProcessDesign.trigger.httpRequest'),
+    value: TriggerTypeEnum.HTTP_REQUEST as any,
+  },
+  // 接收 HTTP 回调
+  {
+    label: $t('bpm.simpleProcessDesign.trigger.httpCallback'),
+    value: TriggerTypeEnum.HTTP_CALLBACK as any,
+  },
+  // 修改表单数据
+  {
+    label: $t('bpm.simpleProcessDesign.trigger.formUpdate'),
+    value: TriggerTypeEnum.FORM_UPDATE as any,
+  },
+  // 删除表单数据
+  {
+    label: $t('bpm.simpleProcessDesign.trigger.formDelete'),
+    value: TriggerTypeEnum.FORM_DELETE as any,
+  },
 ];
 
+// 子流程发起人类型（原文 → bpm.simpleProcessDesign.childProcess.sameAsMain / fromForm）
 export const CHILD_PROCESS_START_USER_TYPE = [
+  // 同主流程发起人
   {
-    label: '同主流程发起人',
+    label: $t('bpm.simpleProcessDesign.childProcess.sameAsMain'),
     value: ChildProcessStartUserTypeEnum.MAIN_PROCESS_START_USER,
   },
-  { label: '从表单中获取', value: ChildProcessStartUserTypeEnum.FROM_FORM },
+  // 从表单中获取
+  {
+    label: $t('bpm.simpleProcessDesign.childProcess.fromFormUser'),
+    value: ChildProcessStartUserTypeEnum.FROM_FORM,
+  },
 ];
 
+// 子流程发起人为空的处理类型（原文 → bpm.simpleProcessDesign.childProcess.*）
 export const CHILD_PROCESS_START_USER_EMPTY_TYPE = [
+  // 同主流程发起人
   {
-    label: '同主流程发起人',
+    label: $t('bpm.simpleProcessDesign.childProcess.sameAsMain'),
     value: ChildProcessStartUserEmptyTypeEnum.MAIN_PROCESS_START_USER,
   },
+  // 子流程管理员
   {
-    label: '子流程管理员',
+    label: $t('bpm.simpleProcessDesign.childProcess.childAdmin'),
     value: ChildProcessStartUserEmptyTypeEnum.CHILD_PROCESS_ADMIN,
   },
+  // 主流程管理员
   {
-    label: '主流程管理员',
+    label: $t('bpm.simpleProcessDesign.childProcess.mainAdmin'),
     value: ChildProcessStartUserEmptyTypeEnum.MAIN_PROCESS_ADMIN,
   },
 ];
 
+// 子流程多实例来源类型（原文 → bpm.simpleProcessDesign.childProcess.*）
 export const CHILD_PROCESS_MULTI_INSTANCE_SOURCE_TYPE = [
+  // 固定数量
   {
-    label: '固定数量',
+    label: $t('bpm.simpleProcessDesign.childProcess.fixedQuantity'),
     value: ChildProcessMultiInstanceSourceTypeEnum.FIXED_QUANTITY,
   },
+  // 数字表单
   {
-    label: '数字表单',
+    label: $t('bpm.simpleProcessDesign.childProcess.numberForm'),
     value: ChildProcessMultiInstanceSourceTypeEnum.NUMBER_FORM,
   },
+  // 多选表单
   {
-    label: '多选表单',
+    label: $t('bpm.simpleProcessDesign.childProcess.multiForm'),
     value: ChildProcessMultiInstanceSourceTypeEnum.MULTIPLE_FORM,
   },
 ];

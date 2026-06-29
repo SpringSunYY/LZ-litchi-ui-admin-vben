@@ -15,6 +15,7 @@ import type { SystemUserApi } from '#/api/system/user';
 import { inject, nextTick, ref, toRaw, unref, watch } from 'vue';
 
 import { parseFormFields } from '#/components/form-create';
+import { $t } from '#/locales';
 import {
   BpmNodeTypeEnum,
   BpmTaskStatusEnum,
@@ -146,7 +147,8 @@ export function useFormFieldsAndStartUser() {
   // 添加发起人
   formFields.unshift({
     field: ProcessVariableEnum.START_USER_ID,
-    title: '发起人',
+    // 发起人
+    title: $t('bpm.simpleProcessDesign.action.startUserFieldTitle'),
     required: true,
   });
   return formFields;
@@ -265,7 +267,10 @@ export function useNodeForm(nodeType: BpmNodeTypeEnum) {
           candidateNames.push(item.nickname);
         }
       });
-      showText = `指定成员：${candidateNames.join(',')}`;
+      showText = $t(
+        'bpm.simpleProcessDesign.candidateStrategyShowText.assignUser',
+        [candidateNames.join(',')],
+      );
     }
     // 指定角色
     if (
@@ -278,7 +283,10 @@ export function useNodeForm(nodeType: BpmNodeTypeEnum) {
           candidateNames.push(item.name);
         }
       });
-      showText = `指定角色：${candidateNames.join(',')}`;
+      showText = $t(
+        'bpm.simpleProcessDesign.candidateStrategyShowText.assignRole',
+        [candidateNames.join(',')],
+      );
     }
     // 指定部门
     if (
@@ -297,13 +305,22 @@ export function useNodeForm(nodeType: BpmNodeTypeEnum) {
       if (
         configForm.value.candidateStrategy === CandidateStrategy.DEPT_MEMBER
       ) {
-        showText = `部门成员：${candidateNames.join(',')}`;
+        showText = $t(
+          'bpm.simpleProcessDesign.candidateStrategyShowText.deptMember',
+          [candidateNames.join(',')],
+        );
       } else if (
         configForm.value.candidateStrategy === CandidateStrategy.DEPT_LEADER
       ) {
-        showText = `部门的负责人：${candidateNames.join(',')}`;
+        showText = $t(
+          'bpm.simpleProcessDesign.candidateStrategyShowText.deptLeader',
+          [candidateNames.join(',')],
+        );
       } else {
-        showText = `多级部门的负责人：${candidateNames.join(',')}`;
+        showText = $t(
+          'bpm.simpleProcessDesign.candidateStrategyShowText.multiLevelDeptLeader',
+          [candidateNames.join(',')],
+        );
       }
     }
 
@@ -318,7 +335,10 @@ export function useNodeForm(nodeType: BpmNodeTypeEnum) {
           candidateNames.push(item.name);
         }
       });
-      showText = `指定岗位: ${candidateNames.join(',')}`;
+      showText = $t(
+        'bpm.simpleProcessDesign.candidateStrategyShowText.assignPost',
+        [candidateNames.join(',')],
+      );
     }
     // 指定用户组
     if (
@@ -331,7 +351,10 @@ export function useNodeForm(nodeType: BpmNodeTypeEnum) {
           candidateNames.push(item.name);
         }
       });
-      showText = `指定用户组: ${candidateNames.join(',')}`;
+      showText = $t(
+        'bpm.simpleProcessDesign.candidateStrategyShowText.assignUserGroup',
+        [candidateNames.join(',')],
+      );
     }
 
     // 表单内用户字段
@@ -340,14 +363,16 @@ export function useNodeForm(nodeType: BpmNodeTypeEnum) {
       const item = formFieldOptions.find(
         (item) => item.field === configForm.value?.formUser,
       );
-      showText = `表单用户：${item?.title}`;
+      // 表单用户：{title}
+      showText = $t('bpm.simpleProcessDesign.action.formUser', [item?.title]);
     }
 
     // 表单内部门负责人
     if (
       configForm.value?.candidateStrategy === CandidateStrategy.FORM_DEPT_LEADER
     ) {
-      showText = `表单内部门负责人`;
+      // 表单内部门负责人
+      showText = $t('bpm.simpleProcessDesign.action.formDeptLeader');
     }
 
     // 审批人自选
@@ -355,7 +380,8 @@ export function useNodeForm(nodeType: BpmNodeTypeEnum) {
       configForm.value?.candidateStrategy ===
       CandidateStrategy.APPROVE_USER_SELECT
     ) {
-      showText = `审批人自选`;
+      // 审批人自选
+      showText = $t('bpm.simpleProcessDesign.action.approveUserSelect');
     }
 
     // 发起人自选
@@ -363,29 +389,39 @@ export function useNodeForm(nodeType: BpmNodeTypeEnum) {
       configForm.value?.candidateStrategy ===
       CandidateStrategy.START_USER_SELECT
     ) {
-      showText = `发起人自选`;
+      // 发起人自选
+      showText = $t('bpm.simpleProcessDesign.action.startUserSelect');
     }
     // 发起人自己
     if (configForm.value?.candidateStrategy === CandidateStrategy.START_USER) {
-      showText = `发起人自己`;
+      // 发起人自己
+      showText = $t('bpm.simpleProcessDesign.action.startUserSelf');
     }
     // 发起人的部门负责人
     if (
       configForm.value?.candidateStrategy ===
       CandidateStrategy.START_USER_DEPT_LEADER
     ) {
-      showText = `发起人的部门负责人`;
+      // 发起人的部门负责人
+      showText = $t('bpm.simpleProcessDesign.action.startUserDeptLeader');
     }
     // 发起人的部门负责人
     if (
       configForm.value?.candidateStrategy ===
       CandidateStrategy.START_USER_MULTI_LEVEL_DEPT_LEADER
     ) {
-      showText = `发起人连续部门负责人`;
+      // 发起人连续部门负责人
+      showText = $t(
+        'bpm.simpleProcessDesign.action.startUserMultiLevelDeptLeader',
+      );
     }
     // 流程表达式
     if (configForm.value?.candidateStrategy === CandidateStrategy.EXPRESSION) {
-      showText = `流程表达式：${configForm.value.expression}`;
+      // 流程表达式：{expression}
+      showText = $t(
+        'bpm.simpleProcessDesign.candidateStrategyShowText.expression',
+        [configForm.value.expression],
+      );
     }
     return showText;
   }
@@ -681,7 +717,11 @@ export function getConditionShowText(
 ) {
   let showText: string | undefined;
   if (conditionType === ConditionType.EXPRESSION && conditionExpression) {
-    showText = `表达式：${conditionExpression}`;
+    // 表达式：{conditionExpression}
+    showText = $t(
+      'bpm.simpleProcessDesign.candidateStrategyShowText.expressionPrefix',
+      [conditionExpression],
+    );
   }
   if (conditionType === ConditionType.RULE) {
     // 条件组是否为与关系
@@ -697,15 +737,26 @@ export function getConditionShowText(
             )} ${getOpName(rule.opCode)} ${rule.rightSide}`;
           } else {
             // 有一条规则不完善。提示错误
-            warningMessage = '请完善条件规则';
+            // 请完善条件规则
+            warningMessage = $t(
+              'bpm.simpleProcessDesign.condition.ruleComplete',
+            );
             return '';
           }
         })
-        .join(item.and ? ' 且 ' : ' 或 ')} ) `;
+        .join(
+          item.and
+            ? ` ${$t('bpm.simpleProcessDesign.condition.and')} `
+            : ` ${$t('bpm.simpleProcessDesign.condition.or')} `,
+        )} ) `;
     });
     showText = warningMessage
       ? ''
-      : conditionGroup?.join(groupAnd ? ' 且 ' : ' 或 ');
+      : conditionGroup?.join(
+          groupAnd
+            ? ` ${$t('bpm.simpleProcessDesign.condition.and')} `
+            : ` ${$t('bpm.simpleProcessDesign.condition.or')} `,
+        );
   }
   return showText;
 }
@@ -733,9 +784,11 @@ export function getDefaultConditionNodeName(
   defaultFlow: boolean | undefined,
 ): string {
   if (defaultFlow) {
-    return '其它情况';
+    // 其它情况
+    return $t('bpm.simpleProcessDesign.default.otherCondition');
   }
-  return `条件${index + 1}`;
+  // 条件{index + 1}
+  return $t('bpm.simpleProcessDesign.exclusive.condition', [index + 1]);
 }
 
 /** 获取包容分支条件节点默认的名称 */
@@ -744,7 +797,9 @@ export function getDefaultInclusiveConditionNodeName(
   defaultFlow: boolean | undefined,
 ): string {
   if (defaultFlow) {
-    return '其它情况';
+    // 其它情况
+    return $t('bpm.simpleProcessDesign.default.otherCondition');
   }
-  return `包容条件${index + 1}`;
+  // 包容条件{index + 1}
+  return $t('bpm.simpleProcessDesign.default.inclusiveCondition', [index + 1]);
 }

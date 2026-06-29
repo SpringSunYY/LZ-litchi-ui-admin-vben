@@ -633,7 +633,10 @@
       "trigger": "触发器",
       "transactor": "办理人",
       "childProcess": "子流程",
-      "endEvent": "结束"
+      "endEvent": "结束",
+      "conditionBranch": "条件分支",
+      "parallelBranch": "并行分支",
+      "inclusiveBranch": "包容分支"
     },
     "handlerMenu": {
       "userTask": "审批人",
@@ -661,11 +664,6 @@
     "action": {
       "approveType": "审批类型",
       "person": "人",
-      "user": "用户",
-      "role": "角色",
-      "dept": "部门",
-      "post": "岗位",
-      "userGroup": "用户组",
       "formUserField": "表单内用户字段",
       "formDeptField": "表单内部门字段",
       "expression": "流程表达式",
@@ -688,6 +686,11 @@
       "displayName": "显示名称",
       "enable": "启用",
       "formFieldPermission": "表单字段权限",
+      "userSetting": "人设置",
+      "assignRole": "指定角色",
+      "assignDept": "指定部门",
+      "assignPost": "指定岗位",
+      "assignUserGroup": "指定用户组",
       "fieldName": "字段名称",
       "readOnly": "只读",
       "editable": "可编辑",
@@ -700,9 +703,7 @@
       "allMembersCanStart": "全部成员可以发起流程",
       "canStartProcess": "{0} 可发起流程",
       "deptCountCanStart": "{0} 个部门可发起流程",
-      "designProcess": "请设计流程",
       "nodeConfigIncomplete": "以下节点配置不完善，请修改相关配置",
-      "defaultConfig": "默认配置",
       "alreadySet": "已设置",
       "approveStrategyCannotEmpty": "审批人设置不能为空",
       "userCannotEmpty": "用户不能为空",
@@ -726,13 +727,29 @@
       "startUserSelf": "发起人自己",
       "startUserDeptLeader": "发起人的部门负责人",
       "startUserMultiLevelDeptLeader": "发起人连续部门负责人",
-      "conditionRuleAnd": "且",
-      "conditionRuleOr": "或",
-      "conditionRuleIncomplete": "请完善条件规则",
-      "conditionRulePrefix": "表达式：",
-      "conditionDefaultOther": "其它情况",
-      "conditionInclusiveOther": "包容条件{0}",
-      "startUserFieldTitle": "发起人"
+      "startUserFieldTitle": "发起人",
+      "skipExpression": "跳过表达式",
+      "select": "选择",
+      "clear": "清空",
+      "assignUser": "指定用户",
+      "copyUserCannotEmpty": "抄送人设置不能为空",
+      "copyUser": "抄送人",
+      "copyUserSetting": "抄送人设置",
+      "configIncomplete": "以下节点内容不完善，请修改后保存",
+      "fields": "表单字段权限",
+      "handler": "办理",
+      "selectChildProcess": "选择子流程",
+      "skip": "跳过",
+      "notSkip": "不跳过",
+      "mainToChildVariable": "主→子变量传递",
+      "childToMainVariable": "子→主变量传递",
+      "childProcessInitiator": "子流程发起人",
+      "whenChildEmpty": "当子流程发起人为空时",
+      "childFormUserField": "子流程发起人字段",
+      "multiInstanceSetting": "多实例设置",
+      "open": "开启",
+      "close": "关闭",
+      "processInfo": "流程信息"
     },
     "switch": {
       "on": "开",
@@ -821,7 +838,6 @@
     "delayType": {
       "fixedDuration": "固定时长",
       "fixedDate": "固定日期",
-      "delayTime": "延迟时间",
       "afterEnterNextNode": "后进入下一节点"
     },
     "operation": {
@@ -840,11 +856,12 @@
       "import": "导入",
       "reset": "重置",
       "saveFailed": "保存失败",
-      "loading": "加载中，请稍后"
+      "getFlowDataFailed": "获取流程数据失败"
     },
     "condition": {
       "rule": "条件规则",
       "expression": "条件表达式",
+      "conditionConfig": "条件配置",
       "conditionGroupRelation": "条件组关系",
       "and": "且",
       "or": "或",
@@ -853,16 +870,13 @@
       "configMethod": "配置方式",
       "configMethodCannotEmpty": "配置方式不能为空",
       "conditionExpressionCannotEmpty": "条件表达式不能为空",
-      "leftSide": "左值",
       "leftSideCannotEmpty": "左值不能为空",
       "leftSideSelectPlaceholder": "请选择表单字段",
-      "rightSide": "右值",
       "rightSideCannotEmpty": "右值不能为空",
       "rightSidePlaceholder": "请输入右值",
       "formFieldNotRequiredTip": "表单字段非必填时不能作为流程分支条件",
       "addConditionGroup": "添加条件组",
       "ruleComplete": "请完善条件规则",
-      "selectOperator": "请选择操作符",
       "expressionPlaceholder": "请输入条件表达式",
       "opEq": "等于",
       "opNe": "不等于",
@@ -871,9 +885,7 @@
       "opGt": "大于",
       "opGte": "大于等于",
       "opContains": "包含",
-      "opNotContains": "不包含",
-      "opIsEmpty": "为空",
-      "opIsNotEmpty": "不为空"
+      "opNotContains": "不包含"
     },
     "httpRequest": {
       "fixedValue": "固定值",
@@ -884,7 +896,6 @@
       "paramValueCannotEmpty": "参数值不能为空",
       "paramNamePlaceholder": "参数名",
       "paramValuePlaceholder": "请求头",
-      "paramValueSelectPlaceholder": "请选择表单字段",
       "addRow": "添加一行",
       "responseSetting": "返回值设置",
       "formFieldCannotEmpty": "表单字段不能为空",
@@ -922,20 +933,15 @@
       "addRouterBranch": "新增路由分支"
     },
     "placeholder": {
-      "conditionExpression": "请输入条件表达式",
       "requestAddress": "请求地址",
       "requestAddressCannotEmpty": "请求地址不能为空",
       "selectFormField": "请选择表单字段",
       "enterValue": "请输入值",
       "selectDeleteField": "请选择要删除的字段",
-      "selectOperator": "请选择操作符"
+      "selectOperator": "请选择操作符",
+      "selectTime": "请选择日期和时间"
     },
     "default": {
-      "parallelBranch": "并行分支",
-      "conditionBranch": "条件分支",
-      "copyTask": "抄送节点",
-      "trigger": "触发器",
-      "childProcess": "子流程",
       "condition1": "条件1",
       "otherCondition": "其它情况",
       "otherConditionTip": "未满足其它条件时，将进入此分支",
@@ -943,44 +949,80 @@
       "parallel1": "并行1",
       "parallel2": "并行2",
       "parallelCondition": "并行{0}",
-      "inclusiveBranch": "包容分支",
       "inclusiveCondition": "包容条件{0}",
       "noConditionConcurrentExecute": "无需配置条件同时执行",
       "addBranch": "添加分支",
-      "addCondition": "添加条件",
       "noPriority": "无优先级",
-      "notAllowAddParallelAfterCondition": "条件分支、包容分支后面，不允许直接添加并行分支"
+      "notAllowAddParallelAfterCondition": "条件分支、包容分支后面，不允许直接添加并行分支",
+      "delayFor": "延迟{0}{1}",
+      "delayTo": "延迟至{0}",
+      "delayType": "延迟时间"
     },
     "exclusive": {
       "condition": "条件 {0}",
       "addCondition": "添加条件",
       "priority": "优先级 {0}"
     },
+    "field": {
+      "startUser": "发起人",
+      "dept": "部门",
+      "startTime": "开始时间",
+      "endTime": "结束时间",
+      "processStatus": "流程状态",
+      "approveStatus": "审批状态",
+      "approveReason": "审批建议",
+      "assignee": "审批人",
+      "duration": "耗时"
+    },
     "childProcess": {
       "sameAsMain": "同主流程发起人",
-      "fromForm": "表单",
+      "fromFormUser": "从表单中获取",
       "childAdmin": "子流程管理员",
       "mainAdmin": "主流程管理员",
       "fixedQuantity": "固定数量",
       "numberForm": "数字表单",
-      "multiForm": "多选表单"
-    }
-  },
-  "selectModal": {
-    "userSelectModal": {
-      "title": "选择用户",
-      "confirmText": "确定",
-      "cancelText": "取消",
-      "searchDept": "搜索部门",
-      "total": "共 {0} 条",
-      "pleaseSelectUser": "请选择用户",
-      "unselected": "未选",
-      "selected": "已选"
+      "multiForm": "多选表单",
+      "variableCannotEmpty": "变量不能为空",
+      "addRow": "添加一行",
+      "asyncExecute": "异步执行",
+      "skipStartNode": "跳过开始节点",
+      "serial": "串行",
+      "completeRatioTip": "完成比例(%)",
+      "instanceQuantity": "实例数量",
+      "callSubProcess": "调用子流程：{0}",
+      "loadFailed": "加载模型列表失败",
+      "timeoutSetting": "超时设置",
+      "designValidateFailed": "流程设计校验不通过",
+      "confirm": "知道了",
+      "asyncCannotEmpty": "是否异步不能为空",
+      "childProcessCannotEmpty": "子流程不能为空",
+      "skipStartNodeCannotEmpty": "是否自动跳过子流程发起节点不能为空",
+      "childProcessInitiatorCannotEmpty": "子流程发起人不能为空",
+      "whenChildEmptyCannotEmpty": "当子流程发起人为空时不能为空",
+      "childFormUserFieldCannotEmpty": "子流程发起人字段不能为空",
+      "timeoutEnableCannotEmpty": "超时设置是否开启不能为空",
+      "timeoutCannotEmpty": "超时设置时间不能为空",
+      "multiInstanceEnableCannotEmpty": "多实例设置不能为空",
+      "sequentialCannotEmpty": "是否串行不能为空",
+      "instanceQuantityCannotEmpty": "实例数量不能为空",
+      "completeRatioCannotEmpty": "完成比例不能为空",
+      "fixedQuantityCannotEmpty": "固定数量不能为空",
+      "numberFormCannotEmpty": "数字表单字段不能为空",
+      "multiFormCannotEmpty": "多选表单字段不能为空"
     },
-    "deptSelectModal": {
-      "title": "部门选择",
-      "confirmText": "确认",
-      "cancelText": "取消"
+    "common": {
+      "loading": "加载中，请稍后"
+    },
+    "candidateStrategyShowText": {
+      "assignUser": "指定成员：{0}",
+      "assignRole": "指定角色：{0}",
+      "deptMember": "部门成员：{0}",
+      "deptLeader": "部门的负责人：{0}",
+      "multiLevelDeptLeader": "多级部门的负责人：{0}",
+      "assignPost": "指定岗位: {0}",
+      "assignUserGroup": "指定用户组: {0}",
+      "expression": "流程表达式：{0}",
+      "expressionPrefix": "表达式：{0}"
     }
   }
 }

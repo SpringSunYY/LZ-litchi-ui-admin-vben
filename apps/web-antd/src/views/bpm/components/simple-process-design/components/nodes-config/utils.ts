@@ -1,3 +1,5 @@
+import { $t } from '#/locales';
+
 import { APPROVE_TYPE, ApproveType, TimeUnitType } from '../../consts';
 
 /** 获取条件节点默认的名称 */
@@ -6,9 +8,11 @@ export function getDefaultConditionNodeName(
   defaultFlow: boolean | undefined,
 ): string {
   if (defaultFlow) {
-    return '其它情况';
+    // 其它情况
+    return $t('bpm.simpleProcessDesign.default.otherCondition');
   }
-  return `条件${index + 1}`;
+  // 条件 + N
+  return $t('bpm.simpleProcessDesign.exclusive.condition', [index + 1]);
 }
 
 /** 获取包容分支条件节点默认的名称 */
@@ -17,9 +21,11 @@ export function getDefaultInclusiveConditionNodeName(
   defaultFlow: boolean | undefined,
 ): string {
   if (defaultFlow) {
-    return '其它情况';
+    // 其它情况
+    return $t('bpm.simpleProcessDesign.default.otherCondition');
   }
-  return `包容条件${index + 1}`;
+  // 包容条件 + N
+  return $t('bpm.simpleProcessDesign.default.inclusiveCondition', [index + 1]);
 }
 
 /** 转换时间单位字符串为枚举值 */

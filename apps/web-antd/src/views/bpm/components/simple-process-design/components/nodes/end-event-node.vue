@@ -7,6 +7,8 @@ import { inject, ref } from 'vue';
 
 import { useVbenModal } from '@vben/common-ui';
 
+import { $t } from '#/locales';
+
 import { useTaskStatusClass, useWatchNode } from '../../helpers';
 import ProcessInstanceModal from './modules/process-instance-modal.vue';
 
@@ -41,7 +43,8 @@ function nodeClick() {
     ];
     modalApi
       .setData(processInstanceInfo)
-      .setState({ title: '流程信息' })
+      // 流程信息
+      .setState({ title: $t('bpm.simpleProcessDesign.action.processInfo') })
       .open();
   }
 }
@@ -53,7 +56,13 @@ function nodeClick() {
       :class="`${useTaskStatusClass(currentNode?.activityStatus)}`"
       @click="nodeClick"
     >
-      <span class="node-fixed-name" title="结束">结束</span>
+      <!-- 结束 -->
+      <span
+        class="node-fixed-name"
+        :title="$t('bpm.simpleProcessDesign.node.endEvent')"
+      >
+        {{ $t('bpm.simpleProcessDesign.node.endEvent') }}
+      </span>
     </div>
   </div>
   <!-- 流程信息弹窗 -->

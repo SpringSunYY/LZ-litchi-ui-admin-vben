@@ -3,10 +3,11 @@ import type { SimpleFlowNode } from '../../consts';
 
 import { inject, ref } from 'vue';
 
-import { BpmNodeTypeEnum } from '#/utils';
 import { IconifyIcon } from '@vben/icons';
 
 import { Input } from 'ant-design-vue';
+
+import { BpmNodeTypeEnum } from '#/utils';
 
 import { NODE_DEFAULT_TEXT } from '../../consts';
 import { useNodeName2, useTaskStatusClass, useWatchNode } from '../../helpers';

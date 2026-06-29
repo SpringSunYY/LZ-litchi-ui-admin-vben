@@ -9,11 +9,6 @@ import type { UserTaskFormType } from '../../helpers';
 import { computed, nextTick, onMounted, reactive, ref, watchEffect } from 'vue';
 
 import { useVbenDrawer, useVbenModal } from '@vben/common-ui';
-import {
-  BpmModelFormType,
-  BpmNodeTypeEnum,
-  ProcessVariableEnum,
-} from '#/utils';
 import { IconifyIcon } from '@vben/icons';
 import { cloneDeep } from '@vben/utils';
 
@@ -39,6 +34,12 @@ import {
   TypographyText,
 } from 'ant-design-vue';
 
+import { $t } from '#/locales';
+import {
+  BpmModelFormType,
+  BpmNodeTypeEnum,
+  ProcessVariableEnum,
+} from '#/utils';
 import { ProcessExpressionSelectModal } from '#/views/bpm/processExpression/components';
 
 import {
@@ -86,18 +87,22 @@ const emits = defineEmits<{
 }>();
 
 const deptLevelLabel = computed(() => {
-  let label = '部门负责人来源';
+  // 部门负责人来源
+  let label = $t('bpm.simpleProcessDesign.deptLeaderSource.default');
   if (
     configForm.value.candidateStrategy ===
     CandidateStrategy.MULTI_LEVEL_DEPT_LEADER
   ) {
-    label = `${label}(指定部门向上)`;
+    // 部门负责人来源(指定部门向上)
+    label = $t('bpm.simpleProcessDesign.deptLeaderSource.specifyDept');
   } else if (
     configForm.value.candidateStrategy === CandidateStrategy.FORM_DEPT_LEADER
   ) {
-    label = `${label}(表单内部门向上)`;
+    // 部门负责人来源(表单内部门向上)
+    label = $t('bpm.simpleProcessDesign.deptLeaderSource.formDept');
   } else {
-    label = `${label}(发起人部门向上)`;
+    // 部门负责人来源(发起人部门向上)
+    label = $t('bpm.simpleProcessDesign.deptLeaderSource.startUserDept');
   }
   return label;
 });
@@ -165,44 +170,115 @@ const formRef = ref(); // 表单 Ref
 // 表单校验规则
 const formRules: Record<string, Rule[]> = reactive({
   candidateStrategy: [
-    { required: true, message: '审批人设置不能为空', trigger: 'change' },
+    // 审批人设置不能为空
+    {
+      required: true,
+      message: $t('bpm.simpleProcessDesign.action.approveStrategyCannotEmpty'),
+      trigger: 'change',
+    },
   ],
-  userIds: [{ required: true, message: '用户不能为空', trigger: 'change' }],
-  roleIds: [{ required: true, message: '角色不能为空', trigger: 'change' }],
-  deptIds: [{ required: true, message: '部门不能为空', trigger: 'change' }],
+  userIds: [
+    {
+      required: true,
+      message: $t('bpm.simpleProcessDesign.action.userCannotEmpty'),
+      trigger: 'change',
+    },
+  ],
+  roleIds: [
+    {
+      required: true,
+      message: $t('bpm.simpleProcessDesign.action.roleCannotEmpty'),
+      trigger: 'change',
+    },
+  ],
+  deptIds: [
+    {
+      required: true,
+      message: $t('bpm.simpleProcessDesign.action.deptCannotEmpty'),
+      trigger: 'change',
+    },
+  ],
   userGroups: [
-    { required: true, message: '用户组不能为空', trigger: 'change' },
+    {
+      required: true,
+      message: $t('bpm.simpleProcessDesign.action.userGroupCannotEmpty'),
+      trigger: 'change',
+    },
   ],
   formUser: [
-    { required: true, message: '表单内用户字段不能为空', trigger: 'change' },
+    {
+      required: true,
+      message: $t('bpm.simpleProcessDesign.action.formUserFieldCannotEmpty'),
+      trigger: 'change',
+    },
   ],
   formDept: [
-    { required: true, message: '表单内部门字段不能为空', trigger: 'change' },
+    {
+      required: true,
+      message: $t('bpm.simpleProcessDesign.action.formDeptFieldCannotEmpty'),
+      trigger: 'change',
+    },
   ],
-  postIds: [{ required: true, message: '岗位不能为空', trigger: 'change' }],
+  postIds: [
+    {
+      required: true,
+      message: $t('bpm.simpleProcessDesign.action.postCannotEmpty'),
+      trigger: 'change',
+    },
+  ],
   expression: [
-    { required: true, message: '流程表达式不能为空', trigger: 'blur' },
+    {
+      required: true,
+      message: $t('bpm.simpleProcessDesign.action.expressionCannotEmpty'),
+      trigger: 'blur',
+    },
   ],
   approveMethod: [
-    { required: true, message: '多人审批方式不能为空', trigger: 'change' },
+    {
+      required: true,
+      message: $t(
+        'bpm.simpleProcessDesign.action.multiPersonMethodCannotEmpty',
+      ),
+      trigger: 'change',
+    },
   ],
   approveRatio: [
-    { required: true, message: '通过比例不能为空', trigger: 'blur' },
+    {
+      required: true,
+      message: $t('bpm.simpleProcessDesign.action.approveRatioCannotEmpty'),
+      trigger: 'blur',
+    },
   ],
   returnNodeId: [
-    { required: true, message: '驳回节点不能为空', trigger: 'change' },
+    {
+      required: true,
+      message: $t('bpm.simpleProcessDesign.action.rejectNodeCannotEmpty'),
+      trigger: 'change',
+    },
   ],
   timeoutHandlerEnable: [{ required: true }],
   timeoutHandlerType: [{ required: true }],
   timeDuration: [
-    { required: true, message: '超时时间不能为空', trigger: 'blur' },
+    {
+      required: true,
+      message: $t('bpm.simpleProcessDesign.action.timeoutCannotEmpty'),
+      trigger: 'blur',
+    },
   ],
   maxRemindCount: [
-    { required: true, message: '提醒次数不能为空', trigger: 'blur' },
+    {
+      required: true,
+      message: $t('bpm.simpleProcessDesign.action.remindCountCannotEmpty'),
+      trigger: 'blur',
+    },
   ],
   assignEmptyHandlerType: [{ required: true }],
   assignEmptyHandlerUserIds: [
-    { required: true, message: '用户不能为空', trigger: 'change' },
+    {
+      required: true,
+      message: $t('bpm.simpleProcessDesign.action.userCannotEmpty'),
+      trigger: 'change',
+    },
   ],
   assignStartUserHandlerType: [{ required: true }],
 });
@@ -268,8 +344,10 @@ const userTaskListenerRef = ref();
 /** 节点类型名称 */
 const nodeTypeName = computed(() => {
   return currentNode.value.type === BpmNodeTypeEnum.TRANSACTOR_NODE
-    ? '办理'
-    : '审批';
+    ? // 办理
+      $t('bpm.simpleProcessDesign.action.handler')
+    : // 审批
+      $t('bpm.simpleProcessDesign.action.approveType');
 });
 
 /** 校验节点配置 */
@@ -616,7 +694,8 @@ onMounted(() => {
   // 固定添加发起人ID字段
   formFieldOptions.unshift({
     field: ProcessVariableEnum.START_USER_ID,
-    title: '发起人',
+    // 发起人
+    title: $t('bpm.simpleProcessDesign.action.startUserFieldTitle'),
     type: 'UserSelect',
     required: true,
   });
@@ -646,7 +725,10 @@ onMounted(() => {
       v-if="currentNode.type === BpmNodeTypeEnum.USER_TASK_NODE"
       class="mb-3 flex items-center"
     >
-      <span class="mr-3 text-base">审批类型 :</span>
+      <span class="mr-3 text-base">
+        <!-- 审批类型 : -->
+        {{ $t('bpm.simpleProcessDesign.action.approveType') }} :
+      </span>
       <RadioGroup v-model:value="approveType">
         <RadioButton
           v-for="(item, index) in APPROVE_TYPE"
@@ -662,7 +744,11 @@ onMounted(() => {
       v-model:active-key="activeTabName"
       v-if="approveType === ApproveType.USER"
     >
-      <TabPane :tab="`${nodeTypeName}人`" key="user">
+      <!-- ${nodeTypeName}人 -->
+      <TabPane
+        :tab="`${nodeTypeName}${$t('bpm.simpleProcessDesign.action.person')}`"
+        key="user"
+      >
         <div>
           <Form
             ref="formRef"
@@ -673,7 +759,11 @@ onMounted(() => {
             :rules="formRules"
           >
             <!-- 审批/办理 人设置 -->
-            <FormItem :label="`${nodeTypeName}人设置`" name="candidateStrategy">
+            <!-- ${nodeTypeName}人设置 -->
+            <FormItem
+              :label="`${nodeTypeName}${$t('bpm.simpleProcessDesign.action.userSetting')}`"
+              name="candidateStrategy"
+            >
               <RadioGroup
                 v-model:value="configForm.candidateStrategy"
                 @change="changeCandidateStrategy"
@@ -720,7 +810,7 @@ onMounted(() => {
                 configForm.candidateStrategy ===
                   CandidateStrategy.MULTI_LEVEL_DEPT_LEADER
               "
-              label="指定部门"
+              :label="$t('bpm.simpleProcessDesign.action.assignDept')"
               name="deptIds"
             >
               <TreeSelect
@@ -731,7 +821,7 @@ onMounted(() => {
                   value: 'id',
                   children: 'children',
                 }"
-                empty-text="加载中，请稍后"
+                :empty-text="$t('bpm.simpleProcessDesign.common.loading')"
                 multiple
                 :check-strictly="true"
                 allow-clear
@@ -740,7 +830,7 @@ onMounted(() => {
             </FormItem>
             <FormItem
               v-if="configForm.candidateStrategy === CandidateStrategy.POST"
-              label="指定岗位"
+              :label="$t('bpm.simpleProcessDesign.action.assignPost')"
               name="postIds"
             >
               <Select
@@ -760,7 +850,7 @@ onMounted(() => {
             </FormItem>
             <FormItem
               v-if="configForm.candidateStrategy === CandidateStrategy.USER"
-              label="指定用户"
+              :label="$t('bpm.simpleProcessDesign.action.assignUser')"
               name="userIds"
             >
               <Select
@@ -782,7 +872,7 @@ onMounted(() => {
               v-if="
                 configForm.candidateStrategy === CandidateStrategy.USER_GROUP
               "
-              label="指定用户组"
+              :label="$t('bpm.simpleProcessDesign.action.assignUserGroup')"
               name="userGroups"
             >
               <Select
@@ -804,7 +894,7 @@ onMounted(() => {
               v-if="
                 configForm.candidateStrategy === CandidateStrategy.FORM_USER
               "
-              label="表单内用户字段"
+              :label="$t('bpm.simpleProcessDesign.action.formUserField')"
               name="formUser"
             >
               <Select v-model:value="configForm.formUser" clearable>
@@ -824,7 +914,7 @@ onMounted(() => {
                 configForm.candidateStrategy ===
                 CandidateStrategy.FORM_DEPT_LEADER
               "
-              label="表单内部门字段"
+              :label="$t('bpm.simpleProcessDesign.action.formDeptField')"
               name="formDept"
             >
               <Select v-model:value="configForm.formDept" clearable>
@@ -868,21 +958,33 @@ onMounted(() => {
               v-if="
                 configForm.candidateStrategy === CandidateStrategy.EXPRESSION
               "
-              label="流程表达式"
+              :label="$t('bpm.simpleProcessDesign.action.expression')"
               name="expression"
             >
               <div class="flex gap-2">
                 <Textarea v-model:value="configForm.expression" :rows="2" />
                 <div class="flex flex-col gap-2">
                   <Button type="primary" @click="openExpressionSelect">
-                    选择
+                    <!-- 选择 -->
+                    {{ $t('bpm.simpleProcessDesign.action.select') }}
                   </Button>
-                  <Button @click="configForm.expression = ''">清空</Button>
+                  <!-- 清空 -->
+                  <Button @click="configForm.expression = ''">
+                    {{ $t('bpm.simpleProcessDesign.action.clear') }}
+                  </Button>
                 </div>
               </div>
             </FormItem>
             <!-- 多人审批/办理 方式 -->
-            <FormItem :label="`多人${nodeTypeName}方式`" name="approveMethod">
+            <!-- 多人{nodeTypeName}方式 -->
+            <FormItem
+              :label="
+                $t('bpm.simpleProcessDesign.action.multiPersonMethod', [
+                  nodeTypeName,
+                ])
+              "
+              name="approveMethod"
+            >
               <RadioGroup
                 v-model:value="configForm.approveMethod"
                 @change="approveMethodChanged"
@@ -916,7 +1018,10 @@ onMounted(() => {
             </FormItem>
 
             <div v-if="currentNode.type === BpmNodeTypeEnum.USER_TASK_NODE">
-              <Divider content-position="left">审批人拒绝时</Divider>
+              <!-- 审批人拒绝时 -->
+              <Divider content-position="left">
+                {{ $t('bpm.simpleProcessDesign.action.rejectHandler') }}
+              </Divider>
               <FormItem name="rejectHandlerType">
                 <RadioGroup
                   v-model:value="configForm.rejectHandlerType"
@@ -941,7 +1046,7 @@ onMounted(() => {
                   configForm.rejectHandlerType ===
                   RejectHandlerType.RETURN_USER_TASK
                 "
-                label="驳回节点"
+                :label="$t('bpm.simpleProcessDesign.action.rejectNode')"
                 name="returnNodeId"
               >
                 <Select v-model:value="configForm.returnNodeId" clearable>
@@ -958,9 +1063,12 @@ onMounted(() => {
             </div>
 
             <div v-if="currentNode.type === BpmNodeTypeEnum.USER_TASK_NODE">
-              <Divider content-position="left">审批人超时未处理时</Divider>
+              <!-- 审批人超时未处理时 -->
+              <Divider content-position="left">
+                {{ $t('bpm.simpleProcessDesign.action.timeout') }}
+              </Divider>
               <FormItem
-                label="启用开关"
+                :label="$t('bpm.simpleProcessDesign.action.enableSwitch')"
                 name="timeoutHandlerEnable"
                 label-align="left"
                 :label-col="{ span: 6 }"
@@ -968,13 +1076,15 @@ onMounted(() => {
               >
                 <Switch
                   v-model:checked="configForm.timeoutHandlerEnable"
-                  checked-children="开"
-                  un-checked-children="关"
+                  :checked-children="$t('bpm.simpleProcessDesign.switch.on')"
+                  :un-checked-children="
+                    $t('bpm.simpleProcessDesign.switch.off')
+                  "
                   @change="timeoutHandlerChange"
                 />
               </FormItem>
               <FormItem
-                label="执行动作"
+                :label="$t('bpm.simpleProcessDesign.action.executeAction')"
                 name="timeoutHandlerType"
                 v-if="configForm.timeoutHandlerEnable"
                 label-align="left"
@@ -996,7 +1106,7 @@ onMounted(() => {
                 </RadioGroup>
               </FormItem>
               <FormItem
-                label="超时时间设置"
+                :label="$t('bpm.simpleProcessDesign.action.timeoutSetting')"
                 v-if="configForm.timeoutHandlerEnable"
                 label-align="left"
                 class="h-8"
@@ -1006,7 +1116,8 @@ onMounted(() => {
                 <Row>
                   <Col>
                     <TypographyText class="mr-2 mt-2 inline-flex text-sm">
-                      当超过
+                      <!-- 当超过 -->
+                      {{ $t('bpm.simpleProcessDesign.action.overTime') }}
                     </TypographyText>
                   </Col>
                   <Col>
@@ -1036,13 +1147,14 @@ onMounted(() => {
                       </SelectOption>
                     </Select>
                     <TypographyText class="mr-2 mt-2 inline-flex text-sm">
-                      未处理
+                      <!-- 未处理 -->
+                      {{ $t('bpm.simpleProcessDesign.action.notProcessed') }}
                     </TypographyText>
                   </Col>
                 </Row>
               </FormItem>
               <FormItem
-                label="最大提醒次数"
+                :label="$t('bpm.simpleProcessDesign.action.maxRemindCount')"
                 name="maxRemindCount"
                 v-if="
                   configForm.timeoutHandlerEnable &&
@@ -1061,7 +1173,12 @@ onMounted(() => {
             </div>
 
             <Divider content-position="left">
-              {{ nodeTypeName }}人为空时
+              <!-- {nodeTypeName}人为空时 -->
+              {{
+                $t('bpm.simpleProcessDesign.action.emptyHandler', [
+                  nodeTypeName,
+                ])
+              }}
             </Divider>
             <FormItem name="assignEmptyHandlerType">
               <RadioGroup v-model:value="configForm.assignEmptyHandlerType">
@@ -1083,7 +1200,7 @@ onMounted(() => {
                 configForm.assignEmptyHandlerType ===
                 AssignEmptyHandlerType.ASSIGN_USER
               "
-              label="指定用户"
+              :label="$t('bpm.simpleProcessDesign.action.assignUser')"
               name="assignEmptyHandlerUserIds"
             >
               <Select
@@ -1103,8 +1220,9 @@ onMounted(() => {
             </FormItem>
 
             <div v-if="currentNode.type === BpmNodeTypeEnum.USER_TASK_NODE">
+              <!-- 审批人与提交人为同一人时 -->
               <Divider content-position="left">
-                审批人与提交人为同一人时
+                {{ $t('bpm.simpleProcessDesign.action.sameAsSubmitter') }}
               </Divider>
               <FormItem name="assignStartUserHandlerType">
                 <RadioGroup
@@ -1126,28 +1244,41 @@ onMounted(() => {
             </div>
 
             <div v-if="currentNode.type === BpmNodeTypeEnum.USER_TASK_NODE">
-              <Divider content-position="left">是否需要签名</Divider>
+              <!-- 是否需要签名 -->
+              <Divider content-position="left">
+                {{ $t('bpm.simpleProcessDesign.action.needSign') }}
+              </Divider>
               <FormItem name="signEnable">
                 <Switch
                   v-model:checked="configForm.signEnable"
-                  checked-children="是"
-                  un-checked-children="否"
+                  :checked-children="$t('bpm.simpleProcessDesign.switch.yes')"
+                  :un-checked-children="$t('bpm.simpleProcessDesign.switch.no')"
                 />
               </FormItem>
             </div>
 
             <div v-if="currentNode.type === BpmNodeTypeEnum.USER_TASK_NODE">
-              <Divider content-position="left">审批意见</Divider>
+              <!-- 审批意见 -->
+              <Divider content-position="left">
+                {{ $t('bpm.simpleProcessDesign.action.needOpinion') }}
+              </Divider>
               <FormItem name="reasonRequire">
                 <Switch
                   v-model:checked="configForm.reasonRequire"
-                  checked-children="必填"
-                  un-checked-children="非必填"
+                  :checked-children="
+                    $t('bpm.simpleProcessDesign.switch.required')
+                  "
+                  :un-checked-children="
+                    $t('bpm.simpleProcessDesign.switch.notRequired')
+                  "
                 />
               </FormItem>
             </div>
             <div>
-              <Divider content-position="left">跳过表达式</Divider>
+              <!-- 跳过表达式 -->
+              <Divider content-position="left">
+                {{ $t('bpm.simpleProcessDesign.action.skipExpression') }}
+              </Divider>
               <FormItem prop="skipExpression">
                 <Textarea
                   v-model:value="configForm.skipExpression"
@@ -1160,19 +1291,29 @@ onMounted(() => {
         </div>
       </TabPane>
       <TabPane
-        tab="操作按钮设置"
+        :tab="$t('bpm.simpleProcessDesign.action.operationButtons')"
         v-if="currentNode.type === BpmNodeTypeEnum.USER_TASK_NODE"
         key="buttons"
       >
         <div class="p-1">
-          <div class="mb-4 text-base font-bold">操作按钮</div>
+          <div class="mb-4 text-base font-bold">
+            <!-- 操作按钮 -->
+            {{ $t('bpm.simpleProcessDesign.action.buttonName') }}
+          </div>
 
           <!-- 表头 -->
           <Row class="border border-gray-200 px-4 py-3">
-            <Col :span="8" class="font-bold">操作按钮</Col>
-            <Col :span="12" class="font-bold">显示名称</Col>
+            <!-- 操作按钮 -->
+            <Col :span="8" class="font-bold">
+              {{ $t('bpm.simpleProcessDesign.action.buttonName') }}
+            </Col>
+            <!-- 显示名称 -->
+            <Col :span="12" class="font-bold">
+              {{ $t('bpm.simpleProcessDesign.action.displayName') }}
+            </Col>
+            <!-- 启用 -->
             <Col :span="4" class="flex items-center justify-center font-bold">
-              启用
+              {{ $t('bpm.simpleProcessDesign.action.enable') }}
             </Col>
           </Row>
 
@@ -1208,16 +1349,22 @@ onMounted(() => {
         </div>
       </TabPane>
       <TabPane
-        tab="表单字段权限"
+        :tab="$t('bpm.simpleProcessDesign.action.formFieldPermission')"
         key="fields"
         v-if="formType === BpmModelFormType.NORMAL"
       >
         <div class="p-1">
-          <div class="mb-4 text-base font-bold">字段权限</div>
+          <div class="mb-4 text-base font-bold">
+            <!-- 字段权限 -->
+            {{ $t('bpm.simpleProcessDesign.action.fields') }}
+          </div>
 
           <!-- 表头 -->
           <Row class="border border-gray-200 px-4 py-3">
-            <Col :span="8" class="font-bold">字段名称</Col>
+            <!-- 字段名称 -->
+            <Col :span="8" class="font-bold">
+              {{ $t('bpm.simpleProcessDesign.action.fieldName') }}
+            </Col>
             <Col :span="16">
               <Row>
                 <Col :span="8" class="flex items-center justify-center">
@@ -1225,7 +1372,8 @@ onMounted(() => {
                     class="cursor-pointer font-bold"
                     @click="updatePermission('READ')"
                   >
-                    只读
+                    <!-- 只读 -->
+                    {{ $t('bpm.simpleProcessDesign.action.readOnly') }}
                   </span>
                 </Col>
                 <Col :span="8" class="flex items-center justify-center">
@@ -1233,7 +1381,8 @@ onMounted(() => {
                     class="cursor-pointer font-bold"
                     @click="updatePermission('WRITE')"
                   >
-                    可编辑
+                    <!-- 可编辑 -->
+                    {{ $t('bpm.simpleProcessDesign.action.editable') }}
                   </span>
                 </Col>
                 <Col :span="8" class="flex items-center justify-center">
@@ -1241,7 +1390,8 @@ onMounted(() => {
                     class="cursor-pointer font-bold"
                     @click="updatePermission('NONE')"
                   >
-                    隐藏
+                    <!-- 隐藏 -->
+                    {{ $t('bpm.simpleProcessDesign.action.hidden') }}
                   </span>
                 </Col>
               </Row>
@@ -1285,7 +1435,11 @@ onMounted(() => {
           </div>
         </div>
       </TabPane>
-      <TabPane tab="监听器" key="listener" :force-render="true">
+      <TabPane
+        :tab="$t('bpm.simpleProcessDesign.action.listener')"
+        key="listener"
+        :force-render="true"
+      >
         <UserTaskListener
           ref="userTaskListenerRef"
           v-model="configForm"

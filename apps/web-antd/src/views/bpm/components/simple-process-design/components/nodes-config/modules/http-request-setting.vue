@@ -14,6 +14,8 @@ import {
   SelectOption,
 } from 'ant-design-vue';
 
+import { $t } from '#/locales';
+
 import { useFormFields } from '../../../helpers';
 import HttpRequestParamSetting from './http-request-param-setting.vue';
 
@@ -67,7 +69,7 @@ function deleteHttpResponseSetting(
 <template>
   <FormItem>
     <Alert
-      message="仅支持 POST 请求，以请求体方式接收参数"
+      :message="$t('bpm.simpleProcessDesign.trigger.onlySupportPost')"
       type="warning"
       show-icon
       :closable="false"
@@ -75,17 +77,22 @@ function deleteHttpResponseSetting(
   </FormItem>
   <!-- 请求地址-->
   <FormItem
-    label="请求地址"
+    :label="$t('bpm.simpleProcessDesign.placeholder.requestAddress')"
     :label-col="{ span: 24 }"
     :wrapper-col="{ span: 24 }"
     :name="[formItemPrefix, 'url']"
     :rules="{
       required: true,
-      message: '请求地址不能为空',
+      message: $t(
+        'bpm.simpleProcessDesign.placeholder.requestAddressCannotEmpty',
+      ),
       trigger: ['blur', 'change'],
     }"
   >
-    <Input v-model:value="setting.url" placeholder="请输入请求地址" />
+    <Input
+      v-model:value="setting.url"
+      :placeholder="$t('bpm.simpleProcessDesign.placeholder.requestAddress')"
+    />
   </FormItem>
   <!-- 请求头，请求体设置-->
   <HttpRequestParamSetting
@@ -96,12 +103,12 @@ function deleteHttpResponseSetting(
   <!-- 返回值设置-->
   <div v-if="responseEnable">
     <FormItem
-      label="返回值"
+      :label="$t('bpm.simpleProcessDesign.httpRequest.responseSetting')"
       :label-col="{ span: 24 }"
       :wrapper-col="{ span: 24 }"
     >
       <Alert
-        message="通过请求返回值, 可以修改流程表单的值"
+        :message="$t('bpm.simpleProcessDesign.httpRequest.responseFieldTip')"
         type="warning"
         show-icon
         :closable="false"
@@ -119,13 +126,17 @@ function deleteHttpResponseSetting(
             :name="[formItemPrefix, 'response', index, 'key']"
             :rules="{
               required: true,
-              message: '表单字段不能为空',
+              message: $t(
+                'bpm.simpleProcessDesign.httpRequest.formFieldCannotEmpty',
+              ),
               trigger: ['blur', 'change'],
             }"
           >
             <Select
               v-model:value="item.key"
-              placeholder="请选择表单字段"
+              :placeholder="
+                $t('bpm.simpleProcessDesign.placeholder.selectFormField')
+              "
               allow-clear
             >
               <SelectOption
@@ -145,11 +156,18 @@ function deleteHttpResponseSetting(
             :name="[formItemPrefix, 'response', index, 'value']"
             :rules="{
               required: true,
-              message: '请求返回字段不能为空',
+              message: $t(
+                'bpm.simpleProcessDesign.httpRequest.responseFieldCannotEmpty',
+              ),
               trigger: ['blur', 'change'],
             }"
           >
-            <Input v-model:value="item.value" placeholder="请求返回字段" />
+            <Input
+              v-model:value="item.value"
+              :placeholder="
+                $t('bpm.simpleProcessDesign.httpRequest.responseField')
+              "
+            />
           </FormItem>
         </Col>
         <Col :span="2">
@@ -170,7 +188,8 @@ function deleteHttpResponseSetting(
         <template #icon>
           <IconifyIcon class="size-4" icon="lucide:plus" />
         </template>
-        添加一行
+        <!-- 添加一行 -->
+        {{ $t('bpm.simpleProcessDesign.httpRequest.addRow') }}
       </Button>
     </FormItem>
   </div>

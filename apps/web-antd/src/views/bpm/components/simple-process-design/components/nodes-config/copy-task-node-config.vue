@@ -9,7 +9,6 @@ import type { CopyTaskFormType } from '../../helpers';
 import { computed, onMounted, reactive, ref } from 'vue';
 
 import { useVbenDrawer } from '@vben/common-ui';
-import { BpmModelFormType, BpmNodeTypeEnum } from '#/utils';
 import { IconifyIcon } from '@vben/icons';
 
 import {
@@ -27,6 +26,9 @@ import {
   Textarea,
   TreeSelect,
 } from 'ant-design-vue';
+
+import { $t } from '#/locales';
+import { BpmModelFormType, BpmNodeTypeEnum } from '#/utils';
 
 import {
   CANDIDATE_STRATEGY,
@@ -51,12 +53,15 @@ const props = defineProps({
 });
 
 const deptLevelLabel = computed(() => {
-  let label = '部门负责人来源';
+  // 部门负责人来源
+  let label = $t('bpm.simpleProcessDesign.deptLeaderSource.default');
   label =
     configForm.value.candidateStrategy ===
     CandidateStrategy.MULTI_LEVEL_DEPT_LEADER
-      ? `${label}(指定部门向上)`
-      : `${label}(发起人部门向上)`;
+      ? // 部门负责人来源(指定部门向上)
+        $t('bpm.simpleProcessDesign.deptLeaderSource.specifyDept')
+      : // 部门负责人来源(发起人部门向上)
+        $t('bpm.simpleProcessDesign.deptLeaderSource.startUserDept');
   return label;
 });
 
@@ -104,23 +109,67 @@ const formRef = ref(); // 表单 Ref
 // 表单校验规则
 const formRules: Record<string, Rule[]> = reactive({
   candidateStrategy: [
-    { required: true, message: '抄送人设置不能为空', trigger: 'change' },
+    {
+      required: true,
+      message: $t('bpm.simpleProcessDesign.action.copyUserCannotEmpty'),
+      trigger: 'change',
+    },
   ],
-  userIds: [{ required: true, message: '用户不能为空', trigger: 'change' }],
-  roleIds: [{ required: true, message: '角色不能为空', trigger: 'change' }],
-  deptIds: [{ required: true, message: '部门不能为空', trigger: 'change' }],
+  userIds: [
+    {
+      required: true,
+      message: $t('bpm.simpleProcessDesign.action.userCannotEmpty'),
+      trigger: 'change',
+    },
+  ],
+  roleIds: [
+    {
+      required: true,
+      message: $t('bpm.simpleProcessDesign.action.roleCannotEmpty'),
+      trigger: 'change',
+    },
+  ],
+  deptIds: [
+    {
+      required: true,
+      message: $t('bpm.simpleProcessDesign.action.deptCannotEmpty'),
+      trigger: 'change',
+    },
+  ],
   userGroups: [
-    { required: true, message: '用户组不能为空', trigger: 'change' },
+    {
+      required: true,
+      message: $t('bpm.simpleProcessDesign.action.userGroupCannotEmpty'),
+      trigger: 'change',
+    },
   ],
-  postIds: [{ required: true, message: '岗位不能为空', trigger: 'change' }],
+  postIds: [
+    {
+      required: true,
+      message: $t('bpm.simpleProcessDesign.action.postCannotEmpty'),
+      trigger: 'change',
+    },
+  ],
   formUser: [
-    { required: true, message: '表单内用户字段不能为空', trigger: 'change' },
+    {
+      required: true,
+      message: $t('bpm.simpleProcessDesign.action.formUserFieldCannotEmpty'),
+      trigger: 'change',
+    },
   ],
   formDept: [
-    { required: true, message: '表单内部门字段不能为空', trigger: 'change' },
+    {
+      required: true,
+      message: $t('bpm.simpleProcessDesign.action.formDeptFieldCannotEmpty'),
+      trigger: 'change',
+    },
   ],
   expression: [
-    { required: true, message: '流程表达式不能为空', trigger: 'blur' },
+    {
+      required: true,
+      message: $t('bpm.simpleProcessDesign.action.expressionCannotEmpty'),
+      trigger: 'blur',
+    },
   ],
 });
 
@@ -226,7 +275,8 @@ defineExpose({ showCopyTaskNodeConfig }); // 暴露方法给父组件
       </div>
     </template>
     <Tabs v-model:active-key="activeTabName">
-      <TabPane tab="抄送人" key="user">
+      <!-- 抄送人 -->
+      <TabPane :tab="$t('bpm.simpleProcessDesign.action.copyUser')" key="user">
         <div>
           <Form
             ref="formRef"
@@ -235,7 +285,11 @@ defineExpose({ showCopyTaskNodeConfig }); // 暴露方法给父组件
             :wrapper-col="{ span: 24 }"
             :rules="formRules"
           >
-            <FormItem label="抄送人设置" name="candidateStrategy">
+            <!-- 抄送人设置 -->
+            <FormItem
+              :label="$t('bpm.simpleProcessDesign.action.copyUserSetting')"
+              name="candidateStrategy"
+            >
               <RadioGroup
                 v-model:value="configForm.candidateStrategy"
                 @change="changeCandidateStrategy"
@@ -256,7 +310,7 @@ defineExpose({ showCopyTaskNodeConfig }); // 暴露方法给父组件
 
             <FormItem
               v-if="configForm.candidateStrategy === CandidateStrategy.ROLE"
-              label="指定角色"
+              :label="$t('bpm.simpleProcessDesign.action.assignRole')"
               name="roleIds"
             >
               <Select
@@ -283,7 +337,7 @@ defineExpose({ showCopyTaskNodeConfig }); // 暴露方法给父组件
                 configForm.candidateStrategy ===
                   CandidateStrategy.MULTI_LEVEL_DEPT_LEADER
               "
-              label="指定部门"
+              :label="$t('bpm.simpleProcessDesign.action.assignDept')"
               name="deptIds"
             >
               <TreeSelect
@@ -294,7 +348,7 @@ defineExpose({ showCopyTaskNodeConfig }); // 暴露方法给父组件
                   value: 'id',
                   children: 'children',
                 }"
-                empty-text="加载中，请稍后"
+                :empty-text="$t('bpm.simpleProcessDesign.common.loading')"
                 multiple
                 :check-strictly="true"
                 allow-clear
@@ -303,7 +357,7 @@ defineExpose({ showCopyTaskNodeConfig }); // 暴露方法给父组件
             </FormItem>
             <FormItem
               v-if="configForm.candidateStrategy === CandidateStrategy.POST"
-              label="指定岗位"
+              :label="$t('bpm.simpleProcessDesign.action.assignPost')"
               name="postIds"
             >
               <Select
@@ -323,7 +377,7 @@ defineExpose({ showCopyTaskNodeConfig }); // 暴露方法给父组件
             </FormItem>
             <FormItem
               v-if="configForm.candidateStrategy === CandidateStrategy.USER"
-              label="指定用户"
+              :label="$t('bpm.simpleProcessDesign.action.assignUser')"
               name="userIds"
             >
               <Select
@@ -345,7 +399,7 @@ defineExpose({ showCopyTaskNodeConfig }); // 暴露方法给父组件
               v-if="
                 configForm.candidateStrategy === CandidateStrategy.USER_GROUP
               "
-              label="指定用户组"
+              :label="$t('bpm.simpleProcessDesign.action.assignUserGroup')"
               name="userGroups"
             >
               <Select
@@ -367,7 +421,7 @@ defineExpose({ showCopyTaskNodeConfig }); // 暴露方法给父组件
               v-if="
                 configForm.candidateStrategy === CandidateStrategy.FORM_USER
               "
-              label="表单内用户字段"
+              :label="$t('bpm.simpleProcessDesign.action.formUserField')"
               name="formUser"
             >
               <Select v-model:value="configForm.formUser" clearable>
@@ -387,7 +441,7 @@ defineExpose({ showCopyTaskNodeConfig }); // 暴露方法给父组件
                 configForm.candidateStrategy ===
                 CandidateStrategy.FORM_DEPT_LEADER
               "
-              label="表单内部门字段"
+              :label="$t('bpm.simpleProcessDesign.action.formDeptField')"
               name="formDept"
             >
               <Select v-model:value="configForm.formDept" clearable>
@@ -431,7 +485,7 @@ defineExpose({ showCopyTaskNodeConfig }); // 暴露方法给父组件
               v-if="
                 configForm.candidateStrategy === CandidateStrategy.EXPRESSION
               "
-              label="流程表达式"
+              :label="$t('bpm.simpleProcessDesign.action.expression')"
               name="expression"
             >
               <Textarea v-model:value="configForm.expression" clearable />
@@ -440,16 +494,22 @@ defineExpose({ showCopyTaskNodeConfig }); // 暴露方法给父组件
         </div>
       </TabPane>
       <TabPane
-        tab="表单字段权限"
+        :tab="$t('bpm.simpleProcessDesign.action.formFieldPermission')"
         key="fields"
         v-if="formType === BpmModelFormType.NORMAL"
       >
         <div class="p-1">
-          <div class="mb-4 text-base font-bold">字段权限</div>
+          <div class="mb-4 text-base font-bold">
+            <!-- 字段权限 -->
+            {{ $t('bpm.simpleProcessDesign.action.fields') }}
+          </div>
 
           <!-- 表头 -->
           <Row class="border border-gray-200 px-4 py-3">
-            <Col :span="8" class="font-bold">字段名称</Col>
+            <!-- 字段名称 -->
+            <Col :span="8" class="font-bold">
+              {{ $t('bpm.simpleProcessDesign.action.fieldName') }}
+            </Col>
             <Col :span="16">
               <Row>
                 <Col :span="8" class="flex items-center justify-center">
@@ -457,7 +517,8 @@ defineExpose({ showCopyTaskNodeConfig }); // 暴露方法给父组件
                     class="cursor-pointer font-bold"
                     @click="updatePermission('READ')"
                   >
-                    只读
+                    <!-- 只读 -->
+                    {{ $t('bpm.simpleProcessDesign.action.readOnly') }}
                   </span>
                 </Col>
                 <Col :span="8" class="flex items-center justify-center">
@@ -465,7 +526,8 @@ defineExpose({ showCopyTaskNodeConfig }); // 暴露方法给父组件
                     class="cursor-pointer font-bold"
                     @click="updatePermission('WRITE')"
                   >
-                    可编辑
+                    <!-- 可编辑 -->
+                    {{ $t('bpm.simpleProcessDesign.action.editable') }}
                   </span>
                 </Col>
                 <Col :span="8" class="flex items-center justify-center">
@@ -473,7 +535,8 @@ defineExpose({ showCopyTaskNodeConfig }); // 暴露方法给父组件
                     class="cursor-pointer font-bold"
                     @click="updatePermission('NONE')"
                   >
-                    隐藏
+                    <!-- 隐藏 -->
+                    {{ $t('bpm.simpleProcessDesign.action.hidden') }}
                   </span>
                 </Col>
               </Row>

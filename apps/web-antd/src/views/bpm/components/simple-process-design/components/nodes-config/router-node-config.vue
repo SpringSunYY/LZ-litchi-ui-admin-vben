@@ -6,7 +6,6 @@ import type { RouterSetting, SimpleFlowNode } from '../../consts';
 import { inject, ref } from 'vue';
 
 import { useVbenDrawer } from '@vben/common-ui';
-import { BpmNodeTypeEnum } from '#/utils';
 import { IconifyIcon } from '@vben/icons';
 
 import {
@@ -21,6 +20,9 @@ import {
   Select,
   SelectOption,
 } from 'ant-design-vue';
+
+import { $t } from '#/locales';
+import { BpmNodeTypeEnum } from '#/utils';
 
 import { ConditionType } from '../../consts';
 import { useNodeName, useWatchNode } from '../../helpers';
@@ -52,7 +54,8 @@ async function validateConfig() {
   // 校验路由分支选择
   const routeIdValid = await formRef.value.validate().catch(() => false);
   if (!routeIdValid) {
-    message.warning('请配置路由目标节点');
+    // 请配置路由目标节点
+    message.warning($t('bpm.simpleProcessDesign.router.selectTargetNode'));
     return false;
   }
 
@@ -110,33 +113,46 @@ function getShowText() {
     !Array.isArray(routerGroups.value) ||
     routerGroups.value.length <= 0
   ) {
-    message.warning('请配置路由！');
+    // 请配置路由！
+    message.warning($t('bpm.simpleProcessDesign.router.pleaseConfigRouter'));
     return '';
   }
   for (const route of routerGroups.value) {
     if (!route.nodeId || !route.conditionType) {
-      message.warning('请完善路由配置项！');
+      // 请完善路由配置项！
+      message.warning(
+        $t('bpm.simpleProcessDesign.router.pleaseCompleteConfig'),
+      );
       return '';
     }
     if (
       route.conditionType === ConditionType.EXPRESSION &&
       !route.conditionExpression
     ) {
-      message.warning('请完善路由配置项！');
+      // 请完善路由配置项！
+      message.warning(
+        $t('bpm.simpleProcessDesign.router.pleaseCompleteConfig'),
+      );
       return '';
     }
     if (route.conditionType === ConditionType.RULE) {
       for (const condition of route.conditionGroups.conditions) {
         for (const rule of condition.rules) {
           if (!rule.leftSide || !rule.rightSide) {
-            message.warning('请完善路由配置项！');
+            // 请完善路由配置项！
+            message.warning(
+              $t('bpm.simpleProcessDesign.router.pleaseCompleteConfig'),
+            );
             return '';
           }
         }
       }
     }
   }
-  return `${routerGroups.value.length}条路由分支`;
+  // {routerGroups.length}条路由分支
+  return $t('bpm.simpleProcessDesign.router.routerBranchCount', [
+    routerGroups.value.length,
+  ]);
 }
 
 /** 添加路由分支 */
@@ -233,19 +249,25 @@ defineExpose({ openDrawer }); // 暴露方法给父组件
         <template #title>
           <div class="flex h-16 w-full items-center justify-between">
             <div class="flex items-center font-normal">
-              <span class="font-medium">路由{{ index + 1 }}</span>
+              <span class="font-medium">{{
+                $t('bpm.simpleProcessDesign.router.routerIndex', [index + 1])
+              }}</span>
               <FormItem
                 class="mb-0 ml-4 inline-block w-48"
                 :name="['routerGroups', index, 'nodeId']"
                 :rules="{
                   required: true,
-                  message: '路由目标节点不能为空',
+                  message: $t(
+                    'bpm.simpleProcessDesign.router.targetNodeCannotEmpty',
+                  ),
                   trigger: 'change',
                 }"
               >
                 <Select
                   v-model:value="item.nodeId"
-                  placeholder="请选择路由目标节点"
+                  :placeholder="
+                    $t('bpm.simpleProcessDesign.router.selectTargetNode')
+                  "
                   allow-clear
                 >
                   <SelectOption
@@ -288,7 +310,8 @@ defineExpose({ openDrawer }); // 暴露方法给父组件
           <template #icon>
             <IconifyIcon icon="lucide:settings" />
           </template>
-          新增路由分支
+          <!-- 新增路由分支 -->
+          {{ $t('bpm.simpleProcessDesign.router.addRouterBranch') }}
         </Button>
       </Col>
     </Row>

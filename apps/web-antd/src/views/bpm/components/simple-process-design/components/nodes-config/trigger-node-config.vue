@@ -11,7 +11,6 @@ import type {
 import { computed, getCurrentInstance, onMounted, reactive, ref } from 'vue';
 
 import { useVbenDrawer } from '@vben/common-ui';
-import { BpmNodeTypeEnum } from '#/utils';
 import { IconifyIcon } from '@vben/icons';
 import { cloneDeep } from '@vben/utils';
 
@@ -29,6 +28,9 @@ import {
   SelectOption,
   Tag,
 } from 'ant-design-vue';
+
+import { $t } from '#/locales';
+import { BpmNodeTypeEnum } from '#/utils';
 
 import {
   DEFAULT_CONDITION_GROUP_VALUE,
@@ -71,7 +73,6 @@ const [Drawer, drawerApi] = useVbenDrawer({
 // 当前节点
 const currentNode = useWatchNode(props);
 // 节点名称
-// @ts-expect-error: composable typing does not preserve this node schema exactly
 const { nodeName, showInput, clickIcon, changeNodeName, inputRef } =
   useNodeName(BpmNodeTypeEnum.TRIGGER_NODE);
 // 触发器表单配置
@@ -79,9 +80,21 @@ const formRef = ref(); // 表单 Ref
 
 // 表单校验规则
 const formRules: Record<string, Rule[]> = reactive({
-  type: [{ required: true, message: '触发器类型不能为空', trigger: 'change' }],
+  type: [
+    {
+      required: true,
+      message: $t('bpm.simpleProcessDesign.trigger.triggerTypeCannotEmpty'),
+      trigger: 'change',
+    },
+  ],
   'httpRequestSetting.url': [
-    { required: true, message: '请求地址不能为空', trigger: 'blur' },
+    {
+      required: true,
+      message: $t(
+        'bpm.simpleProcessDesign.placeholder.requestAddressCannotEmpty',
+      ),
+      trigger: 'blur',
+    },
   ],
 });
 
@@ -316,11 +329,17 @@ function getShowText(): string {
     case TriggerTypeEnum.FORM_DELETE: {
       for (const [index, setting] of configForm.value.formSettings!.entries()) {
         if (!setting.deleteFields || setting.deleteFields.length === 0) {
-          message.warning(`请选择表单设置${index + 1}要删除的字段`);
+          // 请选择表单设置{index + 1}要删除的字段
+          message.warning(
+            $t('bpm.simpleProcessDesign.trigger.selectFieldToDelete', [
+              index + 1,
+            ]),
+          );
           return '';
         }
       }
-      showText = '删除表单数据';
+      // 删除表单数据
+      showText = $t('bpm.simpleProcessDesign.trigger.formDelete');
 
       break;
     }
@@ -330,11 +349,17 @@ function getShowText(): string {
           !setting.updateFormFields ||
           Object.keys(setting.updateFormFields).length === 0
         ) {
-          message.warning(`请添加表单设置${index + 1}的修改字段`);
+          // 请添加表单设置{index + 1}的修改字段
+          message.warning(
+            $t('bpm.simpleProcessDesign.trigger.addUpdateFieldForSetting', [
+              index + 1,
+            ]),
+          );
           return '';
         }
       }
-      showText = '修改表单数据';
+      // 修改表单数据
+      showText = $t('bpm.simpleProcessDesign.trigger.formUpdate');
 
       break;
     }
@@ -411,7 +436,10 @@ onMounted(() => {
         :wrapper-col="{ span: 24 }"
         :rules="formRules"
       >
-        <FormItem label="触发器类型" name="type">
+        <FormItem
+          :label="$t('bpm.simpleProcessDesign.trigger.triggerType')"
+          name="type"
+        >
           <Select v-model:value="configForm.type" @change="changeTriggerType">
             <SelectOption
               v-for="(item, index) in TRIGGER_TYPES"
@@ -448,7 +476,11 @@ onMounted(() => {
             <Card class="mt-4">
               <template #title>
                 <div class="flex w-full items-center justify-between">
-                  <span>修改表单设置 {{ index + 1 }}</span>
+                  <span>{{
+                    $t('bpm.simpleProcessDesign.trigger.updateFormSetting', [
+                      index + 1,
+                    ])
+                  }}</span>
                   <Button
                     v-if="configForm.formSettings!.length > 1"
                     shape="circle"
@@ -488,11 +520,17 @@ onMounted(() => {
                     <template #icon>
                       <IconifyIcon icon="lucide:link" />
                     </template>
-                    添加条件
+                    <!-- 添加条件 -->
+                    {{ $t('bpm.simpleProcessDesign.trigger.addCondition') }}
                   </Button>
                 </Col>
               </Row>
-              <Divider>修改表单字段设置</Divider>
+              <!-- 修改表单字段设置 -->
+              <Divider>
+                {{
+                  $t('bpm.simpleProcessDesign.trigger.updateFormFieldSetting')
+                }}
+              </Divider>
               <!-- 表单字段修改设置 -->
               <Row
                 :gutter="8"
@@ -506,7 +544,11 @@ onMounted(() => {
                       @change="
                         (newKey) => updateFormFieldKey(formSetting, key, newKey)
                       "
-                      placeholder="请选择表单字段"
+                      :placeholder="
+                        $t(
+                          'bpm.simpleProcessDesign.placeholder.selectFormField',
+                        )
+                      "
                       :disabled="key !== ''"
                       allow-clear
                     >
@@ -523,20 +565,26 @@ onMounted(() => {
                   </FormItem>
                 </Col>
                 <Col :span="4">
-                  <FormItem>的值设置为</FormItem>
+                  <FormItem>
+                    {{ $t('bpm.simpleProcessDesign.trigger.setValueAs') }}
+                  </FormItem>
                 </Col>
                 <Col :span="10">
                   <FormItem
                     :name="['formSettings', index, 'updateFormFields', key]"
                     :rules="{
                       required: true,
-                      message: '值不能为空',
+                      message: $t(
+                        'bpm.simpleProcessDesign.trigger.valueCannotEmpty',
+                      ),
                       trigger: 'blur',
                     }"
                   >
                     <Input
                       v-model:value="formSetting.updateFormFields![key]"
-                      placeholder="请输入值"
+                      :placeholder="
+                        $t('bpm.simpleProcessDesign.placeholder.enterValue')
+                      "
                       allow-clear
                       :disabled="!key"
                     />
@@ -564,7 +612,8 @@ onMounted(() => {
                     <template #icon>
                       <IconifyIcon icon="lucide:file-cog" />
                     </template>
-                    添加修改字段
+                    <!-- 添加修改字段 -->
+                    {{ $t('bpm.simpleProcessDesign.trigger.addUpdateField') }}
                   </Button>
                 </Col>
               </Row>
@@ -582,7 +631,8 @@ onMounted(() => {
                 <template #icon>
                   <IconifyIcon icon="lucide:settings" />
                 </template>
-                添加设置
+                <!-- 添加设置 -->
+                {{ $t('bpm.simpleProcessDesign.trigger.addSetting') }}
               </Button>
             </Col>
           </Row>
@@ -597,7 +647,11 @@ onMounted(() => {
             <Card class="mt-4">
               <template #title>
                 <div class="flex w-full items-center justify-between">
-                  <span>删除表单设置 {{ index + 1 }}</span>
+                  <span>{{
+                    $t('bpm.simpleProcessDesign.trigger.deleteFormSetting', [
+                      index + 1,
+                    ])
+                  }}</span>
                   <Button
                     v-if="configForm.formSettings!.length > 1"
                     shape="circle"
@@ -638,18 +692,24 @@ onMounted(() => {
                     <template #icon>
                       <IconifyIcon icon="lucide:link" />
                     </template>
-                    添加条件
+                    <!-- 添加条件 -->
+                    {{ $t('bpm.simpleProcessDesign.trigger.addCondition') }}
                   </Button>
                 </Col>
               </Row>
 
-              <Divider>删除表单字段设置</Divider>
+              <!-- 删除表单字段设置 -->
+              <Divider>
+                {{ $t('bpm.simpleProcessDesign.trigger.deleteFieldSetting') }}
+              </Divider>
               <!-- 表单字段删除设置 -->
               <div class="flex flex-wrap gap-2">
                 <Select
                   v-model:value="formSetting.deleteFields"
                   mode="multiple"
-                  placeholder="请选择要删除的字段"
+                  :placeholder="
+                    $t('bpm.simpleProcessDesign.placeholder.selectDeleteField')
+                  "
                   class="w-full"
                 >
                   <SelectOption
@@ -676,7 +736,8 @@ onMounted(() => {
                 <template #icon>
                   <IconifyIcon icon="lucide:settings" />
                 </template>
-                添加设置
+                <!-- 添加设置 -->
+                {{ $t('bpm.simpleProcessDesign.trigger.addSetting') }}
               </Button>
             </Col>
           </Row>

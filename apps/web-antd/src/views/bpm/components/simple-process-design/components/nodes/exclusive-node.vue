@@ -3,11 +3,13 @@ import type { SimpleFlowNode } from '../../consts';
 
 import { getCurrentInstance, inject, nextTick, ref, watch } from 'vue';
 
-import { BpmNodeTypeEnum } from '#/utils';
 import { IconifyIcon } from '@vben/icons';
 import { cloneDeep, buildShortUUID as generateUUID } from '@vben/utils';
 
 import { Button, Input } from 'ant-design-vue';
+
+import { $t } from '#/locales';
+import { BpmNodeTypeEnum } from '#/utils';
 
 import {
   ConditionType,
@@ -107,7 +109,8 @@ function addCondition() {
     const lastIndex = len - 1;
     const conditionData: SimpleFlowNode = {
       id: `Flow_${generateUUID()}`,
-      name: `条件${len}`,
+      // 条件 + N
+      name: $t('bpm.simpleProcessDesign.exclusive.condition', [len]),
       showText: '',
       type: BpmNodeTypeEnum.CONDITION_NODE,
       childNode: undefined,
@@ -178,7 +181,8 @@ function recursiveFindParentNode(
         <span class="iconfont icon-exclusive icon-size condition"></span>
       </div>
       <Button v-else class="branch-node-add" @click="addCondition">
-        添加条件
+        <!-- 添加条件 -->
+        {{ $t('bpm.simpleProcessDesign.exclusive.addCondition') }}
       </Button>
       <!-- 排他网关节点下面可以多个分支，每个分支第一个节点是条件节点 NodeType.CONDITION_NODE -->
       <div
@@ -221,7 +225,14 @@ function recursiveFindParentNode(
                 <div v-else class="branch-title" @click="clickEvent(index)">
                   {{ item.name }}
                 </div>
-                <div class="branch-priority">优先级{{ index + 1 }}</div>
+                <div class="branch-priority">
+                  <!-- 优先级 + N -->
+                  {{
+                    $t('bpm.simpleProcessDesign.exclusive.priority', [
+                      index + 1,
+                    ])
+                  }}
+                </div>
               </div>
               <div
                 class="branch-node-content"

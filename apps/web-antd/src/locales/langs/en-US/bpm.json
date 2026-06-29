@@ -633,7 +633,10 @@
       "trigger": "trigger",
       "transactor": "handler",
       "childProcess": "sub-process",
-      "endEvent": "end"
+      "endEvent": "end",
+      "conditionBranch": "condition branch",
+      "parallelBranch": "parallel branch",
+      "inclusiveBranch": "inclusive branch"
     },
     "handlerMenu": {
       "userTask": "approver",
@@ -661,11 +664,6 @@
     "action": {
       "approveType": "approval type",
       "person": "",
-      "user": "user",
-      "role": "role",
-      "dept": "department",
-      "post": "post",
-      "userGroup": "user group",
       "formUserField": "form user field",
       "formDeptField": "form department field",
       "expression": "process expression",
@@ -692,6 +690,11 @@
       "readOnly": "read only",
       "editable": "editable",
       "hidden": "hidden",
+      "userSetting": "user setting",
+      "assignRole": "assign role",
+      "assignDept": "assign department",
+      "assignPost": "assign post",
+      "assignUserGroup": "assign user group",
       "listener": "listener",
       "listenerCreate": "create task",
       "listenerAssign": "assign task executor",
@@ -700,9 +703,7 @@
       "allMembersCanStart": "all members can start process",
       "canStartProcess": "{0} can start process",
       "deptCountCanStart": "{0} departments can start process",
-      "designProcess": "please design the process",
       "nodeConfigIncomplete": "incomplete node config, please modify",
-      "defaultConfig": "default config",
       "alreadySet": "already set",
       "approveStrategyCannotEmpty": "approver setting cannot be empty",
       "userCannotEmpty": "user cannot be empty",
@@ -726,13 +727,29 @@
       "startUserSelf": "initiator self",
       "startUserDeptLeader": "initiator dept leader",
       "startUserMultiLevelDeptLeader": "initiator multi-level dept leader",
-      "conditionRuleAnd": "and",
-      "conditionRuleOr": "or",
-      "conditionRuleIncomplete": "please complete condition rules",
-      "conditionRulePrefix": "expression: ",
-      "conditionDefaultOther": "other",
-      "conditionInclusiveOther": "inclusive condition {0}",
-      "startUserFieldTitle": "initiator"
+      "startUserFieldTitle": "initiator",
+      "skipExpression": "skip expression",
+      "select": "select",
+      "clear": "clear",
+      "assignUser": "specify user",
+      "copyUserCannotEmpty": "cc user setting cannot be empty",
+      "copyUser": "cc user",
+      "copyUserSetting": "cc user setting",
+      "configIncomplete": "incomplete node config, please modify and save",
+      "fields": "form fields",
+      "handler": "handle",
+      "selectChildProcess": "select sub-process",
+      "skip": "skip",
+      "notSkip": "not skip",
+      "mainToChildVariable": "main → child variable",
+      "childToMainVariable": "child → main variable",
+      "childProcessInitiator": "sub-process initiator",
+      "whenChildEmpty": "when sub-process initiator is empty",
+      "childFormUserField": "sub-process initiator field",
+      "multiInstanceSetting": "multi-instance setting",
+      "open": "open",
+      "close": "close",
+      "processInfo": "process info"
     },
     "switch": {
       "on": "on",
@@ -821,7 +838,6 @@
     "delayType": {
       "fixedDuration": "fixed duration",
       "fixedDate": "fixed date",
-      "delayTime": "delay time",
       "afterEnterNextNode": "after enter next node"
     },
     "operation": {
@@ -840,11 +856,12 @@
       "import": "import",
       "reset": "reset",
       "saveFailed": "save failed",
-      "loading": "loading, please wait"
+      "getFlowDataFailed": "failed to get flow data"
     },
     "condition": {
       "rule": "condition rule",
       "expression": "condition expression",
+      "conditionConfig": "condition config",
       "conditionGroupRelation": "condition group relation",
       "and": "and",
       "or": "or",
@@ -853,16 +870,13 @@
       "configMethod": "config method",
       "configMethodCannotEmpty": "config method cannot be empty",
       "conditionExpressionCannotEmpty": "condition expression cannot be empty",
-      "leftSide": "left value",
       "leftSideCannotEmpty": "left value cannot be empty",
       "leftSideSelectPlaceholder": "select form field",
-      "rightSide": "right value",
       "rightSideCannotEmpty": "right value cannot be empty",
       "rightSidePlaceholder": "enter right value",
       "formFieldNotRequiredTip": "form field cannot be used as branch condition when not required",
       "addConditionGroup": "add condition group",
       "ruleComplete": "please complete condition rules",
-      "selectOperator": "select operator",
       "expressionPlaceholder": "enter condition expression",
       "opEq": "equals",
       "opNe": "not equals",
@@ -871,9 +885,7 @@
       "opGt": "greater than",
       "opGte": "greater than or equal",
       "opContains": "contains",
-      "opNotContains": "not contains",
-      "opIsEmpty": "is empty",
-      "opIsNotEmpty": "is not empty"
+      "opNotContains": "not contains"
     },
     "httpRequest": {
       "fixedValue": "fixed value",
@@ -884,7 +896,6 @@
       "paramValueCannotEmpty": "param value cannot be empty",
       "paramNamePlaceholder": "param name",
       "paramValuePlaceholder": "header",
-      "paramValueSelectPlaceholder": "select form field",
       "addRow": "add row",
       "responseSetting": "response setting",
       "formFieldCannotEmpty": "form field cannot be empty",
@@ -922,20 +933,15 @@
       "addRouterBranch": "add router branch"
     },
     "placeholder": {
-      "conditionExpression": "enter condition expression",
       "requestAddress": "request address",
       "requestAddressCannotEmpty": "request address cannot be empty",
       "selectFormField": "select form field",
       "enterValue": "enter value",
       "selectDeleteField": "select field to delete",
-      "selectOperator": "select operator"
+      "selectOperator": "select operator",
+      "selectTime": "select date and time"
     },
     "default": {
-      "parallelBranch": "parallel branch",
-      "conditionBranch": "condition branch",
-      "copyTask": "cc node",
-      "trigger": "trigger",
-      "childProcess": "sub-process",
       "condition1": "condition 1",
       "otherCondition": "other",
       "otherConditionTip": "will enter this branch when other conditions are not met",
@@ -943,44 +949,80 @@
       "parallel1": "parallel 1",
       "parallel2": "parallel 2",
       "parallelCondition": "parallel {0}",
-      "inclusiveBranch": "inclusive branch",
       "inclusiveCondition": "inclusive condition {0}",
       "noConditionConcurrentExecute": "execute concurrently without conditions",
       "addBranch": "add branch",
-      "addCondition": "add condition",
       "noPriority": "no priority",
-      "notAllowAddParallelAfterCondition": "parallel branch is not allowed after condition or inclusive branch"
+      "notAllowAddParallelAfterCondition": "parallel branch is not allowed after condition or inclusive branch",
+      "delayFor": "delay {0}{1}",
+      "delayTo": "delay until {0}",
+      "delayType": "delay time"
     },
     "exclusive": {
       "condition": "condition {0}",
       "addCondition": "add condition",
       "priority": "priority {0}"
     },
+    "field": {
+      "startUser": "initiator",
+      "dept": "department",
+      "startTime": "start time",
+      "endTime": "end time",
+      "processStatus": "process status",
+      "approveStatus": "approval status",
+      "approveReason": "approval reason",
+      "assignee": "assignee",
+      "duration": "duration"
+    },
     "childProcess": {
       "sameAsMain": "same as main process initiator",
-      "fromForm": "form",
+      "fromFormUser": "from form",
       "childAdmin": "sub-process admin",
       "mainAdmin": "main process admin",
       "fixedQuantity": "fixed quantity",
       "numberForm": "number form",
-      "multiForm": "multi-select form"
-    }
-  },
-  "selectModal": {
-    "userSelectModal": {
-      "title": "select user",
-      "confirmText": "confirm",
-      "cancelText": "cancel",
-      "searchDept": "search department",
-      "total": "total {0} items",
-      "pleaseSelectUser": "please select a user",
-      "unselected": "unselected",
-      "selected": "selected"
+      "multiForm": "multi-select form",
+      "variableCannotEmpty": "variable cannot be empty",
+      "addRow": "add row",
+      "asyncExecute": "async execute",
+      "skipStartNode": "skip start node",
+      "serial": "serial",
+      "completeRatioTip": "complete ratio (%)",
+      "instanceQuantity": "instance quantity",
+      "callSubProcess": "call sub-process: {0}",
+      "loadFailed": "failed to load model list",
+      "timeoutSetting": "timeout setting",
+      "designValidateFailed": "Process design validation failed",
+      "confirm": "OK",
+      "asyncCannotEmpty": "async cannot be empty",
+      "childProcessCannotEmpty": "child process cannot be empty",
+      "skipStartNodeCannotEmpty": "skip start user node cannot be empty",
+      "childProcessInitiatorCannotEmpty": "child process initiator cannot be empty",
+      "whenChildEmptyCannotEmpty": "when child process initiator is empty cannot be empty",
+      "childFormUserFieldCannotEmpty": "child process initiator field cannot be empty",
+      "timeoutEnableCannotEmpty": "timeout enable cannot be empty",
+      "timeoutCannotEmpty": "timeout cannot be empty",
+      "multiInstanceEnableCannotEmpty": "multi-instance enable cannot be empty",
+      "sequentialCannotEmpty": "sequential cannot be empty",
+      "instanceQuantityCannotEmpty": "instance quantity cannot be empty",
+      "completeRatioCannotEmpty": "complete ratio cannot be empty",
+      "fixedQuantityCannotEmpty": "fixed quantity cannot be empty",
+      "numberFormCannotEmpty": "number form field cannot be empty",
+      "multiFormCannotEmpty": "multi-select form field cannot be empty"
     },
-    "deptSelectModal": {
-      "title": "select department",
-      "confirmText": "confirm",
-      "cancelText": "cancel"
+    "common": {
+      "loading": "loading, please wait"
+    },
+    "candidateStrategyShowText": {
+      "assignUser": "assign user: {0}",
+      "assignRole": "assign role: {0}",
+      "deptMember": "dept member: {0}",
+      "deptLeader": "dept leader: {0}",
+      "multiLevelDeptLeader": "multi-level dept leader: {0}",
+      "assignPost": "assign post: {0}",
+      "assignUserGroup": "assign user group: {0}",
+      "expression": "process expression: {0}",
+      "expressionPrefix": "expression: {0}"
     }
   }
 }

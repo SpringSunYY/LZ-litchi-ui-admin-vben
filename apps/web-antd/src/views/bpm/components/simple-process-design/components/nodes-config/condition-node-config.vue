@@ -187,7 +187,8 @@ defineExpose({ open }); // 提供 open 方法，用于打开弹窗
         class="mb-3 text-base"
         v-if="currentNode.conditionSetting?.defaultFlow"
       >
-        未满足其它条件时，将进入此分支（该分支不可编辑和删除）
+        <!-- 未满足其它条件时，将进入此分支（该分支不可编辑和删除） -->
+        {{ $t('bpm.simpleProcessDesign.default.otherConditionTipWithNote') }}
       </div>
       <div v-else>
         <Condition ref="conditionRef" v-model:model-value="condition" />

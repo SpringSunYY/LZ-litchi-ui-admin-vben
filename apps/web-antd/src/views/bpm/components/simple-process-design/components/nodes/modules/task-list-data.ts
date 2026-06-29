@@ -1,5 +1,6 @@
 import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 
+import { $t } from '#/locales';
 import { DICT_TYPE } from '#/utils';
 
 /** 审批记录列表字段 */
@@ -7,7 +8,8 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
   return [
     {
       field: 'assigneeUser',
-      title: '审批人',
+      // 审批人
+      title: $t('bpm.simpleProcessDesign.field.assignee'),
       slots: {
         default: ({ row }: { row: any }) => {
           return row.assigneeUser?.nickname || row.ownerUser?.nickname;
@@ -17,7 +19,8 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
     },
     {
       field: 'deptName',
-      title: '部门',
+      // 部门
+      title: $t('bpm.simpleProcessDesign.field.dept'),
       slots: {
         default: ({ row }: { row: any }) => {
           return row.assigneeUser?.deptName || row.ownerUser?.deptName;
@@ -27,19 +30,22 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
     },
     {
       field: 'createTime',
-      title: '开始时间',
+      // 开始时间
+      title: $t('bpm.simpleProcessDesign.field.startTime'),
       formatter: 'formatDateTime',
       minWidth: 140,
     },
     {
       field: 'endTime',
-      title: '结束时间',
+      // 结束时间
+      title: $t('bpm.simpleProcessDesign.field.endTime'),
       formatter: 'formatDateTime',
       minWidth: 140,
     },
     {
       field: 'status',
-      title: '审批状态',
+      // 审批状态
+      title: $t('bpm.simpleProcessDesign.field.approveStatus'),
       minWidth: 90,
       cellRender: {
         name: 'CellDict',
@@ -48,12 +54,14 @@ export function useGridColumns(): VxeTableGridOptions['columns'] {
     },
     {
       field: 'reason',
-      title: '审批建议',
+      // 审批建议
+      title: $t('bpm.simpleProcessDesign.field.approveReason'),
       minWidth: 160,
     },
     {
       field: 'durationInMillis',
-      title: '耗时',
+      // 耗时
+      title: $t('bpm.simpleProcessDesign.field.duration'),
       minWidth: 100,
       formatter: 'formatPast2',
     },

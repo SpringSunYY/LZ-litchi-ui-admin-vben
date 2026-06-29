@@ -8,6 +8,7 @@ import { downloadFileFromBlob, isString } from '@vben/utils';
 
 import { Button, ButtonGroup, Modal, Row } from 'ant-design-vue';
 
+import { $t } from '#/locales';
 import { BpmNodeTypeEnum } from '#/utils';
 
 import { NODE_DEFAULT_TEXT } from '../consts';
@@ -161,7 +162,11 @@ async function getCurrentFlowData() {
     }
     return processNodeTree.value;
   } catch (error) {
-    console.error('获取流程数据失败:', error);
+    // 获取流程数据失败
+    console.error(
+      $t('bpm.simpleProcessDesign.toolbar.getFlowDataFailed'),
+      error,
+    );
     return undefined;
   }
 }
@@ -205,10 +210,14 @@ onMounted(() => {
       <Row type="flex" justify="end">
         <ButtonGroup key="scale-control">
           <Button v-if="!readonly" @click="exportJson">
-            <IconifyIcon icon="lucide:download" /> 导出
+            <IconifyIcon icon="lucide:download" />
+            <!-- 导出 -->
+            {{ $t('bpm.simpleProcessDesign.toolbar.export') }}
           </Button>
           <Button v-if="!readonly" @click="importJson">
-            <IconifyIcon icon="lucide:upload" />导入
+            <IconifyIcon icon="lucide:upload" />
+            <!-- 导入 -->
+            {{ $t('bpm.simpleProcessDesign.toolbar.import') }}
           </Button>
           <!-- 用于打开本地文件-->
           <input
@@ -230,7 +239,10 @@ onMounted(() => {
           <Button :plain="true" @click="zoomIn()">
             <IconifyIcon icon="lucide:zoom-in" />
           </Button>
-          <Button @click="resetPosition">重置</Button>
+          <Button @click="resetPosition">
+            <!-- 重置 -->
+            {{ $t('bpm.simpleProcessDesign.toolbar.reset') }}
+          </Button>
         </ButtonGroup>
       </Row>
     </div>
@@ -252,11 +264,14 @@ onMounted(() => {
 
   <Modal
     v-model:open="errorDialogVisible"
-    title="保存失败"
+    :title="$t('bpm.simpleProcessDesign.toolbar.saveFailed')"
     width="400"
     :fullscreen="false"
   >
-    <div class="mb-2">以下节点内容不完善，请修改后保存</div>
+    <div class="mb-2">
+      <!-- 以下节点内容不完善，请修改后保存 -->
+      {{ $t('bpm.simpleProcessDesign.action.configIncomplete') }}
+    </div>
     <div
       class="line-height-normal mb-3 rounded p-2"
       v-for="(item, index) in errorNodes"
@@ -265,7 +280,10 @@ onMounted(() => {
       {{ item.name }} : {{ NODE_DEFAULT_TEXT.get(item.type) }}
     </div>
     <template #footer>
-      <Button type="primary" @click="errorDialogVisible = false">知道了</Button>
+      <!-- 知道了 -->
+      <Button type="primary" @click="errorDialogVisible = false">
+        {{ $t('bpm.simpleProcessDesign.childProcess.confirm') }}
+      </Button>
     </template>
   </Modal>
 </template>
