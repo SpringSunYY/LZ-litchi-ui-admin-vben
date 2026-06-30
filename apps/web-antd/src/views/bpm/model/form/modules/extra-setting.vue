@@ -2,7 +2,7 @@
 import { computed, provide, ref, watch } from 'vue';
 
 import { useVbenModal } from '@vben/common-ui';
-import { IconifyIcon } from '@vben/icons';
+import { IconifyIcon, CircleHelp } from '@vben/icons';
 import { $t } from '@vben/locales';
 
 import {
@@ -605,7 +605,7 @@ defineExpose({ initData, validate });
         </Col>
       </Row>
     </FormItem>
-    <FormItem class="mb-5" label="自定义打印模板">
+    <FormItem class="mb-5" :label="$t('bpm.model.extra.customPrintTemplate')">
       <div class="flex w-full flex-col">
         <div class="flex items-center">
           <Switch
@@ -621,7 +621,7 @@ defineExpose({ initData, validate });
             <template #icon>
               <IconifyIcon icon="lucide:pencil" />
             </template>
-            编辑模板
+            {{ $t('bpm.model.extra.editTemplate') }}
           </Button>
         </div>
       </div>

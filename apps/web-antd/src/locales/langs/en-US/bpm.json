@@ -214,7 +214,7 @@
       "systemDefault": "system default",
       "showProcessName": "show process name",
       "customTitle": "custom title",
-      "insertFieldTip": "enter '{'' to insert a form field",
+      "insertFieldTip": "type curly braces to insert a form field",
       "insertFieldPlaceholder": "insert form fields or enter text",
       "summarySetting": "summary setting",
       "showFirst3Fields": "show first 3 form fields",
@@ -227,7 +227,24 @@
       "beforeTaskNotice": "pre-task notification",
       "taskExecutingNotice": "notify when task executes",
       "afterTaskNotice": "post-task notification",
-      "taskEndedNotice": "notify after task ends"
+      "taskEndedNotice": "notify after task ends",
+      "customPrintTemplate": "Custom Print Template",
+      "editTemplate": "Edit Template"
+    },
+    "printTemplate": {
+      "title": "Custom Template",
+      "tip": "Type @ to choose process or form fields to insert",
+      "field": {
+        "startUser": "Start User",
+        "startUserDept": "Start User Dept",
+        "processName": "Process Name",
+        "processNum": "Process No.",
+        "startTime": "Start Time",
+        "endTime": "End Time",
+        "processStatus": "Process Status",
+        "printUser": "Print User",
+        "printTime": "Print Time"
+      }
     }
   },
   "definition": {

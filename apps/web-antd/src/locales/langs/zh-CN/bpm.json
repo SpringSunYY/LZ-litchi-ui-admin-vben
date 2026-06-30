@@ -213,8 +213,8 @@
       "systemDefault": "系统默认",
       "showProcessName": "展示流程名称",
       "customTitle": "自定义标题",
-      "insertFieldTip": "输入字符 '{'' 即可插入表单字段",
-      "insertFieldPlaceholder": "请插入表单字段（输入 '{'' 可以选择表单字段）或输入文本",
+      "insertFieldTip": "输入花括号即可插入表单字段",
+      "insertFieldPlaceholder": "请插入表单字段（输入花括号可以选择表单字段）或输入文本",
       "summarySetting": "摘要设置",
       "showFirst3Fields": "展示表单前 3 个字段",
       "customSummary": "自定义摘要",
@@ -226,7 +226,24 @@
       "beforeTaskNotice": "任务前置通知",
       "taskExecutingNotice": "任务执行时通知",
       "afterTaskNotice": "任务后置通知",
-      "taskEndedNotice": "任务结束后通知"
+      "taskEndedNotice": "任务结束后通知",
+      "customPrintTemplate": "自定义打印模板",
+      "editTemplate": "编辑模板"
+    },
+    "printTemplate": {
+      "title": "自定义模板",
+      "tip": "输入 @ 可选择插入流程选项和表单选项",
+      "field": {
+        "startUser": "发起人",
+        "startUserDept": "发起人部门",
+        "processName": "流程名称",
+        "processNum": "流程编号",
+        "startTime": "发起时间",
+        "endTime": "结束时间",
+        "processStatus": "流程状态",
+        "printUser": "打印人",
+        "printTime": "打印时间"
+      }
     }
   },
   "definition": {

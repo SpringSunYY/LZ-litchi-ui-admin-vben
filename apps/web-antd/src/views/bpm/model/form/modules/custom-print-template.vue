@@ -9,6 +9,7 @@ import Editor from '@tinymce/tinymce-vue';
 import { Alert } from 'ant-design-vue';
 
 import { setupTinyPlugins } from './tinymce-plugin';
+import { $t } from '#/locales';
 
 const props = withDefaults(
   defineProps<{
@@ -51,15 +52,24 @@ const [Modal, modalApi] = useVbenModal({
 
 const mentionList = computed<MentionItem[]>(() => {
   const base: MentionItem[] = [
-    { id: 'startUser', name: '发起人' },
-    { id: 'startUserDept', name: '发起人部门' },
-    { id: 'processName', name: '流程名称' },
-    { id: 'processNum', name: '流程编号' },
-    { id: 'startTime', name: '发起时间' },
-    { id: 'endTime', name: '结束时间' },
-    { id: 'processStatus', name: '流程状态' },
-    { id: 'printUser', name: '打印人' },
-    { id: 'printTime', name: '打印时间' },
+    { id: 'startUser', name: $t('bpm.model.printTemplate.field.startUser') },
+    {
+      id: 'startUserDept',
+      name: $t('bpm.model.printTemplate.field.startUserDept'),
+    },
+    {
+      id: 'processName',
+      name: $t('bpm.model.printTemplate.field.processName'),
+    },
+    { id: 'processNum', name: $t('bpm.model.printTemplate.field.processNum') },
+    { id: 'startTime', name: $t('bpm.model.printTemplate.field.startTime') },
+    { id: 'endTime', name: $t('bpm.model.printTemplate.field.endTime') },
+    {
+      id: 'processStatus',
+      name: $t('bpm.model.printTemplate.field.processStatus'),
+    },
+    { id: 'printUser', name: $t('bpm.model.printTemplate.field.printUser') },
+    { id: 'printTime', name: $t('bpm.model.printTemplate.field.printTime') },
   ];
 
   const extras: MentionItem[] = (props.formFields || []).map((it: any) => ({
@@ -99,10 +109,10 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <Modal class="w-3/4" title="自定义模板">
+  <Modal class="w-3/4" :title="$t('bpm.model.printTemplate.title')">
     <div class="mb-3">
       <Alert
-        message="输入 @ 可选择插入流程选项和表单选项"
+        :message="$t('bpm.model.printTemplate.tip')"
         type="info"
         show-icon
       />

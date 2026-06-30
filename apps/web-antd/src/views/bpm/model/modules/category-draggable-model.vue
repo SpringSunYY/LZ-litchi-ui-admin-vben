@@ -32,6 +32,7 @@ import {
 } from '#/api/bpm/model';
 import I18nDictTag from '#/components/i18n/i18n-dict-tag/i18n-dict-tag.vue';
 import { $t } from '#/locales';
+import { setPendingExtraTitle } from '#/router/state';
 import { BpmModelFormType, DICT_TYPE } from '#/utils';
 
 // 导入重命名表单
@@ -280,10 +281,11 @@ function isManagerUser(row: any) {
   return row.managerUserIds && row.managerUserIds.includes(userId);
 }
 
-async function modelOperation(type: string, id: number) {
+async function modelOperation(type: string, recorde: any) {
+  setPendingExtraTitle(recorde.name ?? recorde.id);
   await router.push({
     name: 'BpmModelUpdate',
-    params: { id, type },
+    params: { id: recorde.id, type },
   });
 }
 
@@ -317,7 +319,7 @@ function handleModelCommand(command: string, row: any) {
       break;
     }
     case 'handleCopy': {
-      modelOperation('copy', row.id);
+      modelOperation('copy', row);
       break;
     }
     case 'handleDefinitionList': {
@@ -402,6 +404,7 @@ function handleDelete(row: any) {
 
 /** 跳转到指定流程定义列表 */
 function handleDefinitionList(row: any) {
+  setPendingExtraTitle(row.name ?? row.id);
   router.push({
     name: 'BpmProcessDefinition',
     query: {
@@ -422,7 +425,7 @@ watch(
     // 排序模式下不要用 props 覆盖，否则拖动结果会被擦掉
     if (isModelSorting.value) return;
     // 防御性：过滤掉 undefined / null，避免 ant-design-vue Table 渲染时报 "record is undefined"
-    const safeList = newList.filter((item) => item != null);
+    const safeList = newList.filter((item) => item !== null);
     modelList.value = safeList as BpmModelApi.ModelVO[];
     if (safeList.length > 0) {
       isExpand.value = true;
@@ -712,7 +715,7 @@ const handleRenameSuccess = () => {
                     type="link"
                     size="small"
                     class="px-1"
-                    @click="modelOperation('update', record.id)"
+                    @click="modelOperation('update', record)"
                     :disabled="!isManagerUser(record)"
                   >
                     {{ $t('bpm.model.message.edit') }}
