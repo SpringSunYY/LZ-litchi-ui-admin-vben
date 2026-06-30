@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { SimpleFlowNode } from '../../consts';
+import type { SimpleFlowNode } from '../../../consts';
 
 import { getCurrentInstance, inject, nextTick, ref, watch } from 'vue';
 
@@ -15,7 +15,7 @@ import {
   ConditionType,
   DEFAULT_CONDITION_GROUP_VALUE,
   NODE_DEFAULT_TEXT,
-} from '../../consts';
+} from '../../../consts';
 import { getDefaultConditionNodeName, useTaskStatusClass } from '../../helpers';
 import ConditionNodeConfig from '../nodes-config/condition-node-config.vue';
 import ProcessNodeTree from '../process-node-tree.vue';

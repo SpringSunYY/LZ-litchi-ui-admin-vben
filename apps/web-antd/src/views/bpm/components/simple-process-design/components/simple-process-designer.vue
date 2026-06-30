@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Ref } from 'vue';
 
-import type { SimpleFlowNode } from '../consts';
+import type { SimpleFlowNode } from '../../consts';
 
 import type { BpmUserGroupApi } from '#/api/bpm/userGroup';
 import type { SystemDeptApi } from '#/api/system/dept';
@@ -25,7 +25,7 @@ import { getSimpleUserList } from '#/api/system/user';
 import { $t } from '#/locales';
 import { BpmModelFormType, BpmNodeTypeEnum } from '#/utils';
 
-import { NODE_DEFAULT_TEXT, NodeId } from '../consts';
+import { NODE_DEFAULT_TEXT, NodeId } from '../../consts';
 import SimpleProcessModel from './simple-process-model.vue';
 
 defineOptions({

@@ -41,7 +41,7 @@ import {
   OPERATION_BUTTON_NAME,
   REJECT_HANDLER_TYPES,
   RejectHandlerType,
-} from '#/views/bpm/components/simple-process-design/consts';
+} from '#/views/bpm/components/consts';
 import { useFormFieldsPermission } from '#/views/bpm/components/simple-process-design/helpers';
 
 defineOptions({ name: 'ElementCustomConfig4UserTask' });

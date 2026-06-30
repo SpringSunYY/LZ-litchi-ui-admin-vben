@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { SimpleFlowNode } from '../../consts';
+import type { SimpleFlowNode } from '../../../consts';
 
 import { inject, ref } from 'vue';
 
@@ -19,7 +19,7 @@ import {
   DEFAULT_CONDITION_GROUP_VALUE,
   NODE_DEFAULT_NAME,
   RejectHandlerType,
-} from '../../consts';
+} from '../../../consts';
 
 defineOptions({
   name: 'NodeHandler',

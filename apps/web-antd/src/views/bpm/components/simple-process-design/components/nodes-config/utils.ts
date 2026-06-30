@@ -1,6 +1,6 @@
 import { $t } from '#/locales';
 
-import { APPROVE_TYPE, ApproveType, TimeUnitType } from '../../consts';
+import { APPROVE_TYPE, ApproveType, TimeUnitType } from '../../../consts';
 
 /** 获取条件节点默认的名称 */
 export function getDefaultConditionNodeName(

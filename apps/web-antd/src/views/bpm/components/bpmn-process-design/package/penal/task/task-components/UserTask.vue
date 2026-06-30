@@ -41,7 +41,7 @@ import {
   CandidateStrategy,
   FieldPermissionType,
   MULTI_LEVEL_DEPT,
-} from '#/views/bpm/components/simple-process-design/consts';
+} from '#/views/bpm/components/consts';
 import { useFormFieldsPermission } from '#/views/bpm/components/simple-process-design/helpers';
 import { ProcessExpressionSelectModal } from '#/views/bpm/processExpression/components';
 

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { SimpleFlowNode } from '../../consts';
+import type { SimpleFlowNode } from '../../../consts';
 
 import { nextTick, ref, watch } from 'vue';
 
@@ -9,7 +9,7 @@ import { cloneDeep } from '@vben/utils';
 
 import { Input } from 'ant-design-vue';
 
-import { ConditionType } from '../../consts';
+import { ConditionType } from '../../../consts';
 import {
   getConditionShowText,
   getDefaultConditionNodeName,

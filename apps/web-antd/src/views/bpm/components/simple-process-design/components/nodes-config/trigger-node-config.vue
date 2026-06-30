@@ -6,7 +6,7 @@ import type {
   FormTriggerSetting,
   SimpleFlowNode,
   TriggerSetting,
-} from '../../consts';
+} from '../../../consts';
 
 import { computed, getCurrentInstance, onMounted, reactive, ref } from 'vue';
 
@@ -36,7 +36,7 @@ import {
   DEFAULT_CONDITION_GROUP_VALUE,
   TRIGGER_TYPES,
   TriggerTypeEnum,
-} from '../../consts';
+} from '../../../consts';
 import {
   getConditionShowText,
   useFormFields,

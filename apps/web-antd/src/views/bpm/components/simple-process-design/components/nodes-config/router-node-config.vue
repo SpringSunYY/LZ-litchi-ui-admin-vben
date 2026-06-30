@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Ref } from 'vue';
 
-import type { RouterSetting, SimpleFlowNode } from '../../consts';
+import type { RouterSetting, SimpleFlowNode } from '../../../consts';
 
 import { inject, ref } from 'vue';
 
@@ -24,7 +24,7 @@ import {
 import { $t } from '#/locales';
 import { BpmNodeTypeEnum } from '#/utils';
 
-import { ConditionType } from '../../consts';
+import { ConditionType } from '../../../consts';
 import { useNodeName, useWatchNode } from '../../helpers';
 import Condition from './modules/condition.vue';
 

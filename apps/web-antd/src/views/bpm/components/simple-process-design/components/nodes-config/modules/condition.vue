@@ -33,7 +33,7 @@ import {
   CONDITION_CONFIG_TYPES,
   ConditionType,
   DEFAULT_CONDITION_GROUP_VALUE,
-} from '../../../consts';
+} from '../../../../consts';
 import { useFormFieldsAndStartUser } from '../../../helpers';
 
 defineOptions({

@@ -3,7 +3,7 @@ import type { Rule } from 'ant-design-vue/es/form';
 
 import type { ComponentPublicInstance, Ref } from 'vue';
 
-import type { ButtonSetting, SimpleFlowNode } from '../../consts';
+import type { ButtonSetting, SimpleFlowNode } from '../../../consts';
 import type { UserTaskFormType } from '../../helpers';
 
 import { computed, nextTick, onMounted, reactive, ref, watchEffect } from 'vue';
@@ -63,7 +63,7 @@ import {
   TimeoutHandlerType,
   TimeUnitType,
   TRANSACTOR_DEFAULT_BUTTON_SETTING,
-} from '../../consts';
+} from '../../../consts';
 import {
   useFormFieldsPermission,
   useNodeForm,

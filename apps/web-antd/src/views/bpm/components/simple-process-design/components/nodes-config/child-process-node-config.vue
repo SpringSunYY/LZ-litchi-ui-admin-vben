@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Rule } from 'ant-design-vue/es/form';
 
-import type { IOParameter, SimpleFlowNode } from '../../consts';
+import type { IOParameter, SimpleFlowNode } from '../../../consts';
 
 import { computed, onMounted, reactive, ref } from 'vue';
 
@@ -43,7 +43,7 @@ import {
   DelayTypeEnum,
   TIME_UNIT_TYPES,
   TimeUnitType,
-} from '../../consts';
+} from '../../../consts';
 import { useFormFields, useNodeName, useWatchNode } from '../../helpers';
 import { convertTimeUnit } from './utils';
 

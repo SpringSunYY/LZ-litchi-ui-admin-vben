@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { ConditionGroup } from '../../../consts';
+import type { ConditionGroup } from '../../../../consts';
 
 import { ref } from 'vue';
 
@@ -10,7 +10,10 @@ import { message } from 'ant-design-vue';
 
 import { $t } from '#/locales';
 
-import { ConditionType, DEFAULT_CONDITION_GROUP_VALUE } from '../../../consts';
+import {
+  ConditionType,
+  DEFAULT_CONDITION_GROUP_VALUE,
+} from '../../../../consts';
 import Condition from './condition.vue';
 
 defineOptions({ name: 'ConditionDialog' });

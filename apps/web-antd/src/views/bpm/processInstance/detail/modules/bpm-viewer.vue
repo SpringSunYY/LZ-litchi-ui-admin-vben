@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue';
 
-import { MyProcessViewer } from '#/views/bpm/components/bpmn-process-designer/package';
+import { MyProcessViewer } from '#/views/bpm/components/bpmn-process-design/package';
 
 defineOptions({ name: 'ProcessInstanceBpmnViewer' });
 

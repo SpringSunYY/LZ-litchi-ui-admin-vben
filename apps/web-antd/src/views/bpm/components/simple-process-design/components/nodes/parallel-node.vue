@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { SimpleFlowNode } from '../../consts';
+import type { SimpleFlowNode } from '../../../consts';
 
 import { inject, nextTick, ref, watch } from 'vue';
 
@@ -11,7 +11,7 @@ import { Button, Input } from 'ant-design-vue';
 import { $t } from '#/locales';
 import { BpmNodeTypeEnum } from '#/utils';
 
-import { NODE_DEFAULT_TEXT } from '../../consts';
+import { NODE_DEFAULT_TEXT } from '../../../consts';
 import { useTaskStatusClass } from '../../helpers';
 import ProcessNodeTree from '../process-node-tree.vue';
 import NodeHandler from './node-handler.vue';

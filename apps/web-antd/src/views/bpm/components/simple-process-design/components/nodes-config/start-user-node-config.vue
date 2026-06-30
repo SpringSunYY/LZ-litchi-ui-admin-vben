@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Ref } from 'vue';
 
-import type { SimpleFlowNode } from '../../consts';
+import type { SimpleFlowNode } from '../../../consts';
 
 import type { SystemDeptApi } from '#/api/system/dept';
 import type { SystemUserApi } from '#/api/system/user';
@@ -26,7 +26,10 @@ import {
 import { $t } from '#/locales';
 import { BpmModelFormType, BpmNodeTypeEnum } from '#/utils';
 
-import { FieldPermissionType, START_USER_BUTTON_SETTING } from '../../consts';
+import {
+  FieldPermissionType,
+  START_USER_BUTTON_SETTING,
+} from '../../../consts';
 import {
   useFormFieldsPermission,
   useNodeName,

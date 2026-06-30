@@ -4,7 +4,7 @@ import type {
   ConditionGroup,
   HttpRequestParam,
   SimpleFlowNode,
-} from './consts';
+} from '../consts';
 
 import type { BpmUserGroupApi } from '#/api/bpm/userGroup';
 import type { SystemDeptApi } from '#/api/system/dept';
@@ -32,7 +32,7 @@ import {
   FieldPermissionType,
   NODE_DEFAULT_NAME,
   RejectHandlerType,
-} from './consts';
+} from '../consts';
 
 export function useWatchNode(props: {
   flowNode: SimpleFlowNode;
@@ -727,9 +727,9 @@ export function getConditionShowText(
     // 条件组是否为与关系
     const groupAnd = conditionGroups?.and;
     let warningMessage: string | undefined;
-    const conditionGroup = conditionGroups?.conditions.map((item) => {
+    const conditionGroup = conditionGroups?.conditions.map((item: any) => {
       return `(${item.rules
-        .map((rule) => {
+        .map((rule: any) => {
           if (rule.leftSide && rule.rightSide) {
             return `${getFormFieldTitle(
               fieldOptions,

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { HttpRequestParam } from '../../../consts';
+import type { HttpRequestParam } from '../../../../consts';
 
 import { IconifyIcon } from '@vben/icons';
 
@@ -18,7 +18,7 @@ import { $t } from '#/locales';
 import {
   BPM_HTTP_REQUEST_PARAM_TYPES,
   BpmHttpRequestParamTypeEnum,
-} from '../../../consts';
+} from '../../../../consts';
 import { useFormFieldsAndStartUser } from '../../../helpers';
 
 defineOptions({ name: 'HttpRequestParamSetting' });

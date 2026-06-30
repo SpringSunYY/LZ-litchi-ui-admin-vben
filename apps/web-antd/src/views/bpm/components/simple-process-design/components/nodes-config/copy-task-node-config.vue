@@ -3,7 +3,7 @@ import type { Rule } from 'ant-design-vue/es/form';
 
 import type { Ref } from 'vue';
 
-import type { SimpleFlowNode } from '../../consts';
+import type { SimpleFlowNode } from '../../../consts';
 import type { CopyTaskFormType } from '../../helpers';
 
 import { computed, onMounted, reactive, ref } from 'vue';
@@ -35,7 +35,7 @@ import {
   CandidateStrategy,
   FieldPermissionType,
   MULTI_LEVEL_DEPT,
-} from '../../consts';
+} from '../../../consts';
 import {
   useFormFieldsPermission,
   useNodeForm,

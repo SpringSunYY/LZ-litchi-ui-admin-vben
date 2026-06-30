@@ -15,12 +15,12 @@ import {
   TypographyText,
 } from 'ant-design-vue';
 
-import { convertTimeUnit } from '#/views/bpm/components/simple-process-design/components/nodes-config/utils';
 import {
   TIME_UNIT_TYPES,
   TIMEOUT_HANDLER_TYPES,
   TimeUnitType,
-} from '#/views/bpm/components/simple-process-design/consts';
+} from '#/views/bpm/components/consts';
+import { convertTimeUnit } from '#/views/bpm/components/simple-process-design/components/nodes-config/utils';
 
 defineOptions({ name: 'ElementCustomConfig4BoundaryEventTimer' });
 const props = defineProps({

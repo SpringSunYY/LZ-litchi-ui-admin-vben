@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { SimpleFlowNode } from '../../consts';
+import type { SimpleFlowNode } from '../../../consts';
 
 import { inject, ref } from 'vue';
 
@@ -9,7 +9,7 @@ import { Input } from 'ant-design-vue';
 
 import { BpmNodeTypeEnum } from '#/utils';
 
-import { NODE_DEFAULT_TEXT } from '../../consts';
+import { NODE_DEFAULT_TEXT } from '../../../consts';
 import { useNodeName2, useTaskStatusClass, useWatchNode } from '../../helpers';
 import CopyTaskNodeConfig from '../nodes-config/copy-task-node-config.vue';
 import NodeHandler from './node-handler.vue';
