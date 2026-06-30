@@ -1,6 +1,8 @@
 <script lang="ts" setup>
 import { Button } from 'ant-design-vue';
 
+import { $t } from '#/locales';
+
 defineOptions({ name: 'MyProcessPalette' });
 
 const bpmnInstances = () =>
@@ -23,7 +25,7 @@ const addTask = (event: MouseEvent, options: any = {}) => {
 <template>
   <div class="my-process-palette p-20 pt-80">
     <Button type="primary" @click="addTask" @mousedown="addTask">
-      测试任务
+      {{ $t('bpm.bpmnProcessDesign.palette.testTask') }}
     </Button>
     <div class="mt-4" id="palette-container">1</div>
   </div>

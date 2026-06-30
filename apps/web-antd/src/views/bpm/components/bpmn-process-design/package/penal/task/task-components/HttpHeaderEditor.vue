@@ -6,6 +6,8 @@ import { IconifyIcon } from '@vben/icons';
 
 import { Button, Input } from 'ant-design-vue';
 
+import { $t } from '#/locales';
+
 defineOptions({ name: 'HttpHeaderEditor' });
 
 const emit = defineEmits(['save']);
@@ -82,7 +84,11 @@ const [Modal, modalApi] = useVbenModal({
 </script>
 
 <template>
-  <Modal title="编辑请求头" class="w-3/5">
+  <!-- 编辑请求头 / Edit Request Headers -->
+  <Modal
+    :title="$t('bpm.bpmnProcessDesign.httpHeaderEditor.title')"
+    class="w-3/5"
+  >
     <div class="space-y-4">
       <div class="mb-2 space-y-3 overflow-y-auto">
         <div
@@ -92,14 +98,18 @@ const [Modal, modalApi] = useVbenModal({
         >
           <Input
             v-model:value="item.key"
-            placeholder="请输入参数名"
+            :placeholder="
+              $t('bpm.bpmnProcessDesign.httpHeaderEditor.paramNamePlaceholder')
+            "
             class="w-48"
             allow-clear
           />
           <span class="font-medium text-gray-600">:</span>
           <Input
             v-model:value="item.value"
-            placeholder="请输入参数值 (支持表达式 ${变量名})"
+            :placeholder="
+              $t('bpm.bpmnProcessDesign.httpHeaderEditor.paramValuePlaceholder')
+            "
             class="flex-1"
             allow-clear
           />
@@ -114,7 +124,8 @@ const [Modal, modalApi] = useVbenModal({
         <template #icon>
           <IconifyIcon icon="ep:plus" />
         </template>
-        添加请求头
+        {{ $t('bpm.bpmnProcessDesign.httpHeaderEditor.addHeader') }}
+        <!-- 添加请求头 / Add Request Header -->
       </Button>
     </div>
   </Modal>

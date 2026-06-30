@@ -3,11 +3,13 @@ import { onBeforeUnmount, reactive, ref, toRaw, watch } from 'vue';
 
 import { Form, FormItem, Input } from 'ant-design-vue';
 
+import { $t } from '#/locales';
+
 defineOptions({ name: 'ElementBaseInfo' });
 
 const props = defineProps<{
-  businessObject?: BusinessObject;
-  model?: Model;
+  businessObject?: BusinessObject | null;
+  model?: Model | null;
 }>();
 
 interface BusinessObject {
@@ -30,8 +32,22 @@ const elementBaseInfo = ref<BusinessObject>({} as any);
 // const forms = ref([])
 // 流程模型的校验
 const rules = reactive<any>({
-  id: [{ required: true, message: '流程标识不能为空', trigger: 'blur' }],
-  name: [{ required: true, message: '流程名称不能为空', trigger: 'blur' }],
+  id: [
+    {
+      required: true,
+      // 流程标识不能为空 / Process ID cannot be empty
+      message: $t('bpm.bpmnProcessDesign.base.processIdRequired'),
+      trigger: 'blur',
+    },
+  ],
+  name: [
+    {
+      required: true,
+      // 流程名称不能为空 / Process name cannot be empty
+      message: $t('bpm.bpmnProcessDesign.base.processNameRequired'),
+      trigger: 'blur',
+    },
+  ],
 });
 
 const bpmnInstances = () =>
@@ -187,32 +203,41 @@ onBeforeUnmount(() => {
     <Form :model="needProps" :rules="rules" layout="vertical">
       <div v-if="needProps.type === 'bpmn:Process'">
         <!-- 如果是 Process 信息的时候，使用自定义表单 -->
-        <FormItem label="流程标识" name="id">
+        <!-- 流程标识 / Process ID -->
+        <FormItem :label="$t('bpm.bpmnProcessDesign.base.processId')" name="id">
           <Input
             v-model:value="needProps.id"
-            placeholder="请输入流标标识"
+            :placeholder="$t('bpm.bpmnProcessDesign.base.pleaseInputProcessId')"
             :disabled="needProps.id !== undefined && needProps.id.length > 0"
             @change="handleKeyUpdate"
           />
         </FormItem>
-        <FormItem label="流程名称" name="name">
+        <!-- 流程名称 / Process Name -->
+        <FormItem
+          :label="$t('bpm.bpmnProcessDesign.base.processName')"
+          name="name"
+        >
           <Input
             v-model:value="needProps.name"
-            placeholder="请输入流程名称"
+            :placeholder="
+              $t('bpm.bpmnProcessDesign.base.pleaseInputProcessName')
+            "
             allow-clear
             @change="handleNameUpdate"
           />
         </FormItem>
       </div>
       <div v-else>
-        <FormItem label="ID">
+        <!-- ID -->
+        <FormItem :label="$t('bpm.bpmnProcessDesign.base.id')">
           <Input
             v-model:value="elementBaseInfo.id"
             allow-clear
             @change="updateBaseInfo('id')"
           />
         </FormItem>
-        <FormItem label="名称">
+        <!-- 名称 / Name -->
+        <FormItem :label="$t('bpm.bpmnProcessDesign.base.name')">
           <Input
             v-model:value="elementBaseInfo.name"
             allow-clear

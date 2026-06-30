@@ -7,6 +7,7 @@ import { cloneDeep } from '@vben/utils';
 import { Form, FormItem, Select } from 'ant-design-vue';
 
 import { getFormSimpleList } from '#/api/bpm/form';
+import { $t } from '#/locales';
 
 defineOptions({ name: 'ElementForm' });
 
@@ -28,12 +29,18 @@ const optionModelTitle = ref('');
 const fieldList = ref<any[]>([]);
 const formFieldForm = ref<any>({});
 const fieldType = ref({
-  long: '长整型',
-  string: '字符串',
-  boolean: '布尔类',
-  date: '日期类',
-  enum: '枚举类',
-  custom: '自定义类型',
+  // 长整型 / Long
+  long: $t('bpm.bpmnProcessDesign.formConfig.longType'),
+  // 字符串 / String
+  string: $t('bpm.bpmnProcessDesign.formConfig.stringType'),
+  // 布尔类 / Boolean
+  boolean: $t('bpm.bpmnProcessDesign.formConfig.booleanType'),
+  // 日期类 / Date
+  date: $t('bpm.bpmnProcessDesign.formConfig.dateType'),
+  // 枚举类 / Enum
+  enum: $t('bpm.bpmnProcessDesign.formConfig.enumType'),
+  // 自定义类型 / Custom
+  custom: $t('bpm.bpmnProcessDesign.formConfig.customType'),
 });
 const formFieldIndex = ref(-1); // 编辑中的字段， -1 为新增
 const formFieldOptionIndex = ref(-1); // 编辑中的字段配置项， -1 为新增
@@ -95,13 +102,13 @@ const _updateElementBusinessKey = () => {
   );
 };
 // 根据类型调整字段type
-//@ts-ignore 忽略使用检查
+// @ts-ignore 忽略使用检查
 const _changeFieldTypeType = (type: any) => {
   formFieldForm.value.type = type === 'custom' ? '' : type;
 };
 
 // 打开字段详情侧边栏
-//@ts-ignore 忽略使用检查
+// @ts-ignore 忽略使用检查
 const _openFieldForm = (field: any, index: any) => {
   formFieldIndex.value = index;
   if (index === -1) {
@@ -137,7 +144,7 @@ const _openFieldForm = (field: any, index: any) => {
   fieldModelVisible.value = true;
 };
 // 打开字段 某个 配置项 弹窗
-//@ts-ignore 忽略使用检查
+// @ts-ignore 忽略使用检查
 const _openFieldOptionForm = (option: any, index: any, type: any) => {
   fieldOptionModelVisible.value = true;
   fieldOptionType.value = type;
@@ -155,7 +162,7 @@ const _openFieldOptionForm = (option: any, index: any, type: any) => {
 };
 
 // 保存字段 某个 配置项
-//@ts-ignore 忽略使用检查
+// @ts-ignore 忽略使用检查
 const _saveFieldOption = () => {
   if (formFieldOptionIndex.value === -1) {
     if (fieldOptionType.value === 'property') {
@@ -191,7 +198,7 @@ const _saveFieldOption = () => {
   fieldOptionForm.value = {};
 };
 // 保存字段配置
-//@ts-ignore 忽略使用检查
+// @ts-ignore 忽略使用检查
 const _saveField = () => {
   const { id, type, label, defaultValue, datePattern } = formFieldForm.value;
   const Field = bpmnInstances().moddle.create(`${prefix}:FormField`, {
@@ -247,7 +254,7 @@ const _saveField = () => {
 };
 
 // 移除某个 字段的 配置项
-//@ts-ignore 忽略使用检查
+// @ts-ignore 忽略使用检查
 const _removeFieldOptionItem = (_option: any, index: any, type: any) => {
   // console.log(option, 'option')
   if (type === 'property') {
@@ -261,7 +268,7 @@ const _removeFieldOptionItem = (_option: any, index: any, type: any) => {
   fieldConstraintsList.value.splice(index, 1);
 };
 // 移除 字段
-//@ts-ignore 忽略使用检查
+// @ts-ignore 忽略使用检查
 const _removeField = (field: any, index: any) => {
   console.warn(field, 'field');
   fieldList.value.splice(index, 1);
@@ -314,8 +321,8 @@ watch(
 <template>
   <div class="panel-tab__content">
     <Form>
-      <FormItem label="流程表单">
-        <!--        <Input v-model:value="formKey" @change="updateElementFormKey" />-->
+      <!-- 流程表单 / Process Form -->
+      <FormItem :label="$t('bpm.bpmnProcessDesign.form.processForm')">
         <Select
           v-model:value="formKey"
           allow-clear
@@ -323,7 +330,8 @@ watch(
           :options="formOptions"
         />
       </FormItem>
-      <FormItem label="业务标识">
+      <!-- 业务标识 / Business Key -->
+      <FormItem :label="$t('bpm.bpmnProcessDesign.form.businessKey')">
         <Select
           v-model:value="businessKey"
           @change="_updateElementBusinessKey"
@@ -332,7 +340,10 @@ watch(
           <Select.Option v-for="i in fieldList" :key="i.id" :value="i.id">
             {{ i.label }}
           </Select.Option>
-          <Select.Option value="">无</Select.Option>
+          <!-- 无 / None -->
+          <Select.Option value="">
+            {{ $t('bpm.bpmnProcessDesign.form.none') }}
+          </Select.Option>
         </Select>
       </FormItem>
     </Form>

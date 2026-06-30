@@ -7,6 +7,7 @@ import { IconifyIcon } from '@vben/icons';
 import { Button, Divider, message } from 'ant-design-vue';
 
 import { useVbenVxeGrid } from '#/adapter/vxe-table';
+import { $t } from '#/locales';
 
 import SignalMessageModal from './SignalMessageModal.vue';
 
@@ -77,7 +78,10 @@ const handleConfirm = (formData: { id: string; name: string }) => {
     if (editingIndex.value === -1) {
       // 新建模式
       if (messageIdMap.value[formData.id]) {
-        message.error('该消息已存在，请修改id后重新保存');
+        // 该消息已存在，请修改id后重新保存 / Message already exists, please modify id and save again
+        message.error(
+          $t('bpm.bpmnProcessDesign.signalMessage.messageAlreadyExists'),
+        );
         return;
       }
       const messageRef = bpmnInstances().moddle.create(
@@ -100,7 +104,10 @@ const handleConfirm = (formData: { id: string; name: string }) => {
     if (editingIndex.value === -1) {
       // 新建模式
       if (signalIdMap.value[formData.id]) {
-        message.error('该信号已存在，请修改id后重新保存');
+        // 该信号已存在，请修改id后重新保存 / Signal already exists, please modify id and save again
+        message.error(
+          $t('bpm.bpmnProcessDesign.signalMessage.signalAlreadyExists'),
+        );
         return;
       }
       const signalRef = bpmnInstances().moddle.create('bpmn:Signal', formData);
@@ -125,8 +132,15 @@ const handleConfirm = (formData: { id: string; name: string }) => {
 // 补充"编辑"、"移除"功能。相关 issue：https://github.com/YunaiV/yudao-cloud/issues/270
 const removeObject = (type: any, row: any) => {
   confirm({
-    title: '提示',
-    content: `确认移除该${type === 'message' ? '消息' : '信号'}吗？`,
+    // 提示 / Prompt
+    title: $t('bpm.bpmnProcessDesign.common.prompt'),
+    // 确认移除该消息/信号吗？/ Confirm remove this message/signal?
+    content: $t('bpm.bpmnProcessDesign.signalMessage.confirmRemove', {
+      type:
+        type === 'message'
+          ? $t('bpm.bpmnProcessDesign.signalMessage.message')
+          : $t('bpm.bpmnProcessDesign.signalMessage.signal'),
+    }),
   }).then(() => {
     // 从 rootElements 中移除
     const targetType = type === 'message' ? 'bpmn:Message' : 'bpmn:Signal';
@@ -138,7 +152,8 @@ const removeObject = (type: any, row: any) => {
     }
     // 刷新列表
     initDataList();
-    message.success('移除成功');
+    // 移除成功 / Remove success
+    message.success($t('bpm.bpmnProcessDesign.signalMessage.removeSuccess'));
   });
 };
 
@@ -178,11 +193,21 @@ const saveChanges = () => {
 const [MessageGrid, messageGridApi] = useVbenVxeGrid({
   gridOptions: {
     columns: [
-      { type: 'seq', width: 50, title: '序号' },
-      { field: 'id', title: '消息ID', minWidth: 120 },
-      { field: 'name', title: '消息名称', minWidth: 100 },
+      // 序号 / No.
+      { type: 'seq', width: 50, title: '#' },
+      // 消息ID / Message ID
       {
-        title: '操作',
+        field: 'id',
+        title: $t('bpm.bpmnProcessDesign.signalMessage.messageId'),
+      },
+      // 消息名称 / Message Name
+      {
+        field: 'name',
+        title: $t('bpm.bpmnProcessDesign.signalMessage.messageName'),
+      },
+      {
+        // 操作 / Action
+        title: $t('bpm.bpmnProcessDesign.common.action'),
         width: 120,
         slots: { default: 'action' },
         fixed: 'right',
@@ -203,11 +228,21 @@ const [MessageGrid, messageGridApi] = useVbenVxeGrid({
 const [SignalGrid, signalGridApi] = useVbenVxeGrid({
   gridOptions: {
     columns: [
-      { type: 'seq', width: 50, title: '序号' },
-      { field: 'id', title: '信号ID', minWidth: 120 },
-      { field: 'name', title: '信号名称', minWidth: 100 },
+      // 序号 / No.
+      { type: 'seq', width: 50, title: '#' },
+      // 信号ID / Signal ID
       {
-        title: '操作',
+        field: 'id',
+        title: $t('bpm.bpmnProcessDesign.signalMessage.signalId'),
+      },
+      // 信号名称 / Signal Name
+      {
+        field: 'name',
+        title: $t('bpm.bpmnProcessDesign.signalMessage.signalName'),
+      },
+      {
+        // 操作 / Action
+        title: $t('bpm.bpmnProcessDesign.common.action'),
         width: 120,
         slots: { default: 'action' },
         fixed: 'right',
@@ -251,10 +286,11 @@ watch(
 </script>
 <template>
   <div class="-mx-2">
+    <!-- 消息列表 / Message List -->
     <div class="mb-2 flex items-center justify-between">
       <span class="flex items-center">
         <IconifyIcon icon="ep:menu" class="mr-2 text-gray-600" />
-        消息列表
+        {{ $t('bpm.bpmnProcessDesign.signalMessage.messageList') }}
       </span>
       <Button
         class="flex items-center"
@@ -265,35 +301,39 @@ watch(
         <template #icon>
           <IconifyIcon icon="ep:plus" />
         </template>
-        创建新消息
+        {{ $t('bpm.bpmnProcessDesign.signalMessage.createNewMessage') }}
+        <!-- 创建新消息 / Create New Message -->
       </Button>
     </div>
     <MessageGrid :data="messageList">
       <template #action="{ row, rowIndex }">
+        <!-- 编辑 / Edit -->
         <Button
           size="small"
           type="link"
           @click="openEditModel('message', row, rowIndex)"
         >
-          编辑
+          {{ $t('bpm.bpmnProcessDesign.common.edit') }}
         </Button>
         <Divider type="vertical" />
+        <!-- 移除 / Remove -->
         <Button
           size="small"
           type="link"
           danger
           @click="removeObject('message', row)"
         >
-          移除
+          {{ $t('bpm.bpmnProcessDesign.common.remove') }}
         </Button>
       </template>
     </MessageGrid>
+    <!-- 信号列表 / Signal List -->
     <div
       class="mb-2 mt-2 flex items-center justify-between border-t border-gray-200 pt-2"
     >
       <span class="flex items-center">
         <IconifyIcon icon="ep:menu" class="mr-2 text-gray-600" />
-        信号列表
+        {{ $t('bpm.bpmnProcessDesign.signalMessage.signalList') }}
       </span>
       <Button
         class="flex items-center"
@@ -304,26 +344,29 @@ watch(
         <template #icon>
           <IconifyIcon icon="ep:plus" />
         </template>
-        创建新信号
+        {{ $t('bpm.bpmnProcessDesign.signalMessage.createNewSignal') }}
+        <!-- 创建新信号 / Create New Signal -->
       </Button>
     </div>
     <SignalGrid :data="signalList">
       <template #action="{ row, rowIndex }">
+        <!-- 编辑 / Edit -->
         <Button
           size="small"
           type="link"
           @click="openEditModel('signal', row, rowIndex)"
         >
-          编辑
+          {{ $t('bpm.bpmnProcessDesign.common.edit') }}
         </Button>
         <Divider type="vertical" />
+        <!-- 移除 / Remove -->
         <Button
           size="small"
           type="link"
           danger
           @click="removeObject('signal', row)"
         >
-          移除
+          {{ $t('bpm.bpmnProcessDesign.common.remove') }}
         </Button>
       </template>
     </SignalGrid>

@@ -1,6 +1,8 @@
 // 初始化表单数据
 import { cloneDeep } from '@vben/utils';
 
+import { $t } from '#/locales';
+
 export function initListenerForm(listener: any) {
   let self = {
     ...listener,
@@ -79,23 +81,28 @@ export function initListenerForm2(processListener: any) {
   throw new Error('未知的监听器类型');
 }
 
+// 监听器类型 / Listener type
 export const listenerType = {
-  classListener: 'Java 类',
-  expressionListener: '表达式',
-  delegateExpressionListener: '代理表达式',
-  scriptListener: '脚本',
+  classListener: $t('bpm.bpmnProcessDesign.listener.classListener'),
+  expressionListener: $t('bpm.bpmnProcessDesign.listener.expressionListener'),
+  delegateExpressionListener: $t(
+    'bpm.bpmnProcessDesign.listener.delegateExpressionListener',
+  ),
+  scriptListener: $t('bpm.bpmnProcessDesign.listener.scriptListener'),
 };
 
+// 监听器事件类型 / Listener event type
 export const eventType = {
-  create: '创建',
-  assignment: '指派',
-  complete: '完成',
-  delete: '删除',
-  update: '更新',
-  timeout: '超时',
+  create: $t('bpm.bpmnProcessDesign.event.create'),
+  assignment: $t('bpm.bpmnProcessDesign.event.assignment'),
+  complete: $t('bpm.bpmnProcessDesign.event.complete'),
+  delete: $t('bpm.bpmnProcessDesign.event.delete'),
+  update: $t('bpm.bpmnProcessDesign.event.update'),
+  timeout: $t('bpm.bpmnProcessDesign.event.timeout'),
 };
 
+// 字段类型 / Field type
 export const fieldType = {
-  string: '字符串',
-  expression: '表达式',
+  string: $t('bpm.bpmnProcessDesign.field.string'),
+  expression: $t('bpm.bpmnProcessDesign.field.expression'),
 };

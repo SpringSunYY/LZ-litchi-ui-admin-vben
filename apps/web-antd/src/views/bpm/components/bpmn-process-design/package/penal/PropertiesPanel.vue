@@ -6,13 +6,13 @@ import { cloneDeep } from '@vben/utils';
 
 import { Collapse } from 'ant-design-vue';
 
-import ElementCustomConfig from '#/views/bpm/components/bpmn-process-design/package/penal/custom-config/ElementCustomConfig.vue';
-import ElementForm from '#/views/bpm/components/bpmn-process-design/package/penal/form/ElementForm.vue';
+import { $t } from '#/locales';
 
 import ElementBaseInfo from './base/ElementBaseInfo.vue';
+import ElementCustomConfig from './custom-config/ElementCustomConfig.vue';
 import FlowCondition from './flow-condition/FlowCondition.vue';
+import ElementForm from './form/ElementForm.vue';
 import ElementListeners from './listeners/ElementListeners.vue';
-// import ElementForm from './form/ElementForm.vue'
 import UserTaskListeners from './listeners/UserTaskListeners.vue';
 import ElementMultiInstance from './multi-instance/ElementMultiInstance.vue';
 import ElementOtherConfig from './other/ElementOtherConfig.vue';
@@ -279,7 +279,11 @@ watch(() => props.businessObject, syncFromBusinessObject, { deep: true });
     :style="{ width: `${width}px`, maxHeight: '600px' }"
   >
     <Collapse v-model:active-key="activeTab" v-if="isReady">
-      <CollapsePanel key="base" header="常规">
+      <!-- 常规 / General -->
+      <CollapsePanel
+        key="base"
+        :header="$t('bpm.bpmnProcessDesign.panel.base')"
+      >
         <template #extra>
           <IconifyIcon icon="ep:info-filled" />
         </template>
@@ -290,9 +294,10 @@ watch(() => props.businessObject, syncFromBusinessObject, { deep: true });
           :model="model"
         />
       </CollapsePanel>
+      <!-- 消息与信号 / Message & Signal -->
       <CollapsePanel
         key="message"
-        header="消息与信号"
+        :header="$t('bpm.bpmnProcessDesign.panel.messageAndSignal')"
         v-if="elementType === 'Process'"
       >
         <template #extra>
@@ -300,9 +305,10 @@ watch(() => props.businessObject, syncFromBusinessObject, { deep: true });
         </template>
         <SignalAndMassage />
       </CollapsePanel>
+      <!-- 流转条件 / Flow Condition -->
       <CollapsePanel
         key="condition"
-        header="流转条件"
+        :header="$t('bpm.bpmnProcessDesign.panel.flowCondition')"
         v-if="conditionFormVisible"
       >
         <template #extra>
@@ -313,7 +319,12 @@ watch(() => props.businessObject, syncFromBusinessObject, { deep: true });
           :type="elementType"
         />
       </CollapsePanel>
-      <CollapsePanel key="form" header="表单" v-if="formVisible">
+      <!-- 表单 / Form -->
+      <CollapsePanel
+        key="form"
+        :header="$t('bpm.bpmnProcessDesign.panel.form')"
+        v-if="formVisible"
+      >
         <template #extra>
           <IconifyIcon icon="ep:list" />
         </template>
@@ -331,7 +342,7 @@ watch(() => props.businessObject, syncFromBusinessObject, { deep: true });
       </CollapsePanel>
       <CollapsePanel
         key="multiInstance"
-        header="多人审批方式"
+        :header="$t('bpm.bpmnProcessDesign.panel.multiInstance')"
         v-if="elementType.includes('Task')"
       >
         <template #extra>
@@ -343,7 +354,11 @@ watch(() => props.businessObject, syncFromBusinessObject, { deep: true });
           :type="elementType"
         />
       </CollapsePanel>
-      <CollapsePanel key="listeners" header="执行监听器">
+      <!-- 执行监听器 / Execution Listener -->
+      <CollapsePanel
+        key="listeners"
+        :header="$t('bpm.bpmnProcessDesign.panel.executionListener')"
+      >
         <template #extra>
           <IconifyIcon icon="ep:bell-filled" />
         </template>
@@ -351,7 +366,7 @@ watch(() => props.businessObject, syncFromBusinessObject, { deep: true });
       </CollapsePanel>
       <CollapsePanel
         key="taskListeners"
-        header="任务监听器"
+        :header="$t('bpm.bpmnProcessDesign.panel.taskListener')"
         v-if="elementType === 'UserTask'"
       >
         <template #extra>
@@ -359,19 +374,31 @@ watch(() => props.businessObject, syncFromBusinessObject, { deep: true });
         </template>
         <UserTaskListeners :id="elementId" :type="elementType" />
       </CollapsePanel>
-      <CollapsePanel key="extensions" header="扩展属性">
+      <!-- 扩展属性 / Extension Properties -->
+      <CollapsePanel
+        key="extensions"
+        :header="$t('bpm.bpmnProcessDesign.panel.extensions')"
+      >
         <template #extra>
           <IconifyIcon icon="ep:circle-plus-filled" />
         </template>
         <ElementProperties :id="elementId" :type="elementType" />
       </CollapsePanel>
-      <CollapsePanel key="other" header="其他">
+      <!-- 其他 / Other -->
+      <CollapsePanel
+        key="other"
+        :header="$t('bpm.bpmnProcessDesign.panel.other')"
+      >
         <template #extra>
           <IconifyIcon icon="ep:promotion" />
         </template>
         <ElementOtherConfig :id="elementId" />
       </CollapsePanel>
-      <CollapsePanel key="customConfig" header="自定义配置">
+      <!-- 自定义配置 / Custom Config -->
+      <CollapsePanel
+        key="customConfig"
+        :header="$t('bpm.bpmnProcessDesign.panel.customConfig')"
+      >
         <template #extra>
           <IconifyIcon icon="ep:tools" />
         </template>
@@ -384,7 +411,7 @@ watch(() => props.businessObject, syncFromBusinessObject, { deep: true });
       <!-- 新增的时间事件配置项 -->
       <CollapsePanel
         key="timeEvent"
-        header="时间事件"
+        :header="$t('bpm.bpmnProcessDesign.panel.timeEvent')"
         v-if="elementType === 'IntermediateCatchEvent'"
       >
         <template #extra>

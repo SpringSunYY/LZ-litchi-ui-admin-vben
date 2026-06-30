@@ -15,6 +15,7 @@ import {
   TypographyText,
 } from 'ant-design-vue';
 
+import { $t } from '#/locales';
 import {
   TIME_UNIT_TYPES,
   TIMEOUT_HANDLER_TYPES,
@@ -219,17 +220,25 @@ watch(
 
 <template>
   <div>
-    <Divider orientation="left">审批人超时未处理时</Divider>
-    <FormItem label="启用开关" name="timeoutHandlerEnable">
+    <!-- 审批人超时未处理时 / When Approver Timeout -->
+    <Divider orientation="left">
+      {{ $t('bpm.bpmnProcessDesign.customConfig.timeoutNotProcessed') }}
+    </Divider>
+    <!-- 启用开关 / Enable Switch -->
+    <FormItem
+      :label="$t('bpm.bpmnProcessDesign.customConfig.enableSwitch')"
+      name="timeoutHandlerEnable"
+    >
       <Switch
         v-model:checked="timeoutHandlerEnable"
-        checked-children="开启"
-        un-checked-children="关闭"
+        :checked-children="$t('bpm.bpmnProcessDesign.switch.on')"
+        :un-checked-children="$t('bpm.bpmnProcessDesign.switch.off')"
         @change="timeoutHandlerChange"
       />
     </FormItem>
+    <!-- 执行动作 / Execute Action -->
     <FormItem
-      label="执行动作"
+      :label="$t('bpm.bpmnProcessDesign.customConfig.executeAction')"
       name="timeoutHandlerType"
       v-if="timeoutHandlerEnable"
     >
@@ -246,8 +255,9 @@ watch(
         </RadioButton>
       </RadioGroup>
     </FormItem>
+    <!-- 超时时间设置 / Timeout Setting -->
     <FormItem
-      label="超时时间设置"
+      :label="$t('bpm.bpmnProcessDesign.customConfig.timeoutSetting')"
       v-if="timeoutHandlerEnable"
       :label-col="{ span: 24 }"
       :wrapper-col="{ span: 24 }"
@@ -255,7 +265,8 @@ watch(
       <Row :gutter="[0, 0]">
         <Col>
           <TypographyText class="mr-2 mt-2 inline-flex text-sm">
-            当超过
+            <!-- 当超过 / When Exceeds -->
+            {{ $t('bpm.bpmnProcessDesign.customConfig.whenExceeds') }}
           </TypographyText>
         </Col>
         <Col>
@@ -290,13 +301,15 @@ watch(
             </SelectOption>
           </Select>
           <TypographyText class="mr-2 mt-2 inline-flex text-sm">
-            未处理
+            <!-- 未处理 / Not Processed -->
+            {{ $t('bpm.bpmnProcessDesign.customConfig.notProcessed') }}
           </TypographyText>
         </Col>
       </Row>
     </FormItem>
+    <!-- 最大提醒次数 / Max Remind Count -->
     <FormItem
-      label="最大提醒次数"
+      :label="$t('bpm.bpmnProcessDesign.customConfig.maxRemindCount')"
       name="maxRemindCount"
       v-if="timeoutHandlerEnable && timeoutHandlerType.value === 1"
     >

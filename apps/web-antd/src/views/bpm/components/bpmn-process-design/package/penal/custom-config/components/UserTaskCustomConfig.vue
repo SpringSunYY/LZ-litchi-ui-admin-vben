@@ -14,7 +14,6 @@ import type { SystemUserApi } from '#/api/system/user';
 
 import { inject, nextTick, onMounted, ref, toRaw, watch } from 'vue';
 
-import { BpmModelFormType } from '#/utils';
 import { IconifyIcon } from '@vben/icons';
 
 import {
@@ -30,6 +29,8 @@ import {
 } from 'ant-design-vue';
 
 import { getSimpleUserList } from '#/api/system/user';
+import { $t } from '#/locales';
+import { BpmModelFormType } from '#/utils';
 import {
   APPROVE_TYPE,
   ApproveType,
@@ -448,8 +449,15 @@ onMounted(async () => {
 
 <template>
   <div>
-    <Divider orientation="left">审批类型</Divider>
-    <Form.Item name="approveType" label="审批类型">
+    <!-- 审批类型 / Approval Type -->
+    <Divider orientation="left">
+      {{ $t('bpm.bpmnProcessDesign.customConfig.approvalType') }}
+    </Divider>
+    <!-- 审批类型 / Approval Type -->
+    <Form.Item
+      name="approveType"
+      :label="$t('bpm.bpmnProcessDesign.customConfig.approvalType')"
+    >
       <RadioGroup v-model:value="approveType.value">
         <Radio
           v-for="(item, index) in APPROVE_TYPE"
@@ -461,8 +469,15 @@ onMounted(async () => {
       </RadioGroup>
     </Form.Item>
 
-    <Divider orientation="left">审批人拒绝时</Divider>
-    <Form.Item name="rejectHandlerType" label="处理方式">
+    <!-- 审批人拒绝时 / When Approver Rejects -->
+    <Divider orientation="left">
+      {{ $t('bpm.bpmnProcessDesign.customConfig.whenApproverRejects') }}
+    </Divider>
+    <!-- 处理方式 / Handler Method -->
+    <Form.Item
+      name="rejectHandlerType"
+      :label="$t('bpm.bpmnProcessDesign.customConfig.handlerMethod')"
+    >
       <RadioGroup
         v-model:value="rejectHandlerType"
         :disabled="returnTaskList.length === 0"
@@ -480,14 +495,16 @@ onMounted(async () => {
     <Form.Item
       v-if="rejectHandlerType === RejectHandlerType.RETURN_USER_TASK"
       name="returnNodeId"
-      label="驳回节点"
+      :label="$t('bpm.bpmnProcessDesign.customConfig.rejectNode')"
     >
       <Select
         v-model:value="returnNodeId"
         allow-clear
         style="width: 100%"
         @change="updateReturnNodeId"
-        placeholder="请选择驳回节点"
+        :placeholder="
+          $t('bpm.bpmnProcessDesign.customConfig.pleaseSelectRejectNode')
+        "
       >
         <SelectOption
           v-for="item in returnTaskList"
@@ -499,7 +516,10 @@ onMounted(async () => {
       </Select>
     </Form.Item>
 
-    <Divider orientation="left">审批人为空时</Divider>
+    <!-- 审批人为空时 / When Approver Is Empty -->
+    <Divider orientation="left">
+      {{ $t('bpm.bpmnProcessDesign.customConfig.whenApproverEmpty') }}
+    </Divider>
     <Form.Item name="assignEmptyHandlerType">
       <RadioGroup
         v-model:value="assignEmptyHandlerType"
@@ -516,7 +536,7 @@ onMounted(async () => {
     </Form.Item>
     <Form.Item
       v-if="assignEmptyHandlerType === AssignEmptyHandlerType.ASSIGN_USER"
-      label="指定用户"
+      :label="$t('bpm.bpmnProcessDesign.customConfig.assignUser')"
       name="assignEmptyHandlerUserIds"
     >
       <Select
@@ -536,7 +556,10 @@ onMounted(async () => {
       </Select>
     </Form.Item>
 
-    <Divider orientation="left">审批人与提交人为同一人时</Divider>
+    <!-- 审批人与提交人为同一人时 / When Approver Is Submitter -->
+    <Divider orientation="left">
+      {{ $t('bpm.bpmnProcessDesign.customConfig.whenApproverIsSubmitter') }}
+    </Divider>
     <RadioGroup
       v-model:value="assignStartUserHandlerType"
       @change="updateAssignStartUserHandlerType"
@@ -553,15 +576,27 @@ onMounted(async () => {
       </div>
     </RadioGroup>
 
-    <Divider orientation="left">操作按钮</Divider>
+    <!-- 操作按钮 / Operation Buttons -->
+    <Divider orientation="left">
+      {{ $t('bpm.bpmnProcessDesign.customConfig.operationButtons') }}
+    </Divider>
     <div class="mt-2 text-sm">
       <!-- 头部标题行 -->
       <div
         class="flex items-center justify-between border border-slate-200 bg-slate-50 px-3 py-2 text-xs font-semibold text-slate-900"
       >
-        <div class="w-28 text-left">操作按钮</div>
-        <div class="w-40 pl-2 text-left">显示名称</div>
-        <div class="w-20 text-center">启用</div>
+        <!-- 操作按钮 / Operation Button -->
+        <div class="w-28 text-left">
+          {{ $t('bpm.bpmnProcessDesign.customConfig.operationButton') }}
+        </div>
+        <!-- 显示名称 / Display Name -->
+        <div class="w-40 pl-2 text-left">
+          {{ $t('bpm.bpmnProcessDesign.customConfig.displayName') }}
+        </div>
+        <!-- 启用 / Enable -->
+        <div class="w-20 text-center">
+          {{ $t('bpm.bpmnProcessDesign.customConfig.enable') }}
+        </div>
       </div>
 
       <!-- 按钮配置行 -->
@@ -600,31 +635,40 @@ onMounted(async () => {
       </div>
     </div>
 
-    <Divider orientation="left">字段权限</Divider>
+    <!-- 字段权限 / Field Permissions -->
+    <Divider orientation="left">
+      {{ $t('bpm.bpmnProcessDesign.customConfig.fieldPermissions') }}
+    </Divider>
     <div v-if="formType === BpmModelFormType.NORMAL" class="mt-2 text-sm">
       <!-- 头部标题行 -->
       <div
         class="flex items-center justify-between border border-slate-200 bg-slate-50 px-3 py-2 text-xs font-semibold text-slate-900"
       >
-        <div class="w-28 text-left">字段名称</div>
+        <!-- 字段名称 / Field Name -->
+        <div class="w-28 text-left">
+          {{ $t('bpm.bpmnProcessDesign.customConfig.fieldName') }}
+        </div>
         <div class="flex flex-1 justify-between">
+          <!-- 只读 / Read Only -->
           <span
             class="inline-block w-24 cursor-pointer text-center hover:text-blue-500"
             @click="updatePermission('READ')"
           >
-            只读
+            {{ $t('bpm.bpmnProcessDesign.customConfig.readOnly') }}
           </span>
+          <!-- 可编辑 / Editable -->
           <span
             class="inline-block w-24 cursor-pointer text-center hover:text-blue-500"
             @click="updatePermission('WRITE')"
           >
-            可编辑
+            {{ $t('bpm.bpmnProcessDesign.customConfig.editable') }}
           </span>
+          <!-- 隐藏 / Hidden -->
           <span
             class="inline-block w-24 cursor-pointer text-center hover:text-blue-500"
             @click="updatePermission('NONE')"
           >
-            隐藏
+            {{ $t('bpm.bpmnProcessDesign.customConfig.hidden') }}
           </span>
         </div>
       </div>
@@ -676,22 +720,28 @@ onMounted(async () => {
       </div>
     </div>
 
-    <Divider orientation="left">是否需要签名</Divider>
+    <!-- 是否需要签名 / Whether Signature Is Required -->
+    <Divider orientation="left">
+      {{ $t('bpm.bpmnProcessDesign.customConfig.needSignature') }}
+    </Divider>
     <Form.Item name="signEnable">
       <Switch
         v-model:checked="signEnable.value"
-        checked-children="是"
-        un-checked-children="否"
+        :checked-children="$t('bpm.bpmnProcessDesign.switch.yes')"
+        :un-checked-children="$t('bpm.bpmnProcessDesign.switch.no')"
         @change="updateElementExtensions"
       />
     </Form.Item>
 
-    <Divider orientation="left">审批意见</Divider>
+    <!-- 审批意见 / Approval Opinion -->
+    <Divider orientation="left">
+      {{ $t('bpm.bpmnProcessDesign.customConfig.approvalOpinion') }}
+    </Divider>
     <Form.Item name="reasonRequire">
       <Switch
         v-model:checked="reasonRequire.value"
-        checked-children="必填"
-        un-checked-children="非必填"
+        :checked-children="$t('bpm.bpmnProcessDesign.switch.required')"
+        :un-checked-children="$t('bpm.bpmnProcessDesign.switch.notRequired')"
         @change="updateElementExtensions"
       />
     </Form.Item>

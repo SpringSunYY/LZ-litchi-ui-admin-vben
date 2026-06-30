@@ -3,6 +3,8 @@ import { nextTick, onBeforeUnmount, ref, toRaw, watch } from 'vue';
 
 import { Form, FormItem, Input, Select, Textarea } from 'ant-design-vue';
 
+import { $t } from '#/locales';
+
 defineOptions({ name: 'FlowCondition' });
 
 const props = defineProps({
@@ -156,25 +158,43 @@ watch(
       :label-col="{ span: 6 }"
       :wrapper-col="{ span: 18 }"
     >
-      <FormItem label="流转类型">
+      <!-- 流转类型 / Flow Type -->
+      <FormItem :label="$t('bpm.bpmnProcessDesign.flowCondition.flowType')">
         <Select v-model:value="flowConditionForm.type" @change="updateFlowType">
-          <Select.Option value="normal">普通流转路径</Select.Option>
-          <Select.Option value="default">默认流转路径</Select.Option>
-          <Select.Option value="condition">条件流转路径</Select.Option>
+          <!-- 普通流转路径 / Normal Flow Path -->
+          <Select.Option value="normal">
+            {{ $t('bpm.bpmnProcessDesign.flowCondition.normalFlowPath') }}
+          </Select.Option>
+          <!-- 默认流转路径 / Default Flow Path -->
+          <Select.Option value="default">
+            {{ $t('bpm.bpmnProcessDesign.flowCondition.defaultFlowPath') }}
+          </Select.Option>
+          <!-- 条件流转路径 / Conditional Flow Path -->
+          <Select.Option value="condition">
+            {{ $t('bpm.bpmnProcessDesign.flowCondition.conditionalFlowPath') }}
+          </Select.Option>
         </Select>
       </FormItem>
+      <!-- 条件格式 / Condition Format -->
       <FormItem
-        label="条件格式"
+        :label="$t('bpm.bpmnProcessDesign.flowCondition.conditionFormat')"
         v-if="flowConditionForm.type === 'condition'"
         key="condition"
       >
         <Select v-model:value="flowConditionForm.conditionType">
-          <Select.Option value="expression">表达式</Select.Option>
-          <Select.Option value="script">脚本</Select.Option>
+          <!-- 表达式 / Expression -->
+          <Select.Option value="expression">
+            {{ $t('bpm.bpmnProcessDesign.flowCondition.expression') }}
+          </Select.Option>
+          <!-- 脚本 / Script -->
+          <Select.Option value="script">
+            {{ $t('bpm.bpmnProcessDesign.flowCondition.script') }}
+          </Select.Option>
         </Select>
       </FormItem>
+      <!-- 表达式 / Expression -->
       <FormItem
-        label="表达式"
+        :label="$t('bpm.bpmnProcessDesign.flowCondition.expression')"
         v-if="
           flowConditionForm.conditionType &&
           flowConditionForm.conditionType === 'expression'
@@ -194,21 +214,36 @@ watch(
           flowConditionForm.conditionType === 'script'
         "
       >
-        <FormItem label="脚本语言" key="language">
+        <!-- 脚本语言 / Script Language -->
+        <FormItem
+          :label="$t('bpm.bpmnProcessDesign.flowCondition.scriptLanguage')"
+          key="language"
+        >
           <Input
             v-model:value="flowConditionForm.language"
             allow-clear
             @change="updateFlowCondition"
           />
         </FormItem>
-        <FormItem label="脚本类型" key="scriptType">
+        <!-- 脚本类型 / Script Type -->
+        <FormItem
+          :label="$t('bpm.bpmnProcessDesign.flowCondition.scriptType')"
+          key="scriptType"
+        >
           <Select v-model:value="flowConditionForm.scriptType">
-            <Select.Option value="inlineScript">内联脚本</Select.Option>
-            <Select.Option value="externalScript">外部脚本</Select.Option>
+            <!-- 内联脚本 / Inline Script -->
+            <Select.Option value="inlineScript">
+              {{ $t('bpm.bpmnProcessDesign.flowCondition.inlineScript') }}
+            </Select.Option>
+            <!-- 外部脚本 / External Script -->
+            <Select.Option value="externalScript">
+              {{ $t('bpm.bpmnProcessDesign.flowCondition.externalScript') }}
+            </Select.Option>
           </Select>
         </FormItem>
+        <!-- 脚本 / Script -->
         <FormItem
-          label="脚本"
+          :label="$t('bpm.bpmnProcessDesign.flowCondition.script')"
           v-if="flowConditionForm.scriptType === 'inlineScript'"
           key="body"
         >
@@ -219,8 +254,9 @@ watch(
             @change="updateFlowCondition"
           />
         </FormItem>
+        <!-- 资源地址 / Resource Address -->
         <FormItem
-          label="资源地址"
+          :label="$t('bpm.bpmnProcessDesign.flowCondition.resourceAddress')"
           v-if="flowConditionForm.scriptType === 'externalScript'"
           key="resource"
         >

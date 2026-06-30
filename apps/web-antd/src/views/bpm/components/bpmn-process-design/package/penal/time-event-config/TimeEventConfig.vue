@@ -10,6 +10,8 @@ import { IconifyIcon } from '@vben/icons';
 
 import { Button, DatePicker, Input, Tooltip } from 'ant-design-vue';
 
+import { $t } from '#/locales';
+
 import CycleConfig from './CycleConfig.vue';
 import DurationConfig from './DurationConfig.vue';
 
@@ -27,28 +29,41 @@ const valid: Ref<boolean> = ref(false);
 const dateValue = ref<Dayjs>();
 
 const placeholder = computed<string>(() => {
-  if (type.value === 'time') return '请输入时间';
-  if (type.value === 'duration') return '请输入持续时长';
-  if (type.value === 'cycle') return '请输入循环表达式';
+  // 请输入时间 / Please input time
+  if (type.value === 'time')
+    return $t('bpm.bpmnProcessDesign.timeEventConfig.pleaseInputTime');
+  // 请输入持续时长 / Please input duration
+  if (type.value === 'duration')
+    return $t('bpm.bpmnProcessDesign.timeEventConfig.pleaseInputDuration');
+  // 请输入循环表达式 / Please input cycle expression
+  if (type.value === 'cycle')
+    return $t('bpm.bpmnProcessDesign.timeEventConfig.pleaseInputCycle');
   return '';
 });
 const helpText = computed<string>(() => {
-  if (type.value === 'time') return '选择具体时间';
-  if (type.value === 'duration') return 'ISO 8601格式，如PT1H';
-  if (type.value === 'cycle') return 'CRON表达式或ISO 8601周期';
+  // 选择具体时间 / Select specific time
+  if (type.value === 'time')
+    return $t('bpm.bpmnProcessDesign.timeEventConfig.selectSpecificTime');
+  // ISO 8601格式，如PT1H / ISO 8601 format, e.g. PT1H
+  if (type.value === 'duration')
+    return $t('bpm.bpmnProcessDesign.timeEventConfig.iso8601Duration');
+  // CRON表达式或ISO 8601周期 / CRON expression or ISO 8601 cycle
+  if (type.value === 'cycle')
+    return $t('bpm.bpmnProcessDesign.timeEventConfig.cronOrIsoCycle');
   return '';
 });
 const helpHtml = computed<string>(() => {
   if (type.value === 'duration') {
-    return `指定定时器之前要等待多长时间。S表示秒，M表示分，D表示天；P表示时间段，T表示精确到时间的时间段。<br>
-    时间格式依然为ISO 8601格式，一年两个月三天四小时五分六秒内，可以写成P1Y2M3DT4H5M6S。<br>
-    P是开始标记，T是时间和日期分割标记，没有日期只有时间T是不能省去的，比如1小时执行一次应写成PT1H。`;
+    // 指定定时器之前要等待多长时间... / Specifies how long to wait before the timer...
+    return $t('bpm.bpmnProcessDesign.timeEventConfig.durationFormatHelp');
   }
   if (type.value === 'cycle') {
-    return `支持CRON表达式（如0 0/30 * * * ?）或ISO 8601周期（如R3/PT10M）。`;
+    // 支持CRON表达式... / Supports CRON expression...
+    return $t('bpm.bpmnProcessDesign.timeEventConfig.cronHelp');
   }
   if (type.value === 'time') {
-    return `支持ISO 8601格式的时间（如2024-12-12T12:12:12）`;
+    // 支持ISO 8601格式的时间... / Supports ISO 8601 time format...
+    return $t('bpm.bpmnProcessDesign.timeEventConfig.isoTimeFormat');
   }
   return '';
 });
@@ -99,9 +114,10 @@ function validate(): boolean {
   return true;
 }
 
-// 选择时间 Modal
+// 选择时间 Modal / Date Selection Modal
 const [DateModal, dateModalApi] = useVbenModal({
-  title: '选择时间',
+  // 选择时间 / Select Time
+  title: $t('bpm.bpmnProcessDesign.timeEventConfig.selectTime'),
   class: 'w-[400px]',
   onConfirm: onDateConfirm,
 });
@@ -117,9 +133,10 @@ function onDateConfirm(): void {
   }
 }
 
-// 持续时长 Modal
+// 持续时长 Modal / Duration Modal
 const [DurationModal, durationModalApi] = useVbenModal({
-  title: '时间配置',
+  // 时间配置 / Time Configuration
+  title: $t('bpm.bpmnProcessDesign.timeEventConfig.timeConfig'),
   class: 'w-[600px]',
   onConfirm: onDurationConfirm,
 });
@@ -132,9 +149,10 @@ function onDurationConfirm(): void {
   updateNode();
 }
 
-// 循环配置 Modal
+// 循环配置 Modal / Cycle Modal
 const [CycleModal, cycleModalApi] = useVbenModal({
-  title: '时间配置',
+  // 时间配置 / Time Configuration
+  title: $t('bpm.bpmnProcessDesign.timeEventConfig.timeConfig'),
   class: 'w-[800px]',
   onConfirm: onCycleConfirm,
 });
@@ -147,12 +165,14 @@ function onCycleConfirm(): void {
   updateNode();
 }
 
-// 帮助说明 Modal
+// 帮助说明 Modal / Help Modal
 const [HelpModal, helpModalApi] = useVbenModal({
   class: 'w-[600px]',
-  title: '格式说明',
+  // 格式说明 / Format Description
+  title: $t('bpm.bpmnProcessDesign.timeEventConfig.formatDescription'),
   showCancelButton: false,
-  confirmText: '关闭',
+  // 关闭 / Close
+  confirmText: $t('bpm.bpmnProcessDesign.common.close'),
   onConfirm: () => helpModalApi.close(),
 });
 
@@ -239,28 +259,34 @@ watch(
 <template>
   <div class="panel-tab__content">
     <div class="mt-2 flex items-center">
-      <span class="w-14">类型：</span>
+      <!-- 类型：/ Type: -->
+      <span class="w-14">{{
+        $t('bpm.bpmnProcessDesign.timeEventConfig.type')
+      }}</span>
       <Button.Group>
         <Button
           size="small"
           :type="type === 'time' ? 'primary' : 'default'"
           @click="setType('time')"
         >
-          时间
+          {{ $t('bpm.bpmnProcessDesign.timeEventConfig.time') }}
+          <!-- 时间 / Time -->
         </Button>
         <Button
           size="small"
           :type="type === 'duration' ? 'primary' : 'default'"
           @click="setType('duration')"
         >
-          持续
+          {{ $t('bpm.bpmnProcessDesign.timeEventConfig.duration') }}
+          <!-- 持续 / Duration -->
         </Button>
         <Button
           size="small"
           :type="type === 'cycle' ? 'primary' : 'default'"
           @click="setType('cycle')"
         >
-          循环
+          {{ $t('bpm.bpmnProcessDesign.timeEventConfig.cycle') }}
+          <!-- 循环 / Cycle -->
         </Button>
       </Button.Group>
       <IconifyIcon
@@ -270,7 +296,10 @@ watch(
       />
     </div>
     <div class="mt-2 flex items-center gap-1">
-      <span class="w-14">条件：</span>
+      <!-- 条件：/ Condition: -->
+      <span class="w-14">{{
+        $t('bpm.bpmnProcessDesign.timeEventConfig.condition')
+      }}</span>
       <Input
         v-model:value="condition"
         :placeholder="placeholder"
@@ -280,7 +309,12 @@ watch(
         @blur="updateNode"
       >
         <template #suffix>
-          <Tooltip v-if="!valid" title="格式错误" placement="top">
+          <!-- 格式错误 / Format Error -->
+          <Tooltip
+            v-if="!valid"
+            :title="$t('bpm.bpmnProcessDesign.timeEventConfig.formatError')"
+            placement="top"
+          >
             <IconifyIcon
               icon="ant-design:exclamation-circle-filled"
               class="text-orange-400"
@@ -324,12 +358,14 @@ watch(
       </Input>
     </div>
 
-    <!-- 时间选择器 -->
+    <!-- 时间选择器 / Date Picker -->
     <DateModal>
       <DatePicker
         v-model:value="dateValue"
         show-time
-        placeholder="选择日期时间"
+        :placeholder="
+          $t('bpm.bpmnProcessDesign.timeEventConfig.selectDateTime')
+        "
         class="w-full"
         @change="onDateChange"
       />

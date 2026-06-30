@@ -5,6 +5,8 @@ import { useVbenModal } from '@vben/common-ui';
 
 import { Form, FormItem, Input } from 'ant-design-vue';
 
+import { $t } from '#/locales';
+
 defineOptions({ name: 'SignalMessageModal' });
 
 const emit = defineEmits<{
@@ -19,14 +21,24 @@ const isEdit = ref(false);
 const config = computed(() => {
   return modelType.value === 'message'
     ? {
-        title: isEdit.value ? '编辑消息' : '创建消息',
-        idLabel: '消息 ID',
-        nameLabel: '消息名称',
+        // 编辑消息 / Edit Message | 创建消息 / Create Message
+        title: isEdit.value
+          ? $t('bpm.bpmnProcessDesign.signalMessage.editMessage')
+          : $t('bpm.bpmnProcessDesign.signalMessage.createMessage'),
+        // 消息 ID / Message ID
+        idLabel: $t('bpm.bpmnProcessDesign.signalMessage.messageId'),
+        // 消息名称 / Message Name
+        nameLabel: $t('bpm.bpmnProcessDesign.signalMessage.messageName'),
       }
     : {
-        title: isEdit.value ? '编辑信号' : '创建信号',
-        idLabel: '信号 ID',
-        nameLabel: '信号名称',
+        // 编辑信号 / Edit Signal | 创建信号 / Create Signal
+        title: isEdit.value
+          ? $t('bpm.bpmnProcessDesign.signalMessage.editSignal')
+          : $t('bpm.bpmnProcessDesign.signalMessage.createSignal'),
+        // 信号 ID / Signal ID
+        idLabel: $t('bpm.bpmnProcessDesign.signalMessage.signalId'),
+        // 信号名称 / Signal Name
+        nameLabel: $t('bpm.bpmnProcessDesign.signalMessage.signalName'),
       };
 });
 
@@ -74,14 +86,24 @@ const [Modal, modalApi] = useVbenModal({
       <FormItem
         :label="config.idLabel"
         name="id"
-        :rules="[{ required: true, message: '请输入 ID' }]"
+        :rules="[
+          {
+            required: true,
+            message: $t('bpm.bpmnProcessDesign.validation.pleaseEnterId'),
+          },
+        ]"
       >
         <Input v-model:value="form.id" allow-clear />
       </FormItem>
       <FormItem
         :label="config.nameLabel"
         name="name"
-        :rules="[{ required: true, message: '请输入名称' }]"
+        :rules="[
+          {
+            required: true,
+            message: $t('bpm.bpmnProcessDesign.validation.pleaseEnterName'),
+          },
+        ]"
       >
         <Input v-model:value="form.name" allow-clear />
       </FormItem>

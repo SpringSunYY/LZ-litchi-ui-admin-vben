@@ -3,6 +3,8 @@ import { ref, watch } from 'vue';
 
 import { Checkbox, Form, FormItem } from 'ant-design-vue';
 
+import { $t } from '#/locales';
+
 import { installedComponent } from './data';
 
 defineOptions({ name: 'ElementTaskConfig' });
@@ -65,25 +67,32 @@ watch(
   <div class="panel-tab__content">
     <Form>
       <!-- add by 芋艿：由于「异步延续」暂时用不到，所以这里 display 为 none -->
-      <FormItem label="异步延续" class="hidden">
+      <!-- 异步延续 / Async Continue -->
+      <FormItem
+        :label="$t('bpm.bpmnProcessDesign.task.asyncContinue')"
+        class="hidden"
+      >
         <Checkbox
           v-model:checked="taskConfigForm.asyncBefore"
           @change="changeTaskAsync"
         >
-          异步前
+          <!-- 异步前 / Async Before -->
+          {{ $t('bpm.bpmnProcessDesign.task.asyncBefore') }}
         </Checkbox>
         <Checkbox
           v-model:checked="taskConfigForm.asyncAfter"
           @change="changeTaskAsync"
         >
-          异步后
+          <!-- 异步后 / Async After -->
+          {{ $t('bpm.bpmnProcessDesign.task.asyncAfter') }}
         </Checkbox>
         <Checkbox
           v-model:checked="taskConfigForm.exclusive"
           v-if="taskConfigForm.asyncAfter || taskConfigForm.asyncBefore"
           @change="changeTaskAsync"
         >
-          排除
+          <!-- 排除 / Exclusive -->
+          {{ $t('bpm.bpmnProcessDesign.task.exclusive') }}
         </Checkbox>
       </FormItem>
       <component :is="witchTaskComponent" v-bind="$props" />

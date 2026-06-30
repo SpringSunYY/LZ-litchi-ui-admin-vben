@@ -13,6 +13,7 @@ import {
   Select,
 } from 'ant-design-vue';
 
+import { $t } from '#/locales';
 import {
   APPROVE_METHODS,
   ApproveMethodType,
@@ -72,7 +73,7 @@ declare global {
 const bpmnInstances = () => (window as any)?.bpmnInstances;
 
 // @ts-expect-error: retained for legacy multi-instance mode compatibility
-// eslint-disable-next-line unused-imports/no-unused-vars
+
 const getElementLoop = (businessObject: any): void => {
   if (!businessObject.loopCharacteristics) {
     loopCharacteristics.value = 'Null';
@@ -433,28 +434,72 @@ watch(
         </div>
       </div>
     </RadioGroup>
-    <div v-else>除了UserTask以外节点的多实例待实现</div>
-    <!-- 与Simple设计器配置合并，保留以前的代码 -->
+    <div v-else>
+      {{ $t('bpm.bpmnProcessDesign.multiInstance.otherNodeNotImplemented') }}
+    </div>
+    <!-- 除了UserTask以外节点的多实例待实现 / Multi-instance for non-UserTask nodes is pending implementation -->
+    <!-- 与Simple设计器配置合并，保留以前的代码 / Merged with Simple designer config, keeping legacy code -->
     <Form class="hidden">
-      <FormItem label="快捷配置">
-        <Button size="small" @click="() => changeConfig('依次审批')">
-          依次审批
+      <!-- 快捷配置 / Quick Config -->
+      <FormItem :label="$t('bpm.bpmnProcessDesign.multiInstance.quickConfig')">
+        <!-- 依次审批 / Sequential Approve -->
+        <Button
+          size="small"
+          @click="
+            () =>
+              changeConfig(
+                $t('bpm.bpmnProcessDesign.multiInstance.sequentialApprove'),
+              )
+          "
+        >
+          {{ $t('bpm.bpmnProcessDesign.multiInstance.sequentialApprove') }}
         </Button>
-        <Button size="small" @click="() => changeConfig('会签')">会签</Button>
-        <Button size="small" @click="() => changeConfig('或签')">或签</Button>
+        <!-- 会签 / Counter Sign -->
+        <Button
+          size="small"
+          @click="
+            () =>
+              changeConfig(
+                $t('bpm.bpmnProcessDesign.multiInstance.counterSign'),
+              )
+          "
+        >
+          {{ $t('bpm.bpmnProcessDesign.multiInstance.counterSign') }}
+        </Button>
+        <!-- 或签 / Or Sign -->
+        <Button
+          size="small"
+          @click="
+            () => changeConfig($t('bpm.bpmnProcessDesign.multiInstance.orSign'))
+          "
+        >
+          {{ $t('bpm.bpmnProcessDesign.multiInstance.orSign') }}
+        </Button>
       </FormItem>
-      <FormItem label="会签类型">
+      <!-- 会签类型 / Counter Sign Type -->
+      <FormItem
+        :label="$t('bpm.bpmnProcessDesign.multiInstance.counterSignType')"
+      >
         <Select
           v-model:value="loopCharacteristics"
           @change="changeLoopCharacteristicsType"
         >
+          <!-- 并行多重事件 / Parallel Multi-Instance -->
           <Select.Option value="ParallelMultiInstance">
-            并行多重事件
+            {{
+              $t('bpm.bpmnProcessDesign.multiInstance.parallelMultiInstance')
+            }}
           </Select.Option>
+          <!-- 时序多重事件 / Sequential Multi-Instance -->
           <Select.Option value="SequentialMultiInstance">
-            时序多重事件
+            {{
+              $t('bpm.bpmnProcessDesign.multiInstance.sequentialMultiInstance')
+            }}
           </Select.Option>
-          <Select.Option value="Null">无</Select.Option>
+          <!-- 无 / None -->
+          <Select.Option value="Null">
+            {{ $t('bpm.bpmnProcessDesign.multiInstance.none') }}
+          </Select.Option>
         </Select>
       </FormItem>
       <template
@@ -463,7 +508,11 @@ watch(
           loopCharacteristics === 'SequentialMultiInstance'
         "
       >
-        <FormItem label="循环数量" key="loopCardinality">
+        <!-- 循环数量 / Loop Count -->
+        <FormItem
+          :label="$t('bpm.bpmnProcessDesign.multiInstance.loopCount')"
+          key="loopCardinality"
+        >
           <Input
             v-model:value="loopInstanceForm.loopCardinality"
             allow-clear
@@ -473,22 +522,36 @@ watch(
             "
           />
         </FormItem>
-        <FormItem label="集合" key="collection" v-show="false">
+        <!-- 集合 / Collection -->
+        <FormItem
+          :label="$t('bpm.bpmnProcessDesign.multiInstance.collection')"
+          key="collection"
+          v-show="false"
+        >
           <Input
             v-model:value="loopInstanceForm.collection"
             allow-clear
             @change="() => updateLoopBase()"
           />
         </FormItem>
-        <!-- add by 芋艿：由于「元素变量」暂时用不到，所以这里 display 为 none -->
-        <FormItem label="元素变量" key="elementVariable" class="hidden">
+        <!-- add by 芋艿：由于「元素变量」暂时用不到，所以这里 display 为 none / Element variable is not used yet, display is none -->
+        <!-- 元素变量 / Element Variable -->
+        <FormItem
+          :label="$t('bpm.bpmnProcessDesign.multiInstance.elementVariable')"
+          key="elementVariable"
+          class="hidden"
+        >
           <Input
             v-model:value="loopInstanceForm.elementVariable"
             allow-clear
             @change="() => updateLoopBase()"
           />
         </FormItem>
-        <FormItem label="完成条件" key="completionCondition">
+        <!-- 完成条件 / Completion Condition -->
+        <FormItem
+          :label="$t('bpm.bpmnProcessDesign.multiInstance.completionCondition')"
+          key="completionCondition"
+        >
           <Input
             v-model:value="loopInstanceForm.completionCondition"
             allow-clear
@@ -498,30 +561,39 @@ watch(
             "
           />
         </FormItem>
-        <!-- add by 芋艿：由于「异步状态」暂时用不到，所以这里 display 为 none -->
-        <FormItem label="异步状态" key="async" class="hidden">
+        <!-- add by 芋艿：由于「异步状态」暂时用不到，所以这里 display 为 none / Async status is not used yet, display is none -->
+        <!-- 异步状态 / Async Status -->
+        <FormItem
+          :label="$t('bpm.bpmnProcessDesign.multiInstance.asyncStatus')"
+          key="async"
+          class="hidden"
+        >
+          <!-- 异步前 / Async Before -->
           <Checkbox
             v-model:checked="loopInstanceForm.asyncBefore"
             @change="() => updateLoopAsync('asyncBefore')"
           >
-            异步前
+            {{ $t('bpm.bpmnProcessDesign.multiInstance.asyncBefore') }}
           </Checkbox>
+          <!-- 异步后 / Async After -->
           <Checkbox
             v-model:checked="loopInstanceForm.asyncAfter"
             @change="() => updateLoopAsync('asyncAfter')"
           >
-            异步后
+            {{ $t('bpm.bpmnProcessDesign.multiInstance.asyncAfter') }}
           </Checkbox>
+          <!-- 排除 / Exclusive -->
           <Checkbox
             v-model:checked="loopInstanceForm.exclusive"
             v-if="loopInstanceForm.asyncAfter || loopInstanceForm.asyncBefore"
             @change="() => updateLoopAsync('exclusive')"
           >
-            排除
+            {{ $t('bpm.bpmnProcessDesign.multiInstance.exclusive') }}
           </Checkbox>
         </FormItem>
+        <!-- 重试周期 / Retry Cycle -->
         <FormItem
-          label="重试周期"
+          :label="$t('bpm.bpmnProcessDesign.multiInstance.retryCycle')"
           name="timeCycle"
           v-if="loopInstanceForm.asyncAfter || loopInstanceForm.asyncBefore"
           key="timeCycle"

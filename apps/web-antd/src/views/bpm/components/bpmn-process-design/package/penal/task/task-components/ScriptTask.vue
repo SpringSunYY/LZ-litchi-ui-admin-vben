@@ -10,6 +10,8 @@ import {
   Textarea,
 } from 'ant-design-vue';
 
+import { $t } from '#/locales';
+
 defineOptions({ name: 'ScriptTask' });
 const props = defineProps({
   id: {
@@ -76,7 +78,7 @@ watch(
 <template>
   <div class="mt-4">
     <Form :label-col="{ span: 6 }" :wrapper-col="{ span: 18 }">
-      <FormItem label="脚本格式">
+      <FormItem :label="$t('bpm.bpmnProcessDesign.task.scriptFormat')">
         <Input
           v-model:value="scriptTaskForm.scriptFormat"
           allow-clear
@@ -84,14 +86,20 @@ watch(
           @change="updateElementTask()"
         />
       </FormItem>
-      <!-- TODO scriptType  外部资源 和 内联脚本，  flowable 文档 https://www.flowable.com/open-source/docs/bpmn/ch07b-BPMN-Constructs#script-task  没看到到有相应的属性 -->
-      <FormItem label="脚本类型">
+      <FormItem :label="$t('bpm.bpmnProcessDesign.task.scriptType')">
         <Select v-model:value="scriptTaskForm.scriptType">
-          <SelectOption value="inline">内联脚本</SelectOption>
-          <SelectOption value="external">外部资源</SelectOption>
+          <SelectOption value="inline">
+            {{ $t('bpm.bpmnProcessDesign.task.inlineScript') }}
+          </SelectOption>
+          <SelectOption value="external">
+            {{ $t('bpm.bpmnProcessDesign.task.externalResource') }}
+          </SelectOption>
         </Select>
       </FormItem>
-      <FormItem label="脚本" v-show="scriptTaskForm.scriptType === 'inline'">
+      <FormItem
+        :label="$t('bpm.bpmnProcessDesign.task.script')"
+        v-show="scriptTaskForm.scriptType === 'inline'"
+      >
         <Textarea
           v-model:value="scriptTaskForm.script"
           :auto-size="{ minRows: 2, maxRows: 4 }"
@@ -101,7 +109,7 @@ watch(
         />
       </FormItem>
       <FormItem
-        label="资源地址"
+        :label="$t('bpm.bpmnProcessDesign.task.resourceAddress')"
         v-show="scriptTaskForm.scriptType === 'external'"
       >
         <Input
@@ -111,7 +119,7 @@ watch(
           @change="updateElementTask()"
         />
       </FormItem>
-      <FormItem label="结果变量">
+      <FormItem :label="$t('bpm.bpmnProcessDesign.task.resultVariable')">
         <Input
           v-model:value="scriptTaskForm.resultVariable"
           allow-clear

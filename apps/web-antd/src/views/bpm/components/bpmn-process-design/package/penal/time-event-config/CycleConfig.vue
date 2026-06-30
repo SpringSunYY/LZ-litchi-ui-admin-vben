@@ -13,6 +13,8 @@ import {
 } from 'ant-design-vue';
 import dayjs from 'dayjs';
 
+import { $t } from '#/locales';
+
 const props = defineProps({
   value: {
     type: String,
@@ -33,13 +35,48 @@ const fields = ref({
   year: '',
 });
 const cronFieldList = [
-  { key: 'second', label: '秒', min: 0, max: 59 },
-  { key: 'minute', label: '分', min: 0, max: 59 },
-  { key: 'hour', label: '时', min: 0, max: 23 },
-  { key: 'day', label: '天', min: 1, max: 31 },
-  { key: 'month', label: '月', min: 1, max: 12 },
-  { key: 'week', label: '周', min: 1, max: 7 },
-  { key: 'year', label: '年', min: 1970, max: 2099 },
+  {
+    key: 'second',
+    label: $t('bpm.bpmnProcessDesign.timeEventConfig.second'),
+    min: 0,
+    max: 59,
+  }, // 秒 / Second
+  {
+    key: 'minute',
+    label: $t('bpm.bpmnProcessDesign.timeEventConfig.minute'),
+    min: 0,
+    max: 59,
+  }, // 分 / Minute
+  {
+    key: 'hour',
+    label: $t('bpm.bpmnProcessDesign.timeEventConfig.hour'),
+    min: 0,
+    max: 23,
+  }, // 时 / Hour
+  {
+    key: 'day',
+    label: $t('bpm.bpmnProcessDesign.timeEventConfig.day'),
+    min: 1,
+    max: 31,
+  }, // 天 / Day
+  {
+    key: 'month',
+    label: $t('bpm.bpmnProcessDesign.timeEventConfig.month'),
+    min: 1,
+    max: 12,
+  }, // 月 / Month
+  {
+    key: 'week',
+    label: $t('bpm.bpmnProcessDesign.timeEventConfig.week'),
+    min: 1,
+    max: 7,
+  }, // 周 / Week
+  {
+    key: 'year',
+    label: $t('bpm.bpmnProcessDesign.timeEventConfig.year'),
+    min: 1970,
+    max: 2099,
+  }, // 年 / Year
 ];
 const activeField = ref('second');
 const cronMode = ref({
@@ -110,12 +147,36 @@ const isoStr = ref('');
 const repeat = ref(1);
 const isoDate = ref('');
 const durationUnits = [
-  { key: 'Y', label: '年', presets: [1, 2, 3, 4] },
-  { key: 'M', label: '月', presets: [1, 2, 3, 4] },
-  { key: 'D', label: '天', presets: [1, 2, 3, 4] },
-  { key: 'H', label: '时', presets: [4, 8, 12, 24] },
-  { key: 'm', label: '分', presets: [5, 10, 30, 50] },
-  { key: 'S', label: '秒', presets: [5, 10, 30, 50] },
+  {
+    key: 'Y',
+    label: $t('bpm.bpmnProcessDesign.timeEventConfig.year'),
+    presets: [1, 2, 3, 4],
+  }, // 年 / Year
+  {
+    key: 'M',
+    label: $t('bpm.bpmnProcessDesign.timeEventConfig.month'),
+    presets: [1, 2, 3, 4],
+  }, // 月 / Month
+  {
+    key: 'D',
+    label: $t('bpm.bpmnProcessDesign.timeEventConfig.day'),
+    presets: [1, 2, 3, 4],
+  }, // 天 / Day
+  {
+    key: 'H',
+    label: $t('bpm.bpmnProcessDesign.timeEventConfig.hour'),
+    presets: [4, 8, 12, 24],
+  }, // 时 / Hour
+  {
+    key: 'm',
+    label: $t('bpm.bpmnProcessDesign.timeEventConfig.minute'),
+    presets: [5, 10, 30, 50],
+  }, // 分 / Minute
+  {
+    key: 'S',
+    label: $t('bpm.bpmnProcessDesign.timeEventConfig.second'),
+    presets: [5, 10, 30, 50],
+  }, // 秒 / Second
 ];
 const durationCustom = ref({ Y: '', M: '', D: '', H: '', m: '', S: '' });
 const isoDuration = ref('');
@@ -203,7 +264,11 @@ watch(
 </script>
 <template>
   <Tabs v-model:active-key="tab">
-    <TabPane key="cron" tab="CRON表达式">
+    <!-- CRON表达式 / CRON Expression -->
+    <TabPane
+      key="cron"
+      :tab="$t('bpm.bpmnProcessDesign.timeEventConfig.cronExpression')"
+    >
       <div class="mb-2.5">
         <Input
           v-model:value="cronStr"
@@ -213,45 +278,52 @@ watch(
         />
       </div>
       <div class="mb-2 flex gap-2">
+        <!-- 秒 / Second -->
         <Input
           v-model:value="fields.second"
-          placeholder="秒"
+          :placeholder="$t('bpm.bpmnProcessDesign.timeEventConfig.second')"
           class="w-20"
           key="second"
         />
+        <!-- 分 / Minute -->
         <Input
           v-model:value="fields.minute"
-          placeholder="分"
+          :placeholder="$t('bpm.bpmnProcessDesign.timeEventConfig.minute')"
           class="w-20"
           key="minute"
         />
+        <!-- 时 / Hour -->
         <Input
           v-model:value="fields.hour"
-          placeholder="时"
+          :placeholder="$t('bpm.bpmnProcessDesign.timeEventConfig.hour')"
           class="w-20"
           key="hour"
         />
+        <!-- 天 / Day -->
         <Input
           v-model:value="fields.day"
-          placeholder="天"
+          :placeholder="$t('bpm.bpmnProcessDesign.timeEventConfig.day')"
           class="w-20"
           key="day"
         />
+        <!-- 月 / Month -->
         <Input
           v-model:value="fields.month"
-          placeholder="月"
+          :placeholder="$t('bpm.bpmnProcessDesign.timeEventConfig.month')"
           class="w-20"
           key="month"
         />
+        <!-- 周 / Week -->
         <Input
           v-model:value="fields.week"
-          placeholder="周"
+          :placeholder="$t('bpm.bpmnProcessDesign.timeEventConfig.week')"
           class="w-20"
           key="week"
         />
+        <!-- 年 / Year -->
         <Input
           v-model:value="fields.year"
-          placeholder="年"
+          :placeholder="$t('bpm.bpmnProcessDesign.timeEventConfig.year')"
           class="w-20"
           key="year"
         />
@@ -264,10 +336,13 @@ watch(
               :key="`radio-${f.key}`"
             >
               <Radio value="every" :key="`every-${f.key}`">
-                每{{ f.label }}
+                {{ $t('bpm.bpmnProcessDesign.timeEventConfig.every') }}
+                {{ f.label }}
+                <!-- 每{unit} / Every {unit} -->
               </Radio>
               <Radio value="range" :key="`range-${f.key}`">
-                从
+                {{ $t('bpm.bpmnProcessDesign.timeEventConfig.from') }}
+                <!-- 从 / From -->
                 <InputNumber
                   v-model:value="cronRange[f.key][0]"
                   :min="f.min"
@@ -276,7 +351,8 @@ watch(
                   class="w-[60px]"
                   :key="`range0-${f.key}`"
                 />
-                到
+                {{ $t('bpm.bpmnProcessDesign.timeEventConfig.to') }}
+                <!-- 到 / To -->
                 <InputNumber
                   v-model:value="cronRange[f.key][1]"
                   :min="f.min"
@@ -285,10 +361,13 @@ watch(
                   class="w-[60px]"
                   :key="`range1-${f.key}`"
                 />
-                之间每{{ f.label }}
+                {{ $t('bpm.bpmnProcessDesign.timeEventConfig.betweenEvery') }}
+                {{ f.label }}
+                <!-- 之间每{unit} / Every {unit} between -->
               </Radio>
               <Radio value="step" :key="`step-${f.key}`">
-                从第
+                {{ $t('bpm.bpmnProcessDesign.timeEventConfig.startFrom') }}
+                <!-- 从第 / Start from -->
                 <InputNumber
                   v-model:value="cronStep[f.key][0]"
                   :min="f.min"
@@ -297,7 +376,8 @@ watch(
                   class="w-[60px]"
                   :key="`step0-${f.key}`"
                 />
-                开始每
+                {{ $t('bpm.bpmnProcessDesign.timeEventConfig.startEvery') }}
+                <!-- 开始每 / Start every -->
                 <InputNumber
                   v-model:value="cronStep[f.key][1]"
                   :min="1"
@@ -308,7 +388,10 @@ watch(
                 />
                 {{ f.label }}
               </Radio>
-              <Radio value="appoint" :key="`appoint-${f.key}`"> 指定 </Radio>
+              <Radio value="appoint" :key="`appoint-${f.key}`">
+                {{ $t('bpm.bpmnProcessDesign.timeEventConfig.specify') }}
+              </Radio>
+              <!-- 指定 / Specify -->
             </Radio.Group>
           </div>
           <div v-if="cronMode[f.key] === 'appoint'">
@@ -328,40 +411,57 @@ watch(
         </Tabs.TabPane>
       </Tabs>
     </TabPane>
-    <TabPane key="iso" tab="标准格式">
+    <!-- 标准格式 / Standard Format -->
+    <TabPane
+      key="iso"
+      :tab="$t('bpm.bpmnProcessDesign.timeEventConfig.standardFormat')"
+    >
       <div class="mb-2.5">
         <Input
           v-model:value="isoStr"
-          placeholder="如R1/2025-05-21T21:59:54/P3DT30M30S"
+          :placeholder="
+            $t('bpm.bpmnProcessDesign.timeEventConfig.isoPlaceholder')
+          "
           class="w-[400px] font-bold"
           key="isoStr"
         />
       </div>
+      <!-- 循环次数 / Repeat Count -->
       <div class="mb-2.5">
-        循环次数：<InputNumber
+        {{ $t('bpm.bpmnProcessDesign.timeEventConfig.repeatCount') }}：
+        <InputNumber
           v-model:value="repeat"
           :min="1"
           class="w-[100px]"
           key="repeat"
         />
       </div>
+      <!-- 开始时间 / Start Time -->
       <div class="mb-2.5">
-        开始时间：<DatePicker
+        {{ $t('bpm.bpmnProcessDesign.timeEventConfig.startTime') }}：
+        <DatePicker
           v-model:value="isoDate"
           show-time
-          placeholder="选择开始时间"
+          :placeholder="
+            $t('bpm.bpmnProcessDesign.timeEventConfig.selectStartTime')
+          "
           class="w-[200px]"
           key="isoDate"
         />
       </div>
+      <!-- 间隔时长 / Interval Duration -->
       <div class="mb-2.5">
-        间隔时长：<Input
+        {{ $t('bpm.bpmnProcessDesign.timeEventConfig.intervalDuration') }}：
+        <Input
           v-model:value="isoDuration"
           readonly
-          placeholder="如P3DT30M30S"
+          :placeholder="
+            $t('bpm.bpmnProcessDesign.timeEventConfig.intervalPlaceholder')
+          "
           class="w-[200px]"
           key="isoDuration"
         />
+        <!-- 如P3DT30M30S / E.g. P3DT30M30S -->
       </div>
       <div>
         <div v-for="unit in durationUnits" :key="unit.key" class="mb-2">
@@ -379,7 +479,7 @@ watch(
               v-model:value="durationCustom[unit.key]"
               size="small"
               class="ml-2 w-[60px]"
-              placeholder="自定义"
+              :placeholder="$t('bpm.bpmnProcessDesign.timeEventConfig.custom')"
               @change="setDuration(unit.key, durationCustom[unit.key])"
             />
           </Button.Group>

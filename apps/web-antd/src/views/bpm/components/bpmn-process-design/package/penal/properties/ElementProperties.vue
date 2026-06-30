@@ -8,6 +8,7 @@ import { cloneDeep } from '@vben/utils';
 import { Button, Divider, Form, FormItem, Input } from 'ant-design-vue';
 
 import { useVbenVxeGrid } from '#/adapter/vxe-table';
+import { $t } from '#/locales';
 
 defineOptions({ name: 'ElementProperties' });
 
@@ -61,8 +62,10 @@ const removeAttributes = (
   index: number,
 ) => {
   confirm({
-    title: '提示',
-    content: '确认移除该属性吗？',
+    // 提示 / Prompt
+    title: $t('bpm.bpmnProcessDesign.common.prompt'),
+    // 确认移除该属性吗？/ Confirm remove this property?
+    content: $t('bpm.bpmnProcessDesign.properties.confirmRemoveProperty'),
   }).then(() => {
     elementPropertyList.value.splice(index, 1);
     bpmnElementPropertyList.value.splice(index, 1);
@@ -132,11 +135,21 @@ const updateElementExtensions = (properties: any) => {
 const [Grid, gridApi] = useVbenVxeGrid({
   gridOptions: {
     columns: [
-      { type: 'seq', width: 50, title: '序号' },
-      { field: 'name', title: '属性名', minWidth: 120 },
-      { field: 'value', title: '属性值', minWidth: 120 },
+      // 序号 / No.
+      { type: 'seq', width: 50, title: '#' },
+      // 属性名 / Property Name
       {
-        title: '操作',
+        field: 'name',
+        title: $t('bpm.bpmnProcessDesign.properties.propertyName'),
+      },
+      // 属性值 / Property Value
+      {
+        field: 'value',
+        title: $t('bpm.bpmnProcessDesign.properties.propertyValue'),
+      },
+      {
+        // 操作 / Action
+        title: $t('bpm.bpmnProcessDesign.common.action'),
         width: 120,
         slots: { default: 'action' },
         fixed: 'right',
@@ -155,7 +168,8 @@ const [Grid, gridApi] = useVbenVxeGrid({
 });
 
 const [FieldModal, fieldModalApi] = useVbenModal({
-  title: '属性配置',
+  // 属性配置 / Property Config
+  title: $t('bpm.bpmnProcessDesign.properties.propertyConfig'),
   onConfirm: saveAttribute,
 });
 
@@ -194,21 +208,23 @@ watch(
   <div class="-mx-2">
     <Grid :data="elementPropertyList">
       <template #action="{ row, rowIndex }">
+        <!-- 编辑 / Edit -->
         <Button
           size="small"
           type="link"
           @click="openAttributesForm(row, rowIndex)"
         >
-          编辑
+          {{ $t('bpm.bpmnProcessDesign.common.edit') }}
         </Button>
         <Divider type="vertical" />
+        <!-- 移除 / Remove -->
         <Button
           size="small"
           type="link"
           danger
           @click="removeAttributes(row, rowIndex)"
         >
-          移除
+          {{ $t('bpm.bpmnProcessDesign.common.remove') }}
         </Button>
       </template>
     </Grid>
@@ -222,7 +238,8 @@ watch(
         <template #icon>
           <IconifyIcon icon="ep:plus" />
         </template>
-        添加属性
+        {{ $t('bpm.bpmnProcessDesign.properties.addProperty') }}
+        <!-- 添加属性 / Add Property -->
       </Button>
     </div>
 
@@ -233,17 +250,33 @@ watch(
         :label-col="{ span: 5 }"
         :wrapper-col="{ span: 17 }"
       >
+        <!-- 属性名 / Property Name -->
         <FormItem
-          label="属性名："
+          :label="$t('bpm.bpmnProcessDesign.properties.propertyName')"
           name="name"
-          :rules="[{ required: true, message: '请输入属性名' }]"
+          :rules="[
+            {
+              required: true,
+              message: $t(
+                'bpm.bpmnProcessDesign.properties.pleaseInputPropertyName',
+              ),
+            },
+          ]"
         >
           <Input v-model:value="propertyForm.name" allow-clear />
         </FormItem>
+        <!-- 属性值 / Property Value -->
         <FormItem
-          label="属性值："
+          :label="$t('bpm.bpmnProcessDesign.properties.propertyValue')"
           name="value"
-          :rules="[{ required: true, message: '请输入属性值' }]"
+          :rules="[
+            {
+              required: true,
+              message: $t(
+                'bpm.bpmnProcessDesign.properties.pleaseInputPropertyValue',
+              ),
+            },
+          ]"
         >
           <Input v-model:value="propertyForm.value" allow-clear />
         </FormItem>

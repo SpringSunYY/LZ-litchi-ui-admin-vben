@@ -5,6 +5,8 @@ import { useVbenModal } from '@vben/common-ui';
 
 import { Form, FormItem, Input, Select, SelectOption } from 'ant-design-vue';
 
+import { $t } from '#/locales';
+
 import { fieldType } from './utilSelf';
 
 defineOptions({ name: 'ListenerFieldModal' });
@@ -41,7 +43,11 @@ const [Modal, modalApi] = useVbenModal({
 </script>
 
 <template>
-  <Modal title="字段配置" class="w-3/5">
+  <!-- 字段配置 / Field Config -->
+  <Modal
+    :title="$t('bpm.bpmnProcessDesign.listenerConfig.fieldConfig')"
+    class="w-3/5"
+  >
     <Form
       ref="formRef"
       :model="form"
@@ -49,12 +55,15 @@ const [Modal, modalApi] = useVbenModal({
       :wrapper-col="{ span: 18 }"
     >
       <FormItem
-        label="字段名称："
+        :label="$t('bpm.bpmnProcessDesign.listenerConfig.fieldName')"
         name="name"
         :rules="[
           {
             required: true,
-            message: '请填写字段名称',
+            // 请填写字段名称 / Please fill in field name
+            message: $t(
+              'bpm.bpmnProcessDesign.listenerConfig.pleaseFillFieldName',
+            ),
             trigger: ['blur', 'change'],
           },
         ]"
@@ -62,12 +71,15 @@ const [Modal, modalApi] = useVbenModal({
         <Input v-model:value="form.name" allow-clear />
       </FormItem>
       <FormItem
-        label="字段类型："
+        :label="$t('bpm.bpmnProcessDesign.listenerConfig.fieldType')"
         name="fieldType"
         :rules="[
           {
             required: true,
-            message: '请选择字段类型',
+            // 请选择字段类型 / Please select field type
+            message: $t(
+              'bpm.bpmnProcessDesign.listenerConfig.pleaseSelectFieldType',
+            ),
             trigger: ['blur', 'change'],
           },
         ]"
@@ -84,13 +96,16 @@ const [Modal, modalApi] = useVbenModal({
       </FormItem>
       <FormItem
         v-if="form.fieldType === 'string'"
-        label="字段值："
+        :label="$t('bpm.bpmnProcessDesign.listenerConfig.fieldValue')"
         name="string"
         key="field-string"
         :rules="[
           {
             required: true,
-            message: '请填写字段值',
+            // 请填写字段值 / Please fill in field value
+            message: $t(
+              'bpm.bpmnProcessDesign.listenerConfig.pleaseFillFieldValue',
+            ),
             trigger: ['blur', 'change'],
           },
         ]"
@@ -99,13 +114,16 @@ const [Modal, modalApi] = useVbenModal({
       </FormItem>
       <FormItem
         v-if="form.fieldType === 'expression'"
-        label="表达式："
+        :label="$t('bpm.bpmnProcessDesign.listenerConfig.expression')"
         name="expression"
         key="field-expression"
         :rules="[
           {
             required: true,
-            message: '请填写表达式',
+            // 请填写表达式 / Please fill in expression
+            message: $t(
+              'bpm.bpmnProcessDesign.listenerConfig.pleaseFillExpression',
+            ),
             trigger: ['blur', 'change'],
           },
         ]"

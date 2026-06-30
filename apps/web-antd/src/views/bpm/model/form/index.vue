@@ -353,7 +353,8 @@ async function handleDeploy() {
     await router.push({ name: 'BpmModel' });
   } catch (error: any) {
     console.error('发布失败:', error);
-    message.warning(error.message || $t('bpm.model.message.deployFailed'));
+    const message = error.message || $t('bpm.model.message.deployFailed');
+    message.warning(message);
   } finally {
     deployLoading.value = false;
   }

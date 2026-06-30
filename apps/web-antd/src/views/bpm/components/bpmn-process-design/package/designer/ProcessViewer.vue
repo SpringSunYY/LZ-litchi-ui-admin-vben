@@ -9,6 +9,7 @@ import BpmnViewer from 'bpmn-js/lib/Viewer';
 import MoveCanvasModule from 'diagram-js/lib/navigation/movecanvas';
 
 import { DictTag } from '#/components/dict-tag';
+import { $t } from '#/locales';
 import { BpmProcessInstanceStatus, DICT_TYPE } from '#/utils';
 
 import '../theme/index.scss';
@@ -151,6 +152,7 @@ const onSelectElement = (element: any) => {
     activityType === 'bpmn:EndEvent' ||
     activityType === 'bpmn:StartEvent'
   ) {
+    // 审批信息 / Approval Info
     dialogTitle.value = '审批信息';
     selectTasks.value = [
       {
@@ -192,8 +194,8 @@ const importXML = async (xml: string) => {
       isLoading.value = false;
       // 高亮流程
       setProcessStatus(props.view);
-      console.log('[Process xml]', '开始加载流程图', xml);
-      console.log('[Process Designer]', '开始加载流程图', bpmnViewer.value);
+      // console.log('[Process xml]', '开始加载流程图', xml);
+      // console.log('[Process Designer]', '开始加载流程图', bpmnViewer.value);
       // 启动 ResizeObserver，等待容器可见且有尺寸时自动居中
       // 对应 https://github.com/yudaocode/yudao-ui-admin-vue3/pull/221 场景
       if (bpmnViewer.value) {
@@ -352,21 +354,22 @@ onBeforeUnmount(() => {
       </marker>
     </defs>
 
-    <!-- 审批记录 -->
+    <!-- 审批记录 / Approval Records -->
     <Modal
-      :title="dialogTitle || '审批记录'"
+      :title="dialogTitle || $t('bpm.bpmnProcessDesign.viewer.approvalRecords')"
       v-model:open="dialogVisible"
       :width="1000"
     >
       <Row>
         <Table :data-source="selectTasks" size="small" :bordered="true">
-          <Table.Column title="序号" align="center" width="50">
+          <!-- 序号 / No. -->
+          <Table.Column title="#" align="center" width="50">
             <template #default="{ index }">
               {{ index + 1 }}
             </template>
           </Table.Column>
           <Table.Column
-            title="审批人"
+            :title="$t('bpm.bpmnProcessDesign.viewer.approver')"
             width="100"
             align="center"
             v-if="selectActivityType === 'bpmn:UserTask'"
@@ -375,35 +378,44 @@ onBeforeUnmount(() => {
               {{ record.assigneeUser?.nickname || record.ownerUser?.nickname }}
             </template>
           </Table.Column>
+          <!-- 发起人 / Initiator -->
           <Table.Column
-            title="发起人"
+            :title="$t('bpm.bpmnProcessDesign.viewer.initiator')"
             data-index="assigneeUser.nickname"
             width="100"
             align="center"
             v-else
           />
-          <Table.Column title="部门" width="100" align="center">
+          <!-- 部门 / Department -->
+          <Table.Column
+            :title="$t('bpm.bpmnProcessDesign.viewer.department')"
+            width="100"
+            align="center"
+          >
             <template #default="{ record }">
               {{ record.assigneeUser?.deptName || record.ownerUser?.deptName }}
             </template>
           </Table.Column>
+          <!-- 开始时间 / Start Time -->
           <Table.Column
             :custom-render="({ text }) => formatDate(text)"
             align="center"
-            title="开始时间"
+            :title="$t('bpm.bpmnProcessDesign.viewer.startTime')"
             data-index="createTime"
             width="140"
           />
+          <!-- 结束时间 / End Time -->
           <Table.Column
             :custom-render="({ text }) => formatDate(text)"
             align="center"
-            title="结束时间"
+            :title="$t('bpm.bpmnProcessDesign.viewer.endTime')"
             data-index="endTime"
             width="140"
           />
+          <!-- 审批状态 / Approval Status -->
           <Table.Column
             align="center"
-            title="审批状态"
+            :title="$t('bpm.bpmnProcessDesign.viewer.approvalStatus')"
             data-index="status"
             width="90"
           >
@@ -414,16 +426,18 @@ onBeforeUnmount(() => {
               />
             </template>
           </Table.Column>
+          <!-- 审批建议 / Approval Comment -->
           <Table.Column
             align="center"
-            title="审批建议"
+            :title="$t('bpm.bpmnProcessDesign.viewer.approvalComment')"
             data-index="reason"
             width="120"
             v-if="selectActivityType === 'bpmn:UserTask'"
           />
+          <!-- 耗时 / Duration -->
           <Table.Column
             align="center"
-            title="耗时"
+            :title="$t('bpm.bpmnProcessDesign.viewer.duration')"
             data-index="durationInMillis"
             width="100"
           >

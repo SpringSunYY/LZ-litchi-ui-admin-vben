@@ -6,6 +6,8 @@ import { IconifyIcon } from '@vben/icons';
 
 import { Button, message, Select, SelectOption } from 'ant-design-vue';
 
+import { $t } from '#/locales';
+
 import SignalMessageModal from '../../signal-message/SignalMessageModal.vue';
 
 defineOptions({ name: 'ReceiveTask' });
@@ -49,7 +51,8 @@ const openCreateModal = () => {
 
 const handleConfirm = (formData: { id: string; name: string }) => {
   if (messageMap.value[formData.id]) {
-    message.error('该消息已存在, 请修改id后重新保存');
+    // 该消息已存在, 请修改id后重新保存 / Message already exists, please modify the id and save again
+    message.error($t('bpm.bpmnProcessDesign.receiveTask.messageExists'));
     return;
   }
   const newMessage = bpmnInstances().moddle.create('bpmn:Message', formData);
@@ -87,7 +90,7 @@ onMounted(() => {
       }
       messageMap.value[m.id] = m.name;
     });
-  messageMap.value['-1'] = '无';
+  messageMap.value['-1'] = $t('bpm.bpmnProcessDesign.receiveTask.none'); // 无 / None
 });
 
 onBeforeUnmount(() => {
@@ -111,11 +114,15 @@ watch(
         <template #icon>
           <IconifyIcon class="size-4" icon="lucide:plus" />
         </template>
-        创建新消息
+        {{ $t('bpm.bpmnProcessDesign.task.createNewMessage') }}
+        <!-- 创建新消息 / Create New Message -->
       </Button>
     </div>
     <div class="mb-1 flex items-center">
-      <span class="text-foreground w-20">消息实例:</span>
+      <!-- 消息实例 / Message Instance -->
+      <span class="text-foreground w-20"
+        >{{ $t('bpm.bpmnProcessDesign.task.messageInstance') }}:</span
+      >
       <Select
         v-model:value="bindMessageId"
         class="w-full"

@@ -36,6 +36,7 @@ import { getSimpleDeptList } from '#/api/system/dept';
 import { getSimplePostList } from '#/api/system/post';
 import { getSimpleRoleList } from '#/api/system/role';
 import { getSimpleUserList } from '#/api/system/user';
+import { $t } from '#/locales';
 import {
   CANDIDATE_STRATEGY,
   CandidateStrategy,
@@ -91,18 +92,22 @@ const deptFieldOnFormOptions = computed(() => {
 
 const deptLevel = ref(1);
 const deptLevelLabel = computed(() => {
-  let label = '部门负责人来源';
+  // 部门负责人来源 / Department Leader Source
+  let label = $t('bpm.bpmnProcessDesign.userTask.deptLeaderSource');
   if (
     userTaskForm.value.candidateStrategy ===
     CandidateStrategy.MULTI_LEVEL_DEPT_LEADER
   ) {
-    label = `${label}(指定部门向上)`;
+    // (指定部门向上) / (Specifying Dept Upward)
+    label = `${label}(${$t('bpm.bpmnProcessDesign.userTask.specifyDeptUpward')})`;
   } else if (
     userTaskForm.value.candidateStrategy === CandidateStrategy.FORM_DEPT_LEADER
   ) {
-    label = `${label}(表单内部门向上)`;
+    // (表单内部门向上) / (Form Dept Upward)
+    label = `${label}(${$t('bpm.bpmnProcessDesign.userTask.formDeptUpward')})`;
   } else {
-    label = `${label}(发起人部门向上)`;
+    // (发起人部门向上) / (Start User Dept Upward)
+    label = `${label}(${$t('bpm.bpmnProcessDesign.userTask.startUserDeptUpward')})`;
   }
   return label;
 });
@@ -348,8 +353,12 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
+  <!-- 规则类型 / Rule Type -->
   <Form :label-col="{ span: 6 }" :wrapper-col="{ span: 18 }">
-    <FormItem label="规则类型" name="candidateStrategy">
+    <FormItem
+      :label="$t('bpm.bpmnProcessDesign.userTask.ruleType')"
+      name="candidateStrategy"
+    >
       <Select
         v-model:value="userTaskForm.candidateStrategy"
         allow-clear
@@ -365,9 +374,10 @@ onBeforeUnmount(() => {
         </SelectOption>
       </Select>
     </FormItem>
+    <!-- 指定角色 / Assign Role -->
     <FormItem
       v-if="userTaskForm.candidateStrategy === CandidateStrategy.ROLE"
-      label="指定角色"
+      :label="$t('bpm.bpmnProcessDesign.userTask.assignRole')"
       name="candidateParam"
     >
       <Select
@@ -393,7 +403,7 @@ onBeforeUnmount(() => {
         userTaskForm.candidateStrategy ===
           CandidateStrategy.MULTI_LEVEL_DEPT_LEADER
       "
-      label="指定部门"
+      :label="$t('bpm.bpmnProcessDesign.userTask.assignDept')"
       name="candidateParam"
     >
       <TreeSelect
@@ -401,15 +411,16 @@ onBeforeUnmount(() => {
         v-model:value="userTaskForm.candidateParam"
         :tree-data="deptTreeOptions"
         :field-names="defaultProps"
-        placeholder="加载中，请稍后"
+        :placeholder="$t('bpm.bpmnProcessDesign.common.loading')"
         multiple
         tree-checkable
         @change="updateElementTask"
       />
     </FormItem>
+    <!-- 指定岗位 / Assign Post -->
     <FormItem
       v-if="userTaskForm.candidateStrategy === CandidateStrategy.POST"
-      label="指定岗位"
+      :label="$t('bpm.bpmnProcessDesign.userTask.assignPost')"
       name="candidateParam"
     >
       <Select
@@ -428,9 +439,10 @@ onBeforeUnmount(() => {
         </SelectOption>
       </Select>
     </FormItem>
+    <!-- 指定用户 / Assign User -->
     <FormItem
       v-if="userTaskForm.candidateStrategy === CandidateStrategy.USER"
-      label="指定用户"
+      :label="$t('bpm.bpmnProcessDesign.userTask.assignUser')"
       name="candidateParam"
     >
       <Select
@@ -449,9 +461,10 @@ onBeforeUnmount(() => {
         </SelectOption>
       </Select>
     </FormItem>
+    <!-- 指定用户组 / Assign User Group -->
     <FormItem
       v-if="userTaskForm.candidateStrategy === CandidateStrategy.USER_GROUP"
-      label="指定用户组"
+      :label="$t('bpm.bpmnProcessDesign.userTask.assignUserGroup')"
       name="candidateParam"
     >
       <Select
@@ -470,9 +483,10 @@ onBeforeUnmount(() => {
         </SelectOption>
       </Select>
     </FormItem>
+    <!-- 表单内用户字段 / Form User Field -->
     <FormItem
       v-if="userTaskForm.candidateStrategy === CandidateStrategy.FORM_USER"
-      label="表单内用户字段"
+      :label="$t('bpm.bpmnProcessDesign.userTask.formUserField')"
       name="formUser"
     >
       <Select
@@ -491,11 +505,12 @@ onBeforeUnmount(() => {
         </SelectOption>
       </Select>
     </FormItem>
+    <!-- 表单内部门字段 / Form Dept Field -->
     <FormItem
       v-if="
         userTaskForm.candidateStrategy === CandidateStrategy.FORM_DEPT_LEADER
       "
-      label="表单内部门字段"
+      :label="$t('bpm.bpmnProcessDesign.userTask.formDeptField')"
       name="formDept"
     >
       <Select
@@ -537,9 +552,10 @@ onBeforeUnmount(() => {
         </SelectOption>
       </Select>
     </FormItem>
+    <!-- 流程表达式 / Process Expression -->
     <FormItem
       v-if="userTaskForm.candidateStrategy === CandidateStrategy.EXPRESSION"
-      label="流程表达式"
+      :label="$t('bpm.bpmnProcessDesign.userTask.processExpression')"
       name="candidateParam"
     >
       <Textarea
@@ -556,14 +572,19 @@ onBeforeUnmount(() => {
           :icon="h(SelectOutlined)"
           @click="openProcessExpressionDialog"
         >
-          选择表达式
+          {{ $t('bpm.bpmnProcessDesign.userTask.selectExpression') }}
+          <!-- 选择表达式 / Select Expression -->
         </Button>
       </div>
       <!-- 选择弹窗 -->
       <ProcessExpressionSelectModalComp @select="selectProcessExpression" />
     </FormItem>
 
-    <FormItem label="跳过表达式" name="skipExpression">
+    <!-- 跳过表达式 / Skip Expression -->
+    <FormItem
+      :label="$t('bpm.bpmnProcessDesign.userTask.skipExpression')"
+      name="skipExpression"
+    >
       <Textarea
         v-model:value="userTaskForm.skipExpression"
         allow-clear

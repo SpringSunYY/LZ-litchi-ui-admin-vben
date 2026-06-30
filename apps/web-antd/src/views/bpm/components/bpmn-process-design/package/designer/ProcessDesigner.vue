@@ -39,6 +39,8 @@ import hljs from 'highlight.js'; // 导入代码高亮文件
 // import xml2js from 'fast-xml-parser'
 import { parseXmlString, XmlNode } from 'steady-xml';
 
+import { $t } from '#/locales';
+
 import DefaultEmptyXML from './plugins/defaultEmpty';
 import activitiModdleDescriptor from './plugins/descriptor/activitiDescriptor.json';
 // 标签解析构建器
@@ -461,15 +463,19 @@ const elementsAlign = (align: string) => {
   const Selection = bpmnModeler.get('selection');
   const SelectedElements = Selection.get();
   if (!SelectedElements || SelectedElements.length <= 1) {
-    message.warning('请按住 Shift 键选择多个元素对齐');
-    // alert('请按住 Ctrl 键选择多个元素对齐
+    // 请按住 Shift 键选择多个元素对齐 / Please hold Shift to select multiple elements for alignment
+    message.warning($t('bpm.bpmnProcessDesign.toolbar.selectMultipleForAlign'));
     return;
   }
   Modal.confirm({
-    title: '警告',
-    content: '自动对齐可能造成图形变形，是否继续？',
-    okText: '确定',
-    cancelText: '取消',
+    // 警告 / Warning
+    title: $t('bpm.bpmnProcessDesign.toolbar.warning'),
+    // 自动对齐可能造成图形变形，是否继续？/ Auto-alignment may cause shape distortion, continue?
+    content: $t('bpm.bpmnProcessDesign.toolbar.autoAlignWarning'),
+    // 确定 / Confirm
+    okText: $t('bpm.bpmnProcessDesign.common.confirm'),
+    // 取消 / Cancel
+    cancelText: $t('bpm.bpmnProcessDesign.common.cancel'),
     icon: h(WarningOutlined) as any,
     onOk() {
       Align.trigger(SelectedElements, align);
@@ -518,83 +524,110 @@ onBeforeUnmount(() => {
         <ButtonGroup key="file-control">
           <Button
             :icon="h(FolderOpenOutlined)"
-            title="打开文件"
+            :title="$t('bpm.bpmnProcessDesign.toolbar.openFile')"
             @click="refFile.click()"
           />
           <Tooltip placement="bottom">
             <template #title>
               <div>
+                <!-- 下载为XML文件 / Download as XML -->
                 <Button type="link" @click="downloadProcessAsXml()">
-                  下载为XML文件
+                  {{ $t('bpm.bpmnProcessDesign.toolbar.downloadXml') }}
                 </Button>
                 <br />
+                <!-- 下载为SVG文件 / Download as SVG -->
                 <Button type="link" @click="downloadProcessAsSvg()">
-                  下载为SVG文件
+                  {{ $t('bpm.bpmnProcessDesign.toolbar.downloadSvg') }}
                 </Button>
                 <br />
+                <!-- 下载为BPMN文件 / Download as BPMN -->
                 <Button type="link" @click="downloadProcessAsBpmn()">
-                  下载为BPMN文件
+                  {{ $t('bpm.bpmnProcessDesign.toolbar.downloadBpmn') }}
                 </Button>
               </div>
             </template>
-            <Button :icon="h(DownloadOutlined)" title="下载文件" />
+            <Button
+              :icon="h(DownloadOutlined)"
+              :title="$t('bpm.bpmnProcessDesign.toolbar.downloadFile')"
+            />
           </Tooltip>
           <Tooltip>
             <template #title>
-              <Button type="link" @click="previewProcessXML">预览XML</Button>
+              <!-- 预览XML / Preview XML -->
+              <Button type="link" @click="previewProcessXML">
+                {{ $t('bpm.bpmnProcessDesign.toolbar.previewXml') }}
+              </Button>
               <br />
-              <Button type="link" @click="previewProcessJson">预览JSON</Button>
+              <!-- 预览JSON / Preview JSON -->
+              <Button type="link" @click="previewProcessJson">
+                {{ $t('bpm.bpmnProcessDesign.toolbar.previewJson') }}
+              </Button>
             </template>
-            <Button :icon="h(EyeOutlined)" title="浏览" />
+            <!-- 浏览 / Browse -->
+            <Button
+              :icon="h(EyeOutlined)"
+              :title="$t('bpm.bpmnProcessDesign.toolbar.browse')"
+            />
           </Tooltip>
+          <!-- 开启模拟 / 退出模拟 / Start Simulation / Exit Simulation -->
           <Tooltip
             v-if="props.simulation"
-            :title="simulationStatus ? '退出模拟' : '开启模拟'"
+            :title="
+              simulationStatus
+                ? $t('bpm.bpmnProcessDesign.toolbar.exitSimulation')
+                : $t('bpm.bpmnProcessDesign.toolbar.startSimulation')
+            "
           >
             <Button
               :icon="h(ApiOutlined)"
-              title="模拟"
+              :title="$t('bpm.bpmnProcessDesign.toolbar.simulation')"
               @click="processSimulation"
             />
           </Tooltip>
         </ButtonGroup>
         <ButtonGroup key="align-control">
-          <Tooltip title="向左对齐">
+          <!-- 向左对齐 / Align Left -->
+          <Tooltip :title="$t('bpm.bpmnProcessDesign.toolbar.alignLeft')">
             <Button
               :icon="h(AlignLeftOutlined)"
               class="align align-bottom"
               @click="elementsAlign('left')"
             />
           </Tooltip>
-          <Tooltip title="向右对齐">
+          <!-- 向右对齐 / Align Right -->
+          <Tooltip :title="$t('bpm.bpmnProcessDesign.toolbar.alignRight')">
             <Button
               :icon="h(AlignLeftOutlined)"
               class="align align-top"
               @click="elementsAlign('right')"
             />
           </Tooltip>
-          <Tooltip title="向上对齐">
+          <!-- 向上对齐 / Align Top -->
+          <Tooltip :title="$t('bpm.bpmnProcessDesign.toolbar.alignTop')">
             <Button
               :icon="h(AlignLeftOutlined)"
               class="align align-left"
               @click="elementsAlign('top')"
             />
           </Tooltip>
-          <Tooltip title="向下对齐">
+          <!-- 向下对齐 / Align Bottom -->
+          <Tooltip :title="$t('bpm.bpmnProcessDesign.toolbar.alignBottom')">
             <Button
               :icon="h(AlignLeftOutlined)"
               class="align align-right"
               @click="elementsAlign('bottom')"
             />
           </Tooltip>
-          <Tooltip title="水平居中">
+          <!-- 水平居中 / Align Center Horizontal -->
+          <Tooltip :title="$t('bpm.bpmnProcessDesign.toolbar.alignCenter')">
             <Button
               :icon="h(AlignLeftOutlined)"
               class="align align-center"
               @click="elementsAlign('center')"
             />
           </Tooltip>
-          <Tooltip title="垂直居中">
+          <!-- 垂直居中 / Align Middle Vertical -->
+          <Tooltip :title="$t('bpm.bpmnProcessDesign.toolbar.alignMiddle')">
             <Button
               :icon="h(AlignLeftOutlined)"
               class="align align-middle"
@@ -603,7 +636,8 @@ onBeforeUnmount(() => {
           </Tooltip>
         </ButtonGroup>
         <ButtonGroup key="scale-control">
-          <Tooltip title="缩小视图">
+          <!-- 缩小视图 / Zoom Out -->
+          <Tooltip :title="$t('bpm.bpmnProcessDesign.toolbar.zoomOut')">
             <Button
               :icon="h(ZoomOutOutlined)"
               @click="processZoomOut()"
@@ -611,33 +645,38 @@ onBeforeUnmount(() => {
             />
           </Tooltip>
           <Button>{{ `${Math.floor(defaultZoom * 10 * 10)}%` }}</Button>
-          <Tooltip title="放大视图">
+          <!-- 放大视图 / Zoom In -->
+          <Tooltip :title="$t('bpm.bpmnProcessDesign.toolbar.zoomIn')">
             <Button
               :icon="h(ZoomInOutlined)"
               @click="processZoomIn()"
               :disabled="defaultZoom > 4"
             />
           </Tooltip>
-          <Tooltip title="重置视图并居中">
+          <!-- 重置视图并居中 / Reset View and Center -->
+          <Tooltip :title="$t('bpm.bpmnProcessDesign.toolbar.resetView')">
             <Button :icon="h(ReloadOutlined)" @click="processReZoom()" />
           </Tooltip>
         </ButtonGroup>
         <ButtonGroup key="stack-control">
-          <Tooltip title="撤销">
+          <!-- 撤销 / Undo -->
+          <Tooltip :title="$t('bpm.bpmnProcessDesign.toolbar.undo')">
             <Button
               :icon="h(UndoOutlined)"
               @click="processUndo()"
               :disabled="!revocable"
             />
           </Tooltip>
-          <Tooltip title="恢复">
+          <!-- 恢复 / Redo -->
+          <Tooltip :title="$t('bpm.bpmnProcessDesign.toolbar.redo')">
             <Button
               :icon="h(RedoOutlined)"
               @click="processRedo()"
               :disabled="!recoverable"
             />
           </Tooltip>
-          <Tooltip title="重新绘制">
+          <!-- 重新绘制 / Redraw -->
+          <Tooltip :title="$t('bpm.bpmnProcessDesign.toolbar.redraw')">
             <Button :icon="h(ReloadOutlined)" @click="processRestart()" />
           </Tooltip>
         </ButtonGroup>
@@ -662,8 +701,9 @@ onBeforeUnmount(() => {
       <!-- <div id="js-properties-panel" class="panel"></div> -->
       <!-- <div class="my-process-designer__canvas" ref="bpmn-canvas"></div> -->
     </div>
+    <!-- 预览 / Preview -->
     <Modal
-      title="预览"
+      :title="$t('bpm.bpmnProcessDesign.toolbar.preview')"
       v-model:open="previewModelVisible"
       class="max-h-[600px] w-4/5"
       :scroll="true"

@@ -17,6 +17,7 @@ import {
 
 import { useVbenVxeGrid } from '#/adapter/vxe-table';
 import { getModelList } from '#/api/bpm/model';
+import { $t } from '#/locales';
 
 interface FormData {
   processInstanceName: string;
@@ -95,7 +96,8 @@ const updateCallActivityAttr = (attr: keyof FormData) => {
 };
 
 const [VariableModal, variableModalApi] = useVbenModal({
-  title: '参数配置',
+  // 参数配置 / Parameter Config
+  title: $t('bpm.bpmnProcessDesign.callActivity.parameterConfig'),
   onConfirm: () => {
     saveVariable();
   },
@@ -111,8 +113,10 @@ const openVariableForm = (type: string, data: any, index: number) => {
 const removeVariable = async (type: string, index: number) => {
   try {
     await confirm({
-      title: '提示',
-      content: '是否确认删除？',
+      // 提示 / Prompt
+      title: $t('bpm.bpmnProcessDesign.common.prompt'),
+      // 是否确认删除？/ Confirm delete?
+      content: $t('bpm.bpmnProcessDesign.common.confirmDelete'),
     });
     if (type === 'in') {
       inVariableList.value.splice(index, 1);
@@ -195,10 +199,21 @@ watch(
 
 const gridOptions = {
   columns: [
-    { title: '源', field: 'source', minWidth: 100 },
-    { title: '目标', field: 'target', minWidth: 100 },
+    // 源 / Source
     {
-      title: '操作',
+      title: $t('bpm.bpmnProcessDesign.callActivity.source'),
+      field: 'source',
+      minWidth: 100,
+    },
+    // 目标 / Target
+    {
+      title: $t('bpm.bpmnProcessDesign.callActivity.target'),
+      field: 'target',
+      minWidth: 100,
+    },
+    {
+      // 操作 / Action
+      title: $t('bpm.bpmnProcessDesign.common.action'),
       width: 130,
       slots: { default: 'action' },
       fixed: 'right' as const,
@@ -263,10 +278,15 @@ onMounted(async () => {
 <template>
   <div class="-mx-2">
     <Form :label-col="{ span: 6 }" :wrapper-col="{ span: 18 }">
-      <FormItem label="被调用子流程">
+      <!-- 被调用子流程 / Called Sub-Process -->
+      <FormItem
+        :label="$t('bpm.bpmnProcessDesign.callActivity.calledSubProcess')"
+      >
         <Select
           v-model:value="formData.calledElement"
-          placeholder="请选择子流程"
+          :placeholder="
+            $t('bpm.bpmnProcessDesign.callActivity.pleaseSelectSubProcess')
+          "
           allow-clear
           @change="handleChildProcessChange"
         >
@@ -281,33 +301,50 @@ onMounted(async () => {
         </Select>
       </FormItem>
 
-      <FormItem label="继承变量">
+      <!-- 继承变量 / Inherit Variables -->
+      <FormItem
+        :label="$t('bpm.bpmnProcessDesign.callActivity.inheritVariables')"
+      >
         <Switch
           v-model:checked="formData.inheritVariables"
           @change="updateCallActivityAttr('inheritVariables')"
         />
       </FormItem>
 
-      <FormItem label="继承业务键">
+      <!-- 继承业务键 / Inherit Business Key -->
+      <FormItem
+        :label="$t('bpm.bpmnProcessDesign.callActivity.inheritBusinessKey')"
+      >
         <Switch
           v-model:checked="formData.inheritBusinessKey"
           @change="updateCallActivityAttr('inheritBusinessKey')"
         />
       </FormItem>
 
-      <FormItem v-if="!formData.inheritBusinessKey" label="业务键表达式">
+      <!-- 业务键表达式 / Business Key Expression -->
+      <FormItem
+        v-if="!formData.inheritBusinessKey"
+        :label="$t('bpm.bpmnProcessDesign.callActivity.businessKeyExpression')"
+      >
         <Input
           v-model:value="formData.businessKey"
           allow-clear
-          placeholder="请输入业务键表达式"
+          :placeholder="
+            $t(
+              'bpm.bpmnProcessDesign.callActivity.pleaseInputBusinessKeyExpression',
+            )
+          "
           @change="updateCallActivityAttr('businessKey')"
         />
       </FormItem>
 
+      <!-- 输入参数 / Input Parameters -->
       <div
         class="mb-1 mt-2 flex items-center justify-between border-t border-gray-200 pt-2"
       >
-        <span class="flex items-center text-sm font-medium"> 输入参数 </span>
+        <span class="flex items-center text-sm font-medium">
+          {{ $t('bpm.bpmnProcessDesign.callActivity.inputParameters') }}
+        </span>
         <Button
           class="flex items-center"
           size="small"
@@ -317,17 +354,20 @@ onMounted(async () => {
           <template #icon>
             <IconifyIcon icon="ep:plus" />
           </template>
-          添加参数
+          {{ $t('bpm.bpmnProcessDesign.callActivity.addParameter') }}
+          <!-- 添加参数 / Add Parameter -->
         </Button>
       </div>
       <InVariableGrid class="-mx-2 mb-4">
         <template #action="{ row, rowIndex }">
+          {{ $t('bpm.bpmnProcessDesign.common.edit') }}
+          <!-- 编辑 / Edit -->
           <Button
             size="small"
             type="link"
             @click="openVariableForm('in', row, rowIndex)"
           >
-            编辑
+            {{ $t('bpm.bpmnProcessDesign.common.edit') }}
           </Button>
           <Divider type="vertical" />
           <Button
@@ -336,15 +376,18 @@ onMounted(async () => {
             danger
             @click="removeVariable('in', rowIndex)"
           >
-            移除
+            {{ $t('bpm.bpmnProcessDesign.common.remove') }}
           </Button>
         </template>
       </InVariableGrid>
 
+      <!-- 输出参数 / Output Parameters -->
       <div
         class="mb-1 mt-2 flex items-center justify-between border-t border-gray-200 pt-2"
       >
-        <span class="flex items-center text-sm font-medium"> 输出参数 </span>
+        <span class="flex items-center text-sm font-medium">
+          {{ $t('bpm.bpmnProcessDesign.callActivity.outputParameters') }}
+        </span>
         <Button
           class="flex items-center"
           size="small"
@@ -354,7 +397,7 @@ onMounted(async () => {
           <template #icon>
             <IconifyIcon icon="lucide:plus" class="size-4" />
           </template>
-          添加参数
+          {{ $t('bpm.bpmnProcessDesign.callActivity.addParameter') }}
         </Button>
       </div>
       <OutVariableGrid class="-mx-2">
@@ -364,7 +407,7 @@ onMounted(async () => {
             type="link"
             @click="openVariableForm('out', row, rowIndex)"
           >
-            编辑
+            {{ $t('bpm.bpmnProcessDesign.common.edit') }}
           </Button>
           <Divider type="vertical" />
           <Button
@@ -373,7 +416,7 @@ onMounted(async () => {
             danger
             @click="removeVariable('out', rowIndex)"
           >
-            移除
+            {{ $t('bpm.bpmnProcessDesign.common.remove') }}
           </Button>
         </template>
       </OutVariableGrid>
@@ -386,26 +429,28 @@ onMounted(async () => {
         :label-col="{ span: 4 }"
         :wrapper-col="{ span: 18 }"
       >
+        <!-- 源 / Source -->
         <FormItem
-          label="源"
+          :label="$t('bpm.bpmnProcessDesign.callActivity.source')"
           name="source"
           :rules="[
             {
               required: true,
-              message: '源不能为空',
+              message: $t('bpm.bpmnProcessDesign.callActivity.sourceRequired'), // 源不能为空 / Source cannot be empty
               trigger: ['blur', 'change'],
             },
           ]"
         >
           <Input v-model:value="varialbeFormData.source" allow-clear />
         </FormItem>
+        <!-- 目标 / Target -->
         <FormItem
-          label="目标"
+          :label="$t('bpm.bpmnProcessDesign.callActivity.target')"
           name="target"
           :rules="[
             {
               required: true,
-              message: '目标不能为空',
+              message: $t('bpm.bpmnProcessDesign.callActivity.targetRequired'), // 目标不能为空 / Target cannot be empty
               trigger: ['blur', 'change'],
             },
           ]"

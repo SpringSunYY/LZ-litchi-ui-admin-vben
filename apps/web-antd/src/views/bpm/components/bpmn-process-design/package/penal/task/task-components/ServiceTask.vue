@@ -18,6 +18,8 @@ import {
   Textarea,
 } from 'ant-design-vue';
 
+import { $t } from '#/locales';
+
 import { updateElementExtensions } from '../../../utils';
 import HttpHeaderEditor from './HttpHeaderEditor.vue';
 
@@ -353,21 +355,35 @@ watch(
 <template>
   <div>
     <Form :label-col="{ span: 6 }" :wrapper-col="{ span: 18 }">
-      <FormItem label="执行类型" key="executeType">
+      <!-- 执行类型 / Execute Type -->
+      <FormItem
+        :label="$t('bpm.bpmnProcessDesign.task.executeType')"
+        key="executeType"
+      >
         <Select
           v-model:value="serviceTaskForm.executeType"
           :options="[
-            { label: 'Java类', value: 'class' },
-            { label: '表达式', value: 'expression' },
-            { label: '代理表达式', value: 'delegateExpression' },
-            { label: 'HTTP 调用', value: 'http' },
+            {
+              label: $t('bpm.bpmnProcessDesign.task.javaClass'),
+              value: 'class',
+            },
+            {
+              label: $t('bpm.bpmnProcessDesign.task.expression'),
+              value: 'expression',
+            },
+            {
+              label: $t('bpm.bpmnProcessDesign.task.delegateExpression'),
+              value: 'delegateExpression',
+            },
+            { label: $t('bpm.bpmnProcessDesign.task.httpCall'), value: 'http' },
           ]"
           @change="handleExecuteTypeChange"
         />
       </FormItem>
+      <!-- Java类 / Java Class -->
       <FormItem
         v-if="serviceTaskForm.executeType === 'class'"
-        label="Java类"
+        :label="$t('bpm.bpmnProcessDesign.task.javaClass')"
         name="class"
         key="execute-class"
       >
@@ -377,9 +393,10 @@ watch(
           @change="updateElementTask"
         />
       </FormItem>
+      <!-- 表达式 / Expression -->
       <FormItem
         v-if="serviceTaskForm.executeType === 'expression'"
-        label="表达式"
+        :label="$t('bpm.bpmnProcessDesign.task.expression')"
         name="expression"
         key="execute-expression"
       >
@@ -389,9 +406,10 @@ watch(
           @change="updateElementTask"
         />
       </FormItem>
+      <!-- 代理表达式 / Delegate Expression -->
       <FormItem
         v-if="serviceTaskForm.executeType === 'delegateExpression'"
-        label="代理表达式"
+        :label="$t('bpm.bpmnProcessDesign.task.delegateExpression')"
         name="delegateExpression"
         key="execute-delegate"
       >
@@ -401,8 +419,14 @@ watch(
           @change="updateElementTask"
         />
       </FormItem>
+      <!-- HTTP 请求配置 / HTTP Request Config -->
       <template v-if="serviceTaskForm.executeType === 'http'">
-        <FormItem label="请求方法" key="http-method" name="requestMethod">
+        <!-- 请求方法 / Request Method -->
+        <FormItem
+          :label="$t('bpm.bpmnProcessDesign.task.requestMethod')"
+          key="http-method"
+          name="requestMethod"
+        >
           <RadioGroup v-model:value="httpTaskForm.requestMethod">
             <RadioButton value="GET">GET</RadioButton>
             <RadioButton value="POST">POST</RadioButton>
@@ -410,16 +434,26 @@ watch(
             <RadioButton value="DELETE">DELETE</RadioButton>
           </RadioGroup>
         </FormItem>
-        <FormItem label="请求地址" key="http-url" name="requestUrl">
+        <!-- 请求地址 / Request URL -->
+        <FormItem
+          :label="$t('bpm.bpmnProcessDesign.task.requestUrl')"
+          key="http-url"
+          name="requestUrl"
+        >
           <Input v-model:value="httpTaskForm.requestUrl" allow-clear />
         </FormItem>
-        <FormItem label="请求头" key="http-headers" name="requestHeaders">
+        <!-- 请求头 / Request Headers -->
+        <FormItem
+          :label="$t('bpm.bpmnProcessDesign.task.requestHeaders')"
+          key="http-headers"
+          name="requestHeaders"
+        >
           <div class="flex w-full flex-col gap-2">
             <Textarea
               v-model:value="httpTaskForm.requestHeaders"
               :auto-size="{ minRows: 4, maxRows: 8 }"
               readonly
-              placeholder="点击右侧编辑按钮添加请求头"
+              :placeholder="$t('bpm.bpmnProcessDesign.task.clickToAddHeaders')"
               class="min-w-0 flex-1"
             />
             <div class="flex w-full items-center justify-center">
@@ -432,34 +466,39 @@ watch(
                 <template #icon>
                   <IconifyIcon icon="ep:edit" />
                 </template>
-                编辑
+                {{ $t('bpm.bpmnProcessDesign.common.edit') }}
+                <!-- 编辑 / Edit -->
               </Button>
             </div>
           </div>
         </FormItem>
+        <!-- 禁止重定向 / Disallow Redirects -->
         <FormItem
-          label="禁止重定向"
+          :label="$t('bpm.bpmnProcessDesign.task.disallowRedirects')"
           key="http-disallow-redirects"
           name="disallowRedirects"
         >
           <Switch v-model:checked="httpTaskForm.disallowRedirects" />
         </FormItem>
+        <!-- 忽略异常 / Ignore Exception -->
         <FormItem
-          label="忽略异常"
+          :label="$t('bpm.bpmnProcessDesign.task.ignoreException')"
           key="http-ignore-exception"
           name="ignoreException"
         >
           <Switch v-model:checked="httpTaskForm.ignoreException" />
         </FormItem>
+        <!-- 保存返回变量 / Save Response Variable -->
         <FormItem
-          label="保存返回变量"
+          :label="$t('bpm.bpmnProcessDesign.task.saveResponseVariable')"
           key="http-save-response"
           name="saveResponseParameters"
         >
           <Switch v-model:checked="httpTaskForm.saveResponseParameters" />
         </FormItem>
+        <!-- 是否瞬间变量 / Is Transient Variable -->
         <FormItem
-          label="是否瞬间变量"
+          :label="$t('bpm.bpmnProcessDesign.task.isTransientVariable')"
           key="http-save-transient"
           name="saveResponseParametersTransient"
         >
@@ -467,15 +506,17 @@ watch(
             v-model:checked="httpTaskForm.saveResponseParametersTransient"
           />
         </FormItem>
+        <!-- 返回变量前缀 / Response Variable Prefix -->
         <FormItem
-          label="返回变量前缀"
+          :label="$t('bpm.bpmnProcessDesign.task.responseVariablePrefix')"
           key="http-result-variable-prefix"
           name="resultVariablePrefix"
         >
           <Input v-model:value="httpTaskForm.resultVariablePrefix" />
         </FormItem>
+        <!-- 保存为 JSON 变量 / Save as JSON Variable -->
         <FormItem
-          label="保存为 JSON 变量"
+          :label="$t('bpm.bpmnProcessDesign.task.saveAsJsonVariable')"
           :label-col="{ span: 8 }"
           :wrapper-col="{ span: 16 }"
           key="http-save-json"
