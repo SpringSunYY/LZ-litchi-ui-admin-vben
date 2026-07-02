@@ -5,7 +5,7 @@ const routes: RouteRecordRaw[] = [
     meta: {
       icon: 'lucide:layout-dashboard',
       order: -1,
-      i18n: 'ui.dashboard.title',
+      i18n: 'ui.dashboard.title.menu',
       title: '概况',
     },
     name: 'Dashboard',
@@ -17,7 +17,7 @@ const routes: RouteRecordRaw[] = [
         component: () => import('#/views/dashboard/workspace/index.vue'),
         meta: {
           icon: 'carbon:workspace',
-          i18n: 'ui.dashboard.workspace',
+          i18n: 'ui.dashboard.workspace.menu',
           title: '工作台',
         },
       },
@@ -28,7 +28,7 @@ const routes: RouteRecordRaw[] = [
         meta: {
           affixTab: true,
           icon: 'lucide:area-chart',
-          i18n: 'ui.dashboard.analytics',
+          i18n: 'ui.dashboard.analytics.menu',
           title: '分析页',
         },
       },
@@ -40,7 +40,7 @@ const routes: RouteRecordRaw[] = [
     component: () => import('#/views/_core/profile/index.vue'),
     meta: {
       icon: 'ant-design:profile-outlined',
-      i18n: 'ui.widgets.profile',
+      i18n: 'ui.widgets.profile.menu',
       title: '个人中心',
       hideInMenu: true,
     },

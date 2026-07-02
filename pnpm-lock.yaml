@@ -1271,6 +1271,9 @@ importers:
       '@types/nprogress':
         specifier: 'catalog:'
         version: 0.2.3
+      '@vben/locales':
+        specifier: workspace:*
+        version: link:../../../locales
 
   packages/@core/base/typings:
     dependencies:

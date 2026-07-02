@@ -1,7 +1,6 @@
 {
   "area": {
     "area": "地区信息",
-    "menu": "地区信息",
     "list": "地区信息列表",
     "field": {
       "id": "ID",
@@ -15,19 +14,15 @@
       "geoJson": "GeoJson",
       "sortNum": "排序号",
       "createTime": "创建时间",
-      "code": "行政编码"
+      "code": "行政编码",
+      "ip": "IP 地址",
+      "parentId": "父级编码"
     },
-    "action": {
-      "query": "地区查询",
-      "create": "新增地区",
-      "export": "导出地区",
-      "update": "修改地区",
-      "delete": "删除地区"
+    "help": {
+      "ip": "IP 地址用于标识地区"
     }
   },
   "file": {
-    "file": "文件",
-    "menu": "文件管理",
     "list": "文件列表",
     "field": {
       "id": "文件编号",
@@ -44,9 +39,7 @@
       "uploadTime": "上传时间"
     },
     "action": {
-      "query": "文件查询",
-      "create": "上传图片",
-      "delete": "删除文件"
+      "create": "上传图片"
     },
     "copyUrl": "复制链接",
     "message": {
@@ -64,7 +57,6 @@
   },
   "fileConfig": {
     "fileConfig": "文件配置",
-    "menu": "文件配置",
     "list": "文件配置列表",
     "field": {
       "id": "编号",
@@ -105,10 +97,6 @@
       "disable": "禁用"
     },
     "action": {
-      "query": "文件配置查询",
-      "create": "新增文件配置",
-      "update": "修改文件配置",
-      "delete": "删除文件配置",
       "test": "测试"
     },
     "message": {
@@ -121,8 +109,6 @@
     }
   },
   "apiErrorLog": {
-    "apiErrorLog": "API 错误日志",
-    "menu": "API 错误日志",
     "list": "API 错误日志列表",
     "field": {
       "id": "日志编号",
@@ -131,7 +117,10 @@
       "userId": "用户编号",
       "userType": "用户类型",
       "userIp": "用户IP",
+      "userIpAddr": "登录地址",
       "userAgent": "用户UA",
+      "userBrowser": "浏览器",
+      "userPlatform": "操作系统",
       "requestMethod": "请求方法",
       "requestUrl": "请求地址",
       "requestParams": "请求参数",
@@ -143,7 +132,6 @@
       "processTime": "处理时间"
     },
     "action": {
-      "query": "API 错误日志查询",
       "export": "导出 API 错误日志",
       "markAsDone": "已处理",
       "markAsIgnored": "已忽略",
@@ -155,8 +143,6 @@
     }
   },
   "apiAccessLog": {
-    "apiAccessLog": "API 访问日志",
-    "menu": "API 访问日志",
     "list": "API 访问日志列表",
     "field": {
       "id": "日志编号",
@@ -165,22 +151,22 @@
       "userId": "用户编号",
       "userType": "用户类型",
       "userIp": "用户IP",
+      "userIpAddr": "登录地址",
       "userAgent": "用户UA",
+      "userBrowser": "浏览器",
+      "userPlatform": "操作系统",
       "requestMethod": "请求方法",
       "requestUrl": "请求地址",
       "requestParams": "请求参数",
       "responseBody": "请求结果",
       "beginTime": "请求开始时间",
-      "endTime": "请求结束时间",
       "duration": "请求耗时",
       "resultCode": "结果码",
-      "resultMsg": "结果信息",
       "operateModule": "操作模块",
       "operateName": "操作名",
       "operateType": "操作类型"
     },
     "action": {
-      "query": "API 访问日志查询",
       "export": "导出 API 访问日志"
     },
     "detail": {
@@ -196,7 +182,6 @@
   },
   "dataSourceConfig": {
     "dataSourceConfig": "数据源",
-    "menu": "数据源管理",
     "list": "数据源列表",
     "field": {
       "id": "主键编号",
@@ -205,17 +190,10 @@
       "username": "用户名",
       "password": "密码",
       "createTime": "创建时间"
-    },
-    "action": {
-      "query": "数据源查询",
-      "create": "新增数据源",
-      "update": "修改数据源",
-      "delete": "删除数据源"
     }
   },
   "config": {
     "config": "参数配置",
-    "menu": "参数配置",
     "list": "参数列表",
     "field": {
       "id": "参数主键",
@@ -227,18 +205,10 @@
       "type": "系统内置",
       "remark": "备注",
       "createTime": "创建时间"
-    },
-    "action": {
-      "query": "参数查询",
-      "create": "新增参数",
-      "update": "修改参数",
-      "delete": "删除参数",
-      "export": "导出参数"
     }
   },
   "i18nLocale": {
     "i18nLocale": "国家地区",
-    "menu": "国家地区",
     "list": "国家地区列表",
     "field": {
       "id": "编号",
@@ -254,20 +224,9 @@
     "help": {
       "localeTarget": "展示的区域，例如通用所有端都展示，后台只是后台展示，请不要随意修改，如若修改请及时同步message",
       "isDefault": "是否是默认语言，每个使用端只允许一个默认"
-    },
-    "action": {
-      "query": "国家地区查询",
-      "create": "新增国家地区",
-      "update": "修改国家地区",
-      "delete": "删除国家地区",
-      "export": "导出国家地区"
     }
   },
   "i18nMessage": {
-    "i18nMessage": "国际化管理",
-    "menu": "国际化管理",
-    "locale": "国际化国家",
-    "localeList": "国家地区列表",
     "key": "国际化键名",
     "keyList": "国际化键名列表",
     "messageLabel": "国际化信息",
@@ -290,21 +249,28 @@
       "updateSupport": "是否更新",
       "help": "是否更新国际化key，如果是则更新国际化key，与message无关，无论是否都会根据key和locale更新message信息"
     },
-    "action": {
-      "query": "国际化键名查询",
-      "create": "新增国际化键名",
-      "update": "修改国际化键名",
-      "delete": "删除国际化键名",
-      "export": "导出国际化键名"
-    },
     "message": {
       "confirmDelete": "确认删除国际化键名 {0} 吗？删除该键名会同步删除其所有语言的消息。"
     }
   },
+  "demo01Contact": {
+    "demo01Contact": "演示联系人",
+    "field": {
+      "id": "编号",
+      "name": "姓名",
+      "age": "年龄",
+      "sex": "性别",
+      "avatar": "头像",
+      "birthday": "生日",
+      "description": "描述",
+      "createTime": "创建时间"
+    },
+    "label": "演示联系人"
+  },
   "job": {
     "job": "定时任务",
-    "menu": "定时任务",
     "list": "定时任务列表",
+    "log.menu": "调度日志",
     "field": {
       "id": "任务编号",
       "name": "任务名称",
@@ -318,15 +284,9 @@
       "nextTimes": "后续执行时间",
       "noNextTimes": "无后续执行时间",
       "monitorTimeoutUnit": "毫秒",
-      "monitorTimeoutDisabled": "未开启",
-      "createTime": "创建时间"
+      "monitorTimeoutDisabled": "未开启"
     },
     "action": {
-      "query": "任务查询",
-      "create": "新增任务",
-      "update": "修改任务",
-      "delete": "删除任务",
-      "export": "导出任务",
       "trigger": "执行任务",
       "start": "开启",
       "pause": "暂停",
@@ -342,7 +302,6 @@
   },
   "jobLog": {
     "jobLog": "任务日志",
-    "menu": "任务日志",
     "list": "任务日志列表",
     "field": {
       "id": "日志编号",
@@ -355,12 +314,7 @@
       "duration": "执行时长",
       "durationUnit": "毫秒",
       "status": "任务状态",
-      "result": "执行结果",
-      "createTime": "创建时间"
-    },
-    "action": {
-      "query": "任务日志查询",
-      "export": "导出任务日志"
+      "result": "执行结果"
     },
     "detail": {
       "title": "日志详情"
@@ -368,7 +322,6 @@
   },
   "redis": {
     "redis": "Redis 缓存",
-    "menu": "Redis 缓存",
     "overview": "Redis 概览",
     "memoryUsage": "内存使用",
     "commandStats": "命令统计",
@@ -394,9 +347,6 @@
     "loadFailed": "加载 Redis 数据失败"
   },
   "webSocket": {
-    "webSocket": "WebSocket 通信",
-    "menu": "WebSocket 通信",
-    "list": "WebSocket 消息列表",
     "docTitle": "WebSocket 实时通信",
     "connection": "连接管理",
     "connectionStatus": "连接状态",
@@ -404,7 +354,6 @@
     "openConnection": "开启连接",
     "closeConnection": "关闭连接",
     "messageSend": "消息发送",
-    "receiver": "接收人",
     "selectReceiver": "请选择接收人",
     "all": "所有人",
     "inputMessage": "请输入你要发送的消息...",
@@ -419,9 +368,6 @@
     "single": "单发",
     "system": "系统",
     "unknown": "未知",
-    "action": {
-      "query": "WebSocket 查询"
-    },
     "message": {
       "messageContentEmpty": "消息内容不能为空",
       "unknownMessageType": "未知的消息类型：{0}",
@@ -430,36 +376,14 @@
     }
   },
   "skywalking": {
-    "skywalking": "SkyWalking 监控",
-    "menu": "SkyWalking 监控",
-    "list": "SkyWalking 监控列表",
     "docTitle": "服务监控"
   },
   "server": {
-    "server": "服务监控",
-    "menu": "服务监控",
-    "list": "服务监控列表",
     "docTitle": "服务监控"
   },
-  "build": {
-    "build": "表单设计",
-    "menu": "表单设计",
-    "list": "表单设计",
-    "action": {
-      "showJson": "生成JSON",
-      "showOption": "生成Options",
-      "showTemplate": "生成组件",
-      "copy": "复制"
-    },
-    "message": {
-      "copySuccess": "复制成功",
-      "copyFailed": "复制失败"
-    }
-  },
   "codegen": {
-    "codegen": "代码生成",
-    "menu": "代码生成",
     "list": "代码生成列表",
+    "menu": "代码生成",
     "field": {
       "dataSource": "数据源",
       "tableName": "表名称",
@@ -484,8 +408,6 @@
       "popupType": "弹窗类型",
       "drawer": "抽屉",
       "modal": "弹窗",
-      "treeInfo": "树表信息",
-      "subTableInfo": "主子表信息",
       "treeParentColumn": "父编号字段",
       "treeNameColumn": "名称字段",
       "masterTable": "关联的主表",
@@ -536,15 +458,13 @@
       "joinRelation": "主表与子表的关联关系"
     },
     "action": {
-      "query": "代码生成查询",
       "create": "导入表",
-      "update": "修改生成配置",
-      "delete": "删除代码生成",
-      "export": "导出代码生成",
       "preview": "预览",
       "generateCode": "生成代码",
       "batchGenerateCode": "批量生成代码",
-      "sync": "同步"
+      "sync": "同步",
+      "update": "修改生成配置",
+      "update.menu": "修改生成配置"
     },
     "message": {
       "generatingCode": "正在生成代码...",
@@ -565,6 +485,31 @@
       "basicInfoValidationFailed": "保存失败，原因：基本信息表单校验失败，请检查！",
       "generationInfoValidationFailed": "保存失败，原因：生成信息表单校验失败，请检查！",
       "saveFailed": "保存失败"
+    }
+  },
+  "demo01Contact": {
+    "demo01Contact": "演示联系人",
+    "field": {
+      "id": "编号",
+      "name": "姓名",
+      "age": "年龄",
+      "sex": "性别",
+      "avatar": "头像",
+      "birthday": "生日",
+      "description": "描述",
+      "createTime": "创建时间"
+    }
+  },
+  "build": {
+    "action": {
+      "showJson": "查看 JSON",
+      "showOption": "查看配置",
+      "showTemplate": "查看模板",
+      "copy": "复制"
+    },
+    "message": {
+      "copySuccess": "复制成功",
+      "copyFailed": "复制失败"
     }
   }
 }

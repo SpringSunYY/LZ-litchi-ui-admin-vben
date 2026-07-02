@@ -1,8 +1,6 @@
 {
-  "menu": "workflow",
   "category": {
     "category": "process category",
-    "menu": "process category",
     "list": "process category list",
     "field": {
       "id": "category id",
@@ -13,19 +11,12 @@
       "sort": "sort order",
       "createTime": "create time"
     },
-    "action": {
-      "query": "process category query",
-      "create": "create process category",
-      "update": "update process category",
-      "delete": "delete process category"
-    },
     "message": {
       "rename": "rename process category"
     }
   },
   "form": {
     "form": "process form",
-    "menu": "process form",
     "list": "process form list",
     "field": {
       "id": "id",
@@ -35,10 +26,8 @@
       "createTime": "create time"
     },
     "action": {
-      "query": "process form query",
-      "create": "create process form",
-      "update": "update process form",
-      "delete": "delete process form"
+      "update": "edit process form",
+      "update.menu": "edit process form"
     },
     "message": {
       "detail": "process form detail",
@@ -48,7 +37,6 @@
   },
   "group": {
     "group": "user group",
-    "menu": "user group",
     "list": "user group list",
     "field": {
       "id": "id",
@@ -57,48 +45,25 @@
       "userIds": "members",
       "status": "status",
       "createTime": "create time"
-    },
-    "action": {
-      "query": "user group query",
-      "create": "create user group",
-      "update": "update user group",
-      "delete": "delete user group",
-      "detail": "user group detail"
     }
   },
   "model": {
-    "model": "process model",
-    "menu": "process model",
-    "list": "process model list",
     "field": {
       "name": "process name",
       "startUserIds": "visible range",
       "type": "process type",
       "formType": "form info",
-      "formId": "process form",
-      "formCustomCreatePath": "form submit route",
-      "formCustomViewPath": "form view route",
       "deploymentTime": "last deployed",
-      "key": "process key",
-      "category": "process category",
-      "icon": "process icon",
-      "description": "description",
-      "visible": "visibility",
-      "startUserType": "who can start",
-      "managerUserIds": "process manager",
-      "version": "process version",
-      "processDefinition": "process definition"
+      "icon": "process icon"
     },
     "action": {
-      "query": "process model query",
-      "create": "create process model",
-      "update": "update process model",
-      "delete": "delete process model",
-      "detail": "process model detail"
+      "update": "modify process",
+      "update.menu": "modify process"
     },
     "message": {
       "list": "process model",
       "create": "create process",
+      "create.menu": "create process",
       "categoryAdd": "create category",
       "categorySort": "sort categories",
       "categorySortSuccess": "category sort saved",
@@ -112,13 +77,11 @@
       "deleteCategory": "delete category",
       "deleteCategoryWarn": "cannot delete category with existing process definitions",
       "restore": "restore",
-      "deploy": "deploy",
       "copy": "copy",
       "history": "history",
       "enable": "enable",
       "disable": "disable",
       "enableSuccess": "{0} process \"{1}\" success",
-      "disableSuccess": "{0} process \"{1}\" success",
       "confirmEnable": "confirm to {0} process \"{1}\"?",
       "confirmDeploy": "confirm to deploy [{0}]?",
       "deploySuccess": "deploy [{0}] success",
@@ -139,10 +102,7 @@
       "publish": "publish",
       "more": "more",
       "dragSortTip": "drag to sort",
-      "copySuccess": "copy process success",
       "report": "report",
-      "designProcess": "please design the process",
-      "completeDesignConfig": "please complete design config",
       "createSuccess": "create success, click deploy to publish",
       "updateSuccess": "update success, click deploy to publish",
       "copySuccessForm": "copy success, click deploy to publish",
@@ -158,7 +118,6 @@
       "extraSetting": "extra settings"
     },
     "basic": {
-      "basicInfo": "basic info",
       "formType": "form type",
       "processForm": "process form",
       "formPreview": "form preview",
@@ -196,7 +155,6 @@
       "formViewRouteTip": "custom form view component path, use Vue component path, e.g.: bpm/oa/leave/detail.vue"
     },
     "extra": {
-      "extraSetting": "extra settings",
       "submitterPermission": "submitter permission",
       "allowCancel": "allow cancel during approval",
       "allowCancelTip": "after the first approval node passes, the submitter can still cancel the request",
@@ -248,8 +206,6 @@
     }
   },
   "definition": {
-    "definition": "process definition",
-    "menu": "process definition",
     "list": "process definition list",
     "field": {
       "id": "definition id",
@@ -258,38 +214,17 @@
       "startUsers": "visible range",
       "modelType": "process type",
       "formType": "form info",
-      "formId": "process form",
-      "formCustomCreatePath": "custom form",
       "version": "process version",
-      "deploymentTime": "deployed at",
-      "createTime": "create time"
-    },
-    "action": {
-      "query": "process definition query",
-      "detail": "process definition detail"
+      "deploymentTime": "deployed at"
     },
     "message": {
-      "restore": "restore",
       "noIcon": "no icon",
-      "allVisible": "all visible",
-      "userVisible": "{0} users visible",
-      "noForm": "no form",
-      "copySuccess": "copy success, click deploy to publish",
-      "restoreSuccess": "restore success, click deploy to publish",
-      "updateSuccess": "update success, click deploy to publish",
-      "createSuccess": "create success, click deploy to publish",
-      "confirmDeploy": "confirm to deploy this process?",
-      "deploySuccess": "deploy success",
-      "deployFailed": "deploy failed",
-      "stepTip": "please complete required info in current step"
+      "noForm": "no form"
     }
   },
   "oa": {
-    "oa": "OA leave",
-    "menu": "OA leave",
     "leave": {
       "leave": "leave",
-      "menu": "leave request",
       "list": "leave list",
       "field": {
         "id": "request id",
@@ -301,16 +236,15 @@
         "createTime": "submitted at"
       },
       "action": {
-        "query": "leave query",
         "create": "apply for leave",
-        "update": "update leave",
-        "delete": "delete leave",
+        "create.menu": "create leave",
         "detail": "leave detail",
         "progress": "approval progress",
         "cancel": "cancel"
       },
       "message": {
         "detail": "leave detail",
+        "detail.menu": "leave detail",
         "cancelSuccess": "cancel success",
         "cancelReasonEmpty": "please enter cancel reason",
         "draftSuccess": "draft saved",
@@ -323,7 +257,6 @@
   },
   "processExpression": {
     "processExpression": "process expression",
-    "menu": "process expression",
     "list": "process expression list",
     "field": {
       "id": "id",
@@ -331,27 +264,10 @@
       "expression": "expression",
       "status": "status",
       "createTime": "create time"
-    },
-    "action": {
-      "query": "process expression query",
-      "create": "create expression",
-      "update": "update expression",
-      "delete": "delete expression",
-      "detail": "process expression detail"
-    },
-    "placeholder": {
-      "selectType": "please select type",
-      "selectTime": "please select time",
-      "inputReason": "please input reason",
-      "name": "enter name",
-      "expression": "enter expression",
-      "startTime": "start time",
-      "endTime": "end time"
     }
   },
   "processListener": {
     "processListener": "process listener",
-    "menu": "process listener",
     "list": "process listener list",
     "field": {
       "id": "id",
@@ -363,29 +279,15 @@
       "status": "status",
       "createTime": "create time"
     },
-    "action": {
-      "query": "process listener query",
-      "create": "create listener",
-      "update": "update listener",
-      "delete": "delete listener",
-      "detail": "process listener detail"
-    },
-    "message": {
-      "eventTip": "execution type: start/end; task type: create/assignment/complete/delete/update/timeout"
-    },
     "placeholder": {
-      "name": "enter name",
       "classPath": "enter class path",
-      "expression": "enter expression",
-      "selectType": "select type",
-      "selectEvent": "select event"
+      "expression": "enter expression"
     }
   },
   "processInstance": {
-    "processInstance": "process instance",
-    "menu": "process instance",
     "list": "process instance list",
     "myList": "my processes",
+    "myList.menu": "my processes",
     "field": {
       "id": "id",
       "name": "process name",
@@ -397,22 +299,24 @@
       "endTime": "end time",
       "startUser": "initiator",
       "deptName": "department",
-      "processDefinitionId": "process",
       "processDefinition": "process definition",
       "duration": "duration",
       "tasks": "tasks"
     },
+    "detail": {
+      "title": "process detail",
+      "title.menu": "process detail",
+      "instanceId": "ID: {0}",
+      "submittedBy": "submitted by {0}",
+      "underReview": "under review"
+    },
     "action": {
-      "query": "process instance query",
-      "cancel": "cancel",
-      "detail": "detail"
+      "cancel": "cancel"
     },
     "message": {
       "cancelSuccess": "cancel success",
-      "cancelReasonEmpty": "please enter cancel reason",
       "cancelProcess": "cancel process",
       "cancelReasonPlaceholder": "enter cancel reason",
-      "approvalDetailNotFound": "approval detail not found!",
       "processInfoNotFound": "process info not found!",
       "getApprovalDetailFailed": "failed to get approval detail!",
       "restructureFailed": "failed to restart: process instance not found",
@@ -422,7 +326,6 @@
       "selectUser": "select user"
     },
     "status": {
-      "approving": "{0} approving",
       "multiApproving": "{0} and {1} others ({2}) approving",
       "allProcesses": "all processes"
     },
@@ -434,33 +337,23 @@
       "formFill": "fill form"
     },
     "create": {
-      "title": "start process",
-      "selectProcess": "select process",
-      "fillForm": "fill form",
       "processForm": "process form - {0}",
       "submit": "submit",
-      "cancel": "cancel",
       "back": "back",
       "submitSuccess": "process started successfully",
       "submitFailed": "failed to start process",
-      "selectCandidate": "please select candidate for {0}",
-      "noProcessDefinitions": "no available process definitions"
+      "selectCandidate": "please select candidate for {0}"
     },
-    "detail": {
-      "instanceId": "ID: {0}",
-      "submittedBy": "submitted by {0}",
-      "underReview": "under review",
-      "completed": "completed",
-      "title": "process detail"
+    "operation": {
+      "signature": "signature",
+      "uploadingSignature": "uploading signature...",
+      "undo": "undo",
+      "clear": "clear"
     }
   },
   "task": {
-    "task": "task",
-    "menu": "task",
-    "approvalCenter": "approval center",
+    "menu": "approval center",
     "todo": {
-      "todo": "todo tasks",
-      "menu": "todo tasks",
       "list": "todo task list",
       "message": {
         "clickCardTip": "Click a card to view process details in real time"
@@ -473,14 +366,11 @@
         "summary": "summary",
         "startUser": "initiator",
         "currentTask": "current task",
-        "taskTime": "task time",
         "processInstanceId": "process id",
         "taskId": "task id"
       }
     },
     "done": {
-      "done": "done tasks",
-      "menu": "done tasks",
       "list": "done task list",
       "message": {
         "clickCardTip": "Click a card to view process details in real time"
@@ -503,8 +393,6 @@
       }
     },
     "copy": {
-      "copy": "copy tasks",
-      "menu": "copy tasks",
       "list": "copy task list",
       "message": {
         "clickCardTip": "Click a card to view process details in real time"
@@ -524,12 +412,7 @@
       }
     },
     "manager": {
-      "manager": "task management",
-      "menu": "task management",
       "list": "task list",
-      "message": {
-        "clickCardTip": "Click a card to view process details in real time"
-      },
       "action": {
         "history": "history"
       },
@@ -555,11 +438,6 @@
       "status": "process status",
       "createTime": "start time",
       "taskTime": "task time"
-    },
-    "action": {
-      "query": "task query",
-      "handle": "handle",
-      "history": "history"
     }
   },
   "timeline": {
@@ -591,7 +469,6 @@
     "returnSuccess": "returned",
     "copySuccess": "copied",
     "cancelSuccess": "cancelled",
-    "operationSuccess": "operation success",
     "formValidateFailed": "form validation failed, please complete the form!",
     "noReturnNode": "no returnable nodes available",
     "nextApproverEmpty": "next node approver cannot be empty",
@@ -630,10 +507,6 @@
     "clickToSign": "sign",
     "reason": "{0} opinion",
     "reasonPlaceholder": "enter {0} opinion",
-    "confirm": "confirm",
-    "undo": "undo",
-    "clear": "clear",
-    "uploadingSignature": "uploading signature, please wait...",
     "forward": "forward",
     "backward": "backward",
     "viewForm": "view form",
@@ -1043,24 +916,17 @@
     }
   },
   "bpmnProcessDesign": {
-    
     "common": {
       "edit": "Edit",
       "remove": "Remove",
-      "add": "Add",
       "confirm": "Confirm",
       "cancel": "Cancel",
       "close": "Close",
-      "save": "Save",
-      "delete": "Delete",
       "confirmDelete": "Are you sure you want to delete?",
       "prompt": "Prompt",
       "action": "Action",
-      "loading": "Loading, please wait...",
-      "success": "Operation successful",
-      "error": "Operation failed"
+      "loading": "Loading, please wait..."
     },
-    
     "task": {
       "userTask": "User Task",
       "serviceTask": "Service Task",
@@ -1082,7 +948,6 @@
       "requestUrl": "Request URL",
       "requestHeaders": "Request Headers",
       "clickToAddHeaders": "Click the edit button on the right to add request headers",
-      "edit": "Edit",
       "disallowRedirects": "Disallow Redirects",
       "ignoreException": "Ignore Exception",
       "saveResponseVariable": "Save Response Variable",
@@ -1097,15 +962,40 @@
       "resourceAddress": "Resource Address",
       "resultVariable": "Result Variable"
     },
-    
     "form": {
       "processForm": "Process Form",
       "businessKey": "Business Key",
       "none": "None"
     },
     "customConfig": {
+      "boundaryEventTimer": "Timer Boundary Event (Non-Interrupting)",
       "userTask": "User Task",
-      "boundaryEventTimer": "Timer Boundary Event (Non-Interrupting)"
+      "approvalType": "Approval Type",
+      "approvalOpinion": "Approval Opinion",
+      "assignUser": "Assign User",
+      "displayName": "Display Name",
+      "editable": "Editable",
+      "enable": "Enable",
+      "fieldName": "Field Name",
+      "fieldPermissions": "Field Permissions",
+      "handlerMethod": "Handler Method",
+      "hidden": "Hidden",
+      "needSignature": "Need Signature",
+      "operationButton": "Operation Button",
+      "operationButtons": "Operation Buttons",
+      "pleaseSelectRejectNode": "Please select reject node",
+      "readOnly": "Read Only",
+      "rejectNode": "Reject Node",
+      "whenApproverEmpty": "When Approver is Empty",
+      "whenApproverIsSubmitter": "When Approver is Same as Initiator",
+      "whenApproverRejects": "When Approver Rejects",
+      "enableSwitch": "Enable Switch",
+      "executeAction": "Execute Action",
+      "maxRemindCount": "Max Remind Count",
+      "notProcessed": "Not Processed",
+      "timeoutNotProcessed": "When Approver Times Out",
+      "timeoutSetting": "Timeout Setting",
+      "whenExceeds": "When Exceeds"
     },
     "listener": {
       "classListener": "Java Class",
@@ -1138,31 +1028,17 @@
       "customConfig": "Custom Config",
       "timeEvent": "Time Event"
     },
-    "baseInfo": {
-      "processId": "Process ID",
-      "processName": "Process Name",
-      "id": "ID",
-      "name": "Name",
-      "processIdPlaceholder": "Enter process ID",
-      "processNamePlaceholder": "Enter process name"
-    },
-    
     "base": {
       "processId": "Process ID",
       "processName": "Process Name",
       "id": "ID",
       "name": "Name",
-      "processIdPlaceholder": "Enter process ID",
-      "processNamePlaceholder": "Enter process name",
       "processIdRequired": "Process ID cannot be empty",
       "processNameRequired": "Process name cannot be empty",
       "pleaseInputProcessId": "Enter process ID",
       "pleaseInputProcessName": "Enter process name"
     },
     "formConfig": {
-      "processForm": "Process Form",
-      "businessKey": "Business Key",
-      "noBusinessKey": "None",
       "longType": "Long",
       "stringType": "String",
       "booleanType": "Boolean",
@@ -1182,7 +1058,6 @@
       "scriptType": "Script Type",
       "inlineScript": "Inline Script",
       "externalScript": "External Script",
-      "scriptContent": "Script Content",
       "resourceAddress": "Resource Address"
     },
     "userTask": {
@@ -1198,17 +1073,11 @@
       "selectExpression": "Select Expression",
       "skipExpression": "Skip Expression",
       "deptLeaderSource": "Dept Leader Source",
-      "deptLeaderSourceDefault": "Dept Leader Source",
-      "deptLeaderSourceSpecify": "Dept Leader Source (Specifying Dept Upward)",
-      "deptLeaderSourceForm": "Dept Leader Source (Form Dept Upward)",
-      "deptLeaderSourceStartUser": "Dept Leader Source (Initiator Dept Upward)",
-      "loadingPlaceholder": "Loading, please wait",
       "formDeptUpward": "Form Dept Leader Upward",
       "specifyDeptUpward": "Specify Dept Upward",
       "startUserDeptUpward": "Initiator Dept Leader Upward"
     },
     "multiInstance": {
-      "pendingImplementation": "Multi-instance for nodes other than UserTask is not yet implemented",
       "otherNodeNotImplemented": "Multi-instance for non-UserTask nodes is pending implementation",
       "quickConfig": "Quick Config",
       "sequentialApprove": "Sequential Approve",
@@ -1229,7 +1098,6 @@
       "retryCycle": "Retry Cycle"
     },
     "listenerConfig": {
-      "unknownListenerType": "Unknown listener type",
       "executionListener": "Execution Listener",
       "taskListener": "Task Listener",
       "eventType": "Event Type",
@@ -1245,7 +1113,6 @@
       "externalScript": "External Script",
       "scriptContent": "Script Content",
       "resourceAddress": "Resource Address",
-      "injectedField": "Injected Field",
       "injectFields": "Injected Fields",
       "timerType": "Timer Type",
       "timer": "Timer",
@@ -1256,44 +1123,11 @@
       "addListener": "Add Listener",
       "addField": "Add Field",
       "selectListener": "Select Listener",
-      "edit": "Edit",
-      "remove": "Remove",
       "fieldConfig": "Field Config",
       "fieldName": "Field Name",
       "fieldType": "Field Type",
       "fieldValue": "Field Value",
       "fieldValueExpression": "Field Value/Expression",
-      "fieldExpression": "Expression",
-      "prompt": "Prompt",
-      "confirmRemoveField": "Confirm remove this field?",
-      "confirmRemoveListener": "Confirm remove this listener?"
-    },
-    "taskListener": {
-      "taskListener": "Task Listener",
-      "eventType": "Event Type",
-      "listenerId": "Listener ID",
-      "listenerType": "Listener Type",
-      "javaClass": "Java Class",
-      "expression": "Expression",
-      "delegateExpression": "Delegate Expression",
-      "scriptFormat": "Script Format",
-      "scriptType": "Script Type",
-      "inlineScript": "Inline Script",
-      "externalScript": "External Script",
-      "scriptContent": "Script Content",
-      "resourceAddress": "Resource Address",
-      "timerType": "Timer Type",
-      "date": "Date",
-      "duration": "Duration",
-      "cycle": "Cycle",
-      "timer": "Timer",
-      "timerConfig": "Timer Config",
-      "injectedField": "Injected Field",
-      "addListener": "Add Listener",
-      "selectListener": "Select Listener",
-      "edit": "Edit",
-      "remove": "Remove",
-      "addField": "Add Field",
       "prompt": "Prompt",
       "confirmRemoveField": "Confirm remove this field?",
       "confirmRemoveListener": "Confirm remove this listener?"
@@ -1303,9 +1137,6 @@
       "propertyName": "Property Name",
       "propertyValue": "Property Value",
       "addProperty": "Add Property",
-      "edit": "Edit",
-      "remove": "Remove",
-      "prompt": "Prompt",
       "confirmRemoveProperty": "Confirm remove this property?"
     },
     "signalMessage": {
@@ -1313,8 +1144,6 @@
       "createNewMessage": "Create New Message",
       "signalList": "Signal List",
       "createNewSignal": "Create New Signal",
-      "edit": "Edit",
-      "remove": "Remove",
       "messageId": "Message ID",
       "messageName": "Message Name",
       "signalId": "Signal ID",
@@ -1325,84 +1154,13 @@
       "createMessage": "Create Message",
       "editSignal": "Edit Signal",
       "createSignal": "Create Signal",
-      "messageIdLabel": "Message ID",
-      "messageNameLabel": "Message Name",
-      "signalIdLabel": "Signal ID",
-      "signalNameLabel": "Signal Name",
-      "prompt": "Prompt",
-      "confirmRemoveMessage": "Confirm remove this message?",
-      "confirmRemoveSignal": "Confirm remove this signal?",
       "removeSuccess": "Removed successfully",
-      "messageExists": "Message already exists, please modify the id and try again",
-      "signalExists": "Signal already exists, please modify the id and try again",
       "messageAlreadyExists": "Message already exists, please modify the id and try again",
       "signalAlreadyExists": "Signal already exists, please modify the id and try again"
-    },
-    "otherConfig": {
-      "elementDocumentation": "Element Documentation"
     },
     "other": {
       "elementDocumentation": "Element Documentation"
     },
-    "customUserTask": {
-      "approveType": "Approval Type",
-      "approveTypeManual": "Manual Approval",
-      "approveTypeAutoApprove": "Auto Approve",
-      "approveTypeAutoReject": "Auto Reject",
-      "rejectHandler": "When Approver Rejects",
-      "rejectNode": "Reject to Node",
-      "selectRejectNode": "Please select reject node",
-      "assignEmptyHandler": "When Approver is Empty",
-      "assignUser": "Assign User",
-      "assignStartUserHandler": "When Approver is Same as Initiator",
-      "operationButtons": "Operation Buttons",
-      "operationButton": "Operation Button",
-      "displayName": "Display Name",
-      "enable": "Enable",
-      "fieldPermission": "Field Permission",
-      "fieldName": "Field Name",
-      "readOnly": "Read Only",
-      "editable": "Editable",
-      "hidden": "Hidden",
-      "needSign": "Need Signature",
-      "yes": "Yes",
-      "no": "No",
-      "needOpinion": "Approval Opinion",
-      "required": "Required",
-      "notRequired": "Not Required"
-    },
-    
-    "customConfig": {
-      "boundaryEventTimer": "Timer Boundary Event (Non-Interrupting)",
-      "userTask": "User Task",
-      "approvalType": "Approval Type",
-      "approvalOpinion": "Approval Opinion",
-      "assignUser": "Assign User",
-      "displayName": "Display Name",
-      "editable": "Editable",
-      "enable": "Enable",
-      "fieldName": "Field Name",
-      "fieldPermissions": "Field Permissions",
-      "handlerMethod": "Handler Method",
-      "hidden": "Hidden",
-      "needSignature": "Need Signature",
-      "operationButton": "Operation Button",
-      "operationButtons": "Operation Buttons",
-      "pleaseSelectRejectNode": "Please select reject node",
-      "readOnly": "Read Only",
-      "rejectNode": "Reject Node",
-      "whenApproverEmpty": "When Approver is Empty",
-      "whenApproverIsSubmitter": "When Approver is Same as Initiator",
-      "whenApproverRejects": "When Approver Rejects",
-      "enableSwitch": "Enable Switch",
-      "executeAction": "Execute Action",
-      "maxRemindCount": "Max Remind Count",
-      "notProcessed": "Not Processed",
-      "timeoutNotProcessed": "When Approver Times Out",
-      "timeoutSetting": "Timeout Setting",
-      "whenExceeds": "When Exceeds"
-    },
-    
     "switch": {
       "on": "On",
       "off": "Off",
@@ -1411,61 +1169,16 @@
       "required": "Required",
       "notRequired": "Not Required"
     },
-    "boundaryTimer": {
-      "timeoutHandler": "When Approver Times Out",
-      "enableSwitch": "Enable Switch",
-      "open": "Open",
-      "close": "Close",
-      "executeAction": "Execute Action",
-      "timeoutSetting": "Timeout Setting",
-      "overTime": "When exceeding",
-      "notProcessed": "Not processed",
-      "maxRemindCount": "Max Remind Count"
-    },
     "receiveTask": {
-      "createNewMessage": "Create New Message",
-      "messageInstance": "Message Instance",
       "none": "None",
       "messageExists": "Message already exists, please modify the id and try again"
-    },
-    "serviceTask": {
-      "executeType": "Execute Type",
-      "javaClass": "Java Class",
-      "expression": "Expression",
-      "delegateExpression": "Delegate Expression",
-      "httpCall": "HTTP Call",
-      "requestMethod": "Request Method",
-      "requestUrl": "Request URL",
-      "requestHeaders": "Request Headers",
-      "edit": "Edit",
-      "disallowRedirects": "Disallow Redirects",
-      "ignoreException": "Ignore Exception",
-      "saveResponse": "Save Response Variable",
-      "transientVariable": "Transient Variable",
-      "responsePrefix": "Response Prefix",
-      "saveAsJson": "Save as JSON Variable",
-      "clickToEditHeaders": "Click the edit button on the right to add request headers",
-      "addHeader": "Add Header",
-      "paramName": "Param Name",
-      "paramValue": "Param Value (supports expression ${variable})"
-    },
-    "scriptTask": {
-      "scriptFormat": "Script Format",
-      "scriptType": "Script Type",
-      "inlineScript": "Inline Script",
-      "externalResource": "External Resource",
-      "script": "Script",
-      "resourceAddress": "Resource Address",
-      "resultVariable": "Result Variable"
     },
     "callActivity": {
       "calledSubProcess": "Called Sub-Process",
       "pleaseSelectSubProcess": "Please select sub-process",
-      "selectSubProcess": "Please select sub-process",
       "inheritVariables": "Inherit Variables",
       "inheritBusinessKey": "Inherit Business Key",
       "businessKeyExpression": "Business Key Expression",
-      "enterBusinessKeyExpression": "Please input business key expression",
       "inputParameters": "Input Parameters",
       "outputParameters": "Output Parameters",
       "addParameter": "Add Parameter",
@@ -1473,12 +1186,7 @@
       "target": "Target",
       "sourceRequired": "Source cannot be empty",
       "targetRequired": "Target cannot be empty",
-      "parameterConfig": "Parameter Config",
-      "edit": "Edit",
-      "remove": "Remove",
-      "prompt": "Prompt",
-      "confirmDelete": "Confirm delete?",
-      "loadSubProcessListFailed": "Failed to load sub-process list"
+      "parameterConfig": "Parameter Config"
     },
     "httpHeaderEditor": {
       "title": "Edit Request Headers",
@@ -1498,7 +1206,6 @@
       "pleaseInputCycle": "Please input cycle expression",
       "selectDateTime": "Select date and time",
       "formatDescription": "Format Description",
-      "close": "Close",
       "currentSelection": "Current Selection",
       "timeConfig": "Time Configuration",
       "year": "Year",
@@ -1532,76 +1239,6 @@
       "isoTimeFormat": "Supports ISO 8601 time format (e.g. 2024-12-12T12:12:12)",
       "durationFormatHelp": "ISO 8601 format, e.g. one year two months three days four hours five minutes six seconds = P1Y2M3DT4H5M6S. P is the start marker, T separates date and time. Even if there's only time without date, T cannot be omitted, e.g. execute once every hour should be PT1H."
     },
-    "timeEvent": {
-      "type": "Type",
-      "condition": "Condition",
-      "time": "Time",
-      "duration": "Duration",
-      "cycle": "Cycle",
-      "selectTime": "Select Time",
-      "enterTime": "Enter time",
-      "enterDuration": "Enter duration",
-      "enterCycleExpression": "Enter cycle expression",
-      "selectDateTime": "Select date time",
-      "formatDescription": "Format Description",
-      "close": "Close",
-      "currentSelection": "Current Selection",
-      "timeConfig": "Time Config",
-      "year": "Year",
-      "month": "Month",
-      "day": "Day",
-      "hour": "Hour",
-      "minute": "Minute",
-      "second": "Second",
-      "custom": "Custom",
-      "repeatCount": "Repeat Count",
-      "startTime": "Start Time",
-      "selectStartTime": "Select start time",
-      "intervalDuration": "Interval Duration",
-      "cronExpression": "CRON Expression",
-      "isoFormat": "ISO Format",
-      "isoFormatExample": "e.g. R1/2025-05-21T21:59:54/P3DT30M30S",
-      "durationFormat": "e.g. P3DT30M30S",
-      "cronHelp": "Supports CRON expression (e.g. 0 0/30 * * * ?) or ISO 8601 duration (e.g. R3/PT10M)",
-      "iso8601Help": "ISO 8601 format, e.g. PT1H",
-      "selectSpecificTime": "Select specific time",
-      "beforeWaitHelp": "Specify how long to wait before the timer. S=second, M=minute, D=day; P=period, T=time of day separator.",
-      "durationFormatHelp": "ISO 8601 format, e.g. one year two months three days four hours five minutes six seconds = P1Y2M3DT4H5M6S. P is the start marker, T separates date and time. Even if there's only time without date, T cannot be omitted, e.g. execute once every hour should be PT1H.",
-      "isoTimeFormat": "Supports ISO 8601 time format (e.g. 2024-12-12T12:12:12)",
-      "formatError": "Format error"
-    },
-    "designer": {
-      "openFile": "Open File",
-      "downloadFile": "Download File",
-      "downloadXml": "Download as XML",
-      "downloadSvg": "Download as SVG",
-      "downloadBpmn": "Download as BPMN",
-      "preview": "Preview",
-      "browse": "Browse",
-      "previewXml": "Preview XML",
-      "previewJson": "Preview JSON",
-      "simulation": "Simulation",
-      "exitSimulation": "Exit Simulation",
-      "enterSimulation": "Start Simulation",
-      "alignLeft": "Align Left",
-      "alignRight": "Align Right",
-      "alignTop": "Align Top",
-      "alignBottom": "Align Bottom",
-      "alignCenterHorizontal": "Align Center Horizontal",
-      "alignCenterVertical": "Align Center Vertical",
-      "zoomOut": "Zoom Out",
-      "zoomIn": "Zoom In",
-      "resetView": "Reset View",
-      "undo": "Undo",
-      "redo": "Redo",
-      "redraw": "Redraw",
-      "warning": "Warning",
-      "confirmAlignDeformation": "Auto-align may cause shape deformation, continue?",
-      "ok": "OK",
-      "cancel": "Cancel",
-      "shiftSelectMultiple": "Please hold Shift to select multiple elements for alignment"
-    },
-    
     "toolbar": {
       "openFile": "Open File",
       "downloadFile": "Download File",
@@ -1632,42 +1269,19 @@
       "selectMultipleForAlign": "Please hold Shift to select multiple elements for alignment"
     },
     "viewer": {
-      "approvalRecord": "Approval Record",
       "approvalRecords": "Approval Records",
-      "seqNo": "No.",
       "approver": "Approver",
       "initiator": "Initiator",
       "department": "Department",
-      "dept": "Dept",
       "startTime": "Start Time",
       "endTime": "End Time",
       "approvalStatus": "Status",
-      "approvalOpinion": "Opinion",
       "approvalComment": "Comment",
-      "duration": "Duration",
-      "approvalInfo": "Approval Info"
+      "duration": "Duration"
     },
     "validation": {
-      "pleaseSelectEventType": "Please select event type",
-      "pleaseSelectListenerType": "Please select listener type",
-      "pleaseEnterJavaClass": "Please enter Java class",
-      "pleaseFillJavaClass": "Please fill Java class",
-      "pleaseFillExpression": "Please fill expression",
-      "pleaseFillDelegateExpression": "Please fill delegate expression",
-      "pleaseFillScriptFormat": "Please fill script format",
-      "pleaseSelectScriptType": "Please select script type",
-      "pleaseFillScriptContent": "Please fill script content",
-      "pleaseFillResourceAddress": "Please fill resource address",
-      "pleaseEnterListenerId": "Please enter listener ID",
-      "pleaseSelectFieldType": "Please select field type",
-      "pleaseFillFieldValue": "Please fill field value",
-      "pleaseFillFieldName": "Please fill field name",
       "pleaseEnterId": "Please enter ID",
-      "pleaseEnterName": "Please enter name",
-      "pleaseEnterPropertyName": "Please enter property name",
-      "pleaseEnterPropertyValue": "Please enter property value",
-      "processIdCannotEmpty": "Process ID cannot be empty",
-      "processNameCannotEmpty": "Process name cannot be empty"
+      "pleaseEnterName": "Please enter name"
     },
     "palette": {
       "testTask": "Test Task"

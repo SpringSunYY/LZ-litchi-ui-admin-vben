@@ -1,3 +1,5 @@
+import { $t } from '@vben/locales';
+
 import dayjs from 'dayjs';
 
 import { formatDate } from './date';
@@ -143,22 +145,37 @@ export function formatAxis(param: Date): string {
  * @returns {string} 字符串
  */
 export function formatPast2(ms: number): string {
-  const day = Math.floor(ms / (24 * 60 * 60 * 1000));
-  const hour = Math.floor(ms / (60 * 60 * 1000) - day * 24);
-  const minute = Math.floor(ms / (60 * 1000) - day * 24 * 60 - hour * 60);
-  const second = Math.floor(
-    ms / 1000 - day * 24 * 60 * 60 - hour * 60 * 60 - minute * 60,
-  );
+  const SECOND = 1000;
+  const MINUTE = 60 * SECOND;
+  const HOUR = 60 * MINUTE;
+  const DAY = 24 * HOUR;
+
+  const day = Math.floor(ms / DAY);
+  const hour = Math.floor((ms % DAY) / HOUR);
+  const minute = Math.floor((ms % HOUR) / MINUTE);
+  const second = Math.floor((ms % MINUTE) / SECOND);
+
   if (day > 0) {
-    return `${day} 天${hour} 小时 ${minute} 分钟`;
+    if (hour > 0) {
+      return `${day}${$t('ui.time.day')}${hour}${$t('ui.time.hour')}`;
+    }
+    if (minute > 0) {
+      return `${day}${$t('ui.time.day')}${minute}${$t('ui.time.minute')}`;
+    }
+    return `${day}${$t('ui.time.day')}`;
   }
   if (hour > 0) {
-    return `${hour} 小时 ${minute} 分钟`;
+    if (minute > 0) {
+      return `${hour}${$t('ui.time.hour')}${minute}${$t('ui.time.minute')}`;
+    }
+    return `${hour}${$t('ui.time.hour')}`;
   }
   if (minute > 0) {
-    return `${minute} 分钟`;
+    return `${minute}${$t('ui.time.minute')}`;
   }
-  return second > 0 ? `${second} 秒` : `${0} 秒`;
+  return second > 0
+    ? `${second}${$t('ui.time.second')}`
+    : `0${$t('ui.time.second')}`;
 }
 
 /**

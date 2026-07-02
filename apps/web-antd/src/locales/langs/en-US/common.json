@@ -19,7 +19,6 @@
   "disabled": "Disabled",
   "edit": "Edit",
   "delete": "Delete",
-  "deleteBatch": "Delete Batch",
   "create": "Create",
   "detail": "Detail",
   "view": "View",
@@ -39,7 +38,6 @@
   "collapse": "Collapse",
   "append": "Add Child",
   "save": "Save",
-  "copySuffix": " (Copy)",
   "none": "None",
   "initiator": "Initiator",
   "startTime": "Start Time",
@@ -53,5 +51,8 @@
   "high": "High",
   "low": "Low",
   "min": "Min",
-  "max": "Max"
+  "max": "Max",
+  "filter": "Filter",
+  "todo": "Todo",
+  "yuan": "Yuan"
 }

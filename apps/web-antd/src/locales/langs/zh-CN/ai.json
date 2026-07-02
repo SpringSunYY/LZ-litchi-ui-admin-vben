@@ -1,35 +1,16 @@
 {
   "chat": {
-    "chat": "AI 聊天",
-    "menu": "AI 聊天",
-    "list": "AI 聊天列表",
     "field": {
-      "id": "对话编号",
-      "title": "对话标题",
-      "roleId": "角色编号",
-      "roleName": "角色名称",
-      "model": "模型标识",
       "modelId": "模型",
-      "modelName": "模型名称",
       "systemMessage": "角色设定",
       "temperature": "温度参数",
       "maxTokens": "回复数 Token 数",
-      "maxContexts": "上下文数量",
-      "userId": "用户编号",
-      "pinned": "是否置顶",
-      "createTime": "创建时间",
-      "updateTime": "更新时间",
-      "messageCount": "消息数"
+      "maxContexts": "上下文数量"
     },
     "action": {
-      "query": "AI 聊天查询",
-      "create": "新建对话",
-      "update": "修改对话",
-      "delete": "删除对话"
+      "create": "新建对话"
     },
     "conversation": {
-      "conversation": "对话管理",
-      "menu": "对话管理",
       "list": "对话列表",
       "field": {
         "id": "对话编号",
@@ -44,15 +25,9 @@
         "maxContexts": "上下文数量",
         "createTime": "创建时间",
         "system": "系统"
-      },
-      "action": {
-        "query": "对话查询",
-        "delete": "删除对话"
       }
     },
     "message": {
-      "message": "消息管理",
-      "menu": "消息管理",
       "list": "消息列表",
       "field": {
         "id": "消息编号",
@@ -66,10 +41,6 @@
         "createTime": "创建时间",
         "replyId": "回复消息编号",
         "useContext": "携带上下文"
-      },
-      "action": {
-        "query": "消息查询",
-        "delete": "删除消息"
       },
       "switching": "对话中，不允许切换！",
       "clearing": "确认清空对话消息？",
@@ -105,7 +76,7 @@
       "searchHistory": "搜索历史记录",
       "startConversation": "开始你的对话吧",
       "newConversation": "新建对话",
-      "aiBranding": "芋道 AI",
+      "aiBranding": "荔枝 AI",
       "suggestWeather": "今天天气怎么样？",
       "suggestPoem": "写一首好听的诗歌？",
       "knowledgeReference": "知识引用",
@@ -136,8 +107,9 @@
   },
   "image": {
     "image": "AI 绘图",
-    "menu": "AI 绘图",
     "list": "AI 绘图列表",
+    "square": "绘图作品",
+    "square.menu": "绘图作品",
     "field": {
       "id": "编号",
       "picUrl": "图片",
@@ -156,10 +128,6 @@
       "submitTime": "提交时间",
       "finishTime": "生成时间"
     },
-    "action": {
-      "query": "AI 绘图查询",
-      "delete": "删除绘图"
-    },
     "message": {
       "generating": "生成中...",
       "generatingContent": "生成内容",
@@ -167,7 +135,6 @@
       "loadFailed": "加载失败",
       "imageDetail": "图片详情",
       "drawingTask": "绘画任务",
-      "drawingWorks": "绘画作品",
       "viewWorks": "查看作品",
       "confirmGenerate": "确认生成内容？",
       "confirmDelete": "是否删除照片？",
@@ -177,8 +144,7 @@
       "totalItems": "共 {0} 条",
       "confirmAction": "确认操作 \"{0} {1}\" ?",
       "confirmPublic": "确认要将该图片切换为【公开】吗？",
-      "confirmPrivate": "确认要将该图片切换为【私有】吗？",
-      "searchPlaceholder": "请输入要搜索的内容"
+      "confirmPrivate": "确认要将该图片切换为【私有】吗？"
     },
     "common": {
       "common": "通用",
@@ -194,8 +160,6 @@
     },
     "dall3": {
       "dall3": "DALL3 绘画",
-      "platform": "平台",
-      "model": "模型",
       "modelSelect": "模型选择",
       "styleSelect": "风格选择",
       "sizeSelect": "画面比例"
@@ -219,31 +183,23 @@
       "seed": "随机因子"
     },
     "square": {
-      "square": "绘图广场",
-      "menu": "绘图广场",
       "searchPlaceholder": "请输入要搜索的内容"
     }
   },
   "knowledge": {
     "knowledge": "AI 知识库",
-    "menu": "AI 知识库",
+    "retrieval": "文档召回测试",
+    "retrieval.menu": "文档召回测试",
     "list": "AI 知识库列表",
     "field": {
       "id": "编号",
       "name": "知识库名称",
       "description": "知识库描述",
-      "embeddingModelId": "向量模型编号",
       "embeddingModel": "向量化模型",
       "topK": "检索 topK",
       "similarityThreshold": "检索相似度阈值",
       "status": "是否启用",
       "createTime": "创建时间"
-    },
-    "action": {
-      "query": "AI 知识库查询",
-      "create": "新建知识库",
-      "update": "修改知识库",
-      "delete": "删除知识库"
     },
     "message": {
       "retrievalTest": "召回测试",
@@ -259,7 +215,11 @@
     },
     "document": {
       "document": "知识库文档",
-      "menu": "知识库文档",
+      "document.menu": "知识库文档",
+      "create": "创建文档",
+      "create.menu": "创建文档",
+      "update": "修改文档",
+      "update.menu": "修改文档",
       "list": "知识库文档列表",
       "field": {
         "id": "文档编号",
@@ -270,12 +230,6 @@
         "retrievalCount": "召回次数",
         "status": "是否启用",
         "createTime": "上传时间"
-      },
-      "action": {
-        "query": "知识库文档查询",
-        "create": "新建文档",
-        "update": "修改文档",
-        "delete": "删除文档"
       },
       "message": {
         "idNotFound": "知识库 ID 不存在，无法查看文档列表",
@@ -305,7 +259,6 @@
         "splitFailed": "获取分段内容失败",
         "pleasePreviewSplitFirst": "请先预览分段内容",
         "saveFailed": "保存失败",
-        "processing": "处理中...",
         "segmentCount": "分段数量",
         "complete": "完成",
         "dragOrSelectFile": "拖拽文件至此，或者选择文件",
@@ -317,8 +270,8 @@
     },
     "segment": {
       "segment": "知识库分段",
-      "menu": "知识库分段",
       "list": "分段列表",
+      "menu": "知识库分段",
       "field": {
         "id": "分段编号",
         "documentId": "文档编号",
@@ -329,12 +282,6 @@
         "status": "状态",
         "createTime": "创建时间"
       },
-      "action": {
-        "query": "知识库分段查询",
-        "create": "新建分段",
-        "update": "修改分段",
-        "delete": "删除分段"
-      },
       "message": {
         "switchConfirm": "确认将分段 {0} 的状态切换为【{1}】吗？",
         "fullContent": "完整内容"
@@ -343,21 +290,15 @@
   },
   "mindmap": {
     "mindmap": "AI 思维导图",
-    "menu": "AI 思维导图",
     "list": "AI 思维导图列表",
     "field": {
       "id": "编号",
-      "userId": "用户编号",
       "user": "用户",
       "prompt": "提示词",
       "generatedContent": "思维导图",
       "model": "模型",
       "createTime": "创建时间",
       "errorMessage": "错误信息"
-    },
-    "action": {
-      "query": "AI 思维导图查询",
-      "delete": "删除思维导图"
     },
     "message": {
       "generatingFailed": "生成思维导图异常! {0}",
@@ -374,7 +315,6 @@
   },
   "music": {
     "music": "AI 音乐创作",
-    "menu": "AI 音乐创作",
     "list": "AI 音乐列表",
     "field": {
       "id": "编号",
@@ -395,10 +335,6 @@
       "errorMessage": "错误信息",
       "createTime": "创建时间"
     },
-    "action": {
-      "query": "AI 音乐查询",
-      "delete": "删除音乐"
-    },
     "message": {
       "descMode": "描述模式",
       "lyricMode": "歌词模式",
@@ -412,8 +348,6 @@
       "listenSquare": "试听广场",
       "noMusic": "暂无音乐",
       "infoReuse": "信息复用",
-      "public": "公开",
-      "private": "私有",
       "confirmPublic": "确认要将该音乐切换为【公开】吗？",
       "confirmPrivate": "确认要将该音乐切换为【私有】吗？",
       "music": "音乐",
@@ -441,55 +375,34 @@
   },
   "model": {
     "model": "AI 模型配置",
-    "menu": "AI 模型配置",
     "list": "AI 模型配置列表",
     "field": {
-      "id": "编号",
       "platform": "所属平台",
       "type": "模型类型",
       "name": "模型名称",
       "model": "模型标识",
-      "keyId": "API 密钥",
       "keyIdName": "API 密钥",
       "sort": "排序",
       "status": "状态",
       "temperature": "温度参数",
       "maxTokens": "回复数 Token 数",
-      "maxContexts": "上下文数量",
-      "createTime": "创建时间"
-    },
-    "action": {
-      "query": "AI 模型查询",
-      "create": "新建模型",
-      "update": "修改模型",
-      "delete": "删除模型"
+      "maxContexts": "上下文数量"
     },
     "apiKey": {
       "apiKey": "API 密钥",
-      "menu": "API 密钥",
       "list": "API 密钥列表",
       "field": {
-        "id": "编号",
         "platform": "所属平台",
         "name": "名称",
         "apiKey": "密钥",
         "url": "自定义 API URL",
-        "status": "状态",
-        "createTime": "创建时间"
-      },
-      "action": {
-        "query": "API 密钥查询",
-        "create": "新建密钥",
-        "update": "修改密钥",
-        "delete": "删除密钥"
+        "status": "状态"
       }
     },
     "chatRole": {
       "chatRole": "聊天角色",
-      "menu": "聊天角色",
       "list": "聊天角色列表",
       "field": {
-        "id": "编号",
         "name": "角色名称",
         "avatar": "角色头像",
         "modelId": "绑定模型",
@@ -502,14 +415,7 @@
         "mcpClientNames": "引用 MCP",
         "publicStatus": "是否公开",
         "sort": "角色排序",
-        "status": "状态",
-        "createTime": "创建时间"
-      },
-      "action": {
-        "query": "聊天角色查询",
-        "create": "新建角色",
-        "update": "修改角色",
-        "delete": "删除角色"
+        "status": "状态"
       },
       "message": {
         "referencedKnowledge": "引用 {0} 个",
@@ -519,7 +425,6 @@
     },
     "tool": {
       "tool": "AI 工具",
-      "menu": "AI 工具",
       "list": "AI 工具列表",
       "field": {
         "id": "工具编号",
@@ -527,18 +432,13 @@
         "description": "工具描述",
         "status": "状态",
         "createTime": "创建时间"
-      },
-      "action": {
-        "query": "AI 工具查询",
-        "create": "新建工具",
-        "update": "修改工具",
-        "delete": "删除工具"
       }
     }
   },
   "workflow": {
     "workflow": "AI 工作流",
-    "menu": "AI 工作流",
+    "design": "设计 AI 工作流",
+    "design.menu": "设计 AI 工作流",
     "list": "AI 工作流列表",
     "field": {
       "id": "编号",
@@ -550,10 +450,6 @@
       "createTime": "创建时间"
     },
     "action": {
-      "query": "AI 工作流查询",
-      "create": "新建工作流",
-      "update": "修改工作流",
-      "delete": "删除工作流",
       "test": "测试工作流",
       "deploy": "发布工作流"
     },
@@ -593,11 +489,9 @@
   },
   "write": {
     "write": "AI 写作助手",
-    "menu": "AI 写作助手",
     "list": "AI 写作列表",
     "field": {
       "id": "编号",
-      "userId": "用户编号",
       "user": "用户",
       "type": "写作类型",
       "platform": "平台",
@@ -611,10 +505,6 @@
       "language": "语言",
       "errorMessage": "错误信息",
       "createTime": "创建时间"
-    },
-    "action": {
-      "query": "AI 写作查询",
-      "delete": "删除写作"
     },
     "message": {
       "tabWriting": "撰写",

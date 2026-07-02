@@ -13,6 +13,7 @@ import {
 import {
   erpCountInputFormatter,
   floatToFixed2,
+  formatPast2,
   formatToFractionDigit,
   isFunction,
   isString,
@@ -392,28 +393,7 @@ setupVbenVxeTable({
         if (cellValue === null || cellValue === undefined) {
           return '';
         }
-        const SECOND = 1000;
-        const MINUTE = 60 * SECOND;
-        const HOUR = 60 * MINUTE;
-        const DAY = 24 * HOUR;
-
-        const day = Math.floor(cellValue / DAY);
-        const hour = Math.floor((cellValue % DAY) / HOUR);
-        const minute = Math.floor((cellValue % HOUR) / MINUTE);
-        const second = Math.floor((cellValue % MINUTE) / SECOND);
-
-        if (day > 0) {
-          return `${day}${$t('ui.time.day')}${$t('ui.time.hour')}${$t('ui.time.minute')}`;
-        }
-        if (hour > 0) {
-          return `${hour}${$t('ui.time.hour')}${$t('ui.time.minute')}`;
-        }
-        if (minute > 0) {
-          return `${minute}${$t('ui.time.minute')}`;
-        }
-        return second > 0
-          ? `${second}${$t('ui.time.second')}`
-          : `0${$t('ui.time.second')}`;
+        return formatPast2(cellValue);
       },
     });
 

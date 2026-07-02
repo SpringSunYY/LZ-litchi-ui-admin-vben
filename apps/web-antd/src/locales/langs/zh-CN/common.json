@@ -19,7 +19,6 @@
   "disabled": "已禁用",
   "edit": "修改",
   "delete": "删除",
-  "deleteBatch": "批量删除",
   "create": "新增",
   "detail": "详情",
   "view": "查看",
@@ -39,7 +38,6 @@
   "collapse": "收缩",
   "append": "新增下级",
   "save": "保存",
-  "copySuffix": "副本",
   "none": "无",
   "initiator": "发起人",
   "startTime": "发起时间",
@@ -53,5 +51,8 @@
   "high": "高",
   "low": "低",
   "min": "最小值",
-  "max": "最大值"
+  "max": "最大值",
+  "filter": "筛选",
+  "todo": "待办",
+  "yuan": "元"
 }

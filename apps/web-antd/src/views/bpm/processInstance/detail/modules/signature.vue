@@ -9,7 +9,7 @@ import Vue3Signature from 'vue3-signature';
 
 import { uploadFile } from '#/api/infra/file';
 import { $t } from '#/locales';
-import { download } from '#/utils';
+import { download, MODULE_TYPE_ENUM } from '#/utils';
 
 defineOptions({
   name: 'BpmProcessInstanceSignature',
@@ -38,6 +38,7 @@ const [Modal, modalApi] = useVbenModal({
         signature.value?.save('image/jpeg') || '',
         'signature',
       ),
+      moduleType: MODULE_TYPE_ENUM.AI,
     });
     emit('success', signFileUrl);
     modalApi.close();

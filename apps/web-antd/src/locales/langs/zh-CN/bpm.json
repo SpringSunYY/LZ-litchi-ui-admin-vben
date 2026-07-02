@@ -1,8 +1,6 @@
 {
-  "menu": "工作流",
   "category": {
     "category": "流程分类",
-    "menu": "流程分类",
     "list": "流程分类列表",
     "field": {
       "id": "分类编号",
@@ -13,19 +11,12 @@
       "sort": "分类排序",
       "createTime": "创建时间"
     },
-    "action": {
-      "query": "流程分类查询",
-      "create": "新增流程分类",
-      "update": "修改流程分类",
-      "delete": "删除流程分类"
-    },
     "message": {
       "rename": "重命名流程分类"
     }
   },
   "form": {
     "form": "流程表单",
-    "menu": "流程表单",
     "list": "流程表单列表",
     "field": {
       "id": "编号",
@@ -35,10 +26,8 @@
       "createTime": "创建时间"
     },
     "action": {
-      "query": "流程表单查询",
-      "create": "新增流程表单",
-      "update": "修改流程表单",
-      "delete": "删除流程表单"
+      "update": "编辑流程表单",
+      "update.menu": "编辑流程表单"
     },
     "message": {
       "detail": "流程表单详情",
@@ -48,7 +37,6 @@
   },
   "group": {
     "group": "用户分组",
-    "menu": "用户分组",
     "list": "用户分组列表",
     "field": {
       "id": "编号",
@@ -57,48 +45,25 @@
       "userIds": "成员",
       "status": "状态",
       "createTime": "创建时间"
-    },
-    "action": {
-      "query": "用户分组查询",
-      "create": "新增用户分组",
-      "update": "修改用户分组",
-      "delete": "删除用户分组",
-      "detail": "用户分组详情"
     }
   },
   "model": {
-    "model": "流程模型",
-    "menu": "流程模型",
-    "list": "流程模型列表",
     "field": {
       "name": "流程名",
       "startUserIds": "可见范围",
       "type": "流程类型",
       "formType": "表单信息",
-      "formId": "流程表单",
-      "formCustomCreatePath": "表单提交路由",
-      "formCustomViewPath": "表单查看地址",
       "deploymentTime": "最后发布",
-      "key": "流程标识",
-      "category": "流程分类",
-      "icon": "流程图标",
-      "description": "流程描述",
-      "visible": "是否可见",
-      "startUserType": "谁可以发起",
-      "managerUserIds": "流程管理员",
-      "version": "流程版本",
-      "processDefinition": "流程定义"
+      "icon": "流程图标"
     },
     "action": {
-      "query": "流程模型查询",
-      "create": "新增流程模型",
-      "update": "修改流程模型",
-      "delete": "删除流程模型",
-      "detail": "流程模型详情"
+      "update": "修改流程",
+      "update.menu": "修改流程"
     },
     "message": {
       "list": "流程模型",
       "create": "创建流程",
+      "create.menu": "创建流程",
       "categoryAdd": "新建分类",
       "categorySort": "分类排序",
       "categorySortSuccess": "分类排序成功",
@@ -112,13 +77,11 @@
       "deleteCategory": "删除分类",
       "deleteCategoryWarn": "该分类下仍有流程定义,不允许删除",
       "restore": "恢复",
-      "deploy": "发布",
       "copy": "复制",
       "history": "历史",
       "enable": "启用",
       "disable": "停用",
       "enableSuccess": "{0} 流程: \"{1}\" 成功",
-      "disableSuccess": "{0} 流程: \"{1}\" 成功",
       "confirmEnable": "确认要{0}流程: \"{1}\" 吗？",
       "confirmDeploy": "确认要发布[{0}]流程吗？",
       "deploySuccess": "发布[{0}]流程成功",
@@ -139,10 +102,7 @@
       "publish": "发布",
       "more": "更多",
       "dragSortTip": "拖动排序",
-      "copySuccess": "复制流程成功",
       "report": "报表",
-      "designProcess": "请设计流程",
-      "completeDesignConfig": "请完善设计配置",
       "createSuccess": "新建成功，可点击【发布】按钮，进行发布模型",
       "updateSuccess": "修改成功，可点击【发布】按钮，进行发布模型",
       "restoreSuccess": "恢复成功，可点击【发布】按钮，进行发布模型",
@@ -157,7 +117,6 @@
       "extraSetting": "更多设置"
     },
     "basic": {
-      "basicInfo": "基本信息",
       "formType": "表单类型",
       "processForm": "流程表单",
       "formPreview": "表单预览",
@@ -195,7 +154,6 @@
       "formViewRouteTip": "自定义表单的查看组件地址，使用 Vue 的组件地址，例如说：bpm/oa/leave/detail.vue"
     },
     "extra": {
-      "extraSetting": "更多设置",
       "submitterPermission": "提交人权限",
       "allowCancel": "允许撤销审批中的申请",
       "allowCancelTip": "第一个审批节点通过后，提交人仍可撤销申请",
@@ -247,8 +205,6 @@
     }
   },
   "definition": {
-    "definition": "流程定义",
-    "menu": "流程定义",
     "list": "流程定义列表",
     "field": {
       "id": "定义编号",
@@ -257,38 +213,17 @@
       "startUsers": "可见范围",
       "modelType": "流程类型",
       "formType": "表单信息",
-      "formId": "流程表单",
-      "formCustomCreatePath": "自定义表单",
       "version": "流程版本",
-      "deploymentTime": "部署时间",
-      "createTime": "创建时间"
-    },
-    "action": {
-      "query": "流程定义查询",
-      "detail": "流程定义详情"
+      "deploymentTime": "部署时间"
     },
     "message": {
-      "restore": "恢复",
       "noIcon": "无图标",
-      "allVisible": "全部可见",
-      "userVisible": "{0} 人可见",
-      "noForm": "暂无表单",
-      "copySuccess": "复制成功，可点击【发布】按钮，进行发布模型",
-      "restoreSuccess": "恢复成功，可点击【发布】按钮，进行发布模型",
-      "updateSuccess": "修改成功，可点击【发布】按钮，进行发布模型",
-      "createSuccess": "新建成功，可点击【发布】按钮，进行发布模型",
-      "confirmDeploy": "是否确认发布该流程？",
-      "deploySuccess": "发布成功",
-      "deployFailed": "发布失败",
-      "stepTip": "请先完善当前步骤必填信息"
+      "noForm": "暂无表单"
     }
   },
   "oa": {
-    "oa": "OA请假",
-    "menu": "OA请假",
     "leave": {
       "leave": "请假",
-      "menu": "请假申请",
       "list": "请假列表",
       "field": {
         "id": "申请编号",
@@ -300,16 +235,15 @@
         "createTime": "申请时间"
       },
       "action": {
-        "query": "请假查询",
         "create": "发起请假",
-        "update": "修改请假",
-        "delete": "删除请假",
+        "create.menu": "创建请假",
         "detail": "请假详情",
         "progress": "审批进度",
         "cancel": "取消"
       },
       "message": {
         "detail": "请假详情",
+        "detail.menu": "请假详情",
         "cancelSuccess": "取消成功",
         "cancelReasonEmpty": "请输入取消原因",
         "draftSuccess": "保存草稿成功",
@@ -322,7 +256,6 @@
   },
   "processExpression": {
     "processExpression": "流程表达式",
-    "menu": "流程表达式",
     "list": "流程表达式列表",
     "field": {
       "id": "编号",
@@ -330,27 +263,10 @@
       "expression": "表达式",
       "status": "状态",
       "createTime": "创建时间"
-    },
-    "action": {
-      "query": "流程表达式查询",
-      "create": "新增流程表达式",
-      "update": "修改流程表达式",
-      "delete": "删除流程表达式",
-      "detail": "流程表达式详情"
-    },
-    "placeholder": {
-      "selectType": "请选择类型",
-      "selectTime": "请选择时间",
-      "inputReason": "请输入原因",
-      "name": "请输入名字",
-      "expression": "请输入表达式",
-      "startTime": "开始时间",
-      "endTime": "结束时间"
     }
   },
   "processListener": {
     "processListener": "流程监听器",
-    "menu": "流程监听器",
     "list": "流程监听器列表",
     "field": {
       "id": "编号",
@@ -362,29 +278,15 @@
       "status": "状态",
       "createTime": "创建时间"
     },
-    "action": {
-      "query": "流程监听器查询",
-      "create": "新增流程监听器",
-      "update": "修改流程监听器",
-      "delete": "删除流程监听器",
-      "detail": "流程监听器详情"
-    },
-    "message": {
-      "eventTip": "execution 类型可选 start/end；task 类型可选 create/assignment/complete/delete/update/timeout"
-    },
     "placeholder": {
-      "name": "请输入名字",
       "classPath": "请输入类路径",
-      "expression": "请输入表达式",
-      "selectType": "请选择类型",
-      "selectEvent": "请选择事件"
+      "expression": "请输入表达式"
     }
   },
   "processInstance": {
-    "processInstance": "流程实例",
-    "menu": "流程实例",
     "list": "流程实例列表",
     "myList": "我的流程",
+    "myList.menu": "我的流程",
     "field": {
       "id": "编号",
       "name": "流程名称",
@@ -396,22 +298,24 @@
       "endTime": "结束时间",
       "startUser": "发起人",
       "deptName": "发起部门",
-      "processDefinitionId": "所属流程",
       "processDefinition": "流程定义",
       "duration": "流程耗时",
       "tasks": "任务"
     },
+    "detail": {
+      "title": "流程详情",
+      "title.menu": "流程详情",
+      "instanceId": "编号：{0}",
+      "submittedBy": "{0} 提交",
+      "underReview": "审批中"
+    },
     "action": {
-      "query": "流程实例查询",
-      "cancel": "取消",
-      "detail": "详情"
+      "cancel": "取消"
     },
     "message": {
       "cancelSuccess": "取消成功",
-      "cancelReasonEmpty": "请输入取消原因",
       "cancelProcess": "取消流程",
       "cancelReasonPlaceholder": "请输入取消原因",
-      "approvalDetailNotFound": "查询不到审批详情信息！",
       "processInfoNotFound": "查询不到流程信息！",
       "getApprovalDetailFailed": "获取审批详情失败！",
       "restructureFailed": "重新发起流程失败，原因：流程实例不存在",
@@ -421,7 +325,6 @@
       "selectUser": "选择用户"
     },
     "status": {
-      "approving": "{0}审批中",
       "multiApproving": "{0}等{1}人({2})审批中",
       "allProcesses": "全部流程"
     },
@@ -433,34 +336,23 @@
       "formFill": "表单填写"
     },
     "create": {
-      "title": "发起流程",
-      "selectProcess": "选择流程",
-      "fillForm": "填写表单",
       "processForm": "流程表单 - {0}",
       "submit": "发起",
-      "cancel": "取消",
       "back": "返回",
       "submitSuccess": "发起流程成功",
       "submitFailed": "发起流程失败",
-      "selectCandidate": "请选择{0}的候选人",
-      "noProcessDefinitions": "暂无可用流程定义"
+      "selectCandidate": "请选择{0}的候选人"
     },
-    "detail": {
-      "title": "流程详情",
-      "instanceId": "编号：{0}",
-      "submittedBy": "{0} 提交",
-      "underReview": "审批中",
-      "completed": "已完成"
+    "operation": {
+      "signature": "签名",
+      "uploadingSignature": "正在上传签名...",
+      "undo": "撤销",
+      "clear": "清除"
     }
   },
   "task": {
-    "task": "流程任务",
-    "menu": "流程任务",
-    "approvalCenter": "审批中心",
+    "menu": "审批中心",
     "todo": {
-      "title": "流程详情",
-      "todo": "待办任务",
-      "menu": "待办任务",
       "list": "待办任务列表",
       "message": {
         "clickCardTip": "点击卡片，实时查看流程详情"
@@ -473,14 +365,11 @@
         "summary": "摘要",
         "startUser": "发起人",
         "currentTask": "当前任务",
-        "taskTime": "任务时间",
         "processInstanceId": "流程编号",
         "taskId": "任务编号"
       }
     },
     "done": {
-      "done": "已办任务",
-      "menu": "已办任务",
       "list": "已办任务列表",
       "message": {
         "clickCardTip": "点击卡片，实时查看流程详情"
@@ -503,8 +392,6 @@
       }
     },
     "copy": {
-      "copy": "抄送任务",
-      "menu": "抄送任务",
       "list": "抄送任务列表",
       "message": {
         "clickCardTip": "点击卡片，实时查看流程详情"
@@ -524,12 +411,7 @@
       }
     },
     "manager": {
-      "manager": "流程任务",
-      "menu": "流程任务",
       "list": "任务列表",
-      "message": {
-        "clickCardTip": "点击卡片，实时查看流程详情"
-      },
       "action": {
         "history": "历史"
       },
@@ -555,11 +437,6 @@
       "status": "流程状态",
       "createTime": "发起时间",
       "taskTime": "任务时间"
-    },
-    "action": {
-      "query": "任务查询",
-      "handle": "办理",
-      "history": "历史"
     }
   },
   "timeline": {
@@ -591,7 +468,6 @@
     "returnSuccess": "退回成功",
     "copySuccess": "抄送成功",
     "cancelSuccess": "取消成功",
-    "operationSuccess": "操作成功",
     "formValidateFailed": "表单校验不通过，请先完善表单!!",
     "noReturnNode": "当前没有可退回的节点",
     "nextApproverEmpty": "下一个节点的审批人不能为空",
@@ -633,11 +509,7 @@
     "forward": "向前",
     "backward": "向后",
     "viewForm": "查看表单",
-    "formTitle": "查看表单",
-    "confirm": "确认",
-    "undo": "撤销",
-    "clear": "清除",
-    "uploadingSignature": "签名上传中，请稍等..."
+    "formTitle": "查看表单"
   },
   "simpleProcessDesign": {
     "node": {
@@ -1046,18 +918,13 @@
     "common": {
       "edit": "编辑",
       "remove": "移除",
-      "add": "添加",
       "confirm": "确定",
       "cancel": "取消",
       "close": "关闭",
-      "save": "保存",
-      "delete": "删除",
       "confirmDelete": "是否确认删除？",
       "prompt": "提示",
       "action": "操作",
-      "loading": "加载中，请稍候",
-      "success": "操作成功",
-      "error": "操作失败"
+      "loading": "加载中，请稍候"
     },
     "task": {
       "userTask": "用户任务",
@@ -1080,7 +947,6 @@
       "requestUrl": "请求地址",
       "requestHeaders": "请求头",
       "clickToAddHeaders": "点击右侧编辑按钮添加请求头",
-      "edit": "编辑",
       "disallowRedirects": "禁止重定向",
       "ignoreException": "忽略异常",
       "saveResponseVariable": "保存返回变量",
@@ -1095,7 +961,6 @@
       "resourceAddress": "资源地址",
       "resultVariable": "结果变量"
     },
-
     "form": {
       "processForm": "流程表单",
       "businessKey": "业务标识",
@@ -1162,30 +1027,17 @@
       "customConfig": "自定义配置",
       "timeEvent": "时间事件"
     },
-    "baseInfo": {
-      "processId": "流程标识",
-      "processName": "流程名称",
-      "id": "ID",
-      "name": "名称",
-      "processIdPlaceholder": "请输入流程标识",
-      "processNamePlaceholder": "请输入流程名称"
-    },
     "base": {
       "processId": "流程标识",
       "processName": "流程名称",
       "id": "ID",
       "name": "名称",
-      "processIdPlaceholder": "请输入流程标识",
-      "processNamePlaceholder": "请输入流程名称",
       "processIdRequired": "流程标识不能为空",
       "processNameRequired": "流程名称不能为空",
       "pleaseInputProcessId": "请输入流程标识",
       "pleaseInputProcessName": "请输入流程名称"
     },
     "formConfig": {
-      "processForm": "流程表单",
-      "businessKey": "业务标识",
-      "noBusinessKey": "无",
       "longType": "长整数",
       "stringType": "字符串",
       "booleanType": "布尔型",
@@ -1205,7 +1057,6 @@
       "scriptType": "脚本类型",
       "inlineScript": "内联脚本",
       "externalScript": "外部脚本",
-      "scriptContent": "脚本内容",
       "resourceAddress": "资源地址"
     },
     "userTask": {
@@ -1221,17 +1072,11 @@
       "selectExpression": "选择表达式",
       "skipExpression": "跳过表达式",
       "deptLeaderSource": "部门负责人来源",
-      "deptLeaderSourceDefault": "部门负责人来源",
-      "deptLeaderSourceSpecify": "部门负责人来源(指定部门向上)",
-      "deptLeaderSourceForm": "部门负责人来源(表单内部门向上)",
-      "deptLeaderSourceStartUser": "部门负责人来源(发起人部门向上)",
-      "loadingPlaceholder": "加载中，请稍候",
       "formDeptUpward": "表单内部门负责人向上",
       "specifyDeptUpward": "指定部门向上",
       "startUserDeptUpward": "发起人部门负责人向上"
     },
     "multiInstance": {
-      "pendingImplementation": "除了UserTask以外节点的多实例待实现",
       "otherNodeNotImplemented": "除了UserTask以外节点的多实例待实现",
       "quickConfig": "快捷配置",
       "sequentialApprove": "依次审批",
@@ -1252,7 +1097,6 @@
       "retryCycle": "重试周期"
     },
     "listenerConfig": {
-      "unknownListenerType": "未知的监听器类型",
       "executionListener": "执行监听器",
       "taskListener": "任务监听器",
       "eventType": "事件类型",
@@ -1268,7 +1112,6 @@
       "externalScript": "外部脚本",
       "scriptContent": "脚本内容",
       "resourceAddress": "资源地址",
-      "injectedField": "注入字段",
       "injectFields": "注入字段",
       "timerType": "定时器类型",
       "timer": "定时器",
@@ -1279,44 +1122,11 @@
       "addListener": "添加监听器",
       "addField": "添加字段",
       "selectListener": "选择监听器",
-      "edit": "编辑",
-      "remove": "移除",
       "fieldConfig": "字段配置",
       "fieldName": "字段名称",
       "fieldType": "字段类型",
       "fieldValue": "字段值",
       "fieldValueExpression": "字段值表达式",
-      "fieldExpression": "表达式",
-      "prompt": "提示",
-      "confirmRemoveField": "确认移除该字段吗？",
-      "confirmRemoveListener": "确认移除该监听器吗？"
-    },
-    "taskListener": {
-      "taskListener": "任务监听器",
-      "eventType": "事件类型",
-      "listenerId": "监听器ID",
-      "listenerType": "监听器类型",
-      "javaClass": "Java类",
-      "expression": "表达式",
-      "delegateExpression": "代理表达式",
-      "scriptFormat": "脚本格式",
-      "scriptType": "脚本类型",
-      "inlineScript": "内联脚本",
-      "externalScript": "外部脚本",
-      "scriptContent": "脚本内容",
-      "resourceAddress": "资源地址",
-      "timerType": "定时器类型",
-      "date": "日期",
-      "duration": "持续时长",
-      "cycle": "循环",
-      "timer": "定时器",
-      "timerConfig": "定时器配置",
-      "injectedField": "注入字段",
-      "addListener": "添加监听器",
-      "selectListener": "选择监听器",
-      "edit": "编辑",
-      "remove": "移除",
-      "addField": "添加字段",
       "prompt": "提示",
       "confirmRemoveField": "确认移除该字段吗？",
       "confirmRemoveListener": "确认移除该监听器吗？"
@@ -1326,9 +1136,6 @@
       "propertyName": "属性名",
       "propertyValue": "属性值",
       "addProperty": "添加属性",
-      "edit": "编辑",
-      "remove": "移除",
-      "prompt": "提示",
       "confirmRemoveProperty": "确认移除该属性吗？"
     },
     "signalMessage": {
@@ -1336,8 +1143,6 @@
       "createNewMessage": "创建新消息",
       "signalList": "信号列表",
       "createNewSignal": "创建新信号",
-      "edit": "编辑",
-      "remove": "移除",
       "messageId": "消息ID",
       "messageName": "消息名称",
       "signalId": "信号ID",
@@ -1348,52 +1153,12 @@
       "createMessage": "创建消息",
       "editSignal": "编辑信号",
       "createSignal": "创建信号",
-      "messageIdLabel": "消息 ID",
-      "messageNameLabel": "消息名称",
-      "signalIdLabel": "信号 ID",
-      "signalNameLabel": "信号名称",
-      "prompt": "提示",
-      "confirmRemoveMessage": "确认移除该消息吗？",
-      "confirmRemoveSignal": "确认移除该信号吗？",
       "removeSuccess": "移除成功",
-      "messageExists": "该消息已存在，请修改id后重新保存",
-      "signalExists": "该信号已存在，请修改id后重新保存",
       "messageAlreadyExists": "该消息已存在，请修改id后重新保存",
       "signalAlreadyExists": "该信号已存在，请修改id后重新保存"
     },
-    "otherConfig": {
-      "elementDocumentation": "元素文档"
-    },
-
     "other": {
       "elementDocumentation": "元素文档"
-    },
-    "customUserTask": {
-      "approveType": "审批类型",
-      "approveTypeManual": "人工审批",
-      "approveTypeAutoApprove": "自动通过",
-      "approveTypeAutoReject": "自动拒绝",
-      "rejectHandler": "审批人拒绝时",
-      "rejectNode": "驳回节点",
-      "selectRejectNode": "请选择驳回节点",
-      "assignEmptyHandler": "审批人为空时",
-      "assignUser": "指定用户",
-      "assignStartUserHandler": "审批人与提交人为同一人时",
-      "operationButtons": "操作按钮",
-      "operationButton": "操作按钮",
-      "displayName": "显示名称",
-      "enable": "启用",
-      "fieldPermission": "字段权限",
-      "fieldName": "字段名称",
-      "readOnly": "只读",
-      "editable": "可编辑",
-      "hidden": "隐藏",
-      "needSign": "是否需要签名",
-      "yes": "是",
-      "no": "否",
-      "needOpinion": "审批意见",
-      "required": "必填",
-      "notRequired": "非必填"
     },
     "switch": {
       "on": "开启",
@@ -1403,62 +1168,16 @@
       "required": "必填",
       "notRequired": "非必填"
     },
-    "boundaryTimer": {
-      "timeoutHandler": "审批人超时未处理时",
-      "enableSwitch": "启用开关",
-      "open": "开启",
-      "close": "关闭",
-      "executeAction": "执行动作",
-      "timeoutSetting": "超时时间设置",
-      "overTime": "当超过",
-      "notProcessed": "未处理",
-      "maxRemindCount": "最大提醒次数"
-    },
     "receiveTask": {
-      "createNewMessage": "创建新消息",
-      "messageInstance": "消息实例",
       "none": "无",
       "messageExists": "该消息已存在, 请修改id后重新保存"
-    },
-    "serviceTask": {
-      "executeType": "执行类型",
-      "javaClass": "Java类",
-      "expression": "表达式",
-      "delegateExpression": "代理表达式",
-      "httpCall": "HTTP 调用",
-      "requestMethod": "请求方法",
-      "requestUrl": "请求地址",
-      "requestHeaders": "请求头",
-      "edit": "编辑",
-      "disallowRedirects": "禁止重定向",
-      "ignoreException": "忽略异常",
-      "saveResponse": "保存返回变量",
-      "transientVariable": "是否瞬间变量",
-      "responsePrefix": "返回变量前缀",
-      "saveAsJson": "保存为 JSON 变量",
-      "clickToEditHeaders": "点击右侧编辑按钮添加请求头",
-      "addHeader": "添加请求头",
-      "paramName": "参数名",
-      "paramValue": "参数值",
-      "paramValuePlaceholder": "请输入参数值(支持表达式${变量名})"
-    },
-    "scriptTask": {
-      "scriptFormat": "脚本格式",
-      "scriptType": "脚本类型",
-      "inlineScript": "内联脚本",
-      "externalResource": "外部资源",
-      "script": "脚本",
-      "resourceAddress": "资源地址",
-      "resultVariable": "结果变量"
     },
     "callActivity": {
       "calledSubProcess": "被调用子流程",
       "pleaseSelectSubProcess": "请选择子流程",
-      "selectSubProcess": "请选择子流程",
       "inheritVariables": "继承变量",
       "inheritBusinessKey": "继承业务键",
       "businessKeyExpression": "业务键表达式",
-      "enterBusinessKeyExpression": "请输入业务键表达式",
       "inputParameters": "输入参数",
       "outputParameters": "输出参数",
       "addParameter": "添加参数",
@@ -1466,12 +1185,7 @@
       "target": "目标",
       "sourceRequired": "源不能为空",
       "targetRequired": "目标不能为空",
-      "parameterConfig": "参数配置",
-      "edit": "编辑",
-      "remove": "移除",
-      "prompt": "提示",
-      "confirmDelete": "是否确认删除？",
-      "loadSubProcessListFailed": "获取子流程列表失败"
+      "parameterConfig": "参数配置"
     },
     "httpHeaderEditor": {
       "title": "编辑请求头",
@@ -1491,7 +1205,6 @@
       "pleaseInputCycle": "请输入循环表达式",
       "selectDateTime": "选择日期时间",
       "formatDescription": "格式说明",
-      "close": "关闭",
       "currentSelection": "当前选择",
       "timeConfig": "时间配置",
       "year": "年",
@@ -1525,76 +1238,6 @@
       "isoTimeFormat": "支持ISO 8601格式的时间（如2024-12-12T12:12:12）",
       "durationFormatHelp": "时间格式依然为ISO 8601格式，一年两个月三天四小时五分六秒内，可以写成P1Y2M3DT4H5M6S。P是开始标记，T是时间和日期分割标记，没有日期只有时间T是不能省去的，比如1小时执行一次应写成PT1H"
     },
-    "timeEvent": {
-      "type": "类型",
-      "condition": "条件",
-      "time": "时间",
-      "duration": "持续",
-      "cycle": "循环",
-      "selectTime": "选择时间",
-      "enterTime": "请输入时间",
-      "enterDuration": "请输入持续时间",
-      "enterCycleExpression": "请输入循环表达式",
-      "selectDateTime": "选择日期时间",
-      "formatDescription": "格式说明",
-      "close": "关闭",
-      "currentSelection": "当前选择",
-      "timeConfig": "时间配置",
-      "year": "年",
-      "month": "月",
-      "day": "日",
-      "hour": "时",
-      "minute": "分",
-      "second": "秒",
-      "custom": "自定义",
-      "repeatCount": "循环次数",
-      "startTime": "开始时间",
-      "selectStartTime": "选择开始时间",
-      "intervalDuration": "间隔时长",
-      "cronExpression": "CRON表达式",
-      "isoFormat": "标准格式",
-      "isoFormatExample": "如R1/2025-05-21T21:59:54/P3DT30M30S",
-      "durationFormat": "如P3DT30M30S",
-      "cronHelp": "支持CRON表达式（如 0/30 * * * ?）或ISO 8601周期（如R3/PT10M）",
-      "iso8601Help": "ISO 8601格式，如PT1H",
-      "selectSpecificTime": "选择具体时间",
-      "beforeWaitHelp": "指定定时器之前要等待多长时间。S表示秒，M表示分，D表示天；P表示时间段，T表示精确到时间的时间段",
-      "durationFormatHelp": "时间格式依然为ISO 8601格式，一年两个月三天四小时五分六秒内，可以写成P1Y2M3DT4H5M6S。P是开始标记，T是时间和日期分割标记，没有日期只有时间T是不能省去的，比如1小时执行一次应写成PT1H",
-      "isoTimeFormat": "支持ISO 8601格式的时间（如2024-12-12T12:12:12）",
-      "formatError": "格式错误"
-    },
-    "designer": {
-      "openFile": "打开文件",
-      "downloadFile": "下载文件",
-      "downloadXml": "下载为XML文件",
-      "downloadSvg": "下载为SVG文件",
-      "downloadBpmn": "下载为BPMN文件",
-      "preview": "预览",
-      "browse": "浏览",
-      "previewXml": "预览XML",
-      "previewJson": "预览JSON",
-      "simulation": "模拟",
-      "exitSimulation": "退出模拟",
-      "enterSimulation": "开启模拟",
-      "alignLeft": "向左对齐",
-      "alignRight": "向右对齐",
-      "alignTop": "向上对齐",
-      "alignBottom": "向下对齐",
-      "alignCenterHorizontal": "水平居中",
-      "alignCenterVertical": "垂直居中",
-      "zoomOut": "缩小视图",
-      "zoomIn": "放大视图",
-      "resetView": "重置视图并居中",
-      "undo": "撤销",
-      "redo": "恢复",
-      "redraw": "重新绘制",
-      "warning": "警告",
-      "confirmAlignDeformation": "自动对齐可能造成图形变形，是否继续？",
-      "ok": "确定",
-      "cancel": "取消",
-      "shiftSelectMultiple": "请按住 Shift 键选择多个元素对齐"
-    },
-
     "toolbar": {
       "openFile": "打开文件",
       "downloadFile": "下载文件",
@@ -1625,42 +1268,19 @@
       "selectMultipleForAlign": "请按住 Shift 键选择多个元素对齐"
     },
     "viewer": {
-      "approvalRecord": "审批记录",
       "approvalRecords": "审批记录",
-      "seqNo": "序号",
       "approver": "审批人",
       "initiator": "发起人",
       "department": "部门",
-      "dept": "部门",
       "startTime": "开始时间",
       "endTime": "结束时间",
       "approvalStatus": "审批状态",
-      "approvalOpinion": "审批建议",
       "approvalComment": "审批建议",
-      "duration": "耗时",
-      "approvalInfo": "审批信息"
+      "duration": "耗时"
     },
     "validation": {
-      "pleaseSelectEventType": "请选择事件类型",
-      "pleaseSelectListenerType": "请选择监听器类型",
-      "pleaseEnterJavaClass": "请输入Java类",
-      "pleaseFillJavaClass": "请填写Java类",
-      "pleaseFillDelegateExpression": "请填写代理表达式",
-      "pleaseFillScriptFormat": "请填写脚本格式",
-      "pleaseSelectScriptType": "请选择脚本类型",
-      "pleaseFillScriptContent": "请填写脚本内容",
-      "pleaseFillResourceAddress": "请填写资源地址",
-      "pleaseEnterListenerId": "请输入监听器ID",
-      "pleaseSelectFieldType": "请选择字段类型",
-      "pleaseFillFieldValue": "请填写字段值",
-      "pleaseFillExpression": "请填写表达式",
-      "pleaseFillFieldName": "请填写字段名称",
       "pleaseEnterId": "请输入ID",
-      "pleaseEnterName": "请输入名称",
-      "pleaseEnterPropertyName": "请输入属性名",
-      "pleaseEnterPropertyValue": "请输入属性值",
-      "processIdCannotEmpty": "流程标识不能为空",
-      "processNameCannotEmpty": "流程名称不能为空"
+      "pleaseEnterName": "请输入名称"
     },
     "palette": {
       "testTask": "测试任务"

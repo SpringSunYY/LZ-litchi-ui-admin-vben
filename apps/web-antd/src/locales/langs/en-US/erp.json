@@ -1,11 +1,9 @@
 {
   "payment": {
     "payment": "payment",
-    "menu": "payment order",
     "list": "payment list",
     "docTitle": "finance: purchase payment, sale receipt",
     "field": {
-      "id": "id",
       "no": "payment no",
       "paymentTime": "payment time",
       "supplierIdName": "supplier",
@@ -30,16 +28,9 @@
       "returnTime": "return time"
     },
     "action": {
-      "query": "query payment",
-      "create": "create payment",
-      "export": "export payment",
-      "update": "update payment",
-      "delete": "delete payment",
-      "updateStatus": "approve payment",
       "batchDelete": "batch delete payment"
     },
     "message": {
-      "autoGenerate": "auto-generated",
       "autoSelectedSupplier": "supplier auto selected",
       "childFormValidateFailed": "child form validation failed",
       "pleaseSelectSupplier": "please select supplier",
@@ -50,16 +41,13 @@
       "addPurchaseReturn": "add purchase return",
       "seq": "seq",
       "totalPayment": "total payment",
-      "paidAmount": "paid amount",
       "currentPayment": "current payment",
       "total": "total:",
       "unpaidPrice": "unpaid amount",
       "unRefundPrice": "unrefund amount",
       "shouldPayPrice": "should pay amount",
       "shouldReturnPrice": "should return amount",
-      "refundStatus": "refund status",
       "refundedPrice": "refunded amount",
-      "paymentStatus": "payment status",
       "selectPurchaseIn": "select purchase in",
       "selectPurchaseReturn": "select purchase return",
       "purchaseInListTitle": "purchase in list (only show payable documents)",
@@ -67,9 +55,6 @@
       "unpaid": "unpaid",
       "partialPayment": "partial payment",
       "paid": "paid",
-      "unrefunded": "unrefunded",
-      "partialRefund": "partial refund",
-      "refunded": "refunded",
       "pleaseSelectPurchaseIn": "please select purchase in to add",
       "pleaseSelectPurchaseReturn": "please select purchase return to add",
       "confirmAudit": "are you sure to {0} this payment?",
@@ -81,11 +66,9 @@
   },
   "receipt": {
     "receipt": "receipt",
-    "menu": "receipt order",
     "list": "receipt list",
     "docTitle": "finance: purchase payment, sale receipt",
     "field": {
-      "id": "id",
       "no": "receipt no",
       "receiptTime": "receipt time",
       "customerIdName": "customer",
@@ -105,19 +88,14 @@
       "saleOutNo": "out no",
       "saleReturnNo": "return no",
       "outTime": "out time",
-      "returnTime": "return time"
+      "returnTime": "return time",
+      "receiptStatus": "receipt status",
+      "refundStatus": "refund status"
     },
     "action": {
-      "query": "query receipt",
-      "create": "create receipt",
-      "export": "export receipt",
-      "update": "update receipt",
-      "delete": "delete receipt",
-      "updateStatus": "approve receipt",
       "batchDelete": "batch delete receipt"
     },
     "message": {
-      "autoGenerate": "auto-generated",
       "autoSelectedCustomer": "customer auto selected",
       "childFormValidateFailed": "child form validation failed",
       "pleaseSelectCustomer": "please select customer",
@@ -128,15 +106,12 @@
       "addSaleReturn": "add sale return",
       "seq": "seq",
       "totalReceipt": "total receipt",
-      "receiptedAmount": "receipted amount",
       "currentReceipt": "current receipt",
       "total": "total:",
       "unreceiptPrice": "unreceipt amount",
       "unRefundPrice": "unrefund amount",
       "shouldReceivePrice": "should receive amount",
       "shouldReturnPrice": "should return amount",
-      "receiptStatus": "receipt status",
-      "refundStatus": "refund status",
       "refundedPrice": "refunded amount",
       "selectSaleOut": "select sale out",
       "selectSaleReturn": "select sale return",
@@ -159,11 +134,9 @@
   },
   "account": {
     "account": "account",
-    "menu": "account order",
     "list": "account list",
     "docTitle": "finance: purchase payment, sale receipt",
     "field": {
-      "id": "id",
       "name": "name",
       "no": "code",
       "remark": "remark",
@@ -172,23 +145,14 @@
       "defaultStatus": "default",
       "createTime": "create time"
     },
-    "action": {
-      "query": "query account",
-      "create": "create account",
-      "export": "export account",
-      "update": "update account",
-      "delete": "delete account"
-    },
     "message": {
       "confirmSetDefault": "are you sure to {0} \"{1}\" as default?",
       "setDefaultSuccess": "{0} default succeeded",
       "set": "set",
-      "cancel": "cancel",
       "cancelDefault": "cancel default"
     }
   },
   "home": {
-    "home": "erp home",
     "docTitle": "erp manual (feature setup)",
     "field": {
       "saleToday": "today sale",
@@ -206,11 +170,9 @@
   },
   "product": {
     "product": "product info",
-    "menu": "product info",
     "list": "product info list",
     "docTitle": "product: product info, category, unit",
     "field": {
-      "id": "id",
       "name": "name",
       "barCode": "bar code",
       "categoryIdName": "category",
@@ -224,21 +186,13 @@
       "status": "status",
       "remark": "remark",
       "createTime": "create time"
-    },
-    "action": {
-      "query": "query product",
-      "create": "create product",
-      "export": "export product",
-      "update": "update product",
-      "delete": "delete product"
     }
   },
   "category": {
     "category": "product category",
-    "menu": "product category",
     "list": "product category list",
+    "docTitle": "product: product info, category, unit",
     "field": {
-      "id": "id",
       "parentIdName": "parent category",
       "name": "category name",
       "code": "category code",
@@ -246,42 +200,26 @@
       "status": "category status",
       "createTime": "create time"
     },
-    "action": {
-      "query": "query category",
-      "create": "create category",
-      "export": "export category",
-      "update": "update category",
-      "delete": "delete category"
-    },
     "message": {
       "topLevelCategory": "top level category"
     }
   },
   "unit": {
     "unit": "product unit",
-    "menu": "product unit",
     "list": "product unit list",
+    "docTitle": "product: product info, category, unit",
     "field": {
       "id": "unit id",
       "name": "unit name",
       "status": "unit status",
       "createTime": "create time"
-    },
-    "action": {
-      "query": "query unit",
-      "create": "create unit",
-      "export": "export unit",
-      "update": "update unit",
-      "delete": "delete unit"
     }
   },
   "purchaseIn": {
     "purchaseIn": "purchase in",
-    "menu": "purchase in",
     "list": "purchase in list",
     "docTitle": "purchase: purchase order, in, return",
     "field": {
-      "id": "id",
       "no": "in no",
       "inTime": "in time",
       "orderNo": "related order",
@@ -320,15 +258,6 @@
       "amountTotal": "amount total",
       "taxAmountTotal": "tax amount total"
     },
-    "action": {
-      "query": "query purchase in",
-      "create": "create purchase in",
-      "export": "export purchase in",
-      "update": "update purchase in",
-      "delete": "delete purchase in",
-      "updateStatus": "approve purchase in",
-      "batchDelete": "batch delete purchase in"
-    },
     "message": {
       "autoGenerate": "auto-generated",
       "childFormValidateFailed": "child form validation failed",
@@ -349,10 +278,8 @@
       "auditSuccess": "{0} succeeded",
       "deleteSelectedData": "are you sure to delete selected data?",
       "selectPurchaseOrder": "please select a purchase order",
-      "selectReturnOrder": "please select a purchase return order",
       "selectPurchaseOrderTitle": "select related order",
       "purchaseOrderListTitle": "purchase order list (only show inable orders)",
-      "returnOrderListTitle": "purchase return order list (only show inable orders)",
       "unpaid": "unpaid",
       "partialPayment": "partial payment",
       "paid": "paid"
@@ -360,11 +287,9 @@
   },
   "purchaseReturn": {
     "purchaseReturn": "purchase return",
-    "menu": "purchase return",
     "list": "purchase return list",
     "docTitle": "purchase: purchase order, in, return",
     "field": {
-      "id": "id",
       "no": "return no",
       "returnTime": "return time",
       "orderNo": "related order",
@@ -404,19 +329,9 @@
       "amountTotal": "amount total",
       "taxAmountTotal": "tax amount total"
     },
-    "action": {
-      "query": "query purchase return",
-      "create": "create purchase return",
-      "export": "export purchase return",
-      "update": "update purchase return",
-      "delete": "delete purchase return",
-      "updateStatus": "approve purchase return",
-      "batchDelete": "batch delete purchase return"
-    },
     "message": {
       "autoGenerate": "auto-generated",
       "childFormValidateFailed": "child form validation failed",
-      "pleaseSelectOrder": "please select related order",
       "pleaseSelectWarehouse": "please select warehouse",
       "pleaseSelectProduct": "please select product",
       "warehouseRequired": "row {0}: warehouse cannot be empty",
@@ -433,9 +348,7 @@
       "auditSuccess": "{0} succeeded",
       "deleteSelectedData": "are you sure to delete selected data?",
       "selectPurchaseOrder": "please select a purchase order",
-      "selectReturnOrder": "please select a purchase return order",
       "selectPurchaseOrderTitle": "select related order",
-      "purchaseOrderListTitle": "purchase order list (only show returnable orders)",
       "returnOrderListTitle": "purchase return order list (only show inable orders)",
       "unrefunded": "unrefunded",
       "partialRefund": "partial refund",
@@ -444,11 +357,9 @@
   },
   "supplier": {
     "supplier": "supplier",
-    "menu": "supplier info",
     "list": "supplier list",
     "docTitle": "purchase: purchase order, in, return",
     "field": {
-      "id": "id",
       "name": "supplier name",
       "contact": "contact",
       "mobile": "mobile",
@@ -462,24 +373,14 @@
       "bankName": "bank name",
       "bankAccount": "bank account",
       "bankAddress": "bank address",
-      "remark": "remark",
-      "createTime": "create time"
-    },
-    "action": {
-      "query": "query supplier",
-      "create": "create supplier",
-      "export": "export supplier",
-      "update": "update supplier",
-      "delete": "delete supplier"
+      "remark": "remark"
     }
   },
   "purchaseOrder": {
     "purchaseOrder": "purchase order",
-    "menu": "purchase order",
     "list": "purchase order list",
     "docTitle": "purchase: purchase order, in, return",
     "field": {
-      "id": "id",
       "no": "order no",
       "orderTime": "order time",
       "supplierIdName": "supplier",
@@ -511,17 +412,7 @@
       "returnStatus": "return status",
       "auditStatus": "audit status"
     },
-    "action": {
-      "query": "query purchase order",
-      "create": "create purchase order",
-      "export": "export purchase order",
-      "update": "update purchase order",
-      "delete": "delete purchase order",
-      "updateStatus": "approve purchase order",
-      "batchDelete": "batch delete purchase order"
-    },
     "message": {
-      "autoGenerate": "auto-generated",
       "childFormValidateFailed": "child form validation failed",
       "pleaseSelectProduct": "please select product",
       "productRequired": "row {0}: product cannot be empty",
@@ -543,11 +434,9 @@
   },
   "customer": {
     "customer": "customer",
-    "menu": "customer info",
     "list": "customer list",
     "docTitle": "sale: sale order, out, return",
     "field": {
-      "id": "id",
       "name": "customer name",
       "contact": "contact",
       "mobile": "mobile",
@@ -563,22 +452,13 @@
       "bankAddress": "bank address",
       "remark": "remark",
       "createTime": "create time"
-    },
-    "action": {
-      "query": "query customer",
-      "create": "create customer",
-      "export": "export customer",
-      "update": "update customer",
-      "delete": "delete customer"
     }
   },
   "saleOrder": {
     "saleOrder": "sale order",
-    "menu": "sale order",
     "list": "sale order list",
     "docTitle": "sale: sale order, out, return",
     "field": {
-      "id": "id",
       "no": "order no",
       "orderTime": "order time",
       "customerIdName": "customer",
@@ -610,22 +490,14 @@
       "taxAmountTotal2": "tax amount total",
       "outStatus": "out status",
       "returnStatus": "return status",
-      "auditStatus": "audit status"
+      "auditStatus": "audit status",
+      "seq": "seq"
     },
     "action": {
-      "query": "query sale order",
-      "create": "create sale order",
-      "export": "export sale order",
-      "update": "update sale order",
-      "delete": "delete sale order",
-      "updateStatus": "approve sale order",
       "batchDelete": "batch delete sale order"
     },
     "message": {
-      "autoGenerate": "auto-generated",
-      "seq": "seq",
       "childFormValidateFailed": "child form validation failed",
-      "pleaseSelectProduct": "please select product",
       "productRequired": "row {0}: product cannot be empty",
       "countRequired": "row {0}: product count cannot be empty",
       "priceRequired": "row {0}: product price cannot be empty",
@@ -650,92 +522,11 @@
       "allReturn": "all return"
     }
   },
-  "saleOut": {
-    "saleOut": "sale out",
-    "menu": "sale out",
-    "list": "sale out list",
-    "docTitle": "sale: sale order, out, return",
-    "field": {
-      "id": "id",
-      "no": "out no",
-      "outTime": "out time",
-      "orderNo": "related order",
-      "customerIdName": "customer",
-      "saleUserIdName": "sale user",
-      "remark": "remark",
-      "fileUrl": "attachment",
-      "items": "out product list",
-      "discountPercent": "discount (%)",
-      "discountPrice": "receipt discount",
-      "discountedPrice": "discounted amount",
-      "otherPrice": "other fee",
-      "accountIdName": "account",
-      "totalPrice": "receivable amount",
-      "productIdName": "product name",
-      "productNames": "product info",
-      "warehouseIdName": "warehouse",
-      "stock": "stock",
-      "barCode": "bar code",
-      "unitName": "unit",
-      "originalCount": "original count",
-      "outCount": "out count",
-      "count": "count",
-      "productPrice": "product price",
-      "productAmount": "product amount",
-      "taxPercent": "tax (%)",
-      "taxPrice": "tax amount",
-      "totalAmount": "total amount",
-      "creatorName": "creator",
-      "totalCount": "total count",
-      "receiptPrice": "receipted amount",
-      "unReceiptPrice": "unreceipt amount",
-      "receiptStatus": "receipt status",
-      "auditStatus": "audit status"
-    },
-    "action": {
-      "query": "query sale out",
-      "create": "create sale out",
-      "export": "export sale out",
-      "update": "update sale out",
-      "delete": "delete sale out",
-      "updateStatus": "approve sale out",
-      "batchDelete": "batch delete sale out"
-    },
-    "message": {
-      "autoGenerate": "auto-generated",
-      "childFormValidateFailed": "child form validation failed",
-      "pleaseSelectOrder": "please select related order",
-      "pleaseSelectWarehouse": "please select warehouse",
-      "pleaseSelectProduct": "please select product",
-      "warehouseRequired": "row {0}: warehouse cannot be empty",
-      "countRequired": "row {0}: product count cannot be empty",
-      "confirmDeleteProduct": "are you sure to delete this product?",
-      "totalLabel": "total:",
-      "countLabel": "count:",
-      "amountLabel": "amount:",
-      "taxAmountLabel": "tax:",
-      "taxAmountTotalLabel": "tax total:",
-      "confirmAudit": "are you sure to {0} this order?",
-      "confirmAntiAudit": "are you sure to {0} {1}?",
-      "audit": "approve",
-      "antiAudit": "reject",
-      "auditSuccess": "{0} succeeded",
-      "deleteSelectedData": "are you sure to delete selected data?",
-      "selectSaleOrder": "select related order",
-      "selectSaleOrderTitle": "select related order",
-      "saleOrderListTitle": "sale order list (only show outable orders)",
-      "unreceipt": "unreceipt",
-      "partialReceipt": "partial receipt",
-      "receipted": "receipted"
-    }
-  },
   "saleReturn": {
     "saleReturn": "sale return",
-    "menu": "sale return",
     "list": "sale return list",
     "docTitle": "sale: sale order, out, return",
     "field": {
-      "id": "id",
       "no": "return no",
       "returnTime": "return time",
       "orderNo": "related order",
@@ -769,23 +560,14 @@
       "refundPrice": "refunded amount",
       "unRefundPrice": "unrefunded amount",
       "refundStatus": "refund status",
-      "auditStatus": "audit status"
+      "auditStatus": "audit status",
+      "seq": "seq"
     },
     "action": {
-      "query": "query sale return",
-      "create": "create sale return",
-      "export": "export sale return",
-      "update": "update sale return",
-      "delete": "delete sale return",
-      "updateStatus": "approve sale return",
       "batchDelete": "batch delete sale return"
     },
     "message": {
-      "autoGenerate": "auto-generated",
       "childFormValidateFailed": "child form validation failed",
-      "pleaseSelectOrder": "please select related order",
-      "pleaseSelectWarehouse": "please select warehouse",
-      "pleaseSelectProduct": "please select product",
       "warehouseRequired": "row {0}: warehouse cannot be empty",
       "countRequired": "row {0}: product count cannot be empty",
       "confirmDeleteProduct": "are you sure to delete this product?",
@@ -810,11 +592,9 @@
   },
   "stockIn": {
     "stockIn": "stock in",
-    "menu": "stock in",
     "list": "stock in list",
     "docTitle": "stock: stock in, out",
     "field": {
-      "id": "id",
       "no": "in no",
       "inTime": "in time",
       "warehouseIdName": "warehouse",
@@ -822,7 +602,6 @@
       "remark": "remark",
       "fileUrl": "attachment",
       "items": "in product list",
-      "totalPrice": "in amount",
       "productIdName": "product",
       "productName": "product name",
       "productNames": "product info",
@@ -836,24 +615,12 @@
       "creatorName": "creator",
       "totalCount": "total count",
       "totalAmount": "total amount",
-      "status": "status",
-      "auditStatus": "audit status"
-    },
-    "action": {
-      "query": "query stock in",
-      "create": "create stock in",
-      "export": "export stock in",
-      "update": "update stock in",
-      "delete": "delete stock in",
-      "updateStatus": "approve stock in",
-      "batchDelete": "batch delete stock in"
+      "status": "status"
     },
     "message": {
       "autoGenerate": "auto-generated",
       "seq": "seq",
       "childFormValidateFailed": "child form validation failed",
-      "pleaseSelectWarehouse": "please select warehouse",
-      "pleaseSelectProduct": "please select product",
       "warehouseRequired": "row {0}: warehouse cannot be empty",
       "productRequired": "row {0}: product cannot be empty",
       "countRequired": "row {0}: product count cannot be empty",
@@ -863,96 +630,24 @@
       "countLabel": "count:",
       "amountLabel": "amount:",
       "confirmAudit": "are you sure to {0} this in?",
-      "confirmAntiAudit": "are you sure to {0} {1}?",
       "audit": "approve",
       "antiAudit": "reject",
       "auditSuccess": "{0} succeeded",
       "deleteSelectedData": "are you sure to delete selected data?",
-      "unapproved": "unapproved",
-      "partialApproval": "partial approval",
-      "allApproved": "all approved",
       "addStockInProduct": "add in product"
-    }
-  },
-  "stockOut": {
-    "stockOut": "stock out",
-    "menu": "stock out",
-    "list": "stock out list",
-    "docTitle": "stock: stock in, out",
-    "field": {
-      "id": "id",
-      "no": "out no",
-      "outTime": "out time",
-      "warehouseIdName": "warehouse",
-      "remark": "remark",
-      "fileUrl": "attachment",
-      "items": "out product list",
-      "totalPrice": "out amount",
-      "productIdName": "product",
-      "productName": "product name",
-      "productNames": "product info",
-      "warehouseName": "warehouse",
-      "stock": "stock",
-      "barCode": "bar code",
-      "unitName": "unit",
-      "count": "count",
-      "productPrice": "product price",
-      "productAmount": "product amount",
-      "creatorName": "creator",
-      "totalCount": "total count",
-      "totalAmount": "total amount",
-      "status": "status",
-      "customerIdName": "customer",
-      "auditStatus": "audit status"
-    },
-    "action": {
-      "query": "query stock out",
-      "create": "create stock out",
-      "export": "export stock out",
-      "update": "update stock out",
-      "delete": "delete stock out",
-      "updateStatus": "approve stock out",
-      "batchDelete": "batch delete stock out"
-    },
-    "message": {
-      "autoGenerate": "auto-generated",
-      "seq": "seq",
-      "childFormValidateFailed": "child form validation failed",
-      "pleaseSelectWarehouse": "please select warehouse",
-      "pleaseSelectProduct": "please select product",
-      "warehouseRequired": "row {0}: warehouse cannot be empty",
-      "productRequired": "row {0}: product cannot be empty",
-      "countRequired": "row {0}: product count cannot be empty",
-      "priceRequired": "row {0}: product price cannot be empty",
-      "confirmDeleteProduct": "are you sure to delete this product?",
-      "totalLabel": "total:",
-      "countLabel": "count:",
-      "amountLabel": "amount:",
-      "confirmAudit": "are you sure to {0} this out?",
-      "confirmAntiAudit": "are you sure to {0} {1}?",
-      "audit": "approve",
-      "antiAudit": "reject",
-      "auditSuccess": "{0} succeeded",
-      "deleteSelectedData": "are you sure to delete selected data?",
-      "unapproved": "unapproved",
-      "partialApproval": "partial approval",
-      "allApproved": "all approved",
-      "addStockOutProduct": "add out product"
     }
   },
   "stockCheck": {
     "stockCheck": "stock check",
-    "menu": "stock check",
     "list": "stock check list",
     "docTitle": "stock: stock move, check",
     "field": {
-      "id": "id",
       "no": "check no",
       "checkTime": "check time",
       "warehouseIdName": "warehouse",
       "remark": "remark",
+      "fileUrl": "attachment",
       "items": "check product list",
-      "totalPrice": "check amount",
       "productIdName": "product",
       "productName": "product name",
       "productNames": "product info",
@@ -967,24 +662,12 @@
       "creatorName": "creator",
       "totalCount": "total count",
       "totalAmount": "total amount",
-      "status": "status",
-      "auditStatus": "audit status"
-    },
-    "action": {
-      "query": "query stock check",
-      "create": "create stock check",
-      "export": "export stock check",
-      "update": "update stock check",
-      "delete": "delete stock check",
-      "updateStatus": "approve stock check",
-      "batchDelete": "batch delete stock check"
+      "status": "status"
     },
     "message": {
       "autoGenerate": "auto-generated",
       "seq": "seq",
       "childFormValidateFailed": "child form validation failed",
-      "pleaseSelectWarehouse": "please select warehouse",
-      "pleaseSelectProduct": "please select product",
       "warehouseRequired": "row {0}: warehouse cannot be empty",
       "productRequired": "row {0}: product cannot be empty",
       "actualCountRequired": "row {0}: actual stock cannot be empty",
@@ -993,35 +676,28 @@
       "countLabel": "count:",
       "amountLabel": "amount:",
       "confirmAudit": "are you sure to {0} this check?",
-      "confirmAntiAudit": "are you sure to {0} {1}?",
       "audit": "approve",
       "antiAudit": "reject",
       "auditSuccess": "{0} succeeded",
       "deleteSelectedData": "are you sure to delete selected data?",
-      "unapproved": "unapproved",
-      "partialApproval": "partial approval",
-      "allApproved": "all approved",
       "addCheckProduct": "add check product"
     }
   },
   "stockMove": {
     "stockMove": "stock move",
-    "menu": "stock move",
     "list": "stock move list",
     "docTitle": "stock: stock move, check",
     "field": {
-      "id": "id",
       "no": "move no",
       "moveTime": "move time",
       "remark": "remark",
+      "fileUrl": "attachment",
       "items": "move product list",
-      "totalPrice": "move amount",
       "productIdName": "product",
       "productName": "product name",
       "productNames": "product info",
       "fromWarehouseIdName": "from warehouse",
       "toWarehouseIdName": "to warehouse",
-      "warehouseName": "warehouse",
       "stock": "stock",
       "barCode": "bar code",
       "unitName": "unit",
@@ -1031,24 +707,12 @@
       "creatorName": "creator",
       "totalCount": "total count",
       "totalAmount": "total amount",
-      "status": "status",
-      "auditStatus": "audit status"
-    },
-    "action": {
-      "query": "query stock move",
-      "create": "create stock move",
-      "export": "export stock move",
-      "update": "update stock move",
-      "delete": "delete stock move",
-      "updateStatus": "approve stock move",
-      "batchDelete": "batch delete stock move"
+      "status": "status"
     },
     "message": {
       "autoGenerate": "auto-generated",
       "seq": "seq",
       "childFormValidateFailed": "child form validation failed",
-      "pleaseSelectWarehouse": "please select warehouse",
-      "pleaseSelectProduct": "please select product",
       "fromWarehouseRequired": "row {0}: from warehouse cannot be empty",
       "toWarehouseRequired": "row {0}: to warehouse cannot be empty",
       "productRequired": "row {0}: product cannot be empty",
@@ -1058,27 +722,20 @@
       "countLabel": "count:",
       "amountLabel": "amount:",
       "confirmAudit": "are you sure to {0} this move?",
-      "confirmAntiAudit": "are you sure to {0} {1}?",
       "audit": "approve",
       "antiAudit": "reject",
       "auditSuccess": "{0} succeeded",
       "deleteSelectedData": "are you sure to delete selected data?",
-      "unapproved": "unapproved",
-      "partialApproval": "partial approval",
-      "allApproved": "all approved",
       "addMoveProduct": "add move product"
     }
   },
   "warehouse": {
     "warehouse": "warehouse",
-    "menu": "warehouse info",
     "list": "warehouse list",
     "docTitle": "stock: product stock, stock record",
     "field": {
-      "id": "id",
       "name": "name",
       "address": "address",
-      "code": "code",
       "remark": "remark",
       "sort": "sort order",
       "status": "status",
@@ -1090,59 +747,36 @@
       "principal": "principal",
       "createTime": "create time"
     },
-    "action": {
-      "query": "query warehouse",
-      "create": "create warehouse",
-      "export": "export warehouse",
-      "update": "update warehouse",
-      "delete": "delete warehouse"
-    },
     "message": {
       "confirmSetDefault": "are you sure to {0} \"{1}\" as default?",
       "setDefaultSuccess": "{0} default succeeded",
       "set": "set",
-      "cancel": "cancel",
-      "cancelDefault": "cancel default"
+      "cancel": "cancel"
     }
   },
   "stock": {
     "stock": "product stock",
-    "menu": "product stock",
     "list": "product stock list",
     "docTitle": "stock: product stock, stock record",
     "field": {
-      "id": "id",
       "productIdName": "product",
       "productName": "product name",
       "categoryName": "category",
       "warehouseIdName": "warehouse",
       "warehouseName": "warehouse",
-      "barCode": "bar code",
       "unitName": "unit",
-      "stockCount": "stock count",
-      "purchasePrice": "purchase price",
-      "retailPrice": "retail price",
-      "amount": "stock amount",
-      "lockCount": "lock count"
-    },
-    "action": {
-      "query": "query product stock",
-      "export": "export product stock"
+      "stockCount": "stock count"
     }
   },
   "stockRecord": {
     "stockRecord": "stock record",
-    "menu": "stock record",
     "list": "stock record list",
     "docTitle": "stock: product stock, stock record",
     "field": {
-      "id": "id",
       "bizNo": "business no",
       "bizType": "type",
       "bizTime": "in/out date",
       "count": "in/out count",
-      "inCount": "in count",
-      "outCount": "out count",
       "stockCount": "stock count",
       "productIdName": "product",
       "productName": "product name",
@@ -1150,19 +784,129 @@
       "unitName": "unit",
       "warehouseIdName": "warehouse",
       "warehouseName": "warehouse",
-      "barCode": "bar code",
-      "remark": "remark",
       "creatorName": "operator",
       "createTime": "create time"
+    }
+  },
+  "stockOut": {
+    "stockOut": "stock out",
+    "list": "stock out list",
+    "docTitle": "stock: stock in, out",
+    "field": {
+      "no": "out no",
+      "outTime": "out time",
+      "customerIdName": "customer",
+      "remark": "remark",
+      "fileUrl": "attachment",
+      "items": "out product list",
+      "productIdName": "product",
+      "productName": "product name",
+      "productNames": "product info",
+      "warehouseIdName": "warehouse",
+      "warehouseName": "warehouse",
+      "stock": "stock",
+      "barCode": "bar code",
+      "unitName": "unit",
+      "count": "count",
+      "productPrice": "product price",
+      "productAmount": "product amount",
+      "creatorName": "creator",
+      "status": "status",
+      "totalCount": "total count",
+      "totalAmount": "total amount"
     },
     "action": {
-      "query": "query stock record",
-      "export": "export stock record"
+      "batchDelete": "batch delete stock out"
     },
     "message": {
-      "in": "in",
-      "out": "out",
-      "adjustment": "adjustment"
+      "autoGenerate": "auto-generated",
+      "seq": "seq",
+      "childFormValidateFailed": "child form validation failed",
+      "warehouseRequired": "row {0}: warehouse cannot be empty",
+      "productRequired": "row {0}: product cannot be empty",
+      "countRequired": "row {0}: product count cannot be empty",
+      "priceRequired": "row {0}: product price cannot be empty",
+      "confirmDeleteProduct": "are you sure to delete this product?",
+      "totalLabel": "total:",
+      "countLabel": "count:",
+      "amountLabel": "amount:",
+      "confirmAudit": "are you sure to {0} this out?",
+      "audit": "approve",
+      "antiAudit": "reject",
+      "auditSuccess": "{0} succeeded",
+      "deleteSelectedData": "are you sure to delete selected data?",
+      "addStockOutProduct": "add out product"
+    }
+  },
+  "saleOut": {
+    "saleOut": "sale out",
+    "list": "sale out list",
+    "docTitle": "sale: sale order, out, return",
+    "field": {
+      "no": "out no",
+      "orderNo": "related order",
+      "outTime": "out time",
+      "customerIdName": "customer",
+      "saleUserIdName": "sale user",
+      "remark": "remark",
+      "fileUrl": "attachment",
+      "items": "out product list",
+      "discountPercent": "discount (%)",
+      "discountPrice": "payment discount",
+      "discountedPrice": "discounted amount",
+      "otherPrice": "other fee",
+      "accountIdName": "account",
+      "totalPrice": "receivable amount",
+      "productIdName": "product name",
+      "productNames": "product info",
+      "stock": "stock",
+      "barCode": "bar code",
+      "unitName": "unit",
+      "originalCount": "original count",
+      "outCount": "out count",
+      "count": "count",
+      "productPrice": "product price",
+      "productAmount": "product amount",
+      "taxPercent": "tax (%)",
+      "taxPrice": "tax amount",
+      "totalAmount": "total amount",
+      "creatorName": "creator",
+      "totalCount": "total count",
+      "receiptPrice": "receipted amount",
+      "receiptStatus": "receipt status",
+      "unReceiptPrice": "unreceipt amount",
+      "auditStatus": "audit status",
+      "seq": "seq",
+      "warehouseIdName": "warehouse"
+    },
+    "action": {
+      "batchDelete": "batch delete sale out"
+    },
+    "message": {
+      "autoGenerate": "auto-generated",
+      "childFormValidateFailed": "child form validation failed",
+      "selectSaleOrder": "please select a sale order",
+      "saleOrderListTitle": "select related order",
+      "selectSaleOrderTitle": "sale order list (only show outable orders)",
+      "warehouseRequired": "row {0}: warehouse cannot be empty",
+      "productRequired": "row {0}: product cannot be empty",
+      "countRequired": "row {0}: product count cannot be empty",
+      "priceRequired": "row {0}: product price cannot be empty",
+      "confirmDeleteProduct": "are you sure to delete this product?",
+      "totalLabel": "total:",
+      "countLabel": "count:",
+      "amountLabel": "amount:",
+      "taxAmountLabel": "tax:",
+      "taxAmountTotalLabel": "tax total:",
+      "confirmAudit": "are you sure to {0} this out?",
+      "confirmAntiAudit": "are you sure to {0} {1}?",
+      "audit": "approve",
+      "antiAudit": "reject",
+      "auditSuccess": "{0} succeeded",
+      "deleteSelectedData": "are you sure to delete selected data?",
+      "partialReceipt": "partial receipt",
+      "receipted": "receipted",
+      "unreceipt": "unreceipt"
     }
   }
 }

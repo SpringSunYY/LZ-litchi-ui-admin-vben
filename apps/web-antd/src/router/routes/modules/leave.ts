@@ -29,7 +29,7 @@ const routes: RouteRecordRaw[] = [
         component: () => import('#/views/bpm/oa/leave/create.vue'),
         meta: {
           title: '创建请假',
-          i18n: $t('ui.actionTitle.create', [$t('bpm.oa.leave.leave')]),
+          i18n: 'bpm.oa.leave.create.menu',
           activePath: '/bpm/oa/leave',
         },
       },
@@ -39,7 +39,7 @@ const routes: RouteRecordRaw[] = [
         component: () => import('#/views/bpm/oa/leave/detail.vue'),
         meta: {
           title: '请假详情',
-          i18n: 'bpm.oa.leave.message.detail',
+          i18n: 'bpm.oa.leave.message.detail.menu',
           activePath: '/bpm/oa/leave',
         },
       },

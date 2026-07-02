@@ -11,4 +11,5 @@ export default defineBuildConfig({
     'src/cache/index',
     'src/global-state',
   ],
+  externals: ['@vben/locales'],
 });

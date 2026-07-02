@@ -21,7 +21,7 @@
   "tenantContactMobileTip": "Please enter tenant contact mobile",
   "tenantContactName": "Tenant contact name",
   "tenantContactNameTip": "Please enter tenant contact name",
-  "tenantErrorTip":"tenant code error,not found tenant",
+  "tenantErrorTip": "tenant code error,not found tenant",
   "verifyRequiredTip": "Please complete the verification first",
   "rememberMe": "Remember Me",
   "createAnTenant": "create an tenant",
@@ -72,7 +72,6 @@
   "formNotReady": "Form is not ready",
   "invalidMobile": "Please enter a valid mobile number",
   "sso": {
-    "authorize": "Authorization",
     "thisAppRequests": "This third-party application requests the following permissions:",
     "accessYourInfo": "access your personal information",
     "modifyYourInfo": "modify your personal information",

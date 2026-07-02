@@ -4,7 +4,6 @@
     "selectRequired": "Please select {0}",
     "minLength": "{0} must be at least {1} characters",
     "maxLength": "{0} can be at most {1} characters",
-    "length": "{0} must be {1} characters long",
     "alreadyExists": "{0} `{1}` already exists",
     "startWith": "{0} must start with `{1}`",
     "invalidURL": "Please input a valid URL",
@@ -12,13 +11,11 @@
   },
   "actionTitle": {
     "copy": "Copy {0}",
-    "cancel": "Cancel {0}",
     "edit": "Modify {0}",
     "create": "Create {0}",
     "delete": "Delete {0}",
     "deleteBatch": "Delete Batch",
     "detail": "Detail {0}",
-    "view": "View {0}",
     "import": "Import {0}",
     "importTemplate": "Import Template {0}",
     "export": "Export",
@@ -26,8 +23,6 @@
     "clearCache": "Clear Cache {0}"
   },
   "actionName": {
-    "reset": "Reset",
-    "search": "Search",
     "searchDept": "Search department"
   },
   "actionMessage": {
@@ -35,7 +30,6 @@
     "deleteCascadeConfirm": "Are you sure to delete {0}?",
     "deleting": "Deleting {0} ...",
     "deleteSuccess": "{0} deleted successfully",
-    "deleteFailed": "{0} deleted failed",
     "operationSuccess": "Operation succeeded",
     "operationFailed": "Operation failed",
     "submitting": "Submitting {0} ...",
@@ -43,9 +37,6 @@
     "downloading": "Downloading ...",
     "exporting": "Exporting ...",
     "importing": "Importing {0} ...",
-    "importSuccess": "Import succeeded",
-    "importFail": "Import failed",
-    "downloadTemplateFail": "Download template failed",
     "updating": "Updating {0}...",
     "cascadeDelete": "Cascade Delete",
     "cascadeDeleteTip": "When enabled, all child data will be deleted together",
@@ -55,19 +46,21 @@
     "copySuccess": "Copied successfully",
     "grant": "Grant Menu Success",
     "updateConfirm": "Confirm Update?",
-    "selectRequired": "Please select {0}"
+    "selectRequired": "Please select {0}",
+    "processing": "Processing...",
+    "updateSuccess": "{0} updated successfully"
   },
   "placeholder": {
     "input": "Please enter {0}",
     "select": "Please select {0}",
     "date": "Please select {0}",
-    "autoGenerate": "Auto generated on save"
+    "autoGenerate": "Auto generated on save",
+    "accountCount": "{0} accounts"
   },
   "validate": {
     "email": "Please enter a valid email address"
   },
   "color": {
-    "none": "None",
     "primary": "Primary",
     "success": "Success",
     "default": "Default",
@@ -120,8 +113,8 @@
   "widgets": {
     "document": "Document",
     "profile": "Profile",
+    "profile.menu": "Profile",
     "qa": "Q&A",
-    "setting": "Settings",
     "logoutTip": "Do you want to logout?",
     "viewAll": "View All Messages",
     "notifications": "Notifications",
@@ -142,10 +135,8 @@
     "lockScreen": {
       "title": "Lock Screen",
       "screenButton": "Locking",
-      "password": "Password",
       "placeholder": "Please enter password",
       "unlock": "Click to unlock",
-      "errorPasswordTip": "Password error, please re-enter",
       "backToLogin": "Back to login",
       "entry": "Enter the system"
     }
@@ -160,7 +151,8 @@
     "maxSizeMultiple": "Only upload files up to {0}MB!",
     "minSizeMultiple": "Only upload files no smaller than {0}MB!",
     "maxNumber": "Only upload up to {0} files",
-    "uploadSuccess": "Upload successfully"
+    "uploadSuccess": "Upload successfully",
+    "fileUpload": "File Upload"
   },
   "cropper": {
     "selectImage": "Select Image",
@@ -192,28 +184,23 @@
     "copyJson": "Copy JSON",
     "copySuccess": "Copied"
   },
-  "select": {
-    "dictPlaceholder": "Please select"
-  },
   "selectToString": {
     "placeholder": "Please select"
   },
-  "dateRange": {
-    "separator": "to",
-    "start": "Start Date",
-    "end": "End Date"
-  },
   "treeRoot": "Top Level {0}",
-  "validation": {
-    "required": "{0} cannot be empty"
-  },
   "common": {
     "yes": "Yes",
     "no": "No",
-    "table": "Table",
     "noData": "No Data",
     "selectFile": "Select File",
-    "downloadTemplate": "Download Template"
+    "downloadTemplate": "Download Template",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "reset": "Reset",
+    "submit": "Submit",
+    "collapse": "Collapse",
+    "expand": "Expand",
+    "prompt": "Prompt"
   },
   "menu": {
     "clearCache": "Clear Cache"
@@ -277,37 +264,9 @@
       "showBtnText": "Show Button Text",
       "dictType": "Dict Type",
       "valueType": "Dict Value Type",
-      "valueTypeInt": "Number",
-      "valueTypeStr": "String",
-      "valueTypeBool": "Boolean",
-      "selectType": "Selector Type",
-      "selectTypeSelect": "Dropdown",
-      "selectTypeRadio": "Radio",
-      "selectTypeCheckbox": "Checkbox",
-      "filterable": "Searchable",
-      "multiple": "Multiple",
       "clearable": "Clearable",
-      "collapseTags": "Collapse Tags",
-      "multipleLimit": "Multiple Limit (0 = unlimited)",
-      "autocomplete": "Autocomplete",
       "placeholder": "Placeholder",
-      "allowCreate": "Allow Create",
-      "noMatchText": "No Match Text",
-      "noDataText": "No Data Text",
-      "reserveKeyword": "Reserve Keyword",
-      "defaultFirstOption": "Default First Option",
-      "popperAppendToBody": "Popper Append To Body",
-      "automaticDropdown": "Automatic Dropdown",
       "url": "URL",
-      "method": "Request Method",
-      "methodGet": "GET",
-      "methodPost": "POST",
-      "data": "Request Data (JSON)",
-      "labelField": "Label Field",
-      "valueField": "Value Field",
-      "parseFunc": "Parse Function",
-      "remote": "Remote Loading",
-      "remoteField": "Remote Field",
       "level": "Selection Level",
       "levelInfo": "Restrict the selectable area depth",
       "areaLevelProvince": "Province",
@@ -339,36 +298,22 @@
     "register": "Register",
     "codeLogin": "Code Login",
     "qrcodeLogin": "Qr Code Login",
-    "forgetPassword": "Forget Password"
+    "forgetPassword": "Forget Password",
+    "codeSentTo": "Code sent to {0}",
+    "sendingCode": "Sending..."
   },
   "dashboard": {
-    "title": "Dashboard",
-    "analytics": "Analytics",
-    "workspace": "Workspace"
+    "title.menu": "Dashboard",
+    "analytics.menu": "Analytics",
+    "workspace.menu": "Workspace"
   },
   "action": {
-    "action": "Action",
-    "add": "Add",
-    "edit": "Edit",
-    "delete": "Delete",
-    "save": "Save",
-    "import": "Import",
-    "export": "Export",
-    "submit": "Submit",
-    "cancel": "Cancel",
-    "confirm": "Confirm",
-    "reset": "Reset",
-    "search": "Search",
-    "more": "More",
-    "view": "View"
+    "more": "More"
   },
   "tenant": {
-    "placeholder": "Please select tenant",
-    "success": "Switch tenant success"
+    "placeholder": "Please select tenant"
   },
   "oauth2": {
-    "client": "OAuth2 Client",
-    "token": "OAuth2 Token",
     "sso": "OAuth 2.0 (SSO Single Sign-On)"
   },
   "rangePicker": {
@@ -376,9 +321,6 @@
     "last7Days": "Last 7 Days",
     "last30Days": "Last 30 Days",
     "yesterday": "Yesterday",
-    "thisWeek": "This Week",
-    "thisMonth": "This Month",
-    "lastWeek": "Last Week",
     "lastMonth": "Last Month",
     "last3Months": "Last 3 Months",
     "lastYear": "Last Year",
@@ -399,7 +341,6 @@
     "lastDay": "Last day of month",
     "unspecified": "Unspecified",
     "lastWeek": "Last week of month",
-    "weekDay": "Weekday",
     "from": "Start, every ",
     "unitSecond": "sec",
     "unitMinute": "min",
@@ -456,7 +397,6 @@
   },
   "selectModal": {
     "userSelectModal": {
-      "title": "select user",
       "confirmText": "confirm",
       "cancelText": "cancel",
       "searchDept": "search department",
@@ -466,9 +406,7 @@
       "selected": "selected"
     },
     "deptSelectModal": {
-      "title": "select department",
-      "confirmText": "confirm",
-      "cancelText": "cancel"
+      "title": "select department"
     }
   }
 }

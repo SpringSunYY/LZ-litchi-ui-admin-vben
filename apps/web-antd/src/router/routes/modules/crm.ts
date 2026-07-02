@@ -17,7 +17,7 @@ const routes: RouteRecordRaw[] = [
         name: 'CrmClueDetail',
         meta: {
           title: '线索详情',
-          i18n: 'crm.clue.detail',
+          i18n: 'crm.clue.detail.menu',
           activeMenu: '/crm/clue',
           keepAlive: true,
         },
@@ -28,7 +28,7 @@ const routes: RouteRecordRaw[] = [
         name: 'CrmCustomerDetail',
         meta: {
           title: '客户详情',
-          i18n: 'crm.customer.detail',
+          i18n: 'crm.customer.detail.menu',
           activeMenu: '/crm/customer',
           keepAlive: true,
         },
@@ -39,7 +39,7 @@ const routes: RouteRecordRaw[] = [
         name: 'CrmBusinessDetail',
         meta: {
           title: '商机详情',
-          i18n: 'crm.business.detail',
+          i18n: 'crm.business.detail.menu',
           activeMenu: '/crm/business',
           keepAlive: true,
         },
@@ -50,7 +50,7 @@ const routes: RouteRecordRaw[] = [
         name: 'CrmContractDetail',
         meta: {
           title: '合同详情',
-          i18n: 'crm.contract.detail',
+          i18n: 'crm.contract.detail.menu',
           activeMenu: '/crm/contract',
           keepAlive: true,
         },
@@ -61,7 +61,7 @@ const routes: RouteRecordRaw[] = [
         name: 'CrmReceivablePlanDetail',
         meta: {
           title: '回款计划详情',
-          i18n: 'crm.receivablePlan.detail',
+          i18n: 'crm.receivablePlan.detail.menu',
           activeMenu: '/crm/receivable-plan',
           keepAlive: true,
         },
@@ -73,7 +73,7 @@ const routes: RouteRecordRaw[] = [
         name: 'CrmReceivableDetail',
         meta: {
           title: '回款详情',
-          i18n: 'crm.receivable.detail',
+          i18n: 'crm.receivable.detail.menu',
           activeMenu: '/crm/receivable',
           keepAlive: true,
         },
@@ -84,7 +84,7 @@ const routes: RouteRecordRaw[] = [
         name: 'CrmContactDetail',
         meta: {
           title: '联系人详情',
-          i18n: 'crm.contact.detail',
+          i18n: 'crm.contact.detail.menu',
           activeMenu: '/crm/contact',
           keepAlive: true,
         },
@@ -95,7 +95,7 @@ const routes: RouteRecordRaw[] = [
         name: 'CrmProductDetail',
         meta: {
           title: '产品详情',
-          i18n: 'crm.product.detail',
+          i18n: 'crm.product.detail.menu',
           activeMenu: '/crm/product',
           keepAlive: true,
         },

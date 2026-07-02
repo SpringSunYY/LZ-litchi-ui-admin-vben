@@ -16,6 +16,7 @@ import {
   updateKnowledgeDocumentStatus,
 } from '#/api/ai/knowledge/document';
 import { $t } from '#/locales';
+import { setPendingExtraTitle } from '#/router/state';
 import { DICT_TYPE, getDictLabel } from '#/utils';
 
 import { useGridColumns, useGridFormSchema } from './data';
@@ -40,10 +41,11 @@ function handleCreate() {
 }
 
 /** 编辑知识库文档 */
-function handleEdit(id: number) {
+function handleEdit(row: AiKnowledgeDocumentApi.KnowledgeDocument) {
+  setPendingExtraTitle(row?.name || row.id);
   router.push({
     name: 'AiKnowledgeDocumentUpdate',
-    query: { id, knowledgeId: route.query.knowledgeId },
+    query: { id: row.id, knowledgeId: route.query.knowledgeId },
   });
 }
 
@@ -63,10 +65,11 @@ async function handleDelete(row: AiKnowledgeDocumentApi.KnowledgeDocument) {
 }
 
 /** 跳转到知识库分段页面 */
-function handleSegment(id: number) {
+function handleSegment(row: AiKnowledgeDocumentApi.KnowledgeDocument) {
+  setPendingExtraTitle(row?.name || row.id);
   router.push({
     name: 'AiKnowledgeSegment',
-    query: { documentId: id },
+    query: { documentId: row.id },
   });
 }
 
@@ -166,14 +169,14 @@ onMounted(() => {
               type: 'link',
               icon: ACTION_ICON.EDIT,
               auth: ['ai:knowledge:update'],
-              onClick: handleEdit.bind(null, row.id),
+              onClick: handleEdit.bind(null, row),
             },
             {
               label: $t('ai.knowledge.segment.segment'),
               type: 'link',
               icon: ACTION_ICON.BOOK,
               auth: ['ai:knowledge:query'],
-              onClick: handleSegment.bind(null, row.id),
+              onClick: handleSegment.bind(null, row),
             },
             {
               label: $t('common.delete'),

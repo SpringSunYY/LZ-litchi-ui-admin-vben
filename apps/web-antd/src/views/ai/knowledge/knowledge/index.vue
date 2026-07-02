@@ -14,6 +14,7 @@ import {
   getKnowledgePage,
 } from '#/api/ai/knowledge/knowledge';
 import { $t } from '#/locales';
+import { setPendingExtraTitle } from '#/router/state';
 
 import { useGridColumns, useGridFormSchema } from './data';
 import Form from './modules/form.vue';
@@ -55,18 +56,20 @@ async function handleDelete(row: AiKnowledgeKnowledgeApi.Knowledge) {
 
 /** 跳转到知识库文档页面 */
 const router = useRouter();
-function handleDocument(id: number) {
+function handleDocument(row: AiKnowledgeKnowledgeApi.Knowledge) {
+  setPendingExtraTitle(row?.name || row.id);
   router.push({
     name: 'AiKnowledgeDocument',
-    query: { knowledgeId: id },
+    query: { knowledgeId: row.id },
   });
 }
 
 /** 跳转到文档召回测试页面 */
-function handleRetrieval(id: number) {
+function handleRetrieval(row: AiKnowledgeKnowledgeApi.Knowledge) {
+  setPendingExtraTitle(row?.name || row.id);
   router.push({
     name: 'AiKnowledgeRetrieval',
-    query: { id },
+    query: { id: row.id },
   });
 }
 
@@ -138,14 +141,14 @@ const [Grid, gridApi] = useVbenVxeGrid({
               type: 'link',
               icon: ACTION_ICON.BOOK,
               auth: ['ai:knowledge:query'],
-              onClick: handleDocument.bind(null, row.id),
+              onClick: handleDocument.bind(null, row),
             },
             {
               label: $t('ai.knowledge.message.retrievalTest'),
               type: 'link',
               icon: ACTION_ICON.SEARCH,
               auth: ['ai:knowledge:query'],
-              onClick: handleRetrieval.bind(null, row.id),
+              onClick: handleRetrieval.bind(null, row),
             },
             {
               label: $t('common.delete'),

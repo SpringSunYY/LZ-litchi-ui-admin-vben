@@ -4,7 +4,6 @@
     "selectRequired": "请选择{0}",
     "minLength": "{0}至少{1}个字符",
     "maxLength": "{0}最多{1}个字符",
-    "length": "{0}长度必须为{1}个字符",
     "alreadyExists": "{0} `{1}` 已存在",
     "startWith": "{0}必须以 {1} 开头",
     "invalidURL": "请输入有效的链接",
@@ -12,13 +11,11 @@
   },
   "actionTitle": {
     "copy": "复制{0}",
-    "cancel": "取消{0}",
     "edit": "修改{0}",
     "create": "新增{0}",
     "delete": "删除{0}",
     "deleteBatch": "批量删除",
     "detail": "详情{0}",
-    "view": "查看{0}",
     "import": "导入{0}",
     "importTemplate": "导入模板{0}",
     "export": "导出",
@@ -26,8 +23,6 @@
     "clearCache": "清除缓存 {0}"
   },
   "actionName": {
-    "reset": "重置",
-    "search": "搜索",
     "searchDept": "搜索部门"
   },
   "actionMessage": {
@@ -35,7 +30,6 @@
     "deleteCascadeConfirm": "确定删除 {0} 吗？",
     "deleting": "正在删除 {0} ...",
     "deleteSuccess": "{0} 删除成功",
-    "deleteFailed": "{0} 删除失败",
     "operationSuccess": "操作成功",
     "submitting": "正在提交 {0} ...",
     "submitSuccess": "{0} 提交成功",
@@ -43,9 +37,6 @@
     "downloading": "正在下载...",
     "exporting": "正在导出...",
     "importing": "正在导入 {0} ...",
-    "importSuccess": "导入成功",
-    "importFail": "导入失败",
-    "downloadTemplateFail": "下载模板失败",
     "updating": "正在更新 {0}...",
     "cascadeDelete": "级联删除",
     "cascadeDeleteTip": "开启后，将连同所有子数据一并删除",
@@ -55,19 +46,21 @@
     "copySuccess": "复制成功",
     "grant": "授予菜单权限成功",
     "updateConfirm": "您确定要更新吗？",
-    "selectRequired": "请选择{0}"
+    "selectRequired": "请选择{0}",
+    "processing": "处理中...",
+    "updateSuccess": "{0}更新成功"
   },
   "placeholder": {
     "input": "请输入{0}",
     "select": "请选择{0}",
     "date": "请选择{0}",
-    "autoGenerate": "保存时自动生成"
+    "autoGenerate": "保存时自动生成",
+    "accountCount": "账号数量{0}个"
   },
   "validate": {
     "email": "请输入正确的邮箱地址"
   },
   "color": {
-    "none": "无",
     "primary": "主要",
     "success": "成功",
     "default": "默认",
@@ -120,8 +113,8 @@
   "widgets": {
     "document": "文档",
     "profile": "个人中心",
+    "profile.menu": "个人中心",
     "qa": "问题 & 帮助",
-    "setting": "设置",
     "logoutTip": "是否退出登录？",
     "viewAll": "查看所有消息",
     "notifications": "通知",
@@ -142,10 +135,8 @@
     "lockScreen": {
       "title": "锁定屏幕",
       "screenButton": "锁定",
-      "password": "密码",
       "placeholder": "请输入锁屏密码",
       "unlock": "点击解锁",
-      "errorPasswordTip": "密码错误，请重新输入",
       "backToLogin": "返回登录",
       "entry": "进入系统"
     }
@@ -160,7 +151,8 @@
     "maxSizeMultiple": "只能上传不超过{0}MB的文件!",
     "minSizeMultiple": "只能上传不小于{0}MB的文件!",
     "maxNumber": "最多只能上传{0}个文件",
-    "uploadSuccess": "上传成功"
+    "uploadSuccess": "上传成功",
+    "fileUpload": "文件上传"
   },
   "cropper": {
     "selectImage": "选择图片",
@@ -192,28 +184,23 @@
     "copyJson": "复制JSON",
     "copySuccess": "复制成功"
   },
-  "select": {
-    "dictPlaceholder": "请选择"
-  },
   "selectToString": {
     "placeholder": "请选择"
   },
-  "dateRange": {
-    "separator": "至",
-    "start": "开始日期",
-    "end": "结束日期"
-  },
   "treeRoot": "顶级{0}",
-  "validation": {
-    "required": "{0}不能为空"
-  },
   "common": {
     "yes": "是",
     "no": "否",
-    "table": "表",
     "noData": "暂无数据",
     "selectFile": "选择文件",
-    "downloadTemplate": "下载模板"
+    "downloadTemplate": "下载模板",
+    "cancel": "取消",
+    "confirm": "确认",
+    "reset": "重置",
+    "submit": "提交",
+    "collapse": "收起",
+    "expand": "展开",
+    "prompt": "提示"
   },
   "menu": {
     "clearCache": "清除缓存"
@@ -277,37 +264,9 @@
       "showBtnText": "是否显示按钮文字",
       "dictType": "字典类型",
       "valueType": "字典值类型",
-      "valueTypeInt": "数字",
-      "valueTypeStr": "字符串",
-      "valueTypeBool": "布尔值",
-      "selectType": "选择器类型",
-      "selectTypeSelect": "下拉框",
-      "selectTypeRadio": "单选框",
-      "selectTypeCheckbox": "多选框",
-      "filterable": "是否可搜索",
-      "multiple": "是否多选",
       "clearable": "是否可以清空选项",
-      "collapseTags": "多选时是否将选中值按文字的形式展示",
-      "multipleLimit": "多选时用户最多可以选择的项目数，为 0 则不限制",
-      "autocomplete": "autocomplete 属性",
       "placeholder": "占位符",
-      "allowCreate": "是否允许用户创建新条目",
-      "noMatchText": "搜索条件无匹配时显示的文字",
-      "noDataText": "选项为空时显示的文字",
-      "reserveKeyword": "多选且可搜索时，是否在选中一个选项后保留当前的搜索关键词",
-      "defaultFirstOption": "在输入框按下回车，选择第一个匹配项",
-      "popperAppendToBody": "是否将弹出框插入至 body 元素",
-      "automaticDropdown": "对于不可搜索的 Select，是否在输入框获得焦点后自动弹出选项菜单",
       "url": "url 地址",
-      "method": "请求类型",
-      "methodGet": "GET",
-      "methodPost": "POST",
-      "data": "请求参数 JSON 格式",
-      "labelField": "label 属性",
-      "valueField": "value 属性",
-      "parseFunc": "选项解析函数",
-      "remote": "其中的选项是否从服务器远程加载",
-      "remoteField": "请求参数",
       "level": "选择层级",
       "levelInfo": "限制可选择的地区层级",
       "areaLevelProvince": "省",
@@ -339,36 +298,22 @@
     "register": "注册",
     "codeLogin": "验证码登录",
     "qrcodeLogin": "二维码登录",
-    "forgetPassword": "忘记密码"
+    "forgetPassword": "忘记密码",
+    "codeSentTo": "验证码已发送至 {0}",
+    "sendingCode": "发送中..."
   },
   "dashboard": {
-    "title": "概览",
-    "analytics": "分析页",
-    "workspace": "工作台"
+    "title.menu": "概况",
+    "analytics.menu": "分析页",
+    "workspace.menu": "工作台"
   },
   "action": {
-    "action": "操作",
-    "add": "新增",
-    "edit": "编辑",
-    "delete": "删除",
-    "save": "保存",
-    "import": "导入",
-    "export": "导出",
-    "submit": "提交",
-    "cancel": "取消",
-    "confirm": "确认",
-    "reset": "重置",
-    "search": "搜索",
-    "more": "更多",
-    "view": "查看"
+    "more": "更多"
   },
   "tenant": {
-    "placeholder": "请选择租户",
-    "success": "切换租户成功"
+    "placeholder": "请选择租户"
   },
   "oauth2": {
-    "client": "OAuth2 客户端",
-    "token": "OAuth2 令牌",
     "sso": "OAuth 2.0（SSO 单点登录）"
   },
   "rangePicker": {
@@ -376,9 +321,6 @@
     "last7Days": "最近 7 天",
     "last30Days": "最近 30 天",
     "yesterday": "昨天",
-    "thisWeek": "本周",
-    "thisMonth": "本月",
-    "lastWeek": "上周",
     "lastMonth": "上月",
     "last3Months": "近三月",
     "lastYear": "近一年",
@@ -399,7 +341,6 @@
     "lastDay": "本月最后一天",
     "unspecified": "不指定",
     "lastWeek": "本月最后一周",
-    "weekDay": "周",
     "from": "开始，每",
     "unitSecond": "秒",
     "unitMinute": "分钟",
@@ -456,7 +397,6 @@
   },
   "selectModal": {
     "userSelectModal": {
-      "title": "选择用户",
       "confirmText": "确定",
       "cancelText": "取消",
       "searchDept": "搜索部门",
@@ -466,9 +406,7 @@
       "selected": "已选"
     },
     "deptSelectModal": {
-      "title": "部门选择",
-      "confirmText": "确认",
-      "cancelText": "取消"
+      "title": "部门选择"
     }
   }
 }

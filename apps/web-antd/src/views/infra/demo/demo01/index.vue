@@ -168,19 +168,23 @@ const [Grid, gridApi] = useVbenVxeGrid({
     <FormModalDrawer @success="onRefresh" />
     <ImportModal @success="onRefresh" />
 
-    <Grid :table-title="$t('infra.demo01Contact')">
+    <Grid :table-title="$t('infra.demo01Contact.demo01Contact')">
       <template #toolbar-tools>
         <TableAction
           :actions="[
             {
-              label: $t('ui.actionTitle.create', [$t('infra.demo01Contact')]),
+              label: $t('ui.actionTitle.create', [
+                $t('infra.demo01Contact.demo01Contact'),
+              ]),
               type: 'primary',
               icon: ACTION_ICON.ADD,
               auth: ['infra:demo01-contact:create'],
               onClick: handleCreate,
             },
             {
-              label: $t('ui.actionTitle.export', [$t('infra.demo01Contact')]),
+              label: $t('ui.actionTitle.export', [
+                $t('infra.demo01Contact.demo01Contact'),
+              ]),
               type: 'primary',
               icon: ACTION_ICON.DOWNLOAD,
               auth: ['infra:demo01-contact:export'],
@@ -189,7 +193,7 @@ const [Grid, gridApi] = useVbenVxeGrid({
             },
             {
               label: $t('ui.actionTitle.deleteBatch', [
-                $t('infra.demo01Contact'),
+                $t('infra.demo01Contact.demo01Contact'),
               ]),
               type: 'primary',
               danger: true,
@@ -199,7 +203,9 @@ const [Grid, gridApi] = useVbenVxeGrid({
               onClick: handleDeleteBatch,
             },
             {
-              label: $t('ui.actionTitle.import', [$t('infra.demo01Contact')]),
+              label: $t('ui.actionTitle.import', [
+                $t('infra.demo01Contact.demo01Contact'),
+              ]),
               type: 'primary',
               icon: ACTION_ICON.UPLOAD,
               auth: ['infra:demo01-contact:import'],

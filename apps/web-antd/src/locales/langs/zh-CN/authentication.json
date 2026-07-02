@@ -72,7 +72,6 @@
   "formNotReady": "表单未准备好",
   "invalidMobile": "请输入有效的手机号码",
   "sso": {
-    "authorize": "授权确认",
     "thisAppRequests": "此第三方应用请求获得以下权限：",
     "accessYourInfo": "访问你的个人信息",
     "modifyYourInfo": "修改你的个人信息",

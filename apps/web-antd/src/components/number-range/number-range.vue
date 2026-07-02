@@ -115,7 +115,7 @@ defineExpose({
       @blur="handleMinBlur"
       @change="handleMinChange"
     />
-    <span class="text-gray-400">至</span>
+    <span class="text-gray-400">-</span>
     <InputNumber
       :value="maxValue"
       :min="min"

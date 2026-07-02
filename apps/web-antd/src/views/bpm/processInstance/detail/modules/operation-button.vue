@@ -14,7 +14,6 @@ import { IconifyIcon } from '@vben/icons';
 import { useUserStore } from '@vben/stores';
 import { isEmpty } from '@vben/utils';
 
-import FormCreate from '@form-create/ant-design-vue';
 import {
   Alert,
   Button,
@@ -376,6 +375,7 @@ async function initNextAssigneesFormField() {
 function selectNextAssigneesConfirm(id: string, userList: any[]) {
   approveReasonForm.nextAssignees[id] = userList?.map((item: any) => item.id);
 }
+
 /** 审批通过时，校验每个自选审批人的节点是否都已配置了审批人 */
 function validateNextAssignees() {
   if (Object.keys(nextAssigneesActivityNode.value).length === 0) {
@@ -610,6 +610,7 @@ function getDeleteSignUserLabel(task: any): string {
   const nickname = task?.assigneeUser?.nickname || task?.ownerUser?.nickname;
   return `${nickname} ( ${$t('bpm.operation.deptLabel', [deptName])} )`;
 }
+
 /** 处理减签 */
 async function handlerDeleteSign() {
   formLoading.value = true;
@@ -632,6 +633,7 @@ async function handlerDeleteSign() {
     formLoading.value = false;
   }
 }
+
 /** 重新加载数据 */
 function reload() {
   emit('success');
@@ -689,6 +691,38 @@ function loadTodoTask(task: any) {
       task.formFields,
       task.formVariables,
     );
+    // 覆盖 option 中的配置，确保表单能正常显示
+    tempApproveForm.option = {
+      ...tempApproveForm.option,
+      globalConfig: {
+        ...tempApproveForm.option?.globalConfig,
+        labelWidth: 100,
+        hideLabel: false,
+      },
+      form: {
+        ...tempApproveForm.option?.form,
+        height: 'auto',
+        labelWidth: 100,
+        labelCol: { span: 6 },
+      },
+    };
+    // 重置每个字段的 labelWidth
+    if (tempApproveForm.rule) {
+      const resetLabelWidth = (rules: any[]) => {
+        rules.forEach((rule) => {
+          if (rule.props) {
+            rule.props.labelWidth = 100;
+          }
+          if (rule.col) {
+            rule.col.labelCol = { span: 6 };
+          }
+          if (rule.children && Array.isArray(rule.children)) {
+            resetLabelWidth(rule.children);
+          }
+        });
+      };
+      resetLabelWidth(tempApproveForm.rule);
+    }
     approveForm.value = tempApproveForm;
   } else {
     approveForm.value = {}; // 占位，避免为空
@@ -771,32 +805,30 @@ defineExpose({ loadTodoTask });
             class="flex flex-1 flex-col px-[20px] pt-[20px]"
             v-loading="formLoading"
           >
+            <Card v-if="runningTask?.formId > 0" class="!-mt-[10px] mb-[15px]">
+              <template #title>
+                <span class="el-icon-picture-outline">
+                  {{ $t('bpm.operation.fillForm', [runningTask?.formName]) }}
+                </span>
+              </template>
+              <div class="max-h-[60vh] overflow-auto">
+                <form-create
+                  :locale="formCreateLocale"
+                  v-model="approveForm.value"
+                  v-model:api="approveFormFApi"
+                  :option="approveForm.option"
+                  :rule="approveForm.rule"
+                />
+              </div>
+            </Card>
             <Form
               layout="vertical"
-              class="mb-auto"
+              class="mb-auto w-full"
               ref="approveFormRef"
               :model="approveReasonForm"
               :rules="approveReasonRule"
               label-width="100px"
             >
-              <Card
-                v-if="runningTask?.formId > 0"
-                class="!-mt-[10px] mb-[15px]"
-              >
-                <template #title>
-                  <span class="el-icon-picture-outline">
-                    {{ $t('bpm.operation.fillForm', [runningTask?.formName]) }}
-                  </span>
-                </template>
-                <FormCreate
-                  :locale="formCreateLocale"
-                  v-model:value="approveForm.value"
-                  v-model:api="approveFormFApi"
-                  :option="approveForm.option"
-                  :rule="approveForm.rule"
-                />
-              </Card>
-
               <FormItem
                 :label="$t('bpm.operation.nextNodeApprover')"
                 name="nextAssignees"

@@ -1,7 +1,6 @@
 {
   "area": {
     "area": "area",
-    "menu": "area",
     "list": "area list",
     "field": {
       "id": "id",
@@ -14,19 +13,16 @@
       "source": "data source",
       "geoJson": "geo json",
       "sortNum": "sort order",
-      "createTime": "create time"
+      "createTime": "create time",
+      "code": "area code",
+      "ip": "ip address",
+      "parentId": "parent code"
     },
-    "action": {
-      "query": "area query",
-      "create": "create area",
-      "export": "export area",
-      "update": "update area",
-      "delete": "delete area"
+    "help": {
+      "ip": "ip address is used to identify the area"
     }
   },
   "file": {
-    "file": "file",
-    "menu": "file",
     "list": "file list",
     "field": {
       "id": "file id",
@@ -40,13 +36,10 @@
       "moduleType": "module",
       "createTime": "create time",
       "file": "file upload",
-      "uploadTime": "upload time",
-      "code": "administrative code"
+      "uploadTime": "upload time"
     },
     "action": {
-      "query": "file query",
-      "create": "upload image",
-      "delete": "delete file"
+      "create": "upload image"
     },
     "copyUrl": "copy link",
     "message": {
@@ -64,7 +57,6 @@
   },
   "fileConfig": {
     "fileConfig": "file config",
-    "menu": "file config",
     "list": "file config list",
     "field": {
       "id": "id",
@@ -105,10 +97,6 @@
       "disable": "disable"
     },
     "action": {
-      "query": "file config query",
-      "create": "create file config",
-      "update": "update file config",
-      "delete": "delete file config",
       "test": "test"
     },
     "message": {
@@ -121,8 +109,6 @@
     }
   },
   "apiErrorLog": {
-    "apiErrorLog": "api error log",
-    "menu": "api error log",
     "list": "api error log list",
     "field": {
       "id": "log id",
@@ -131,7 +117,10 @@
       "userId": "user id",
       "userType": "user type",
       "userIp": "user ip",
+      "userIpAddr": "login ip",
       "userAgent": "user agent",
+      "userBrowser": "browser",
+      "userPlatform": "platform",
       "requestMethod": "request method",
       "requestUrl": "request url",
       "requestParams": "request params",
@@ -143,7 +132,6 @@
       "processTime": "process time"
     },
     "action": {
-      "query": "api error log query",
       "export": "export api error log",
       "markAsDone": "mark as done",
       "markAsIgnored": "mark as ignored",
@@ -155,8 +143,6 @@
     }
   },
   "apiAccessLog": {
-    "apiAccessLog": "api access log",
-    "menu": "api access log",
     "list": "api access log list",
     "field": {
       "id": "log id",
@@ -165,22 +151,22 @@
       "userId": "user id",
       "userType": "user type",
       "userIp": "user ip",
+      "userIpAddr": "login ip",
       "userAgent": "user agent",
+      "userBrowser": "browser",
+      "userPlatform": "platform",
       "requestMethod": "request method",
       "requestUrl": "request url",
       "requestParams": "request params",
       "responseBody": "response body",
       "beginTime": "request start time",
-      "endTime": "request end time",
       "duration": "duration",
       "resultCode": "result code",
-      "resultMsg": "result message",
       "operateModule": "operate module",
       "operateName": "operate name",
       "operateType": "operate type"
     },
     "action": {
-      "query": "api access log query",
       "export": "export api access log"
     },
     "detail": {
@@ -196,7 +182,6 @@
   },
   "dataSourceConfig": {
     "dataSourceConfig": "data source",
-    "menu": "data source",
     "list": "data source list",
     "field": {
       "id": "id",
@@ -205,17 +190,10 @@
       "username": "username",
       "password": "password",
       "createTime": "create time"
-    },
-    "action": {
-      "query": "data source query",
-      "create": "create data source",
-      "update": "update data source",
-      "delete": "delete data source"
     }
   },
   "config": {
     "config": "config",
-    "menu": "config",
     "list": "config list",
     "field": {
       "id": "id",
@@ -227,18 +205,10 @@
       "type": "type",
       "remark": "remark",
       "createTime": "create time"
-    },
-    "action": {
-      "query": "config query",
-      "create": "create config",
-      "update": "update config",
-      "delete": "delete config",
-      "export": "export config"
     }
   },
   "i18nLocale": {
     "i18nLocale": "locale",
-    "menu": "locale",
     "list": "locale list",
     "field": {
       "id": "id",
@@ -254,20 +224,9 @@
     "help": {
       "localeTarget": "display target, e.g. common for all ends, admin only for backend. do not modify casually, sync messages if changed.",
       "isDefault": "whether it is the default language; only one default is allowed per target."
-    },
-    "action": {
-      "query": "locale query",
-      "create": "create locale",
-      "update": "update locale",
-      "delete": "delete locale",
-      "export": "export locale"
     }
   },
   "i18nMessage": {
-    "i18nMessage": "i18n management",
-    "menu": "i18n management",
-    "locale": "i18n locale",
-    "localeList": "locale list",
     "key": "i18n key",
     "keyList": "i18n key list",
     "messageLabel": "i18n message",
@@ -290,21 +249,15 @@
       "updateSupport": "update support",
       "help": "Whether to update the internationalization key. If yes, the internationalization key will be updated. This is unrelated to the message itself. Regardless, the message will be updated based on the key and locale settings."
     },
-    "action": {
-      "query": "i18n key query",
-      "create": "create i18n key",
-      "update": "update i18n key",
-      "delete": "delete i18n key",
-      "export": "export i18n key"
-    },
     "message": {
       "confirmDelete": "confirm delete i18n key {0}? deleting this key will also delete all language messages."
     }
   },
   "job": {
     "job": "scheduled job",
-    "menu": "scheduled job",
     "list": "job list",
+    "log": "job log",
+    "log.menu": "job log",
     "field": {
       "id": "job id",
       "name": "job name",
@@ -318,15 +271,9 @@
       "nextTimes": "next run times",
       "noNextTimes": "no next run times",
       "monitorTimeoutUnit": "ms",
-      "monitorTimeoutDisabled": "disabled",
-      "createTime": "create time"
+      "monitorTimeoutDisabled": "disabled"
     },
     "action": {
-      "query": "job query",
-      "create": "create job",
-      "update": "update job",
-      "delete": "delete job",
-      "export": "export job",
       "trigger": "trigger job",
       "start": "start",
       "pause": "pause",
@@ -337,12 +284,10 @@
     },
     "detail": {
       "title": "job detail"
-    },
-    "log": "job log"
+    }
   },
   "jobLog": {
     "jobLog": "job log",
-    "menu": "job log",
     "list": "job log list",
     "field": {
       "id": "log id",
@@ -355,12 +300,7 @@
       "duration": "duration",
       "durationUnit": "ms",
       "status": "status",
-      "result": "result",
-      "createTime": "create time"
-    },
-    "action": {
-      "query": "job log query",
-      "export": "export job log"
+      "result": "result"
     },
     "detail": {
       "title": "log detail"
@@ -368,7 +308,6 @@
   },
   "redis": {
     "redis": "redis cache",
-    "menu": "redis cache",
     "overview": "redis overview",
     "memoryUsage": "memory usage",
     "commandStats": "command stats",
@@ -394,9 +333,6 @@
     "loadFailed": "failed to load redis data"
   },
   "webSocket": {
-    "webSocket": "websocket",
-    "menu": "websocket",
-    "list": "websocket message list",
     "docTitle": "websocket realtime communication",
     "connection": "connection management",
     "connectionStatus": "connection status",
@@ -404,7 +340,6 @@
     "openConnection": "open connection",
     "closeConnection": "close connection",
     "messageSend": "message send",
-    "receiver": "receiver",
     "selectReceiver": "please select receiver",
     "all": "all",
     "inputMessage": "enter message to send...",
@@ -419,9 +354,6 @@
     "single": "single",
     "system": "system",
     "unknown": "unknown",
-    "action": {
-      "query": "websocket query"
-    },
     "message": {
       "messageContentEmpty": "message content cannot be empty",
       "unknownMessageType": "unknown message type: {0}",
@@ -430,36 +362,14 @@
     }
   },
   "skywalking": {
-    "skywalking": "skywalking",
-    "menu": "skywalking",
-    "list": "skywalking list",
     "docTitle": "service monitor"
   },
   "server": {
-    "server": "service monitor",
-    "menu": "service monitor",
-    "list": "service monitor list",
     "docTitle": "service monitor"
   },
-  "build": {
-    "build": "form design",
-    "menu": "form design",
-    "list": "form design",
-    "action": {
-      "showJson": "generate json",
-      "showOption": "generate options",
-      "showTemplate": "generate component",
-      "copy": "copy"
-    },
-    "message": {
-      "copySuccess": "copied to clipboard",
-      "copyFailed": "copy failed"
-    }
-  },
   "codegen": {
-    "codegen": "code generation",
-    "menu": "code generation",
     "list": "code generation list",
+    "menu": "code generation",
     "field": {
       "dataSource": "data source",
       "tableName": "table name",
@@ -484,8 +394,6 @@
       "popupType": "popup type",
       "drawer": "drawer",
       "modal": "modal",
-      "treeInfo": "tree info",
-      "subTableInfo": "master-sub table info",
       "treeParentColumn": "parent column",
       "treeNameColumn": "name column",
       "masterTable": "master table",
@@ -536,15 +444,13 @@
       "joinRelation": "join relationship between master and sub tables"
     },
     "action": {
-      "query": "code generation query",
       "create": "import table",
-      "update": "edit generation config",
-      "delete": "delete code generation",
-      "export": "export code generation",
       "preview": "preview",
       "generateCode": "generate code",
       "batchGenerateCode": "batch generate code",
-      "sync": "sync"
+      "sync": "sync",
+      "update": "modify generation config",
+      "update.menu": "modify generation config"
     },
     "message": {
       "generatingCode": "generating code...",
@@ -565,6 +471,31 @@
       "basicInfoValidationFailed": "save failed, please check the basic info form validation!",
       "generationInfoValidationFailed": "save failed, please check the generation info form validation!",
       "saveFailed": "save failed"
+    }
+  },
+  "demo01Contact": {
+    "demo01Contact": "demo contact",
+    "field": {
+      "id": "id",
+      "name": "name",
+      "age": "age",
+      "sex": "sex",
+      "avatar": "avatar",
+      "birthday": "birthday",
+      "description": "description",
+      "createTime": "create time"
+    }
+  },
+  "build": {
+    "action": {
+      "showJson": "View JSON",
+      "showOption": "View Config",
+      "showTemplate": "View Template",
+      "copy": "Copy"
+    },
+    "message": {
+      "copySuccess": "Copied successfully",
+      "copyFailed": "Copy failed"
     }
   }
 }

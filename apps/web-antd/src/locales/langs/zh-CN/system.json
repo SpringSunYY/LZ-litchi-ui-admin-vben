@@ -1,43 +1,24 @@
 {
   "dept": {
     "dept": "部门",
-    "menu": "部门管理",
     "list": "部门列表",
     "field": {
-      "id": "部门编号",
       "name": "部门名称",
       "parentId": "上级部门",
-      "parentIdName": "上级部门",
       "sort": "显示顺序",
       "leaderUserId": "负责人",
-      "leaderUserIdName": "负责人",
       "phone": "联系电话",
       "email": "邮箱",
       "status": "状态",
       "createTime": "创建时间"
-    },
-    "action": {
-      "query": "部门查询",
-      "create": "新增部门",
-      "update": "修改部门",
-      "delete": "删除部门"
     }
   },
   "dict": {
-    "dict": "字典管理",
     "type": "字典类型",
     "typeList": "字典类型列表",
     "data": "字典数据",
     "dataList": "字典数据列表",
     "menu": "字典管理",
-    "field": {
-      "id": "字典编号",
-      "name": "字典名称",
-      "type": "字典类型",
-      "status": "状态",
-      "remark": "备注",
-      "createTime": "创建时间"
-    },
     "typeField": {
       "id": "字典编号",
       "name": "字典名称",
@@ -51,7 +32,6 @@
       "dictType": "字典类型",
       "label": "字典标签",
       "i18n": "国际化",
-      "labelName": "字典标签",
       "value": "字典键值",
       "sort": "排序",
       "status": "状态",
@@ -61,11 +41,6 @@
       "createTime": "创建时间"
     },
     "action": {
-      "query": "字典查询",
-      "create": "新增字典",
-      "export": "导出字典",
-      "update": "修改字典",
-      "delete": "删除字典",
       "createI18n": "创建国际化"
     },
     "help": {
@@ -75,7 +50,6 @@
   },
   "post": {
     "post": "岗位",
-    "menu": "岗位管理",
     "list": "岗位列表",
     "field": {
       "id": "岗位编号",
@@ -85,18 +59,10 @@
       "status": "岗位状态",
       "remark": "岗位备注",
       "createTime": "创建时间"
-    },
-    "action": {
-      "query": "岗位查询",
-      "create": "新增岗位",
-      "export": "导出岗位",
-      "update": "修改岗位",
-      "delete": "删除岗位"
     }
   },
   "role": {
     "role": "角色",
-    "menu": "角色管理",
     "list": "角色列表",
     "field": {
       "id": "角色编号",
@@ -111,13 +77,6 @@
       "type": "角色类型",
       "createTime": "创建时间"
     },
-    "action": {
-      "query": "角色查询",
-      "create": "新增角色",
-      "export": "导出角色",
-      "update": "修改角色",
-      "delete": "删除角色"
-    },
     "message": {
       "dataPermission": "数据权限",
       "menuPermission": "菜单权限"
@@ -125,7 +84,6 @@
   },
   "user": {
     "user": "用户",
-    "menu": "用户管理",
     "list": "用户列表",
     "field": {
       "id": "用户编号",
@@ -147,16 +105,6 @@
       "updateSupport": "是否覆盖",
       "createTime": "创建时间"
     },
-    "action": {
-      "query": "用户查询",
-      "create": "新增用户",
-      "export": "导出用户",
-      "import": "导入用户",
-      "update": "修改用户",
-      "delete": "删除用户",
-      "resetPassword": "重置密码",
-      "assignRole": "分配角色"
-    },
     "message": {
       "socialLogin": "三方登陆",
       "assignRole": "分配角色",
@@ -177,7 +125,6 @@
     "menu": "菜单管理",
     "list": "菜单列表",
     "field": {
-      "id": "菜单编号",
       "parentId": "上级菜单",
       "name": "菜单名称",
       "i18n": "国际化",
@@ -192,20 +139,11 @@
       "alwaysShow": "总是显示",
       "keepAlive": "缓存状态",
       "remark": "菜单备注",
-      "createTime": "创建时间",
       "layout": "布局",
       "newWindows": "新窗口"
     },
-    "action": {
-      "query": "菜单查询",
-      "create": "新增菜单",
-      "update": "修改菜单",
-      "delete": "删除菜单"
-    },
     "message": {
       "route": "菜单路由",
-      "expand": "展开",
-      "collapse": "收缩",
       "append": "新增下级"
     },
     "help": {
@@ -227,10 +165,6 @@
       "yes": "缓存",
       "no": "不缓存"
     },
-    "sidebar": {
-      "yes": "开启",
-      "no": "关闭"
-    },
     "newWindows": {
       "yes": "打开",
       "no": "不打开"
@@ -238,7 +172,6 @@
   },
   "tenant": {
     "tenant": "租户",
-    "menu": "租户管理",
     "list": "租户列表",
     "field": {
       "id": "租户编号",
@@ -263,21 +196,12 @@
       "currentAccountCount": "当前数量",
       "createTime": "创建时间"
     },
-    "action": {
-      "query": "租户查询",
-      "create": "新增租户",
-      "export": "导出租户",
-      "update": "修改租户",
-      "delete": "删除租户",
-      "grantMenu": "菜单授权"
-    },
     "message": {
       "saas": "SaaS 多租户"
     }
   },
   "tenantPackage": {
     "tenantPackage": "租户套餐",
-    "menu": "租户套餐管理",
     "list": "租户套餐列表",
     "field": {
       "id": "套餐编号",
@@ -294,19 +218,10 @@
       "description": "套餐描述",
       "remark": "备注",
       "createTime": "创建时间"
-    },
-    "action": {
-      "query": "租户套餐查询",
-      "create": "新增租户套餐",
-      "export": "导出租户套餐",
-      "update": "修改租户套餐",
-      "delete": "删除租户套餐",
-      "grant": "菜单授权"
     }
   },
   "tenantPackageSubscribe": {
     "tenantPackageSubscribe": "租户套餐订阅",
-    "menu": "租户套餐订阅管理",
     "list": "租户套餐订阅列表",
     "field": {
       "id": "套餐编号",
@@ -327,31 +242,22 @@
       "endTime": "结束时间",
       "remark": "备注",
       "createTime": "创建时间"
-    },
-    "action": {
-      "query": "租户套餐订阅查询",
-      "create": "新增租户套餐订阅",
-      "export": "导出租户套餐订阅",
-      "update": "修改租户套餐订阅",
-      "delete": "删除租户套餐订阅"
     }
   },
   "loginlog": {
     "loginlog": "登录日志",
-    "menu": "登录日志",
     "list": "登录日志列表",
     "field": {
       "id": "日志编号",
       "logType": "操作类型",
       "username": "用户名称",
-      "userIp": "登录地址",
+      "userIp": "登录IP",
+      "userIpAddr": "登录地址",
       "userAgent": "浏览器",
+      "userBrowser": "浏览器",
+      "userPlatform": "操作系统",
       "result": "登录结果",
       "createTime": "登录日期"
-    },
-    "action": {
-      "query": "登录日志查询",
-      "export": "导出登录日志"
     },
     "message": {
       "detail": "登录日志详情",
@@ -360,7 +266,6 @@
   },
   "operatelog": {
     "operatelog": "操作日志",
-    "menu": "操作日志",
     "list": "操作日志列表",
     "field": {
       "id": "日志编号",
@@ -373,14 +278,9 @@
       "subType": "操作名",
       "action": "操作内容",
       "extra": "操作拓展参数",
-      "requestMethod": "请求方式",
       "requestUrl": "请求URL",
       "bizId": "业务编号",
       "createTime": "操作时间"
-    },
-    "action": {
-      "query": "操作日志查询",
-      "export": "导出操作日志"
     },
     "message": {
       "detail": "操作日志详情"
@@ -388,7 +288,6 @@
   },
   "notice": {
     "notice": "公告",
-    "menu": "公告管理",
     "list": "公告列表",
     "field": {
       "id": "公告编号",
@@ -399,14 +298,6 @@
       "status": "公告状态",
       "remark": "备注",
       "createTime": "创建时间"
-    },
-    "action": {
-      "query": "公告查询",
-      "create": "新增公告",
-      "export": "导出公告",
-      "update": "修改公告",
-      "delete": "删除公告",
-      "push": "推送"
     },
     "message": {
       "detail": "公告详情",
@@ -429,32 +320,20 @@
         "status": "状态",
         "remark": "备注",
         "createTime": "创建时间",
-        "userType": "用户类型",
-        "userId": "接收人ID",
-        "templateParams": "模板参数",
         "receiverId": "接收人ID",
         "receiver": "接收人",
         "params": "模板参数",
         "param": "参数 {0}"
       },
       "action": {
-        "query": "站内信模板查询",
-        "create": "新增站内信模板",
-        "export": "导出站内信模板",
-        "update": "修改站内信模板",
-        "delete": "删除站内信模板",
-        "test": "测试"
+        "test": "测试",
+        "testSend": "测试发送"
       },
       "message": {
-        "test": "测试",
-        "testSend": "测试发送站内信",
-        "sendSuccess": "发送成功",
-        "sendFailed": "发送站内信失败",
-        "param": "参数 {0}"
+        "sendFailed": "发送站内信失败"
       }
     },
     "message": {
-      "message": "站内信",
       "menu": "站内信",
       "list": "站内信列表",
       "field": {
@@ -462,17 +341,12 @@
         "userId": "用户编号",
         "userType": "用户类型",
         "templateId": "模版编号",
-        "templateCode": "模板编码",
-        "templateNickname": "发送人名称",
         "templateContent": "模版内容",
         "templateParams": "模版参数",
         "templateType": "模版类型",
         "readStatus": "是否已读",
         "readTime": "阅读时间",
         "createTime": "创建时间"
-      },
-      "action": {
-        "query": "站内信查询"
       },
       "detail": {
         "detail": "站内信详情"
@@ -481,10 +355,7 @@
     "my": {
       "my": "我的站内信",
       "menu": "我的站内信",
-      "list": "我的站内信",
       "field": {
-        "id": "编号",
-        "sendTime": "发送时间",
         "templateNickname": "发送人",
         "templateType": "类型",
         "templateContent": "消息内容",
@@ -492,27 +363,17 @@
         "readTime": "阅读时间",
         "createTime": "发送时间"
       },
-      "action": {
-        "query": "我的站内信查询"
-      },
       "message": {
         "detail": "消息详情",
         "markRead": "标记已读",
-        "markReadSuccess": "标记已读成功",
         "markAllRead": "全部已读",
-        "markAllReadSuccess": "全部标记已读成功",
-        "markingRead": "正在标记已读...",
-        "markingAllRead": "正在标记全部已读...",
-        "view": "查看",
-        "read": "已读"
+        "view": "查看"
       }
     }
   },
   "mail": {
     "account": {
-      "account": "邮箱账号",
       "mailAccount": "邮箱账号",
-      "menu": "邮箱账号",
       "list": "邮箱账号列表",
       "field": {
         "id": "编号",
@@ -526,19 +387,12 @@
         "remark": "备注",
         "createTime": "创建时间"
       },
-      "action": {
-        "query": "邮箱账号查询",
-        "create": "新增邮箱账号",
-        "update": "修改邮箱账号",
-        "delete": "删除邮箱账号"
-      },
       "message": {
         "config": "邮件配置"
       }
     },
     "template": {
       "template": "邮件模板",
-      "menu": "邮件模板",
       "list": "邮件模板列表",
       "field": {
         "id": "编号",
@@ -552,16 +406,7 @@
         "remark": "备注",
         "createTime": "创建时间",
         "mail": "收件邮箱",
-        "params": "模板参数",
-        "templateParams": "模板参数"
-      },
-      "action": {
-        "query": "邮件模板查询",
-        "create": "新增邮件模板",
-        "export": "导出邮件模板",
-        "update": "修改邮件模板",
-        "delete": "删除邮件模板",
-        "test": "测试"
+        "params": "模板参数"
       },
       "message": {
         "test": "测试",
@@ -572,8 +417,6 @@
       }
     },
     "log": {
-      "log": "邮件日志",
-      "menu": "邮件日志",
       "list": "邮件日志列表",
       "field": {
         "id": "编号",
@@ -587,14 +430,9 @@
         "sendStatus": "发送状态",
         "templateCode": "模板编码",
         "templateId": "模板编号",
-        "accountId": "邮箱账号",
         "sendMessageId": "发送消息编号",
         "sendException": "发送异常",
         "createTime": "创建时间"
-      },
-      "action": {
-        "query": "邮件日志查询",
-        "export": "导出邮件日志"
       },
       "message": {
         "detail": "邮件日志详情"
@@ -617,17 +455,12 @@
         "remark": "备注",
         "createTime": "创建时间"
       },
-      "action": {
-        "query": "短信渠道查询",
-        "create": "新增短信渠道",
-        "export": "导出短信渠道",
-        "update": "修改短信渠道",
-        "delete": "删除短信渠道"
+      "message": {
+        "config": "短信配置"
       }
     },
     "template": {
       "template": "短信模板",
-      "menu": "短信模板",
       "list": "短信模板列表",
       "field": {
         "id": "编号",
@@ -645,28 +478,20 @@
         "templateParams": "模板参数"
       },
       "action": {
-        "query": "短信模板查询",
-        "create": "新增短信模板",
-        "export": "导出短信模板",
-        "update": "修改短信模板",
-        "delete": "删除短信模板",
         "send": "发送短信"
       },
       "message": {
         "send": "发送短信",
         "sendSuccess": "短信发送成功",
-        "sendFailed": "发送短信失败",
         "param": "参数 {0}"
       }
     },
     "log": {
       "log": "短信日志",
-      "menu": "短信日志",
       "list": "短信日志列表",
       "field": {
         "id": "编号",
         "mobile": "手机号",
-        "channelId": "短信渠道",
         "templateId": "模板编号",
         "sendStatus": "发送状态",
         "sendTime": "发送时间",
@@ -683,10 +508,6 @@
         "apiSerialNo": "API 序列号",
         "createTime": "创建时间"
       },
-      "action": {
-        "query": "短信日志查询",
-        "export": "导出短信日志"
-      },
       "message": {
         "detail": "短信日志详情"
       }
@@ -696,10 +517,8 @@
     "sso": "OAuth2.0",
     "client": {
       "client": "OAuth2 客户端",
-      "menu": "OAuth2 客户端管理",
       "list": "OAuth2 客户端列表",
       "field": {
-        "id": "编号",
         "clientId": "客户端编号",
         "secret": "客户端密钥",
         "name": "应用名",
@@ -717,12 +536,6 @@
         "additionalInformation": "附加信息",
         "createTime": "创建时间"
       },
-      "action": {
-        "query": "OAuth2 客户端查询",
-        "create": "新增 OAuth2 客户端",
-        "update": "修改 OAuth2 客户端",
-        "delete": "删除 OAuth2 客户端"
-      },
       "help": {
         "accessTokenValidity": "请输入访问令牌的有效期，单位：秒",
         "refreshTokenValidity": "请输入刷新令牌的有效期，单位：秒",
@@ -731,10 +544,8 @@
     },
     "token": {
       "token": "OAuth2 令牌",
-      "menu": "OAuth2 令牌管理",
       "list": "OAuth2 令牌列表",
       "field": {
-        "id": "编号",
         "accessToken": "访问令牌",
         "refreshToken": "刷新令牌",
         "userId": "用户编号",
@@ -742,14 +553,6 @@
         "clientId": "客户端编号",
         "expiresTime": "过期时间",
         "createTime": "创建时间"
-      },
-      "action": {
-        "query": "OAuth2 令牌查询",
-        "delete": "强退令牌"
-      },
-      "message": {
-        "forceLogout": "强退",
-        "deleteTokenConfirm": "强退后，令牌将立即失效，确定强退吗？"
       }
     }
   },
@@ -796,7 +599,6 @@
   "social": {
     "client": {
       "client": "社交客户端",
-      "menu": "社交客户端管理",
       "list": "社交客户端列表",
       "field": {
         "id": "编号",
@@ -808,23 +610,13 @@
         "agentId": "agentId",
         "status": "状态",
         "createTime": "创建时间"
-      },
-      "action": {
-        "query": "社交客户端查询",
-        "create": "新增社交客户端",
-        "update": "修改社交客户端",
-        "delete": "删除社交客户端"
       }
     },
     "user": {
-      "user": "社交用户",
-      "menu": "社交用户管理",
       "list": "社交用户列表",
       "field": {
-        "id": "编号",
         "type": "社交平台",
         "openid": "社交 openid",
-        "userId": "用户编号",
         "nickname": "用户昵称",
         "avatar": "用户头像",
         "token": "社交 token",
@@ -834,9 +626,6 @@
         "state": "最后一次的认证 state",
         "createTime": "创建时间",
         "updateTime": "更新时间"
-      },
-      "action": {
-        "query": "社交用户查询"
       },
       "message": {
         "detail": "社交用户详情"

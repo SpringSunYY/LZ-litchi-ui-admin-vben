@@ -1,29 +1,9 @@
 {
   "common": {
-    "days": "天",
-    "yuan": "元",
-    "customerCount": "客户数",
-    "businessCount": "商机数",
-    "businessWinCount": "赢单数",
-    "businessStage": "阶段",
-    "businessAmount": "商机总金额",
-    "customerName": "客户名称",
     "ownerUser": "负责人",
-    "date": "日期",
-    "productName": "产品名称",
-    "department": "部门",
-    "employee": "员工",
-    "interval": "时间间隔",
-    "intervalDay": "按天",
-    "intervalWeek": "按周",
-    "intervalMonth": "按月",
-    "intervalQuarter": "按季度",
-    "intervalYear": "按年",
-    "noDeptAndTime": "请选择和部门时间间隔"
+    "date": "日期"
   },
   "followup": {
-    "followup": "跟进记录",
-    "menu": "跟进记录",
     "field": {
       "createTime": "创建时间",
       "creatorName": "跟进人",
@@ -43,21 +23,15 @@
       "businessIds": "关联商机"
     },
     "action": {
-      "query": "查询跟进记录",
       "create": "新增跟进记录",
-      "delete": "删除跟进记录",
       "write": "写跟进"
-    },
-    "message": {
-      "selectContactFirst": "请先选择联系人后操作",
-      "selectBusinessFirst": "请先选择商机后操作"
     }
   },
   "customer": {
     "customer": "客户",
-    "menu": "客户管理",
-    "detail": "客户详情",
     "list": "客户列表",
+    "detail": "客户详情",
+    "detail.menu": "客户详情",
     "field": {
       "name": "客户名称",
       "source": "客户来源",
@@ -67,7 +41,6 @@
       "wechat": "微信",
       "qq": "QQ",
       "industryId": "客户行业",
-      "industryName": "客户行业",
       "level": "客户级别",
       "areaCode": "地址",
       "areaName": "地址",
@@ -83,12 +56,7 @@
       "updateTime": "更新时间"
     },
     "action": {
-      "query": "查询客户",
-      "create": "新增客户",
-      "update": "修改客户",
       "updateDealStatus": "更改成交状态",
-      "delete": "删除客户",
-      "export": "导出客户",
       "import": "导入客户",
       "transfer": "转移",
       "receive": "领取",
@@ -112,20 +80,9 @@
       "systemInfo": "系统信息"
     },
     "message": {
-      "transferConfirm": "确定将该客户转移给他人吗？",
-      "transferSuccess": "客户转移成功",
-      "lockConfirm": "确定锁定该客户吗？",
-      "lockSuccess": "锁定成功",
-      "unlockConfirm": "确定解锁该客户吗？",
-      "unlockSuccess": "解锁成功",
-      "receiveConfirm": "确定领取该客户吗？",
-      "receiveSuccess": "领取成功",
-      "putPoolConfirm": "确定将该客户放入公海吗？",
-      "putPoolSuccess": "已放入公海",
       "updateDealStatusConfirm": "确定更新成交状态为【{0}】吗？",
       "updateDealStatusSuccess": "更新成交状态成功",
       "updateDealStatusFailed": "更新成交状态失败",
-      "updateDealStatus": "更改成交状态",
       "dealYes": "已成交",
       "dealNo": "未成交",
       "importHelp": "仅允许导入 xls、xlsx 格式文件",
@@ -139,102 +96,9 @@
       "myResponsible": "我负责的",
       "myParticipant": "我参与的",
       "subordinateResponsible": "下属负责的"
-    },
-    "option": {
-      "myResponsible": "我负责的",
-      "myParticipant": "我参与的",
-      "subordinateResponsible": "下属负责的"
     }
   },
-  "funnel": {
-    "title": "销售漏斗",
-    "businessAnalysis": "商机分析",
-    "businessInversionRateAnalysis": "商机转化率分析",
-    "customerView": "客户视角",
-    "dynamicView": "动态视角",
-    "newBusinessCount": "新增商机数",
-    "newBusinessAmount": "新增商机金额",
-    "winRate": "赢单转化率",
-    "totalBusinessCount": "商机总数",
-    "winBusinessCount": "赢单商机数",
-    "businessName": "商机名称",
-    "creator": "创建人",
-    "totalProductPrice": "产品总金额",
-    "discountPercent": "折扣率",
-    "endStatus": "结束状态"
-  },
-  "performance": {
-    "title": "员工业绩",
-    "contractCountAnalysis": "合同数量统计",
-    "contractPriceAnalysis": "合同金额统计",
-    "receivablePriceAnalysis": "回款金额统计",
-    "contractCount": "签约合同数",
-    "contractAmount": "合同金额",
-    "receivableAmount": "回款金额",
-    "currentMonthCount": "本月",
-    "lastMonthCount": "上月",
-    "lastYearCount": "去年",
-    "currentMonthAmount": "本月合同金额",
-    "lastMonthAmount": "上月合同金额",
-    "lastYearAmount": "去年合同金额",
-    "currentMonthReceivable": "本月回款金额",
-    "lastMonthReceivable": "上月回款金额",
-    "lastYearReceivable": "去年回款金额",
-    "byEmployee": "按员工",
-    "byMonth": "按月份",
-    "monthChainRate": "环比增长率",
-    "yearChainRate": "同比增长率"
-  },
-  "portrait": {
-    "title": "客户画像",
-    "areaAnalysis": "客户地区分布",
-    "levelAnalysis": "客户级别分布",
-    "sourceAnalysis": "客户来源分布",
-    "industryAnalysis": "客户行业分布",
-    "customerCount": "客户数",
-    "dealCount": "成交数",
-    "dealRate": "成交率",
-    "allCustomer": "全部客户",
-    "dealCustomer": "成交客户",
-    "levelPortion": "全部客户占比",
-    "dealPortion": "成交客户占比",
-    "sourcePortion": "全部客户占比",
-    "industryPortion": "全部客户占比",
-    "areaPortion": "全部客户占比",
-    "level": "客户级别",
-    "source": "客户来源",
-    "industry": "客户行业",
-    "areaName": "地区",
-    "businessName": "商机名称",
-    "productName": "产品名称",
-    "contractName": "合同名称",
-    "totalPrice": "合同金额",
-    "receivablePrice": "已收款金额",
-    "receivableNotPrice": "未收款金额",
-    "orderDate": "成交日期"
-  },
-  "rank": {
-    "title": "排行榜",
-    "count": "数量",
-    "contractPrice": "合同金额",
-    "contractPriceAnalysis": "合同金额排行",
-    "receivablePrice": "回款金额",
-    "receivablePriceAnalysis": "回款金额排行",
-    "contractCount": "签约合同数",
-    "contractCountAnalysis": "签约合同排行",
-    "productSales": "产品销量",
-    "productSalesAnalysis": "产品销量排行",
-    "customerCount": "新增客户数",
-    "customerCountAnalysis": "新增客户数排行",
-    "contactsCount": "新增联系人数",
-    "contactCountAnalysis": "新增联系人数排行",
-    "followCount": "跟进次数",
-    "followCountAnalysis": "跟进次数排行",
-    "followCustomerCount": "跟进客户数",
-    "followCustomerCountAnalysis": "跟进客户数排行"
-  },
   "backlog": {
-    "backlog": "待办事项",
     "menu": {
       "customerTodayContact": "今日需联系客户",
       "clueFollow": "分配给我的线索",
@@ -249,12 +113,7 @@
       "status": "状态",
       "attribution": "归属",
       "contractStatus": "合同状态",
-      "expiryStatus": "到期状态",
-      "followUpStatus": "跟进状态",
-      "contactStatus": "联系状态",
-      "auditStatus": "审批状态",
-      "remindType": "提醒类型",
-      "expiryType": "过期状态"
+      "expiryStatus": "到期状态"
     },
     "action": {
       "viewDetail": "查看详情",
@@ -281,9 +140,9 @@
   },
   "clue": {
     "clue": "线索",
-    "menu": "线索管理",
-    "detail": "线索详情",
     "list": "线索列表",
+    "detail": "线索详情",
+    "detail.menu": "线索详情",
     "field": {
       "name": "线索名称",
       "source": "线索来源",
@@ -310,11 +169,6 @@
       "creatorName": "创建人"
     },
     "action": {
-      "query": "查询线索",
-      "create": "新增线索",
-      "update": "修改线索",
-      "delete": "删除线索",
-      "export": "导出线索",
       "transfer": "转移",
       "transform": "转化为客户"
     },
@@ -329,8 +183,6 @@
       "systemInfo": "系统信息"
     },
     "message": {
-      "transferConfirm": "确定将该线索转移给他人吗？",
-      "transferSuccess": "线索转移成功",
       "transformConfirm": "确定将该线索转化为客户吗？",
       "transformSuccess": "转化客户成功",
       "transformFailed": "转化失败"
@@ -342,9 +194,9 @@
   },
   "contact": {
     "contact": "联系人",
-    "menu": "联系人管理",
-    "detail": "联系人详情",
     "list": "联系人列表",
+    "detail": "联系人详情",
+    "detail.menu": "联系人详情",
     "field": {
       "name": "联系人姓名",
       "customerName": "客户名称",
@@ -370,13 +222,7 @@
       "updateTime": "更新时间"
     },
     "action": {
-      "query": "查询联系人",
-      "create": "新增联系人",
-      "update": "修改联系人",
-      "delete": "删除联系人",
-      "export": "导出联系人",
-      "transfer": "转移",
-      "associate": "关联联系人"
+      "transfer": "转移"
     },
     "tab": {
       "detail": "详细资料",
@@ -402,9 +248,9 @@
   },
   "business": {
     "business": "商机",
-    "detail": "商机详情",
     "list": "商机列表",
-    "menu": "商机管理",
+    "detail": "商机详情",
+    "detail.menu": "商机详情",
     "field": {
       "name": "商机名称",
       "ownerUser": "负责人",
@@ -427,7 +273,6 @@
       "winRate": "赢单率：{0}%",
       "createTime": "创建时间",
       "updateTime": "更新时间",
-      "creator": "创建人",
       "creatorName": "创建人"
     },
     "action": {
@@ -459,16 +304,13 @@
   "businessStatus": {
     "businessStatus": "商机状态组",
     "list": "商机状态列表",
-    "menu": "商机状态配置",
     "field": {
       "name": "状态组名",
       "dept": "应用部门",
-      "status": "状态",
       "selectDept": "请选择应用部门",
       "allCompany": "全公司",
       "createTime": "创建时间",
       "creator": "创建人",
-      "stageSetting": "阶段设置",
       "stage": "阶段",
       "stageName": "阶段名称",
       "winRate": "赢单率",
@@ -477,18 +319,13 @@
       "placeholderName": "请输入状态名",
       "placeholderWinRate": "请输入赢单率",
       "stagePhase": "阶段{0}"
-    },
-    "action": {
-      "create": "新增商机状态",
-      "delete": "删除商机状态",
-      "query": "查询商机状态"
     }
   },
   "contract": {
     "contract": "合同",
-    "menu": "合同管理",
-    "detail": "合同详情",
     "list": "合同列表",
+    "detail": "合同详情",
+    "detail.menu": "合同详情",
     "field": {
       "no": "合同编号",
       "name": "合同名称",
@@ -520,11 +357,6 @@
       "creatorName": "创建人"
     },
     "action": {
-      "query": "查询合同",
-      "create": "新增合同",
-      "update": "修改合同",
-      "delete": "删除合同",
-      "export": "导出合同",
       "transfer": "转移",
       "submit": "提交审核"
     },
@@ -540,17 +372,12 @@
       "baseInfo": "基本信息",
       "systemInfo": "系统信息"
     },
-    "message": {
-      "submitConfirm": "确定要提交审核吗？",
-      "submitSuccess": "提交审核成功"
-    },
     "option": {
       "myResponsible": "我负责的",
       "myParticipant": "我参与的",
       "subordinateResponsible": "下属负责的"
     },
     "config": {
-      "menu": "合同配置",
       "title": "合同配置设置",
       "notifyEnabled": "提前提醒设置",
       "notifyDays": "提前天数",
@@ -561,7 +388,6 @@
   },
   "customerPool": {
     "customerPool": "客户公海",
-    "menu": "客户公海",
     "list": "客户公海列表",
     "field": {
       "name": "客户名称",
@@ -582,12 +408,8 @@
     }
   },
   "customerPoolConfig": {
-    "customerPoolConfig": "客户公海配置",
-    "menu": "客户公海配置",
-    "list": "客户公海配置列表",
     "field": {
       "poolConfig": "公海规则设置",
-      "enabled": "客户公海规则设置",
       "contactExpireDays": "跟进过期天数",
       "dealExpireDays": "成交过期天数",
       "notifyEnabled": "提前提醒设置",
@@ -602,42 +424,20 @@
   "customerLimitConfig": {
     "customerLimitConfig": "客户限制配置",
     "menu": "客户限制配置",
-    "list": "客户限制配置列表",
     "field": {
-      "poolConfig": "公海规则设置",
-      "enabled": "客户公海规则设置",
-      "contactExpireDays": "跟进过期天数",
-      "dealExpireDays": "成交过期天数",
-      "notifyEnabled": "提前提醒设置",
-      "notifyDays": "提前提醒天数",
-      "daysTip": "天提醒",
-      "customerLimit": "客户限制设置",
-      "customerCount": "客户数量限制",
-      "contactExpireRemindDays": "跟进过期提醒天数",
-      "receiveConfig": "领取配置",
-      "receiveDays": "公海客户领取后保持天数",
-      "receiveCountLimit": "每人最大领取客户数",
-      "poolConfigTitle": "客户公海规则设置",
-      "limitConfigTitle": "客户限制设置",
-      "receiveConfigTitle": "领取配置",
-      "enable": "开启",
-      "disable": "关闭",
       "id": "编号",
       "userIds": "规则适用人群",
       "deptIds": "规则适用部门",
-      "maxCount": "上限",
       "ownerCustomerCountLimit": "拥有客户数上限",
       "lockCustomerCountLimit": "锁定客户数上限",
       "dealCountOccupied": "成交客户是否占用拥有客户数",
       "ownerCustomerTab": "拥有客户数限制",
       "lockCustomerTab": "锁定客户数限制",
-      "or": "或",
       "yes": "是",
       "no": "否"
     }
   },
   "permission": {
-    "permission": "权限",
     "teamMember": "团队成员",
     "field": {
       "nickname": "姓名",
@@ -659,10 +459,6 @@
       "remove": "移除"
     },
     "action": {
-      "query": "查询权限",
-      "create": "新增团队成员",
-      "update": "修改团队成员",
-      "delete": "删除团队成员",
       "transfer": "转移",
       "quit": "退出团队"
     },
@@ -675,14 +471,14 @@
       "ownerCannotQuit": "负责人不能退出团队",
       "notTeamMember": "你不是团队成员",
       "quitTeamSuccess": "退出团队成员成功",
-      "transferFailed": "转移失败",
       "noTransferApi": "没有转移接口"
     }
   },
   "product": {
     "product": "产品",
-    "menu": "产品管理",
     "list": "产品列表",
+    "detail": "产品详情",
+    "detail.menu": "产品详情",
     "field": {
       "id": "产品编号",
       "name": "产品名称",
@@ -702,11 +498,6 @@
       "baseInfo": "基本信息"
     },
     "action": {
-      "query": "查询产品",
-      "create": "新增产品",
-      "update": "修改产品",
-      "delete": "删除产品",
-      "export": "导出产品",
       "addProduct": "添加产品"
     },
     "tab": {
@@ -730,19 +521,11 @@
   "productCategory": {
     "productCategory": "产品分类",
     "menu": "产品分类",
-    "list": "产品分类列表",
     "field": {
       "id": "分类编号",
       "name": "分类名称",
-      "parentId": "上级分类",
       "parentIdName": "上级分类",
       "createTime": "创建时间"
-    },
-    "action": {
-      "query": "查询分类",
-      "create": "新增分类",
-      "update": "修改分类",
-      "delete": "删除分类"
     },
     "message": {
       "topLevelCategory": "顶级分类"
@@ -752,9 +535,8 @@
     "receivable": "回款",
     "menu": "回款管理",
     "detail": "回款详情",
-    "list": "回款列表",
+    "detail.menu": "回款详情",
     "field": {
-      "id": "ID",
       "no": "回款编号",
       "customerId": "客户名称",
       "customerName": "客户名称",
@@ -777,14 +559,6 @@
       "baseInfo": "基本信息",
       "systemInfo": "系统信息"
     },
-    "action": {
-      "query": "查询回款",
-      "create": "新增回款",
-      "update": "修改回款",
-      "delete": "删除回款",
-      "export": "导出回款",
-      "submit": "提交审核"
-    },
     "tab": {
       "myResponsibility": "我负责的",
       "myParticipation": "我参与的",
@@ -803,9 +577,8 @@
     "receivablePlan": "回款计划",
     "menu": "回款计划",
     "detail": "回款计划详情",
-    "list": "回款计划列表",
+    "detail.menu": "回款计划详情",
     "field": {
-      "id": "ID",
       "customerId": "客户",
       "customerName": "客户名称",
       "contractId": "合同",
@@ -820,23 +593,14 @@
       "remark": "备注",
       "totalPrice": "合同金额",
       "ownerUserName": "负责人",
-      "receivablePrice": "实际回款金额",
       "receivablePriceUnit": "实际回款金额（元）",
       "receivableTime": "实际回款日期",
-      "unpaidPrice": "未回款金额",
       "unpaidPriceUnit": "未回款金额（元）",
       "createTime": "创建时间",
       "updateTime": "更新时间",
       "creatorName": "创建人",
       "baseInfo": "基本信息",
       "systemInfo": "系统信息"
-    },
-    "action": {
-      "query": "查询回款计划",
-      "create": "新增回款计划",
-      "update": "修改回款计划",
-      "delete": "删除回款计划",
-      "export": "导出回款计划"
     },
     "tab": {
       "myResponsibility": "我负责的",
@@ -851,9 +615,7 @@
     }
   },
   "statistics": {
-    "menu": "数据统计",
     "customer": {
-      "menu": "客户分析",
       "customerTotal": "客户总量",
       "followUpSummary": "跟进汇总",
       "followUpType": "跟进方式",
@@ -890,11 +652,9 @@
       "netGrowthCustomerCount": "净增长客户数",
       "poolCustomerTrend": "公海客户趋势",
       "poolCustomerRankByEmployee": "公海客户排行榜(按员工)",
-      "receivableRate": "回款率",
-      "businessWinCount": "赢单数量"
+      "receivableRate": "回款率"
     },
     "funnel": {
-      "menu": "销售漏斗",
       "title": "销售漏斗",
       "businessAnalysis": "商机分析",
       "businessInversionRateAnalysis": "商机转化率分析",
@@ -913,7 +673,6 @@
       "orderDate": "下单日期"
     },
     "performance": {
-      "menu": "销售业绩",
       "contractCountAnalysis": "合同数量统计",
       "contractPriceAnalysis": "合同金额统计",
       "receivablePriceAnalysis": "回款金额统计",
@@ -933,7 +692,6 @@
       "receivableAmount": "回款金额"
     },
     "portrait": {
-      "menu": "客户画像",
       "areaAnalysis": "地区分布",
       "levelAnalysis": "级别分布",
       "sourceAnalysis": "来源分布",
@@ -957,7 +715,6 @@
       "dealCustomer": "成交客户"
     },
     "rank": {
-      "menu": "数据排行",
       "contractPriceAnalysis": "合同金额排行",
       "receivablePriceAnalysis": "回款金额排行",
       "contractCountAnalysis": "签约合同数排行",
@@ -986,15 +743,13 @@
       "intervalYear": "按年",
       "department": "部门",
       "employee": "员工",
-      "ownerUser": "负责人",
       "customerCount": "客户数量",
       "businessCount": "商机数量",
       "businessAmount": "商机金额",
       "businessStage": "商机阶段",
       "businessWinCount": "赢单数量",
       "customerName": "客户名称",
-      "productName": "产品名称",
-      "date": "日期"
+      "productName": "产品名称"
     }
   }
 }

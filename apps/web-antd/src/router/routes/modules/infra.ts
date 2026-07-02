@@ -7,7 +7,7 @@ const routes: RouteRecordRaw[] = [
     name: 'InfraJobLog',
     meta: {
       title: '调度日志',
-      i18n: 'infra.job.log',
+      i18n: 'infra.job.log.menu',
       icon: 'ant-design:history-outlined',
       activePath: '/infra/job',
       keepAlive: false,
@@ -31,7 +31,7 @@ const routes: RouteRecordRaw[] = [
         component: () => import('#/views/infra/codegen/edit/index.vue'),
         meta: {
           title: '修改生成配置',
-          i18n: 'infra.codegen.action.update',
+          i18n: 'infra.codegen.action.update.menu',
           activeMenu: '/infra/codegen',
         },
       },

@@ -2,8 +2,6 @@
   "title": "Preferences",
   "subtitle": "Customize Preferences & Preview in Real Time",
   "resetTip": "Data has changed, click to reset",
-  "resetTitle": "Reset Preferences",
-  "resetSuccess": "Preferences reset successfully",
   "appearance": "Appearance",
   "layout": "Layout",
   "content": "Content",

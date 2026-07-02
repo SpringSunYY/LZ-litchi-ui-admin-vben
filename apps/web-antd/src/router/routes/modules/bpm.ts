@@ -15,7 +15,7 @@ const routes: RouteRecordRaw[] = [
         name: 'BpmTask',
         meta: {
           title: '审批中心',
-          i18n: 'bpm.task.approvalCenter',
+          i18n: 'bpm.task.menu',
           icon: 'ant-design:history-outlined',
         },
         children: [
@@ -25,7 +25,7 @@ const routes: RouteRecordRaw[] = [
             component: () => import('#/views/bpm/task/my/index.vue'),
             meta: {
               title: '我的流程',
-              i18n: 'bpm.processInstance.myList',
+              i18n: 'bpm.processInstance.myList.menu',
             },
           },
         ],
@@ -36,7 +36,7 @@ const routes: RouteRecordRaw[] = [
         name: 'BpmProcessInstanceDetail',
         meta: {
           title: '流程详情',
-          i18n: 'bpm.processInstance.detail.title',
+          i18n: 'bpm.processInstance.detail.title.menu',
           activePath: '/bpm/task/my',
           icon: 'ant-design:history-outlined',
           keepAlive: false,
@@ -56,7 +56,7 @@ const routes: RouteRecordRaw[] = [
         component: () => import('#/views/bpm/form/designer/index.vue'),
         meta: {
           title: '编辑流程表单',
-          i18n: 'bpm.form.action.update',
+          i18n: 'bpm.form.action.update.menu',
           activePath: '/bpm/manager/form',
         },
         props: (route) => {
@@ -73,7 +73,7 @@ const routes: RouteRecordRaw[] = [
         name: 'BpmModelCreate',
         meta: {
           title: '创建流程',
-          i18n: 'bpm.model.message.create',
+          i18n: 'bpm.model.message.create.menu',
           activePath: '/bpm/manager/model',
           icon: 'carbon:flow-connection',
           hideInMenu: true,
@@ -86,7 +86,7 @@ const routes: RouteRecordRaw[] = [
         name: 'BpmModelUpdate',
         meta: {
           title: '修改流程',
-          i18n: 'bpm.model.action.update',
+          i18n: 'bpm.model.action.update.menu',
           activePath: '/bpm/manager/model',
           icon: 'carbon:flow-connection',
           hideInMenu: true,
