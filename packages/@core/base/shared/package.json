@@ -81,6 +81,7 @@
   "dependencies": {
     "@ctrl/tinycolor": "catalog:",
     "@tanstack/vue-store": "catalog:",
+    "@vben/locales": "workspace:*",
     "@vue/shared": "catalog:",
     "clsx": "catalog:",
     "dayjs": "catalog:",
