@@ -1,14 +1,10 @@
 <script setup lang="ts">
+import type { FilePreviewProps } from '#/components/file-preview/typing';
+
 import { computed, ref } from 'vue';
 
 import { $t } from '#/locales';
 
-interface FilePreviewProps {
-  /** 文件 URL，多个用 separator 分隔 */
-  fileUrl?: string | null;
-  /** 多个文件 URL 之间的分隔符 */
-  separator?: string;
-}
 defineOptions({ name: 'FilePreview', inheritAttrs: false });
 
 const props = withDefaults(defineProps<FilePreviewProps>(), {

@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup lang="ts" generic>
 import type { RadioChangeEvent } from 'ant-design-vue';
 
 /**
@@ -9,9 +9,7 @@ import type { RadioChangeEvent } from 'ant-design-vue';
  * @example type="select" mode="multiple" - Select 下拉多选
  * @example type="select" mode="single" - Select 下拉单选
  */
-import type { PropType } from 'vue';
-
-import type { DictDataType } from '#/utils';
+import type { SelectToStringProps } from './typing';
 
 import { computed, ref, watch } from 'vue';
 
@@ -21,38 +19,19 @@ import { $t } from '#/locales';
 
 defineOptions({ name: 'SelectToString', inheritAttrs: false });
 
-const props = defineProps({
-  modelValue: {
-    type: String,
-    default: '',
-  },
-  options: {
-    type: Array as PropType<DictDataType[]>,
-    default: () => [],
-  },
-  disabled: {
-    type: Boolean,
-    default: false,
-  },
-  separator: {
-    type: String,
-    default: ';',
-  },
-  type: {
-    type: String as PropType<SelectType>,
-    default: 'check',
-  },
-  mode: {
-    type: String as PropType<SelectMode>,
-    default: 'multiple',
-  },
+const props = withDefaults(defineProps<SelectToStringProps>(), {
+  modelValue: '',
+  options: () => [],
+  disabled: false,
+  separator: ';',
+  type: 'check',
+  mode: 'multiple',
 });
+
 const emit = defineEmits<{
   change: [value: string];
   'update:modelValue': [value: string];
 }>();
-type SelectType = 'check' | 'select';
-type SelectMode = 'multiple' | 'single';
 
 // 将字符串转换为数组
 const selectedValues = ref<string[]>([]);

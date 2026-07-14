@@ -23,7 +23,7 @@ import RoleRepository from '../role/repository.vue';
 
 const props = defineProps({
   activeId: {
-    type: [Number, null] as PropType<null | number>,
+    type: [Number, String, null] as PropType<number | string | null>,
     default: null,
   },
 });
@@ -40,8 +40,8 @@ const [Drawer, drawerApi] = useVbenDrawer({
 });
 
 const searchName = ref<string>(''); // 对话搜索
-const activeConversationId = ref<null | number>(null); // 选中的对话，默认为 null
-const hoverConversationId = ref<null | number>(null); // 悬浮上去的对话
+const activeConversationId = ref<number | string | null>(null); // 选中的对话，默认为 null
+const hoverConversationId = ref<number | string | null>(null); // 悬浮上去的对话
 const conversationList = ref([] as AiChatConversationApi.ChatConversation[]); // 对话列表
 const conversationMap = ref<any>({}); // 对话分组 (置顶、今天、三天前、一星期前、一个月前)
 const loading = ref<boolean>(false); // 加载中
@@ -65,10 +65,10 @@ async function searchConversation() {
 }
 
 /** 点击对话 */
-async function handleConversationClick(id: number) {
+async function handleConversationClick(id: number | string) {
   // 过滤出选中的对话
   const filterConversation = conversationList.value.find((item) => {
-    return item.id === id;
+    return String(item.id) === String(id);
   });
   // 回调 onConversationClick
   // noinspection JSVoidFunctionReturnValueUsed

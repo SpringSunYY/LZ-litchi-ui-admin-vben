@@ -32,6 +32,7 @@ import { I18nDictTagSelect } from '#/components/i18n/i18n-dict-tag-select';
 import { I18nRadio, I18nRadioGroup } from '#/components/i18n/i18n-radio';
 import { I18nSelect } from '#/components/i18n/i18n-select';
 import { I18nSelectToString } from '#/components/i18n/i18n-select-to-string';
+import { ImagePreview } from '#/components/image-preview';
 import { NumberRange } from '#/components/number-range';
 import { SelectToString } from '#/components/select-to-string';
 import { Tinymce as RichTextarea } from '#/components/tinymce';
@@ -171,6 +172,7 @@ export type ComponentType =
   | 'I18nSelect'
   | 'I18nSelectToString'
   | 'IconPicker'
+  | 'ImagePreview'
   | 'ImageUpload'
   | 'Input'
   | 'InputNumber'
@@ -271,6 +273,7 @@ async function initComponentAdapter() {
     TreeSelect: withDefaultPlaceholder(TreeSelect, 'select'),
     Upload,
     FilePreview,
+    ImagePreview,
     FileUpload,
     ImageUpload,
   };

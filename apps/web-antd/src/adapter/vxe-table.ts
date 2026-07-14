@@ -19,14 +19,13 @@ import {
   isString,
 } from '@vben/utils';
 
-import { Button, Image, Popconfirm, Switch } from 'ant-design-vue';
+import { Button, Popconfirm, Switch } from 'ant-design-vue';
 
 import { DictTag } from '#/components/dict-tag';
 import CellFileAndImages from '#/components/file-and-images/file-and-images-preview.vue';
 import { FilePreview } from '#/components/file-preview';
 import I18nDictTag from '#/components/i18n/i18n-dict-tag/i18n-dict-tag.vue';
-import CellImage from '#/components/image/image-preview.vue';
-import JsonPreview from '#/components/json-preview/json-preview.vue';
+import { ImagePreview } from '#/components/image-preview';
 import CellLink from '#/components/link/link-preview.vue';
 import { $t } from '#/locales';
 
@@ -112,33 +111,15 @@ setupVbenVxeTable({
       renderTableDefault(_renderOpts: any, params: any) {
         const { column, row } = params;
         const value = row[column.field];
-        return h(CellImage, { src: value });
-      },
-    });
-
-    // 表格配置项可以用 cellRender: { name: 'CellJson' },
-    // 将 JSON 对象解析为 key: value 形式显示，支持复制 JSON
-    addRenderer('CellJson', {
-      renderTableDefault(_renderOpts: any, params: any) {
-        const { column, row } = params;
-        const value = row[column.field];
-        return h(JsonPreview, { value });
-      },
-    });
-
-    addRenderer('CellImages', {
-      renderTableDefault(_renderOpts: any, params: any) {
-        const { column, row } = params;
-        if (column && column.field && row[column.field]) {
-          let list = row[column.field];
-          if (typeof list === 'string' && list.includes('||')) {
-            list = list.split('||').map((item: string) => item.trim());
-          }
-          if (Array.isArray(list)) {
-            return list.map((item: any) => h(Image, { src: item }));
-          }
+        if (!value) {
+          return '-';
         }
-        return '';
+        const { props } = _renderOpts;
+        return h(ImagePreview, {
+          src: value,
+          height: props?.height,
+          width: props?.width,
+        });
       },
     });
 
@@ -146,10 +127,14 @@ setupVbenVxeTable({
     // 支持单个文件URL或 || 分隔的多个URL字符串
     addRenderer('CellFilePreview', {
       renderTableDefault(renderOpts: any, params: any) {
-        const { props } = renderOpts;
         const { column, row } = params;
+        const value = row[column.field];
+        if (!value) {
+          return '-';
+        }
+        const { props } = renderOpts;
         return h(FilePreview, {
-          fileUrl: row[column.field],
+          fileUrl: value,
           text: props?.text ?? '查看文件',
         });
       },
@@ -165,7 +150,7 @@ setupVbenVxeTable({
     });
 
     // 表格配置项可以用 cellRender: { name: 'CellFileAndImages', props: { separator: '||', type: 'auto' } },
-    // type 可选值：'auto' 自动判断，'image' 强制图片，'file' 强制文件
+    // type 可选值：'auto' 自动判断，'image-preview' 强制图片，'file' 强制文件
     // 支持单个或多个文件/图片 URL，多个用 separator 分隔
     // 自动判断文件类型：图片扩展名使用图片预览，否则使用文件预览
     addRenderer('CellFileAndImages', {
@@ -387,13 +372,12 @@ setupVbenVxeTable({
 
     // 这里可以自行扩展 vxe-table 的全局配置，比如自定义格式化
     // vxeUI.formats.add
-
     addFormat('formatPast2', {
       tableCellFormatMethod({ cellValue }: { cellValue: any }) {
         if (cellValue === null || cellValue === undefined) {
           return '';
         }
-        return formatPast2(cellValue);
+        return formatPast2(cellValue, $t);
       },
     });
 

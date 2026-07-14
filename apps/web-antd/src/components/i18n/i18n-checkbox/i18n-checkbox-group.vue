@@ -1,7 +1,5 @@
-<script setup lang="ts">
-import type { PropType } from 'vue';
-
-import type { DictDataType } from '#/utils';
+<script setup lang="ts" generic>
+import type { I18nCheckboxGroupProps } from './typing';
 
 import { computed } from 'vue';
 
@@ -11,19 +9,10 @@ import { $t } from '#/locales';
 
 defineOptions({ name: 'I18nCheckboxGroup' });
 
-const props = defineProps({
-  modelValue: {
-    type: Array as PropType<string[]>,
-    default: () => [],
-  },
-  options: {
-    type: Array as PropType<DictDataType[]>,
-    default: () => [],
-  },
-  disabled: {
-    type: Boolean,
-    default: false,
-  },
+const props = withDefaults(defineProps<I18nCheckboxGroupProps>(), {
+  modelValue: () => [],
+  options: () => [],
+  disabled: false,
 });
 
 const emit = defineEmits<{

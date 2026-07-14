@@ -1,34 +1,25 @@
-<script lang="ts" setup>
-import type { PropType } from 'vue';
+<script setup lang="ts" generic>
+import type { I18nDictTagSelectProps } from './typing';
 
-import type { DictDataType } from '#/utils';
+import { $t } from '#/locales';
 
 defineOptions({ name: 'I18nDictTagSelect' });
 
-const props = defineProps({
-  modelValue: {
-    type: [String, Number, Boolean] as PropType<boolean | number | string>,
-    default: null,
-  },
-  tags: {
-    type: Array as PropType<DictDataType[]>,
-    default: () => [],
-  },
-  disabled: {
-    type: Boolean,
-    default: false,
-  },
+const props = withDefaults(defineProps<I18nDictTagSelectProps>(), {
+  modelValue: undefined,
+  tags: () => [],
+  disabled: false,
 });
 
-const emits = defineEmits<{
-  (e: 'update:modelValue', value: boolean | number | string): void;
-  (e: 'change', value: boolean | number | string): void;
+const emit = defineEmits<{
+  change: [value: boolean | number | string];
+  'update:modelValue': [value: boolean | number | string];
 }>();
 
 function handleClick(value: boolean | number | string) {
   if (props.disabled) return;
-  emits('update:modelValue', value);
-  emits('change', value);
+  emit('update:modelValue', value);
+  emit('change', value);
 }
 </script>
 

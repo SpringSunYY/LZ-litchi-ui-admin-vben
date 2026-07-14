@@ -1,7 +1,5 @@
-<script setup lang="ts">
-import type { PropType } from 'vue';
-
-import type { DictDataType } from '#/utils';
+<script setup lang="ts" generic>
+import type { I18nRadioGroupProps } from './typing';
 
 import { computed, defineAsyncComponent } from 'vue';
 
@@ -11,19 +9,10 @@ import { $t } from '#/locales';
 
 defineOptions({ name: 'I18nRadioGroup' });
 
-const props = defineProps({
-  modelValue: {
-    type: [String, Number, Boolean] as PropType<boolean | number | string>,
-    default: null,
-  },
-  options: {
-    type: Array as PropType<DictDataType[]>,
-    default: () => [],
-  },
-  disabled: {
-    type: Boolean,
-    default: false,
-  },
+const props = withDefaults(defineProps<I18nRadioGroupProps>(), {
+  modelValue: undefined,
+  options: () => [],
+  disabled: false,
 });
 
 const emit = defineEmits<{

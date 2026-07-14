@@ -82,8 +82,10 @@ function audioTimeUpdate(args: any) {
       </div>
       <!-- 音频 -->
       <audio
-        v-bind="audioProps"
         ref="audioRef"
+        :autoplay="audioProps.autoplay"
+        :muted="audioProps.muted"
+        :volume="audioProps.volume / 100"
         controls
         v-show="!audioProps"
         @timeupdate="audioTimeUpdate"

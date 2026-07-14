@@ -1,4 +1,6 @@
-<script setup lang="ts">
+<script setup lang="ts" generic>
+import type { I18nDictTagProps } from './typing';
+
 import { computed, ref } from 'vue';
 
 import { Popover, Tag } from 'ant-design-vue';
@@ -6,34 +8,7 @@ import { Popover, Tag } from 'ant-design-vue';
 import { $t } from '#/locales';
 import { getDictObj } from '#/utils';
 
-interface DictTagProps {
-  /**
-   * 字典类型
-   */
-  type: string;
-  /**
-   * 字典值
-   */
-  value: any;
-  /**
-   * 图标
-   */
-  icon?: string;
-  /**
-   * 多值分隔符，默认 ';'
-   */
-  separator?: string;
-  /**
-   * 未匹配时是否显示原字符，默认 true
-   */
-  useOriginal?: boolean;
-  /**
-   * 最大显示数量，默认 0 表示不限制，设置为 1 表示只显示 1 个
-   */
-  max?: number;
-}
-
-const props = withDefaults(defineProps<DictTagProps>(), {
+const props = withDefaults(defineProps<I18nDictTagProps>(), {
   separator: ';',
   useOriginal: true,
   max: 1,

@@ -1,5 +1,5 @@
-<script setup lang="ts">
-import type { PropType } from 'vue';
+<script setup lang="ts" generic>
+import type { I18nRadioProps } from './typing';
 
 import type { DictDataType } from '#/utils';
 
@@ -9,19 +9,9 @@ import { $t } from '#/locales';
 
 defineOptions({ name: 'I18nRadio' });
 
-const props = defineProps({
-  modelValue: {
-    type: [String, Number, Boolean] as PropType<boolean | number | string>,
-    default: null,
-  },
-  option: {
-    type: Object as PropType<DictDataType>,
-    required: true,
-  },
-  disabled: {
-    type: Boolean,
-    default: false,
-  },
+const props = withDefaults(defineProps<I18nRadioProps>(), {
+  modelValue: undefined,
+  disabled: false,
 });
 
 const emit = defineEmits<{
@@ -50,11 +40,11 @@ function getLabel(option: DictDataType) {
 
 <template>
   <Radio
-    :value="option.value"
+    :value="props.option.value"
     :disabled="props.disabled"
-    :checked="modelValue === option.value"
+    :checked="modelValue === props.option.value"
     @change="handleChange"
   >
-    {{ getLabel(option) }}
+    {{ getLabel(props.option) }}
   </Radio>
 </template>

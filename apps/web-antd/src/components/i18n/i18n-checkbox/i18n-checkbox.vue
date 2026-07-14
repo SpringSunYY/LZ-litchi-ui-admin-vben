@@ -1,7 +1,7 @@
-<script setup lang="ts">
+<script setup lang="ts" generic>
 import type { CheckboxChangeEvent } from 'ant-design-vue/es/checkbox/interface';
 
-import type { PropType } from 'vue';
+import type { I18nCheckboxProps } from './typing';
 
 import type { DictDataType } from '#/utils';
 
@@ -11,19 +11,9 @@ import { $t } from '#/locales';
 
 defineOptions({ name: 'I18nCheckbox' });
 
-const props = defineProps({
-  modelValue: {
-    type: Array as PropType<string[]>,
-    default: () => [],
-  },
-  option: {
-    type: Object as PropType<DictDataType>,
-    required: true,
-  },
-  disabled: {
-    type: Boolean,
-    default: false,
-  },
+const props = withDefaults(defineProps<I18nCheckboxProps>(), {
+  modelValue: () => [],
+  disabled: false,
 });
 
 const emit = defineEmits<{

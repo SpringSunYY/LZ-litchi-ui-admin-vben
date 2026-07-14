@@ -442,7 +442,7 @@ onBeforeUnmount(() => {
             width="100"
           >
             <template #default="{ record }">
-              {{ formatPast2(record.durationInMillis) }}
+              {{ formatPast2(record.durationInMillis, $t) }}
             </template>
           </Table.Column>
         </Table>

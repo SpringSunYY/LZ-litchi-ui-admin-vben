@@ -21,8 +21,6 @@
   },
   "dependencies": {
     "@intlify/core-base": "catalog:",
-    "@vben-core/composables": "workspace:*",
-    "@vben/constants": "workspace:*",
     "vue": "catalog:",
     "vue-i18n": "catalog:"
   }

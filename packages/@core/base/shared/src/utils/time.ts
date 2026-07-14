@@ -1,5 +1,3 @@
-import { $t } from '@vben/locales';
-
 import dayjs from 'dayjs';
 
 import { formatDate } from './date';
@@ -142,9 +140,10 @@ export function formatAxis(param: Date): string {
  * 将毫秒，转换成时间字符串。例如说，xx 分钟
  *
  * @param ms 毫秒
+ * @param t 国际化翻译函数，不传则使用中文
  * @returns {string} 字符串
  */
-export function formatPast2(ms: number): string {
+export function formatPast2(ms: number, t?: (key: string) => string): string {
   const SECOND = 1000;
   const MINUTE = 60 * SECOND;
   const HOUR = 60 * MINUTE;
@@ -155,28 +154,33 @@ export function formatPast2(ms: number): string {
   const minute = Math.floor((ms % HOUR) / MINUTE);
   const second = Math.floor((ms % MINUTE) / SECOND);
 
+  const dayLabel = t?.('ui.time.day') ?? '天';
+  const hourLabel = t?.('ui.time.hour') ?? '小时';
+  const minuteLabel = t?.('ui.time.minute') ?? '分钟';
+  const secondLabel = t?.('ui.time.second') ?? '秒';
+
   if (day > 0) {
     if (hour > 0) {
-      return `${day}${$t('ui.time.day')}${hour}${$t('ui.time.hour')}`;
+      return `${day}${dayLabel}${hour}${hourLabel}`;
     }
     if (minute > 0) {
-      return `${day}${$t('ui.time.day')}${minute}${$t('ui.time.minute')}`;
+      return `${day}${dayLabel}${minute}${minuteLabel}`;
     }
-    return `${day}${$t('ui.time.day')}`;
+    return `${day}${dayLabel}`;
   }
   if (hour > 0) {
     if (minute > 0) {
-      return `${hour}${$t('ui.time.hour')}${minute}${$t('ui.time.minute')}`;
+      return `${hour}${hourLabel}${minute}${minuteLabel}`;
     }
-    return `${hour}${$t('ui.time.hour')}`;
+    return `${hour}${hourLabel}`;
   }
   if (minute > 0) {
-    return `${minute}${$t('ui.time.minute')}`;
+    return `${minute}${minuteLabel}`;
   }
-  return second > 0
-    ? `${second}${$t('ui.time.second')}`
-    : `0${$t('ui.time.second')}`;
+  return second > 0 ? `${second}${secondLabel}` : `0${secondLabel}`;
 }
+
+// ... existing code ...
 
 /**
  * 设置起始日期，时间为00:00:00

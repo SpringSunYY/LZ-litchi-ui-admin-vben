@@ -2,11 +2,11 @@
 import { computed } from 'vue';
 
 import { FilePreview } from '#/components/file-preview';
-import CellImage from '#/components/image/image-preview.vue';
+import { ImagePreview } from '#/components/image-preview';
 
 interface CellFileAndImagesProps {
   /** 文件 URL，多个用 separator 分隔 */
-  value?: string | null;
+  value?: null | string;
   /** 多个文件 URL 之间的分隔符 */
   separator?: string;
   /** 强制指定类型：'image' | 'file' | 'auto'，默认 auto */
@@ -88,11 +88,11 @@ const imageUrls = computed(() => {
 <template>
   <template v-if="fileList.length > 0">
     <!-- 全部是图片 -->
-    <CellImage v-if="allAreImages" :src="imageUrls" />
+    <ImagePreview v-if="allAreImages" :src="imageUrls" />
     <!-- 混合类型或文件 -->
     <div v-else>
       <template v-for="(file, index) in filesWithType" :key="index">
-        <CellImage
+        <ImagePreview
           v-if="file.isImage"
           :src="file.url"
           style="max-width: 80px; vertical-align: middle"
