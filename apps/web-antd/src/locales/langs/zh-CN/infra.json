@@ -511,5 +511,109 @@
       "copySuccess": "复制成功",
       "copyFailed": "复制失败"
     }
+  },
+  "vectorImage": {
+    "list": "以图搜图列表",
+    "field": {
+      "id": "向量编号",
+      "imagePath": "图片路径",
+      "createTime": "入库时间",
+      "fileId": "文件 ID",
+      "tenantId": "租户编号",
+      "topK": "Top K",
+      "similarity": "相似度",
+      "score": "距离分"
+    },
+    "action": {
+      "create": "上传图片",
+      "search": "以图搜图",
+      "searchByUpload": "上传图片搜索",
+      "searchById": "按编号搜索",
+      "searchByPath": "按路径搜索",
+      "delete": "删除",
+      "deleteBatch": "批量删除",
+      "reset": "重置集合",
+      "refresh": "刷新"
+    },
+    "message": {
+      "confirmDelete": "确认删除图片 {0} ？删除后无法恢复。",
+      "confirmReset": "确认清空 Milvus 集合并重建吗？所有已索引的图片数据都会丢失！",
+      "resetSuccess": "集合已重置",
+      "resetFailed": "重置失败",
+      "searchEmpty": "请先选择一张查询图片",
+      "searchNoResult": "暂无匹配结果，请先在「索引图片」中添加图片",
+      "uploadSuccess": "图片上传成功，ID：{0}",
+      "uploadFailed": "图片上传失败：{0}",
+      "searchFailed": "搜索失败：{0}",
+      "moduleType": "图片以图搜图",
+      "batchUploadSuccess": "批量入库完成：新增 {0}，跳过 {1}，失败 {2}",
+      "batchUploadPartialFailed": "部分失败（{0} 条）：{1}",
+      "emptyFile": "请选择至少一个图片文件",
+      "emptyUrl": "请输入至少一个 URL",
+      "dirImportEmpty": "请输入目录路径",
+      "dirImportSuccess": "目录导入完成：扫描 {0}，新增 {1}，跳过 {2}，失败 {3}",
+      "dirImportFailed": "目录导入失败：{0}",
+      "batchImportSuccess": "导入已完成"
+    },
+    "import": {
+      "modalTitle": "导入图片",
+      "tabUrls": "URL 列表",
+      "tabDir": "本地目录",
+      "urlsHint": "每行一个 http(s) 图片地址，服务端按 URL 末段文件名查重。",
+      "urlsPlaceholder": "https://example.com/cat1.jpg\nhttps://example.com/cat2.png",
+      "urlsConfirm": "按 URL 入库",
+      "urlsImporting": "导入中…",
+      "dirHint": "输入服务器本地绝对路径。",
+      "dirPlaceholder": "例如 D:/images 或 /var/data/images",
+      "dirRecursive": "递归子目录",
+      "dirConfirm": "开始导入",
+      "dirImporting": "导入中…"
+    },
+    "upload": {
+      "modalTitle": "上传图片",
+      "title": "选择要上传并索引的图片",
+      "dragText": "点击或拖拽文件到此区域上传",
+      "hint": "支持 .jpg、.jpeg、.png、.webp 格式，单张图片最大 2MB",
+      "placeholder": "请选择要上传的图片",
+      "remove": "移除",
+      "confirm": "上传并索引",
+      "batchHint": "支持多选 .jpg / .jpeg / .png / .webp；同名文件自动跳过。",
+      "batchConfirm": "批量上传并索引",
+      "tipSingle": "已选择 {0} 张，将走单条上传接口",
+      "tipBatch": "已选择 {0} 张，将走批量上传接口（同名自动跳过）",
+      "uploading": "上传中…"
+    },
+    "dirImport": {
+      "sectionTitle": "本地目录导入",
+      "dirLabel": "目录路径：",
+      "dirPlaceholder": "例如 D:/images 或 /var/data/images",
+      "recursiveLabel": "递归子目录",
+      "recursiveHint": "（默认跳过已入库的图片）",
+      "submit": "开始导入",
+      "submitting": "导入中…",
+      "statusPrefix": "正在导入…"
+    },
+    "search": {
+      "modalTitle": "以图搜图",
+      "uploadTitle": "上传查询图片",
+      "uploadHint": "上传一张图片，系统会找最相似的 K 张",
+      "preview": "查询图预览",
+      "actionSearch": "开始搜索",
+      "tip": "上传图片后可点击「开始搜索」检索",
+      "tipReupload": "已返回 {0} 条结果，可重新上传图片进行下一次搜索",
+      "queryByIdLabel": "按编号查询（编号：{0}）",
+      "result": "相似图片（Top {0}）",
+      "resultEmpty": "搜索结果",
+      "empty": "暂无结果，请先上传图片后点击「开始搜索」",
+      "loading": "检索中…",
+      "topK": "Top K",
+      "similarity": "相似度"
+    },
+    "stats": {
+      "collectionName": "集合名",
+      "rowCount": "记录数",
+      "dimension": "特征维度",
+      "exists": "集合存在"
+    }
   }
 }

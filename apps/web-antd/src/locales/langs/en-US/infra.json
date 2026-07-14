@@ -497,5 +497,109 @@
       "copySuccess": "Copied successfully",
       "copyFailed": "Copy failed"
     }
+  },
+  "vectorImage": {
+    "list": "image search list",
+    "field": {
+      "id": "vector id",
+      "imagePath": "image path",
+      "createTime": "indexed at",
+      "fileId": "file id",
+      "tenantId": "tenant id",
+      "topK": "Top K",
+      "similarity": "similarity",
+      "score": "distance"
+    },
+    "action": {
+      "create": "upload image",
+      "search": "search by image",
+      "searchByUpload": "search by upload",
+      "searchById": "search by id",
+      "searchByPath": "search by path",
+      "delete": "delete",
+      "deleteBatch": "batch delete",
+      "reset": "reset collection",
+      "refresh": "refresh"
+    },
+    "message": {
+      "confirmDelete": "confirm delete image {0}? this action cannot be undone.",
+      "confirmReset": "confirm to drop and recreate the milvus collection? all indexed images will be lost!",
+      "resetSuccess": "collection has been reset",
+      "resetFailed": "reset failed",
+      "searchEmpty": "please select a query image first",
+      "searchNoResult": "no matches found. please index some images first.",
+      "uploadSuccess": "image uploaded, id: {0}",
+      "uploadFailed": "image upload failed: {0}",
+      "searchFailed": "search failed: {0}",
+      "moduleType": "image search by image",
+      "batchUploadSuccess": "batch upload done: inserted {0}, skipped {1}, failed {2}",
+      "batchUploadPartialFailed": "partial failed ({0}): {1}",
+      "emptyFile": "please select at least one image file",
+      "emptyUrl": "please input at least one URL",
+      "dirImportEmpty": "please input a directory path",
+      "dirImportSuccess": "directory import done: scanned {0}, inserted {1}, skipped {2}, failed {3}",
+      "dirImportFailed": "directory import failed: {0}",
+      "batchImportSuccess": "import done"
+    },
+    "import": {
+      "modalTitle": "import images",
+      "tabUrls": "URLs",
+      "tabDir": "local directory",
+      "urlsHint": "one URL per line. server dedupes by URL filename.",
+      "urlsPlaceholder": "https://example.com/cat1.jpg\nhttps://example.com/cat2.png",
+      "urlsConfirm": "index by URLs",
+      "urlsImporting": "importing…",
+      "dirHint": "input an absolute server-side path.",
+      "dirPlaceholder": "e.g. D:/images or /var/data/images",
+      "dirRecursive": "recursive",
+      "dirConfirm": "start import",
+      "dirImporting": "importing…"
+    },
+    "upload": {
+      "modalTitle": "upload image",
+      "title": "select an image to upload and index",
+      "dragText": "click or drag files to this area to upload",
+      "hint": "supports .jpg, .jpeg, .png, .webp formats, max 2MB per image",
+      "placeholder": "please select an image to upload",
+      "remove": "remove",
+      "confirm": "upload & index",
+      "batchHint": "supports multi-select .jpg / .jpeg / .png / .webp; existing files are skipped.",
+      "batchConfirm": "batch upload & index",
+      "tipSingle": "{0} file selected. will use single-image upload.",
+      "tipBatch": "{0} files selected. will use batch upload (dedupes by name).",
+      "uploading": "uploading…"
+    },
+    "dirImport": {
+      "sectionTitle": "import from local directory",
+      "dirLabel": "directory:",
+      "dirPlaceholder": "e.g. D:/images or /var/data/images",
+      "recursiveLabel": "recursive",
+      "recursiveHint": "(already-indexed images will be skipped)",
+      "submit": "start import",
+      "submitting": "importing…",
+      "statusPrefix": "importing…"
+    },
+    "search": {
+      "modalTitle": "search by image",
+      "uploadTitle": "upload query image",
+      "uploadHint": "upload an image and the system will find the top K most similar ones",
+      "preview": "query image preview",
+      "actionSearch": "start search",
+      "tip": "upload an image and click \"start search\" to query",
+      "tipReupload": "{0} results returned. upload a new image to run another search.",
+      "queryByIdLabel": "searching by id: {0}",
+      "result": "similar images (top {0})",
+      "resultEmpty": "search results",
+      "empty": "no results. please upload an image and click \"start search\".",
+      "loading": "searching…",
+      "topK": "Top K",
+      "similarity": "similarity"
+    },
+    "stats": {
+      "collectionName": "collection name",
+      "rowCount": "record count",
+      "dimension": "feature dim",
+      "exists": "exists"
+    }
   }
 }

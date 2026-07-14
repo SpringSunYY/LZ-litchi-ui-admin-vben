@@ -54,5 +54,7 @@
   "max": "Max",
   "filter": "Filter",
   "todo": "Todo",
-  "yuan": "Yuan"
+  "yuan": "Yuan",
+  "copy": "Copy",
+  "clear": "Clear"
 }
