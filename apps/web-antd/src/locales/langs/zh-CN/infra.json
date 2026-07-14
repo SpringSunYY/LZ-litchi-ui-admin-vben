@@ -454,7 +454,7 @@
       "treeParentColumn": "树显示的父编码字段名，例如 parent_id",
       "treeNameColumn": "树节点显示的名称字段，一般是 name",
       "masterTable": "关联主表（父表）的表名，如：system_user",
-      "subJoinColumn": "子表关联的字段，如：user_id",
+      "subJoinColumn": "子表关联的字段，如：user_id。注意如果关联的不是主表主键，删除时需要自己重新优化一下，具体看代码。",
       "joinRelation": "主表与子表的关联关系"
     },
     "action": {

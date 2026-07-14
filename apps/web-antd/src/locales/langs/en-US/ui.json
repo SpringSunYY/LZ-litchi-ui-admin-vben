@@ -48,14 +48,16 @@
     "updateConfirm": "Confirm Update?",
     "selectRequired": "Please select {0}",
     "processing": "Processing...",
-    "updateSuccess": "{0} updated successfully"
+    "updateSuccess": "{0} updated successfully",
+    "submitConfirm": "Are you sure you want to submit {0}?"
   },
   "placeholder": {
     "input": "Please enter {0}",
     "select": "Please select {0}",
     "date": "Please select {0}",
     "autoGenerate": "Auto generated on save",
-    "accountCount": "{0} accounts"
+    "accountCount": "{0} accounts",
+    "subTableInput": "Please enter the value {1} on line {0}"
   },
   "validate": {
     "email": "Please enter a valid email address"

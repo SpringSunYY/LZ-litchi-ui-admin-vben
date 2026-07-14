@@ -440,7 +440,7 @@
       "treeParentColumn": "parent code field name for tree display, e.g. parent_id",
       "treeNameColumn": "name field for tree node display, usually name",
       "masterTable": "master table (parent table) name, e.g. system_user",
-      "subJoinColumn": "sub table join column, e.g. user_id",
+      "subJoinColumn": "sub table join column, e.g. user_id. Note: If the associated key is not the primary table's primary key, you need to re-optimize it yourself when deleting it. Please refer to the code for details.",
       "joinRelation": "join relationship between master and sub tables"
     },
     "action": {
