@@ -77,11 +77,8 @@ function submitEnd() {
   modalApi.unlock();
 }
 function onError(error: any) {
-  message.error(
-    $t('infra.vectorImage.message.uploadFailed', [
-      error?.message ?? String(error),
-    ]),
-  );
+  message.error($t('infra.vectorImage.message.uploadFailed'));
+  console.error(error);
 }
 
 const [Modal, modalApi] = useVbenModal({
