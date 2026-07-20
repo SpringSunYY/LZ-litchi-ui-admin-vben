@@ -100,7 +100,7 @@ function handleAdd() {
     totalPrice: undefined,
     remark: undefined,
   } as unknown as ErpStockInApi.StockInItem;
-  tableData.value.push(newRow, newRow);
+  tableData.value.push(newRow);
   // 通知父组件更新
   emit('update:items', [...tableData.value]);
 }
@@ -282,10 +282,10 @@ onMounted(async () => {
             $t('erp.stockIn.message.totalLabel')
           }}</span>
           <div class="flex space-x-4">
-            <span
-              >{{ $t('erp.stockIn.message.countLabel')
-              }}{{ erpCountInputFormatter(summaries.count) }}</span
-            >
+            <span>
+              {{ $t('erp.stockIn.message.countLabel')
+              }}{{ erpCountInputFormatter(summaries.count) }}
+            </span>
             <span>
               {{ $t('erp.stockIn.message.amountLabel')
               }}{{ erpPriceInputFormatter(summaries.totalPrice) }}
