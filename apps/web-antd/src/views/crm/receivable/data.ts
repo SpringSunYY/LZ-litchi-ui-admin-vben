@@ -159,6 +159,7 @@ export function useFormSchema(): VbenFormSchema[] {
         ]),
         rows: 4,
       },
+      formItemClass: 'md:col-span-2',
     },
   ];
 }

@@ -1,15 +1,18 @@
 import type { VbenFormSchema } from '#/adapter/form';
 import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 
+import { useUserStore } from '@vben/stores';
 import { floatToFixed2 } from '@vben/utils';
 
 import { getContractSimpleList } from '#/api/crm/contract';
 import { getCustomerSimpleList } from '#/api/crm/customer';
+import { getSimpleUserList } from '#/api/system/user';
 import { $t } from '#/locales';
 import { DICT_TYPE, getDictOptions } from '#/utils';
 
 /** 新增/修改的表单 */
 export function useFormSchema(): VbenFormSchema[] {
+  const userStore = useUserStore();
   return [
     {
       fieldName: 'customerId',
@@ -24,6 +27,22 @@ export function useFormSchema(): VbenFormSchema[] {
           $t('crm.receivablePlan.field.customerId'),
         ]),
       },
+    },
+    {
+      fieldName: 'ownerUserId',
+      label: $t('crm.customer.field.ownerUserId'),
+      component: 'ApiSelect',
+      rules: 'required',
+      componentProps: {
+        api: getSimpleUserList,
+        labelField: 'nickname',
+        valueField: 'id',
+      },
+      dependencies: {
+        triggerFields: ['id'],
+        disabled: (values) => values.id,
+      },
+      defaultValue: userStore.userInfo?.id,
     },
     {
       fieldName: 'contractId',
@@ -123,6 +142,7 @@ export function useFormSchema(): VbenFormSchema[] {
         ]),
         rows: 4,
       },
+      formItemClass: 'md:col-span-2',
     },
   ];
 }
