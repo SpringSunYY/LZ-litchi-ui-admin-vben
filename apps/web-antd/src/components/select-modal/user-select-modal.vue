@@ -2,6 +2,8 @@
 // @ts-nocheck
 import type { Key } from 'ant-design-vue/es/table/interface';
 
+import type { UserSelectModalProps } from './typing';
+
 import type { SystemDeptApi } from '#/api/system/dept';
 import type { SystemUserApi } from '#/api/system/user';
 
@@ -34,18 +36,11 @@ interface DeptTreeNode {
 
 defineOptions({ name: 'UserSelectModal' });
 
-const props = withDefaults(
-  defineProps<{
-    cancelText?: string;
-    confirmText?: string;
-    title?: string;
-  }>(),
-  {
-    title: '',
-    confirmText: '',
-    cancelText: '',
-  },
-);
+const props = withDefaults(defineProps<UserSelectModalProps>(), {
+  title: '',
+  confirmText: '',
+  cancelText: '',
+});
 
 const emit = defineEmits<{
   cancel: [];

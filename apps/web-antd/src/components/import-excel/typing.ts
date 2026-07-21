@@ -12,7 +12,7 @@ export interface ImportExcelProps {
   /** 表单schema */
   formSchema: () => VbenFormSchema[];
   /** 弹窗宽度 */
-  width?: string | number;
+  width?: number | string;
 }
 
 export interface ImportExcelEmits {

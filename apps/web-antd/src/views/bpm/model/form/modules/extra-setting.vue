@@ -2,7 +2,7 @@
 import { computed, provide, ref, watch } from 'vue';
 
 import { useVbenModal } from '@vben/common-ui';
-import { IconifyIcon, CircleHelp } from '@vben/icons';
+import { CircleHelp, IconifyIcon } from '@vben/icons';
 import { $t } from '@vben/locales';
 
 import {
@@ -240,11 +240,13 @@ watch(
     if (newFormId && modelData.value.formType === BpmModelFormType.NORMAL) {
       const data = await getFormDetail(newFormId);
       const result: Array<{ field: string; title: string }> = [];
-      if (data.fields) {
+      if (data?.fields) {
         unParsedFormFields.value = data.fields;
         data.fields.forEach((fieldStr: string) => {
           parseFormFields(JSON.parse(fieldStr), result);
         });
+      } else {
+        unParsedFormFields.value = [];
       }
       formFields.value = result;
     } else {

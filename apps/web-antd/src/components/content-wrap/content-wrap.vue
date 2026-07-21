@@ -3,7 +3,7 @@
   保证和 yudao-ui-admin-vue3 功能的一致性
 -->
 <script lang="ts" setup>
-import type { CSSProperties } from 'vue';
+import type { ContentWrapProps } from './typing';
 
 import { ShieldQuestion } from '@vben/icons';
 
@@ -11,18 +11,11 @@ import { Card, Tooltip } from 'ant-design-vue';
 
 defineOptions({ name: 'ContentWrap' });
 
-withDefaults(
-  defineProps<{
-    bodyStyle?: CSSProperties;
-    message?: string;
-    title?: string;
-  }>(),
-  {
-    bodyStyle: () => ({ padding: '10px' }),
-    title: '',
-    message: '',
-  },
-);
+withDefaults(defineProps<ContentWrapProps>(), {
+  bodyStyle: () => ({ padding: '10px' }),
+  title: '',
+  message: '',
+});
 </script>
 
 <template>

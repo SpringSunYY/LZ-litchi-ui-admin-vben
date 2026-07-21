@@ -2,6 +2,8 @@
 <script lang="ts" setup>
 import type { DataNode } from 'ant-design-vue/es/tree';
 
+import type { DeptSelectModalProps } from './typing';
+
 import type { SystemDeptApi } from '#/api/system/dept';
 
 import { ref } from 'vue';
@@ -15,27 +17,13 @@ import { getSimpleDeptList } from '#/api/system/dept';
 
 defineOptions({ name: 'DeptSelectModal' });
 
-const props = withDefaults(
-  defineProps<{
-    // 取消按钮文本
-    cancelText?: string;
-    // checkable 状态下节点选择完全受控
-    checkStrictly?: boolean;
-    // 确认按钮文本
-    confirmText?: string;
-    // 是否支持多选
-    multiple?: boolean;
-    // 标题
-    title?: string;
-  }>(),
-  {
-    cancelText: '',
-    checkStrictly: false,
-    confirmText: '',
-    multiple: true,
-    title: '',
-  },
-);
+const props = withDefaults(defineProps<DeptSelectModalProps>(), {
+  cancelText: '',
+  checkStrictly: false,
+  confirmText: '',
+  multiple: true,
+  title: '',
+});
 
 const emit = defineEmits<{
   confirm: [deptList: SystemDeptApi.Dept[]];

@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import type { EllipsisContentProps } from './typing';
+
 import { Popover } from 'ant-design-vue';
 
 defineOptions({
@@ -6,14 +8,9 @@ defineOptions({
   inheritAttrs: false,
 });
 
-withDefaults(
-  defineProps<{
-    title?: string;
-  }>(),
-  {
-    title: '',
-  },
-);
+withDefaults(defineProps<EllipsisContentProps>(), {
+  title: '',
+});
 </script>
 
 <template>

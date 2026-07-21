@@ -26,7 +26,8 @@ import CellFileAndImages from '#/components/file-and-images/file-and-images-prev
 import { FilePreview } from '#/components/file-preview';
 import I18nDictTag from '#/components/i18n/i18n-dict-tag/i18n-dict-tag.vue';
 import { ImagePreview } from '#/components/image-preview';
-import CellLink from '#/components/link/link-preview.vue';
+import { JsonPreview } from '#/components/json-preview';
+import { LinkPreview as CellLink } from '#/components/link';
 import { $t } from '#/locales';
 
 import { useVbenForm } from './form';
@@ -162,6 +163,16 @@ setupVbenVxeTable({
           separator: props?.separator ?? '||',
           type: props?.type ?? 'auto',
         });
+      },
+    });
+
+    // 表格配置项可以用 cellRender: { name: 'CellJson' },
+    // 将 JSON 对象解析为 key: value 形式显示，支持复制 JSON
+    addRenderer('CellJson', {
+      renderTableDefault(_renderOpts: any, params: any) {
+        const { column, row } = params;
+        const value = row[column.field];
+        return h(JsonPreview, { value });
       },
     });
 

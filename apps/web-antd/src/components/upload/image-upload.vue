@@ -83,12 +83,9 @@ watch(
     }
     let value: string | string[] = [];
     if (v) {
-      if (Array.isArray(v)) {
-        value = v;
-      } else {
-        // 支持 || 分隔符分隔的多个文件URL
-        value = v.split('||').filter((item) => item.trim());
-      }
+      value = Array.isArray(v)
+        ? v
+        : v.split('||').filter((item) => item.trim());
       fileList.value = value.map((item, i) => {
         if (item && isString(item)) {
           return {

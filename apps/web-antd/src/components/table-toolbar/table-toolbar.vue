@@ -1,6 +1,7 @@
 <!-- add by puhui999：vxe table 工具栏二次封装，提供给 vxe 原生列表使用 -->
 <script setup lang="ts">
-//@ts-nocheck
+import type { TableToolbarProps } from './typing';
+
 import type { VxeToolbarInstance } from '#/adapter/vxe-table';
 
 import { ref } from 'vue';
@@ -15,11 +16,11 @@ import { VxeToolbar } from '#/adapter/vxe-table';
 /** 列表工具栏封装 */
 defineOptions({ name: 'TableToolbar' });
 
-const props = defineProps<{
-  hiddenSearch: boolean;
-}>();
+const props = defineProps<TableToolbarProps>();
 
-const emits = defineEmits(['update:hiddenSearch']);
+const emits = defineEmits<{
+  'update:hiddenSearch': [value: boolean];
+}>();
 
 const toolbarRef = ref<VxeToolbarInstance>();
 const { toggleMaximizeAndTabbarHidden, contentIsMaximize } =

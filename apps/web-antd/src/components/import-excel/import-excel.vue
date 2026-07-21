@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import type { FileType } from 'ant-design-vue/es/upload/interface';
 
-import type { VbenFormSchema } from '#/adapter/form';
+import type { ImportExcelProps } from './typing';
 
 import { ref } from 'vue';
 
@@ -12,15 +12,6 @@ import { Button, message, Upload } from 'ant-design-vue';
 
 import { useVbenForm } from '#/adapter/form';
 import { $t } from '#/locales';
-
-interface ImportExcelProps {
-  title: string;
-  importApi: (file: File, ...args: any[]) => Promise<any>;
-  templateApi: () => Promise<Blob>;
-  templateFileName: string;
-  formSchema: () => VbenFormSchema[];
-  width?: number | string;
-}
 
 interface ImportExcelEmits {
   (e: 'success'): void;
@@ -54,7 +45,7 @@ const [Modal, modalApi] = useVbenModal({
     const { file, ...extraParams } = data;
     try {
       // 将表单数据中的额外参数展开传递给导入接口
-      await props.importApi(file, ...Object.values(extraParams));
+      await props.importApi(file, extraParams);
       await modalApi.close();
       emit('success');
       message.success($t('ui.actionMessage.operationSuccess'));

@@ -1,13 +1,13 @@
 <script setup lang="ts">
+import type { JsonPreviewProps } from './typing';
+
 import { computed, ref } from 'vue';
 
 import { message } from 'ant-design-vue';
 
 import { $t } from '#/locales';
 
-const props = defineProps<{
-  value: null | Record<string, any> | string;
-}>();
+const props = defineProps<JsonPreviewProps>();
 
 const visible = ref(false);
 

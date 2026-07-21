@@ -19,7 +19,12 @@ import { I18nRadioGroup } from '#/components/i18n/i18n-radio';
 import { DeptSelectModal, UserSelectModal } from '#/components/select-modal';
 import { ImageUpload } from '#/components/upload';
 import { $t } from '#/locales';
-import { DICT_TYPE, getBoolDictOptions, getIntDictOptions } from '#/utils';
+import {
+  DICT_TYPE,
+  getBoolDictOptions,
+  getIntDictOptions,
+  MODULE_TYPE_ENUM,
+} from '#/utils';
 
 const props = defineProps({
   categoryList: {
@@ -147,7 +152,10 @@ function openStartUserSelect() {
 
 /** 打开部门选择 */
 function openStartDeptSelect() {
-  deptSelectModalApi.setData({ selectedList: selectedStartDepts.value }).open();
+  deptSelectModalApi
+    .setState({ title: $t('bpm.model.basic.selectDeptModalTitle') })
+    .setData({ selectedList: selectedStartDepts.value })
+    .open();
 }
 
 /** 处理部门选择确认 */
@@ -304,7 +312,6 @@ defineExpose({ validate });
       >
         <Input
           v-model:value="modelData.name"
-          :disabled="!!modelData.id"
           allow-clear
           :placeholder="
             $t('ui.placeholder.input', [$t('bpm.model.basic.processName')])
@@ -334,7 +341,10 @@ defineExpose({ validate });
         </Select>
       </Form.Item>
       <Form.Item :label="$t('bpm.model.basic.processIcon')" class="mb-5">
-        <ImageUpload v-model:value="modelData.icon" module-type="bpm" />
+        <ImageUpload
+          v-model:value="modelData.icon"
+          :module-type="MODULE_TYPE_ENUM.BPM"
+        />
       </Form.Item>
       <Form.Item
         :label="$t('bpm.model.basic.processDesc')"
@@ -508,7 +518,6 @@ defineExpose({ validate });
     />
     <!-- 部门选择对话框 -->
     <DeptSelectModalComp
-      :title="$t('bpm.model.basic.selectDeptModalTitle')"
       :check-strictly="true"
       @confirm="handleDeptSelectConfirm"
     />

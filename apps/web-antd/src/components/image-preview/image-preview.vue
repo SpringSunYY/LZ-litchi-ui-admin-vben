@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { ImagePreviewProps } from '#/components/image-preview/typing';
+import type { ImagePreviewProps } from './typing';
 
 import { computed, ref } from 'vue';
 

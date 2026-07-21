@@ -1,10 +1,7 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import type { IFrameProps } from './typing';
 
-interface IFrameProps {
-  /** iframe 的源地址 */
-  src: string;
-}
+import { onMounted, ref } from 'vue';
 
 const props = defineProps<IFrameProps>();
 

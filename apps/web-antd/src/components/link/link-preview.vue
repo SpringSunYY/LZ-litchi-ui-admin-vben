@@ -1,13 +1,13 @@
 <script setup lang="ts">
+import type { LinkPreviewProps } from './typing';
+
 import { ref } from 'vue';
 
 import { message } from 'ant-design-vue';
 
 import { $t } from '#/locales';
 
-const props = defineProps<{
-  url?: null | string;
-}>();
+const props = defineProps<LinkPreviewProps>();
 
 const visible = ref(false);
 
@@ -57,14 +57,16 @@ const copyLink = async () => {
   min-width: 200px;
   max-width: 400px;
 }
+
 .link-preview-url {
+  padding: 4px 0;
+  margin-bottom: 4px;
   font-size: 12px;
   color: #666;
   word-break: break-all;
-  padding: 4px 0;
   border-bottom: 1px solid #f0f0f0;
-  margin-bottom: 4px;
 }
+
 .link-preview-actions {
   display: flex;
   flex-direction: column;

@@ -1,19 +1,12 @@
 <script setup lang="ts">
+import type { FileAndImagesPreviewProps } from './typing';
+
 import { computed } from 'vue';
 
 import { FilePreview } from '#/components/file-preview';
 import { ImagePreview } from '#/components/image-preview';
 
-interface CellFileAndImagesProps {
-  /** 文件 URL，多个用 separator 分隔 */
-  value?: null | string;
-  /** 多个文件 URL 之间的分隔符 */
-  separator?: string;
-  /** 强制指定类型：'image' | 'file' | 'auto'，默认 auto */
-  type?: 'auto' | 'file' | 'image';
-}
-
-const props = withDefaults(defineProps<CellFileAndImagesProps>(), {
+const props = withDefaults(defineProps<FileAndImagesPreviewProps>(), {
   value: null,
   separator: '||',
   type: 'auto',
