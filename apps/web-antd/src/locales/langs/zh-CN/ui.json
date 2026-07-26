@@ -49,7 +49,8 @@
     "selectRequired": "请选择{0}",
     "processing": "处理中...",
     "updateSuccess": "{0}更新成功",
-    "submitConfirm": "您确定要提交{0}吗？"
+    "submitConfirm": "您确定要提交{0}吗？",
+    "pasteSuccess": "成功粘贴 {0} 条{1}"
   },
   "placeholder": {
     "input": "请输入{0}",
@@ -154,7 +155,11 @@
     "minSizeMultiple": "只能上传不小于{0}MB的文件!",
     "maxNumber": "最多只能上传{0}个文件",
     "uploadSuccess": "上传成功",
-    "fileUpload": "文件上传"
+    "fileUpload": "文件上传",
+    "pasteHint": "在此处粘贴图片以上传",
+    "pasteUploading": "正在上传粘贴的图片…",
+    "pasteNotFile": "剪贴板内容不是文件 / 图片",
+    "pasteBusy": "正在上传中，请稍候"
   },
   "cropper": {
     "selectImage": "选择图片",

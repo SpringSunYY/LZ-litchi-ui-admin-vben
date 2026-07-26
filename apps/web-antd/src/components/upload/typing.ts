@@ -13,7 +13,7 @@ export type UploadListType = 'picture' | 'picture-card' | 'text';
 
 export interface FileUploadProps {
   // 根据后缀，或者其他，格式：'jpg/jpeg/png/gif/webp' 或 ['jpg', 'jpeg', 'png', 'gif', 'webp']
-  accept?: string[] | string;
+  accept?: string | string[];
   api?: (
     file: File,
     onUploadProgress?: AxiosProgressEvent,
@@ -21,6 +21,8 @@ export interface FileUploadProps {
   // 上传的目录
   directory?: string;
   disabled?: boolean;
+  // 是否启用粘贴板上传（粘贴文件 / 图片到容器内直接上传）
+  enablePaste?: boolean;
   helpText?: string;
   listType?: UploadListType;
   // 最大数量的文件，Infinity不限制

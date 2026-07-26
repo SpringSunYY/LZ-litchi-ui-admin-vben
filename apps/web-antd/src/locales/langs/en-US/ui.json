@@ -49,7 +49,8 @@
     "selectRequired": "Please select {0}",
     "processing": "Processing...",
     "updateSuccess": "{0} updated successfully",
-    "submitConfirm": "Are you sure you want to submit {0}?"
+    "submitConfirm": "Are you sure you want to submit {0}?",
+    "pasteSuccess": "Successfully pasted {0} {1}"
   },
   "placeholder": {
     "input": "Please enter {0}",
@@ -154,7 +155,11 @@
     "minSizeMultiple": "Only upload files no smaller than {0}MB!",
     "maxNumber": "Only upload up to {0} files",
     "uploadSuccess": "Upload successfully",
-    "fileUpload": "File Upload"
+    "fileUpload": "File Upload",
+    "pasteHint": "Paste image here to upload",
+    "pasteUploading": "Uploading pasted image…",
+    "pasteNotFile": "The clipboard content is not a file / image",
+    "pasteBusy": "Upload is in progress, please wait"
   },
   "cropper": {
     "selectImage": "Select Image",
