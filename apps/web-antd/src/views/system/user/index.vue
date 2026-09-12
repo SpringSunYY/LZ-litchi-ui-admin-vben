@@ -53,12 +53,16 @@ function onRefresh() {
 }
 
 /** 导出表格 */
+const exportLoading = ref(false);
+
 async function handleExport() {
+  exportLoading.value = true;
   const data = await exportUser(await gridApi.formApi.getValues());
   downloadFileFromBlobPart({
     fileName: `${$t('system.user.user')}.xls`,
     source: data,
   });
+  exportLoading.value = false;
 }
 
 /** 选择部门 */
@@ -214,6 +218,7 @@ const [Grid, gridApi] = useVbenVxeGrid({
                   type: 'primary',
                   icon: ACTION_ICON.DOWNLOAD,
                   auth: ['system:user:export'],
+                  loading: exportLoading,
                   onClick: handleExport,
                 },
                 {

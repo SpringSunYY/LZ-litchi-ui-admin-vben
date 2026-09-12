@@ -56,7 +56,7 @@ export function deleteConfig(id: number) {
 
 /** 导出参数 */
 export function exportConfig(params: any) {
-  return requestClient.download('/infra/config/export', {
+  return requestClient.download('/infra/config/export-excel', {
     params,
   });
 }

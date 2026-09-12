@@ -94,6 +94,7 @@ describe('requestClient', () => {
 
     const res = await requestClient.download('/test/download');
 
+    // @ts-ignore
     expect(res.data).toBeInstanceOf(Blob);
   });
 });

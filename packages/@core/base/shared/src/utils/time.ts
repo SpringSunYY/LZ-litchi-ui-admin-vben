@@ -3,6 +3,13 @@ import dayjs from 'dayjs';
 import { formatDate } from './date';
 
 /**
+ * 获取当前时间精确到年月日时分秒
+ */
+export function getCurrentTime() {
+  return formatTime(new Date(), 'yyyy-MM-dd_HH:mm:ss');
+}
+
+/**
  * @param {Date | number | string} time 需要转换的时间
  * @param {string} fmt 需要转换的格式 如 yyyy-MM-dd、yyyy-MM-dd HH:mm:ss
  */
