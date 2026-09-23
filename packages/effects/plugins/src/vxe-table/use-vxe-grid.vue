@@ -44,6 +44,7 @@ import { VxeGrid, VxeUI } from 'vxe-table';
 
 import { extendProxyOptions } from './extends';
 import { useTableForm } from './init';
+import { applyViewedRowOptions, useViewedRow } from './viewed-row';
 
 import 'vxe-table/styles/cssvar.scss';
 import 'vxe-pc-ui/styles/cssvar.scss';
@@ -72,10 +73,31 @@ const {
   gridEvents,
   formOptions,
   tableTitle,
+  tableData,
   tableTitleHelp,
   showSearchForm,
   separator,
+  viewedRowOptions,
 } = usePriorityValues(props, state);
+
+const gridApi = props.api;
+
+// viewedRowOptions：helper 只创建一次（persist/keyField 不支持运行时切换）
+// actionCodes、rowClassName、rowStyle、viewedKeys 的变化通过 options computed 自然响应
+watch(
+  viewedRowOptions,
+  (cfg) => {
+    // helper 已存在则不重建
+    if (gridApi.viewedRowHelper) return;
+
+    if (!cfg) return;
+
+    const keyField = (gridOptions.value?.rowConfig as any)?.keyField || 'id';
+    const resolved = isBoolean(cfg) ? { keyField } : { keyField, ...cfg };
+    gridApi.viewedRowHelper = useViewedRow(resolved);
+  },
+  { immediate: true },
+);
 
 const { isMobile } = usePreferences();
 const isSeparator = computed(() => {
@@ -105,16 +127,17 @@ const [Form, formApi] = useTableForm({
   handleSubmit: async () => {
     const formValues = await formApi.getValues();
     formApi.setLatestSubmissionValues(toRaw(formValues));
-    props.api.reload(formValues);
+    props.api.query(formValues);
   },
   handleReset: async () => {
     const prevValues = await formApi.getValues();
-    await formApi.resetForm();
+    // @ts-expect-error reset 方法在不同 vben 版本中可能存在差异
+    await formApi.reset?.();
     const formValues = await formApi.getValues();
     formApi.setLatestSubmissionValues(formValues);
     // 如果值发生了变化，submitOnChange会触发刷新。所以只在submitOnChange为false或者值没有发生变化时，手动刷新
     if (isEqual(prevValues, formValues) || !formOptions.value?.submitOnChange) {
-      props.api.reload(formValues);
+      props.api.query(formValues);
     }
   },
   commonConfig: {
@@ -165,6 +188,7 @@ const toolbarOptions = computed(() => {
   }
 
   if (!showToolbar.value) {
+    toolbarConfig.enabled = false;
     return { toolbarConfig };
   }
 
@@ -182,14 +206,21 @@ const toolbarOptions = computed(() => {
 const options = computed(() => {
   const globalGridConfig = VxeUI?.getConfig()?.grid ?? {};
 
-  const mergedOptions: VxeTableGridProps = cloneDeep(
+  const mergedOptions = cloneDeep(
     mergeWithArrayOverride(
       {},
       toRaw(toolbarOptions.value),
-      toRaw(gridOptions.value),
+      toRaw(gridOptions.value) as any,
       globalGridConfig,
     ),
-  );
+  ) as VxeTableGridProps;
+
+  // 兼容 vxe-table 4.16+：normalize 后再次应用，避免被 gridOptions.toolbarConfig 覆盖
+  if (mergedOptions.toolbarConfig) {
+    mergedOptions.toolbarConfig = normalizeToolbarConfig(
+      mergedOptions.toolbarConfig as any,
+    );
+  }
 
   if (mergedOptions.proxyConfig) {
     const { ajax } = mergedOptions.proxyConfig;
@@ -229,6 +260,20 @@ const options = computed(() => {
   if (mergedOptions.formConfig) {
     mergedOptions.formConfig.enabled = false;
   }
+  if (tableData.value && tableData.value.length > 0) {
+    mergedOptions.data = tableData.value;
+  }
+
+  // 注入已读行功能（rowClassName、rowStyle、columns 拦截）
+  if (viewedRowOptions.value && gridApi.viewedRowHelper) {
+    applyViewedRowOptions(
+      mergedOptions,
+      viewedRowOptions.value,
+      // @ts-expect-error viewedRowHelper 类型差异
+      gridApi.viewedRowHelper,
+    );
+  }
+
   return mergedOptions;
 });
 
@@ -287,23 +332,63 @@ const showDefaultEmpty = computed(() => {
   return !hasEmptyText && !hasEmptyRender;
 });
 
+/** 将混合的 toolbarConfig 转换为标准格式（兼容 vxe-table 4.16+ 的新参数格式） */
+function normalizeToolbarConfig(toolbarConfig: any) {
+  if (!toolbarConfig) {
+    return toolbarConfig;
+  }
+
+  const result = { ...toolbarConfig };
+
+  // 兼容 refresh: { code: 'xxx' } → refresh: true, refreshOptions: { code: 'xxx' }
+  if (result.refresh && typeof result.refresh === 'object') {
+    result.refreshOptions = result.refresh;
+    result.refresh = true;
+  }
+
+  // 兼容 zoom: { ... } → zoom: true, zoomOptions: { ... }
+  if (result.zoom && typeof result.zoom === 'object') {
+    result.zoomOptions = result.zoom;
+    result.zoom = true;
+  }
+
+  // 兼容 import/export 同理（按需扩展）
+  if (result.import && typeof result.import === 'object') {
+    result.importOptions = result.import;
+    result.import = true;
+  }
+  if (result.export && typeof result.export === 'object') {
+    result.exportOptions = result.export;
+    result.export = true;
+  }
+  if (result.print && typeof result.print === 'object') {
+    result.printOptions = result.print;
+    result.print = true;
+  }
+  if (result.custom && typeof result.custom === 'object') {
+    result.customOptions = result.custom;
+    result.custom = true;
+  }
+
+  return result;
+}
+
 async function init() {
   await nextTick();
   const globalGridConfig = VxeUI?.getConfig()?.grid ?? {};
-  const defaultGridOptions: VxeTableGridProps = mergeWithArrayOverride(
+  const defaultGridOptions = mergeWithArrayOverride(
     {},
-    toRaw(gridOptions.value),
-    toRaw(globalGridConfig),
-  );
+    toRaw(gridOptions.value) as any,
+    toRaw(globalGridConfig) as any,
+  ) as VxeTableGridProps;
   // 内部主动加载数据，防止form的默认值影响
   const autoLoad = defaultGridOptions.proxyConfig?.autoLoad;
   const enableProxyConfig = options.value.proxyConfig?.enabled;
   if (enableProxyConfig && autoLoad) {
     props.api.grid.commitProxy?.(
-      '_init',
+      'query',
       formOptions.value ? ((await formApi.getValues()) ?? {}) : {},
     );
-    // props.api.reload(formApi.form?.values ?? {});
   }
 
   // form 由 vben-form代替，所以不适配formConfig，这里给出警告
@@ -315,7 +400,9 @@ async function init() {
       '[Vben Vxe Table]: The formConfig in the grid is not supported, please use the `formOptions` props',
     );
   }
-  props.api?.setState?.({ gridOptions: defaultGridOptions });
+  props.api?.setState?.({
+    gridOptions: defaultGridOptions,
+  } as Partial<VxeGridProps>);
   // form 由 vben-form 代替，所以需要保证query相关事件可以拿到参数
   extendProxyOptions(props.api, defaultGridOptions, () =>
     formApi.getLatestSubmissionValues(),
@@ -326,7 +413,7 @@ async function init() {
 watch(
   formOptions,
   () => {
-    formApi.setState((prev) => {
+    formApi.setState((prev: Record<string, any>) => {
       const finalFormOptions: VbenFormProps = mergeWithArrayOverride(
         {},
         formOptions.value,
@@ -344,7 +431,7 @@ watch(
 );
 
 const isCompactForm = computed(() => {
-  return formApi.getState()?.compact;
+  return formApi.getState?.()?.compact;
 });
 
 onMounted(() => {
@@ -377,9 +464,9 @@ onUnmounted(() => {
       <!-- 左侧操作区域或者title -->
       <template v-if="showToolbar" #toolbar-actions="slotProps">
         <slot v-if="showTableTitle" name="table-title">
-          <div class="mr-1 pl-1 text-[1rem]">
+          <div class="flex-center gap-1 text-[1rem] font-bold">
             {{ tableTitle }}
-            <VbenHelpTooltip v-if="tableTitleHelp" trigger-class="pb-1">
+            <VbenHelpTooltip v-if="tableTitleHelp">
               {{ tableTitleHelp }}
             </VbenHelpTooltip>
           </div>
@@ -415,7 +502,7 @@ onUnmounted(() => {
           v-show="showSearchForm !== false"
           :class="
             cn(
-              'relative rounded py-3',
+              'relative rounded-sm py-3',
               isCompactForm
                 ? isSeparator
                   ? 'pb-8'
@@ -457,7 +544,7 @@ onUnmounted(() => {
             :style="{
               ...(separatorBg ? { backgroundColor: separatorBg } : undefined),
             }"
-            class="bg-background-deep z-100 absolute -left-2 bottom-1 h-2 w-[calc(100%+1rem)] overflow-hidden md:bottom-2 md:h-3"
+            class="z-100 bg-background-deep absolute -left-2 bottom-1 h-2 w-[calc(100%+1rem)] overflow-hidden md:bottom-2 md:h-3"
           ></div>
         </div>
       </template>

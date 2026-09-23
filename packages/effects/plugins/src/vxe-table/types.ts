@@ -12,6 +12,7 @@ import type { ClassType, DeepPartial } from '@vben/types';
 import type { BaseFormComponentType, VbenFormProps } from '@vben-core/form-ui';
 
 import type { VxeGridApi } from './api';
+import type { ViewedRowOptions } from './viewed-row';
 
 import { useVbenForm } from '@vben-core/form-ui';
 
@@ -40,6 +41,10 @@ export interface VxeGridProps<
   T extends Record<string, any> = any,
   D extends BaseFormComponentType = BaseFormComponentType,
 > {
+  /**
+   * 数据
+   */
+  tableData?: any[];
   /**
    * 标题
    */
@@ -76,6 +81,10 @@ export interface VxeGridProps<
    * 搜索表单与表格主体之间的分隔条
    */
   separator?: boolean | SeparatorOptions;
+  /**
+   * 已读行功能
+   */
+  viewedRowOptions?: ViewedRowOptions<T>;
 }
 
 export type ExtendedVxeGridApi<
@@ -89,5 +98,5 @@ export type ExtendedVxeGridApi<
 
 export interface SetupVxeTable {
   configVxeTable: (ui: VxeUIExport) => void;
-  useVbenForm: typeof useVbenForm;
+  useVbenForm?: typeof useVbenForm;
 }

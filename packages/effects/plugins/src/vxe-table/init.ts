@@ -129,7 +129,8 @@ export function setupVbenVxeTable(setupOptions: SetupVxeTable) {
   const { configVxeTable, useVbenForm } = setupOptions;
 
   initVxeTable();
-  useTableForm = useVbenForm;
+
+  useTableForm = (useVbenForm ?? useTableForm) as any;
 
   const { isDark, locale } = usePreferences();
 
@@ -138,9 +139,9 @@ export function setupVbenVxeTable(setupOptions: SetupVxeTable) {
     async ([isDarkValue, localeValue]) => {
       VxeUI.setTheme(isDarkValue ? 'dark' : 'light');
       const localeMessages = await loadVxeLocale(localeValue);
-      // @ts-ignore
+      // @ts-expect-error vxe-table 类型不全
       VxeUI.setI18n(localeValue, localeMessages);
-      // @ts-ignore
+      // @ts-expect-error vxe-table 类型不全
       VxeUI.setLanguage(localeValue);
     },
     {

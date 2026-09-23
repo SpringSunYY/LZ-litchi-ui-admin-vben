@@ -6,7 +6,6 @@ import type { ContentCompactType } from '@vben-core/typings';
 import { computed } from 'vue';
 
 import { useLayoutContentStyle } from '@vben-core/composables';
-import { Slot } from '@vben-core/shadcn-ui';
 
 interface Props {
   /**
@@ -26,7 +25,7 @@ interface Props {
 
 const props = withDefaults(defineProps<Props>(), {});
 
-const { contentElement, overlayStyle } = useLayoutContentStyle();
+const { contentElement } = useLayoutContentStyle();
 
 const style = computed((): CSSProperties => {
   const {
@@ -45,6 +44,8 @@ const style = computed((): CSSProperties => {
   return {
     ...compactStyle,
     flex: 1,
+    minHeight: 0,
+    minWidth: 0,
     padding: `${padding}px`,
     paddingBottom: `${paddingBottom}px`,
     paddingLeft: `${paddingLeft}px`,
@@ -56,9 +57,6 @@ const style = computed((): CSSProperties => {
 
 <template>
   <main ref="contentElement" :style="style" class="bg-background-deep relative">
-    <Slot :style="overlayStyle">
-      <slot name="overlay"></slot>
-    </Slot>
     <slot></slot>
   </main>
 </template>

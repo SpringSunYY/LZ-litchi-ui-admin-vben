@@ -8,6 +8,9 @@ import type { ClassType, MaybeComputedRef } from '@vben-core/typings';
 
 import type { FormApi } from './form-api';
 
+/** 表单值类型 */
+export type FormValues = Record<string, any>;
+
 export type FormLayout = 'horizontal' | 'vertical';
 
 export type BaseFormComponentType =
