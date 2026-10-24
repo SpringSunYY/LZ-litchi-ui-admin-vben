@@ -35,17 +35,39 @@ describe('page.vue', () => {
     expect(wrapper.html()).toContain('<p>Default Slot Content</p>');
   });
 
-  it('renders footer slot when showFooter is true', () => {
+  it('renders footer slot when footer slot is provided', () => {
     const wrapper = mount(Page, {
-      props: {
-        showFooter: true,
-      },
       slots: {
         footer: '<p>Footer Slot Content</p>',
       },
     });
 
     expect(wrapper.html()).toContain('<p>Footer Slot Content</p>');
+  });
+
+  it('does not render footer area when footer slot is not provided', () => {
+    const wrapper = mount(Page);
+
+    expect(wrapper.find('[data-layout-region="page-content"]').exists()).toBe(
+      true,
+    );
+    expect(wrapper.text()).not.toContain('Footer Slot Content');
+  });
+
+  it('applies size containment and height offset in autoContentHeight mode', () => {
+    const wrapper = mount(Page, {
+      props: {
+        autoContentHeight: true,
+        heightOffset: 20,
+      },
+    });
+
+    const contentDiv = wrapper.find('[data-layout-region="page-content"]');
+    const style = contentDiv.attributes('style') ?? '';
+
+    expect(contentDiv.classes()).toContain('overflow-y-auto');
+    expect(style).toContain('contain: size');
+    expect(style).toContain('--page-content-height-offset: 20px');
   });
 
   it('applies the custom contentClass', () => {

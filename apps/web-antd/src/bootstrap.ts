@@ -1,7 +1,5 @@
 import { createApp, watchEffect } from 'vue';
 import VueDOMPurifyHTML from 'vue-dompurify-html';
-// @ts-expect-error - vue3-print-nb 没有官方类型声明
-import print from 'vue3-print-nb';
 
 import { registerAccessDirective } from '@vben/access';
 import { registerLoadingDirective } from '@vben/common-ui/es/loading';
@@ -11,6 +9,8 @@ import '@vben/styles';
 import '@vben/styles/antd';
 
 import { useTitle } from '@vueuse/core';
+// @ts-expect-error - vue3-print-nb 没有官方类型声明
+import print from 'vue3-print-nb';
 
 import { $t, getDefaultLocaleFromBackend, setupI18n } from '#/locales';
 import { setupFormCreate } from '#/plugins/form-create';
@@ -19,6 +19,9 @@ import { initComponentAdapter } from './adapter/component';
 import { initSetupVbenForm } from './adapter/form';
 import App from './app.vue';
 import { router } from './router';
+
+// 必须在应用挂载前完成 dayjs 插件注册（ant-design-vue 的日期组件依赖这些插件）
+import './utils/dayjs';
 
 async function bootstrap(namespace: string) {
   // 初始化组件适配器

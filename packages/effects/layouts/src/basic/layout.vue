@@ -17,6 +17,7 @@ import { cloneDeep, mapTree } from '@vben/utils';
 
 import { VbenAdminLayout } from '@vben-core/layout-ui';
 import { VbenBackTop, VbenLogo } from '@vben-core/shadcn-ui';
+import { ELEMENT_ID_LAYOUT_SCROLL } from '@vben-core/shared/constants';
 
 import { Breadcrumb, CheckUpdates, Preferences } from '../widgets';
 import { LayoutContent, LayoutContentSpinner } from './content';
@@ -80,6 +81,8 @@ const logoClass = computed(() => {
 const isMenuRounded = computed(() => {
   return preferences.navigation.styleType === 'rounded';
 });
+
+const layoutScrollTarget = `#${ELEMENT_ID_LAYOUT_SCROLL}`;
 
 const logoCollapsed = computed(() => {
   if (isMobile.value && sidebarCollapsed.value) {
@@ -379,7 +382,7 @@ const headerSlots = computed(() => {
           @clear-preferences-and-logout="clearPreferencesAndLogout"
         />
       </template>
-      <VbenBackTop />
+      <VbenBackTop :target="layoutScrollTarget" />
     </template>
   </VbenAdminLayout>
 </template>

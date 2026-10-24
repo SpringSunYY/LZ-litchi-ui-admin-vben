@@ -17,6 +17,7 @@ $bpm-task-sidebar-width: 400px;
   .bpm-task-content {
     flex: 1;
     min-width: 0;
+    height: 105%;
 
     @media (max-width: 1279px) {
       display: none;

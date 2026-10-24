@@ -70,6 +70,14 @@ export default {
         ],
       },
     ],
+    // Tailwind 的 @apply 参数是工具类名，不是标准 CSS prelude，
+    // css-tree 无法解析，需要与 at-rule-no-unknown 一样忽略
+    'at-rule-prelude-no-invalid': [
+      true,
+      {
+        ignoreAtRules: ['apply'],
+      },
+    ],
     'font-family-no-missing-generic-family-keyword': null,
     'function-no-unknown': null,
     'import-notation': null,

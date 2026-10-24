@@ -17,12 +17,12 @@ import {
   Tabs,
   TreeSelect,
 } from 'ant-design-vue';
-import dayjs from 'dayjs';
 
 import { getSimpleDeptList } from '#/api/system/dept';
 import { getSimpleUserList } from '#/api/system/user';
 import { $t } from '#/locales';
 import { getRangePickerDefaultProps } from '#/utils';
+import { dayjs } from '#/utils/dayjs';
 
 import CustomerConversionStat from './components/CustomerConversionStat.vue';
 import CustomerDealCycleByArea from './components/CustomerDealCycleByArea.vue';

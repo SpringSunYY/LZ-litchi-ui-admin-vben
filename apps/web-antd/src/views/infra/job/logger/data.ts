@@ -6,11 +6,10 @@ import { h } from 'vue';
 
 import { formatDateTime } from '@vben/utils';
 
-import dayjs from 'dayjs';
-
 import I18nDictTag from '#/components/i18n/i18n-dict-tag/i18n-dict-tag.vue';
 import { $t } from '#/locales';
 import { DICT_TYPE, getDictOptions } from '#/utils';
+import { dayjs } from '#/utils/dayjs';
 
 /** 列表的搜索表单 */
 export function useGridFormSchema(): VbenFormSchema[] {

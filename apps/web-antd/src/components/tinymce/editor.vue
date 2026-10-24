@@ -21,6 +21,7 @@ import { preferences, usePreferences } from '@vben/preferences';
 import { buildShortUUID, isNumber } from '@vben/utils';
 
 import Editor from '@tinymce/tinymce-vue';
+import { FormItemRest } from 'ant-design-vue';
 
 import { useUpload } from '#/components/upload/use-upload';
 import { MODULE_TYPE_ENUM } from '#/utils';
@@ -369,29 +370,36 @@ function handleFileError() {
 <template>
   <div :style="{ width: containerWidth }" class="app-tinymce">
     <div :class="[{ fullscreen }]" class="app-tinymce-upload-actions">
-      <ImgUpload
-        v-if="showImageUpload"
-        v-show="editorRef"
-        :accept="imageAccept"
-        :max-size="imageMaxSize"
-        :disabled="disabled"
-        :fullscreen="fullscreen"
-        :module-type="moduleType"
-        @done="handleDone"
-        @error="handleError"
-        @uploading="handleImageUploading"
-      />
-      <FileUpload
-        v-if="showFileUpload"
-        v-show="editorRef"
-        :accept="fileAccept"
-        :max-size="fileMaxSize"
-        :disabled="disabled"
-        :fullscreen="fullscreen"
-        :module-type="moduleType"
-        @done="handleFileDone"
-        @error="handleFileError"
-      />
+      <!--
+        图片上传、文件上传只是编辑器的辅助操作按钮，并不是当前表单项的绑定控件。
+        使用 FormItemRest 包裹，避免它们被 AFormItem 收集为字段项
+        （否则会触发 "FormItem can only collect one field item" 警告）。
+      -->
+      <FormItemRest>
+        <ImgUpload
+          v-if="showImageUpload"
+          v-show="editorRef"
+          :accept="imageAccept"
+          :max-size="imageMaxSize"
+          :disabled="disabled"
+          :fullscreen="fullscreen"
+          :module-type="moduleType"
+          @done="handleDone"
+          @error="handleError"
+          @uploading="handleImageUploading"
+        />
+        <FileUpload
+          v-if="showFileUpload"
+          v-show="editorRef"
+          :accept="fileAccept"
+          :max-size="fileMaxSize"
+          :disabled="disabled"
+          :fullscreen="fullscreen"
+          :module-type="moduleType"
+          @done="handleFileDone"
+          @error="handleFileError"
+        />
+      </FormItemRest>
     </div>
     <Editor
       v-if="!initOptions.inline && init"

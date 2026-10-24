@@ -109,7 +109,7 @@
       "@ast-grep/napi": "catalog:",
       "@ctrl/tinycolor": "catalog:",
       "clsx": "catalog:",
-      "esbuild": "0.25.3",
+      "dayjs": "catalog:",
       "pinia": "catalog:",
       "vue": "catalog:"
     },

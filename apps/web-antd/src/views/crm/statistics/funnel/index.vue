@@ -17,20 +17,19 @@ import {
   Tabs,
   TreeSelect,
 } from 'ant-design-vue';
-import dayjs from 'dayjs';
-import quarterOfYear from 'dayjs/plugin/quarterOfYear';
 
 import { getSimpleDeptList } from '#/api/system/dept';
 import { getSimpleUserList } from '#/api/system/user';
 import { $t } from '#/locales';
 import { getRangePickerDefaultProps } from '#/utils';
+import { dayjs } from '#/utils/dayjs';
 
 import BusinessInversionRateSummary from './components/BusinessInversionRateSummary.vue';
 import BusinessSummary from './components/BusinessSummary.vue';
 import FunnelBusiness from './components/FunnelBusiness.vue';
 
 defineOptions({ name: 'CrmStatisticsFunnel' });
-dayjs.extend(quarterOfYear);
+
 const hasDept = computed(() => deptList.value && deptList.value.length > 0);
 
 const deptList = ref<any[]>([]);

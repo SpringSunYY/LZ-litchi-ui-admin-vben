@@ -52,6 +52,6 @@ onUnmounted(() => {
 .standalone-layout__content {
   flex: 1;
   min-height: 0;
-  overflow: hidden;
+  overflow: hidden auto;
 }
 </style>

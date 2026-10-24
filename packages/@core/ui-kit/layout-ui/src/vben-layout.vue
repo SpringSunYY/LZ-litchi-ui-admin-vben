@@ -9,10 +9,14 @@ import {
   SCROLL_FIXED_CLASS,
   useLayoutFooterStyle,
   useLayoutHeaderStyle,
+  useLayoutViewportHeight,
 } from '@vben-core/composables';
 import { Menu } from '@vben-core/icons';
 import { VbenIconButton } from '@vben-core/shadcn-ui';
-import { ELEMENT_ID_MAIN_CONTENT } from '@vben-core/shared/constants';
+import {
+  ELEMENT_ID_LAYOUT_SCROLL,
+  ELEMENT_ID_MAIN_CONTENT,
+} from '@vben-core/shared/constants';
 
 import { useMouse, useScroll, useThrottleFn } from '@vueuse/core';
 
@@ -79,19 +83,21 @@ const sidebarEnable = defineModel<boolean>('sidebarEnable', { default: true });
 // side是否处于hover状态展开菜单中
 const sidebarExpandOnHovering = ref(false);
 const headerIsHidden = ref(false);
-const contentRef = ref();
+const mainRef = ref<HTMLElement | null>(null);
+const contentRef = ref<HTMLElement | null>(null);
 
 const {
   arrivedState,
   directions,
   isScrolling,
   y: scrollY,
-} = useScroll(document);
+} = useScroll(contentRef);
 
+useLayoutViewportHeight();
 const { setLayoutHeaderHeight } = useLayoutHeaderStyle();
 const { setLayoutFooterHeight } = useLayoutFooterStyle();
 
-const { y: mouseY } = useMouse({ target: contentRef, type: 'client' });
+const { y: mouseY } = useMouse({ target: mainRef, type: 'client' });
 
 const {
   currentLayout,
@@ -293,9 +299,20 @@ const tabbarStyle = computed((): CSSProperties => {
 });
 
 const contentStyle = computed((): CSSProperties => {
+  const { footerEnable, footerFixed, footerHeight } = props;
+  return {
+    minHeight: footerEnable && !footerFixed ? undefined : 0,
+    paddingBottom: `${footerEnable && footerFixed ? footerHeight : 0}px`,
+  };
+});
+
+/**
+ * 滚动容器的样式
+ * fixed 顶栏时，需要给滚动容器预留出顶栏的高度，避免内容被顶栏遮挡
+ */
+const layoutScrollStyle = computed((): CSSProperties => {
   const fixed = headerFixed.value;
 
-  const { footerEnable, footerFixed, footerHeight } = props;
   return {
     marginTop:
       fixed &&
@@ -304,8 +321,6 @@ const contentStyle = computed((): CSSProperties => {
       (!isHeaderAutoMode.value || scrollY.value < headerWrapperHeight.value)
         ? `${headerWrapperHeight.value}px`
         : 0,
-    minHeight: footerEnable && !footerFixed ? undefined : 0,
-    paddingBottom: `${footerEnable && footerFixed ? footerHeight : 0}px`,
   };
 });
 
@@ -479,6 +494,7 @@ function handleHeaderToggle() {
 }
 
 const idMainContent = ELEMENT_ID_MAIN_CONTENT;
+const idLayoutScroll = ELEMENT_ID_LAYOUT_SCROLL;
 </script>
 
 <template>
@@ -526,7 +542,7 @@ const idMainContent = ELEMENT_ID_MAIN_CONTENT;
     </LayoutSidebar>
 
     <div
-      ref="contentRef"
+      ref="mainRef"
       class="flex min-h-0 flex-1 flex-col overflow-hidden transition-all duration-300 ease-in"
     >
       <div
@@ -576,35 +592,42 @@ const idMainContent = ELEMENT_ID_MAIN_CONTENT;
       </div>
 
       <!-- </div> -->
-      <LayoutContent
-        :id="idMainContent"
-        :content-compact="contentCompact"
-        :content-compact-width="contentCompactWidth"
-        :padding="contentPadding"
-        :padding-bottom="contentPaddingBottom"
-        :padding-left="contentPaddingLeft"
-        :padding-right="contentPaddingRight"
-        :padding-top="contentPaddingTop"
-        :style="contentStyle"
-        class="transition-[margin-top] duration-200"
+      <div
+        :id="idLayoutScroll"
+        ref="contentRef"
+        data-layout-region="scroll"
+        :style="layoutScrollStyle"
+        class="flex min-h-0 flex-1 flex-col overflow-y-auto overflow-x-hidden"
       >
-        <slot name="content"></slot>
+        <LayoutContent
+          :id="idMainContent"
+          :content-compact="contentCompact"
+          :content-compact-width="contentCompactWidth"
+          :padding="contentPadding"
+          :padding-bottom="contentPaddingBottom"
+          :padding-left="contentPaddingLeft"
+          :padding-right="contentPaddingRight"
+          :padding-top="contentPaddingTop"
+          :style="contentStyle"
+        >
+          <slot name="content"></slot>
 
-        <template #overlay>
-          <slot name="content-overlay"></slot>
-        </template>
-      </LayoutContent>
+          <template #overlay>
+            <slot name="content-overlay"></slot>
+          </template>
+        </LayoutContent>
 
-      <LayoutFooter
-        v-if="footerEnable"
-        :fixed="footerFixed"
-        :height="footerHeight"
-        :show="!isFullContent"
-        :width="footerWidth"
-        :z-index="zIndex"
-      >
-        <slot name="footer"></slot>
-      </LayoutFooter>
+        <LayoutFooter
+          v-if="footerEnable"
+          :fixed="footerFixed"
+          :height="footerHeight"
+          :show="!isFullContent"
+          :width="footerWidth"
+          :z-index="zIndex"
+        >
+          <slot name="footer"></slot>
+        </LayoutFooter>
+      </div>
     </div>
     <slot name="extra"></slot>
     <div
