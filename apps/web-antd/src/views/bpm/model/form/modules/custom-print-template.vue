@@ -89,7 +89,7 @@ const tinyInit = {
   plugins: 'link importcss table code preview autoresize lists ',
   toolbar:
     'undo redo | styles fontsize | bold italic underline | alignleft aligncenter alignright | link table | processrecord code preview',
-  language: 'zh_CN',
+  language: 'zh-CN',
   branding: false,
   statusbar: true,
   content_style:

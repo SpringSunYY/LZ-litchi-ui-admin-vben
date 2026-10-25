@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { Tooltip, UploadFile, UploadProps } from 'ant-design-vue';
+import type { UploadFile, UploadProps } from 'ant-design-vue';
 import type { UploadRequestOption } from 'ant-design-vue/lib/vc-upload/interface';
 
 import type { FileUploadProps } from './typing';
@@ -12,7 +12,7 @@ import { CloudUpload } from '@vben/icons';
 import { $t } from '@vben/locales';
 import { isFunction, isObject, isString } from '@vben/utils';
 
-import { Button, message, Upload } from 'ant-design-vue';
+import { Button, message, Tooltip, Upload } from 'ant-design-vue';
 
 import { MODULE_TYPE_ENUM } from '#/utils';
 

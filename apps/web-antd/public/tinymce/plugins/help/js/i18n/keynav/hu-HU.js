@@ -1,4 +1,4 @@
-tinymce.Resource.add('tinymce.html-i18n.help-keynav.hu_HU',
+tinymce.Resource.add('tinymce.html-i18n.help-keynav.hu-HU',
 '<h1>Billentyűzetes navigáció indítása</h1>\n' +
   '\n' +
   '<dl>\n' +

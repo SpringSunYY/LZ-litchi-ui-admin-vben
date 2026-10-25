@@ -1,4 +1,4 @@
-tinymce.Resource.add('tinymce.html-i18n.help-keynav.fr_FR',
+tinymce.Resource.add('tinymce.html-i18n.help-keynav.fr-FR',
 '<h1>Débuter la navigation au clavier</h1>\n' +
   '\n' +
   '<dl>\n' +

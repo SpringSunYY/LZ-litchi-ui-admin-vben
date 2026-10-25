@@ -1,4 +1,4 @@
-tinymce.Resource.add('tinymce.html-i18n.help-keynav.pt_PT',
+tinymce.Resource.add('tinymce.html-i18n.help-keynav.pt-PT',
 '<h1>Iniciar navegação com teclado</h1>\n' +
   '\n' +
   '<dl>\n' +

@@ -142,7 +142,8 @@ const langName = computed(() => {
   if (locale.value === 'en-US') {
     return 'en';
   }
-  return 'zh_CN';
+  // TinyMCE 8 的语言包注册码为 `zh-CN`（`zh_CN` 已废弃，仅为兼容保留）
+  return 'zh-CN';
 });
 
 /** 监听 mode、locale 进行主题、语言切换 */
@@ -175,8 +176,8 @@ const initOptions = computed((): InitOptions => {
     branding: false, // 禁止显示，右下角的“使用 TinyMCE 构建”
     default_link_target: '_blank',
     link_title: false,
-    object_resizing: true, // 和 vben2.0 不同，它默认是 false
-    auto_focus: undefined, // 和 vben2.0 不同，它默认是 true
+    object_resizing: true, 
+    auto_focus: undefined,
     skin: skinName.value,
     content_css: contentCss.value,
     content_style:
