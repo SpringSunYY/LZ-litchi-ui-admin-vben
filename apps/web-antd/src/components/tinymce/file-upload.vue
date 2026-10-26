@@ -9,6 +9,7 @@ import { $t } from '@vben/locales';
 
 import { Button, message, Upload } from 'ant-design-vue';
 
+import { usePastable } from '#/components/upload/use-pastable';
 import { useUpload } from '#/components/upload/use-upload';
 import { MODULE_TYPE_ENUM } from '#/utils';
 
@@ -49,6 +50,11 @@ const props = defineProps({
   maxSize: {
     default: 20,
     type: Number,
+  },
+  /** 是否启用粘贴上传（对应 antd React 的 pastable） */
+  pastable: {
+    default: true,
+    type: Boolean,
   },
 });
 
@@ -116,9 +122,23 @@ async function customRequest(info: UploadRequestOption<any>) {
     uploading.value = false;
   }
 }
+
+// ============ 粘贴板上传（pastable 启用时） ============
+
+const uploadWrapperRef = ref<HTMLElement | null>(null);
+const pastableEnabled = computed(() => props.pastable && !props.disabled);
+usePastable({
+  containerRef: uploadWrapperRef,
+  pastable: pastableEnabled,
+  multiple: computed(() => true),
+});
 </script>
 <template>
-  <div :class="[{ fullscreen }]" class="tinymce-file-upload">
+  <div
+    ref="uploadWrapperRef"
+    :class="[{ fullscreen }]"
+    class="tinymce-file-upload"
+  >
     <Upload
       :show-upload-list="false"
       :accept="acceptAttr"

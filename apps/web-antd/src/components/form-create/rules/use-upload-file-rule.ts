@@ -119,6 +119,12 @@ export const useUploadFileRule = (label?: string) => {
           title: t('ui.formCreate.props.disabled'),
           value: false,
         },
+        {
+          type: 'switch',
+          field: 'pastable',
+          title: t('ui.formCreate.props.pastable'),
+          value: true,
+        },
       ]);
     },
   };

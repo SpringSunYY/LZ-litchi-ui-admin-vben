@@ -54,6 +54,11 @@ export const useFileUpload = () => {
         type: Boolean,
         default: false,
       },
+      // 是否启用粘贴上传
+      pastable: {
+        type: Boolean,
+        default: true,
+      },
       // 模块类型
       moduleType: {
         type: String,
@@ -95,6 +100,7 @@ export const useFileUpload = () => {
           maxSize={props.fileSize}
           moduleType={props.moduleType}
           onChange={handleChange}
+          pastable={props.pastable}
           showDescription={props.isShowTip}
           value={bindValue}
         />

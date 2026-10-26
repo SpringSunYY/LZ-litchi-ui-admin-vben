@@ -10,14 +10,22 @@ import { computed, nextTick, ref, toRefs, useAttrs, watch } from 'vue';
 
 import { CloudUpload } from '@vben/icons';
 import { $t } from '@vben/locales';
-import { isFunction, isObject, isString } from '@vben/utils';
+import { isFunction } from '@vben/utils';
 
 import { Button, message, Tooltip, Upload } from 'ant-design-vue';
 
 import { MODULE_TYPE_ENUM } from '#/utils';
 
 import { checkFileType } from './helper';
-import { UploadResultStatus } from './typing';
+import Pastable from './pastable.vue';
+import {
+  buildFileListFromValue,
+  getUploadValue,
+  runUploadRequest,
+  useRemainCount,
+  validateUploadFile,
+} from './upload-common';
+import { usePastable } from './use-pastable';
 import { useUpload, useUploadType } from './use-upload';
 
 defineOptions({ name: 'FileUpload', inheritAttrs: false });
@@ -26,6 +34,7 @@ const props = withDefaults(defineProps<FileUploadProps>(), {
   value: () => [],
   directory: undefined,
   disabled: false,
+  pastable: true,
   helpText: '',
   maxSize: 500,
   minSize: 0,
@@ -40,7 +49,8 @@ const props = withDefaults(defineProps<FileUploadProps>(), {
 });
 const emit = defineEmits(['change', 'update:value', 'delete', 'returnText']);
 const attrs = useAttrs();
-const { accept, helpText, maxNumber, maxSize, minSize } = toRefs(props);
+const { accept, helpText, maxNumber, maxSize, minSize, multiple } =
+  toRefs(props);
 const isInnerOperate = ref<boolean>(false);
 const { getStringAccept, getHelpText } = useUploadType({
   acceptRef: accept,
@@ -51,8 +61,6 @@ const { getStringAccept, getHelpText } = useUploadType({
 });
 
 const fileList = ref<UploadProps['fileList']>([]);
-const isLtMsg = ref<boolean>(true); // 文件大小错误提示
-const isActMsg = ref<boolean>(true); // 文件类型错误提示
 const isFirstRender = ref<boolean>(true); // 是否第一次渲染
 
 watch(
@@ -62,27 +70,9 @@ watch(
       isInnerOperate.value = false;
       return;
     }
-    let value: string[] = [];
+    const value: string | string[] = [];
     if (v) {
-      if (Array.isArray(v)) {
-        value = v;
-      } else {
-        // 支持 || 分隔符分隔的多个文件URL
-        value = v.split('||').filter((item) => item.trim());
-      }
-      fileList.value = value.map((item, i) => {
-        if (item && isString(item)) {
-          return {
-            uid: `${-i}`,
-            name: item.slice(Math.max(0, item.lastIndexOf('/') + 1)),
-            status: UploadResultStatus.DONE,
-            url: item,
-          };
-        } else if (item && isObject(item)) {
-          return item;
-        }
-        return null;
-      }) as UploadProps['fileList'];
+      fileList.value = buildFileListFromValue(v);
     }
     if (!isFirstRender.value) {
       emit('change', value);
@@ -109,26 +99,14 @@ async function handleRemove(file: UploadFile) {
 
 async function beforeUpload(file: File) {
   const { maxSize, minSize, accept } = props;
-  const isAct = checkFileType(file, accept);
-  if (!isAct) {
-    message.error($t('ui.upload.acceptUpload', [accept]));
-    isActMsg.value = false;
-    // 防止弹出多个错误提示
-    setTimeout(() => (isActMsg.value = true), 1000);
-  }
-  const isLt = file.size / 1024 / 1024 > maxSize;
-  if (isLt) {
-    message.error($t('ui.upload.maxSizeMultiple', [maxSize]));
-    isLtMsg.value = false;
-    // 防止弹出多个错误提示
-    setTimeout(() => (isLtMsg.value = true), 1000);
-  }
-  // 检查最小文件大小
-  if (minSize && minSize > 0 && file.size / 1024 / 1024 < minSize) {
-    message.error($t('ui.upload.minSizeMultiple', [minSize]));
-    return Upload.LIST_IGNORE;
-  }
-  return (isAct && !isLt) || Upload.LIST_IGNORE;
+  return validateUploadFile(file, {
+    accept,
+    maxSize,
+    minSize,
+    check: checkFileType,
+  })
+    ? true
+    : Upload.LIST_IGNORE;
 }
 
 async function customRequest(info: UploadRequestOption<any>) {
@@ -143,19 +121,13 @@ async function customRequest(info: UploadRequestOption<any>) {
       info.onProgress!({ percent });
     };
 
-    // 构建上传 Promise
-    const uploadPromise = api?.(info.file as File, progressEvent);
-
-    // 处理超时（仅在 timeout > 0 时启用超时检测）
-    let res;
-    if (timeout && timeout > 0) {
-      const timeoutPromise = new Promise((_, reject) => {
-        setTimeout(() => reject(new Error('上传超时')), timeout);
-      });
-      res = await Promise.race([uploadPromise, timeoutPromise]);
-    } else {
-      res = await uploadPromise;
-    }
+    // 构建上传 Promise（含超时处理）
+    const res = await runUploadRequest(
+      api!,
+      info.file as File,
+      progressEvent,
+      timeout,
+    );
 
     info.onSuccess!(res);
     message.success($t('ui.upload.uploadSuccess'));
@@ -176,20 +148,10 @@ async function customRequest(info: UploadRequestOption<any>) {
 }
 
 function getValue() {
-  const list = (fileList.value || [])
-    .filter((item) => item?.status === UploadResultStatus.DONE)
-    .map((item: any) => {
-      if (item?.response && props?.resultField) {
-        return item?.response;
-      }
-      return item?.url || item?.response?.url || item?.response;
-    });
-  // add by YY：【特殊】单个文件的情况，获取首个元素，保证返回的是 String 类型
-  if (props.maxNumber === 1) {
-    return list.length > 0 ? list[0] : '';
-  }
-  // 多个文件用 || 分隔符拼接成字符串
-  return list.length > 0 ? list.join('||') : '';
+  return getUploadValue(fileList.value, {
+    maxNumber: props.maxNumber,
+    resultField: props.resultField,
+  });
 }
 
 const uploadAttrs = computed(() => {
@@ -216,10 +178,33 @@ function handlePreview(file: UploadFile) {
     window.open(file.response, '_blank');
   }
 }
+
+// ============ 粘贴板上传（pastable 启用时） ============
+// 剪贴板里的文件会被塞进 antd Upload 内部的隐藏 input，
+// 由 antd Upload 走完整的校验 + 上传 + 列表更新流程
+const uploadWrapperRef = ref<HTMLElement | null>(null);
+const pastableEnabled = computed(() => props.pastable && !props.disabled);
+// 是否还有剩余名额（达到 maxNumber 后隐藏粘贴入口）
+const { fileCount, hasRemainCount } = useRemainCount(fileList, maxNumber);
+usePastable({
+  containerRef: uploadWrapperRef,
+  fileCount,
+  pastable: pastableEnabled,
+  maxNumber,
+  multiple,
+  // 与下方 beforeUpload 同规则：注入 input 前先过滤不合格文件，
+  // 保证「成功上传 N 个文件」的提示与实际上传数一致
+  validate: () => ({
+    accept: props.accept,
+    maxSize: props.maxSize,
+    minSize: props.minSize,
+    check: checkFileType,
+  }),
+});
 </script>
 
 <template>
-  <div>
+  <div ref="uploadWrapperRef">
     <Upload
       v-bind="uploadAttrs"
       v-model:file-list="fileList"
@@ -247,13 +232,14 @@ function handlePreview(file: UploadFile) {
         </div>
       </Tooltip>
     </Upload>
+    <Pastable :pastable="pastableEnabled && hasRemainCount" />
   </div>
 </template>
 
 <style scoped>
 /* 文件名过长时省略显示，保证删除按钮不被遮挡 */
 :deep(.ant-upload-list-item-name) {
-  max-width: calc(100% - 50%) !important;
+  max-width: calc(100% - 30%) !important;
   overflow: hidden !important;
   text-overflow: ellipsis !important;
   white-space: nowrap !important;

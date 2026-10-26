@@ -7,7 +7,7 @@ export const defaultImageAccepts = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
  * 解析 accept 配置为数组
  * 支持 'jpg/jpeg/png' 格式或 ['jpg', 'jpeg', 'png'] 数组格式
  */
-function parseAccept(accept: string[] | string): string[] {
+function parseAccept(accept?: string | string[] | undefined): string[] {
   if (!accept) {
     return [];
   }
@@ -17,20 +17,23 @@ function parseAccept(accept: string[] | string): string[] {
   return accept;
 }
 
-export function checkFileType(file: File, accepts: string[] | string) {
+export function checkFileType(
+  file: File,
+  accepts?: string | string[] | undefined,
+) {
   const acceptList = parseAccept(accepts);
   if (!acceptList || acceptList.length === 0) {
     return true;
   }
   const newTypes = acceptList.join('|');
-  const pattern = '\\.(' + newTypes + ')$';
+  const pattern = `${String.raw`\.(` + newTypes})$`;
   const reg = new RegExp(pattern, 'i');
   return reg.test(file.name);
 }
 
 export function checkImgType(
   file: File,
-  accepts: string[] | string = defaultImageAccepts,
+  accepts: string | string[] | undefined = defaultImageAccepts,
 ) {
   return checkFileType(file, accepts);
 }

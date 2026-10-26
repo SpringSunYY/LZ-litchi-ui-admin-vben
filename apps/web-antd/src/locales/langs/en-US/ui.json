@@ -156,10 +156,13 @@
     "maxNumber": "Only upload up to {0} files",
     "uploadSuccess": "Upload successfully",
     "fileUpload": "File Upload",
-    "pasteHint": "Paste image here to upload",
-    "pasteUploading": "Uploading pasted image…",
-    "pasteNotFile": "The clipboard content is not a file / image",
-    "pasteBusy": "Upload is in progress, please wait"
+    "pastable": {
+      "hint": "Paste file here to upload",
+      "notFile": "The clipboard content is not a file / image",
+      "failed": "Paste upload failed, please try again",
+      "busy": "Paste upload in progress, please wait",
+      "success": "Successfully uploaded {0} files"
+    }
   },
   "cropper": {
     "selectImage": "Select Image",
@@ -269,6 +272,7 @@
       "borderradius": "Border Radius",
       "showDeleteButton": "Show Delete Button",
       "showBtnText": "Show Button Text",
+      "pastable": "Enable Paste Upload",
       "dictType": "Dict Type",
       "valueType": "Dict Value Type",
       "clearable": "Clearable",

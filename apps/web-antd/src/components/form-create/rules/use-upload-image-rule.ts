@@ -1,5 +1,5 @@
-import { buildUUID } from '@vben/utils';
 import { useI18n } from '@vben/locales';
+import { buildUUID } from '@vben/utils';
 
 import {
   localeProps,
@@ -103,6 +103,12 @@ export const useUploadImageRule = (label?: string) => {
           type: 'switch',
           field: 'showBtnText',
           title: t('ui.formCreate.props.showBtnText'),
+          value: true,
+        },
+        {
+          type: 'switch',
+          field: 'pastable',
+          title: t('ui.formCreate.props.pastable'),
           value: true,
         },
       ]);

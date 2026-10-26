@@ -54,6 +54,11 @@ export const useImageUpload = () => {
         type: [Array, String] as PropType<string | string[]>,
         default: () => ['jpg', 'jpeg', 'png', 'gif', 'webp'],
       },
+      // 是否启用粘贴上传
+      pastable: {
+        type: Boolean,
+        default: true,
+      },
       // 模块类型
       moduleType: {
         type: String,
@@ -96,6 +101,7 @@ export const useImageUpload = () => {
           maxSize={fileSize.value}
           moduleType={props.moduleType}
           onChange={handleChange}
+          pastable={props.pastable}
           value={bindValue}
         />
       );

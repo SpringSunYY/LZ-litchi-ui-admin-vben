@@ -20,9 +20,10 @@ export interface FileUploadProps {
   ) => Promise<AxiosResponse<any>>;
   // 上传的目录
   directory?: string;
+  // 是否禁用
   disabled?: boolean;
-  // 是否启用粘贴板上传（粘贴文件 / 图片到容器内直接上传）
-  enablePaste?: boolean;
+  // 是否启用粘贴板上传
+  pastable?: boolean;
   helpText?: string;
   listType?: UploadListType;
   // 最大数量的文件，Infinity不限制

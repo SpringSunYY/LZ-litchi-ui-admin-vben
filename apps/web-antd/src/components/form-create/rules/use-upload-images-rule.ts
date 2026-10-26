@@ -99,6 +99,12 @@ export const useUploadImagesRule = (label?: string) => {
           title: t('ui.formCreate.props.borderradius'),
           value: '8px',
         },
+        {
+          type: 'switch',
+          field: 'pastable',
+          title: t('ui.formCreate.props.pastable'),
+          value: true,
+        },
       ]);
     },
   };

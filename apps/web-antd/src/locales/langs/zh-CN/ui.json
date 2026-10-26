@@ -156,10 +156,13 @@
     "maxNumber": "最多只能上传{0}个文件",
     "uploadSuccess": "上传成功",
     "fileUpload": "文件上传",
-    "pasteHint": "在此处粘贴图片以上传",
-    "pasteUploading": "正在上传粘贴的图片…",
-    "pasteNotFile": "剪贴板内容不是文件 / 图片",
-    "pasteBusy": "正在上传中，请稍候"
+    "pastable": {
+      "hint": "在此处粘贴文件以上传",
+      "notFile": "剪贴板内容不是文件 / 图片",
+      "failed": "粘贴上传失败，请重试",
+      "busy": "正在粘贴上传，请稍候",
+      "success": "成功上传 {0} 个文件"
+    }
   },
   "cropper": {
     "selectImage": "选择图片",
@@ -269,6 +272,7 @@
       "borderradius": "组件边框圆角",
       "showDeleteButton": "是否显示删除按钮",
       "showBtnText": "是否显示按钮文字",
+      "pastable": "是否启用粘贴上传",
       "dictType": "字典类型",
       "valueType": "字典值类型",
       "clearable": "是否可以清空选项",

@@ -176,7 +176,7 @@ const initOptions = computed((): InitOptions => {
     branding: false, // 禁止显示，右下角的“使用 TinyMCE 构建”
     default_link_target: '_blank',
     link_title: false,
-    object_resizing: true, 
+    object_resizing: true,
     auto_focus: undefined,
     skin: skinName.value,
     content_css: contentCss.value,
