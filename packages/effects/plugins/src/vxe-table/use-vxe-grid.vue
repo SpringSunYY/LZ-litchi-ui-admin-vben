@@ -131,8 +131,9 @@ const [Form, formApi] = useTableForm({
   },
   handleReset: async () => {
     const prevValues = await formApi.getValues();
-    // @ts-expect-error reset 方法在不同 vben 版本中可能存在差异
-    await formApi.reset?.();
+    // 重置表单：FormApi 提供的是 resetForm 方法（不存在 reset 方法，
+    // 用 reset?.() 会因为可选链而静默跳过，导致搜索条件没有被清空）
+    await formApi.resetForm();
     const formValues = await formApi.getValues();
     formApi.setLatestSubmissionValues(formValues);
     // 如果值发生了变化，submitOnChange会触发刷新。所以只在submitOnChange为false或者值没有发生变化时，手动刷新
